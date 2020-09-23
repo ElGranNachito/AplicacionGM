@@ -1,0 +1,9 @@
+﻿
+
+namespace AppGMCore
+{
+    class ViewModelRol
+    {
+       
+    }
+}
