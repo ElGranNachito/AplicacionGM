@@ -97,6 +97,11 @@
     <Compile Include="Otros\ValorTemporal.cs" />
     <Compile Include="Otros\Vector2D.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Relaciones\TICombate.cs" />
+    <Compile Include="Relaciones\TIEfecto.cs" />
+    <Compile Include="Relaciones\TIHabilidades.cs" />
+    <Compile Include="Relaciones\TIPersonajes.cs" />
+    <Compile Include="Relaciones\TIUtilizables.cs" />
     <Compile Include="Sistema\SistemaPrincipal.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\DesignModels\BaseDesignModel.cs" />
