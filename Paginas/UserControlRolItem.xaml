@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="AppGM.UserControlRolItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AppGM"
+             xmlns:core="clr-namespace:AppGM.Core;assembly=AppGMCore"
+             mc:Ignorable="d" 
+             d:DesignHeight="75" d:DesignWidth="250"
+             d:DataContext="{x:Static core:DesignModelPrueba.Instancia}">
+
+    <UserControl.Template>
+        <ControlTemplate TargetType="{x:Type UserControl}">
+            <Grid Background="White" local:CrearDesignTimeViewModelProperty.Value="{x:Type core:DesignModelRolItem}">
+
+                <Border Padding="10">
+                    <Grid>
+                        <TextBlock Text="{Binding Nombre}"/>
+                    </Grid>
+                </Border>
+
+            </Grid>
+       </ControlTemplate>
+    </UserControl.Template>
+</UserControl>

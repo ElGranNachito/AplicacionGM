@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using AppGM.Viewmodels;
 
 namespace AppGM
 {
@@ -10,6 +11,8 @@ namespace AppGM
         public MainWindow()
         {
             InitializeComponent();
+
+            DataContext = new ViewModelVentanaPrincipal(this);
         }
     }
 }

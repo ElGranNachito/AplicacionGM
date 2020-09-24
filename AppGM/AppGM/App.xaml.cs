@@ -17,6 +17,7 @@ namespace AppGM
             SistemaPrincipal.Inicializar();
 
             MainWindow = new MainWindow();
+            MainWindow.Show();
         }
     }
 }
