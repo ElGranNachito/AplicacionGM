@@ -102,6 +102,8 @@
     <Compile Include="ViewModels\DesignModels\BaseDesignModel.cs" />
     <Compile Include="ViewModels\DesignModels\DesignModelRolItem.cs" />
     <Compile Include="ViewModels\DesignModels\DesingModelListaRoles.cs" />
+    <Compile Include="ViewModels\ViewModelsGlobos\ViewModelContenidoGloboInfoRol.cs" />
+    <Compile Include="ViewModels\ViewModelsGlobos\ViewModelGlobo.cs" />
     <Compile Include="ViewModels\ViewModelListaRoles.cs" />
     <Compile Include="ViewModels\ViewModelPaginaPrincipal.cs" />
     <Compile Include="ViewModels\ViewModelRolItem.cs" />

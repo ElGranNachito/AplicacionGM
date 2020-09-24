@@ -16,11 +16,14 @@
         </Grid.Background>
 
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Column="0">
+        <StackPanel Grid.Column="0"
+                    Margin="20 0 0 0"
+                    HorizontalAlignment="Center">
 
             <Button Content="+Agregar" 
                     Margin=" 0 50 0 10"
@@ -29,18 +32,24 @@
 
             <Border HorizontalAlignment="Center"
                     Width="300"
-                    Height="300"
-                    BorderThickness="1"
-                    BorderBrush="Aqua">
+                    Height="300">
 
                 <local:UserControlListaRolItems 
+                    DataContext="{Binding Roles}"
                     d:DataContext="{x:Static core:DesingModelListaRoles.listaRoles}"/>
 
             </Border>
 
         </StackPanel>
 
-        <StackPanel Grid.Column="1">
+        <local:UserControlGlobo Grid.Column="1"
+                                Margin="20 75 50 0"
+                                HorizontalAlignment="Left"
+                                DataContext="{Binding GloboInfoRol}"/>
+
+        <StackPanel Grid.Column="2"
+                    Margin="0 0 20 0"
+                    HorizontalAlignment="Center">
 
             <Button Content="Reglas" 
                     Margin=" 0 50 0 20"

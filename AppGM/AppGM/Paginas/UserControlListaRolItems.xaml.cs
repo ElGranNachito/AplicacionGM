@@ -12,8 +12,6 @@ namespace AppGM
         public UserControlListaRolItems()
         {
             InitializeComponent();
-
-            DataContext = new ViewModelListaRoles();
         }
     }
 }
