@@ -1,6 +1,4 @@
-﻿
-
-namespace AppGMCore
+﻿namespace AppGMCore
 {
     class ControladorRol : ControladorBase<ModeloRol>
     {
