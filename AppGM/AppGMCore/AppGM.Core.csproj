@@ -8,8 +8,8 @@
     <ProjectGuid>{DC35C1D2-76B4-4FA9-A13E-E08AD9B9A433}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AppGMCore</RootNamespace>
-    <AssemblyName>AppGMCore</AssemblyName>
+    <RootNamespace>AppGM.Core</RootNamespace>
+    <AssemblyName>AppGM.Core</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

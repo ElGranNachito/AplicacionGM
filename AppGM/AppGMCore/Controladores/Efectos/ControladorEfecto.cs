@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AppGMCore
+namespace AppGM.Core
 {
     public class ControladorEfecto<TipoEfecto> : ControladorBase<ModeloEfecto>
     {

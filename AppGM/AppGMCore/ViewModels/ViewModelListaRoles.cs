@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using AppGM.Core;
 
-namespace AppGMCore
+namespace AppGM.Core
 {
     public class ViewModelListaRoles : BaseViewModel
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace AppGMCore
+namespace AppGM.Core
 {
     public class ControladorHabilidad<TipoHabilidad> : ControladorBase<ModeloHabilidad>
     {

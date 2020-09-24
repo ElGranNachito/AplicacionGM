@@ -1,5 +1,4 @@
 ﻿using System.Windows.Input;
-using AppGMCore;
 
 namespace AppGM.Core
 {

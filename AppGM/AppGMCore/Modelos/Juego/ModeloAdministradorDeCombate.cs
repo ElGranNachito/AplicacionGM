@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace AppGMCore
+namespace AppGM.Core
 {
     public class ModeloAdministradorDeCombate
     {

@@ -1,7 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using AppGMCore;
-
-namespace AppGM.Core
+﻿namespace AppGM.Core
 {
     public class DesignModelRolItem : ViewModelRolItem
     {

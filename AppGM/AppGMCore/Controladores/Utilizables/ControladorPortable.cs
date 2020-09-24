@@ -1,6 +1,6 @@
 ﻿using Microsoft.Win32.SafeHandles;
 
-namespace AppGMCore
+namespace AppGM.Core
 {
     class ControladorPortable<TipoPortable> : ControladorUtilizable<ModeloPortable>
     {

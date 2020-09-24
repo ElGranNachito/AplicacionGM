@@ -1,6 +1,6 @@
 ﻿using Ninject;
 
-namespace AppGMCore
+namespace AppGM.Core
 {
 
     /// <summary>

@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace AppGMCore
+namespace AppGM.Core
 {
     class ControladorCondicion : ControladorBase<ModeloCondicion>
     {

@@ -1,5 +1,5 @@
 ﻿
-namespace AppGMCore
+namespace AppGM.Core
 {
     public class ControladorPersonaje<TipoPersonaje> : ControladorBase<ModeloPersonaje>
     {

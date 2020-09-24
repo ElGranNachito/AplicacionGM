@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using AppGMCore;
-
-namespace AppGM.Core
+﻿namespace AppGM.Core
 {
     public class DesingModelListaRoles : BaseDesignModel<DesingModelListaRoles, ViewModelListaRoles>
     {

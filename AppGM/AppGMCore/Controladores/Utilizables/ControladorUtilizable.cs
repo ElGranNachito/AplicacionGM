@@ -1,4 +1,4 @@
-﻿namespace AppGMCore
+﻿namespace AppGM.Core
 {
     public abstract class ControladorUtilizable<TipoUtilizable> : IUtilizableConObjetivos, IUtilizableSinObjetivos
     {

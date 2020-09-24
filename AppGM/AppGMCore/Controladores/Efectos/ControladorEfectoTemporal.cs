@@ -1,6 +1,5 @@
-﻿using AppGMCore;
-
-namespace AppGMCore
+﻿
+namespace AppGM.Core
 {
     class ControladorEfectoTemporal : ControladorEfecto<ModeloEfectoTemporal>
     {

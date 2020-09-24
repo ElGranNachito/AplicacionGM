@@ -1,7 +1,4 @@
 ﻿
-
-using AppGMCore;
-
 namespace AppGM.Core
 {
     public class ViewModelPaginaPrincipal : BaseViewModel

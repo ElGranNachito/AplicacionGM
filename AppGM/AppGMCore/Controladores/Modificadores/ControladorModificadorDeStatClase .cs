@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace AppGMCore
+namespace AppGM.Core
 {
     class ControladorModificadorDeStatClase : ControladorModificadorDeStatBase
     {

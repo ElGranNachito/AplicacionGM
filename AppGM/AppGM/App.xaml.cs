@@ -1,7 +1,5 @@
 ﻿using System.Windows;
 using AppGM.Core;
-using AppGMCore;
-
 namespace AppGM
 {
     /// <summary>

@@ -1,4 +1,4 @@
-﻿namespace AppGMCore
+﻿namespace AppGM.Core
 {
     class ControladorLimitador : ControladorBase<ModeloLimitador>
     {

@@ -153,9 +153,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AppGMCore\AppGMCore.csproj">
+    <ProjectReference Include="..\AppGMCore\AppGM.Core.csproj">
       <Project>{dc35c1d2-76b4-4fa9-a13e-e08ad9b9a433}</Project>
-      <Name>AppGMCore</Name>
+      <Name>AppGM.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

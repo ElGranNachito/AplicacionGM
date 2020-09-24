@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AppGMCore
+namespace AppGM.Core
 {
     /// <summary>
     /// Modelo de datos para el rol

@@ -1,8 +1,6 @@
 ﻿
 using System.Windows.Controls;
 using AppGM.Core;
-using AppGMCore;
-
 
 namespace AppGM
 {

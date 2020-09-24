@@ -1,4 +1,4 @@
-﻿namespace AppGMCore
+﻿namespace AppGM.Core
 {
     class ControladorAdministradorDeCombate : ControladorBase<ModeloAdministradorDeCombate>
     {
