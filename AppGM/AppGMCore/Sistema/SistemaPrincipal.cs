@@ -14,7 +14,7 @@ namespace AppGM.Core
         //DatosRolActual DatorRolActual
         //ControladorRol ControladorRolActual
 
-        public static IKernel kernel = new StandardKernel();
+        public static IKernel Kernel { get; set; } = new StandardKernel();
 
         /// <summary>
         /// Funcion que se llama antes de que se inicie la primera ventana. Se encarga de la carga
@@ -22,12 +22,17 @@ namespace AppGM.Core
         /// </summary>
         public static void Inicializar()
         {
-
+            CrearViewModels();
         }
 
         private static void CrearViewModels()
         {
-           
+            Kernel.Bind<ViewModelPaginaPrincipal>().ToConstant(new ViewModelPaginaPrincipal());
+        }
+
+        public static T ObtenerInstancia<T>()
+        {
+            return Kernel.Get<T>();
         }
     }
 }

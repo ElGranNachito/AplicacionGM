@@ -59,7 +59,7 @@
                             <!-- Contenido -->
         
                             <Border Grid.Row="1">
-                                <ContentPresenter Content="{TemplateBinding Content}"></ContentPresenter>
+                                <ContentPresenter Content="{TemplateBinding Content}"/>
                             </Border>
 
                         </Grid>

@@ -14,11 +14,11 @@
 
         public void AvanzarDia()
         {
-            ushort nuevoDia = ++modelo.DiaEnRol;
+            ushort nuevoDia = ++modelo.Dia;
 
             OnAvanzarDia(ref nuevoDia);
 
-            modelo.DiaEnRol = nuevoDia;
+            modelo.Dia = nuevoDia;
         }
 
         #endregion

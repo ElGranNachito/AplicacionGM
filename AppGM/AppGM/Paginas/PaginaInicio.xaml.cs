@@ -1,5 +1,4 @@
-﻿
-using AppGM.Core;
+﻿using AppGM.Core;
 
 namespace AppGM
 {
@@ -11,6 +10,8 @@ namespace AppGM
         public PaginaInicio()
         {
             InitializeComponent();
+
+            ViewModel = SistemaPrincipal.ObtenerInstancia<ViewModelPaginaPrincipal>();
         }
     }
 }

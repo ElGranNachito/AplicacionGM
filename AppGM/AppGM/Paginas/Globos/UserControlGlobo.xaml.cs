@@ -12,16 +12,15 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using AppGM.Core;
 
 namespace AppGM
 {
     /// <summary>
-    /// Lógica de interacción para UserControlRolItem.xaml
+    /// Lógica de interacción para UserControlGlobo.xaml
     /// </summary>
-    public partial class UserControlRolItem : UserControl
+    public partial class UserControlGlobo : UserControl
     {
-        public UserControlRolItem()
+        public UserControlGlobo()
         {
             InitializeComponent();
         }

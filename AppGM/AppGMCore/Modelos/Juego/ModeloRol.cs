@@ -11,7 +11,7 @@ namespace AppGM.Core
         public int IdRol { get; set; }
 
         //Dia dentro del mundo del rol
-        public ushort DiaEnRol { get; set; }
+        public ushort Dia { get; set; }
 
         //Nombre del rol
         public string Nombre { get; set; }
