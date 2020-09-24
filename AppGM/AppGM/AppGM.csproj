@@ -62,7 +62,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AttachedProperties\BaseAttachedProperty.cs" />
+    <Compile Include="AttachedProperties\ParametroProperty\BaseAttachedPropertyParametro.cs" />
     <Compile Include="AttachedProperties\CrearDesignTimeViewModelProperty.cs" />
+    <Compile Include="AttachedProperties\LlamarComandoOnMouseEnterProperty.cs" />
+    <Compile Include="AttachedProperties\ParametroProperty\ParametroComandoOnLeaveProperty.cs" />
     <Compile Include="Converters\Prueba.cs" />
     <Compile Include="Helpers\WindowHelpers.cs" />
     <Compile Include="Paginas\BaseUserControl.cs" />

@@ -5,9 +5,6 @@ namespace AppGM.Core
 {
     public class DesignModelRolItem : ViewModelRolItem
     {
-        public static DesignModelRolItem Instancia => new DesignModelRolItem()
-        {
-            Nombre = "SuperRol"
-        };
+        public static DesignModelRolItem Instancia => new DesignModelRolItem();
     }
 }

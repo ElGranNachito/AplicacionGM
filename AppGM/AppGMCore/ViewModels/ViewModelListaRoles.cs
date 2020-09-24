@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AppGM.Core;
 
@@ -14,17 +15,32 @@ namespace AppGMCore
             {
                 new ViewModelRolItem
                 {
-                    Nombre = "Super Rol"
+                    ModeloRol = new ModeloRol
+                    {
+                        Nombre = "Super Rol",
+                        Descripcion = "Este es un rol muy piola. Era hace una vez la legendaria historia de un sujeto muy genial",
+                        FechaUltimaSesion = DateTime.UtcNow.AddMonths(-8).AddHours(2).AddDays(6)
+                    }
                 },
 
                 new ViewModelRolItem
                 {
-                    Nombre =  "Mega Rol"
+                    ModeloRol = new ModeloRol
+                    {
+                        Nombre =  "Mega Rol",
+                        Descripcion = "Increible rol",
+                        FechaUltimaSesion = DateTime.UtcNow.AddHours(8)
+                    }
                 },
 
                 new ViewModelRolItem
                 {
-                    Nombre = "Rol rol rol"
+                    ModeloRol = new ModeloRol
+                    {
+                        Nombre = "Rol rol rol",
+                        Descripcion = "Me quede sin descripciones",
+                        FechaUltimaSesion = DateTime.UtcNow.ToLocalTime()
+                    }
                 }
                 
             };

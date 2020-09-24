@@ -1,27 +1,21 @@
-﻿using System;
+﻿using System.Windows.Input;
 using AppGMCore;
 
 namespace AppGM.Core
 {
     public class ViewModelRolItem : BaseViewModel
     {
-        //Id
-        public int IdRol { get; set; }
+        public ModeloRol ModeloRol { get; set; }
+        public bool GloboDescripcionCompletaVisible { get; set; }
+        public ICommand ComandoClickeado { get; set; }
+        public ICommand ComandoMouseEnter { get; set; }
+        public ICommand ComandoMouseLeave { get; set; }
 
-        //Dia dentro del mundo del rol
-        public ushort DiaEnRol { get; set; }
-
-        //Nombre del rol
-        public string Nombre { get; set; }
-
-        //Descripcion del rol
-        public string Descripcion { get; set; }
-
-        //Anotaciones realizadas por el GM
-        public string Registros { get; set; }
-
-        // Ultima fecha de uso del rol (sesion)
-        public DateTime FechaUltimaSesion { get; set; }
+        public ViewModelRolItem()
+        {
+            ComandoMouseEnter = new Comando(()=> GloboDescripcionCompletaVisible = true);
+            ComandoMouseLeave = new Comando(()=> GloboDescripcionCompletaVisible = false);
+        }
     }
 
 }

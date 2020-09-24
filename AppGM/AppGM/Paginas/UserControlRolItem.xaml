@@ -7,19 +7,45 @@
              xmlns:core="clr-namespace:AppGM.Core;assembly=AppGMCore"
              mc:Ignorable="d" 
              d:DesignHeight="75" d:DesignWidth="250"
-             d:DataContext="{x:Static core:DesignModelPrueba.Instancia}">
+             d:DataContext="{x:Static core:DesignModelRolItem.Instancia}">
 
     <UserControl.Template>
         <ControlTemplate TargetType="{x:Type UserControl}">
-            <Grid Background="White">
+            
+            <!-- Grid con attached property que llama un comando del view model cuando el mouse esta sobre el elemento y
+            otra que llame a un comando cuando el mouse deja de estar sobre el elemento -->
+            <Grid Background="White" x:Name="contenido"
+                  local:ParametroComandoOnLeaveProperty.Parametro="{Binding ComandoMouseLeave}"
+                  local:LlamarComandoOnMouseEnterProperty.Value="{Binding ComandoMouseEnter}">
 
-                <Border Padding="10">
+                <!-- Grid con attached property que llama un comando del view model cuando el mouse deja de estar sobre el elemento -->
+                <Border Padding="5 10">
                     <Grid>
-                        <TextBlock Text="{Binding Nombre}"/>
+                        <StackPanel>
+                            <TextBlock Text="{Binding ModeloRol.Nombre}"/>
+                            <TextBlock Text="{Binding ModeloRol.Descripcion}" TextTrimming="WordEllipsis"/>
+                            <TextBlock Text="{Binding ModeloRol.FechaUltimaSesion}"
+                                       Margin="0 5 0 0"/>
+                        </StackPanel>
                     </Grid>
                 </Border>
 
+                <!-- Binding a un comando del view model que se ejecuta cuando el elemento es clickeado -->
+                <Grid.InputBindings>
+                    <MouseBinding MouseAction="LeftClick" 
+                                  Command="{Binding ComandoClickeado}"/>
+                </Grid.InputBindings>
+
             </Grid>
-       </ControlTemplate>
+
+            <!-- Cuando el mouse esta sobre el control cambiar el color de fondo -->
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter TargetName="contenido" Property="Background" Value="LightGray"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+
+            </ControlTemplate>
+
     </UserControl.Template>
 </UserControl>
