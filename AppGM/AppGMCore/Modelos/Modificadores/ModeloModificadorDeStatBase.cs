@@ -1,8 +1,11 @@
-﻿namespace AppGM.Core
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace AppGM.Core
 {
     public class ModeloModificadorDeStatBase
     {
         //Id
+        [Key]
         public int IdModificadorDeStat { get; set; }
         //Valor requerido para realizar tirada
         public int ValorRequeridoTirada { get; set; }
@@ -24,6 +27,7 @@
     public class ModeloModificadorDeStatClase : ModeloModificadorDeStatBase
     {
         //Nombre de la clase a modificar
+        [StringLength(50)]
         public string NombreClase { get; set; }
 
         //Id de la clase

@@ -1,7 +1,10 @@
-﻿namespace AppGM.Core
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace AppGM.Core
 {
     public abstract class ModeloTiradaBase
     {
+        [Key]
         public int IdTirada { get; set; }
     }
 

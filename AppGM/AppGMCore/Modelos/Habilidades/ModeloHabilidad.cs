@@ -1,18 +1,22 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace AppGM.Core
 {
     public class ModeloHabilidad : IDescripcion
     {
         //Id
+        [Key]
         public int IdHabilidad { get; set; }
         
         //Costos de mana que tiene la habilidad para ser utilizada
         public ushort CostoDeMana { get; set; }
         //Turnos que dura la habilidad
         public ushort TurnosDeDuracion { get; set; }
-        
+
+        [StringLength(50)]
         public string Nombre { get; set; }
+        [StringLength(2000)]
         public string Descripcion { get; set; }
 
         public ModeloLimitador LimiteDeUsos { get; set; }
