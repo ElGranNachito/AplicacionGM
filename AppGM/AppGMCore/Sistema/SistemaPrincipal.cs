@@ -11,10 +11,12 @@ namespace AppGM.Core
     //TODO: Extender esta clase cuando tengamos el programa mas desarrollado
     public static class SistemaPrincipal
     {
-        //DatosRolActual DatorRolActual
-        //ControladorRol ControladorRolActual
+        #region Propiedades
+        public static IKernel Kernel { get; set; } = new StandardKernel(); 
 
-        public static IKernel Kernel { get; set; } = new StandardKernel();
+        #endregion
+
+        #region Funciones
 
         /// <summary>
         /// Funcion que se llama antes de que se inicie la primera ventana. Se encarga de la carga
@@ -24,15 +26,23 @@ namespace AppGM.Core
         {
             CrearViewModels();
         }
-
-        private static void CrearViewModels()
+        public static void CargarRol(ModeloRol modelo)
         {
-            Kernel.Bind<ViewModelPaginaPrincipal>().ToConstant(new ViewModelPaginaPrincipal());
-        }
+            //TODO: Cargar base da datos en base al nombre/id del rol
 
+            Kernel.Bind<ViewModelPaginaPrincipalRol>().ToConstant(new ViewModelPaginaPrincipalRol(modelo));
+
+            ObtenerInstancia<ViewModelAplicacion>().TituloVentana = modelo.Nombre;
+        }
         public static T ObtenerInstancia<T>()
         {
             return Kernel.Get<T>();
         }
+        private static void CrearViewModels()
+        {
+            Kernel.Bind<ViewModelAplicacion>().ToConstant(new ViewModelAplicacion());
+            Kernel.Bind<ViewModelPaginaPrincipal>().ToConstant(new ViewModelPaginaPrincipal());
+        }
+        #endregion
     }
 }

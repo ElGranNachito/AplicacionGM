@@ -1,9 +1,9 @@
-﻿
-
-namespace AppGM.Core
+﻿namespace AppGM.Core
 {
     public class ViewModelContenidoGloboInfoRol : BaseViewModel
     {
-        public ModeloRol ModeloRol { get; set; }
+        #region Propiedades
+        public ModeloRol ModeloRol { get; set; } 
+        #endregion
     }
 }

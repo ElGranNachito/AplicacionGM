@@ -69,6 +69,7 @@
     <Compile Include="AttachedProperties\ParametroProperty\ParametroComandoOnLeaveProperty.cs" />
     <Compile Include="AttachedProperties\ParametroProperty\ParametroThicknessProperty.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Converters\EnumToUserControlConverter.cs" />
     <Compile Include="Converters\StringToSolidColorBrushConverter.cs" />
     <Compile Include="Converters\ViewModelToContenidoConverter.cs" />
     <Compile Include="Helpers\WindowHelpers.cs" />
@@ -79,11 +80,14 @@
     <Compile Include="Paginas\Globos\UserControlGlobo.xaml.cs">
       <DependentUpon>UserControlGlobo.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Paginas\UserControlListaRolItems.xaml.cs">
+    <Compile Include="Paginas\Inicio\UserControlListaRolItems.xaml.cs">
       <DependentUpon>UserControlListaRolItems.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Paginas\UserControlRolItem.xaml.cs">
+    <Compile Include="Paginas\Inicio\UserControlRolItem.xaml.cs">
       <DependentUpon>UserControlRolItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Rol\UserControlPaginaPrincipalRol.xaml.cs">
+      <DependentUpon>UserControlPaginaPrincipalRol.xaml</DependentUpon>
     </Compile>
     <Compile Include="Viewmodels\ViewModelVentanaPrincipal.cs" />
     <Page Include="Paginas\Globos\UserControlContenidoGloboInfoRol.xaml">
@@ -94,13 +98,17 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Paginas\UserControlListaRolItems.xaml">
+    <Page Include="Paginas\Inicio\UserControlListaRolItems.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Paginas\UserControlRolItem.xaml">
+    <Page Include="Paginas\Inicio\UserControlRolItem.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Paginas\Rol\UserControlPaginaPrincipalRol.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Ventanas\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -115,7 +123,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Paginas\PaginaInicio.xaml">
+    <Page Include="Paginas\Inicio\UserControlPaginaInicio.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -141,8 +149,8 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Paginas\PaginaInicio.xaml.cs">
-      <DependentUpon>PaginaInicio.xaml</DependentUpon>
+    <Compile Include="Paginas\Inicio\UserControlPaginaInicio.xaml.cs">
+      <DependentUpon>UserControlPaginaInicio.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

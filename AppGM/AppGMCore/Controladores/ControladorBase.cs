@@ -3,6 +3,6 @@
     public class ControladorBase<TipoModelo>
         where TipoModelo: new()
     {
-        public TipoModelo modelo = new TipoModelo();
+        public TipoModelo modelo;
     }
 }

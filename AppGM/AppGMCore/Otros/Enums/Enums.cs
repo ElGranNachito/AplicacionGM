@@ -1,5 +1,21 @@
 ﻿namespace AppGM.Core
 {
+    public enum EPaginaActual
+    {
+        PaginaPrincipal = 1,
+        PaginaPrincipalRol = 2
+    }
+
+    public enum EMenuActualRol
+    {
+        NINGUNO = 0,
+        Fichas = 1,
+        Mapas = 2,
+        Registro = 3,
+        Tirada = 4,
+        AdministrarCombates = 5,
+        Combate = 6
+    }
     public enum EClaseServant
     {
         NINGUNO = 0,
