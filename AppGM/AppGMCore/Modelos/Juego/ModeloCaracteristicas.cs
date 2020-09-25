@@ -1,8 +1,11 @@
-﻿namespace AppGM.Core
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace AppGM.Core
 {
     public class ModeloCaracteristicas
     {
         //Id
+        [Key]
         public int IdCaracteristica { get; set; }
 
         //Edad del personaje
@@ -16,8 +19,10 @@
         public ESexo ESexo { get; set; }
 
         //Nacionalidad del personaje
+        [StringLength(50)]
         public string Nacionalidad { get; set; }
         //Contextura fisica
+        [StringLength(100)]
         public string Contextura { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace AppGM.Core
 {
@@ -8,10 +9,13 @@ namespace AppGM.Core
     public class ModeloPersonaje
     {
         //ID
+        [Key]
         public int IdPersonaje { get; set; }
 
         //Nombre del personaje
+        [StringLength(50)]
         public string Nombre { get; set; }
+
         //Stats del personaje
         public short Hp { get; set; }
         public ushort Str { get; set; }

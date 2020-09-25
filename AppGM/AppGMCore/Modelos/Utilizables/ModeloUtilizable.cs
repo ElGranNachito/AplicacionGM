@@ -1,8 +1,11 @@
-﻿namespace AppGM.Core
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace AppGM.Core
 {
     public abstract class ModeloUtilizable
     {
         //Id
+        [Key]
         public int IdUtilizable { get; set; }
 
         //Stats
