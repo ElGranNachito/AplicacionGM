@@ -1,7 +1,17 @@
-﻿namespace AppGM.Core
+﻿using System.Collections.Generic;
+
+namespace AppGM.Core
 {
-    class ControladorSlot : ControladorBase<ModeloSlot>
+    public class ControladorSlot : ControladorBase<ModeloSlot>
     {
+        #region Controladores
+
+        public List<ControladorUtilizable<ModeloItem>> ControladorItemsAlmacenados { get; set; }
+
+        #endregion
+
+        #region Funciones
+
         public bool AlmacenarItem(ControladorUtilizable<ModeloItem> item)
         {
             //TODO: Chequear si queda espacio para almacenar dicho item y almacenarlo.
@@ -9,5 +19,7 @@
 
             return false;
         }
+
+        #endregion
     }
 }

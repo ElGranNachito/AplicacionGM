@@ -11,8 +11,7 @@ namespace AppGM.Core
         public int ValorRequeridoTirada { get; set; }
 
         //Valor de la stat en las tiradas
-        public ModeloTiradaBase ValorTirada { get; set; }
-        private ControladorTiradaBase<ModeloTiradaBase> ControaldorTiradaBase { get; set; }
+        public TIModificadorDeStatBaseTiradaBase ValorTirada { get; set; }
     }
 
     public class ModeloModificadorDeStatPrimitivos : ModeloModificadorDeStatBase

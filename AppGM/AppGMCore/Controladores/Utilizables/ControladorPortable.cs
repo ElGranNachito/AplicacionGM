@@ -1,9 +1,24 @@
-﻿using Microsoft.Win32.SafeHandles;
+﻿using System.Collections.Generic;
+using Microsoft.Win32.SafeHandles;
 
 namespace AppGM.Core
 {
-    class ControladorPortable<TipoPortable> : ControladorUtilizable<ModeloPortable>
+    public class ControladorPortable<TipoPortable> : ControladorUtilizable<ModeloPortable>
     {
+        #region Controladores
+
+        public List<ControladorSlot> ControladorSlots { get; set; }
+
+        public ControladorModificadorDeStatBase<ModeloModificadorDeStatBase> ControladorDesventajasDeEquiparlo { get; set; }
+        public ControladorModificadorDeStatBase<ModeloModificadorDeStatBase> ControladorVentajasDeEquiparlo { get; set; }
+
+        // Portable ofensivo
+        public List<ControladorTiradaBase<ModeloTiradaDeDaño>> ControladorTiradaDeDaño { get; set; }
+
+        public ControladorEfecto<ModeloEfecto> ControladorEfectoQueInflige { get; set; }
+
+        #endregion
+
         #region Funciones
 
         public virtual void Equipar(ControladorPersonaje<ModeloPersonaje> objetivo)
@@ -19,7 +34,7 @@ namespace AppGM.Core
         #endregion
     }
 
-    class ControladorDefensivo<TipoDefensivo> : ControladorPortable<ModeloDefensivo>
+    public class ControladorDefensivo<TipoDefensivo> : ControladorPortable<ModeloDefensivo>
     {
         #region Funciones
 
@@ -32,7 +47,7 @@ namespace AppGM.Core
         #endregion
     }
 
-    class ControladorDefensivoAbsoluto : ControladorDefensivo<ModeloDefensivoAbsoluto>
+    public class ControladorDefensivoAbsoluto : ControladorDefensivo<ModeloDefensivoAbsoluto>
     {
         #region Funciones
 

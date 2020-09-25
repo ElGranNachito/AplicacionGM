@@ -6,12 +6,10 @@
         public bool EsAutomata { get; set; }
 
         //Personaje que la invoca
-        public ModeloPersonaje Invocador { get; set; }
-        private ControladorPersonaje<ModeloPersonaje> ControladorInvocador { get; set; }
+        public TIInvocacionPersonaje Invocador { get; set; }
 
         //Efecto que la invocacion produce
-        public ModeloEfecto Efecto { get; set; }
-        private ControladorEfecto<ModeloEfecto> ControladorEfecto { get; set; }
+        public TIInvocacionEfecto Efecto { get; set; }
     }
 
     public class ModeloInvocacionTemporal : ModeloInvocacion

@@ -2,7 +2,7 @@
 
 namespace AppGM.Core
 {
-    class ControladorCondicion : ControladorBase<ModeloCondicion>
+    public class ControladorCondicion : ControladorBase<ModeloCondicion>
     {
         #region Funciones
 

@@ -2,6 +2,15 @@
 {
     public abstract class ControladorUtilizable<TipoUtilizable> : IUtilizableConObjetivos, IUtilizableSinObjetivos
     {
+        #region Controladores
+
+        private ControladorTiradaBase<ModeloTiradaBase> ControladorTiradaDeUso { get; set; }
+        public ControladorModificadorDeStatBase<ModeloModificadorDeStatBase> ControladorVentajaAlUtilizarlo { get; set; }
+        public ControladorEfecto<ModeloEfecto> ControladorEfectoSobreElUsuario { get; set; }
+        public ControladorEfecto<ModeloEfecto> ControladorEfectoSobreElObjetivo { get; set; }
+
+        #endregion
+
         #region Eventos
 
         public delegate void dUtilizarHabilidad(ControladorHabilidad<ModeloHabilidad> habilidad, ControladorPersonaje<ModeloPersonaje> usuario, ControladorPersonaje<ModeloPersonaje>[] objetivos);

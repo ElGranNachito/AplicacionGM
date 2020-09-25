@@ -1,6 +1,6 @@
 ﻿namespace AppGM.Core
 {
-    public class TIEfectoModificadorDeStat
+    public class TIEfectoModificadorDeStatBase
     {
         public int IdEfecto { get; set; }
         public ModeloEfecto Efecto { get; set; }

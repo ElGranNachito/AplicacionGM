@@ -6,8 +6,6 @@ namespace AppGM.Core
     {
         public ModeloCaracteristicas Caracteristicas { get; set; }
 
-        public List<ModeloInvocacion> Invocaciones { get; set; }
-
-        private List<ControladorInvocacion<ModeloInvocacion>> ControladorInvocaciones { get; set; }
+        public List<TIPersonajeJugableInvocacion> Invocaciones { get; set; }
     }
 }

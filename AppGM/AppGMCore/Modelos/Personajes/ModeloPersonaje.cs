@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace AppGM.Core
@@ -30,23 +31,13 @@ namespace AppGM.Core
         //Posicion del personaje en el mapa
         public Vector2D Posicion { get; set; }
 
-        //TODO: Terminar la db
-        //public List<ModeloEfecto> Efectos
-        //public List<ModeloUtilizable> Inventario
-        //public List<ModeloDefensivo> Armadura
-        //public List<ModeloPersonaje> Aliados
-        //public List<ModeloPerk> Perks
-        //public List<ModeloHabilidad> Skills
-        //public List<ModeloMagia> Magias
-        //public List<ModeloModificadorDeDefensa> ModificadoresDeDefensa
-        //
-        //private List<ControladorEfecto<ModeloEfecto>> controladorEfectos
-        //private List<ControladorUtilizable<ModeloUtilizable>> controladorInventario
-        //private List<ControladorDefensivo<ModeloDefensivo>> controladorArmadura
-        //private List<ControladorPersonaje<ModeloPersonaje>> controladorAliados
-        //private List<ControladorPerk<ModeloPerk>> controladorPerks
-        //private List<ControladorHabilidad<ModeloHabilidad>> controladorSkills
-        //private List<ControladorMagia<ModeloMagia>> controladorMagias
-        //private List<ControladorModificadorDeDefensa<ModeloModificadorDeDefensa>> controladorModificadoresDeDefens
+        public List<TIPersonajeEfecto> Efectos { get; set; }
+        public List<TIPersonajeUtilizable> Inventario { get; set; }
+        public List<TIPersonajeDefensivo> Armadura { get; set; }
+        public List<TIPersonajePersonaje> Aliados { get; set; }
+        public List<TIPersonajePerk> Perks { get; set; }
+        public List<TIPersonajeHabilidad> Skills { get; set; }
+        public List<TIPersonajeMagia> Magias { get; set; }
+        public List<TIPersonajeModificadorDeDefensa> ModificadoresDeDefensa { get; set; }
     }
 }

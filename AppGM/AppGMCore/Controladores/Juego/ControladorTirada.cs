@@ -1,6 +1,6 @@
 ﻿namespace AppGM.Core
 {
-    abstract class ControladorTiradaBase<TipoTirada>
+    public abstract class ControladorTiradaBase<TipoTirada>
     {
         #region Propiedades
 
@@ -17,11 +17,11 @@
         #endregion
     }
 
-    class ControladorTiradaVariable<TipoVariable> : ControladorTiradaBase<ModeloTiradaVariable>
+    public class ControladorTiradaVariable<TipoVariable> : ControladorTiradaBase<ModeloTiradaVariable>
     {
     }
 
-    class ControladorTiradaStat<TipoStat> : ControladorTiradaBase<ModeloTiradaStat>
+    public class ControladorTiradaStat<TipoStat> : ControladorTiradaBase<ModeloTiradaStat>
     {
         #region Funciones
 

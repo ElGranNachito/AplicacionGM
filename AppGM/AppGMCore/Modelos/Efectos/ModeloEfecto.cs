@@ -19,8 +19,12 @@ namespace AppGM.Core
         [StringLength(500)]
         public string Descripcion { get; set; }
 
-        //TODO: Terminar la db
-        public List<ModeloModificadorDeStatBase> Modificaciones;
-        private List<ControladorModificadorDeStatBase> ControladoresModificaciones;
+        public List<TIEfectoModificadorDeStatBase> Modificaciones;
+    }
+
+    public class ModeloEfectoTemporal : ModeloEfecto
+    {
+        //Turnos que dura el efecto
+        public ushort TurnosDeDuracion { get; set; }
     }
 }

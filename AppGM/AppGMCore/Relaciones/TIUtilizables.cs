@@ -44,33 +44,64 @@
 
     public class TIPortableSlots : TIPortable
     {
-        public int idSlot { get; set; }
+        public int IdSlot { get; set; }
         public ModeloSlot Slot { get; set; }
     }
 
     public class TIPortableEfecto : TIPortable
     {
-        public int idEfecto { get; set; }
+        public int IdEfecto { get; set; }
         public ModeloEfecto Efecto { get; set; }
     }
     
-    public class TIPortableModificadorDeStat : TIPortable
+    public class TIPortableModificadorDeStatBase : TIPortable
     {
-        public int idModificadorDeStat { get; set; }
+        public int IdModificadorDeStat { get; set; }
         public ModeloModificadorDeStatBase Modificador { get; set; }
     }
 
-    // Portable armas
+    // Utilizable portable ofensivo
+    public abstract class TIOfensivo
+    {
+        public int IdOfensivo { get; set; }
+        public ModeloOfensivo Ofensivo { get; set; }
+    }
+
+    public class TIOfensivoTiradaDeDaño : TIOfensivo
+    {
+        public int IdTiradaDeDaño { get; set; }
+        public ModeloTiradaDeDaño TiradaDeDaño { get; set; }
+    }
+
+    public class TIOfensivoEfecto : TIOfensivo
+    {
+        public int IdEfecto { get; set; }
+        public ModeloEfecto Efecto { get; set; }
+    }
+
+    // Consumible armas
     public abstract class TIArmasDistancia
     {
-        public int idArmasDistancia { get; set; }
+        public int IdArmasDistancia { get; set; }
         public ModeloArmasDistancia ArmasDistancia { get; set; }
     }
 
-    public class TIArmasDistanciaTirada : TIArmasDistancia
+    public class TIArmasDistanciaTiradaVariable : TIArmasDistancia
     {
         public int IdTirada { get; set; }
         public ModeloTiradaVariable TiradaVariable { get; set; }
+    }
+
+    public class TIArmasDistanciaTiradaDeDaño : TIArmasDistancia
+    {
+        public int IdTirada { get; set; }
+        public ModeloTiradaDeDaño TiradaVariable { get; set; }
+    }
+
+    public class TIArmasDistanciaEfecto : TIArmasDistancia
+    {
+        public int IdEfecto { get; set; }
+        public ModeloEfecto Efecto { get; set; }
     }
 
 }

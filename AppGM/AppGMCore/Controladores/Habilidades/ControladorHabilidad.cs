@@ -5,15 +5,28 @@ namespace AppGM.Core
 {
     public class ControladorHabilidad<TipoHabilidad> : ControladorBase<ModeloHabilidad>
     {
+        #region Controladores
+
+        public ControladorLimitador ControladorLimiteDeUsos { get; set; }
+        public ControladorCargasHabilidad ControladorCargasHabilidad { get; set; }
+
+        public List<ControladorTiradaBase<ModeloTiradaBase>> ControladorTiradasDeUso { get; set; }
+        public ControladorTiradaVariable<ModeloTiradaDeDaño> ControladorTiradaDeDaño { get; set; }
+
+        public List<ControladorUtilizable<ModeloItem>> ControladorItemInvocacion { get; set; }
+        public List<ControladorUtilizable<ModeloItem>> ControladorItemsQueCuesta { get; set; }
+
+        public List<ControladorInvocacion<ModeloInvocacion>> ControladorInvocacion { get; set; }
+
+        public List<ControladorEfecto<ModeloEfecto>> ControladorEfectosSobreUsuario { get; set; }
+        public List<ControladorEfecto<ModeloEfecto>> ControladorEfectoSobreObjetivo { get; set; }
+
+        #endregion
+
         #region Miembros
 
         private ushort TurnosRestantes;
         private bool EstaActiva;
-
-        private ControladorLimitador ControladorLimitador;
-        private ControladorCargasHabilidad ControladorCargasHabilidad;
-        private List<ControladorTiradaBase<ModeloTiradaBase>> ControladoresTiradas;
-
 
         private Func<ControladorPersonaje<ModeloPersonaje>, bool> mPuedeSerUtilizada;
         private Func<ControladorPersonaje<ModeloPersonaje>, ControladorPersonaje<ModeloPersonaje>[], bool> mPuedeSerUtilizadaConObjetivos;
@@ -44,7 +57,7 @@ namespace AppGM.Core
         #endregion
     }
 
-    class ControladorMagia : ControladorHabilidad<ModeloMagia>
+    public class ControladorMagia : ControladorHabilidad<ModeloMagia>
     {
         #region Funciones
 

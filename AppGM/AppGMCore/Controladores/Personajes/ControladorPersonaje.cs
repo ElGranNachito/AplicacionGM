@@ -1,8 +1,25 @@
-﻿
+﻿using System.Collections.Generic;
+
 namespace AppGM.Core
 {
     public class ControladorPersonaje<TipoPersonaje> : ControladorBase<ModeloPersonaje>
     {
+        #region Controladores
+
+        public List<TIPersonajeEfecto> Efectos { get; set; }
+        public List<TIPersonajeUtilizable> Inventario { get; set; }
+        public List<TIPersonajeDefensivo> Armadura { get; set; }
+        public List<TIPersonajePersonaje> Aliados { get; set; }
+        public List<TIPersonajePerk> Perks { get; set; }
+        public List<TIPersonajeHabilidad> Skills { get; set; }
+        public List<TIPersonajeMagia> Magias { get; set; }
+        public List<TIPersonajeModificadorDeDefensa> ModificadoresDeDefensa { get; set; }
+
+
+        public List<ControladorInvocacion<ModeloInvocacion>> ControladorInvocaciones { get; set; }
+        public List<ControladorHabilidad<ModeloNoblePhantasm>> ControladorNoblePhantasms { get; set; }
+
+        #endregion
 
         #region Eventos
 

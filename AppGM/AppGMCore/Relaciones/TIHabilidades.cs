@@ -7,12 +7,6 @@
         public ModeloHabilidad Habilidad { get; set; }
     }
 
-    public class TIHabilidadItem : TIHabilidad
-    {
-        public int IdItem { get; set; }
-        public ModeloItem Item { get; set; }
-    }
-
     public class TIHabilidadLimitador : TIHabilidad
     {
         public int IdLimitador { get; set; }
@@ -29,6 +23,25 @@
     {
         public int IdTirada { get; set; }
         public ModeloTiradaBase TiradaBase { get; set; }
+    }
+
+    public class TIHabilidadTiradaDeDaño : TIHabilidad
+    {
+        public int IdTirada { get; set; }
+        public ModeloTiradaDeDaño TiradaBase { get; set; }
+    }
+
+    public class TIHabilidadItem : TIHabilidad
+    {
+        public int IdItem { get; set; }
+        public ModeloItem Item { get; set; }
+    }
+
+    public class TIHabilidadInvocacion : TIHabilidad
+    {
+        public int IdInvocacion { get; set; }
+
+        public ModeloInvocacion Invocacion { get; set; }
     }
 
     public class TIHabilidadEfecto : TIHabilidad
