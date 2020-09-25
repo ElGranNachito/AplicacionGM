@@ -1,11 +1,11 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace AppGM.Core
 {
     public class ViewModelPaginaPrincipal : BaseViewModel
     {
+        #region Propiedades
         public ViewModelListaRoles Roles { get; set; } = new ViewModelListaRoles
         {
             Roles = new List<ViewModelRolItem>
@@ -56,6 +56,7 @@ namespace AppGM.Core
                     Nombre = "Rol"
                 }
             }
-        };
+        }; 
+        #endregion
     }
 }

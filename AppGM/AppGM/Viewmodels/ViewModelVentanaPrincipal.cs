@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Navigation;
 using AppGM.Core;
 using AppGM.Helpers;
 
@@ -13,18 +14,16 @@ namespace AppGM.Viewmodels
     {
         #region Miembros Privados
 
-        private Window     mVentana;
+        private Window        mVentana;
 
-        private int        mCaptionHeight         = 5;
+        private int           mCaptionHeight         = 5;
 
-        private GridLength mAlturaTitulo          = new GridLength(25);
-        private Thickness  mResizeBorderThickness = new Thickness(2);
+        private GridLength    mAlturaTitulo          = new GridLength(25);
+        private Thickness     mResizeBorderThickness = new Thickness(2);
 
         #endregion
 
         #region Miembros Publicos
-
-        public string Titulo { get; set; } = "Prueba";
 
         public ICommand ComandoCerrarVentana    { get; set; }
         public ICommand ComandoMaximizarVentana { get; set; }
@@ -54,6 +53,11 @@ namespace AppGM.Viewmodels
                 DispararPropertyChanged(new PropertyChangedEventArgs(nameof(ResizeBorderThickness)));
                 DispararPropertyChanged(new PropertyChangedEventArgs(nameof(CaptionHeight)));
             };
+
+            SistemaPrincipal.ObtenerInstancia<ViewModelAplicacion>().PropertyChanged += (obj, e) =>
+            {
+                DispararPropertyChanged(new PropertyChangedEventArgs(e.PropertyName));
+            };
         }
 
         #region Propiedades
@@ -72,7 +76,17 @@ namespace AppGM.Viewmodels
         {
             get => mVentana.EstaMaximizada() ? 0 : mCaptionHeight;
             set => mCaptionHeight = value;
-        } 
+        }
+
+        public string TituloVentana
+        {
+            get => SistemaPrincipal.ObtenerInstancia<ViewModelAplicacion>().TituloVentana;
+        }
+
+        public EPaginaActual EPaginaActual
+        {
+            get => SistemaPrincipal.ObtenerInstancia<ViewModelAplicacion>().EPaginaActual;
+        }
 
         #endregion
     }

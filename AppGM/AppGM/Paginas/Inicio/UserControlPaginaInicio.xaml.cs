@@ -3,11 +3,11 @@
 namespace AppGM
 {
     /// <summary>
-    /// Lógica de interacción para PaginaInicio.xaml
+    /// Lógica de interacción para UserControlPaginaInicio.xaml
     /// </summary>
-    public partial class PaginaInicio : BaseUserControl<ViewModelPaginaPrincipal>
+    public partial class UserControlPaginaInicio : BaseUserControl<ViewModelPaginaPrincipal>
     {
-        public PaginaInicio()
+        public UserControlPaginaInicio()
         {
             InitializeComponent();
 
