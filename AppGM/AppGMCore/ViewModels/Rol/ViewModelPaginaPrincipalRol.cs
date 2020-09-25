@@ -22,6 +22,8 @@ namespace AppGM.Core
         public ViewModelPaginaPrincipalRol(ModeloRol modelo)
         {
             ControladorRol = new ControladorRol(modelo);
+
+            ComandoBotonFichas = new Comando(()=>SistemaPrincipal.ObtenerInstancia<ViewModelPaginaPrincipalRol>().EMenuActual = EMenuActualRol.SeleccionTipoFichas);
         } 
         #endregion
     }

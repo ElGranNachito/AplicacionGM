@@ -217,13 +217,17 @@
     <Compile Include="ViewModels\DesignModels\BaseDesignModel.cs" />
     <Compile Include="ViewModels\DesignModels\DesignModelRolItem.cs" />
     <Compile Include="ViewModels\DesignModels\DesingModelListaRoles.cs" />
+    <Compile Include="ViewModels\Rol\Fichas\ViewModelFichaItem.cs" />
+    <Compile Include="ViewModels\Rol\Fichas\ViewModelListaFichas.cs" />
+    <Compile Include="ViewModels\Rol\Fichas\ViewModelListaFichasVistaFichas.cs" />
     <Compile Include="ViewModels\ViewModelAplicacion.cs" />
+    <Compile Include="ViewModels\Rol\Fichas\ViewModelMenuSeleccionTipoFicha.cs" />
     <Compile Include="ViewModels\ViewModelsGlobos\ViewModelContenidoGloboInfoRol.cs" />
     <Compile Include="ViewModels\ViewModelsGlobos\ViewModelGlobo.cs" />
     <Compile Include="ViewModels\ViewModelListaRoles.cs" />
     <Compile Include="ViewModels\ViewModelPaginaPrincipal.cs" />
     <Compile Include="ViewModels\ViewModelRolItem.cs" />
-    <Compile Include="ViewModels\ViewModelPaginaPrincipalRol.cs" />
+    <Compile Include="ViewModels\Rol\ViewModelPaginaPrincipalRol.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

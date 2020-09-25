@@ -1,0 +1,41 @@
+﻿<UserControl x:Class="AppGM.UserControlFichaItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AppGM"
+             mc:Ignorable="d" 
+             d:DesignHeight="70" d:DesignWidth="250">
+
+    <UserControl.Template>
+        <ControlTemplate TargetType="{x:Type UserControl}">
+
+            <Grid Background="White" x:Name="contenido" Margin="0 0 0 5">
+            
+                <StackPanel>
+
+                    <TextBlock>
+                        <Run Text="Nombre: "/>
+                        <Run Text="{Binding Nombre}"/>
+                    </TextBlock>
+
+                    <TextBlock
+                    Visibility="{Binding EsServant, Converter={local:BooleanToVisibilityConverterColapsar}}">
+                        <Run Text="Clase: "/>
+                        <Run Text="{Binding ClaseServant}"/>
+                    </TextBlock>
+
+                </StackPanel>
+
+            </Grid>
+
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter TargetName="contenido" Property="Background" Value="LightGray"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+
+        </ControlTemplate>
+    </UserControl.Template>
+
+</UserControl>

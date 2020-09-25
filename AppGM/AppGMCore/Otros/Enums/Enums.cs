@@ -9,12 +9,21 @@
     public enum EMenuActualRol
     {
         NINGUNO = 0,
-        Fichas = 1,
-        Mapas = 2,
-        Registro = 3,
-        Tirada = 4,
-        AdministrarCombates = 5,
-        Combate = 6
+        SeleccionTipoFichas = 1,
+        VistaFichas = 2,
+        Mapas = 3,
+        Registro = 4,
+        Tirada = 5,
+        AdministrarCombates = 6,
+        Combate = 7
+    }
+
+    public enum ETipoPersonaje
+    {
+        Master = 1,
+        Servant = 2,
+        Invocacion = 3,
+        NPC = 4
     }
     public enum EClaseServant
     {
