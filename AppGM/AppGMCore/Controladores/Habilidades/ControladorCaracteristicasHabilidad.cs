@@ -1,6 +1,6 @@
 ﻿namespace AppGM.Core
 {
-    class ControladorLimitador : ControladorBase<ModeloLimitador>
+    public class ControladorLimitador : ControladorBase<ModeloLimitador>
     {
         #region Miembros
 
@@ -10,7 +10,7 @@
         #endregion
     }
 
-    class ControladorCargasHabilidad : ControladorBase<ModeloCargasHabilidad>
+    public class ControladorCargasHabilidad : ControladorBase<ModeloCargasHabilidad>
     {
         #region Miembros
 

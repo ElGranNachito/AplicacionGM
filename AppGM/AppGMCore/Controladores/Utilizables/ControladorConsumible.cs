@@ -1,6 +1,8 @@
-﻿namespace AppGM.Core
+﻿using System.Collections.Generic;
+
+namespace AppGM.Core
 {
-    class ControladorConsumible<TipoConsumible> : ControladorUtilizable<ModeloConsumible>
+    public class ControladorConsumible<TipoConsumible> : ControladorUtilizable<ModeloConsumible>
     {
         #region Funciones
 
@@ -12,8 +14,17 @@
         #endregion
     }
 
-    class ControladorArmaDistancia : ControladorConsumible<ModeloArmasDistancia>
+    public class ControladorArmaDistancia : ControladorConsumible<ModeloArmasDistancia>
     {
+        #region Controladores
+
+        public ControladorTiradaVariable<ModeloTiradaDeDaño> ControladorTiradaDeDaño { get; set; }
+        public ControladorTiradaVariable<ModeloTiradaVariable> ControladorTiradaVariable { get; set; }
+
+        public List<ControladorEfecto<ModeloEfecto>> ControladorEfectoQueInflige { get; set; }
+
+        #endregion
+
         #region Funciones
 
         public override void Utilizar(ControladorPersonaje<ModeloPersonaje> usuario, ControladorPersonaje<ModeloPersonaje>[] objetivos, object parametroExtra, object segundoParametroExtra)

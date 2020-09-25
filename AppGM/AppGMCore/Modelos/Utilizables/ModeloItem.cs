@@ -15,15 +15,12 @@ namespace AppGM.Core
 
     public class ModeloArmasDistancia : ModeloConsumible, IInfligeDaño
     {
-        public ModeloTiradaDeDaño TiradaDeDaño { get; set; }
-        private ControladorTiradaVariable<ModeloTiradaDeDaño> ControladorTiradaDeDaño { get; set; }
+        public TIOfensivoTiradaDeDaño TiradaDeDaño { get; set; }
 
-        public ModeloTiradaVariable TiradaRafaga { get; set; }
-        private ControladorTiradaVariable<ModeloTiradaVariable> ControladorTiradaVariable { get; set; }
+        public TIArmasDistanciaTiradaVariable TiradaRafaga { get; set; }
 
         public ETipoDeDaño TipoDeDañoQueInflige { get; set; }
-        
-        List<ModeloEfecto> EfectoQueInflige { get; set; }
-        List<ControladorEfecto<ModeloEfecto>> ControladorEfectoQueInflige { get; set; }
+
+        public List<TIArmasDistanciaEfecto> EfectoQueInflige { get; set; }
     }
 }

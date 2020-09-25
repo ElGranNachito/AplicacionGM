@@ -19,29 +19,21 @@ namespace AppGM.Core
         [StringLength(2000)]
         public string Descripcion { get; set; }
 
-        public ModeloLimitador LimiteDeUsos { get; set; }
-        private ControladorLimitador ControladorLimiteDeUso { get; set; }
-        public ModeloCargasHabilidad CargasHabilidad { get; set; }
-        private ControladorCargasHabilidad ControladorCargasHabilidad { get; set; }
+        public TIHabilidadLimitador LimiteDeUsos { get; set; }
+        public TIHabilidadCargasHabilidad CargasHabilidad { get; set; }
+        
+        public TIHabilidadTiradaDeDaño TiradaDeDaño { get; set; }
+        
+        public List<TIHabilidadItem> ItemInvocacion { get; set; }
+        public List<TIHabilidadItem> ItemsQueCuesta { get; set; }
 
-        public ModeloTiradaDeDaño TiradaDeDaño { get; set; }
-        private ControladorTiradaVariable<ModeloTiradaDeDaño> ControladorTiradaDeDaño { get; set; }
+        public List<TIHabilidadInvocacion> Invocacion { get; set; }
         
-        public List<ModeloItem> ItemInvocacion { get; set; }
-        private List<ControladorUtilizable<ModeloItem>> ControladorItemInvocacion { get; set; }
-        public List<ModeloItem> ItemsQueCuesta { get; set; }
-        private List<ControladorUtilizable<ModeloItem>> ControladorItemsQueCuesta { get; set; }
+        public List<TIHabilidadTirada> TiradasDeUso { get; set; }
         
-        public List<ModeloInvocacion> Invocación { get; set; }
-        private List<ControladorInvocacion<ModeloInvocacion>> ControladorInvocacion { get; set; }
-        
-        public List<ModeloTiradaBase> TiradasDeUso { get; set; }
-        private List<ControladorTiradaBase<ModeloTiradaBase>> ControladorTiradasDeUso { get; set; }
+        public List<TIHabilidadEfecto> EfectosSobreUsuario { get; set; }
+        public List<TIHabilidadEfecto> EfectoSobreObjetivo { get; set; }
 
-        public List<ModeloEfecto> EfectosSobreUsuario { get; set; }
-        private List<ControladorEfecto<ModeloEfecto>> ControladorEfectosSobreUsuario { get; set; }
-        public List<ModeloEfecto> EfectoSobreObjetivo { get; set; }
-        private List<ControladorEfecto<ModeloEfecto>> ControladorEfectoSobreObjetivo { get; set; }
     }
 
     public class ModeloPerk : ModeloHabilidad

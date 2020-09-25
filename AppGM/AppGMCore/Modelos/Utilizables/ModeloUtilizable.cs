@@ -13,18 +13,14 @@ namespace AppGM.Core
         public EStat EStatDeLaQueDepende { get; set; }
 
         //Tirada requerida para poder se utilizado
-        public ModeloTiradaBase TiradaDeUso { get; set; }
-        private ControladorTiradaBase<ModeloTiradaBase> ControladorTiradaDeUso { get; set; }
+        public TIUtilizableTiradaBase TiradaDeUso { get; set; }
 
         //Modificador para la stat afectada por el utilizable
-        public ModeloModificadorDeStatBase VentajaAlUtilizarlo { get; set; }
-        private ControladorModificadorDeStatBase ControladorVentajaAlUtilizarlo { get; set; }
+        public TIUtilizableModificadorDeStatBase VentajaAlUtilizarlo { get; set; }
 
         //Efectos al utilizarlo
-        public ModeloEfecto EfectoSobreElUsuario { get; set; }
-        ControladorEfecto<ModeloEfecto> controladorEfectoSobreElUsuario { get; set; }
+        public TIUtilizableEfecto EfectoSobreElUsuario { get; set; }
         
-        public ModeloEfecto EfectoSobreElObjetivo { get; set; }
-        ControladorEfecto<ModeloEfecto> controladorEfectoSobreElObjetivo { get; set; }
+        public TIUtilizableEfecto EfectoSobreElObjetivo { get; set; }
     }
 }

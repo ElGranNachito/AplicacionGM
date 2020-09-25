@@ -1,19 +1,22 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace AppGM.Core
 {
     public class ModeloParticipante
     {
+        //Id
+        [Key]
+        public int IdParticipante { get; set; }
         public int TiradaIniciativa { get; set; }
 
         //Personaje participante
-        public ModeloPersonaje Personaje { get; set; }
-        private ControladorPersonaje<ModeloPersonaje> ControladorPersonaje { get; set; }
+        public TIParticipantePersonaje Personaje { get; set; }
 
         //Posicion del participante en el mapa
         public Vector2D PosicionCombate { get; set; }
 
         //Acciones realizadas por el participante
-        public List<ModeloAccion> AccionesRealizadas { get; set; }
+        public List<TIParticipanteAccion> AccionesRealizadas { get; set; }
     }
 }

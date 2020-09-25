@@ -5,11 +5,6 @@
         public int IdParticipante { get; set; }
         public ModeloParticipante Participante { get; set; }
     }
-    public class TIModeloAdministradorDeCombateParticipante : TIParticipante
-    {
-        public int IdAdministradorDeCombate { get; set; }
-        public ModeloAdministradorDeCombate AdministradorDeCombate { get; set; }
-    }
 
     public class TIParticipantePersonaje : TIParticipante
     {
@@ -21,6 +16,15 @@
     {
         public int IdAccion { get; set; }
         public ModeloAccion Accion { get; set; }
+    }
+
+    public class TIModeloAdministradorDeCombateParticipante
+    {
+        public int IdAdministradorDeCombate { get; set; }
+        public ModeloAdministradorDeCombate AdministradorDeCombate { get; set; }
+
+        public int IdParticipante { get; set; }
+        public ModeloParticipante Participante { get; set; }
     }
 
 }

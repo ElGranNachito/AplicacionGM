@@ -1,9 +1,11 @@
-﻿namespace AppGM.Core
+﻿using System.ComponentModel;
+
+namespace AppGM.Core
 {
     public abstract class TIPersonaje
     {
         public int IdPersonaje { get; set; }
-
+        
         public ModeloPersonaje Personaje { get; set; }
     }
 
@@ -77,6 +79,12 @@
         public ModeloMagia Magia { get; set; }
     }
 
+    public class TIPersonajeModificadorDeDefensa : TIPersonaje
+    {
+        public int IdModificadorDefensa { get; set; }
+        public ModeloModificadorDeDefensa ModificadorDeDefensa { get; set; }
+    }
+
     // Personaje servant
     public class TIServantNoblePhantasm
     {
@@ -85,6 +93,25 @@
 
         public int IdNoblePhantasm { get; set; }
         public ModeloNoblePhantasm NoblePhantasm { get; set; }
+    }
+
+    // Personaje invocacion
+    public abstract class TIInvocacion
+    {
+        public int IdInvocacion { get; set; }
+        public ModeloInvocacion Invocacion { get; set; }
+    }
+
+    public class TIInvocacionPersonaje : TIInvocacion
+    {
+        public int IdPersonaje { get; set; }
+        public ModeloPersonaje Invocador { get; set; }
+    }
+
+    public class TIInvocacionEfecto : TIInvocacion
+    {
+        public int IdEfecto { get; set; }
+        public ModeloEfecto Efecto { get; set; }
     }
 
     // Personaje jugable

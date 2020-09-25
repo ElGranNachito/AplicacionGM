@@ -1,7 +1,15 @@
 ﻿namespace AppGM.Core
 {
-    class ControladorInvocacion<TipoInvocacion> : ControladorPersonaje<ModeloInvocacion>
+    public class ControladorInvocacion<TipoInvocacion> : ControladorPersonaje<ModeloInvocacion>
     {
+        #region Controladores
+
+        public ControladorPersonaje<ModeloPersonaje> ControladorInvocador { get; set; }
+
+        public ControladorEfecto<ModeloEfecto> ControladorEfecto { get; set; }
+
+        #endregion
+
         #region Funciones
 
         public override void AvanzarTurno()
@@ -12,7 +20,7 @@
         #endregion
     }
 
-    class ControladorInvocacionTemporal : ControladorInvocacion<ModeloInvocacionTemporal>
+    public class ControladorInvocacionTemporal : ControladorInvocacion<ModeloInvocacionTemporal>
     {
         #region Funciones
 
@@ -24,7 +32,7 @@
         #endregion
     }
 
-    class ControladorInvocacionCondicionada : ControladorInvocacion<ModeloInvocacionCondicionada>
+    public class ControladorInvocacionCondicionada : ControladorInvocacion<ModeloInvocacionCondicionada>
     {
         //public Func<ControladorPersonaje<ModeloPersonaje>, bool> DebeDesaparecer;
 

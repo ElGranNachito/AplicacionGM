@@ -1,7 +1,13 @@
 ﻿namespace AppGM.Core
 {
-    class ControladorAdministradorDeCombate : ControladorBase<ModeloAdministradorDeCombate>
+    public class ControladorAdministradorDeCombate : ControladorBase<ModeloAdministradorDeCombate>
     {
+        #region Controladores
+
+        public ControladorParticipante ControladorParticipante { get; set; }
+
+        #endregion
+
         #region Eventos
 
         public delegate void dAvanzarTurno(ref uint TurnoActual);
