@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using AppGM.Core;
 
 namespace AppGM
 {
@@ -10,6 +11,8 @@ namespace AppGM
         public UserControlPaginaPrincipalRol()
         {
             InitializeComponent();
+
+            DataContext = SistemaPrincipal.ObtenerInstancia<ViewModelPaginaPrincipalRol>();
         }
     }
 }

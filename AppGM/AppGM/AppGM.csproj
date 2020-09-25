@@ -68,7 +68,8 @@
     <Compile Include="AttachedProperties\LlamarComandoOnMouseEnterProperty.cs" />
     <Compile Include="AttachedProperties\ParametroProperty\ParametroComandoOnLeaveProperty.cs" />
     <Compile Include="AttachedProperties\ParametroProperty\ParametroThicknessProperty.cs" />
-    <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Converters\BooleanToVisibilityConverterColapsar.cs" />
+    <Compile Include="Converters\BooleanToVisibilityConverterOcultar.cs" />
     <Compile Include="Converters\EnumToUserControlConverter.cs" />
     <Compile Include="Converters\StringToSolidColorBrushConverter.cs" />
     <Compile Include="Converters\ViewModelToContenidoConverter.cs" />
@@ -86,8 +87,23 @@
     <Compile Include="Paginas\Inicio\UserControlRolItem.xaml.cs">
       <DependentUpon>UserControlRolItem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Paginas\Rol\Fichas\UserControlFichaItem.xaml.cs">
+      <DependentUpon>UserControlFichaItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Rol\Fichas\UserControlListaFichas.xaml.cs">
+      <DependentUpon>UserControlListaFichas.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Rol\Fichas\UserControlListaFichasViewFichas.xaml.cs">
+      <DependentUpon>UserControlListaFichasViewFichas.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Rol\Fichas\UserControlSeleccionTipoFicha.xaml.cs">
+      <DependentUpon>UserControlSeleccionTipoFicha.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Paginas\Rol\UserControlPaginaPrincipalRol.xaml.cs">
       <DependentUpon>UserControlPaginaPrincipalRol.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Rol\Fichas\UserControlMenuSeleccionTipoFicha.xaml.cs">
+      <DependentUpon>UserControlMenuSeleccionTipoFicha.xaml</DependentUpon>
     </Compile>
     <Compile Include="Viewmodels\ViewModelVentanaPrincipal.cs" />
     <Page Include="Paginas\Globos\UserControlContenidoGloboInfoRol.xaml">
@@ -106,9 +122,29 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Paginas\Rol\Fichas\UserControlFichaItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Paginas\Rol\Fichas\UserControlListaFichas.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Paginas\Rol\Fichas\UserControlListaFichasViewFichas.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Paginas\Rol\Fichas\UserControlSeleccionTipoFicha.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Paginas\Rol\UserControlPaginaPrincipalRol.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Paginas\Rol\Fichas\UserControlMenuSeleccionTipoFicha.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Ventanas\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

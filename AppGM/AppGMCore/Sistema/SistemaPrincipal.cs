@@ -31,6 +31,8 @@ namespace AppGM.Core
             //TODO: Cargar base da datos en base al nombre/id del rol
 
             Kernel.Bind<ViewModelPaginaPrincipalRol>().ToConstant(new ViewModelPaginaPrincipalRol(modelo));
+            Kernel.Bind<ViewModelMenuSeleccionTipoFicha>().ToConstant(new ViewModelMenuSeleccionTipoFicha());
+            Kernel.Bind<ViewModelListaFichasVistaFichas>().ToConstant(new ViewModelListaFichasVistaFichas());
 
             ObtenerInstancia<ViewModelAplicacion>().TituloVentana = modelo.Nombre;
         }

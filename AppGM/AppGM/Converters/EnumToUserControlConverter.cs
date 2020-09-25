@@ -19,10 +19,7 @@ namespace AppGM
                         case EPaginaActual.PaginaPrincipal:
                             return new UserControlPaginaInicio();
                         case EPaginaActual.PaginaPrincipalRol:
-                            return new UserControlPaginaPrincipalRol
-                            {
-                                DataContext = SistemaPrincipal.ObtenerInstancia<ViewModelPaginaPrincipalRol>()
-                            };
+                            return new UserControlPaginaPrincipalRol();
                     }
                     break;
 
@@ -31,6 +28,10 @@ namespace AppGM
                     {
                         case EMenuActualRol.NINGUNO:
                             return null;
+                        case EMenuActualRol.SeleccionTipoFichas:
+                            return new UserControlMenuSeleccionTipoFicha();
+                        case EMenuActualRol.VistaFichas:
+                            return new UserControlListaFichasViewFichas();
                     }
                     break;
             }

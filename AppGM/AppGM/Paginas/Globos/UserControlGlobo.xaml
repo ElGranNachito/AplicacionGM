@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:AppGM"
              mc:Ignorable="d" 
              d:DesignHeight="100" d:DesignWidth="100">
-    <Grid Visibility="{Binding GloboVisible, Converter={local:BooleanToVisibilityConverter}}">
+    <Grid Visibility="{Binding GloboVisible, Converter={local:BooleanToVisibilityConverterOcultar}}">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -23,7 +23,7 @@
         </Border>
 
         <Path Grid.Row="1" 
-              Visibility="{Binding ColaGloboVisible, Converter={local:BooleanToVisibilityConverter}}"
+              Visibility="{Binding ColaGloboVisible, Converter={local:BooleanToVisibilityConverterOcultar}}"
               Margin="25 -1 0 0"
               Data="M0,0 15,20 30,0"
               Fill="{Binding ColorFondo, Converter={local:StringToSolidColorBrushConverter}}"

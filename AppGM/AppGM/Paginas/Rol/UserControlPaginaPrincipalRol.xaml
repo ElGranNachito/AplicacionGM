@@ -19,6 +19,7 @@
             <Border
                 BorderBrush="Aqua"
                 BorderThickness="1">
+
                 <ContentControl Content="{Binding EMenuActual, Converter={local:EnumToUserControlConverter}, ConverterParameter=2}"/>
             </Border>
 
@@ -35,7 +36,9 @@
                     local:ParametroThicknessProperty.Parametro="5 0 5 5 "
                     local:AñadirMargenAElementosProperty.Value="{x:Type Button}">
 
-                    <Button Content="Fichas" FontSize="15"/>
+                    <Button Content="Fichas" 
+                            Command="{Binding ComandoBotonFichas}"
+                            FontSize="15"/>
                     <Button Content="Mapas" FontSize="15"/>
                     <Button Content="Registro" FontSize="15"/>
                     <Button Content="Tirada" FontSize="15"/>

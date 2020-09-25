@@ -1,16 +1,14 @@
-﻿
-
-using System;
+﻿using System;
 using System.Globalization;
 using System.Windows;
 
 namespace AppGM
 {
-    public class BooleanToVisibilityConverter : BaseConverter<BooleanToVisibilityConverter>
+    public class BooleanToVisibilityConverterColapsar : BaseConverter<BooleanToVisibilityConverterColapsar>
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            bool valor = (bool) value;
+            bool valor = (bool)value;
 
             if (parameter == null)
                 return valor ? Visibility.Visible : Visibility.Hidden;
