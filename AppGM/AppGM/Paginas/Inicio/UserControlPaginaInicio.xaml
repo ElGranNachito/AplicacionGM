@@ -27,31 +27,69 @@
 
         <StackPanel Grid.Column="0"
                     Margin="20 0 0 0"
-                    HorizontalAlignment="Center">
-
-            <Button Content="+Agregar" 
-                    Margin=" 0 50 0 10"
                     HorizontalAlignment="Center"
-                    Width="100"/>
+                    VerticalAlignment="Bottom">
 
-            <Border HorizontalAlignment="Center"
-                    Width="300"
-                    Height="300">
+            <local:UserControlGlobo DataContext="{Binding GloboInfoRol}"
+                                    Margin="20 75 50 30"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Top"/>
 
-                <local:UserControlListaRolItems 
-                    DataContext="{Binding Roles}"
-                    d:DataContext="{x:Static core:DesingModelListaRoles.listaRoles}"/>
+            <Grid Margin="20 0 0 0">
 
-            </Border>
+                <local:UserControlCarta 
+                    DataContext="{Binding CartaAñadirRol}"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom"
+                    Width="150" 
+                    Height="200" 
+                    Margin="-20 0 0 10">
+
+                    <Button  
+                        Content="+Agregar" 
+                            Margin=" 0 15 0 10"
+                            HorizontalAlignment="Center"
+                            Width="100"/>
+
+                </local:UserControlCarta>
+
+                <local:UserControlCarta 
+                    local:AnimarRotacionProperty.DebeRealizarAnimacion="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Grid}, Path=DataContext.MouseSobreCartaRol}"
+                    DataContext="{Binding CartaSeleccionarRol}"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom"
+                    Height="175"
+                    Width="125"
+                    Margin="30 0 0 0">
+
+                    <TextBlock 
+                        Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Grid}, Path=DataContext.RolActual.Nombre}"
+                        Margin="0 15 0 10"
+                        Foreground="Aquamarine"/>
+
+                    <UserControl.LayoutTransform>
+                        <RotateTransform Angle="25"/>
+                    </UserControl.LayoutTransform>
+
+                </local:UserControlCarta>
+
+            </Grid>
+
+            <StackPanel Orientation="Horizontal">
+                <Button 
+                    Command="{Binding ComandoRetrocederIndiceRol}"
+                    Content="(-" 
+                    Width="40"/>
+                <Button 
+                    Command="{Binding ComandoAvanzarIndiceRol}"
+                    Content="->" 
+                    Width="40" 
+                    Margin="75 0 0 0"/>
+            </StackPanel>
 
         </StackPanel>
 
         <!-- Globo -->
-
-        <local:UserControlGlobo Grid.Column="1"
-                                Margin="20 75 50 0"
-                                HorizontalAlignment="Left"
-                                DataContext="{Binding GloboInfoRol}"/>
 
         <!-- Contenedor botones reglas, informacion e items -->
 

@@ -61,7 +61,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AttachedProperties\Animaciones\AnimarRotacionProperty.cs" />
     <Compile Include="AttachedProperties\AñadirMargenAElementosProperty.cs" />
+    <Compile Include="AttachedProperties\Animaciones\BaseAnimarProperty.cs" />
     <Compile Include="AttachedProperties\BaseAttachedProperty.cs" />
     <Compile Include="AttachedProperties\ParametroProperty\BaseAttachedPropertyParametro.cs" />
     <Compile Include="AttachedProperties\CrearDesignTimeViewModelProperty.cs" />
@@ -71,8 +73,11 @@
     <Compile Include="Converters\BooleanToVisibilityConverterColapsar.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverterOcultar.cs" />
     <Compile Include="Converters\EnumToUserControlConverter.cs" />
+    <Compile Include="Converters\IntToThicknessConverter.cs" />
     <Compile Include="Converters\StringToSolidColorBrushConverter.cs" />
     <Compile Include="Converters\ViewModelToContenidoConverter.cs" />
+    <Compile Include="Helpers\AnimationHelpers.cs" />
+    <Compile Include="Helpers\StoryboardHelpers.cs" />
     <Compile Include="Helpers\WindowHelpers.cs" />
     <Compile Include="Paginas\BaseUserControl.cs" />
     <Compile Include="Paginas\Globos\UserControlContenidoGloboInfoRol.xaml.cs">
@@ -81,11 +86,20 @@
     <Compile Include="Paginas\Globos\UserControlGlobo.xaml.cs">
       <DependentUpon>UserControlGlobo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Paginas\Inicio\UserControlCarta.xaml.cs">
+      <DependentUpon>UserControlCarta.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Paginas\Inicio\UserControlListaRolItems.xaml.cs">
       <DependentUpon>UserControlListaRolItems.xaml</DependentUpon>
     </Compile>
     <Compile Include="Paginas\Inicio\UserControlRolItem.xaml.cs">
       <DependentUpon>UserControlRolItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Inicio\UserControlRolItemOld.xaml.cs">
+      <DependentUpon>UserControlRolItemOld.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Rol\UserControlBotonMenuRol.xaml.cs">
+      <DependentUpon>UserControlBotonMenuRol.xaml</DependentUpon>
     </Compile>
     <Compile Include="Paginas\Rol\Fichas\UserControlFichaItem.xaml.cs">
       <DependentUpon>UserControlFichaItem.xaml</DependentUpon>
@@ -98,6 +112,9 @@
     </Compile>
     <Compile Include="Paginas\Rol\Fichas\UserControlSeleccionTipoFicha.xaml.cs">
       <DependentUpon>UserControlSeleccionTipoFicha.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Rol\Fichas\UserControlVistaFicha.xaml.cs">
+      <DependentUpon>UserControlVistaFicha.xaml</DependentUpon>
     </Compile>
     <Compile Include="Paginas\Rol\UserControlPaginaPrincipalRol.xaml.cs">
       <DependentUpon>UserControlPaginaPrincipalRol.xaml</DependentUpon>
@@ -114,13 +131,25 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Paginas\Inicio\UserControlCarta.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Paginas\Inicio\UserControlListaRolItems.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Paginas\Inicio\UserControlRolItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Paginas\Inicio\UserControlRolItemOld.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Paginas\Rol\UserControlBotonMenuRol.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Paginas\Rol\Fichas\UserControlFichaItem.xaml">
       <SubType>Designer</SubType>
@@ -137,6 +166,10 @@
     <Page Include="Paginas\Rol\Fichas\UserControlSeleccionTipoFicha.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Paginas\Rol\Fichas\UserControlVistaFicha.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Paginas\Rol\UserControlPaginaPrincipalRol.xaml">
       <SubType>Designer</SubType>
@@ -220,10 +253,16 @@
       <Name>AppGM.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Media\Imagenes\Carta_Servant.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Media\Imagenes\UiFondoMenuPrincipal.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Media\Imagenes\CartasCompletita.png" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Fody.6.2.4\build\Fody.targets" Condition="Exists('..\packages\Fody.6.2.4\build\Fody.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

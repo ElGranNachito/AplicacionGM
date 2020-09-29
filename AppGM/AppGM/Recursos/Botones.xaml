@@ -3,17 +3,31 @@
                     xmlns:local="clr-namespace:AppGM">
 
     <!-- Estilo base para los botones de la aplicacion, por default no tienen fondo o borde -->
-    <Style TargetType="{x:Type Button}" x:Key="BotonBase">
+    <Style TargetType="{x:Type ButtonBase}" x:Key="BotonBase">
 
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Foreground" Value="Black"/>
 
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <Border Padding="{TemplateBinding Padding}" 
+                            Background="{TemplateBinding Background}" 
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+
+                        <TextBlock Text="{TemplateBinding Content}"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
     </Style>
 
     <!-- Estilo para los botones de la barra superior de la ventana -->
-    <Style TargetType="{x:Type Button}" x:Key="BotonVentanaPrincipal" BasedOn="{StaticResource BotonBase}">
+    <Style TargetType="{x:Type ButtonBase}" x:Key="BotonVentanaPrincipal" BasedOn="{StaticResource BotonBase}">
 
         <Setter Property="Padding" Value="3 0"></Setter>
 
@@ -54,7 +68,7 @@
     </Style>
 
     <!-- Estilo para el boton para cerrar la ventana principal -->
-    <Style TargetType="{x:Type Button}" x:Key="BotonCerrarVentanaPrincipal" BasedOn="{StaticResource BotonVentanaPrincipal}">
+    <Style TargetType="{x:Type ButtonBase}" x:Key="BotonCerrarVentanaPrincipal" BasedOn="{StaticResource BotonVentanaPrincipal}">
 
         <Style.Triggers>
 
@@ -67,7 +81,7 @@
 
     </Style>
 
-    <Style TargetType="{x:Type Button}" x:Key="BotonMarcoResaltable" BasedOn="{StaticResource BotonBase}">
+    <Style TargetType="{x:Type ButtonBase}" x:Key="BotonMarcoResaltable" BasedOn="{StaticResource BotonBase}">
 
         <Setter Property="Template">
             <Setter.Value>
@@ -90,6 +104,57 @@
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="border" Property="BorderBrush" Value="Aqua"/>
                         </Trigger>
+                    </ControlTemplate.Triggers>
+
+                </ControlTemplate>
+
+            </Setter.Value>
+        </Setter>
+
+    </Style>
+
+    <Style TargetType="{x:Type Button}" x:Key="BotonMenuRol" BasedOn="{StaticResource BotonBase}">
+
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Padding" Value="5 10"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+
+                <ControlTemplate TargetType="{x:Type Button}">
+
+                    <Border Padding="{TemplateBinding Padding}" 
+                            Background="{TemplateBinding Background}" 
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                            VerticalAlignment="{TemplateBinding VerticalAlignment}"
+                            HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                            x:Name="border">
+
+                        <TextBlock Text="{TemplateBinding Content}" 
+                                   IsHitTestVisible="False"/>
+
+                        <Border.Triggers>
+                            <EventTrigger RoutedEvent="MouseLeftButtonDown">
+                                <BeginStoryboard>
+                                    <Storyboard TargetName="border" 
+                                                TargetProperty="BorderThickness">
+
+                                        <ThicknessAnimation To="0 0 2 0" Duration="00:00:00:00" />
+
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Border.Triggers>
+
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="Aqua"/>
+                        </Trigger>
+
                     </ControlTemplate.Triggers>
 
                 </ControlTemplate>

@@ -1,4 +1,6 @@
-﻿namespace AppGM.Core
+﻿using System;
+
+namespace AppGM.Core
 {
     public enum EPaginaActual
     {
@@ -18,13 +20,16 @@
         Combate = 7
     }
 
+    [Flags]
     public enum ETipoPersonaje
     {
         Master = 1,
         Servant = 2,
-        Invocacion = 3,
-        NPC = 4
+        Invocacion = 4,
+        NPC = 8
     }
+
+    [Flags]
     public enum EClaseServant
     {
         NINGUNO = 0,
@@ -38,6 +43,7 @@
         Ruler = 128 
     }
 
+    [Flags]
     public enum EAlineamiento
     {
         NINGUNO = 0, 
@@ -52,16 +58,20 @@
         ChaoticEvil = 256
     }
 
+    [Flags]
     public enum EManoDominante
     {
         NINGUNA = 0, Izquierda = 1, Derecha = 2, Ambidiestro = 4
     }
 
+    [Flags]
     public enum ESexo
     {
         NINGUNO = 0, Femenino = 1, Masculino = 2
     }
 
+
+    [Flags]
     public enum EStat
     {
         NINGUNA = 0,
@@ -75,6 +85,7 @@
         NP = 128
     }
 
+    [Flags]
     public enum ERango
     {
         NINGUNO = 0,
@@ -89,16 +100,19 @@
         Ex = 128
     }
 
+    [Flags]
     public enum ETipoDeHabilidad
     {
         NINGUNA = 0, Personal = 1, Soporte = 2, Defensa = 4, Ataque = 8
     }
 
+    [Flags]
     public enum ETipoHabilidad
     {
         NINGUNO = 0, Perk = 1, Skill = 2, Magia = 4, NoblePhantasm = 8
     }
 
+    [Flags]
     public enum EEstado
     {
         NINGUNO = 0,
@@ -109,6 +123,7 @@
         Irreparable = 16,
     }
 
+    [Flags]
     public enum ETipoValorTemporal
     {
         NINGUNO = 0,
@@ -118,6 +133,7 @@
         Turnos = 8
     }
 
+    [Flags]
     public enum ETipoClaseConElValorTemporal
     {
         NINGUNO = 0,
@@ -126,6 +142,7 @@
         Efecto = 4
     }
 
+    [Flags]
     public enum ETipoDeDaño
     {
         NINGUNO = 0,
@@ -137,6 +154,7 @@
         Proyectil = 32
     }
 
+    [Flags]
     public enum EParteDelCuerpo
     {
         NINGUNA = 0,

@@ -10,29 +10,55 @@
     <UserControl.Template>
         <ControlTemplate TargetType="{x:Type UserControl}">
 
-            <Grid Background="White" x:Name="contenido" Margin="0 0 0 5">
+            <Border x:Name="contenido"
+                    BorderBrush="Aqua" 
+                    Background="{Binding ColorFondo, Converter={local:StringToSolidColorBrushConverter}}"
+                    BorderThickness="{Binding AnchoBorde, Converter={local:IntToThicknessConverter}}">
+
+            <Grid Margin="0 0 0 5">
             
                 <StackPanel>
 
                     <TextBlock>
                         <Run Text="Nombre: "/>
-                        <Run Text="{Binding Nombre}"/>
+                        <Run Text="{Binding ModeloPersonaje.Nombre}"/>
                     </TextBlock>
 
                     <TextBlock
                     Visibility="{Binding EsServant, Converter={local:BooleanToVisibilityConverterColapsar}}">
                         <Run Text="Clase: "/>
-                        <Run Text="{Binding ClaseServant}"/>
+                        <Run Text="{Binding ModeloPersonaje.mEClaseDeServant}"/>
+                    </TextBlock>
+
+                    <TextBlock
+                        Visibility="{Binding EsMaster, Converter={local:BooleanToVisibilityConverterColapsar}}">
+                        <Run Text="Clase de su servant: "/>
+                        <Run Text="{Binding ModeloPersonaje.EClaseDeSuServant}"/>
                     </TextBlock>
 
                 </StackPanel>
 
+                <Grid.InputBindings>
+                    <MouseBinding MouseAction="LeftClick" Command="{Binding ComandoMouseClick}"/>
+                </Grid.InputBindings>
+
             </Grid>
 
+            </Border>
+
             <ControlTemplate.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter TargetName="contenido" Property="Background" Value="LightGray"/>
-                </Trigger>
+                <MultiTrigger>
+
+                    <MultiTrigger.Conditions>
+                        <Condition SourceName="contenido" Property="IsMouseOver" Value="True"/>
+                        <Condition SourceName="contenido" Property="BorderThickness" Value="0"/>
+                    </MultiTrigger.Conditions>
+
+                    <MultiTrigger.Setters>
+                        <Setter TargetName="contenido" Property="Background" Value="LightGray"/>
+                    </MultiTrigger.Setters>
+
+                </MultiTrigger>
             </ControlTemplate.Triggers>
 
         </ControlTemplate>

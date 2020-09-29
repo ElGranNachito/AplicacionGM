@@ -4,6 +4,10 @@ using AppGM.Core;
 
 namespace AppGM
 {
+    /// <summary>
+    /// Toma un enum y devuelve una nueva instancia de una pagina correspondiente al valor del enum dado
+    /// Como segundo parametro toma un numero indicando el tipo de enum que fue pasado en el primer parametro
+    /// </summary>
     public class EnumToUserControlConverter : BaseConverter<EnumToUserControlConverter>
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)

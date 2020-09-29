@@ -13,6 +13,7 @@ namespace AppGM.Core
         public ICommand ComandoBotonRegistro { get; set; }
         public ICommand ComandoBotonTirada { get; set; }
         public ICommand ComandoBotonCombates { get; set; }
+        public ICommand ComandoBotonSalir { get; set; }
 
         public EMenuActualRol EMenuActual { get; set; } = EMenuActualRol.NINGUNO;
 
@@ -24,6 +25,14 @@ namespace AppGM.Core
             ControladorRol = new ControladorRol(modelo);
 
             ComandoBotonFichas = new Comando(()=>SistemaPrincipal.ObtenerInstancia<ViewModelPaginaPrincipalRol>().EMenuActual = EMenuActualRol.SeleccionTipoFichas);
+
+            ComandoBotonSalir = new Comando(()=>
+            {
+                //TODO: Limpiar los datos del rol actual
+
+                SistemaPrincipal.ObtenerInstancia<ViewModelAplicacion>().EPaginaActual =
+                        EPaginaActual.PaginaPrincipal;
+            });
         } 
         #endregion
     }
