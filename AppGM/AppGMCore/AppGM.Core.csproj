@@ -223,6 +223,7 @@
     <Compile Include="ViewModels\Rol\Fichas\ViewModelListaFichasVistaFichas.cs" />
     <Compile Include="ViewModels\ViewModelAplicacion.cs" />
     <Compile Include="ViewModels\Rol\Fichas\ViewModelMenuSeleccionTipoFicha.cs" />
+    <Compile Include="ViewModels\ViewModelCarta.cs" />
     <Compile Include="ViewModels\ViewModelsGlobos\ViewModelContenidoGloboInfoRol.cs" />
     <Compile Include="ViewModels\ViewModelsGlobos\ViewModelGlobo.cs" />
     <Compile Include="ViewModels\ViewModelListaRoles.cs" />

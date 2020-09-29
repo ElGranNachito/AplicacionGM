@@ -18,10 +18,10 @@
 
         <local:UserControlSeleccionTipoFicha>
             <Grid>
-                
-                <Viewbox>
-                    <TextBlock Text="Servants"/>
-                </Viewbox>
+
+                <Grid.Background>
+                    <ImageBrush ImageSource="../../../Media/Imagenes/Carta_Servant.png"/>
+                </Grid.Background>
 
                 <Button Style="{StaticResource BotonMarcoResaltable}"
                         Command="{Binding ComandoBotonFichasServants}"

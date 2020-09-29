@@ -6,6 +6,9 @@
         xmlns:local="clr-namespace:AppGM"
         mc:Ignorable="d"
 
+        MinHeight="700"
+        MinWidth="800"
+
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
 

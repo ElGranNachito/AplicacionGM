@@ -5,15 +5,17 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AppGM"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="700" d:DesignWidth="800">
     <Grid>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*" 
+                              MaxWidth="270"/>
             <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
 
         <local:UserControlListaFichas DataContext="{Binding ViewModelListaFichas}"/>
-            
+
+        <local:UserControlVistaFicha Grid.Column="1" DataContext="{Binding FichaSeleccionada}"/>
     </Grid>
 </UserControl>

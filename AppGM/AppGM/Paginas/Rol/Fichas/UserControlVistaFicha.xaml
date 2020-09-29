@@ -1,0 +1,315 @@
+﻿<UserControl x:Class="AppGM.UserControlVistaFicha"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AppGM"
+             mc:Ignorable="d" 
+             d:DesignHeight="700" d:DesignWidth="600">
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Columna izquierda -->
+
+        <StackPanel>
+
+            <!-- Datos basicos -->
+            <Border 
+                Background="MediumPurple"
+                Padding="5"
+                MinHeight="300">
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                
+
+                    <StackPanel>
+                        <TextBlock
+                            TextWrapping="Wrap">
+                            <Run Text="Nombre:"
+                                 FontWeight="Bold"/>
+                            <Run Text="{Binding ModeloPersonaje.Nombre}"/>
+                        </TextBlock>
+
+                        <TextBlock
+                            TextWrapping="Wrap"
+                            Visibility="{Binding EsServant, Converter={local:BooleanToVisibilityConverterColapsar}}">
+                            <Run Text="Clase Servant:"
+                                 FontWeight="Bold"/>
+                            <Run Text="{Binding ModeloPersonaje.mEClaseServant}"/>
+                        </TextBlock>
+
+                        <TextBlock
+                            TextWrapping="Wrap"
+                            Visibility="{Binding EsMaster, Converter={local:BooleanToVisibilityConverterColapsar}}">
+                            <Run Text="Clase de su servant:"
+                                 FontWeight="Bold"/>
+                            <Run Text="{Binding ModeloPersonaje.EClaseDeSuServant}"/>
+                        </TextBlock>
+
+                        <TextBlock
+                            TextWrapping="Wrap">
+                        <Run Text="Contextura:"
+                             FontWeight="Bold"/>
+                            <Run Text="{Binding ModeloPersonaje.Caracteristicas.Contextura}"/>
+                        </TextBlock>
+
+                        <TextBlock
+                            TextWrapping="Wrap">
+                            <Run Text="Edad:"
+                                 FontWeight="Bold"/>
+                            <Run Text="{Binding ModeloPersonaje.Caracteristicas.Edad}"/>
+                        </TextBlock>
+
+                        <TextBlock
+                            TextWrapping="Wrap">
+                            <Run Text="Alineamiento:"
+                                 FontWeight="Bold"/>
+                            <Run Text="{Binding ModeloPersonaje.Caracteristicas.EAlineamiento}"/>
+                        </TextBlock>
+
+                        <TextBlock
+                            TextWrapping="Wrap">
+                            <Run Text="Mano dominante:"
+                                 FontWeight="Bold"/>
+                            <Run Text="{Binding ModeloPersonaje.Caracteristicas.EManoDominante}"/>
+                        </TextBlock>
+
+                        <TextBlock
+                            TextWrapping="Wrap">
+                            <Run Text="Sexo:"
+                                 FontWeight="Bold"/>
+                            <Run Text="{Binding ModeloPersonaje.Caracteristicas.ESexo}"/>
+                        </TextBlock>
+
+                        <TextBlock
+                            TextWrapping="Wrap">
+                            <Run Text="Estatura:"
+                                 FontWeight="Bold"/>
+                            <Run Text="{Binding ModeloPersonaje.Caracteristicas.Estatura}"/>
+                        </TextBlock>
+
+                        <TextBlock
+                            TextWrapping="Wrap">
+                            <Run Text="Nacionalidad:"
+                                 FontWeight="Bold"/>
+                            <Run Text="{Binding ModeloPersonaje.Caracteristicas.Nacionalidad}"/>
+                        </TextBlock>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1">
+                        <TextBlock>
+                            <Run Text="STR: "
+                                 FontWeight="Bold"/>
+                            <Run Text="{Binding ModeloPersonaje.Str}"/>
+                        </TextBlock>
+
+                        <TextBlock>
+                            <Run Text="AGI: "
+                                 FontWeight="Bold"/>
+                            <Run Text="{Binding ModeloPersonaje.Agi}"/>
+                        </TextBlock>
+
+                        <TextBlock>
+                            <Run Text="END: "
+                                 FontWeight="Bold"/>
+                            <Run Text="{Binding ModeloPersonaje.End}"/>
+                        </TextBlock>
+
+                        <TextBlock>
+                            <Run Text="INT: "
+                                 FontWeight="Bold"/>
+                            <Run Text="{Binding ModeloPersonaje.Intel}"/>
+                        </TextBlock>
+
+                        <TextBlock>
+                            <Run Text="LCK: "
+                                 FontWeight="Bold"/>
+                            <Run Text="{Binding ModeloPersonaje.Lck}"/>
+                        </TextBlock>
+
+                        <TextBlock>
+                            <Run Text="CHR: "
+                                 FontWeight="Bold"/>
+                            <Run Text="{Binding ModeloPersonaje.Chr}"/>
+                        </TextBlock>
+                    </StackPanel>
+
+                </Grid>
+
+            </Border>
+
+            <Grid>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel>
+
+                    <!-- Referencia visual -->
+
+                    <Border 
+                        Background="MediumPurple"
+                        MinHeight="150">
+
+                        <TextBlock Text="REF visual" 
+                                   FontSize="30"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
+
+                    </Border>
+
+                    <!-- Inventario -->
+
+                    <Border 
+                        Background="Purple"
+                        MinHeight="250">
+
+                        <TextBlock Text="Inventario" 
+                                   FontSize="30"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
+
+                    </Border>
+
+                </StackPanel>
+
+                <!-- Equipamiento -->
+
+                <Border Grid.Column="1"
+                    Background="Purple"
+                    MinHeight="150">
+
+                    <TextBlock Text="Equipamiento" 
+                               FontSize="30"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center">
+
+                        <TextBlock.LayoutTransform>
+                            <RotateTransform Angle="90"/>
+                        </TextBlock.LayoutTransform>
+
+                    </TextBlock>
+
+                </Border>
+
+            </Grid>
+
+        </StackPanel>
+
+        <!-- Columna derecha -->
+
+        <StackPanel Grid.Column="1">
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Perks -->
+                <Border
+                    Background="MediumPurple"
+                    MinHeight="150">
+
+                    <TextBlock Text="Perks" 
+                               FontSize="30"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"/>
+
+                </Border>
+
+                <!-- Imagen -->
+
+                <Border Grid.Column="1"
+                    Background="MediumPurple"
+                    Margin="10 5"
+                    CornerRadius="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
+                    MinHeight="150">
+
+                    <TextBlock Text="Imagen" 
+                               FontSize="30"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"/>
+
+                </Border>
+            </Grid>
+
+            <!-- Noble phantasm --> 
+
+            <Border
+                Background="MediumPurple"
+                MinHeight="140">
+
+                <TextBlock Text="Noble Phantasm" 
+                           FontSize="40"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+
+            </Border>
+
+            <!-- Titulo skills -->
+
+            <Border
+                Background="Purple"
+                MinHeight="40">
+
+                <TextBlock Text="Skills" 
+                           FontSize="30"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+
+            </Border>
+
+            <!-- Skills -->
+
+            <Border
+                Background="MediumPurple"
+                MinHeight="160">
+
+                <TextBlock Text="Skills" 
+                           FontSize="40"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+
+            </Border>
+
+            <!-- Titulo magias --> 
+
+            <Border
+                Background="Purple"
+                MinHeight="40">
+
+                <TextBlock Text="Magias" 
+                           FontSize="30"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+
+            </Border>
+
+            <!-- Magias --> 
+
+            <Border
+                Background="MediumPurple"
+                MinHeight="160">
+
+                <TextBlock Text="Magias" 
+                           FontSize="40"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+
+            </Border>
+
+        </StackPanel>
+            
+    </Grid>
+</UserControl>

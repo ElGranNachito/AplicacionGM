@@ -1,48 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Input;
 
 namespace AppGM.Core
 {
+    //TODO: Probablemente hacer este view model una clase estatica para que no sea tanto lio
     public class ViewModelPaginaPrincipal : BaseViewModel
     {
         #region Propiedades
-        public ViewModelListaRoles Roles { get; set; } = new ViewModelListaRoles
-        {
-            Roles = new List<ViewModelRolItem>
-            {
-                new ViewModelRolItem
-                {
-                    ModeloRol = new ModeloRol
-                    {
-                        Nombre = "Super Rol",
-                        Descripcion =
-                            "Este es un rol muy piola. Era hace una vez la legendaria historia de un sujeto muy genial",
-                        FechaUltimaSesion = DateTime.UtcNow.AddMonths(-8).AddHours(2).AddDays(6)
-                    }
-                },
 
-                new ViewModelRolItem
-                {
-                    ModeloRol = new ModeloRol
-                    {
-                        Nombre = "Mega Rol",
-                        Descripcion = "Increible rol",
-                        FechaUltimaSesion = DateTime.UtcNow.AddHours(8)
-                    }
-                },
+        private int mIndiceRolActual = 0;
 
-                new ViewModelRolItem
-                {
-                    ModeloRol = new ModeloRol
-                    {
-                        Nombre = "Rol rol rol",
-                        Descripcion = "Me quede sin descripciones",
-                        FechaUltimaSesion = DateTime.UtcNow.ToLocalTime()
-                    }
-                }
+        public bool MouseSobreCartaRol { get; set; } = false;
 
-            }
-        };
+        public ICommand ComandoAvanzarIndiceRol { get; set; }
+        public ICommand ComandoRetrocederIndiceRol { get; set; }
+
+        public ModeloRol RolActual => Roles[mIndiceRolActual];
 
         public ViewModelGlobo GloboInfoRol { get; set; } = new ViewModelGlobo
         {
@@ -56,7 +31,88 @@ namespace AppGM.Core
                     Nombre = "Rol"
                 }
             }
-        }; 
+        };
+
+        public ViewModelCarta CartaAñadirRol { get; set; } = new ViewModelCarta
+        {
+            ZIndex = 1
+        };
+
+        public ViewModelCarta CartaSeleccionarRol { get; set; } = new ViewModelCarta
+        {
+            ZIndex = 0,
+        };
+
+        public List<ModeloRol> Roles = new List<ModeloRol>
+        {
+            new ModeloRol
+            {
+                Nombre = "SuperRol",
+                Descripcion = "Increible rol super genial con mucha emocion y accion",
+                FechaUltimaSesion = DateTime.UtcNow.AddDays(5)
+            },
+
+            new ModeloRol
+            {
+                Nombre = "MegaRol",
+                Descripcion = "Super, super, super rol",
+                FechaUltimaSesion = DateTime.UtcNow.AddYears(-8)
+            }
+        };
+        #endregion
+
+        #region Constructor
+        public ViewModelPaginaPrincipal()
+        {
+            EstablecerComandosCartaSeleccionarRol();
+
+            ComandoAvanzarIndiceRol = new Comando(() =>
+            {
+                if (mIndiceRolActual < Roles.Count - 1)
+                    ++mIndiceRolActual;
+
+                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(RolActual)));
+            });
+
+            ComandoRetrocederIndiceRol = new Comando(() =>
+            {
+                if (mIndiceRolActual != 0)
+                    --mIndiceRolActual;
+
+                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(RolActual)));
+            });
+        }
+        #endregion
+
+        #region Funciones
+        private void EstablecerComandosCartaSeleccionarRol()
+        {
+            CartaSeleccionarRol.Comando = new Comando(() =>
+            {
+                SistemaPrincipal.CargarRol(RolActual);
+
+                SistemaPrincipal.ObtenerInstancia<ViewModelAplicacion>().EPaginaActual =
+                    EPaginaActual.PaginaPrincipalRol;
+            });
+
+            CartaSeleccionarRol.ComandoMouseEnter = new Comando(() =>
+            {
+                CartaSeleccionarRol.ZIndex = 1;
+
+                MouseSobreCartaRol = true;
+                GloboInfoRol.GloboVisible = true;
+
+                ((ViewModelContenidoGloboInfoRol)GloboInfoRol.ViewModelContenido).ModeloRol = RolActual;
+            });
+
+            CartaSeleccionarRol.ComandoMouseLeave = new Comando(() =>
+            {
+                CartaSeleccionarRol.ZIndex = 0;
+
+                MouseSobreCartaRol = false;
+                GloboInfoRol.GloboVisible = false;
+            });
+        } 
         #endregion
     }
 }

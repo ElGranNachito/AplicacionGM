@@ -6,19 +6,19 @@
              xmlns:local="clr-namespace:AppGM"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Border Padding="20" Background="White">
+    <Border Padding="20 20 0 20" Background="Black">
 
         <Grid>
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="6*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
             <!-- Contenido del recuadro izquierdo -->
             <Border
                 BorderBrush="Aqua"
-                BorderThickness="1">
+                BorderThickness="2">
 
                 <ContentControl Content="{Binding EMenuActual, Converter={local:EnumToUserControlConverter}, ConverterParameter=2}"/>
             </Border>
@@ -33,19 +33,34 @@
                 </Grid.RowDefinitions>
 
                 <StackPanel 
-                    local:ParametroThicknessProperty.Parametro="5 0 5 5 "
+                    local:ParametroThicknessProperty.Parametro="-1 0  0 5 "
                     local:AñadirMargenAElementosProperty.Value="{x:Type Button}">
 
                     <Button Content="Fichas" 
+                            BorderBrush="Aqua"
                             Command="{Binding ComandoBotonFichas}"
+                            Style="{StaticResource BotonMenuRol}"
                             FontSize="15"/>
-                    <Button Content="Mapas" FontSize="15"/>
-                    <Button Content="Registro" FontSize="15"/>
-                    <Button Content="Tirada" FontSize="15"/>
-                    <Button Content="Combates" FontSize="15"/>
+                    <Button Content="Mapas" 
+                            Command="{Binding ComandoBotonMapas}"
+                            Style="{StaticResource BotonMenuRol}"
+                            FontSize="15"/>
+                    <Button Content="Registro"
+                            Command="{Binding ComandoBotonRegistro}"
+                            Style="{StaticResource BotonMenuRol}"
+                            FontSize="15"/>
+                    <Button Content="Tirada"
+                            Command="{Binding ComandoBotonTirada}"
+                            Style="{StaticResource BotonMenuRol}"
+                            FontSize="15"/>
+                    <Button Content="Combates"
+                            Command="{Binding ComandoBotonCombates}"
+                            Style="{StaticResource BotonMenuRol}"
+                            FontSize="15"/>
                 </StackPanel>
 
                 <Button Grid.Row="1" 
+                        Command="{Binding ComandoBotonSalir}"
                         Margin=" 5 0 5 0"
                         Content="Salir" 
                         FontSize="15"/>
