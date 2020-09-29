@@ -15,7 +15,7 @@ namespace AppGM.Core
 
     public class ModeloArmasDistancia : ModeloConsumible, IInfligeDaño
     {
-        public TIOfensivoTiradaDeDaño TiradaDeDaño { get; set; }
+        public TIArmasDistanciaTiradaDeDaño TiradaDeDaño { get; set; }
 
         public TIArmasDistanciaTiradaVariable TiradaRafaga { get; set; }
 

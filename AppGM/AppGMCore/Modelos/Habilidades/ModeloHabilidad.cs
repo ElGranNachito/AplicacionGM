@@ -29,7 +29,7 @@ namespace AppGM.Core
 
         public List<TIHabilidadInvocacion> Invocacion { get; set; }
         
-        public List<TIHabilidadTirada> TiradasDeUso { get; set; }
+        public List<TIHabilidadTiradaBase> TiradasDeUso { get; set; }
         
         public List<TIHabilidadEfecto> EfectosSobreUsuario { get; set; }
         public List<TIHabilidadEfecto> EfectoSobreObjetivo { get; set; }

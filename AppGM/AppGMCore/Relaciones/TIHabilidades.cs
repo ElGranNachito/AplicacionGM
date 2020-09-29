@@ -19,7 +19,7 @@
         public ModeloCargasHabilidad ModeloCargasHabilidad { get; set; }
     }
 
-    public class TIHabilidadTirada : TIHabilidad
+    public class TIHabilidadTiradaBase : TIHabilidad
     {
         public int IdTirada { get; set; }
         public ModeloTiradaBase TiradaBase { get; set; }
@@ -28,7 +28,7 @@
     public class TIHabilidadTiradaDeDaño : TIHabilidad
     {
         public int IdTirada { get; set; }
-        public ModeloTiradaDeDaño TiradaBase { get; set; }
+        public ModeloTiradaDeDaño TiradaDeDaño { get; set; }
     }
 
     public class TIHabilidadItem : TIHabilidad

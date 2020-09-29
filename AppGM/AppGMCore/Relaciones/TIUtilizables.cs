@@ -19,7 +19,7 @@
 
     public class TIUtilizableTiradaBase : TIUtilizable
     {
-        private int IdTirada { get; set; }
+        public int IdTirada { get; set; }
         public ModeloTiradaBase TiradaBase { get; set; }
     }
 
@@ -95,7 +95,7 @@
     public class TIArmasDistanciaTiradaDeDaño : TIArmasDistancia
     {
         public int IdTirada { get; set; }
-        public ModeloTiradaDeDaño TiradaVariable { get; set; }
+        public ModeloTiradaDeDaño TiradaDaño { get; set; }
     }
 
     public class TIArmasDistanciaEfecto : TIArmasDistancia

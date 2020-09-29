@@ -42,6 +42,12 @@ namespace AppGM.Core
         public ModeloDefensivoAbsoluto DefensivoAbsoluto { get; set; }
     }
 
+    public class TIPersonajeOfensivo : TIPersonaje
+    {
+        public int IdOfensivo { get; set; }
+        public ModeloOfensivo PortableOfensivo { get; set; }
+    }
+
     public class TIPersonajeConsumible : TIPersonaje
     {
         public int IdConsumible { get; set; }
@@ -105,7 +111,7 @@ namespace AppGM.Core
     public class TIInvocacionPersonaje : TIInvocacion
     {
         public int IdPersonaje { get; set; }
-        public ModeloPersonaje Invocador { get; set; }
+        public ModeloPersonaje PersonajeInvocador { get; set; }
     }
 
     public class TIInvocacionEfecto : TIInvocacion
