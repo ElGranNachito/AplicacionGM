@@ -15,12 +15,13 @@ namespace AppGM
                 DecelerationRatio = 0.4f
             };
 
+            //Establece como propiedad objetivo "Angulo" que esta dentro de un RotateTransform
             Storyboard.SetTargetProperty(animacion, new PropertyPath("LayoutTransform.Angle"));
 
             sb.Children.Add(animacion);
         }
 
-        public static void AñadirDesplazamientoALaDerecha(this Storyboard sb, TimeSpan duracionAnimacion, Thickness desplazamiento)
+        public static void AñadirDesplazamiento(this Storyboard sb, TimeSpan duracionAnimacion, Thickness desplazamiento)
         {
             ThicknessAnimation animacion = new ThicknessAnimation
             {
@@ -29,6 +30,7 @@ namespace AppGM
                 DecelerationRatio = 0.4f
             };
 
+            //Establece como propiedad objetivo al margen del elemento
             Storyboard.SetTargetProperty(animacion, new PropertyPath("Margin"));
 
             sb.Children.Add(animacion);

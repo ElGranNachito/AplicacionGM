@@ -4,33 +4,43 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AppGM"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              d:DesignHeight="70" d:DesignWidth="250">
+
+    <UserControl.Resources>
+        <system:Int32 x:Key="bordeIzquierdo">4</system:Int32>
+    </UserControl.Resources>
 
     <UserControl.Template>
         <ControlTemplate TargetType="{x:Type UserControl}">
 
-            <Border x:Name="contenido"
-                    BorderBrush="Aqua" 
-                    Background="{Binding ColorFondo, Converter={local:StringToSolidColorBrushConverter}}"
-                    BorderThickness="{Binding AnchoBorde, Converter={local:IntToThicknessConverter}}">
+            <Border x:Name="contenido">
 
-            <Grid Margin="0 0 0 5">
-            
-                <StackPanel>
+            <Grid>
 
-                    <TextBlock>
+                    <Button 
+                        Style="{StaticResource BotonMenuRol}" 
+                        local:BotonMenuRolConViewModelProperty.Value="{Binding}"
+                        BorderBrush="Aqua"/>
+
+                <StackPanel IsHitTestVisible="False">
+
+                    <TextBlock
+                        Foreground="White">
                         <Run Text="Nombre: "/>
                         <Run Text="{Binding ModeloPersonaje.Nombre}"/>
                     </TextBlock>
 
                     <TextBlock
-                    Visibility="{Binding EsServant, Converter={local:BooleanToVisibilityConverterColapsar}}">
+                        Foreground="White"
+                        Visibility="{Binding EsServant, Converter={local:BooleanToVisibilityConverterColapsar}}">
                         <Run Text="Clase: "/>
                         <Run Text="{Binding ModeloPersonaje.mEClaseDeServant}"/>
                     </TextBlock>
 
                     <TextBlock
+                        Foreground="White"
                         Visibility="{Binding EsMaster, Converter={local:BooleanToVisibilityConverterColapsar}}">
                         <Run Text="Clase de su servant: "/>
                         <Run Text="{Binding ModeloPersonaje.EClaseDeSuServant}"/>
@@ -38,28 +48,9 @@
 
                 </StackPanel>
 
-                <Grid.InputBindings>
-                    <MouseBinding MouseAction="LeftClick" Command="{Binding ComandoMouseClick}"/>
-                </Grid.InputBindings>
-
             </Grid>
 
-            </Border>
-
-            <ControlTemplate.Triggers>
-                <MultiTrigger>
-
-                    <MultiTrigger.Conditions>
-                        <Condition SourceName="contenido" Property="IsMouseOver" Value="True"/>
-                        <Condition SourceName="contenido" Property="BorderThickness" Value="0"/>
-                    </MultiTrigger.Conditions>
-
-                    <MultiTrigger.Setters>
-                        <Setter TargetName="contenido" Property="Background" Value="LightGray"/>
-                    </MultiTrigger.Setters>
-
-                </MultiTrigger>
-            </ControlTemplate.Triggers>
+        </Border>
 
         </ControlTemplate>
     </UserControl.Template>

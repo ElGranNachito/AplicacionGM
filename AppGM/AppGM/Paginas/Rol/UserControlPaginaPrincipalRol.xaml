@@ -33,29 +33,34 @@
                 </Grid.RowDefinitions>
 
                 <StackPanel 
-                    local:ParametroThicknessProperty.Parametro="-1 0  0 5 "
+                    local:ParametroThicknessProperty.Parametro="-1 0  0 0 "
                     local:AñadirMargenAElementosProperty.Value="{x:Type Button}">
 
                     <Button Content="Fichas" 
                             BorderBrush="Aqua"
                             Command="{Binding ComandoBotonFichas}"
                             Style="{StaticResource BotonMenuRol}"
+                            local:BotonMenuRolProperty.Value="{Binding}"
                             FontSize="15"/>
                     <Button Content="Mapas" 
                             Command="{Binding ComandoBotonMapas}"
                             Style="{StaticResource BotonMenuRol}"
+                            local:BotonMenuRolProperty.Value="{Binding}"
                             FontSize="15"/>
                     <Button Content="Registro"
                             Command="{Binding ComandoBotonRegistro}"
                             Style="{StaticResource BotonMenuRol}"
+                            local:BotonMenuRolProperty.Value="{Binding}"
                             FontSize="15"/>
                     <Button Content="Tirada"
                             Command="{Binding ComandoBotonTirada}"
                             Style="{StaticResource BotonMenuRol}"
+                            local:BotonMenuRolProperty.Value="{Binding}"
                             FontSize="15"/>
                     <Button Content="Combates"
                             Command="{Binding ComandoBotonCombates}"
                             Style="{StaticResource BotonMenuRol}"
+                            local:BotonMenuRolProperty.Value="{Binding}"
                             FontSize="15"/>
                 </StackPanel>
 

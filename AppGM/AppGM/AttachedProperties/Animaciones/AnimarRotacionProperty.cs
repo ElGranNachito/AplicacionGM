@@ -10,9 +10,9 @@ namespace AppGM
         public override async Task RealizarAnimacion(FrameworkElement fe, bool valor)
         {
             if (valor)
-                await fe.AñadirRotacionYMovimientoALaDerecha(TimeSpan.FromSeconds(0.5f), 40f);
+                await fe.AñadirRotacionYDesplazamiento(TimeSpan.FromSeconds(0.5f), 40f, new Thickness(120, 0,0, 0));
             else
-                await fe.AñadirRotacionYMovimientoALaIzquierda(TimeSpan.FromSeconds(0.5f), 25f);
+                await fe.AñadirRotacionYDesplazamiento(TimeSpan.FromSeconds(0.5f), 25f, new Thickness(30, 0, 0, 0));
         }
     }
 }

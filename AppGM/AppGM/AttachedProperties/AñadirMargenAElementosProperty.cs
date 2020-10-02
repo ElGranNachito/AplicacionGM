@@ -14,12 +14,12 @@ namespace AppGM
         {
             StackPanel sp = (StackPanel) d;
 
-            RoutedEventHandler lambda = null;
+            RoutedEventHandler loadedEventListener = null;
 
-            lambda = (o, re) =>
+            loadedEventListener = (o, re) =>
             {
                 //Desuscribimos la lambda
-                sp.Loaded -= lambda;
+                sp.Loaded -= loadedEventListener;
 
                 //Obtenemos el tipo de elemento que estamos buscando
                 Type tipo = (Type)e.NewValue;
@@ -34,7 +34,7 @@ namespace AppGM
                 }
             };
 
-            sp.Loaded += lambda;
+            sp.Loaded += loadedEventListener;
         }
     }
 }

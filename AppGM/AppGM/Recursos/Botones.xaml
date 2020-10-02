@@ -126,6 +126,7 @@
                     <Border Padding="{TemplateBinding Padding}" 
                             Background="{TemplateBinding Background}" 
                             BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                             VerticalAlignment="{TemplateBinding VerticalAlignment}"
                             HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
@@ -134,7 +135,7 @@
                         <TextBlock Text="{TemplateBinding Content}" 
                                    IsHitTestVisible="False"/>
 
-                        <Border.Triggers>
+                        <!--<Border.Triggers>
                             <EventTrigger RoutedEvent="MouseLeftButtonDown">
                                 <BeginStoryboard>
                                     <Storyboard TargetName="border" 
@@ -145,15 +146,24 @@
                                     </Storyboard>
                                 </BeginStoryboard>
                             </EventTrigger>
-                        </Border.Triggers>
+                        </Border.Triggers>-->
 
                     </Border>
 
                     <ControlTemplate.Triggers>
 
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="Aqua"/>
-                        </Trigger>
+                        <MultiTrigger>
+
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                                <Condition SourceName="border" Property="BorderThickness" Value="0"/>
+                            </MultiTrigger.Conditions>
+
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="border" Property="Background" Value="Aqua"/>
+                            </MultiTrigger.Setters>
+
+                        </MultiTrigger>
 
                     </ControlTemplate.Triggers>
 

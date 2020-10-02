@@ -2,7 +2,7 @@
 
 namespace AppGM.Core
 {
-    public class ViewModelPaginaPrincipalRol : BaseViewModel
+    public class ViewModelPaginaPrincipalRol : BaseViewModel, IBotonSeleccionado<object>
     {
         #region Propiedades
         //DatosRolActual DatorRolActual
@@ -16,6 +16,7 @@ namespace AppGM.Core
         public ICommand ComandoBotonSalir { get; set; }
 
         public EMenuActualRol EMenuActual { get; set; } = EMenuActualRol.NINGUNO;
+        public object BotonSeleccionado { get; set; }
 
         #endregion
 

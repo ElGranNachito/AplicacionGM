@@ -10,8 +10,8 @@
     <Grid>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
@@ -36,9 +36,9 @@
             Grid.Column="1">
             <Grid>
 
-                <Viewbox>
-                    <TextBlock Text="Masters"/>
-                </Viewbox>
+                <Grid.Background>
+                    <ImageBrush ImageSource="../../../Media/Imagenes/Carta_Master.png"/>
+                </Grid.Background>
 
                 <Button Style="{StaticResource BotonMarcoResaltable}"
                         Command="{Binding ComandoBotonFichasMasters}"
@@ -53,9 +53,9 @@
             Grid.Column="2">
             <Grid>
 
-                <Viewbox>
-                    <TextBlock Text="Invocaciones"/>
-                </Viewbox>
+                <Grid.Background>
+                    <ImageBrush ImageSource="../../../Media/Imagenes/Carta_Invocacion.png"/>
+                </Grid.Background>
 
                 <Button Style="{StaticResource BotonMarcoResaltable}"
                         Command="{Binding ComandoBotonFichasInvocaciones}"
@@ -70,9 +70,9 @@
             Grid.Column="3">
             <Grid>
 
-                <Viewbox>
-                    <TextBlock Text="NPCs"/>
-                </Viewbox>
+                <Grid.Background>
+                    <ImageBrush ImageSource="../../../Media/Imagenes/Carta_NPC.png"/>
+                </Grid.Background>
 
                 <Button Style="{StaticResource BotonMarcoResaltable}"
                         Command="{Binding ComandoBotonFichasNPCs}"

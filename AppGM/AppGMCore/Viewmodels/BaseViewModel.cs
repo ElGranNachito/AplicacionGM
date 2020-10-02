@@ -11,7 +11,7 @@ namespace AppGM.Core
         #endregion
 
         #region Funciones
-        protected void DispararPropertyChanged(PropertyChangedEventArgs args) =>
+        public void DispararPropertyChanged(PropertyChangedEventArgs args) =>
             PropertyChanged(this, args); 
         #endregion
     }

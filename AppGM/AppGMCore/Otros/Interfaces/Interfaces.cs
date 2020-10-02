@@ -1,4 +1,6 @@
-﻿namespace AppGM.Core
+﻿using System;
+
+namespace AppGM.Core
 {
     public interface IInfligeDaño
     {
@@ -19,5 +21,15 @@
     public interface IUtilizableSinObjetivos
     {
         void Utilizar(ControladorPersonaje<ModeloPersonaje> usuario, object parametroExtra, object segundoParametroExtra);
+    }
+
+    public interface IBotonSeleccionado<T>
+    {
+        T BotonSeleccionado { get; set; }
+    }
+
+    public interface IViewModelConBotonSeleccionado
+    {
+        BaseViewModel ViewModelConBotonSeleccionado { get; set; }
     }
 }

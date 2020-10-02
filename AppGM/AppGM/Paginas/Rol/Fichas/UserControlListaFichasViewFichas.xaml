@@ -9,13 +9,15 @@
     <Grid>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" 
+            <ColumnDefinition Width="2*" 
                               MaxWidth="270"/>
-            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
 
-        <local:UserControlListaFichas DataContext="{Binding ViewModelListaFichas}"/>
+        <local:UserControlListaFichas 
+            DataContext="{Binding ViewModelListaFichas}"/>
 
-        <local:UserControlVistaFicha Grid.Column="1" DataContext="{Binding FichaSeleccionada}"/>
+        <local:UserControlVistaFicha Grid.Column="1" 
+                                     DataContext="{Binding FichaSeleccionada}"/>
     </Grid>
 </UserControl>

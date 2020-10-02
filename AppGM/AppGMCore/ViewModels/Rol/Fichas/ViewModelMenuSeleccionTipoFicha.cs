@@ -42,8 +42,10 @@ namespace AppGM
                     Nombre = "Pelinore",
                     mEClaseDeServant = EClaseServant.Saber,
 
-                    Caracteristicas = new ModeloCaracteristicas
+                    Caracteristicas = new TIPersonajeJugableCaracteristicas()
                     {
+                        Caracteristicas = new ModeloCaracteristicas
+                        {
                         Contextura = "Super en forma",
                         EAlineamiento = EAlineamiento.LawfulGood,
                         Edad = 50,
@@ -51,6 +53,7 @@ namespace AppGM
                         ESexo = ESexo.Masculino,
                         Estatura = 190,
                         Nacionalidad = "Inglesa"
+                        }
                     }
                 }
             };
@@ -68,8 +71,10 @@ namespace AppGM
                     Lck = 16,
                     Chr = 15,
 
-                    Caracteristicas = new ModeloCaracteristicas
+                    Caracteristicas = new TIPersonajeJugableCaracteristicas
                     {
+                        Caracteristicas = new ModeloCaracteristicas
+                        {
                         Contextura = "Fuera de forma",
                         EAlineamiento = EAlineamiento.NeutralGood,
                         Edad = 19,
@@ -77,6 +82,7 @@ namespace AppGM
                         ESexo = ESexo.Masculino,
                         Estatura = 170,
                         Nacionalidad = "Estadounidense"
+                        }
                     }
                 },
 
@@ -85,8 +91,10 @@ namespace AppGM
                     Nombre = "Charles",
                     EClaseDeSuServant = EClaseServant.Saber,
 
-                    Caracteristicas = new ModeloCaracteristicas
+                    Caracteristicas = new TIPersonajeJugableCaracteristicas()
                     {
+                        Caracteristicas = new ModeloCaracteristicas
+                        {
                         Contextura = "Super entrenado",
                         EAlineamiento = EAlineamiento.Neutral,
                         Edad = 30,
@@ -94,6 +102,7 @@ namespace AppGM
                         ESexo = ESexo.Masculino,
                         Estatura = 190,
                         Nacionalidad = "Ingles"
+                        }
                     }
                 },
 
@@ -102,8 +111,10 @@ namespace AppGM
                     Nombre = "Ricky Millones",
                     EClaseDeSuServant = EClaseServant.Archer,
 
-                    Caracteristicas = new ModeloCaracteristicas
+                    Caracteristicas = new TIPersonajeJugableCaracteristicas()
                     {
+                        Caracteristicas = new ModeloCaracteristicas
+                        {
                         Contextura = "En forma",
                         EAlineamiento = EAlineamiento.Neutral,
                         Edad = 25,
@@ -111,6 +122,7 @@ namespace AppGM
                         ESexo = ESexo.Masculino,
                         Estatura = 200,
                         Nacionalidad = "No se la verdad"
+                        }
                     }
                 }
             };
