@@ -17,7 +17,8 @@
         </Grid.ColumnDefinitions>
 
         <local:UserControlSeleccionTipoFicha>
-            <Grid>
+            <Grid
+                Margin="{Binding AnchoMargenCartas, Converter={local:GrosorToThicknessConverter}}">
 
                 <Grid.Background>
                     <ImageBrush ImageSource="../../../Media/Imagenes/Carta_Servant.png"/>
@@ -34,7 +35,8 @@
 
         <local:UserControlSeleccionTipoFicha
             Grid.Column="1">
-            <Grid>
+            <Grid
+                Margin="{Binding AnchoMargenCartas, Converter={local:GrosorToThicknessConverter}}">
 
                 <Grid.Background>
                     <ImageBrush ImageSource="../../../Media/Imagenes/Carta_Master.png"/>
@@ -51,7 +53,8 @@
 
         <local:UserControlSeleccionTipoFicha
             Grid.Column="2">
-            <Grid>
+            <Grid
+                Margin="{Binding AnchoMargenCartas, Converter={local:GrosorToThicknessConverter}}">
 
                 <Grid.Background>
                     <ImageBrush ImageSource="../../../Media/Imagenes/Carta_Invocacion.png"/>
@@ -68,7 +71,8 @@
 
         <local:UserControlSeleccionTipoFicha
             Grid.Column="3">
-            <Grid>
+            <Grid
+                Margin="{Binding AnchoMargenCartas, Converter={local:GrosorToThicknessConverter}}">
 
                 <Grid.Background>
                     <ImageBrush ImageSource="../../../Media/Imagenes/Carta_NPC.png"/>

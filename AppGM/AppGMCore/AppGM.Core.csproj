@@ -199,6 +199,7 @@
     <Compile Include="Modelos\Utilizables\ModeloPortable.cs" />
     <Compile Include="Modelos\Utilizables\ModeloItem.cs" />
     <Compile Include="Modelos\Utilizables\ModeloUtilizable.cs" />
+    <Compile Include="Otros\Clases\Grosor.cs" />
     <Compile Include="Otros\Enums\Enums.cs" />
     <Compile Include="Otros\Interfaces\Interfaces.cs" />
     <Compile Include="Modelos\Efectos\ModeloEfecto.cs" />

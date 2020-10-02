@@ -52,6 +52,8 @@ namespace AppGM.Viewmodels
                 DispararPropertyChanged(new PropertyChangedEventArgs(nameof(AlturaTitulo)));
                 DispararPropertyChanged(new PropertyChangedEventArgs(nameof(ResizeBorderThickness)));
                 DispararPropertyChanged(new PropertyChangedEventArgs(nameof(CaptionHeight)));
+
+                SistemaPrincipal.ObtenerInstancia<ViewModelAplicacion>().VentanaMaximizada = mVentana.EstaMaximizada();
             };
 
             SistemaPrincipal.ObtenerInstancia<ViewModelAplicacion>().PropertyChanged += (obj, e) =>

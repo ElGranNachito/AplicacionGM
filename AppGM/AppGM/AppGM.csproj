@@ -75,6 +75,7 @@
     <Compile Include="Converters\BooleanToVisibilityConverterColapsar.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverterOcultar.cs" />
     <Compile Include="Converters\EnumToUserControlConverter.cs" />
+    <Compile Include="Converters\GrosorToThicknessConverter.cs" />
     <Compile Include="Converters\IntToThicknessConverter.cs" />
     <Compile Include="Converters\StringToSolidColorBrushConverter.cs" />
     <Compile Include="Converters\ViewModelToContenidoConverter.cs" />

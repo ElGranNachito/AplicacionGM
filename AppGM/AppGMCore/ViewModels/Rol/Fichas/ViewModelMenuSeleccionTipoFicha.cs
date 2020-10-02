@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Windows.Input;
 using AppGM.Core;
 
@@ -7,6 +8,8 @@ namespace AppGM
     public class ViewModelMenuSeleccionTipoFicha : BaseViewModel
     {
         #region Propiedades
+
+        public Grosor AnchoMargenCartas => SistemaPrincipal.ObtenerInstancia<ViewModelAplicacion>().VentanaMaximizada ? new Grosor(20) : new Grosor(5, 20);
         public ICommand ComandoBotonFichasServants { get; set; }
         public ICommand ComandoBotonFichasMasters { get; set; }
         public ICommand ComandoBotonFichasInvocaciones { get; set; }
@@ -23,6 +26,12 @@ namespace AppGM
 
         public ViewModelMenuSeleccionTipoFicha()
         {
+            SistemaPrincipal.ObtenerInstancia<ViewModelAplicacion>().PropertyChanged += (o, a) =>
+            {
+                if (a.PropertyName == nameof(ViewModelAplicacion.VentanaMaximizada))
+                    DispararPropertyChanged(new PropertyChangedEventArgs(nameof(AnchoMargenCartas)));
+            };
+
             Servants = new List<ModeloServant>
             {
                 new ModeloServant
