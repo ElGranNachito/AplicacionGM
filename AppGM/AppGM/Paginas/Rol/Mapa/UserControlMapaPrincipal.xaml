@@ -1,0 +1,48 @@
+﻿<UserControl x:Class="AppGM.UserControlMapaPrincipal"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AppGM"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="6*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Background="White">
+
+            <local:UserControlIngresoPosicion
+                DataContext="{Binding PosicionIglesia}">
+                
+                <TextBlock Text="Posicion Igleisa" 
+                           HorizontalAlignment="Center"/>
+                
+            </local:UserControlIngresoPosicion>
+           
+
+        </StackPanel>
+
+        <Border Padding="5" Grid.Column="1">
+
+            <Canvas>
+
+                <Canvas.Background>
+                    <ImageBrush ImageSource="../../../Media/Imagenes/Mapas/SuperCapturaMapaRol.png"/>
+                </Canvas.Background>
+
+                <Image Source="../../../Media/Imagenes/Carta_Servant.png" 
+                       Width="100" 
+                       Height="120"
+                       Canvas.Left="{Binding PosicionIglesia.PosicionX}"
+                       Canvas.Top="{Binding PosicionIgleisa.PosicionY}"/>
+
+            </Canvas>
+            
+        </Border>
+            
+    </Grid>
+</UserControl>

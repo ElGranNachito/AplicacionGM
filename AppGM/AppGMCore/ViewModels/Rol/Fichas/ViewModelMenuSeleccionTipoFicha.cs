@@ -55,13 +55,13 @@ namespace AppGM
                     {
                         Caracteristicas = new ModeloCaracteristicas
                         {
-                        Contextura = "Super en forma",
-                        EAlineamiento = EAlineamiento.LawfulGood,
-                        Edad = 50,
-                        EManoDominante = EManoDominante.Izquierda,
-                        ESexo = ESexo.Masculino,
-                        Estatura = 190,
-                        Nacionalidad = "Inglesa"
+                            Contextura = "Super en forma",
+                            EAlineamiento = EAlineamiento.LawfulGood,
+                            Edad = 50,
+                            EManoDominante = EManoDominante.Izquierda,
+                            ESexo = ESexo.Masculino,
+                            Estatura = 190,
+                            Nacionalidad = "Inglesa"
                         }
                     }
                 }

@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="AppGM.UserControlIngresoPosicion"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AppGM"
+             mc:Ignorable="d" 
+             d:DesignHeight="100" d:DesignWidth="100">
+
+    <UserControl.Template>
+        <ControlTemplate TargetType="{x:Type UserControl}">
+
+            <StackPanel>
+
+                <ContentPresenter/>
+
+                <StackPanel Orientation="Horizontal" 
+                        HorizontalAlignment="Center"
+                            Margin="0 5">
+
+                    <TextBlock Text="X: "/>
+                    <TextBox HorizontalAlignment="Center"
+                             MinWidth="20"
+                             TextChanged="TextBoxPosX_TextChanged"/>
+
+                    <TextBlock Text="Y: "
+                           Margin="10 0 0 0"/>
+                    <TextBox HorizontalAlignment="Center"
+                             MinWidth="20"
+                             TextChanged="TextBoxPosY_TextChanged"
+                             Text="{Binding TextoPosicionY}"/>
+
+                </StackPanel>
+
+            </StackPanel>
+
+        </ControlTemplate>
+    </UserControl.Template>
+
+</UserControl>

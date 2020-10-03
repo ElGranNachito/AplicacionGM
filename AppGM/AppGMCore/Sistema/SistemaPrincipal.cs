@@ -33,7 +33,7 @@ namespace AppGM.Core
             Kernel.Bind<ViewModelPaginaPrincipalRol>().ToConstant(new ViewModelPaginaPrincipalRol(modelo));
             Kernel.Bind<ViewModelMenuSeleccionTipoFicha>().ToConstant(new ViewModelMenuSeleccionTipoFicha());
             Kernel.Bind<ViewModelListaFichasVistaFichas>().ToConstant(new ViewModelListaFichasVistaFichas());
-            Kernel.Bind<ViewModelListaFichas>().ToConstant(new ViewModelListaFichas());
+            Kernel.Bind<ViewModelMapaPrincipal>().ToConstant(new ViewModelMapaPrincipal());
 
             ObtenerInstancia<ViewModelAplicacion>().TituloVentana = modelo.Nombre;
         }

@@ -182,6 +182,7 @@
     <Compile Include="Controladores\Utilizables\ControladorUtilizable.cs" />
     <Compile Include="Datos\DatosRol.cs" />
     <Compile Include="Datos\RolContext.cs" />
+    <Compile Include="Helpers\StringHelpers.cs" />
     <Compile Include="Modelos\Habilidades\CaracteristicasHabilidad.cs" />
     <Compile Include="Modelos\Habilidades\ModeloHabilidad.cs" />
     <Compile Include="Modelos\Juego\ModeloAccion.cs" />
@@ -222,6 +223,8 @@
     <Compile Include="ViewModels\Rol\Fichas\ViewModelFichaItem.cs" />
     <Compile Include="ViewModels\Rol\Fichas\ViewModelListaFichas.cs" />
     <Compile Include="ViewModels\Rol\Fichas\ViewModelListaFichasVistaFichas.cs" />
+    <Compile Include="ViewModels\Rol\Mapas\ViewModelIngresoPosicion.cs" />
+    <Compile Include="ViewModels\Rol\Mapas\ViewModelMapaPrincipal.cs" />
     <Compile Include="ViewModels\ViewModelAplicacion.cs" />
     <Compile Include="ViewModels\Rol\Fichas\ViewModelMenuSeleccionTipoFicha.cs" />
     <Compile Include="ViewModels\ViewModelCarta.cs" />
