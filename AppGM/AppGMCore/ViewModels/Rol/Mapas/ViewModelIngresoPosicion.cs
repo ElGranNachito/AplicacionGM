@@ -5,50 +5,62 @@ namespace AppGM.Core
 {
     public class ViewModelIngresoPosicion : BaseViewModel
     {
-        private string mTextoPosicionX = string.Empty;
-        private string mTextoPosicionY = string.Empty;
-
+        public ViewModelMapa mapa; 
+        public double PosicionX { get; set; }
+        public double PosicionY { get; set; }
         public string TextoPosicionX
         {
-            get => mTextoPosicionX;
+            get => PosicionX == 0 ? "" : PosicionX.Round(1).ToString();
             set
             {
-                if (value.Length < mTextoPosicionX.Length)
+                if (mapa == null)
+                    return;
+
+                double tmp;
+
+                if (double.TryParse(value, out tmp))
                 {
-                    mTextoPosicionX = value;
-                    DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PosicionX)));
+                    if (tmp < 0)
+                        return;
+
+                    if (tmp < mapa.TamañoCanvasX)
+                        PosicionX = tmp;
+                    else
+                        PosicionX = mapa.TamañoCanvasX;
+
+                    return;
                 }
-                else if (value.Last().EsUnNumero())
-                {
-                    mTextoPosicionX = value;
-                    DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PosicionX)));
-                }
-                else
-                    value.Remove(value.Last());
+
+                if (value.Length == 0)
+                    PosicionX = 0;
             }
         }
         public string TextoPosicionY
         {
-            get => mTextoPosicionY;
+            get => PosicionY.Round(1).ToString();
             set
             {
-                if (value.Length < mTextoPosicionY.Length)
+                if (mapa == null)
+                    return;
+
+                double tmp;
+
+                if (double.TryParse(value, out tmp))
                 {
-                    mTextoPosicionY = value;
-                    DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PosicionY)));
+                    if (tmp < 0)
+                        return;
+
+                    if (tmp < mapa.TamañoCanvasY)
+                        PosicionY = tmp;
+                    else
+                        PosicionY = mapa.TamañoCanvasY;
+
+                    return;
                 }
-                else if (value.Last().EsUnNumero())
-                {
-                    mTextoPosicionY = value;
-                    DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PosicionY)));
-                }
-                else
-                    value.Remove(value.Last());
+
+                if (value.Length == 0)
+                    PosicionX = 0;
             }
         }
-
-        public int PosicionX => int.Parse(mTextoPosicionX);
-        public int PosicionY => int.Parse(mTextoPosicionY);
-
     }
 }

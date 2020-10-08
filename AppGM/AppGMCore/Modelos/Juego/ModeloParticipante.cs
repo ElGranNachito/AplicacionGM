@@ -14,7 +14,7 @@ namespace AppGM.Core
         public TIParticipantePersonaje Personaje { get; set; }
 
         //Posicion del participante en el mapa
-        public Vector2D PosicionCombate { get; set; }
+        public Vector2 PosicionCombate { get; set; }
 
         //Acciones realizadas por el participante
         public List<TIParticipanteAccion> AccionesRealizadas { get; set; }

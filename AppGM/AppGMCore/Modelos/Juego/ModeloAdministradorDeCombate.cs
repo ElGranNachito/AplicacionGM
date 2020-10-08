@@ -11,6 +11,7 @@ namespace AppGM.Core
         public int IndicePersonajeTurnoActual { get; set; }
         public uint TurnoActual { get; set; }
 
-        public List<TIAdministradorDeCombateParticipante> Participantes { get; set; }
+        public List<TIModeloAdministradorDeCombateParticipante> Participantes { get; set; }
+        public List<TIModeloAdministradorDeCombateMapa> Mapas { get; set; }
     }
 }

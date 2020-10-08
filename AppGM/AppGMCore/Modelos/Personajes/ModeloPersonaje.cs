@@ -29,7 +29,7 @@ namespace AppGM.Core
         public bool EstaEnCombate { get; set; }
 
         //Posicion del personaje en el mapa
-        public Vector2D Posicion { get; set; }
+        public Vector2 Posicion { get; set; }
 
         public List<TIPersonajeEfecto> Efectos { get; set; }
         public List<TIPersonajeUtilizable> Inventario { get; set; }

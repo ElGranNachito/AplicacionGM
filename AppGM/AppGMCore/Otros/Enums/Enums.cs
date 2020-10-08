@@ -172,4 +172,10 @@ namespace AppGM.Core
         Cabeza = 2048,
         Canilla = 4096
     }
+
+    public enum EFormatoImagen
+    {
+        Png = 1,
+        Jpg = 2
+    }
 }

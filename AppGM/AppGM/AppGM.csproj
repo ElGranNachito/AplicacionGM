@@ -67,6 +67,7 @@
     <Compile Include="AttachedProperties\BaseAttachedProperty.cs" />
     <Compile Include="AttachedProperties\BotonMenuRolConViewModelProperty.cs" />
     <Compile Include="AttachedProperties\BotonMenuRolProperty.cs" />
+    <Compile Include="AttachedProperties\CampoDeTextoNumericoProperty.cs" />
     <Compile Include="AttachedProperties\ParametroProperty\BaseAttachedPropertyParametro.cs" />
     <Compile Include="AttachedProperties\CrearDesignTimeViewModelProperty.cs" />
     <Compile Include="AttachedProperties\LlamarComandoOnMouseEnterProperty.cs" />
@@ -100,6 +101,12 @@
     </Compile>
     <Compile Include="Paginas\Inicio\UserControlRolItemOld.xaml.cs">
       <DependentUpon>UserControlRolItemOld.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Rol\Mapas\UserControlIngresoPosicion.xaml.cs">
+      <DependentUpon>UserControlIngresoPosicion.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Rol\Mapas\UserControlMapaPrincipal.xaml.cs">
+      <DependentUpon>UserControlMapaPrincipal.xaml</DependentUpon>
     </Compile>
     <Compile Include="Paginas\Rol\UserControlBotonMenuRol.xaml.cs">
       <DependentUpon>UserControlBotonMenuRol.xaml</DependentUpon>
@@ -171,6 +178,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Paginas\Rol\Fichas\UserControlVistaFicha.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Paginas\Rol\Mapas\UserControlIngresoPosicion.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Paginas\Rol\Mapas\UserControlMapaPrincipal.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -273,6 +288,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Media\Imagenes\Carta_NPC.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Media\Imagenes\Mapas\SuperCapturaMapaRol.png" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

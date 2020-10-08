@@ -36,6 +36,8 @@ namespace AppGM
                             return new UserControlMenuSeleccionTipoFicha();
                         case EMenuActualRol.VistaFichas:
                             return new UserControlListaFichasViewFichas();
+                        case EMenuActualRol.Mapas:
+                            return new UserControlMapaPrincipal();
                     }
                     break;
             }

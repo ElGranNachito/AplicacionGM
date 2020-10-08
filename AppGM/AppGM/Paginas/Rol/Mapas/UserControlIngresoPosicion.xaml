@@ -19,16 +19,23 @@
                             Margin="0 5">
 
                     <TextBlock Text="X: "/>
-                    <TextBox HorizontalAlignment="Center"
-                             MinWidth="20"
-                             TextChanged="TextBoxPosX_TextChanged"/>
+                    <TextBox 
+                        local:CampoDeTextoNumericoProperty.Value="True"
+                        HorizontalAlignment="Center"
+                        MinWidth="20"
+                        Width="50"
+                        TextChanged="TextBoxPosX_TextChanged"
+                        Text="{Binding TextoPosicionX, Mode=OneWayToSource}"/>
 
                     <TextBlock Text="Y: "
                            Margin="10 0 0 0"/>
-                    <TextBox HorizontalAlignment="Center"
-                             MinWidth="20"
-                             TextChanged="TextBoxPosY_TextChanged"
-                             Text="{Binding TextoPosicionY}"/>
+                    <TextBox 
+                        local:CampoDeTextoNumericoProperty.Value="True"
+                        HorizontalAlignment="Center"
+                        MinWidth="20"
+                        Width="50"
+                        TextChanged="TextBoxPosY_TextChanged"
+                        Text="{Binding TextoPosicionY, Mode=OneWayToSource}"/>
 
                 </StackPanel>
 
