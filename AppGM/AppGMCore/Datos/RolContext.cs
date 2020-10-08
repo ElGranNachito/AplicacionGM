@@ -7,12 +7,53 @@ namespace AppGM.Core
         // Modelos ---
         public DbSet<ModeloRol> Rols { get; set; }
 
-        public DbSet<ModeloPersonaje> Personajes { get; set; }
-        public DbSet<ModeloServant> Servants { get; set; }
-        public DbSet<ModeloMaster> Masters { get; set; }
-        public DbSet<ModeloInvocacion> Invocaciones { get; set; }
+        public DbSet<ModeloTiradaBase> TiradasBase { get; set; }
+        public DbSet<ModeloTiradaStat> TiradasStat { get; set; }
+        public DbSet<ModeloTiradaVariable> TiradasVariables { get; set; }
+        public DbSet<ModeloTiradaDeDaño> TiradasDaño { get; set; }
 
-        
+        public DbSet<ModeloCaracteristicas> Caracteristicases { get; set; }
+
+        public DbSet<ModeloCondicion> Condiciones { get; set; }
+
+        public DbSet<ModeloPersonaje> Personajes { get; set; }
+        public DbSet<ModeloPersonajeJugable> PersonajesJugables { get; set; }
+        public DbSet<ModeloMaster> Masters { get; set; }
+        public DbSet<ModeloServant> Servants { get; set; }
+        public DbSet<ModeloInvocacion> Invocaciones { get; set; }
+        public DbSet<ModeloInvocacionTemporal> InvocacionesTemporales { get; set; }
+        public DbSet<ModeloInvocacionCondicionada> InvocacionesCondicionadas { get; set; }
+
+        public DbSet<ModeloParticipante> Participantes { get; set; }
+        public DbSet<ModeloAccion> AccionesDeParticipantes { get; set; }
+        public DbSet<ModeloAdministradorDeCombate> AdministradorDeCombates { get; set; }
+
+        public DbSet<ModeloEfecto> Efectos { get; set; }
+        public DbSet<ModeloEfectoTemporal> EfectoTemporales { get; set; }
+
+        public DbSet<ModeloSlot> Slots { get; set; }
+
+        public DbSet<ModeloUtilizable> Utilizables { get; set; }
+        public DbSet<ModeloPortable> Portables { get; set; }
+        public DbSet<ModeloDefensivo> PortablesDefensivos { get; set; }
+        public DbSet<ModeloDefensivoAbsoluto> PortablesDefensivosAbsolutos { get; set; }
+        public DbSet<ModeloOfensivo> PortablesOfensivos { get; set; }
+        public DbSet<ModeloItem> Items { get; set; }
+        public DbSet<ModeloConsumible> ItemsConsumibles { get; set; }
+        public DbSet<ModeloArmasDistancia> ItemsArmasDistancias { get; set; }
+
+        public DbSet<ModeloModificadorDeStatBase> ModificadoresDeStatBases { get; set; }
+        public DbSet<ModeloModificadorDeStatPrimitivos> ModificadoresDeStatPrimitivos { get; set; }
+        public DbSet<ModeloModificadorDeStatClase> ModificadoresDeStatClases { get; set; }
+        public DbSet<ModeloModificadorDeDefensa> ModificadoresDeStatDefensas { get; set; }
+
+        public DbSet<ModeloLimitador> Limitadores { get; set; }
+        public DbSet<ModeloCargasHabilidad> CargasHabilidad { get; set; }
+
+        public DbSet<ModeloHabilidad> Habilidades { get; set; }
+        public DbSet<ModeloPerk> Perks { get; set; }
+        public DbSet<ModeloMagia> Magias { get; set; }
+        public DbSet<ModeloNoblePhantasm> NoblePhantasms { get; set; }
 
         // Relaciones ---
         public DbSet<TIPersonajeEfecto> PersonajeEfectos { get; set; }
@@ -20,6 +61,8 @@ namespace AppGM.Core
         public DbSet<TIPersonajePortable> PersonajePortables { get; set; }
         public DbSet<TIPersonajeDefensivo> PersonajeDefensivos { get; set; }
         public DbSet<TIPersonajeDefensivoAbsoluto> PersonajeDefensivosAbsolutos { get; set; }
+        public DbSet<TIPersonajeOfensivo> PersonajeOfensivos { get; set; }
+        public DbSet<TIPersonajeItem> PersonajeItems { get; set; }
         public DbSet<TIPersonajeConsumible> PersonajeConsumibles { get; set; }
         public DbSet<TIPersonajeArmaDistancia> PersonajeArmasDistancias { get; set; }
         public DbSet<TIPersonajePersonaje> PersonajeAliados { get; set; }
@@ -30,14 +73,59 @@ namespace AppGM.Core
 
         public DbSet<TIServantNoblePhantasm> ServantNoblePhantasms { get; set; }
 
+        public DbSet<TIPersonajeJugableCaracteristicas> PersonajeJugableCaracteristicas { get; set; }
+        public DbSet<TIPersonajeJugableInvocacion> PersonajeJugableInvocaciones { get; set; }
 
+        public DbSet<TIInvocacionPersonaje> InvocacionPersonajes { get; set; }
+        public DbSet<TIInvocacionEfecto> InvocacionEfectos { get; set; }
+
+        public DbSet<TIParticipantePersonaje> ParticipantePersonajes { get; set; }
+        public DbSet<TIParticipanteAccion> ParticipanteAcciones { get; set; }
+        public DbSet<TIAdministradorDeCombateParticipante> AdministradorDeCombateParticipantes { get; set; }
+
+        public DbSet<TIEfectoModificadorDeStatBase> EfectoModificadoresDeStatBase { get; set; }
+
+        public DbSet<TISlotItem> SlotItems { get; set; }
+
+        public DbSet<TIUtilizableTiradaBase> UtilizableTiradasBase { get; set; }
+        public DbSet<TIUtilizableModificadorDeStatBase> UtilizableModificadoresDeStatBase { get; set; }
+        public DbSet<TIUtilizableEfecto> UtilizableEfectos { get; set; }
+
+        public DbSet<TIPortableSlots> PortableSlots { get; set; }
+        public DbSet<TIPortableModificadorDeStatBase> PortableModificadoresDeStatBase { get; set; }
+        public DbSet<TIOfensivoTiradaDeDaño> OfensivoTiradasDeDaño { get; set; }
+        public DbSet<TIOfensivoEfecto> OfensivoEfectos { get; set; }
+
+        public DbSet<TIArmasDistanciaTiradaVariable> ArmasDistanciaTiradasVariable { get; set; }
+        public DbSet<TIArmasDistanciaTiradaDeDaño> ArmasDistanciaTiradasDeDaños { get; set; }
+        public DbSet<TIArmasDistanciaEfecto> ArmasDistanciaEfectos { get; set; }
+
+        public DbSet<TIModificadorDeStatBaseTiradaBase> ModificadorDeStatBaseTiradasBase { get; set; }
+
+        public DbSet<TIHabilidadLimitador> HabilidadLimitadores { get; set; }
+        public DbSet<TIHabilidadCargasHabilidad> HabilidadCargasHabilidad { get; set; }
+        public DbSet<TIHabilidadTiradaBase> HabilidadTiradasBase { get; set; }
+        public DbSet<TIHabilidadTiradaDeDaño> HabilidadTiradasDeDaño { get; set; }
+        public DbSet<TIHabilidadItem> HabilidadItems { get; set; }
+        public DbSet<TIHabilidadInvocacion> HabilidadInvocaciones { get; set; }
+        public DbSet<TIHabilidadEfecto> HabilidadEfectos { get; set; }
+
+        // TODO: Agregar las relaciones a medida que se sigan creando.
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder.UseSqlite("Data Source = datitosrol.db");
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // TODO: Agregar muchas cosas :u
+            // TODO: Agregar modelos y relaciones a medida que se sigan creando.
+
+            // Tiradas:
+            modelBuilder.Entity<ModeloTiradaBase>().ToTable("ModeloTiradaBase")
+                .HasDiscriminator<int>("Clase")
+                .HasValue<ModeloTiradaBase>(1)
+                .HasValue<ModeloTiradaStat>(2)
+                .HasValue<ModeloTiradaVariable>(3)
+                .HasValue<ModeloTiradaDeDaño>(4);
 
             // Persoanjes:
             modelBuilder.Entity<ModeloPersonaje>().ToTable("ModeloPersonaje")
@@ -224,12 +312,12 @@ namespace AppGM.Core
                 .HasForeignKey(ip => ip.IdParticipante);
 
             // Administrador de combate participantes:
-            modelBuilder.Entity<TIModeloAdministradorDeCombateParticipante>().HasKey(e => new { e.IdAdministradorDeCombate, e.IdParticipante });
+            modelBuilder.Entity<TIAdministradorDeCombateParticipante>().HasKey(e => new { e.IdAdministradorDeCombate, e.IdParticipante });
 
-            modelBuilder.Entity<TIModeloAdministradorDeCombateParticipante>()
+            modelBuilder.Entity<TIAdministradorDeCombateParticipante>()
                 .HasOne(i => i.Participante);
 
-            modelBuilder.Entity<TIModeloAdministradorDeCombateParticipante>()
+            modelBuilder.Entity<TIAdministradorDeCombateParticipante>()
                 .HasOne(i => i.AdministradorDeCombate)
                 .WithMany(p => p.Participantes)
                 .HasForeignKey(ip => ip.IdAdministradorDeCombate);

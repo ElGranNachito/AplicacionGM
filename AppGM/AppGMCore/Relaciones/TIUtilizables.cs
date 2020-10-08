@@ -48,12 +48,6 @@
         public ModeloSlot Slot { get; set; }
     }
 
-    public class TIPortableEfecto : TIPortable
-    {
-        public int IdEfecto { get; set; }
-        public ModeloEfecto Efecto { get; set; }
-    }
-    
     public class TIPortableModificadorDeStatBase : TIPortable
     {
         public int IdModificadorDeStat { get; set; }

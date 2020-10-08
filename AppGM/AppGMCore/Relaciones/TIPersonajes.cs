@@ -48,6 +48,13 @@ namespace AppGM.Core
         public ModeloOfensivo PortableOfensivo { get; set; }
     }
 
+    public class TIPersonajeItem : TIPersonaje
+    {
+        public int IdItem { get; set; }
+        public ModeloItem Item { get; set; }
+
+    }
+
     public class TIPersonajeConsumible : TIPersonaje
     {
         public int IdConsumible { get; set; }

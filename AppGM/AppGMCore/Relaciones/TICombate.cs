@@ -18,7 +18,7 @@
         public ModeloAccion Accion { get; set; }
     }
 
-    public class TIModeloAdministradorDeCombateParticipante
+    public class TIAdministradorDeCombateParticipante
     {
         public int IdAdministradorDeCombate { get; set; }
         public ModeloAdministradorDeCombate AdministradorDeCombate { get; set; }
