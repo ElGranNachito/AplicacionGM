@@ -10,10 +10,16 @@ namespace AppGM.Core
     {
         public static bool EsUnNumero(this char caracter)
         {
-            if ((int)caracter > 47 && (int)caracter < 58)
-                return true;
+            return (caracter > 47 && caracter < 58);
+        }
 
-            return false;
+        public static bool EsPunto(this char caracter)
+        {
+            return caracter == '.';
+        }
+        public static bool EstaVacio(this string cadena)
+        {
+            return cadena.Length == 0;
         }
     }
 }

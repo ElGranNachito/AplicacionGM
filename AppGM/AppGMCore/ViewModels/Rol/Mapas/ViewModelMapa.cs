@@ -1,11 +1,20 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
+using System.IO;
+using System.Linq;
 
 namespace AppGM.Core
 {
     public class ViewModelMapa : BaseViewModel
     {
-        #region Propiedades
+        #region Miembros
 
+        private ControladorMapa mControladorMapa;
+
+        #endregion
+
+        #region Propiedades
+        public string PathAImagen { get; set; }
         public double TamañoCanvasX
         {
             get => TamañoCanvas.X.Round(1);
@@ -46,13 +55,32 @@ namespace AppGM.Core
 
         public ViewModelMapa()
         {
-            PosicionIglesia = new ViewModelIngresoPosicion
+            mControladorMapa = new ControladorMapa
             {
-                TextoPosicionX = "50",
-                TextoPosicionY = "150",
-
-                mapa = this
+                modelo = new ModeloMapa
+                {
+                    EFormatoImagen = EFormatoImagen.Png,
+                    NombreMapa = "Seoul",
+                    PosicionesElementos = new List<TIMapaVector2>
+                    {
+                        new TIMapaVector2
+                        {
+                            Posicion = new ModeloVector2
+                            {
+                                X = 50,
+                                Y = 150
+                            }
+                        }
+                    }
+                }
             };
+            if (mControladorMapa.modelo.PosicionesElementos.Count != 0)
+            {
+                PosicionIglesia = new ViewModelIngresoPosicion(this, new Vector2(mControladorMapa.modelo.PosicionesElementos.First().Posicion.X, mControladorMapa.modelo.PosicionesElementos.First().Posicion.Y));
+            }
+
+            PathAImagen = "../../../Media/Imagenes/Mapas/" + 
+                mControladorMapa.modelo.NombreMapa + mControladorMapa.ObtenerExtension();
         }
     }
 }

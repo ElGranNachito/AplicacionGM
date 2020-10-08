@@ -87,9 +87,9 @@ namespace AppGM.Core
         #region Funciones
         private void EstablecerComandosCartaSeleccionarRol()
         {
-            CartaSeleccionarRol.Comando = new Comando(() =>
+            CartaSeleccionarRol.Comando = new Comando(async () =>
             {
-                SistemaPrincipal.CargarRol(RolActual);
+                await SistemaPrincipal.CargarRol(RolActual);
 
                 SistemaPrincipal.ObtenerInstancia<ViewModelAplicacion>().EPaginaActual =
                     EPaginaActual.PaginaPrincipalRol;

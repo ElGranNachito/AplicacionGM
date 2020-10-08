@@ -5,12 +5,17 @@ namespace AppGM.Core
 {
     public class ViewModelIngresoPosicion : BaseViewModel
     {
-        public ViewModelMapa mapa; 
-        public double PosicionX { get; set; }
-        public double PosicionY { get; set; }
+        #region Miembros
+
+        public ViewModelMapa mapa;
+
+        #endregion
+
+        #region Propiedades
+        public ViewModelVector2 Posicion { get; set; }
         public string TextoPosicionX
         {
-            get => PosicionX == 0 ? "" : PosicionX.Round(1).ToString();
+            get => Posicion.X == 0 ? "" : Posicion.X.Round(1).ToString();
             set
             {
                 if (mapa == null)
@@ -24,20 +29,20 @@ namespace AppGM.Core
                         return;
 
                     if (tmp < mapa.TamañoCanvasX)
-                        PosicionX = tmp;
+                        Posicion.X = tmp;
                     else
-                        PosicionX = mapa.TamañoCanvasX;
+                        Posicion.X = mapa.TamañoCanvasX;
 
                     return;
                 }
 
-                if (value.Length == 0)
-                    PosicionX = 0;
+                if (value.EstaVacio())
+                    Posicion.X = 0;
             }
         }
         public string TextoPosicionY
         {
-            get => PosicionY.Round(1).ToString();
+            get => Posicion.Y.Round(1).ToString();
             set
             {
                 if (mapa == null)
@@ -51,16 +56,33 @@ namespace AppGM.Core
                         return;
 
                     if (tmp < mapa.TamañoCanvasY)
-                        PosicionY = tmp;
+                        Posicion.Y = tmp;
                     else
-                        PosicionY = mapa.TamañoCanvasY;
+                        Posicion.Y = mapa.TamañoCanvasY;
 
                     return;
                 }
 
-                if (value.Length == 0)
-                    PosicionX = 0;
+                if (value.EstaVacio())
+                    Posicion.X = 0;
             }
         }
+        #endregion
+
+        #region Constructores
+        public ViewModelIngresoPosicion(ViewModelMapa _mapa, Vector2 _posicionInicial)
+        {
+            mapa = _mapa;
+
+            Posicion = new ViewModelVector2(_posicionInicial);
+        }
+
+        public ViewModelIngresoPosicion(ViewModelMapa _mapa)
+        {
+            mapa = _mapa;
+
+            Posicion = new ViewModelVector2(new Vector2(0, 0));
+        }
+        #endregion
     }
 }
