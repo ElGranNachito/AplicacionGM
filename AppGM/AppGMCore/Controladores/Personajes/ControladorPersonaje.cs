@@ -45,7 +45,7 @@ namespace AppGM.Core
 
         public event dUtilizarHabilidad OnUtilizarHabilidad = delegate { };
 
-        public delegate void dMoverse(Vector2D posicionAntigua, ref Vector2D posicionNueva);
+        public delegate void dMoverse(Vector2 posicionAntigua, ref Vector2 posicionNueva);
 
         public event dMoverse OnMoverse = delegate { };
 

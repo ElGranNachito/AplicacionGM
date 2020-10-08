@@ -26,6 +26,7 @@ namespace AppGM.Core
             ControladorRol = new ControladorRol(modelo);
 
             ComandoBotonFichas = new Comando(()=>SistemaPrincipal.ObtenerInstancia<ViewModelPaginaPrincipalRol>().EMenuActual = EMenuActualRol.SeleccionTipoFichas);
+            ComandoBotonMapas = new Comando(() => SistemaPrincipal.ObtenerInstancia<ViewModelPaginaPrincipalRol>().EMenuActual = EMenuActualRol.Mapas);
 
             ComandoBotonSalir = new Comando(()=>
             {

@@ -4,6 +4,7 @@ namespace AppGM.Core
 {
     public class DatosRol
     {
+        #region Propiedades
         public List<ControladorPersonaje<ModeloServant>> Servants { get; set; }
         public List<ControladorPersonaje<ModeloMaster>> Masters { get; set; }
         public List<ControladorInvocacion<ModeloInvocacion>> Invocaciones { get; set; }
@@ -15,18 +16,26 @@ namespace AppGM.Core
         public List<ControladorConsumible<ModeloConsumible>> Consumibles { get; set; }
         public List<ControladorArmaDistancia> ArmasDistancia { get; set; }
         public List<ControladorSlot> Slots { get; set; }
-        
         public List<ControladorHabilidad<ModeloPerk>> Perks { get; set; }
         public List<ControladorHabilidad<ModeloHabilidad>> Skills { get; set; }
         public List<ControladorHabilidad<ModeloNoblePhantasm>> NoblePhantasms { get; set; }
         public List<ControladorMagia> Magias { get; set; }
-         
         public List<ControladorEfecto<ModeloEfecto>> Efectos { get; set; }
         public List<ControladorCondicion> Condiciones { get; set; }
-         
         public List<ControladorAdministradorDeCombate> CombatesActivos { get; set; }
-         
         public List<ControladorLimitador> Limitadores { get; set; }
         public List<ControladorCargasHabilidad> CargasHabilidades { get; set; }
+
+        //El primer mapa siempre es el principal
+        public List<ControladorMapa> Mapas { get; set; } 
+        #endregion
+
+        public DatosRol(ModeloRol _modeloRol)
+        {
+            using (RolContext datos = new RolContext())
+            {
+
+            }
+        }
     }
 }

@@ -2,6 +2,8 @@
 {
     public class ControladorRol : ControladorBase<ModeloRol>
     {
+        public DatosRol datos;
+
         #region Eventos
 
         public delegate void dAvanzarDia(ref ushort nuevoDia);
@@ -14,6 +16,8 @@
         public ControladorRol(ModeloRol _modelo)
         {
             modelo = _modelo;
+
+
         } 
 
         #endregion

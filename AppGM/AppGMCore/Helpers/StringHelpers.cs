@@ -1,4 +1,7 @@
-﻿namespace AppGM.Core
+﻿using System;
+using System.Linq;
+
+namespace AppGM.Core
 {
     /// <summary>
     /// Contiene varios helpers para lidiar con strings y chars
@@ -7,7 +10,7 @@
     {
         public static bool EsUnNumero(this char caracter)
         {
-            if ((int) caracter > 47 && (int) caracter < 58)
+            if ((int)caracter > 47 && (int)caracter < 58)
                 return true;
 
             return false;

@@ -27,4 +27,13 @@
         public ModeloParticipante Participante { get; set; }
     }
 
+    public class TIModeloAdministradorDeCombateMapa
+    {
+        public int IdAdministradorDeCombate { get; set; }
+        public ModeloAdministradorDeCombate AdministradorDeCombate { get; set; }
+
+        public int IdMapa { get; set; }
+        public ModeloMapa Mapa { get; set; }
+    }
+
 }
