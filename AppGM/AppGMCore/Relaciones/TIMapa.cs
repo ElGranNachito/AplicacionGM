@@ -6,6 +6,6 @@
         public ModeloMapa Mapa { get; set; }
 
         public int IdVector { get; set; }
-        public Vector2 Posicion { get; set; }
+        public ModeloVector2 Posicion { get; set; }
     }
 }

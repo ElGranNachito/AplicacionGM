@@ -4,6 +4,13 @@ namespace AppGM.Core
 {
     public class RolContext : DbContext
     {
+        #region Miembros
+
+        private string mNombreRolSeleccionado;
+
+        #endregion
+
+        #region Propiedades
         // Modelos ---
         public DbSet<ModeloRol> Rols { get; set; }
 
@@ -12,7 +19,7 @@ namespace AppGM.Core
         public DbSet<ModeloMaster> Masters { get; set; }
         public DbSet<ModeloInvocacion> Invocaciones { get; set; }
 
-        
+
 
         // Relaciones ---
         public DbSet<TIPersonajeEfecto> PersonajeEfectos { get; set; }
@@ -29,11 +36,11 @@ namespace AppGM.Core
         public DbSet<TIPersonajeModificadorDeDefensa> PersonajeModificadoresDeDefensa { get; set; }
 
         public DbSet<TIServantNoblePhantasm> ServantNoblePhantasms { get; set; }
+        #endregion
 
-
-
+        #region Configuracion de la base de datos
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.UseSqlite("Data Source = datitosrol.db");
+            => optionsBuilder.UseSqlite($"Data Source = Db{mNombreRolSeleccionado}.db");
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -56,7 +63,7 @@ namespace AppGM.Core
                 .HasOne(i => i.Personaje)
                 .WithMany(p => p.Efectos)
                 .HasForeignKey(ip => ip.IdPersonaje);
-            
+
             // - Personaje utilizables
             modelBuilder.Entity<TIPersonajeUtilizable>().HasKey(e => new { e.IdPersonaje, e.IdUtilizable });
 
@@ -103,7 +110,7 @@ namespace AppGM.Core
 
 
             // - Personaje skills
-            modelBuilder.Entity<TIPersonajeHabilidad>().HasKey(e => new {e.IdPersonaje, e.IdHabilidad });
+            modelBuilder.Entity<TIPersonajeHabilidad>().HasKey(e => new { e.IdPersonaje, e.IdHabilidad });
 
             modelBuilder.Entity<TIPersonajeHabilidad>()
                 .HasOne(i => i.Habilidad);
@@ -278,7 +285,7 @@ namespace AppGM.Core
                 .WithOne(p => p.TiradaDeUso);
 
             // - Utilizable modificador de stat base
-            modelBuilder.Entity<TIUtilizableModificadorDeStatBase>().HasKey(e => new {e.IdUtilizable, e.IdModificadorStatBase });
+            modelBuilder.Entity<TIUtilizableModificadorDeStatBase>().HasKey(e => new { e.IdUtilizable, e.IdModificadorStatBase });
 
             modelBuilder.Entity<TIUtilizableModificadorDeStatBase>()
                 .HasOne(i => i.ModificadorDeStatBase);
@@ -370,7 +377,7 @@ namespace AppGM.Core
             modelBuilder.Entity<TIArmasDistanciaTiradaDeDaño>()
                 .HasOne(i => i.ArmasDistancia)
                 .WithOne(p => p.TiradaDeDaño);
-            
+
             // - Armas distancia tirada variable
             modelBuilder.Entity<TIArmasDistanciaTiradaVariable>().HasKey(e => new { e.IdArmasDistancia, e.IdTirada });
 
@@ -505,5 +512,15 @@ namespace AppGM.Core
                 .HasForeignKey(ip => ip.IdHabilidad);
 
         }
+        #endregion
+
+        #region Constructores
+
+        public RolContext(string _nombreRolSeleccionado)
+        {
+            mNombreRolSeleccionado = _nombreRolSeleccionado;
+        }
+
+        #endregion
     }
 }

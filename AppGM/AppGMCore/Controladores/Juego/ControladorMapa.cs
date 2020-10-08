@@ -2,6 +2,11 @@
 {
     public class ControladorMapa : ControladorBase<ModeloMapa>
     {
+        //Constructor temporal, despues se eliminara
+        public ControladorMapa()
+        {
+            
+        }
         public ControladorMapa(ModeloMapa _modeloMapa)
         {
             modelo = _modeloMapa;

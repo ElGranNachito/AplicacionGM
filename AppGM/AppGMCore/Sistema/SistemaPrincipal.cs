@@ -1,4 +1,5 @@
-﻿using Ninject;
+﻿using System.Threading.Tasks;
+using Ninject;
 
 namespace AppGM.Core
 {
@@ -12,7 +13,9 @@ namespace AppGM.Core
     public static class SistemaPrincipal
     {
         #region Propiedades
-        public static IKernel Kernel { get; set; } = new StandardKernel(); 
+        public static IKernel Kernel { get; set; } = new StandardKernel();
+
+        public static ViewModelPaginaPrincipalRol RolSeleccionado => ObtenerInstancia<ViewModelPaginaPrincipalRol>();
 
         #endregion
 
@@ -26,20 +29,28 @@ namespace AppGM.Core
         {
             CrearViewModels();
         }
-        public static void CargarRol(ModeloRol modelo)
+        public static async Task CargarRol(ModeloRol modelo)
         {
             //TODO: Cargar base da datos en base al nombre/id del rol
 
-            Kernel.Bind<ViewModelPaginaPrincipalRol>().ToConstant(new ViewModelPaginaPrincipalRol(modelo));
+            await CargarDatosRol();
+
+            Kernel.Bind<ViewModelPaginaPrincipalRol>()    .ToConstant(new ViewModelPaginaPrincipalRol(modelo));
             Kernel.Bind<ViewModelMenuSeleccionTipoFicha>().ToConstant(new ViewModelMenuSeleccionTipoFicha());
             Kernel.Bind<ViewModelListaFichasVistaFichas>().ToConstant(new ViewModelListaFichasVistaFichas());
-            Kernel.Bind<ViewModelMapa>().ToConstant(new ViewModelMapa());
+            Kernel.Bind<ViewModelMapa>()                  .ToConstant(new ViewModelMapa());
 
             ObtenerInstancia<ViewModelAplicacion>().TituloVentana = modelo.Nombre;
         }
         public static T ObtenerInstancia<T>()
         {
             return Kernel.Get<T>();
+        }
+
+        private static async Task CargarDatosRol()
+        {
+            await RolSeleccionado.ControladorRol.datosRol.CargarDatos();
+            RolSeleccionado.ControladorRol.datosRol.CerrarConexion();
         }
         private static void CrearViewModels()
         {

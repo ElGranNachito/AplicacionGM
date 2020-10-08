@@ -2,7 +2,7 @@
 {
     public class ControladorRol : ControladorBase<ModeloRol>
     {
-        public DatosRol datos;
+        public DatosRol datosRol;
 
         #region Eventos
 
@@ -17,7 +17,7 @@
         {
             modelo = _modelo;
 
-
+            datosRol = new DatosRol(modelo);
         } 
 
         #endregion

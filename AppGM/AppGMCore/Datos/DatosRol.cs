@@ -1,9 +1,17 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AppGM.Core
 {
     public class DatosRol
     {
+        #region Miembros
+
+        private RolContext mDBRol;
+
+        #endregion
+
         #region Propiedades
         public List<ControladorPersonaje<ModeloServant>> Servants { get; set; }
         public List<ControladorPersonaje<ModeloMaster>> Masters { get; set; }
@@ -30,12 +38,28 @@ namespace AppGM.Core
         public List<ControladorMapa> Mapas { get; set; } 
         #endregion
 
+        /// <summary>
+        /// Crea la clase y abre conexion con la base de datos
+        /// </summary>
+        /// <param name="_modeloRol"></param>
         public DatosRol(ModeloRol _modeloRol)
         {
-            using (RolContext datos = new RolContext())
+            mDBRol = new RolContext(_modeloRol.Nombre);
+        }
+        public async Task CargarDatos()
+        {
+            await Task.Run(() =>
             {
+                //TODO: Cargar datos
+            });
+        }
 
-            }
+        /// <summary>
+        /// Funcion que cierra la conexion con la base de datos. Es necesario llamarla al terminar de utilizar la base de datos
+        /// </summary>
+        public void CerrarConexion()
+        {
+            mDBRol.Dispose();
         }
     }
 }
