@@ -22,7 +22,7 @@ namespace AppGM.Core
             {
                 TamañoCanvas.X = value;
 
-                MitadTamañoCanvas.DispararPropertyChanged(new PropertyChangedEventArgs(nameof(ViewModelVector2.X)));
+                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(MitadTamañoCanvasX)));
             }
         }
 
@@ -33,9 +33,14 @@ namespace AppGM.Core
             {
                 TamañoCanvas.Y = value;
 
-                MitadTamañoCanvas.DispararPropertyChanged(new PropertyChangedEventArgs(nameof(ViewModelVector2.Y)));
+                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(MitadTamañoCanvasY)));
             }
         }
+
+        public double MitadTamañoCanvasX => (TamañoCanvas.X / 2.0f).Round(1);
+        public double MitadTamañoCanvasY => (TamañoCanvas.Y / 2.0f).Round(1);
+
+        public ViewModelVector2 TamañoCanvas { get; set; } = new ViewModelVector2();
 
         public ViewModelVector2 TamañoImagenesPosicion { get; set; } = new ViewModelVector2(100, 120);
 
@@ -43,16 +48,11 @@ namespace AppGM.Core
             -(TamañoImagenesPosicion.X / 2.0f).Round(1),
             -(TamañoImagenesPosicion.Y / 2.0f).Round(1));
 
-        public ViewModelVector2 TamañoCanvas { get; set; } = new ViewModelVector2();
-
-        public ViewModelVector2 MitadTamañoCanvas => new ViewModelVector2(
-            (TamañoCanvas.X / 2.0f).Round(1),
-            (TamañoCanvas.Y / 2.0f).Round(1));
-
-        public ViewModelIngresoPosicion PosicionIglesia { get; set; } 
+        public ViewModelIngresoPosicion PosicionIglesia { get; set; }
 
         #endregion
 
+        #region Constructores
         public ViewModelMapa()
         {
             mControladorMapa = new ControladorMapa
@@ -79,8 +79,9 @@ namespace AppGM.Core
                 PosicionIglesia = new ViewModelIngresoPosicion(this, new Vector2(mControladorMapa.modelo.PosicionesElementos.First().Posicion.X, mControladorMapa.modelo.PosicionesElementos.First().Posicion.Y));
             }
 
-            PathAImagen = "../../../Media/Imagenes/Mapas/" + 
+            PathAImagen = "../../../Media/Imagenes/Mapas/" +
                 mControladorMapa.modelo.NombreMapa + mControladorMapa.ObtenerExtension();
-        }
+        } 
+        #endregion
     }
 }

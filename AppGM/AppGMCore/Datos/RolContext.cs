@@ -231,12 +231,12 @@ namespace AppGM.Core
                 .HasForeignKey(ip => ip.IdParticipante);
 
             // Administrador de combate participantes:
-            modelBuilder.Entity<TIModeloAdministradorDeCombateParticipante>().HasKey(e => new { e.IdAdministradorDeCombate, e.IdParticipante });
+            modelBuilder.Entity<TIAdministradorDeCombateParticipante>().HasKey(e => new { e.IdAdministradorDeCombate, e.IdParticipante });
 
-            modelBuilder.Entity<TIModeloAdministradorDeCombateParticipante>()
+            modelBuilder.Entity<TIAdministradorDeCombateParticipante>()
                 .HasOne(i => i.Participante);
 
-            modelBuilder.Entity<TIModeloAdministradorDeCombateParticipante>()
+            modelBuilder.Entity<TIAdministradorDeCombateParticipante>()
                 .HasOne(i => i.AdministradorDeCombate)
                 .WithMany(p => p.Participantes)
                 .HasForeignKey(ip => ip.IdAdministradorDeCombate);

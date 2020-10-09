@@ -102,7 +102,7 @@
                     </Grid.RowDefinitions>
 
                     <TextBlock Text="0"/>
-                    <TextBlock Text="{Binding MitadTamañoCanvas.Y, Mode=OneWay}" Grid.Row="1" Grid.RowSpan="2" VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding MitadTamañoCanvasY, Mode=OneWay}" Grid.Row="1" Grid.RowSpan="2" VerticalAlignment="Center"/>
                     <TextBlock Text="{Binding TamañoCanvasY, Mode=OneWay}" Grid.Row="2"/>
                 </Grid>
 
@@ -115,7 +115,7 @@
 
                     <Grid>
 
-                        <TextBlock Text="{Binding MitadTamañoCanvas.X}" 
+                        <TextBlock Text="{Binding MitadTamañoCanvasX}" 
                                    HorizontalAlignment="Center"/>
                         <TextBlock Text="{Binding TamañoCanvasX}"
                                    HorizontalAlignment="Right"/>
