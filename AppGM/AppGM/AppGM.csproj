@@ -102,11 +102,14 @@
     <Compile Include="Paginas\Inicio\UserControlRolItemOld.xaml.cs">
       <DependentUpon>UserControlRolItemOld.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Paginas\Rol\AdministradorDeCombate\MenuSeleccionCombate.xaml.cs">
+      <DependentUpon>MenuSeleccionCombate.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Paginas\Rol\Mapas\UserControlIngresoPosicion.xaml.cs">
       <DependentUpon>UserControlIngresoPosicion.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Paginas\Rol\Mapas\UserControlMapaPrincipal.xaml.cs">
-      <DependentUpon>UserControlMapaPrincipal.xaml</DependentUpon>
+    <Compile Include="Paginas\Rol\Mapas\UserControlMapa.xaml.cs">
+      <DependentUpon>UserControlMapa.xaml</DependentUpon>
     </Compile>
     <Compile Include="Paginas\Rol\UserControlBotonMenuRol.xaml.cs">
       <DependentUpon>UserControlBotonMenuRol.xaml</DependentUpon>
@@ -157,6 +160,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Paginas\Rol\AdministradorDeCombate\MenuSeleccionCombate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Paginas\Rol\UserControlBotonMenuRol.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -185,7 +192,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Paginas\Rol\Mapas\UserControlMapaPrincipal.xaml">
+    <Page Include="Paginas\Rol\Mapas\UserControlMapa.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

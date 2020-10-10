@@ -222,13 +222,14 @@
     <Compile Include="Sistema\SistemaPrincipal.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\DesignModels\BaseDesignModel.cs" />
-    <Compile Include="ViewModels\DesignModels\DesignModelRolItem.cs" />
+    <Compile Include="ViewModels\DesignModels\DesignModelCombateItem.cs" />
     <Compile Include="ViewModels\DesignModels\DesingModelListaRoles.cs" />
     <Compile Include="ViewModels\Rol\Fichas\ViewModelFichaItem.cs" />
     <Compile Include="ViewModels\Rol\Fichas\ViewModelListaFichas.cs" />
     <Compile Include="ViewModels\Rol\Fichas\ViewModelListaFichasVistaFichas.cs" />
     <Compile Include="ViewModels\Rol\Mapas\ViewModelIngresoPosicion.cs" />
     <Compile Include="ViewModels\Rol\Mapas\ViewModelMapa.cs" />
+    <Compile Include="ViewModels\Rol\Mapas\ViewModelMapaPrincipal.cs" />
     <Compile Include="ViewModels\ViewModelAplicacion.cs" />
     <Compile Include="ViewModels\Rol\Fichas\ViewModelMenuSeleccionTipoFicha.cs" />
     <Compile Include="ViewModels\ViewModelCarta.cs" />
@@ -236,7 +237,7 @@
     <Compile Include="ViewModels\ViewModelsGlobos\ViewModelGlobo.cs" />
     <Compile Include="ViewModels\ViewModelListaRoles.cs" />
     <Compile Include="ViewModels\ViewModelPaginaPrincipal.cs" />
-    <Compile Include="ViewModels\ViewModelRolItem.cs" />
+    <Compile Include="ViewModels\Rol\AdministradorDeCombates\ViewModelCombateItem.cs" />
     <Compile Include="ViewModels\Rol\ViewModelPaginaPrincipalRol.cs" />
     <Compile Include="ViewModels\ViewModelVector2.cs" />
   </ItemGroup>
@@ -244,9 +245,7 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModels\Rol\AdministradorDeCombates\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

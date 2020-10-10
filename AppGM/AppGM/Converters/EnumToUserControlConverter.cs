@@ -37,7 +37,10 @@ namespace AppGM
                         case EMenuActualRol.VistaFichas:
                             return new UserControlListaFichasViewFichas();
                         case EMenuActualRol.Mapas:
-                            return new UserControlMapaPrincipal();
+                            return new UserControlMapa
+                            {
+                                ViewModel = SistemaPrincipal.ObtenerInstancia<ViewModelMapaPrincipal>()
+                            };
                     }
                     break;
             }

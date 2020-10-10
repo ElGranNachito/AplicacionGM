@@ -18,8 +18,8 @@ namespace AppGM.Core
     {
         #region Controladores
 
-        public ControladorTiradaVariable<ModeloTiradaDeDaño> ControladorTiradaDeDaño { get; set; }
-        public ControladorTiradaVariable<ModeloTiradaVariable> ControladorTiradaVariable { get; set; }
+        public ControladorTiradaVariable ControladorTiradaDeDaño { get; set; }
+        public ControladorTiradaVariable ControladorTiradaVariable { get; set; }
 
         public List<ControladorEfecto<ModeloEfecto>> ControladorEfectoQueInflige { get; set; }
 

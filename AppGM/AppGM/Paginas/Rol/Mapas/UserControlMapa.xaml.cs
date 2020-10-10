@@ -8,13 +8,11 @@ namespace AppGM
     /// <summary>
     /// Lógica de interacción para UserControlMapa.xaml
     /// </summary>
-    public partial class UserControlMapaPrincipal : BaseUserControl<ViewModelMapa>
+    public partial class UserControlMapa : BaseUserControl<ViewModelMapa>
     {
-        public UserControlMapaPrincipal()
+        public UserControlMapa()
         {
             InitializeComponent();
-
-            ViewModel = SistemaPrincipal.ObtenerInstancia<ViewModelMapa>();
         }
 
         private void OnMapaSizeXChanged(object sender, SizeChangedEventArgs e)

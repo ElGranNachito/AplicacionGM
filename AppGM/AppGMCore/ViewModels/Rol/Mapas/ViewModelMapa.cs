@@ -9,7 +9,7 @@ namespace AppGM.Core
     {
         #region Miembros
 
-        private ControladorMapa mControladorMapa;
+        protected ControladorMapa mControladorMapa;
 
         #endregion
 
@@ -48,8 +48,6 @@ namespace AppGM.Core
             -(TamañoImagenesPosicion.X / 2.0f).Round(1),
             -(TamañoImagenesPosicion.Y / 2.0f).Round(1));
 
-        public ViewModelIngresoPosicion PosicionIglesia { get; set; }
-
         #endregion
 
         #region Constructores
@@ -74,13 +72,9 @@ namespace AppGM.Core
                     }
                 }
             };
-            if (mControladorMapa.modelo.PosicionesElementos.Count != 0)
-            {
-                PosicionIglesia = new ViewModelIngresoPosicion(this, new Vector2(mControladorMapa.modelo.PosicionesElementos.First().Posicion.X, mControladorMapa.modelo.PosicionesElementos.First().Posicion.Y));
-            }
 
             PathAImagen = "../../../Media/Imagenes/Mapas/" +
-                mControladorMapa.modelo.NombreMapa + mControladorMapa.ObtenerExtension();
+                          mControladorMapa.modelo.NombreMapa + mControladorMapa.ObtenerExtension();
         } 
         #endregion
     }

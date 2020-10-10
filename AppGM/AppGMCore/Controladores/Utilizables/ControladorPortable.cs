@@ -13,7 +13,7 @@ namespace AppGM.Core
         public ControladorModificadorDeStatBase<ModeloModificadorDeStatBase> ControladorVentajasDeEquiparlo { get; set; }
 
         // Portable ofensivo
-        public List<ControladorTiradaBase<ModeloTiradaDeDaño>> ControladorTiradaDeDaño { get; set; }
+        public List<ControladorTiradaDaño> ControladorTiradaDeDaño { get; set; }
 
         public ControladorEfecto<ModeloEfecto> ControladorEfectoQueInflige { get; set; }
 

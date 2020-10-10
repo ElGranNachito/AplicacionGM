@@ -6,7 +6,7 @@ namespace AppGM.Core
     public class ViewModelListaRoles : BaseViewModel
     {
         #region Propiedades
-        public List<ViewModelRolItem> Roles { get; set; } 
+        public List<ViewModelCombateItem> Roles { get; set; } 
         #endregion
     }
 }

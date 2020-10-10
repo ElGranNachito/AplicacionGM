@@ -10,8 +10,8 @@ namespace AppGM.Core
         public ControladorLimitador ControladorLimiteDeUsos { get; set; }
         public ControladorCargasHabilidad ControladorCargasHabilidad { get; set; }
 
-        public List<ControladorTiradaBase<ModeloTiradaBase>> ControladorTiradasDeUso { get; set; }
-        public ControladorTiradaVariable<ModeloTiradaDeDaño> ControladorTiradaDeDaño { get; set; }
+        public List<IControladorTiradaBase> ControladorTiradasDeUso { get; set; }
+        public ControladorTiradaVariable ControladorTiradaDeDaño { get; set; }
 
         public List<ControladorUtilizable<ModeloItem>> ControladorItemInvocacion { get; set; }
         public List<ControladorUtilizable<ModeloItem>> ControladorItemsQueCuesta { get; set; }

@@ -6,7 +6,7 @@ namespace AppGM.Core
     {
         #region Controladores
 
-        public ControladorTiradaBase<ModeloTiradaBase> ControaldorTiradaBase { get; set; }
+        public IControladorTiradaBase ControaldorTiradaBase { get; set; }
 
         #endregion
 

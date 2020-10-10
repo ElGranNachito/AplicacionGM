@@ -2,7 +2,7 @@
 
 namespace AppGM.Core
 {
-    public abstract class ModeloTiradaBase
+    public class ModeloTiradaBase
     {
         [Key]
         public int IdTirada { get; set; }
