@@ -5,7 +5,7 @@
         #region Controladores
 
         private IControladorTiradaBase ControladorTiradaDeUso { get; set; }
-        public ControladorModificadorDeStatBase<ModeloModificadorDeStatBase> ControladorVentajaAlUtilizarlo { get; set; }
+        public IControladorModificadorDeStatBase ControladorVentajaAlUtilizarlo { get; set; }
         public ControladorEfecto<ModeloEfecto> ControladorEfectoSobreElUsuario { get; set; }
         public ControladorEfecto<ModeloEfecto> ControladorEfectoSobreElObjetivo { get; set; }
 

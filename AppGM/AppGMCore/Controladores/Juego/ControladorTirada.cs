@@ -14,6 +14,7 @@
 
         #endregion
     }
+
     public abstract class ControladorTiradaBase<TipoTirada> : ControladorBase<TipoTirada>, IControladorTiradaBase
         where TipoTirada : ModeloTiradaBase, new()
     {

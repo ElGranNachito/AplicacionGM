@@ -9,8 +9,8 @@ namespace AppGM.Core
 
         public List<ControladorSlot> ControladorSlots { get; set; }
 
-        public ControladorModificadorDeStatBase<ModeloModificadorDeStatBase> ControladorDesventajasDeEquiparlo { get; set; }
-        public ControladorModificadorDeStatBase<ModeloModificadorDeStatBase> ControladorVentajasDeEquiparlo { get; set; }
+        public IControladorModificadorDeStatBase ControladorDesventajasDeEquiparlo { get; set; }
+        public IControladorModificadorDeStatBase ControladorVentajasDeEquiparlo { get; set; }
 
         // Portable ofensivo
         public List<ControladorTiradaDaño> ControladorTiradaDeDaño { get; set; }

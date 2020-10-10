@@ -2,8 +2,27 @@
 
 namespace AppGM.Core
 {
-    public class ControladorModificadorDeStatBase<TipoModificador> : ControladorBase<ModeloModificadorDeStatBase>
+    public interface IControladorModificadorDeStatBase
     {
+        #region Controladores
+
+        IControladorTiradaBase ControaldorTiradaBase { get; set; }
+
+        #endregion
+
+        #region Funciones
+
+        void AplicarModificacion(ControladorPersonaje<ModeloPersonaje> personaje);
+        void QuitarModificacion(ControladorPersonaje<ModeloPersonaje> personaje);
+
+        #endregion
+    }
+
+    public class ControladorModificadorDeStatBase<TipoModificador> : ControladorBase<ModeloModificadorDeStatBase>, IControladorModificadorDeStatBase
+        where TipoModificador : ModeloModificadorDeStatBase, new()
+    {
+        #region Implementacion Interfaz
+
         #region Controladores
 
         public IControladorTiradaBase ControaldorTiradaBase { get; set; }
@@ -12,13 +31,15 @@ namespace AppGM.Core
 
         #region Funciones
 
-        public virtual void AplicarModificacion(ControladorPersonaje<ModeloPersonaje> p)
+        public virtual void AplicarModificacion(ControladorPersonaje<ModeloPersonaje> personaje)
         {
         }
 
-        public virtual void QuitarModificacion(ControladorPersonaje<ModeloPersonaje> p)
+        public virtual void QuitarModificacion(ControladorPersonaje<ModeloPersonaje> personaje)
         {
         }
+
+        #endregion 
 
         #endregion
     }
@@ -35,11 +56,11 @@ namespace AppGM.Core
 
         #region Funciones
 
-        public override void AplicarModificacion(ControladorPersonaje<ModeloPersonaje> p)
+        public override void AplicarModificacion(ControladorPersonaje<ModeloPersonaje> personaje)
         {
         }
 
-        public override void QuitarModificacion(ControladorPersonaje<ModeloPersonaje> p)
+        public override void QuitarModificacion(ControladorPersonaje<ModeloPersonaje> personaje)
         {
         }
 
