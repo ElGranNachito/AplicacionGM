@@ -3,22 +3,19 @@ using System.Collections.Generic;
 
 namespace AppGM.Core
 {
-    public class ControladorEfecto<TipoEfecto> : ControladorBase<TipoEfecto>
-        where TipoEfecto : ModeloEfecto, new()
+    public class ControladorEfecto<TipoEfecto> : ControladorBase<ModeloEfecto>
     {
-        #region Propiedades
+        //TODO: Organizar
 
         public bool EstaSiendoAplicado { get; set; }
 
-        #endregion
+        //Func<ControladorPersonaje, bool> PuedeSerAplicado
 
         #region Controladores
 
-        public List<IControladorModificadorDeStatBase> ControladoresModificaciones { get; set; }
+        public List<ControladorModificadorDeStatBase<ModeloModificadorDeStatBase>> ControladoresModificaciones;
 
         #endregion
-
-        //public Func<ControladorPersonaje<ModeloPersonaje>, bool> PuedeSerAplicado
 
         #region Eventos
 
@@ -48,20 +45,7 @@ namespace AppGM.Core
 
     public class ControladorEfectoTemporal : ControladorEfecto<ModeloEfectoTemporal>
     {
-        #region Constructor
-
-        public ControladorEfectoTemporal(ModeloEfectoTemporal _modeloEfectoTemporal)
-        {
-            modelo = _modeloEfectoTemporal;
-        }
-
-        #endregion
-
-        #region Propiedades
-
         public ushort TurnosRestantes { get; set; }
-
-        #endregion
 
         #region Eventos
 
@@ -79,11 +63,10 @@ namespace AppGM.Core
 
         #region Funciones
 
-        public override void AplicarEfecto(ControladorPersonaje<ModeloPersonaje> personaje)
+        public override void AplicarEfecto(ControladorPersonaje<ModeloPersonaje> p)
         {
-            base.AplicarEfecto(personaje);
+            base.AplicarEfecto(p);
         }
-
         public void AlPasarTurno()
         {
             //TODO: Disminuir turnos restantes

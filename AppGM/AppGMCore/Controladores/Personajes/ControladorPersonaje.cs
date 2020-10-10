@@ -37,7 +37,7 @@ namespace AppGM.Core
         public event dModificarAliados OnAñadirAliado = delegate { };
         public event dModificarAliados OnQuitarAliado = delegate { };
 
-        public delegate void dRecibirEfecto(ControladorEfecto<ModeloEfecto> efectoRecibido, ControladorPersonaje<ModeloPersonaje> objetivo, ControladorPersonaje<ModeloPersonaje>[] instigadores);
+        public delegate void dRecibirEfecto(ControladorEfecto<ModeloPersonaje> efectoRecibido, ControladorPersonaje<ModeloPersonaje> objetivo, ControladorPersonaje<ModeloPersonaje>[] instigadores);
 
         public event dRecibirEfecto OnRecibirEfecto = delegate { };
 

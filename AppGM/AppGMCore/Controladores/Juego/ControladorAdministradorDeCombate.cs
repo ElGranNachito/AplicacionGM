@@ -8,15 +8,6 @@
 
         #endregion
 
-        #region Constructor
-
-        public ControladorAdministradorDeCombate(ModeloAdministradorDeCombate _modeloAdministradorDeCombate)
-        {
-            modelo = _modeloAdministradorDeCombate;
-        }
-
-        #endregion
-
         #region Eventos
 
         public delegate void dAvanzarTurno(ref uint TurnoActual);
