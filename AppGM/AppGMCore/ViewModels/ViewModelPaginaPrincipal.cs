@@ -19,7 +19,7 @@ namespace AppGM.Core
 
         public ModeloRol RolActual => Roles[mIndiceRolActual];
 
-        public ViewModelGlobo GloboInfoRol { get; set; } = new ViewModelGlobo
+        public ViewModelGlobo<ViewModelContenidoGloboInfoRol> GloboInfoRol { get; set; } = new ViewModelGlobo<ViewModelContenidoGloboInfoRol>
         {
             ColaGloboVisible = false,
 
@@ -102,7 +102,7 @@ namespace AppGM.Core
                 MouseSobreCartaRol = true;
                 GloboInfoRol.GloboVisible = true;
 
-                ((ViewModelContenidoGloboInfoRol)GloboInfoRol.ViewModelContenido).ModeloRol = RolActual;
+                GloboInfoRol.ViewModelContenido.ModeloRol = RolActual;
             });
 
             CartaSeleccionarRol.ComandoMouseLeave = new Comando(() =>

@@ -15,7 +15,9 @@ namespace AppGM.Core
         #region Propiedades
         public static IKernel Kernel { get; set; } = new StandardKernel();
 
+        public static ViewModelAplicacion Aplicacion => ObtenerInstancia<ViewModelAplicacion>();
         public static ViewModelPaginaPrincipalRol RolSeleccionado => ObtenerInstancia<ViewModelPaginaPrincipalRol>();
+        public static ViewModelMenuSeleccionCombate MenuSeleccionCombate => ObtenerInstancia<ViewModelMenuSeleccionCombate>();
 
         #endregion
 
@@ -35,12 +37,9 @@ namespace AppGM.Core
 
             await CargarDatosRol();
 
-            Kernel.Bind<ViewModelPaginaPrincipalRol>()    .ToConstant(new ViewModelPaginaPrincipalRol(modelo));
-            Kernel.Bind<ViewModelMenuSeleccionTipoFicha>().ToConstant(new ViewModelMenuSeleccionTipoFicha());
-            Kernel.Bind<ViewModelListaFichasVistaFichas>().ToConstant(new ViewModelListaFichasVistaFichas());
-            Kernel.Bind<ViewModelMapaPrincipal>()         .ToConstant(new ViewModelMapaPrincipal());
+            CrearViewModelsRol(modelo);
 
-            ObtenerInstancia<ViewModelAplicacion>().TituloVentana = modelo.Nombre;
+            Aplicacion.TituloVentana = modelo.Nombre;
         }
         public static T ObtenerInstancia<T>()
         {
@@ -56,6 +55,15 @@ namespace AppGM.Core
         {
             Kernel.Bind<ViewModelAplicacion>().ToConstant(new ViewModelAplicacion());
             Kernel.Bind<ViewModelPaginaPrincipal>().ToConstant(new ViewModelPaginaPrincipal());
+        }
+
+        private static void CrearViewModelsRol(ModeloRol modelo)
+        {
+            Kernel.Bind<ViewModelPaginaPrincipalRol>()    .ToConstant(new ViewModelPaginaPrincipalRol(modelo));
+            Kernel.Bind<ViewModelMenuSeleccionTipoFicha>().ToConstant(new ViewModelMenuSeleccionTipoFicha());
+            Kernel.Bind<ViewModelListaFichasVistaFichas>().ToConstant(new ViewModelListaFichasVistaFichas());
+            Kernel.Bind<ViewModelMapaPrincipal>()         .ToConstant(new ViewModelMapaPrincipal());
+            Kernel.Bind<ViewModelMenuSeleccionCombate>()  .ToConstant(new ViewModelMenuSeleccionCombate());
         }
         #endregion
     }

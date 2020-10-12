@@ -8,6 +8,7 @@ namespace AppGM
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if(value.GetType() == typeof(ViewModelContenidoGloboInfoRol))
             return new UserControlContenidoGloboInfoRol
             {
                 DataContext = value ?? new ViewModelContenidoGloboInfoRol
@@ -18,6 +19,11 @@ namespace AppGM
                         Descripcion = "Caca"
                     }
                 }
+            };
+
+            return new UserControlInfoCombateGlobo
+            {
+                DataContext = value
             };
         }
     }

@@ -41,6 +41,8 @@ namespace AppGM
                             {
                                 ViewModel = SistemaPrincipal.ObtenerInstancia<ViewModelMapaPrincipal>()
                             };
+                        case EMenuActualRol.AdministrarCombates:
+                            return new UserControlMenuSeleccionCombate();
                     }
                     break;
             }

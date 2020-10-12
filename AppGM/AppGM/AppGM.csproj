@@ -93,17 +93,20 @@
     <Compile Include="Paginas\Inicio\UserControlCarta.xaml.cs">
       <DependentUpon>UserControlCarta.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Paginas\Inicio\UserControlListaRolItems.xaml.cs">
-      <DependentUpon>UserControlListaRolItems.xaml</DependentUpon>
+    <Compile Include="Paginas\Rol\AdministradorDeCombate\SeleccionDeCombate\UserControlInfoCombateGlobo.xaml.cs">
+      <DependentUpon>UserControlInfoCombateGlobo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Rol\AdministradorDeCombate\SeleccionDeCombate\UserControlListaCombates.xaml.cs">
+      <DependentUpon>UserControlListaCombates.xaml</DependentUpon>
     </Compile>
     <Compile Include="Paginas\Inicio\UserControlRolItem.xaml.cs">
       <DependentUpon>UserControlRolItem.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Paginas\Inicio\UserControlRolItemOld.xaml.cs">
-      <DependentUpon>UserControlRolItemOld.xaml</DependentUpon>
+    <Compile Include="Paginas\Rol\AdministradorDeCombate\SeleccionDeCombate\UserControlCombateItem.xaml.cs">
+      <DependentUpon>UserControlCombateItem.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Paginas\Rol\AdministradorDeCombate\MenuSeleccionCombate.xaml.cs">
-      <DependentUpon>MenuSeleccionCombate.xaml</DependentUpon>
+    <Compile Include="Paginas\Rol\AdministradorDeCombate\SeleccionDeCombate\UserControlMenuSeleccionCombate.xaml.cs">
+      <DependentUpon>UserControlMenuSeleccionCombate.xaml</DependentUpon>
     </Compile>
     <Compile Include="Paginas\Rol\Mapas\UserControlIngresoPosicion.xaml.cs">
       <DependentUpon>UserControlIngresoPosicion.xaml</DependentUpon>
@@ -148,7 +151,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Paginas\Inicio\UserControlListaRolItems.xaml">
+    <Page Include="Paginas\Rol\AdministradorDeCombate\SeleccionDeCombate\UserControlInfoCombateGlobo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Paginas\Rol\AdministradorDeCombate\SeleccionDeCombate\UserControlListaCombates.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -156,11 +163,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Paginas\Inicio\UserControlRolItemOld.xaml">
+    <Page Include="Paginas\Rol\AdministradorDeCombate\SeleccionDeCombate\UserControlCombateItem.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Paginas\Rol\AdministradorDeCombate\MenuSeleccionCombate.xaml">
+    <Page Include="Paginas\Rol\AdministradorDeCombate\SeleccionDeCombate\UserControlMenuSeleccionCombate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

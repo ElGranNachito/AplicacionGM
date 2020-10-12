@@ -224,6 +224,8 @@
     <Compile Include="ViewModels\DesignModels\BaseDesignModel.cs" />
     <Compile Include="ViewModels\DesignModels\DesignModelCombateItem.cs" />
     <Compile Include="ViewModels\DesignModels\DesingModelListaRoles.cs" />
+    <Compile Include="ViewModels\ViewModelsGlobos\ViewModelInfoCombateGlobo.cs" />
+    <Compile Include="ViewModels\Rol\AdministradorDeCombates\SeleccionDeCombate\ViewModelMenuSeleccionCombate.cs" />
     <Compile Include="ViewModels\Rol\Fichas\ViewModelFichaItem.cs" />
     <Compile Include="ViewModels\Rol\Fichas\ViewModelListaFichas.cs" />
     <Compile Include="ViewModels\Rol\Fichas\ViewModelListaFichasVistaFichas.cs" />
@@ -235,9 +237,9 @@
     <Compile Include="ViewModels\ViewModelCarta.cs" />
     <Compile Include="ViewModels\ViewModelsGlobos\ViewModelContenidoGloboInfoRol.cs" />
     <Compile Include="ViewModels\ViewModelsGlobos\ViewModelGlobo.cs" />
-    <Compile Include="ViewModels\ViewModelListaRoles.cs" />
+    <Compile Include="ViewModels\Rol\AdministradorDeCombates\SeleccionDeCombate\ViewModelListaCombates.cs" />
     <Compile Include="ViewModels\ViewModelPaginaPrincipal.cs" />
-    <Compile Include="ViewModels\Rol\AdministradorDeCombates\ViewModelCombateItem.cs" />
+    <Compile Include="ViewModels\Rol\AdministradorDeCombates\SeleccionDeCombate\ViewModelCombateItem.cs" />
     <Compile Include="ViewModels\Rol\ViewModelPaginaPrincipalRol.cs" />
     <Compile Include="ViewModels\ViewModelVector2.cs" />
   </ItemGroup>

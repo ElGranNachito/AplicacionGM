@@ -25,14 +25,15 @@ namespace AppGM.Core
         {
             ControladorRol = new ControladorRol(modelo);
 
-            ComandoBotonFichas = new Comando(()=>SistemaPrincipal.ObtenerInstancia<ViewModelPaginaPrincipalRol>().EMenuActual = EMenuActualRol.SeleccionTipoFichas);
-            ComandoBotonMapas = new Comando(() => SistemaPrincipal.ObtenerInstancia<ViewModelPaginaPrincipalRol>().EMenuActual = EMenuActualRol.Mapas);
+            ComandoBotonFichas   = new Comando(() => SistemaPrincipal.RolSeleccionado.EMenuActual = EMenuActualRol.SeleccionTipoFichas);
+            ComandoBotonMapas    = new Comando(() => SistemaPrincipal.RolSeleccionado.EMenuActual = EMenuActualRol.Mapas);
+            ComandoBotonCombates = new Comando(() => SistemaPrincipal.RolSeleccionado.EMenuActual = EMenuActualRol.AdministrarCombates);
 
             ComandoBotonSalir = new Comando(()=>
             {
                 //TODO: Limpiar los datos del rol actual
 
-                SistemaPrincipal.ObtenerInstancia<ViewModelAplicacion>().EPaginaActual =
+                SistemaPrincipal.Aplicacion.EPaginaActual =
                         EPaginaActual.PaginaPrincipal;
             });
         } 

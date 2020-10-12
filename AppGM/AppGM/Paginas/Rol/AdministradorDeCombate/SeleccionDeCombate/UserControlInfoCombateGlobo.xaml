@@ -1,0 +1,51 @@
+﻿<UserControl x:Class="AppGM.UserControlInfoCombateGlobo"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AppGM"
+             mc:Ignorable="d" 
+             d:DesignHeight="150" d:DesignWidth="300">
+    <Grid Background="White">
+
+
+        <StackPanel>
+            <!-- Nombre del combate -->
+            <TextBlock>
+                <Run Text="Nombre: " 
+                     FontWeight="Bold" 
+                     FontSize="{StaticResource TamañoFontPequeño}"/>
+                <Run Text="{Binding Combate.Nombre}"
+                     FontSize="{StaticResource TamañoFontPequeño}"/>
+            </TextBlock>
+
+            <!-- Turno acutal dentro del combate -->
+            <TextBlock>
+                <Run Text="Turno actual: " 
+                     FontWeight="Bold" 
+                     FontSize="{StaticResource TamañoFontPequeño}"/>
+                <Run Text="{Binding Combate.TurnoActual}"
+                     FontSize="{StaticResource TamañoFontPequeño}"/>
+            </TextBlock>
+
+            <!-- Cantidad de participantes -->
+            <TextBlock>
+                <Run Text="Cantidad de participantes: " 
+                     FontWeight="Bold" 
+                     FontSize="{StaticResource TamañoFontPequeño}"/>
+                <Run Text="{Binding Combate.Participantes.Count, Mode=OneWay}"
+                     FontSize="{StaticResource TamañoFontPequeño}"/>
+            </TextBlock>
+
+            <!-- Participantes -->
+            <TextBlock>
+                <Run Text="Participantes: " 
+                     FontWeight="Bold" 
+                     FontSize="{StaticResource TamañoFontPequeño}"/>
+                <Run Text="{Binding Participantes, Mode=OneWay}"
+                     FontSize="{StaticResource TamañoFontPequeño}"/>
+            </TextBlock>
+        </StackPanel>
+            
+    </Grid>
+</UserControl>

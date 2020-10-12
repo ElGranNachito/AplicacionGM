@@ -53,10 +53,10 @@ namespace AppGM.Viewmodels
                 DispararPropertyChanged(new PropertyChangedEventArgs(nameof(ResizeBorderThickness)));
                 DispararPropertyChanged(new PropertyChangedEventArgs(nameof(CaptionHeight)));
 
-                SistemaPrincipal.ObtenerInstancia<ViewModelAplicacion>().VentanaMaximizada = mVentana.EstaMaximizada();
+                SistemaPrincipal.Aplicacion.VentanaMaximizada = mVentana.EstaMaximizada();
             };
 
-            SistemaPrincipal.ObtenerInstancia<ViewModelAplicacion>().PropertyChanged += (obj, e) =>
+            SistemaPrincipal.Aplicacion.PropertyChanged += (obj, e) =>
             {
                 DispararPropertyChanged(new PropertyChangedEventArgs(e.PropertyName));
             };
@@ -82,12 +82,12 @@ namespace AppGM.Viewmodels
 
         public string TituloVentana
         {
-            get => SistemaPrincipal.ObtenerInstancia<ViewModelAplicacion>().TituloVentana;
+            get => SistemaPrincipal.Aplicacion.TituloVentana;
         }
 
         public EPaginaActual EPaginaActual
         {
-            get => SistemaPrincipal.ObtenerInstancia<ViewModelAplicacion>().EPaginaActual;
+            get => SistemaPrincipal.Aplicacion.EPaginaActual;
         }
 
         #endregion
