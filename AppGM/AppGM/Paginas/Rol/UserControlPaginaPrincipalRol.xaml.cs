@@ -12,7 +12,7 @@ namespace AppGM
         {
             InitializeComponent();
 
-            DataContext = SistemaPrincipal.ObtenerInstancia<ViewModelPaginaPrincipalRol>();
+            DataContext = SistemaPrincipal.RolSeleccionado;
         }
     }
 }

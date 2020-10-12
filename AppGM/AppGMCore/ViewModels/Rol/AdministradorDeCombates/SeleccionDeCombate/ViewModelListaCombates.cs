@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 namespace AppGM.Core
 {
-    public class ViewModelListaRoles : BaseViewModel
+    public class ViewModelListaCombates : BaseViewModel
     {
         #region Propiedades
-        public List<ViewModelCombateItem> Roles { get; set; } 
+        public List<ViewModelCombateItem> Combates { get; set; } 
         #endregion
     }
 }

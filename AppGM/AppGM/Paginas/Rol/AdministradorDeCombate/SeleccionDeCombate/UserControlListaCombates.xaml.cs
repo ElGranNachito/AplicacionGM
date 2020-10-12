@@ -5,11 +5,11 @@ using AppGM.Core;
 namespace AppGM
 {
     /// <summary>
-    /// Lógica de interacción para UserControlListaRolItems.xaml
+    /// Lógica de interacción para UserControlListaCombates.xaml
     /// </summary>
-    public partial class UserControlListaRolItems : UserControl
+    public partial class UserControlListaCombates : UserControl
     {
-        public UserControlListaRolItems()
+        public UserControlListaCombates()
         {
             InitializeComponent();
         }

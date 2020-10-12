@@ -9,7 +9,7 @@ namespace AppGM
     {
         #region Propiedades
 
-        public Grosor AnchoMargenCartas => SistemaPrincipal.ObtenerInstancia<ViewModelAplicacion>().VentanaMaximizada ? new Grosor(20) : new Grosor(5, 20);
+        public Grosor AnchoMargenCartas => SistemaPrincipal.Aplicacion.VentanaMaximizada ? new Grosor(20) : new Grosor(5, 20);
         public ICommand ComandoBotonFichasServants { get; set; }
         public ICommand ComandoBotonFichasMasters { get; set; }
         public ICommand ComandoBotonFichasInvocaciones { get; set; }
@@ -26,7 +26,7 @@ namespace AppGM
 
         public ViewModelMenuSeleccionTipoFicha()
         {
-            SistemaPrincipal.ObtenerInstancia<ViewModelAplicacion>().PropertyChanged += (o, a) =>
+            SistemaPrincipal.Aplicacion.PropertyChanged += (o, a) =>
             {
                 if (a.PropertyName == nameof(ViewModelAplicacion.VentanaMaximizada))
                     DispararPropertyChanged(new PropertyChangedEventArgs(nameof(AnchoMargenCartas)));
@@ -152,7 +152,7 @@ namespace AppGM
                 ETipoPersonajeSeleccionado = ETipoPersonaje.Servant;
 
                 //Cambiamos la pagina actual
-                SistemaPrincipal.ObtenerInstancia<ViewModelPaginaPrincipalRol>().EMenuActual =
+                SistemaPrincipal.RolSeleccionado.EMenuActual =
                     EMenuActualRol.VistaFichas;
             });
 
@@ -168,7 +168,7 @@ namespace AppGM
                 //Establecemos que el tipo de personaje seleccionado fue Master
                 ETipoPersonajeSeleccionado = ETipoPersonaje.Master;
 
-                SistemaPrincipal.ObtenerInstancia<ViewModelPaginaPrincipalRol>().EMenuActual =
+                SistemaPrincipal.RolSeleccionado.EMenuActual =
                     EMenuActualRol.VistaFichas;
             });
 
@@ -184,7 +184,7 @@ namespace AppGM
                 //Establecemos que el tipo de personaje seleccionado fue Invocacion
                 ETipoPersonajeSeleccionado = ETipoPersonaje.Invocacion;
 
-                SistemaPrincipal.ObtenerInstancia<ViewModelPaginaPrincipalRol>().EMenuActual =
+                SistemaPrincipal.RolSeleccionado.EMenuActual =
                     EMenuActualRol.VistaFichas;
             });
 
@@ -200,7 +200,7 @@ namespace AppGM
                 //Establecemos que el tipo de personaje seleccionado fue NPC
                 ETipoPersonajeSeleccionado = ETipoPersonaje.NPC;
 
-                SistemaPrincipal.ObtenerInstancia<ViewModelPaginaPrincipalRol>().EMenuActual =
+                SistemaPrincipal.RolSeleccionado.EMenuActual =
                     EMenuActualRol.VistaFichas;
             });
         }
