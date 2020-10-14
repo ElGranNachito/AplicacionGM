@@ -9,6 +9,15 @@ namespace AppGM.Core
         public List<ControladorUtilizable<ModeloItem>> ControladorItemsAlmacenados { get; set; }
 
         #endregion
+        
+        #region Constructor
+
+        public ControladorSlot(ModeloSlot _modeloSlot)
+        {
+            modelo = _modeloSlot;
+        }
+
+        #endregion
 
         #region Funciones
 

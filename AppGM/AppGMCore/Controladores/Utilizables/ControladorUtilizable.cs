@@ -1,13 +1,28 @@
 ﻿namespace AppGM.Core
 {
-    public abstract class ControladorUtilizable<TipoUtilizable> : IUtilizableConObjetivos, IUtilizableSinObjetivos
+    //TODO: Decidir si es abstracta o no
+    public class ControladorUtilizable<TipoUtilizable> : ControladorBase<TipoUtilizable>, IUtilizableConObjetivos, IUtilizableSinObjetivos
+    where TipoUtilizable : ModeloUtilizable, new()
     {
         #region Controladores
 
         private IControladorTiradaBase ControladorTiradaDeUso { get; set; }
-        public ControladorModificadorDeStatBase<ModeloModificadorDeStatBase> ControladorVentajaAlUtilizarlo { get; set; }
+        public IControladorModificadorDeStatBase ControladorVentajaAlUtilizarlo { get; set; }
         public ControladorEfecto<ModeloEfecto> ControladorEfectoSobreElUsuario { get; set; }
         public ControladorEfecto<ModeloEfecto> ControladorEfectoSobreElObjetivo { get; set; }
+
+        #endregion
+
+        #region Constructores
+
+        public ControladorUtilizable()
+        {
+        }
+
+        public ControladorUtilizable(ModeloUtilizable _modeloUtilizable)
+        {
+            modelo = (TipoUtilizable) _modeloUtilizable;
+        }
 
         #endregion
 

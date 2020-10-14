@@ -2,7 +2,8 @@
 
 namespace AppGM.Core
 {
-    public abstract class ModeloUtilizable
+    //TODO: Decidir si es abstracta o no
+    public class ModeloUtilizable
     {
         //Id
         [Key]

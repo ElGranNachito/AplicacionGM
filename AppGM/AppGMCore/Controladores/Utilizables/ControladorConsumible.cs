@@ -2,8 +2,22 @@
 
 namespace AppGM.Core
 {
-    public class ControladorConsumible<TipoConsumible> : ControladorUtilizable<ModeloConsumible>
+    public class ControladorConsumible<TipoConsumible> : ControladorUtilizable<TipoConsumible>
+    where TipoConsumible : ModeloConsumible, new()
     {
+        #region Constructor
+
+        public ControladorConsumible()
+        {
+        }
+
+        public ControladorConsumible(ModeloConsumible _modeloConsumible)
+        {
+            modelo = (TipoConsumible)_modeloConsumible;
+        }
+
+        #endregion
+
         #region Funciones
 
         public void Recargar(ushort cant)
@@ -22,6 +36,15 @@ namespace AppGM.Core
         public ControladorTiradaVariable ControladorTiradaVariable { get; set; }
 
         public List<ControladorEfecto<ModeloEfecto>> ControladorEfectoQueInflige { get; set; }
+
+        #endregion
+
+        #region Constructor
+
+        public ControladorArmaDistancia(ModeloArmasDistancia _modeloArmasDistancia)
+        {
+            modelo = _modeloArmasDistancia;
+        }
 
         #endregion
 

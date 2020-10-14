@@ -4,6 +4,15 @@ namespace AppGM.Core
 {
     public class ControladorCondicion : ControladorBase<ModeloCondicion>
     {
+        #region Constructor
+
+        public ControladorCondicion(ModeloCondicion _modeloCondicion)
+        {
+            modelo = _modeloCondicion;
+        }
+
+        #endregion
+
         #region Funciones
 
         //LambdaExpression mLambda
