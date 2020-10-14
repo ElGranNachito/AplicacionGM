@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Windows.Markup.Localizer;
 using AppGM.Core;
 
 namespace AppGM
@@ -8,23 +9,17 @@ namespace AppGM
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if(value.GetType() == typeof(ViewModelContenidoGloboInfoRol))
-            return new UserControlContenidoGloboInfoRol
+            switch (value)
             {
-                DataContext = value ?? new ViewModelContenidoGloboInfoRol
-                {
-                    ModeloRol = new ModeloRol
-                    {
-                        Nombre = "Hola",
-                        Descripcion = "Caca"
-                    }
-                }
-            };
+                case ViewModelContenidoGloboInfoRol vm:
+                    return new UserControlContenidoGloboInfoRol {DataContext = vm};
 
-            return new UserControlInfoCombateGlobo
-            {
-                DataContext = value
-            };
+                case ViewModelInfoCombateGlobo vm:
+                    return new UserControlInfoCombateGlobo {DataContext = vm};
+
+                default:
+                    return null;
+            }
         }
     }
 }

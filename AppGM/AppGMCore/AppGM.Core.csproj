@@ -224,6 +224,9 @@
     <Compile Include="ViewModels\DesignModels\BaseDesignModel.cs" />
     <Compile Include="ViewModels\DesignModels\DesignModelCombateItem.cs" />
     <Compile Include="ViewModels\DesignModels\DesingModelListaRoles.cs" />
+    <Compile Include="ViewModels\Rol\AdministradorDeCombates\Combate\ViewModelCombate.cs" />
+    <Compile Include="ViewModels\Rol\AdministradorDeCombates\Combate\ViewModelListaParticipantes.cs" />
+    <Compile Include="ViewModels\Rol\AdministradorDeCombates\Combate\ViewModelParticipante.cs" />
     <Compile Include="ViewModels\ViewModelsGlobos\ViewModelInfoCombateGlobo.cs" />
     <Compile Include="ViewModels\Rol\AdministradorDeCombates\SeleccionDeCombate\ViewModelMenuSeleccionCombate.cs" />
     <Compile Include="ViewModels\Rol\Fichas\ViewModelFichaItem.cs" />

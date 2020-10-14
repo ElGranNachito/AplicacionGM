@@ -43,6 +43,8 @@ namespace AppGM
                             };
                         case EMenuActualRol.AdministrarCombates:
                             return new UserControlMenuSeleccionCombate();
+                        case EMenuActualRol.Combate:
+                            return new UserControlCombate();
                     }
                     break;
             }

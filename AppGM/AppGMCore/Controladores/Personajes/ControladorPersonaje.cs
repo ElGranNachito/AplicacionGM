@@ -2,7 +2,8 @@
 
 namespace AppGM.Core
 {
-    public class ControladorPersonaje<TipoPersonaje> : ControladorBase<ModeloPersonaje>
+    public class ControladorPersonaje<TipoPersonaje> : ControladorBase<TipoPersonaje>
+        where TipoPersonaje: ModeloPersonaje, new()
     {
         #region Controladores
 
@@ -56,6 +57,14 @@ namespace AppGM.Core
         public delegate void dRealizarAccion(string descripcion);
 
         public event dRealizarAccion OnRealizarAccion = delegate { };
+
+        #endregion
+
+        #region Constructores
+        public ControladorPersonaje(TipoPersonaje _modeloPersonaje)
+        {
+            modelo = _modeloPersonaje;
+        }
 
         #endregion
 

@@ -93,6 +93,15 @@
     <Compile Include="Paginas\Inicio\UserControlCarta.xaml.cs">
       <DependentUpon>UserControlCarta.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Paginas\Rol\AdministradorDeCombate\Combate\UserControlCombate.xaml.cs">
+      <DependentUpon>UserControlCombate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Rol\AdministradorDeCombate\Combate\UserControlListaPartipantes.xaml.cs">
+      <DependentUpon>UserControlListaPartipantes.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Rol\AdministradorDeCombate\Combate\UserControlParticipante.xaml.cs">
+      <DependentUpon>UserControlParticipante.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Paginas\Rol\AdministradorDeCombate\SeleccionDeCombate\UserControlInfoCombateGlobo.xaml.cs">
       <DependentUpon>UserControlInfoCombateGlobo.xaml</DependentUpon>
     </Compile>
@@ -148,6 +157,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Paginas\Inicio\UserControlCarta.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Paginas\Rol\AdministradorDeCombate\Combate\UserControlCombate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Paginas\Rol\AdministradorDeCombate\Combate\UserControlListaPartipantes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Paginas\Rol\AdministradorDeCombate\Combate\UserControlParticipante.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

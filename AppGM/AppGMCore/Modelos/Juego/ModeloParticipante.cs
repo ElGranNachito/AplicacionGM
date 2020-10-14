@@ -9,6 +9,7 @@ namespace AppGM.Core
         [Key]
         public int IdParticipante { get; set; }
         public int TiradaIniciativa { get; set; }
+        public bool EsSuTurno { get; set; }
 
         //Personaje participante
         public TIParticipantePersonaje Personaje { get; set; }

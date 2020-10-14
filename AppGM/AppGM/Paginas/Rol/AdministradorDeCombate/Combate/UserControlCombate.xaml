@@ -1,0 +1,83 @@
+﻿<UserControl x:Class="AppGM.UserControlCombate"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AppGM"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Background="White">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Barra superior -->
+        <Grid Grid.Row="0">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Boton salir -->
+            <Button Content="Salir"/>
+
+            <!-- Boton tirada -->
+            <Button Grid.Column="1" Content="Tirada" HorizontalAlignment="Center"/>
+
+            <!-- Turnos -->
+            <StackPanel Grid.Column="2" Orientation="Horizontal">
+
+                <Button Content="(-"/>
+                
+                <TextBlock Text="5" Margin="5 0"/>
+
+                <Button Content="-)"/>
+
+            </StackPanel>
+
+        </Grid>
+
+        <!-- Mapa y personajes -->
+        <Grid Grid.Row="1">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" MinWidth="600"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!--<local:UserControlMapa></local:UserControlMapa>-->
+
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="5*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <local:UserControlListaPartipantes DataContext="{Binding Participantes, Mode=OneWay}"/>
+
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button>
+                        <TextBlock Text="Agregar Particpante" TextWrapping="Wrap"/>
+                    </Button>
+
+                    <Button Grid.Column="1">
+                        <TextBlock Text="Quitar Participante" TextWrapping="Wrap"/>
+                    </Button>
+
+                </Grid>
+
+            </Grid>
+
+        </Grid>
+            
+    </Grid>
+</UserControl>

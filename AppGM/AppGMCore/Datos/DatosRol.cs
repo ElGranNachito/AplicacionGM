@@ -50,6 +50,10 @@ namespace AppGM.Core
         {
             await Task.Run(() =>
             {
+                if (mDBRol.Masters == null)
+                {
+
+                }
                 //TODO: Cargar datos
             });
         }

@@ -7,7 +7,7 @@ namespace AppGM.Core
     public class ViewModelCombateItem : BaseViewModel
     {
         #region Propiedades
-        public ModeloAdministradorDeCombate Combate { get; set; }
+        public ControladorAdministradorDeCombate Combate { get; set; }
         public ICommand ComandoClickeado { get; set; }
         public ICommand ComandoMouseEnter { get; set; }
         public ICommand ComandoMouseLeave { get; set; }
@@ -17,21 +17,24 @@ namespace AppGM.Core
         #region Constructores
         public ViewModelCombateItem()
         {
-            Combate = new ModeloAdministradorDeCombate
+            Combate = new ControladorAdministradorDeCombate
             {
-                IndicePersonajeTurnoActual = 2,
-                Nombre = "Combate super feroz",
-                Participantes = new List<TIAdministradorDeCombateParticipante>
+                modelo = new ModeloAdministradorDeCombate
                 {
-                    new TIAdministradorDeCombateParticipante
+                    IndicePersonajeTurnoActual = 2,
+                    Nombre = "Combate super feroz",
+                    Participantes = new List<TIAdministradorDeCombateParticipante>
                     {
-                        Participante = new ModeloParticipante
+                        new TIAdministradorDeCombateParticipante
                         {
-                            Personaje = new TIParticipantePersonaje
+                            Participante = new ModeloParticipante
                             {
-                                Personaje = new ModeloPersonaje
+                                Personaje = new TIParticipantePersonaje
                                 {
-                                    Nombre = "Juanito"
+                                    Personaje = new ModeloPersonaje
+                                    {
+                                        Nombre = "Juanito"
+                                    }
                                 }
                             }
                         }
@@ -42,7 +45,7 @@ namespace AppGM.Core
             ComandoMouseEnter = new Comando(
                 () =>
                 {
-                    SistemaPrincipal.MenuSeleccionCombate.GloboInfoCombate.ViewModelContenido.Combate = Combate;
+                    SistemaPrincipal.MenuSeleccionCombate.GloboInfoCombate.ViewModelContenido.Combate = Combate.modelo;
 
                     SistemaPrincipal.MenuSeleccionCombate.GloboInfoCombate.GloboVisible = true;
                 });
@@ -58,7 +61,9 @@ namespace AppGM.Core
             ComandoClickeado = new Comando(
                 () =>
                 {
+                    SistemaPrincipal.CombateActual.ActualizarCombateActual(Combate);
 
+                    SistemaPrincipal.RolSeleccionado.EMenuActual = EMenuActualRol.Combate;
                 });
         }
         #endregion

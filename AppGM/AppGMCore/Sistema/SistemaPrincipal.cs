@@ -15,9 +15,10 @@ namespace AppGM.Core
         #region Propiedades
         public static IKernel Kernel { get; set; } = new StandardKernel();
 
-        public static ViewModelAplicacion Aplicacion => ObtenerInstancia<ViewModelAplicacion>();
-        public static ViewModelPaginaPrincipalRol RolSeleccionado => ObtenerInstancia<ViewModelPaginaPrincipalRol>();
-        public static ViewModelMenuSeleccionCombate MenuSeleccionCombate => ObtenerInstancia<ViewModelMenuSeleccionCombate>();
+        public static ViewModelAplicacion           Aplicacion            => ObtenerInstancia<ViewModelAplicacion>();
+        public static ViewModelPaginaPrincipalRol   RolSeleccionado       => ObtenerInstancia<ViewModelPaginaPrincipalRol>();
+        public static ViewModelMenuSeleccionCombate MenuSeleccionCombate  => ObtenerInstancia<ViewModelMenuSeleccionCombate>();
+        public static ViewModelCombate              CombateActual         => ObtenerInstancia<ViewModelCombate>();
 
         #endregion
 
@@ -64,6 +65,7 @@ namespace AppGM.Core
             Kernel.Bind<ViewModelListaFichasVistaFichas>().ToConstant(new ViewModelListaFichasVistaFichas());
             Kernel.Bind<ViewModelMapaPrincipal>()         .ToConstant(new ViewModelMapaPrincipal());
             Kernel.Bind<ViewModelMenuSeleccionCombate>()  .ToConstant(new ViewModelMenuSeleccionCombate());
+            Kernel.Bind<ViewModelCombate>()               .ToConstant(new ViewModelCombate());
         }
         #endregion
     }
