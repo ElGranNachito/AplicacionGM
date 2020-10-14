@@ -1,12 +1,26 @@
 ﻿namespace AppGM.Core
 {
-    public class ControladorInvocacion<TipoInvocacion> : ControladorPersonaje<ModeloInvocacion>
+    public class ControladorInvocacion<TipoInvocacion> : ControladorPersonaje<TipoInvocacion>
+        where TipoInvocacion : ModeloInvocacion, new()
     {
         #region Controladores
 
         public ControladorPersonaje<ModeloPersonaje> ControladorInvocador { get; set; }
 
         public ControladorEfecto<ModeloEfecto> ControladorEfecto { get; set; }
+
+        #endregion
+
+        #region Constructor
+
+        public ControladorInvocacion()
+        {
+        }
+
+        public ControladorInvocacion(ModeloInvocacion _modeloInvocacion)
+        {
+            modelo = (TipoInvocacion) _modeloInvocacion;
+        }
 
         #endregion
 
@@ -22,6 +36,15 @@
 
     public class ControladorInvocacionTemporal : ControladorInvocacion<ModeloInvocacionTemporal>
     {
+        #region Constructor
+
+        public ControladorInvocacionTemporal(ModeloInvocacionTemporal _modeloInvocacionTemporal)
+        {
+            modelo = _modeloInvocacionTemporal;
+        }
+
+        #endregion
+
         #region Funciones
 
         public override void AvanzarTurno()
@@ -35,6 +58,15 @@
     public class ControladorInvocacionCondicionada : ControladorInvocacion<ModeloInvocacionCondicionada>
     {
         //public Func<ControladorPersonaje<ModeloPersonaje>, bool> DebeDesaparecer;
+
+        #region Constructor
+
+        public ControladorInvocacionCondicionada(ModeloInvocacionCondicionada _modeloInvocacionCondicionada)
+        {
+            modelo = _modeloInvocacionCondicionada;
+        }
+
+        #endregion
 
         #region Funciones
 

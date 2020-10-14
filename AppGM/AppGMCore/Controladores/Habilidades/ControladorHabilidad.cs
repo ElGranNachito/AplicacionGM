@@ -3,7 +3,8 @@ using System.Collections.Generic;
 
 namespace AppGM.Core
 {
-    public class ControladorHabilidad<TipoHabilidad> : ControladorBase<ModeloHabilidad>
+    public class ControladorHabilidad<TipoHabilidad> : ControladorBase<TipoHabilidad>
+    where TipoHabilidad : ModeloHabilidad, new()
     {
         #region Controladores
 
@@ -30,7 +31,20 @@ namespace AppGM.Core
 
         private Func<ControladorPersonaje<ModeloPersonaje>, bool> mPuedeSerUtilizada;
         private Func<ControladorPersonaje<ModeloPersonaje>, ControladorPersonaje<ModeloPersonaje>[], bool> mPuedeSerUtilizadaConObjetivos;
-        
+
+        #endregion
+
+        #region Constructor
+
+        public ControladorHabilidad()
+        {
+        }
+
+        public ControladorHabilidad(ModeloHabilidad _modeloHabilidad)
+        {
+            modelo = (TipoHabilidad)_modeloHabilidad;
+        }
+
         #endregion
 
         #region Eventos
@@ -59,6 +73,15 @@ namespace AppGM.Core
 
     public class ControladorMagia : ControladorHabilidad<ModeloMagia>
     {
+        #region Constructor
+
+        public ControladorMagia(ModeloMagia _modeloMagia)
+        {
+            modelo = _modeloMagia;
+        }
+
+        #endregion
+
         #region Funciones
 
         public virtual void CancelarCasteo(ControladorPersonaje<ModeloPersonaje> usuario)

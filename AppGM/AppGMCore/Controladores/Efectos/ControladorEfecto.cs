@@ -20,6 +20,19 @@ namespace AppGM.Core
 
         //public Func<ControladorPersonaje<ModeloPersonaje>, bool> PuedeSerAplicado
 
+        #region Constructor
+
+        public ControladorEfecto()
+        {
+        }
+
+        public ControladorEfecto(ModeloEfecto _modeloEfecto)
+        {
+            modelo = (TipoEfecto) _modeloEfecto;
+        }
+
+        #endregion
+
         #region Eventos
 
         public delegate void dAplicarEfecto(ControladorPersonaje<ModeloPersonaje> instigador, ControladorPersonaje<ModeloPersonaje>[] objetivos,

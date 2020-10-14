@@ -54,6 +54,15 @@ namespace AppGM.Core
 
         #endregion
 
+        #region Constructor
+
+        public ControladorModificadorDeStatClase(ModeloModificadorDeStatClase _modeloModificadorDeStatClase)
+        {
+            modelo = _modeloModificadorDeStatClase;
+        }
+
+        #endregion
+
         #region Funciones
 
         public override void AplicarModificacion(ControladorPersonaje<ModeloPersonaje> personaje)

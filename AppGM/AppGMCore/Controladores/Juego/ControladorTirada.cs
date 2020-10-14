@@ -19,9 +19,11 @@
         where TipoTirada : ModeloTiradaBase, new()
     {
         #region Implementacion Interfaz
+
         public int Resultado { get; set; }
 
         public virtual void RealizarTirada(object parametro) { } 
+
         #endregion
     }
 

@@ -3,7 +3,8 @@ using Microsoft.Win32.SafeHandles;
 
 namespace AppGM.Core
 {
-    public class ControladorPortable<TipoPortable> : ControladorUtilizable<ModeloPortable>
+    public class ControladorPortable<TipoPortable> : ControladorUtilizable<TipoPortable>
+    where TipoPortable : ModeloPortable, new()
     {
         #region Controladores
 
@@ -16,6 +17,19 @@ namespace AppGM.Core
         public List<ControladorTiradaDaño> ControladorTiradaDeDaño { get; set; }
 
         public ControladorEfecto<ModeloEfecto> ControladorEfectoQueInflige { get; set; }
+
+        #endregion
+
+        #region Constructor
+
+        public ControladorPortable()
+        {
+        }
+        
+        public ControladorPortable(ModeloPortable _modeloPortable)
+        {
+            modelo = (TipoPortable) _modeloPortable;
+        }
 
         #endregion
 
@@ -34,8 +48,22 @@ namespace AppGM.Core
         #endregion
     }
 
-    public class ControladorDefensivo<TipoDefensivo> : ControladorPortable<ModeloDefensivo>
+    public class ControladorDefensivo<TipoDefensivo> : ControladorPortable<TipoDefensivo>
+    where TipoDefensivo : ModeloDefensivo, new()
     {
+        #region Constructor
+
+        public ControladorDefensivo()
+        {
+        }
+
+        public ControladorDefensivo(ModeloDefensivo _modeloDefensivo)
+        {
+            modelo = (TipoDefensivo) _modeloDefensivo;
+        }
+
+        #endregion
+
         #region Funciones
 
         public virtual void RecibirDaño(int daño, out int dañoTrasReduccion, ETipoDeDaño tipoDeDaño)
@@ -49,6 +77,15 @@ namespace AppGM.Core
 
     public class ControladorDefensivoAbsoluto : ControladorDefensivo<ModeloDefensivoAbsoluto>
     {
+        #region Constructor
+
+        public ControladorDefensivoAbsoluto(ModeloDefensivoAbsoluto _modeloDefensivoAbsoluto)
+        {
+            modelo = _modeloDefensivoAbsoluto;
+        }
+
+        #endregion
+
         #region Funciones
 
         public override void RecibirDaño(int daño, out int dañoTrasReduccion, ETipoDeDaño tipoDeDaño)

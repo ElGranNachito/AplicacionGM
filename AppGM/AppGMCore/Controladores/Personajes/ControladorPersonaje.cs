@@ -2,8 +2,22 @@
 
 namespace AppGM.Core
 {
-    public class ControladorPersonaje<TipoPersonaje> : ControladorBase<ModeloPersonaje>
+    public class ControladorPersonaje<TipoPersonaje> : ControladorBase<TipoPersonaje>
+    where TipoPersonaje : ModeloPersonaje, new()
     {
+        #region Constructor
+
+        public ControladorPersonaje()
+        {
+        }
+
+        public ControladorPersonaje(ModeloPersonaje _modeloPersonaje)
+        {
+            modelo = (TipoPersonaje)_modeloPersonaje;
+        }
+
+        #endregion
+
         #region Controladores
 
         public List<TIPersonajeEfecto> Efectos { get; set; }
