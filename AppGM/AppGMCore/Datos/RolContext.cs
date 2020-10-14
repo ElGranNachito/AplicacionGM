@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace AppGM.Core
 {
@@ -13,30 +16,33 @@ namespace AppGM.Core
         #region Propiedades
         // Modelos ---
         public DbSet<ModeloRol> Rols { get; set; }
-
         public DbSet<ModeloPersonaje> Personajes { get; set; }
         public DbSet<ModeloServant> Servants { get; set; }
         public DbSet<ModeloMaster> Masters { get; set; }
         public DbSet<ModeloInvocacion> Invocaciones { get; set; }
+        public DbSet<ModeloAdministradorDeCombate> Combates { get; set; }
+        public DbSet<ModeloParticipante> Participantes { get; set; }
+        public DbSet<ModeloMapa> Mapas { get; set; }
 
 
 
         // Relaciones ---
         public DbSet<TIPersonajeEfecto> PersonajeEfectos { get; set; }
         public DbSet<TIPersonajeUtilizable> PersonajeUtilizables { get; set; }
-        public DbSet<TIPersonajePortable> PersonajePortables { get; set; }
         public DbSet<TIPersonajeDefensivo> PersonajeDefensivos { get; set; }
-        public DbSet<TIPersonajeDefensivoAbsoluto> PersonajeDefensivosAbsolutos { get; set; }
-        public DbSet<TIPersonajeConsumible> PersonajeConsumibles { get; set; }
         public DbSet<TIPersonajeArmaDistancia> PersonajeArmasDistancias { get; set; }
         public DbSet<TIPersonajePersonaje> PersonajeAliados { get; set; }
         public DbSet<TIPersonajePerk> PersonajePerks { get; set; }
         public DbSet<TIPersonajeHabilidad> PersonajeSkills { get; set; }
         public DbSet<TIPersonajeMagia> PersonajeMagias { get; set; }
         public DbSet<TIPersonajeModificadorDeDefensa> PersonajeModificadoresDeDefensa { get; set; }
-
         public DbSet<TIServantNoblePhantasm> ServantNoblePhantasms { get; set; }
+        public DbSet<TIAdministradorDeCombateParticipante> CombateParticipantes { get; set; }
+        public DbSet<TIAdministradorDeCombateMapa> CombateMapas { get; set; }
+        public DbSet<TIParticipantePersonaje> ParticipantePersonaje { get; set; }
         #endregion
+
+        public RolContext() : base(){}
 
         #region Configuracion de la base de datos
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -51,7 +57,11 @@ namespace AppGM.Core
                 .HasDiscriminator<int>("Clase")
                 .HasValue<ModeloPersonajeJugable>(1)
                 .HasValue<ModeloInvocacion>(2)
-                .HasValue<ModeloPersonaje>(3);
+                .HasValue<ModeloPersonaje>(3)
+                .HasValue<ModeloInvocacionCondicionada>(4)
+                .HasValue<ModeloInvocacionTemporal>(5)
+                .HasValue<ModeloMaster>(6)
+                .HasValue<ModeloServant>(7);
 
             // - Personaje efectos
             modelBuilder.Entity<TIPersonajeEfecto>().HasKey(e => new { e.IdPersonaje, e.IdEfecto });
@@ -155,12 +165,6 @@ namespace AppGM.Core
                 .WithMany(p => p.NoblePhantasms)
                 .HasForeignKey(ip => ip.IdServant);
 
-            // Personajes jugables:
-            modelBuilder.Entity<ModeloPersonajeJugable>().ToTable("ModeloPersonajeJugable")
-                .HasDiscriminator<int>("Clase")
-                .HasValue<ModeloMaster>(1)
-                .HasValue<ModeloServant>(2);
-
             // - PersonajeJugable caracteristicas
             modelBuilder.Entity<TIPersonajeJugableCaracteristicas>().HasKey(e => new { e.IdPersonajeJugable, e.IdCaracteristica });
 
@@ -169,7 +173,8 @@ namespace AppGM.Core
 
             modelBuilder.Entity<TIPersonajeJugableCaracteristicas>()
                 .HasOne(i => i.PersonajeJugable)
-                .WithOne(p => p.Caracteristicas);
+                .WithOne(p => p.Caracteristicas)
+                .HasForeignKey<TIPersonajeJugableCaracteristicas>(i => i.IdPersonajeJugable);
 
             // - PersonajeJugable invocaciones
             modelBuilder.Entity<TIPersonajeJugableInvocacion>().HasKey(e => new { e.IdPersonajeJugable, e.IdInvocacion });
@@ -182,12 +187,6 @@ namespace AppGM.Core
                 .WithMany(p => p.Invocaciones)
                 .HasForeignKey(ip => ip.IdPersonajeJugable);
 
-            // Invocaciones:
-            modelBuilder.Entity<ModeloInvocacion>().ToTable("ModeloInvocacion")
-                .HasDiscriminator<int>("Tipo")
-                .HasValue<ModeloInvocacionTemporal>(1)
-                .HasValue<ModeloInvocacionCondicionada>(2);
-
             // - Invocacion personaje
             modelBuilder.Entity<TIInvocacionPersonaje>().HasKey(e => new { e.IdInvocacion, e.IdPersonaje });
 
@@ -196,7 +195,8 @@ namespace AppGM.Core
 
             modelBuilder.Entity<TIInvocacionPersonaje>()
                 .HasOne(i => i.Invocacion)
-                .WithOne(p => p.Invocador);
+                .WithOne(p => p.Invocador)
+                .HasForeignKey<TIInvocacionPersonaje>(i => i.IdInvocacion);
 
             // - Invocacion efecto
             modelBuilder.Entity<TIInvocacionEfecto>().HasKey(e => new { e.IdInvocacion, e.IdEfecto });
@@ -206,7 +206,8 @@ namespace AppGM.Core
 
             modelBuilder.Entity<TIInvocacionEfecto>()
                 .HasOne(i => i.Invocacion)
-                .WithOne(p => p.Efecto);
+                .WithOne(p => p.Efecto)
+                .HasForeignKey<TIInvocacionEfecto>(i => i.IdInvocacion);
 
             // Participante:
             // - Participante personaje
@@ -217,7 +218,8 @@ namespace AppGM.Core
 
             modelBuilder.Entity<TIParticipantePersonaje>()
                 .HasOne(i => i.Participante)
-                .WithOne(p => p.Personaje);
+                .WithOne(p => p.Personaje)
+                .HasForeignKey<TIParticipantePersonaje>(i => i.IdParticipante);
 
             // - Participante accion
             modelBuilder.Entity<TIParticipanteAccion>().HasKey(e => new { e.IdParticipante, e.IdAccion });
@@ -282,7 +284,8 @@ namespace AppGM.Core
 
             modelBuilder.Entity<TIUtilizableTiradaBase>()
                 .HasOne(i => i.Utilizable)
-                .WithOne(p => p.TiradaDeUso);
+                .WithOne(p => p.TiradaDeUso)
+                .HasForeignKey<TIUtilizableTiradaBase>(i => i.IdUtilizable);
 
             // - Utilizable modificador de stat base
             modelBuilder.Entity<TIUtilizableModificadorDeStatBase>().HasKey(e => new { e.IdUtilizable, e.IdModificadorStatBase });
@@ -292,21 +295,16 @@ namespace AppGM.Core
 
             modelBuilder.Entity<TIUtilizableModificadorDeStatBase>()
                 .HasOne(i => i.Utilizable)
-                .WithOne(p => p.VentajaAlUtilizarlo);
+                .WithOne(p => p.VentajaAlUtilizarlo)
+                .HasForeignKey<TIUtilizableModificadorDeStatBase>(i => i.IdUtilizable);
 
             // - Utilizable efecto
             modelBuilder.Entity<TIUtilizableEfecto>().HasKey(e => new { e.IdUtilizable, e.IdEfecto });
 
-            modelBuilder.Entity<TIUtilizableEfecto>()
-                .HasOne(i => i.Efecto);
-
-            modelBuilder.Entity<TIUtilizableEfecto>()
+            /*modelBuilder.Entity<TIUtilizableEfecto>()
                 .HasOne(i => i.Utilizable)
-                .WithOne(p => p.EfectoSobreElUsuario);
-
-            modelBuilder.Entity<TIUtilizableEfecto>()
-                .HasOne(i => i.Utilizable)
-                .WithOne(p => p.EfectoSobreElObjetivo);
+                .WithMany(p => p.EfectoSobreUsuarioYObjetivo)
+                .HasForeignKey(i => i.Efecto);*/
 
             // Utilizable portable:
             modelBuilder.Entity<ModeloPortable>().ToTable("ModeloPortable")
@@ -334,11 +332,8 @@ namespace AppGM.Core
 
             modelBuilder.Entity<TIPortableModificadorDeStatBase>()
                 .HasOne(i => i.Portable)
-                .WithOne(p => p.DesventajasDeEquiparlo);
-
-            modelBuilder.Entity<TIPortableModificadorDeStatBase>()
-                .HasOne(i => i.Portable)
-                .WithOne(p => p.VentajasDeQuiparlo);
+                .WithMany(p => p.VentajasYDesventajasDeEquiparlo)
+                .HasForeignKey(i => i.IdPortable);
 
             // - Portable-Ofensivo tirada de daño
             modelBuilder.Entity<TIOfensivoTiradaDeDaño>().HasKey(e => new { e.IdOfensivo, e.IdTiradaDeDaño });
@@ -359,7 +354,8 @@ namespace AppGM.Core
 
             modelBuilder.Entity<TIOfensivoEfecto>()
                 .HasOne(i => i.Ofensivo)
-                .WithOne(p => p.EfectoQueInflige);
+                .WithOne(p => p.EfectoQueInflige)
+                .HasForeignKey<TIOfensivoEfecto>(i => i.IdOfensivo);
 
 
             // Utilizable item (consumibles):
@@ -376,7 +372,8 @@ namespace AppGM.Core
 
             modelBuilder.Entity<TIArmasDistanciaTiradaDeDaño>()
                 .HasOne(i => i.ArmasDistancia)
-                .WithOne(p => p.TiradaDeDaño);
+                .WithOne(p => p.TiradaDeDaño)
+                .HasForeignKey<TIArmasDistanciaTiradaDeDaño>(i => i.IdArmasDistancia);
 
             // - Armas distancia tirada variable
             modelBuilder.Entity<TIArmasDistanciaTiradaVariable>().HasKey(e => new { e.IdArmasDistancia, e.IdTirada });
@@ -386,7 +383,8 @@ namespace AppGM.Core
 
             modelBuilder.Entity<TIArmasDistanciaTiradaVariable>()
                 .HasOne(i => i.ArmasDistancia)
-                .WithOne(p => p.TiradaRafaga);
+                .WithOne(p => p.TiradaRafaga)
+                .HasForeignKey<TIArmasDistanciaTiradaVariable>(i => i.IdArmasDistancia);
 
             // - Armas distancia efecto
             modelBuilder.Entity<TIArmasDistanciaEfecto>().HasKey(e => new { e.IdArmasDistancia, e.IdEfecto });
@@ -416,7 +414,8 @@ namespace AppGM.Core
 
             modelBuilder.Entity<TIModificadorDeStatBaseTiradaBase>()
                 .HasOne(i => i.ModificadorDeStatBase)
-                .WithOne(p => p.ValorTirada);
+                .WithOne(p => p.ValorTirada)
+                .HasForeignKey<TIModificadorDeStatBaseTiradaBase>(i => i.IdModificadorDeStatBase);
 
             // Habilidades: 
 
@@ -435,7 +434,8 @@ namespace AppGM.Core
 
             modelBuilder.Entity<TIHabilidadLimitador>()
                 .HasOne(i => i.Habilidad)
-                .WithOne(p => p.LimiteDeUsos);
+                .WithOne(p => p.LimiteDeUsos)
+                .HasForeignKey<TIHabilidadLimitador>(i => i.IdHabilidad);
 
             // - Habilidad cargas habilidad
             modelBuilder.Entity<TIHabilidadCargasHabilidad>().HasKey(e => new { e.IdHabilidad, e.IdCargasHabilidad });
@@ -445,7 +445,8 @@ namespace AppGM.Core
 
             modelBuilder.Entity<TIHabilidadCargasHabilidad>()
                 .HasOne(i => i.Habilidad)
-                .WithOne(p => p.CargasHabilidad);
+                .WithOne(p => p.CargasHabilidad)
+                .HasForeignKey<TIHabilidadCargasHabilidad>(i => i.IdHabilidad);
 
             // - Habilidad tirada de daño
             modelBuilder.Entity<TIHabilidadTiradaDeDaño>().HasKey(e => new { e.IdHabilidad, e.IdTirada });
@@ -455,7 +456,8 @@ namespace AppGM.Core
 
             modelBuilder.Entity<TIHabilidadTiradaDeDaño>()
                 .HasOne(i => i.Habilidad)
-                .WithOne(p => p.TiradaDeDaño);
+                .WithOne(p => p.TiradaDeDaño)
+                .HasForeignKey<TIHabilidadTiradaDeDaño>(i => i.IdHabilidad);
 
             // - Habilidad items
             modelBuilder.Entity<TIHabilidadItem>().HasKey(e => new { e.IdHabilidad, e.IdItem });
@@ -465,12 +467,7 @@ namespace AppGM.Core
 
             modelBuilder.Entity<TIHabilidadItem>()
                 .HasOne(i => i.Habilidad)
-                .WithMany(p => p.ItemInvocacion)
-                .HasForeignKey(ip => ip.IdHabilidad);
-
-            modelBuilder.Entity<TIHabilidadItem>()
-                .HasOne(i => i.Habilidad)
-                .WithMany(p => p.ItemsQueCuesta)
+                .WithMany(p => p.ItemsQueCuestaItemInvocacion)
                 .HasForeignKey(ip => ip.IdHabilidad);
 
             // - Habilidad invocacion
@@ -503,13 +500,54 @@ namespace AppGM.Core
 
             modelBuilder.Entity<TIHabilidadEfecto>()
                 .HasOne(i => i.Habilidad)
-                .WithMany(p => p.EfectosSobreUsuario)
+                .WithMany(p => p.EfectosSobreUsuarioEfectoSobreObjetivo)
                 .HasForeignKey(ip => ip.IdHabilidad);
 
-            modelBuilder.Entity<TIHabilidadEfecto>()
-                .HasOne(i => i.Habilidad)
-                .WithMany(p => p.EfectoSobreObjetivo)
-                .HasForeignKey(ip => ip.IdHabilidad);
+            //Combates:
+            modelBuilder.Entity<TIAdministradorDeCombateParticipante>()
+                .HasKey(e => new {e.IdAdministradorDeCombate, e.IdParticipante});
+
+            modelBuilder.Entity<TIAdministradorDeCombateParticipante>()
+                .HasOne(i => i.AdministradorDeCombate)
+                .WithMany(ac => ac.Participantes)
+                .HasForeignKey(i => i.IdAdministradorDeCombate);
+
+            modelBuilder.Entity<TIAdministradorDeCombateParticipante>()
+                .HasOne(i => i.Participante)
+                .WithOne(p => p.Combate);
+
+            modelBuilder.Entity<TIAdministradorDeCombateMapa>()
+                .HasKey(e => new { e.IdAdministradorDeCombate, e.IdMapa });
+
+            modelBuilder.Entity<TIAdministradorDeCombateMapa>()
+                .HasOne(i => i.AdministradorDeCombate)
+                .WithMany(a => a.Mapas)
+                .HasForeignKey(i => i.IdAdministradorDeCombate);
+
+            modelBuilder.Entity<TIAdministradorDeCombateMapa>()
+                .HasOne(i => i.Mapa);
+
+            modelBuilder.Entity<TIMapaVector2>()
+                .HasKey(e => new{e.IdMapa, e.IdVector});
+
+            modelBuilder.Entity<TIMapaVector2>()
+                .HasOne(i => i.Mapa)
+                .WithMany(m => m.PosicionesElementos)
+                .HasForeignKey(i => i.IdMapa);
+
+            modelBuilder.Entity<TIMapaVector2>()
+                .HasOne(i => i.Posicion);
+
+            modelBuilder.Entity<TIPersonajeArmaDistancia>()
+                .HasKey(e => new {e.IdArmaDistancia, e.IdPersonaje});
+
+            modelBuilder.Entity<TIPersonajeArmaDistancia>()
+                .HasOne(i => i.Personaje)
+                .WithMany(p => p.ArmasDistancia)
+                .HasForeignKey(i => i.IdPersonaje);
+
+            modelBuilder.Entity<TIPersonajeArmaDistancia>()
+                .HasOne(i => i.ArmaDistancia);
 
         }
         #endregion

@@ -19,15 +19,6 @@
 
         #endregion
 
-        #region Constructor
-
-        public ControladorParticipante(ModeloParticipante _modeloParticipante)
-        {
-            modelo = _modeloParticipante;
-        }
-
-        #endregion
-
         #region Funciones
 
         //Nada de momento

@@ -18,8 +18,7 @@ namespace AppGM.Core
         //Descripcion del efecto
         [StringLength(500)]
         public string Descripcion { get; set; }
-
-        public List<TIEfectoModificadorDeStatBase> Modificaciones;
+        public List<TIEfectoModificadorDeStatBase> Modificaciones { get; set; }
     }
 
     public class ModeloEfectoTemporal : ModeloEfecto

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace AppGM.Core
 {
@@ -19,9 +20,7 @@ namespace AppGM.Core
         //Modificador para la stat afectada por el utilizable
         public TIUtilizableModificadorDeStatBase VentajaAlUtilizarlo { get; set; }
 
-        //Efectos al utilizarlo
-        public TIUtilizableEfecto EfectoSobreElUsuario { get; set; }
-        
-        public TIUtilizableEfecto EfectoSobreElObjetivo { get; set; }
+        //Efectos al utilizarlo - Primer indice efecto sobre el usuario, Segundo indice efecto sobre el objetivo
+        public List<TIUtilizableEfecto> EfectoSobreUsuarioYObjetivo { get; set; }
     }
 }

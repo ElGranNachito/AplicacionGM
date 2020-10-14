@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace AppGM.Core
 {
@@ -50,10 +51,27 @@ namespace AppGM.Core
         {
             await Task.Run(() =>
             {
-                if (mDBRol.Masters == null)
+                if (mDBRol.Masters.First() == null)
                 {
-
+                    mDBRol.Add(new ModeloAdministradorDeCombate
+                    {
+                        IdAdministradorDeCombate = 0,
+                        IndicePersonajeTurnoActual = 0,
+                        Nombre = "SuperCombateFeroz",
+                        TurnoActual = 0,
+                        Participantes = new List<TIAdministradorDeCombateParticipante>
+                        {
+                            new TIAdministradorDeCombateParticipante
+                            {
+                                AdministradorDeCombate = null,
+                                IdAdministradorDeCombate = 0,
+                                IdParticipante = 0,
+                                Participante = null
+                            }
+                        }
+                    });
                 }
+                
                 //TODO: Cargar datos
             });
         }

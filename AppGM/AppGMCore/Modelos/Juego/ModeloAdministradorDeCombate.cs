@@ -13,6 +13,6 @@ namespace AppGM.Core
         public string Nombre { get; set; }
 
         public List<TIAdministradorDeCombateParticipante> Participantes { get; set; }
-        public List<TIModeloAdministradorDeCombateMapa> Mapas { get; set; }
+        public List<TIAdministradorDeCombateMapa> Mapas { get; set; }
     }
 }

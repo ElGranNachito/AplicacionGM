@@ -19,5 +19,7 @@ namespace AppGM.Core
 
         //Acciones realizadas por el participante
         public List<TIParticipanteAccion> AccionesRealizadas { get; set; }
+
+        public TIAdministradorDeCombateParticipante Combate { get; set; }
     }
 }

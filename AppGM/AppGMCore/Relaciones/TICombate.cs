@@ -1,4 +1,6 @@
-﻿namespace AppGM.Core
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace AppGM.Core
 {
     public abstract class TIParticipante
     {
@@ -23,11 +25,12 @@
         public int IdAdministradorDeCombate { get; set; }
         public ModeloAdministradorDeCombate AdministradorDeCombate { get; set; }
 
+        [ForeignKey("Participante")]
         public int IdParticipante { get; set; }
         public ModeloParticipante Participante { get; set; }
     }
 
-    public class TIModeloAdministradorDeCombateMapa
+    public class TIAdministradorDeCombateMapa
     {
         public int IdAdministradorDeCombate { get; set; }
         public ModeloAdministradorDeCombate AdministradorDeCombate { get; set; }

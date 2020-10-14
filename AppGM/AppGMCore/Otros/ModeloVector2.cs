@@ -1,8 +1,11 @@
-﻿namespace AppGM.Core
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace AppGM.Core
 {
     public class ModeloVector2
     {
-        public int Id;
+        [Key]
+        public int Id { get; set; }
         public double X { get; set; }
         public double Y { get; set; }
     }

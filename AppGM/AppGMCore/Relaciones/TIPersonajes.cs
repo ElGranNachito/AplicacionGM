@@ -22,13 +22,6 @@ namespace AppGM.Core
 
     }
 
-    public class TIPersonajePortable : TIPersonaje
-    {
-        public int IdPortable { get; set; }
-        public ModeloPortable Portable { get; set; }
-
-    }
-
     public class TIPersonajeDefensivo : TIPersonaje
     {
         public int IdDefensivo { get; set; }
@@ -36,29 +29,10 @@ namespace AppGM.Core
 
     }
 
-    public class TIPersonajeDefensivoAbsoluto : TIPersonaje
-    {
-        public int IdDefensivo { get; set; }
-        public ModeloDefensivoAbsoluto DefensivoAbsoluto { get; set; }
-    }
-
     public class TIPersonajeOfensivo : TIPersonaje
     {
         public int IdOfensivo { get; set; }
         public ModeloOfensivo PortableOfensivo { get; set; }
-    }
-
-    public class TIPersonajeItem : TIPersonaje
-    {
-        public int IdItem { get; set; }
-        public ModeloItem Item { get; set; }
-
-    }
-
-    public class TIPersonajeConsumible : TIPersonaje
-    {
-        public int IdConsumible { get; set; }
-        public ModeloConsumible Consumible { get; set; }
     }
 
     public class TIPersonajeArmaDistancia : TIPersonaje

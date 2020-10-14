@@ -39,5 +39,6 @@ namespace AppGM.Core
         public List<TIPersonajeHabilidad> Skills { get; set; }
         public List<TIPersonajeMagia> Magias { get; set; }
         public List<TIPersonajeModificadorDeDefensa> ModificadoresDeDefensa { get; set; }
+        public List<TIPersonajeArmaDistancia> ArmasDistancia { get; set; }
     }
 }
