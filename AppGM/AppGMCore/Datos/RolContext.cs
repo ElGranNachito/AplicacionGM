@@ -24,8 +24,6 @@ namespace AppGM.Core
         public DbSet<ModeloParticipante> Participantes { get; set; }
         public DbSet<ModeloMapa> Mapas { get; set; }
 
-
-
         // Relaciones ---
         public DbSet<TIPersonajeEfecto> PersonajeEfectos { get; set; }
         public DbSet<TIPersonajeUtilizable> PersonajeUtilizables { get; set; }
@@ -273,8 +271,14 @@ namespace AppGM.Core
             // Utilizables:
             modelBuilder.Entity<ModeloUtilizable>().ToTable("ModeloUtilizable")
                 .HasDiscriminator<int>("Tipo")
-                .HasValue<ModeloItem>(1)
-                .HasValue<ModeloPortable>(2);
+                .HasValue<ModeloUtilizable>(1)
+                .HasValue<ModeloPortable>(2)
+                .HasValue<ModeloItem>(3)
+                .HasValue<ModeloDefensivo>(4)
+                .HasValue<ModeloDefensivoAbsoluto>(5)
+                .HasValue<ModeloOfensivo>(6)
+                .HasValue<ModeloConsumible>(7)
+                .HasValue<ModeloArmasDistancia>(8);
 
             // - Utilizable tirada base
             modelBuilder.Entity<TIUtilizableTiradaBase>().HasKey(e => new { e.IdUtilizable, e.IdTirada });
@@ -307,12 +311,6 @@ namespace AppGM.Core
                 .HasForeignKey(i => i.Efecto);*/
 
             // Utilizable portable:
-            modelBuilder.Entity<ModeloPortable>().ToTable("ModeloPortable")
-                .HasDiscriminator<int>("Tipo")
-                .HasValue<ModeloDefensivo>(1)
-                .HasValue<ModeloDefensivoAbsoluto>(2)
-                .HasValue<ModeloOfensivo>(3);
-
             // - Portable slots
             modelBuilder.Entity<TIPortableSlots>().HasKey(e => new { e.IdPortable, e.IdSlot });
 
@@ -357,13 +355,7 @@ namespace AppGM.Core
                 .WithOne(p => p.EfectoQueInflige)
                 .HasForeignKey<TIOfensivoEfecto>(i => i.IdOfensivo);
 
-
             // Utilizable item (consumibles):
-            modelBuilder.Entity<ModeloItem>().ToTable("ModeloItem")
-                .HasDiscriminator<int>("Tipo")
-                .HasValue<ModeloConsumible>(1)
-                .HasValue<ModeloArmasDistancia>(2);
-
             // - Armas distancia tirada de daño
             modelBuilder.Entity<TIArmasDistanciaTiradaDeDaño>().HasKey(e => new { e.IdArmasDistancia, e.IdTirada });
 
