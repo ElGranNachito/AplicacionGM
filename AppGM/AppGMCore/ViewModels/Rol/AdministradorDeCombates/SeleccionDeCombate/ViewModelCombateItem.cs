@@ -15,6 +15,12 @@ namespace AppGM.Core
         #endregion
 
         #region Constructores
+        public ViewModelCombateItem(ControladorAdministradorDeCombate _combate)
+        {
+            Combate = _combate;
+
+            EstablecerComandos();
+        }
         public ViewModelCombateItem()
         {
             Combate = new ControladorAdministradorDeCombate
@@ -42,6 +48,12 @@ namespace AppGM.Core
                 }
             };
 
+            EstablecerComandos();
+        }
+        #endregion
+
+        private void EstablecerComandos()
+        {
             ComandoMouseEnter = new Comando(
                 () =>
                 {
@@ -66,7 +78,6 @@ namespace AppGM.Core
                     SistemaPrincipal.RolSeleccionado.EMenuActual = EMenuActualRol.Combate;
                 });
         }
-        #endregion
     }
 
 }

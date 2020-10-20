@@ -5,40 +5,30 @@ using AppGM.Core;
 
 namespace AppGM
 {
+
     /// <summary>
     /// View model para un item en un ItemControl que contiene datos basicos de una ficha de un personaje
     /// </summary>
     public class ViewModelFichaItem : BaseViewModel, IViewModelConBotonSeleccionado
     {
-
         #region Propiedades
 
-        public ModeloPersonaje ModeloPersonaje { get; set; }
+        public ModeloPersonaje Personaje { get; set; }
 
-        public bool EsServant =>
-            SistemaPrincipal.ObtenerInstancia<ViewModelMenuSeleccionTipoFicha>().ETipoPersonajeSeleccionado ==
-            ETipoPersonaje.Servant;
-        public bool EsMaster =>
-            SistemaPrincipal.ObtenerInstancia<ViewModelMenuSeleccionTipoFicha>().ETipoPersonajeSeleccionado ==
-            ETipoPersonaje.Master;
-        public bool EsInvocacion =>
-            SistemaPrincipal.ObtenerInstancia<ViewModelMenuSeleccionTipoFicha>().ETipoPersonajeSeleccionado ==
-            ETipoPersonaje.Invocacion;
-        public bool EsNPC =>
-            SistemaPrincipal.ObtenerInstancia<ViewModelMenuSeleccionTipoFicha>().ETipoPersonajeSeleccionado ==
-            ETipoPersonaje.NPC;
+        public bool EsServant    => Personaje.GetType() == typeof(ModeloServant);
+        public bool EsMaster     => Personaje.GetType() == typeof(ModeloMaster);
+        public bool EsInvocacion => Personaje.GetType() == typeof(ModeloInvocacion);
+        public bool EsNPC        => Personaje.GetType() == typeof(ModeloPersonaje);
+        public bool EsServantOMaster => EsServant || EsMaster;
 
-        public bool EsServantOMaster =>
-            (SistemaPrincipal.ObtenerInstancia<ViewModelMenuSeleccionTipoFicha>().
-                ETipoPersonajeSeleccionado & (ETipoPersonaje.Servant | ETipoPersonaje.Master)) != 0;
         public BaseViewModel ViewModelConBotonSeleccionado { get; set; }
 
         #endregion
 
         #region Constructores
-        public ViewModelFichaItem(ModeloPersonaje modeloPersonaje)
+        public ViewModelFichaItem(ModeloPersonaje _personaje)
         {
-            ModeloPersonaje = modeloPersonaje;
+            Personaje = _personaje;
             ViewModelConBotonSeleccionado = SistemaPrincipal.ObtenerInstancia<ViewModelListaFichasVistaFichas>();
         }
 

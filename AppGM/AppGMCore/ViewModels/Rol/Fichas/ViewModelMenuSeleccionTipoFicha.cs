@@ -15,8 +15,6 @@ namespace AppGM
         public ICommand ComandoBotonFichasInvocaciones { get; set; }
         public ICommand ComandoBotonFichasNPCs { get; set; }
 
-        public ETipoPersonaje ETipoPersonajeSeleccionado { get; set; }
-
         public List<ModeloServant> Servants { get; set; }
         public List<ModeloMaster> Masters { get; set; }
         public List<ModeloInvocacion> Invocaciones { get; set; }
@@ -24,6 +22,31 @@ namespace AppGM
 
         #endregion
 
+        #region Constructores
+
+        public ViewModelMenuSeleccionTipoFicha(
+            List<ModeloServant> _servants,
+            List<ModeloMaster> _masters,
+            List<ModeloInvocacion> _invocaciones,
+            List<ModeloPersonaje> _npcs)
+        {
+            Servants     = _servants;
+            Masters      = _masters;
+            Invocaciones = _invocaciones;
+            NPCs         = _npcs;
+
+            EstablecerComandos();
+
+            SistemaPrincipal.Aplicacion.PropertyChanged += (o, a) =>
+            {
+                if (a.PropertyName == nameof(ViewModelAplicacion.VentanaMaximizada))
+                    DispararPropertyChanged(new PropertyChangedEventArgs(nameof(AnchoMargenCartas)));
+            };
+        }
+
+        /// <summary>
+        /// Solo para pruebas
+        /// </summary>
         public ViewModelMenuSeleccionTipoFicha()
         {
             SistemaPrincipal.Aplicacion.PropertyChanged += (o, a) =>
@@ -37,33 +60,11 @@ namespace AppGM
                 new ModeloServant
                 {
                     Nombre = "Stephen Hawking",
-                    mEClaseDeServant = EClaseServant.Caster
-                },
-
-                new ModeloServant
-                {
-                    Nombre = "Krampus",
-                    mEClaseDeServant = EClaseServant.Rider
-                },
-
-                new ModeloServant
-                {
-                    Nombre = "Pelinore",
-                    mEClaseDeServant = EClaseServant.Saber,
-
-                    Caracteristicas = new TIPersonajeJugableCaracteristicas()
-                    {
-                        Caracteristicas = new ModeloCaracteristicas
-                        {
-                            Contextura = "Super en forma",
-                            EAlineamiento = EAlineamiento.LawfulGood,
-                            Edad = 50,
-                            EManoDominante = EManoDominante.Izquierda,
-                            ESexo = ESexo.Masculino,
-                            Estatura = 190,
-                            Nacionalidad = "Inglesa"
-                        }
-                    }
+                    mEClaseDeServant = EClaseServant.Caster,
+                    Agi = 0,
+                    Str = 0,
+                    Intel = 20,
+                    Lck = 12
                 }
             };
 
@@ -72,7 +73,7 @@ namespace AppGM
                 new ModeloMaster
                 {
                     Nombre = "Lepibe",
-                    EClaseDeSuServant = EClaseServant.Berserker, 
+                    EClaseDeSuServant = EClaseServant.Berserker,
                     Str = 10,
                     Agi = 11,
                     End = 10,
@@ -84,58 +85,25 @@ namespace AppGM
                     {
                         Caracteristicas = new ModeloCaracteristicas
                         {
-                        Contextura = "Fuera de forma",
-                        EAlineamiento = EAlineamiento.NeutralGood,
-                        Edad = 19,
-                        EManoDominante = EManoDominante.Derecha,
-                        ESexo = ESexo.Masculino,
-                        Estatura = 170,
-                        Nacionalidad = "Estadounidense"
-                        }
-                    }
-                },
-
-                new ModeloMaster
-                {
-                    Nombre = "Charles",
-                    EClaseDeSuServant = EClaseServant.Saber,
-
-                    Caracteristicas = new TIPersonajeJugableCaracteristicas()
-                    {
-                        Caracteristicas = new ModeloCaracteristicas
-                        {
-                        Contextura = "Super entrenado",
-                        EAlineamiento = EAlineamiento.Neutral,
-                        Edad = 30,
-                        EManoDominante = EManoDominante.Derecha,
-                        ESexo = ESexo.Masculino,
-                        Estatura = 190,
-                        Nacionalidad = "Ingles"
-                        }
-                    }
-                },
-
-                new ModeloMaster
-                {
-                    Nombre = "Ricky Millones",
-                    EClaseDeSuServant = EClaseServant.Archer,
-
-                    Caracteristicas = new TIPersonajeJugableCaracteristicas()
-                    {
-                        Caracteristicas = new ModeloCaracteristicas
-                        {
-                        Contextura = "En forma",
-                        EAlineamiento = EAlineamiento.Neutral,
-                        Edad = 25,
-                        EManoDominante = EManoDominante.Derecha,
-                        ESexo = ESexo.Masculino,
-                        Estatura = 200,
-                        Nacionalidad = "No se la verdad"
+                            Contextura = "Fuera de forma",
+                            EAlineamiento = EAlineamiento.NeutralGood,
+                            Edad = 19,
+                            EManoDominante = EManoDominante.Derecha,
+                            ESexo = ESexo.Masculino,
+                            Estatura = 170,
+                            Nacionalidad = "Estadounidense"
                         }
                     }
                 }
             };
 
+            EstablecerComandos();
+        }
+        #endregion
+
+        #region Funciones
+        private void EstablecerComandos()
+        {
             ComandoBotonFichasServants = new Comando(() =>
             {
                 //Creamos una variable tempoal para almacenar los view models para cada item
@@ -148,9 +116,6 @@ namespace AppGM
                 //Cambiamos las fichas actuales por la variable temporal que creamos
                 SistemaPrincipal.ObtenerInstancia<ViewModelListaFichasVistaFichas>().ViewModelListaFichas.FichaItems = fichasTemp;
 
-                //Establecemos que el tipo de personaje seleccionado fue Servant
-                ETipoPersonajeSeleccionado = ETipoPersonaje.Servant;
-
                 //Cambiamos la pagina actual
                 SistemaPrincipal.RolSeleccionado.EMenuActual =
                     EMenuActualRol.VistaFichas;
@@ -160,13 +125,10 @@ namespace AppGM
             {
                 List<ViewModelFichaItem> fichasTemp = new List<ViewModelFichaItem>();
 
-                for (int i = 0; i < Servants.Count; ++i)
+                for (int i = 0; i < Masters.Count; ++i)
                     fichasTemp.Add(new ViewModelFichaItem(Masters[i]));
 
                 SistemaPrincipal.ObtenerInstancia<ViewModelListaFichasVistaFichas>().ViewModelListaFichas.FichaItems = fichasTemp;
-
-                //Establecemos que el tipo de personaje seleccionado fue Master
-                ETipoPersonajeSeleccionado = ETipoPersonaje.Master;
 
                 SistemaPrincipal.RolSeleccionado.EMenuActual =
                     EMenuActualRol.VistaFichas;
@@ -176,13 +138,10 @@ namespace AppGM
             {
                 List<ViewModelFichaItem> fichasTemp = new List<ViewModelFichaItem>();
 
-                for (int i = 0; i < Servants.Count; ++i)
+                for (int i = 0; i < Invocaciones.Count; ++i)
                     fichasTemp.Add(new ViewModelFichaItem(Invocaciones[i]));
 
                 SistemaPrincipal.ObtenerInstancia<ViewModelListaFichasVistaFichas>().ViewModelListaFichas.FichaItems = fichasTemp;
-
-                //Establecemos que el tipo de personaje seleccionado fue Invocacion
-                ETipoPersonajeSeleccionado = ETipoPersonaje.Invocacion;
 
                 SistemaPrincipal.RolSeleccionado.EMenuActual =
                     EMenuActualRol.VistaFichas;
@@ -192,17 +151,15 @@ namespace AppGM
             {
                 List<ViewModelFichaItem> fichasTemp = new List<ViewModelFichaItem>();
 
-                for (int i = 0; i < Servants.Count; ++i)
+                for (int i = 0; i < NPCs.Count; ++i)
                     fichasTemp.Add(new ViewModelFichaItem(NPCs[i]));
 
                 SistemaPrincipal.ObtenerInstancia<ViewModelListaFichasVistaFichas>().ViewModelListaFichas.FichaItems = fichasTemp;
 
-                //Establecemos que el tipo de personaje seleccionado fue NPC
-                ETipoPersonajeSeleccionado = ETipoPersonaje.NPC;
-
                 SistemaPrincipal.RolSeleccionado.EMenuActual =
                     EMenuActualRol.VistaFichas;
             });
-        }
+        } 
+        #endregion
     }
 }

@@ -40,11 +40,11 @@ namespace AppGM.Core
         public DbSet<TIParticipantePersonaje> ParticipantePersonaje { get; set; }
         #endregion
 
-        public RolContext() : base(){}
+        public RolContext(){}
 
         #region Configuracion de la base de datos
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.UseSqlite($"Data Source = Db{mNombreRolSeleccionado}.db");
+            => optionsBuilder.UseSqlite("Data Source = Db.db");
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -305,10 +305,10 @@ namespace AppGM.Core
             // - Utilizable efecto
             modelBuilder.Entity<TIUtilizableEfecto>().HasKey(e => new { e.IdUtilizable, e.IdEfecto });
 
-            /*modelBuilder.Entity<TIUtilizableEfecto>()
+            modelBuilder.Entity<TIUtilizableEfecto>()
                 .HasOne(i => i.Utilizable)
                 .WithMany(p => p.EfectoSobreUsuarioYObjetivo)
-                .HasForeignKey(i => i.Efecto);*/
+                .HasForeignKey(i => i.IdUtilizable);
 
             // Utilizable portable:
             // - Portable slots

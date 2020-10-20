@@ -36,7 +36,7 @@ namespace AppGM.Core
         {
             //TODO: Cargar base da datos en base al nombre/id del rol
 
-            await CargarDatosRol();
+            //await CargarDatosRol();
 
             CrearViewModelsRol(modelo);
 

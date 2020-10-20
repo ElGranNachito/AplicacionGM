@@ -26,24 +26,27 @@
 
                 <StackPanel IsHitTestVisible="False">
 
+                    <!-- Nombre -->
                     <TextBlock
                         Foreground="White">
                         <Run Text="Nombre: "/>
-                        <Run Text="{Binding ModeloPersonaje.Nombre}"/>
+                        <Run Text="{Binding Personaje.Nombre}"/>
                     </TextBlock>
 
+                    <!-- Clase del servant (Servants) -->
                     <TextBlock
                         Foreground="White"
                         Visibility="{Binding EsServant, Converter={local:BooleanToVisibilityConverterColapsar}}">
                         <Run Text="Clase: "/>
-                        <Run Text="{Binding ModeloPersonaje.mEClaseDeServant}"/>
+                        <Run Text="{Binding Personaje.mEClaseDeServant}"/>
                     </TextBlock>
 
+                    <!-- Clase de su servant (Masters) -->
                     <TextBlock
                         Foreground="White"
                         Visibility="{Binding EsMaster, Converter={local:BooleanToVisibilityConverterColapsar}}">
                         <Run Text="Clase de su servant: "/>
-                        <Run Text="{Binding ModeloPersonaje.EClaseDeSuServant}"/>
+                        <Run Text="{Binding Personaje.EClaseDeSuServant}"/>
                     </TextBlock>
 
                 </StackPanel>

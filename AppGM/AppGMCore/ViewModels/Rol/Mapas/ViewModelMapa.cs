@@ -51,6 +51,14 @@ namespace AppGM.Core
         #endregion
 
         #region Constructores
+
+        public ViewModelMapa(ControladorMapa _controlador)
+        {
+            mControladorMapa = _controlador;
+
+            PathAImagen = "../../../Media/Imagenes/Mapas/" +
+                          mControladorMapa.modelo.NombreMapa + mControladorMapa.ObtenerExtension();
+        }
         public ViewModelMapa()
         {
             mControladorMapa = new ControladorMapa

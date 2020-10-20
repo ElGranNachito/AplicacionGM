@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Windows.Input;
 
 namespace AppGM.Core
@@ -23,6 +24,7 @@ namespace AppGM.Core
         public uint TurnoActual => administradorDeCombate.modelo.TurnoActual;
 
         public ViewModelListaParticipantes Participantes { get; set; }
+        public List<ViewModelMapa> Mapas { get; set; }
 
         #endregion
 
@@ -55,6 +57,9 @@ namespace AppGM.Core
             administradorDeCombate = _administradorDeCombate;
 
             Participantes = new ViewModelListaParticipantes(_administradorDeCombate.ControladoresParticipantes);
+           
+            for(int i = 0; i < administradorDeCombate.ControladoresMapas.Count; ++i)
+                Mapas.Add(new ViewModelMapa(administradorDeCombate.ControladoresMapas[i]));
 
             administradorDeCombate.OnAvanzarTurno    += HandlerAvanzarTurno;
             administradorDeCombate.OnRetrocederTurno += HandlerRetrocederTurno;

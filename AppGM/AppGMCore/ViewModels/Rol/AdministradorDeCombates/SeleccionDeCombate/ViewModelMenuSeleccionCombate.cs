@@ -12,6 +12,11 @@ namespace AppGM.Core
         #endregion
 
         #region Constructores
+
+        public ViewModelMenuSeleccionCombate(List<ControladorAdministradorDeCombate> _combates)
+        {
+            Combates = new ViewModelListaCombates(_combates);
+        }
         public ViewModelMenuSeleccionCombate()
         {
             Combates = new ViewModelListaCombates

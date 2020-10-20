@@ -35,7 +35,7 @@
                             TextWrapping="Wrap">
                             <Run Text="Nombre:"
                                  FontWeight="Bold"/>
-                            <Run Text="{Binding ModeloPersonaje.Nombre}"/>
+                            <Run Text="{Binding Personaje.Nombre}"/>
                         </TextBlock>
 
                         <TextBlock
@@ -43,7 +43,7 @@
                             Visibility="{Binding EsServant, Converter={local:BooleanToVisibilityConverterColapsar}}">
                             <Run Text="Clase Servant:"
                                  FontWeight="Bold"/>
-                            <Run Text="{Binding ModeloPersonaje.mEClaseServant}"/>
+                            <Run Text="{Binding Personaje.mEClaseServant}"/>
                         </TextBlock>
 
                         <TextBlock
@@ -51,56 +51,56 @@
                             Visibility="{Binding EsMaster, Converter={local:BooleanToVisibilityConverterColapsar}}">
                             <Run Text="Clase de su servant:"
                                  FontWeight="Bold"/>
-                            <Run Text="{Binding ModeloPersonaje.EClaseDeSuServant}"/>
+                            <Run Text="{Binding Personaje.EClaseDeSuServant}"/>
                         </TextBlock>
 
                         <TextBlock
                             TextWrapping="Wrap">
                         <Run Text="Contextura:"
                              FontWeight="Bold"/>
-                            <Run Text="{Binding ModeloPersonaje.Caracteristicas.Contextura}"/>
+                            <Run Text="{Binding Personaje.Caracteristicas.Caracteristicas.Contextura}"/>
                         </TextBlock>
 
                         <TextBlock
                             TextWrapping="Wrap">
                             <Run Text="Edad:"
                                  FontWeight="Bold"/>
-                            <Run Text="{Binding ModeloPersonaje.Caracteristicas.Edad}"/>
+                            <Run Text="{Binding Personaje.Caracteristicas.Caracteristicas.Edad}"/>
                         </TextBlock>
 
                         <TextBlock
                             TextWrapping="Wrap">
                             <Run Text="Alineamiento:"
                                  FontWeight="Bold"/>
-                            <Run Text="{Binding ModeloPersonaje.Caracteristicas.EAlineamiento}"/>
+                            <Run Text="{Binding Personaje.Caracteristicas.Caracteristicas.EAlineamiento}"/>
                         </TextBlock>
 
                         <TextBlock
                             TextWrapping="Wrap">
                             <Run Text="Mano dominante:"
                                  FontWeight="Bold"/>
-                            <Run Text="{Binding ModeloPersonaje.Caracteristicas.EManoDominante}"/>
+                            <Run Text="{Binding Personaje.Caracteristicas.Caracteristicas.EManoDominante}"/>
                         </TextBlock>
 
                         <TextBlock
                             TextWrapping="Wrap">
                             <Run Text="Sexo:"
                                  FontWeight="Bold"/>
-                            <Run Text="{Binding ModeloPersonaje.Caracteristicas.ESexo}"/>
+                            <Run Text="{Binding Personaje.Caracteristicas.Caracteristicas.ESexo}"/>
                         </TextBlock>
 
                         <TextBlock
                             TextWrapping="Wrap">
                             <Run Text="Estatura:"
                                  FontWeight="Bold"/>
-                            <Run Text="{Binding ModeloPersonaje.Caracteristicas.Estatura}"/>
+                            <Run Text="{Binding Personaje.Caracteristicas.Caracteristicas.Estatura}"/>
                         </TextBlock>
 
                         <TextBlock
                             TextWrapping="Wrap">
                             <Run Text="Nacionalidad:"
                                  FontWeight="Bold"/>
-                            <Run Text="{Binding ModeloPersonaje.Caracteristicas.Nacionalidad}"/>
+                            <Run Text="{Binding Personaje.Caracteristicas.Caracteristicas.Nacionalidad}"/>
                         </TextBlock>
                     </StackPanel>
 
@@ -108,37 +108,37 @@
                         <TextBlock>
                             <Run Text="STR: "
                                  FontWeight="Bold"/>
-                            <Run Text="{Binding ModeloPersonaje.Str}"/>
+                            <Run Text="{Binding Personaje.Str}"/>
                         </TextBlock>
 
                         <TextBlock>
                             <Run Text="AGI: "
                                  FontWeight="Bold"/>
-                            <Run Text="{Binding ModeloPersonaje.Agi}"/>
+                            <Run Text="{Binding Personaje.Agi}"/>
                         </TextBlock>
 
                         <TextBlock>
                             <Run Text="END: "
                                  FontWeight="Bold"/>
-                            <Run Text="{Binding ModeloPersonaje.End}"/>
+                            <Run Text="{Binding Personaje.End}"/>
                         </TextBlock>
 
                         <TextBlock>
                             <Run Text="INT: "
                                  FontWeight="Bold"/>
-                            <Run Text="{Binding ModeloPersonaje.Intel}"/>
+                            <Run Text="{Binding Personaje.Intel}"/>
                         </TextBlock>
 
                         <TextBlock>
                             <Run Text="LCK: "
                                  FontWeight="Bold"/>
-                            <Run Text="{Binding ModeloPersonaje.Lck}"/>
+                            <Run Text="{Binding Personaje.Lck}"/>
                         </TextBlock>
 
                         <TextBlock>
                             <Run Text="CHR: "
                                  FontWeight="Bold"/>
-                            <Run Text="{Binding ModeloPersonaje.Chr}"/>
+                            <Run Text="{Binding Personaje.Chr}"/>
                         </TextBlock>
                     </StackPanel>
 

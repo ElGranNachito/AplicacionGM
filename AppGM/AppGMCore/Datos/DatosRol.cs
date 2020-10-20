@@ -51,7 +51,7 @@ namespace AppGM.Core
         {
             await Task.Run(() =>
             {
-                if (mDBRol.Masters.First() == null)
+                if (!mDBRol.Masters.Any())
                 {
                     mDBRol.Add(new ModeloAdministradorDeCombate
                     {
@@ -71,7 +71,14 @@ namespace AppGM.Core
                         }
                     });
                 }
-                
+                else
+                {
+                    mDBRol.Add(new ModeloMaster
+                    {
+                        Nombre = "Juanito"
+                    });
+                }
+
                 //TODO: Cargar datos
             });
         }
