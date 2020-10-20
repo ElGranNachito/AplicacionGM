@@ -2,7 +2,7 @@
 
 namespace AppGM.Core
 {
-    public class ControladorSlot : ControladorBase<ModeloSlot>
+    public class ControladorSlot : Controlador<ModeloSlot>
     {
         #region Controladores
 

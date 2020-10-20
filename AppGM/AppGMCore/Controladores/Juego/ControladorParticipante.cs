@@ -1,10 +1,10 @@
 ﻿namespace AppGM.Core
 {
-    public class ControladorParticipante : ControladorBase<ModeloParticipante>
+    public class ControladorParticipante : Controlador<ModeloParticipante>
     {
         #region Controladores
 
-        private ControladorPersonaje<ModeloPersonaje> mControladorPersonaje { get; set; }
+        private ControladorPersonaje mControladorPersonaje { get; set; }
 
         #endregion
 
@@ -14,7 +14,7 @@
         {
             modelo = _modeloParticipante;
 
-            mControladorPersonaje = new ControladorPersonaje<ModeloPersonaje>(modelo.Personaje.Personaje);
+            mControladorPersonaje = new ControladorPersonaje(modelo.Personaje.Personaje);
         }
 
         #endregion

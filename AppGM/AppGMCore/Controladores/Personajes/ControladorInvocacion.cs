@@ -2,19 +2,18 @@
 
 namespace AppGM.Core
 {
-    public class ControladorInvocacion<TipoInvocacion> : ControladorPersonaje<TipoInvocacion>
-        where TipoInvocacion: ModeloInvocacion, new()
+    public class ControladorInvocacion : ControladorPersonaje
     {
         #region Controladores
 
-        public ControladorPersonaje<ModeloPersonaje> ControladorInvocador { get; set; }
+        public ControladorPersonaje ControladorInvocador { get; set; }
 
-        public ControladorEfecto<ModeloEfecto> ControladorEfecto { get; set; }
+        public ControladorEfecto ControladorEfecto { get; set; }
 
         #endregion
 
         #region Constructores
-        public ControladorInvocacion(TipoInvocacion _modeloInvocacion) : base(_modeloInvocacion) { } 
+        public ControladorInvocacion(ModeloPersonaje _modeloInvocacion) : base(_modeloInvocacion) { } 
         #endregion
 
         #region Funciones
@@ -27,7 +26,7 @@ namespace AppGM.Core
         #endregion
     }
 
-    public class ControladorInvocacionTemporal : ControladorInvocacion<ModeloInvocacionTemporal>
+    public class ControladorInvocacionTemporal : ControladorInvocacion
     {
         #region Constructores
         public ControladorInvocacionTemporal(ModeloInvocacionTemporal _modeloInvocacionTemporal) : base(_modeloInvocacionTemporal) { } 
@@ -43,9 +42,9 @@ namespace AppGM.Core
         #endregion
     }
 
-    public class ControladorInvocacionCondicionada : ControladorInvocacion<ModeloInvocacionCondicionada>
+    public class ControladorInvocacionCondicionada : ControladorInvocacion
     {
-        public Func<ControladorPersonaje<ModeloPersonaje>, bool> DebeDesaparecer;
+        public Func<ControladorPersonaje, bool> DebeDesaparecer;
 
         public ControladorInvocacionCondicionada(ModeloInvocacionCondicionada _modeloInvocacionCondicionada) : base(_modeloInvocacionCondicionada){}
 

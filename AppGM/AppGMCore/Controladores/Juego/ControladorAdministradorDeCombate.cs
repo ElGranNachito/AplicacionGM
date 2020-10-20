@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace AppGM.Core
 {
-    public class ControladorAdministradorDeCombate : ControladorBase<ModeloAdministradorDeCombate>
+    public class ControladorAdministradorDeCombate : Controlador<ModeloAdministradorDeCombate>
     {
         #region Miembros
         public List<ControladorParticipante> ControladoresParticipantes { get; set; }

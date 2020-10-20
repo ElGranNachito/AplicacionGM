@@ -2,7 +2,7 @@
 
 namespace AppGM.Core
 {
-    public class ControladorCondicion : ControladorBase<ModeloCondicion>
+    public class ControladorCondicion : Controlador<ModeloCondicion>
     {
         #region Constructor
 
@@ -22,7 +22,7 @@ namespace AppGM.Core
             //TODO: Generar expresión
         }
 
-        public bool SeCumpleLaCondicion(ControladorPersonaje<ModeloPersonaje> pj)
+        public bool SeCumpleLaCondicion(ControladorPersonaje pj)
         {
             return false;
         }

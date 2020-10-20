@@ -2,8 +2,7 @@
 
 namespace AppGM.Core
 {
-    public class ControladorConsumible<TipoConsumible> : ControladorUtilizable<TipoConsumible>
-    where TipoConsumible : ModeloConsumible, new()
+    public class ControladorConsumible: ControladorUtilizable
     {
         #region Constructor
 
@@ -13,7 +12,7 @@ namespace AppGM.Core
 
         public ControladorConsumible(ModeloConsumible _modeloConsumible)
         {
-            modelo = (TipoConsumible)_modeloConsumible;
+            modelo = _modeloConsumible;
         }
 
         #endregion
@@ -28,14 +27,14 @@ namespace AppGM.Core
         #endregion
     }
 
-    public class ControladorArmaDistancia : ControladorConsumible<ModeloArmasDistancia>
+    public class ControladorArmaDistancia : ControladorConsumible
     {
         #region Controladores
 
         public ControladorTiradaVariable ControladorTiradaDeDaño { get; set; }
         public ControladorTiradaVariable ControladorTiradaVariable { get; set; }
 
-        public List<ControladorEfecto<ModeloEfecto>> ControladorEfectoQueInflige { get; set; }
+        public List<ControladorEfecto> ControladorEfectoQueInflige { get; set; }
 
         #endregion
 
@@ -50,7 +49,7 @@ namespace AppGM.Core
 
         #region Funciones
 
-        public override void Utilizar(ControladorPersonaje<ModeloPersonaje> usuario, ControladorPersonaje<ModeloPersonaje>[] objetivos, object parametroExtra, object segundoParametroExtra)
+        public override void Utilizar(ControladorPersonaje usuario, ControladorPersonaje[] objetivos, object parametroExtra, object segundoParametroExtra)
         {
             //TODO: Realizar la tirada de utilización. Calcular la tirada mínima necesaria para impactar al enemigo.
         }

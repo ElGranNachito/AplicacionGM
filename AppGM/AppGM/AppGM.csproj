@@ -213,7 +213,7 @@
     <Compile Include="Paginas\Rol\Fichas\UserControlListaFichasViewFichas.xaml.cs">
       <DependentUpon>UserControlListaFichasViewFichas.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Paginas\Rol\Fichas\UserControlSeleccionTipoFicha.xaml.cs">
+    <Compile Include="Paginas\Rol\Fichas\SeleccionTipoFichas\UserControlSeleccionTipoFicha.xaml.cs">
       <DependentUpon>UserControlSeleccionTipoFicha.xaml</DependentUpon>
     </Compile>
     <Compile Include="Paginas\Rol\Fichas\UserControlVistaFicha.xaml.cs">
@@ -222,7 +222,7 @@
     <Compile Include="Paginas\Rol\UserControlPaginaPrincipalRol.xaml.cs">
       <DependentUpon>UserControlPaginaPrincipalRol.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Paginas\Rol\Fichas\UserControlMenuSeleccionTipoFicha.xaml.cs">
+    <Compile Include="Paginas\Rol\Fichas\SeleccionTipoFichas\UserControlMenuSeleccionTipoFicha.xaml.cs">
       <DependentUpon>UserControlMenuSeleccionTipoFicha.xaml</DependentUpon>
     </Compile>
     <Compile Include="Viewmodels\ViewModelVentanaPrincipal.cs" />
@@ -286,7 +286,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Paginas\Rol\Fichas\UserControlSeleccionTipoFicha.xaml">
+    <Page Include="Paginas\Rol\Fichas\SeleccionTipoFichas\UserControlSeleccionTipoFicha.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -306,7 +306,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Paginas\Rol\Fichas\UserControlMenuSeleccionTipoFicha.xaml">
+    <Page Include="Paginas\Rol\Fichas\SeleccionTipoFichas\UserControlMenuSeleccionTipoFicha.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

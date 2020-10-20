@@ -179,7 +179,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Comandos\Comando.cs" />
-    <Compile Include="Controladores\ControladorBase.cs" />
+    <Compile Include="Controladores\Controlador.cs" />
     <Compile Include="Controladores\Habilidades\ControladorCaracteristicasHabilidad.cs" />
     <Compile Include="Controladores\Habilidades\ControladorHabilidad.cs" />
     <Compile Include="Controladores\Juego\ControladorAdministradorDeCombate.cs" />
@@ -190,7 +190,7 @@
     <Compile Include="Controladores\Efectos\ControladorEfecto.cs" />
     <Compile Include="Controladores\Juego\ControladorSlot.cs" />
     <Compile Include="Controladores\Juego\ControladorTirada.cs" />
-    <Compile Include="Controladores\Modificadores\ControladorModificadorDeStatBase.cs" />
+    <Compile Include="Controladores\Modificadores\ControladorModificadorDeStat.cs" />
     <Compile Include="Controladores\Personajes\ControladorInvocacion.cs" />
     <Compile Include="Controladores\Personajes\ControladorPersonaje.cs" />
     <Compile Include="Controladores\Utilizables\ControladorConsumible.cs" />

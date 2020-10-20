@@ -15,7 +15,7 @@
         #endregion
     }
 
-    public abstract class ControladorTiradaBase<TipoTirada> : ControladorBase<TipoTirada>, IControladorTiradaBase
+    public abstract class ControladorTirada<TipoTirada> : Controlador<TipoTirada>, IControladorTiradaBase
         where TipoTirada : ModeloTiradaBase, new()
     {
         #region Implementacion Interfaz
@@ -27,7 +27,7 @@
         #endregion
     }
 
-    public class ControladorTiradaVariable : ControladorTiradaBase<ModeloTiradaVariable>
+    public class ControladorTiradaVariable : ControladorTirada<ModeloTiradaVariable>
     {
         #region Constructor
 
@@ -48,7 +48,7 @@
         #endregion
     }
 
-    public class ControladorTiradaStat : ControladorTiradaBase<ModeloTiradaStat>
+    public class ControladorTiradaStat : ControladorTirada<ModeloTiradaStat>
     {
         #region Constructor
 
@@ -63,7 +63,7 @@
 
         public override void RealizarTirada(object p)
         {
-            var personaje = (ControladorPersonaje<ModeloPersonaje>) p;
+            var personaje = (ControladorPersonaje) p;
 
             personaje.SufrirDaño(500, ETipoDeDaño.Explosivo, null);
 
@@ -73,7 +73,7 @@
         #endregion
     }
 
-    public class ControladorTiradaDaño : ControladorTiradaBase<ModeloTiradaDeDaño>
+    public class ControladorTiradaDaño : ControladorTirada<ModeloTiradaDeDaño>
     {
         #region Constructor
 
@@ -88,7 +88,7 @@
 
         public override void RealizarTirada(object p)
         {
-            var personaje = (ControladorPersonaje<ModeloPersonaje>)p;
+            var personaje = (ControladorPersonaje)p;
 
             personaje.SufrirDaño(500, ETipoDeDaño.Explosivo, null);
 

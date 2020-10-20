@@ -1,6 +1,6 @@
 ﻿namespace AppGM.Core
 {
-    public class ControladorRol : ControladorBase<ModeloRol>
+    public class ControladorRol : Controlador<ModeloRol>
     {
         public DatosRol datosRol;
 

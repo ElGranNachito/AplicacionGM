@@ -3,8 +3,7 @@ using System.Collections.Generic;
 
 namespace AppGM.Core
 {
-    public class ControladorHabilidad<TipoHabilidad> : ControladorBase<TipoHabilidad>
-    where TipoHabilidad : ModeloHabilidad, new()
+    public class ControladorHabilidad : Controlador<ModeloHabilidad>
     {
         #region Controladores
 
@@ -14,13 +13,13 @@ namespace AppGM.Core
         public List<IControladorTiradaBase> ControladorTiradasDeUso { get; set; }
         public ControladorTiradaVariable ControladorTiradaDeDaño { get; set; }
 
-        public List<ControladorUtilizable<ModeloItem>> ControladorItemInvocacion { get; set; }
-        public List<ControladorUtilizable<ModeloItem>> ControladorItemsQueCuesta { get; set; }
+        public List<ControladorUtilizable> ControladorItemInvocacion { get; set; }
+        public List<ControladorUtilizable> ControladorItemsQueCuesta { get; set; }
 
-        public List<ControladorInvocacion<ModeloInvocacion>> ControladorInvocacion { get; set; }
+        public List<ControladorInvocacion> ControladorInvocacion { get; set; }
 
-        public List<ControladorEfecto<ModeloEfecto>> ControladorEfectosSobreUsuario { get; set; }
-        public List<ControladorEfecto<ModeloEfecto>> ControladorEfectoSobreObjetivo { get; set; }
+        public List<ControladorEfecto> ControladorEfectosSobreUsuario { get; set; }
+        public List<ControladorEfecto> ControladorEfectoSobreObjetivo { get; set; }
 
         #endregion
 
@@ -29,8 +28,8 @@ namespace AppGM.Core
         private ushort TurnosRestantes;
         private bool EstaActiva;
 
-        private Func<ControladorPersonaje<ModeloPersonaje>, bool> mPuedeSerUtilizada;
-        private Func<ControladorPersonaje<ModeloPersonaje>, ControladorPersonaje<ModeloPersonaje>[], bool> mPuedeSerUtilizadaConObjetivos;
+        private Func<ControladorPersonaje, bool> mPuedeSerUtilizada;
+        private Func<ControladorPersonaje, ControladorPersonaje[], bool> mPuedeSerUtilizadaConObjetivos;
 
         #endregion
 
@@ -42,14 +41,14 @@ namespace AppGM.Core
 
         public ControladorHabilidad(ModeloHabilidad _modeloHabilidad)
         {
-            modelo = (TipoHabilidad)_modeloHabilidad;
+            modelo = _modeloHabilidad;
         }
 
         #endregion
 
         #region Eventos
 
-        public delegate void dUtilizarHabilidad(ControladorHabilidad<ModeloHabilidad> habilidad, ControladorPersonaje<ModeloPersonaje> usuario, ControladorPersonaje<ModeloPersonaje>[] objetivos);
+        public delegate void dUtilizarHabilidad(ControladorHabilidad habilidad, ControladorPersonaje usuario, ControladorPersonaje[] objetivos);
 
         public event dUtilizarHabilidad OnUtilizarHabilidad = delegate { };
 
@@ -57,7 +56,7 @@ namespace AppGM.Core
 
         #region Funciones
 
-        public virtual void IntentarUtilizar(ControladorPersonaje<ModeloPersonaje> usuario)
+        public virtual void IntentarUtilizar(ControladorPersonaje usuario)
         {
             //TODO: Realizar una tirada de casteo sin activar la habilidad y devolver el resultado.
         }
@@ -71,7 +70,7 @@ namespace AppGM.Core
         #endregion
     }
 
-    public class ControladorMagia : ControladorHabilidad<ModeloMagia>
+    public class ControladorMagia : ControladorHabilidad
     {
         #region Constructor
 
@@ -84,11 +83,23 @@ namespace AppGM.Core
 
         #region Funciones
 
-        public virtual void CancelarCasteo(ControladorPersonaje<ModeloPersonaje> usuario)
+        public virtual void CancelarCasteo(ControladorPersonaje usuario)
         {
             //TODO: Devolver el mana al usuario
         }
 
         #endregion
+    }
+
+    /// <summary>
+    /// Una clase para asegurarnos de que los <see cref="ModeloHabilidad"/> sean de cierto tipo, asi podemos evitar errores en los casteos
+    /// </summary>
+    /// <typeparam name="TipoHabilidad">Tipo del modelo</typeparam>
+    public class ControladorHabilidadG<TipoHabilidad> : ControladorHabilidad
+        where TipoHabilidad: ModeloHabilidad, new()
+    {
+        public ControladorHabilidadG(TipoHabilidad _habilidad) : base(_habilidad){}
+
+        public static Type ObtenerTipo() => typeof(TipoHabilidad);
     }
 }

@@ -10,7 +10,7 @@ namespace AppGM.Core
         public double Y { get; set; }
     }
 
-    public class Vector2 : ControladorBase<ModeloVector2>
+    public class Vector2 : Controlador<ModeloVector2>
     {
         public double X => modelo.X;
         public double Y => modelo.Y;

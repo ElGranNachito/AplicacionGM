@@ -1,6 +1,6 @@
 ﻿namespace AppGM.Core
 {
-    public class ControladorMapa : ControladorBase<ModeloMapa>
+    public class ControladorMapa : Controlador<ModeloMapa>
     {
         //Constructor temporal, despues se eliminara
         public ControladorMapa()

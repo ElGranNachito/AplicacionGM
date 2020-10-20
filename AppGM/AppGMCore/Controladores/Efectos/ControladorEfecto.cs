@@ -3,8 +3,7 @@ using System.Collections.Generic;
 
 namespace AppGM.Core
 {
-    public class ControladorEfecto<TipoEfecto> : ControladorBase<TipoEfecto>
-        where TipoEfecto : ModeloEfecto, new()
+    public class ControladorEfecto : Controlador<ModeloEfecto>
     {
         #region Propiedades
 
@@ -28,15 +27,15 @@ namespace AppGM.Core
 
         public ControladorEfecto(ModeloEfecto _modeloEfecto)
         {
-            modelo = (TipoEfecto) _modeloEfecto;
+            modelo = _modeloEfecto;
         }
 
         #endregion
 
         #region Eventos
 
-        public delegate void dAplicarEfecto(ControladorPersonaje<ModeloPersonaje> instigador, ControladorPersonaje<ModeloPersonaje>[] objetivos,
-            ControladorEfecto<ModeloEfecto> efectoAplicado);
+        public delegate void dAplicarEfecto(ControladorPersonaje instigador, ControladorPersonaje[] objetivos,
+            ControladorEfecto efectoAplicado);
 
         public event dAplicarEfecto OnAplicarEfecto = delegate { };
 
@@ -44,14 +43,14 @@ namespace AppGM.Core
 
         #region Funciones
 
-        public virtual bool PuedeAplicarEfecto(ControladorPersonaje<ModeloPersonaje> personaje)
+        public virtual bool PuedeAplicarEfecto(ControladorPersonaje personaje)
         {
             //TODO: Revisar que las condiciones para aplicar el efecto sean cumplidas
 
             return false;
         }
 
-        public virtual void AplicarEfecto(ControladorPersonaje<ModeloPersonaje> personaje)
+        public virtual void AplicarEfecto(ControladorPersonaje personaje)
         {
             //TODO: Separamos el string con los valores correspondientes para cada stat y sumamos
         }
@@ -59,7 +58,7 @@ namespace AppGM.Core
         #endregion
     }
 
-    public class ControladorEfectoTemporal : ControladorEfecto<ModeloEfectoTemporal>
+    public class ControladorEfectoTemporal : ControladorEfecto
     {
         #region Constructor
 
@@ -78,13 +77,13 @@ namespace AppGM.Core
 
         #region Eventos
 
-        public delegate void dQuitarEfecto(ControladorPersonaje<ModeloPersonaje> instigador, ControladorPersonaje<ModeloPersonaje>[] objetivos,
-            ControladorEfecto<ModeloEfecto> efectoAplicado);
+        public delegate void dQuitarEfecto(ControladorPersonaje instigador, ControladorPersonaje[] objetivos,
+            ControladorEfecto efectoAplicado);
 
         public event dQuitarEfecto OnQuitarEfecto = delegate { };
 
-        public delegate void dReducirTurno(ControladorPersonaje<ModeloPersonaje> instigador,
-            ControladorPersonaje<ModeloPersonaje>[] objetivos, ControladorEfecto<ModeloEfecto> efectoAplicado);
+        public delegate void dReducirTurno(ControladorPersonaje instigador,
+            ControladorPersonaje[] objetivos, ControladorEfecto efectoAplicado);
 
         public event dReducirTurno OnReducirEfecto = delegate { };
 
@@ -92,7 +91,7 @@ namespace AppGM.Core
 
         #region Funciones
 
-        public override void AplicarEfecto(ControladorPersonaje<ModeloPersonaje> personaje)
+        public override void AplicarEfecto(ControladorPersonaje personaje)
         {
             base.AplicarEfecto(personaje);
         }

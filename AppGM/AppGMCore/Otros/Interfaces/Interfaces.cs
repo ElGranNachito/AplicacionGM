@@ -15,12 +15,12 @@ namespace AppGM.Core
 
     public interface IUtilizableConObjetivos
     {
-        void Utilizar(ControladorPersonaje<ModeloPersonaje> usuario, ControladorPersonaje<ModeloPersonaje>[] objetivos, object parametroExtra, object segundoParametroExtra);
+        void Utilizar(ControladorPersonaje usuario, ControladorPersonaje[] objetivos, object parametroExtra, object segundoParametroExtra);
     }
 
     public interface IUtilizableSinObjetivos
     {
-        void Utilizar(ControladorPersonaje<ModeloPersonaje> usuario, object parametroExtra, object segundoParametroExtra);
+        void Utilizar(ControladorPersonaje usuario, object parametroExtra, object segundoParametroExtra);
     }
 
     public interface IBotonSeleccionado<T>

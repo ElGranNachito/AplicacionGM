@@ -3,8 +3,7 @@ using Microsoft.Win32.SafeHandles;
 
 namespace AppGM.Core
 {
-    public class ControladorPortable<TipoPortable> : ControladorUtilizable<TipoPortable>
-    where TipoPortable : ModeloPortable, new()
+    public class ControladorPortable : ControladorUtilizable
     {
         #region Controladores
 
@@ -16,7 +15,7 @@ namespace AppGM.Core
         // Portable ofensivo
         public List<ControladorTiradaDaño> ControladorTiradaDeDaño { get; set; }
 
-        public ControladorEfecto<ModeloEfecto> ControladorEfectoQueInflige { get; set; }
+        public ControladorEfecto ControladorEfectoQueInflige { get; set; }
 
         #endregion
 
@@ -28,19 +27,19 @@ namespace AppGM.Core
         
         public ControladorPortable(ModeloPortable _modeloPortable)
         {
-            modelo = (TipoPortable) _modeloPortable;
+            modelo = _modeloPortable;
         }
 
         #endregion
 
         #region Funciones
 
-        public virtual void Equipar(ControladorPersonaje<ModeloPersonaje> objetivo)
+        public virtual void Equipar(ControladorPersonaje objetivo)
         {
             //TODO equipar item al objetivo.
         }
 
-        public virtual void Desequipar(ControladorPersonaje<ModeloPersonaje> objetivo)
+        public virtual void Desequipar(ControladorPersonaje objetivo)
         {
             //TODO desequipar item al objetivo.
         }
@@ -48,8 +47,7 @@ namespace AppGM.Core
         #endregion
     }
 
-    public class ControladorDefensivo<TipoDefensivo> : ControladorPortable<TipoDefensivo>
-    where TipoDefensivo : ModeloDefensivo, new()
+    public class ControladorDefensivo: ControladorPortable
     {
         #region Constructor
 
@@ -59,7 +57,7 @@ namespace AppGM.Core
 
         public ControladorDefensivo(ModeloDefensivo _modeloDefensivo)
         {
-            modelo = (TipoDefensivo) _modeloDefensivo;
+            modelo = _modeloDefensivo;
         }
 
         #endregion
@@ -75,7 +73,7 @@ namespace AppGM.Core
         #endregion
     }
 
-    public class ControladorDefensivoAbsoluto : ControladorDefensivo<ModeloDefensivoAbsoluto>
+    public class ControladorDefensivoAbsoluto : ControladorDefensivo
     {
         #region Constructor
 
