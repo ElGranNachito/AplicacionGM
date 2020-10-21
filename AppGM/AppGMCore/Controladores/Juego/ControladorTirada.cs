@@ -3,13 +3,11 @@
     public interface IControladorTiradaBase
     {
         #region Propiedades
-        
         int Resultado { get; set; }
 
         #endregion
 
         #region Funciones
-
         void RealizarTirada(object parametro);
 
         #endregion
@@ -19,7 +17,6 @@
         where TipoTirada : ModeloTiradaBase, new()
     {
         #region Implementacion Interfaz
-
         public int Resultado { get; set; }
 
         public virtual void RealizarTirada(object parametro) { } 

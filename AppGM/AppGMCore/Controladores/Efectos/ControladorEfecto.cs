@@ -17,7 +17,7 @@ namespace AppGM.Core
 
         #endregion
 
-        //public Func<ControladorPersonaje<ModeloPersonaje>, bool> PuedeSerAplicado
+        public Func<ControladorPersonaje, bool> PuedeSerAplicado;
 
         #region Constructor
 
@@ -52,6 +52,10 @@ namespace AppGM.Core
 
         public virtual void AplicarEfecto(ControladorPersonaje personaje)
         {
+            if (PuedeAplicarEfecto(personaje))
+            {
+
+            }
             //TODO: Separamos el string con los valores correspondientes para cada stat y sumamos
         }
 

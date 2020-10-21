@@ -18,6 +18,7 @@ namespace AppGM.Core
         public string Nombre { get; set; }
 
         //Stats del personaje
+        public int MaxHp { get; set; }
         public int Hp { get; set; }
         public ushort Str { get; set; }
         public ushort End { get; set; }

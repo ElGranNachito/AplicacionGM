@@ -16,7 +16,7 @@ namespace AppGM.Core
 
     public class ModeloModificadorDeStatPrimitivos : ModeloModificadorDeStatBase
     {
-        //Stats afectadas por el modificador
+        //Stats afectadas por el modificador. Tener en cuenta los valores de EStat
         public int StatsQueAfecta { get; set; }
 
         //Valor aplicado a las stats
@@ -35,7 +35,10 @@ namespace AppGM.Core
 
     public class ModeloModificadorDeDefensa : ModeloModificadorDeStatBase
     {
+        //Tener en cuenta los valores de ETipoDeDaño
         public int TiposDeDaño { get; set; }
+
+        //Tener en cuenta los valores de EAlineamiento
         public int AlineamientosDelInstigador { get; set; }
 
         public byte ModificacionPorcentual { get; set; }

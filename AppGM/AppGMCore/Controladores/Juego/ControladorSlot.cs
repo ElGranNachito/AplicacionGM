@@ -6,7 +6,7 @@ namespace AppGM.Core
     {
         #region Controladores
 
-        public List<ControladorUtilizable<ModeloItem>> ControladorItemsAlmacenados { get; set; }
+        public List<ControladorUtilizable> ControladorItemsAlmacenados { get; set; }
 
         #endregion
         
@@ -21,7 +21,7 @@ namespace AppGM.Core
 
         #region Funciones
 
-        public bool AlmacenarItem(ControladorUtilizable<ModeloItem> item)
+        public bool AlmacenarItem(ControladorUtilizable item)
         {
             //TODO: Chequear si queda espacio para almacenar dicho item y almacenarlo.
             //Retornar booleano indicando si se pudo almacenar el item.

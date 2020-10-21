@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using SuperDll.SuperUtilidades;
+using Math = SuperDll.SuperUtilidades.Math;
 
 namespace AppGM.Core
 {
@@ -41,7 +43,11 @@ namespace AppGM.Core
         object personaje,
         ControladorAdministradorDeCombate combate);
 
-    public delegate void dCurarse(ref int valor, ControladorPersonaje personaje, ControladorPersonaje fuente);
+    public delegate void dCurarse(
+        ref int valor,
+        ControladorPersonaje personaje,
+        ControladorPersonaje fuenteP, 
+        ControladorUtilizable fuenteI);
     
     #endregion
 
@@ -82,7 +88,7 @@ namespace AppGM.Core
         public event dRealizarAccion      OnRealizarAccion    = delegate { };
         public event dEntrarSalirCombate  OnEntrarEnCombate   = delegate { };
         public event dEntrarSalirCombate  OnSalirDeCombate    = delegate { };
-        public event dCurarse OnRecibirCuracion = delegate { };
+        public event dCurarse             OnRecibirCuracion   = delegate { };
 
         #endregion
 
@@ -98,14 +104,30 @@ namespace AppGM.Core
 
         protected void ModificarVida(int cantidad)
         {
-            if ((modelo.Hp += cantidad) <= 0)
+            if ((modelo.Hp = SuperDll.SuperUtilidades.Math.Clamp(modelo.Hp + cantidad, int.MinValue, modelo.MaxHp)) <= 0)
                 OnMorir(this);
         }
 
-        public void Curar(int cantidad)
+        /// <summary>
+        /// Cura al personaje
+        /// </summary>
+        /// <param name="cantidad">Valor de la curacion</param>
+        /// <param name="fuenteP">Personaje que realizo la curacion</param>
+        /// <param name="fuenteI">Item que realizo la curacion</param>
+        public void Curar(int cantidad, ControladorPersonaje fuenteP, ControladorUtilizable fuenteI)
         {
+            //Llamamos al evento antes de realizar la curacion por si algunos de los metodos subscritos modifica el valor de curacion
+            OnRecibirCuracion(ref cantidad, this, fuenteP, fuenteI);
+
+            ModificarVida(cantidad);
         }
 
+        /// <summary>
+        /// Realiza daño al personaje
+        /// </summary>
+        /// <param name="cantidad">Cantidad de daño</param>
+        /// <param name="eTipo">Tipo del daño realizado</param>
+        /// <param name="instigador">Controlador del personaje que realiza el daño</param>
         public void SufrirDaño(int cantidad, ETipoDeDaño eTipo, ControladorPersonaje instigador)
         {
             //Llamamos el evento de sufrir daño antes por si algunos de los metodos subscritos modifica el daño realizado
@@ -116,6 +138,9 @@ namespace AppGM.Core
 
         public virtual void AvanzarTurno()
         {
+            for(int i = 0; i < Efectos.Count; ++i)
+                Efectos[i].AplicarEfecto(this);
+
             //TODO: Aplicar los efectos
         }
         

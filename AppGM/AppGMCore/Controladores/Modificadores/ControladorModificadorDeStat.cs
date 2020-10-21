@@ -5,7 +5,6 @@ namespace AppGM.Core
     public interface IControladorModificadorDeStatBase
     {
         #region Controladores
-
         IControladorTiradaBase ControladorTiradaBase { get; set; }
 
         #endregion
@@ -46,7 +45,6 @@ namespace AppGM.Core
     public class ControladorModificadorDeStatClase : ControladorModificadorDeStat
     {
         #region Propiedades
-
         public object Modificacion { get; set; }
 
         public MemberInfo Miembro { get; set; }
