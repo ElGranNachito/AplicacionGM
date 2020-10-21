@@ -9,11 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AppGM.Core.Migrations
 {
     [DbContext(typeof(RolContext))]
-<<<<<<< Updated upstream:AppGM/AppGMCore/Migrations/20201021184742_Inicial.Designer.cs
     [Migration("20201021184742_Inicial")]
-=======
-    [Migration("20201021185210_Inicial")]
->>>>>>> Stashed changes:AppGM/AppGMCore/Migrations/20201021185210_Inicial.Designer.cs
     partial class Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
