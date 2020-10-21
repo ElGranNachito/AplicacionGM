@@ -71,13 +71,9 @@
     <Compile Include="Datos\RolContext.cs" />
     <Compile Include="Helpers\MathHelpers.cs" />
     <Compile Include="Helpers\StringHelpers.cs" />
-    <Compile Include="Migrations\20201019003224_inicial.cs" />
-    <Compile Include="Migrations\20201019003224_inicial.designer.cs">
-      <DependentUpon>20201019003224_inicial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20201019010414_iiil.cs" />
-    <Compile Include="Migrations\20201019010414_iiil.designer.cs">
-      <DependentUpon>20201019010414_iiil.cs</DependentUpon>
+    <Compile Include="Migrations\20201021184742_Inicial.cs" />
+    <Compile Include="Migrations\20201021184742_Inicial.designer.cs">
+      <DependentUpon>20201021184742_Inicial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\RolContextModelSnapshot.cs" />
     <Compile Include="Modelos\Habilidades\CaracteristicasHabilidad.cs" />
@@ -165,5 +161,6 @@
       <Version>3.2.6</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

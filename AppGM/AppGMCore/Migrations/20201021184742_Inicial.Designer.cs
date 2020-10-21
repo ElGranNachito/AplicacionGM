@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AppGM.Core.Migrations
 {
     [DbContext(typeof(RolContext))]
-    [Migration("20201019010414_iiil")]
-    partial class iiil
+    [Migration("20201021184742_Inicial")]
+    partial class Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -248,13 +248,16 @@ namespace AppGM.Core.Migrations
                     b.Property<bool>("EstaEnCombate")
                         .HasColumnType("INTEGER");
 
-                    b.Property<short>("Hp")
+                    b.Property<int>("Hp")
                         .HasColumnType("INTEGER");
 
                     b.Property<ushort>("Intel")
                         .HasColumnType("INTEGER");
 
                     b.Property<ushort>("Lck")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("MaxHp")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Nombre")

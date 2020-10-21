@@ -246,13 +246,16 @@ namespace AppGM.Core.Migrations
                     b.Property<bool>("EstaEnCombate")
                         .HasColumnType("INTEGER");
 
-                    b.Property<short>("Hp")
+                    b.Property<int>("Hp")
                         .HasColumnType("INTEGER");
 
                     b.Property<ushort>("Intel")
                         .HasColumnType("INTEGER");
 
                     b.Property<ushort>("Lck")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("MaxHp")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Nombre")

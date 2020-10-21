@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AppGM.Core.Migrations
 {
-    public partial class inicial : Migration
+    public partial class Inicial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -651,25 +651,23 @@ namespace AppGM.Core.Migrations
                 columns: table => new
                 {
                     IdUtilizable = table.Column<int>(nullable: false),
-                    IdEfecto = table.Column<int>(nullable: false),
-                    UtilizableIdUtilizable = table.Column<int>(nullable: true),
-                    EfectoIdEfecto = table.Column<int>(nullable: true)
+                    IdEfecto = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TIUtilizableEfecto", x => new { x.IdUtilizable, x.IdEfecto });
                     table.ForeignKey(
-                        name: "FK_TIUtilizableEfecto_ModeloEfecto_EfectoIdEfecto",
-                        column: x => x.EfectoIdEfecto,
+                        name: "FK_TIUtilizableEfecto_ModeloEfecto_IdEfecto",
+                        column: x => x.IdEfecto,
                         principalTable: "ModeloEfecto",
                         principalColumn: "IdEfecto",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_TIUtilizableEfecto_ModeloUtilizable_UtilizableIdUtilizable",
-                        column: x => x.UtilizableIdUtilizable,
+                        name: "FK_TIUtilizableEfecto_ModeloUtilizable_IdUtilizable",
+                        column: x => x.IdUtilizable,
                         principalTable: "ModeloUtilizable",
                         principalColumn: "IdUtilizable",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -728,7 +726,8 @@ namespace AppGM.Core.Migrations
                     IdPersonaje = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Nombre = table.Column<string>(maxLength: 50, nullable: true),
-                    Hp = table.Column<short>(nullable: false),
+                    MaxHp = table.Column<int>(nullable: false),
+                    Hp = table.Column<int>(nullable: false),
                     Str = table.Column<ushort>(nullable: false),
                     End = table.Column<ushort>(nullable: false),
                     Agi = table.Column<ushort>(nullable: false),
@@ -1505,14 +1504,9 @@ namespace AppGM.Core.Migrations
                 column: "ItemIdUtilizable");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TIUtilizableEfecto_EfectoIdEfecto",
+                name: "IX_TIUtilizableEfecto_IdEfecto",
                 table: "TIUtilizableEfecto",
-                column: "EfectoIdEfecto");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TIUtilizableEfecto_UtilizableIdUtilizable",
-                table: "TIUtilizableEfecto",
-                column: "UtilizableIdUtilizable");
+                column: "IdEfecto");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TIUtilizableModificadorDeStatBase_IdUtilizable",
