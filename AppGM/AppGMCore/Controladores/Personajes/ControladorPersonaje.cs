@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using SuperDll.SuperUtilidades;
-using Math = SuperDll.SuperUtilidades.Math;
 
 namespace AppGM.Core
 {
@@ -44,9 +42,9 @@ namespace AppGM.Core
         ControladorAdministradorDeCombate combate);
 
     public delegate void dCurarse(
-        ref int valor,
+        ref int valor, 
         ControladorPersonaje personaje,
-        ControladorPersonaje fuenteP, 
+        ControladorPersonaje fuenteP,
         ControladorUtilizable fuenteI);
     
     #endregion
@@ -138,7 +136,7 @@ namespace AppGM.Core
 
         public virtual void AvanzarTurno()
         {
-            for(int i = 0; i < Efectos.Count; ++i)
+            for (int i = 0; i < Efectos.Count; ++i)
                 Efectos[i].AplicarEfecto(this);
 
             //TODO: Aplicar los efectos

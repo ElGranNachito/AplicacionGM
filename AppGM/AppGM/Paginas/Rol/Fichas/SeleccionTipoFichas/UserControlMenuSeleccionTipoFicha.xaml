@@ -21,7 +21,7 @@
                 Margin="{Binding AnchoMargenCartas, Converter={local:GrosorToThicknessConverter}}">
 
                 <Grid.Background>
-                    <ImageBrush ImageSource="../../../Media/Imagenes/Carta_Servant.png"/>
+                    <ImageBrush ImageSource="../../../../Media/Imagenes/Carta_Servant.png"/>
                 </Grid.Background>
 
                 <Button Style="{StaticResource BotonMarcoResaltable}"
@@ -39,7 +39,7 @@
                 Margin="{Binding AnchoMargenCartas, Converter={local:GrosorToThicknessConverter}}">
 
                 <Grid.Background>
-                    <ImageBrush ImageSource="../../../Media/Imagenes/Carta_Master.png"/>
+                    <ImageBrush ImageSource="../../../../Media/Imagenes/Carta_Master.png"/>
                 </Grid.Background>
 
                 <Button Style="{StaticResource BotonMarcoResaltable}"
@@ -57,7 +57,7 @@
                 Margin="{Binding AnchoMargenCartas, Converter={local:GrosorToThicknessConverter}}">
 
                 <Grid.Background>
-                    <ImageBrush ImageSource="../../../Media/Imagenes/Carta_Invocacion.png"/>
+                    <ImageBrush ImageSource="../../../../Media/Imagenes/Carta_Invocacion.png"/>
                 </Grid.Background>
 
                 <Button Style="{StaticResource BotonMarcoResaltable}"
@@ -75,7 +75,7 @@
                 Margin="{Binding AnchoMargenCartas, Converter={local:GrosorToThicknessConverter}}">
 
                 <Grid.Background>
-                    <ImageBrush ImageSource="../../../Media/Imagenes/Carta_NPC.png"/>
+                    <ImageBrush ImageSource="../../../../Media/Imagenes/Carta_NPC.png"/>
                 </Grid.Background>
 
                 <Button Style="{StaticResource BotonMarcoResaltable}"

@@ -9,12 +9,11 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AppGM.Core</RootNamespace>
     <AssemblyName>AppGM.Core</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -71,9 +70,9 @@
     <Compile Include="Datos\RolContext.cs" />
     <Compile Include="Helpers\MathHelpers.cs" />
     <Compile Include="Helpers\StringHelpers.cs" />
-    <Compile Include="Migrations\20201021184742_Inicial.cs" />
-    <Compile Include="Migrations\20201021184742_Inicial.designer.cs">
-      <DependentUpon>20201021184742_Inicial.cs</DependentUpon>
+    <Compile Include="Migrations\20201021192832_inicial.cs" />
+    <Compile Include="Migrations\20201021192832_inicial.designer.cs">
+      <DependentUpon>20201021192832_inicial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\RolContextModelSnapshot.cs" />
     <Compile Include="Modelos\Habilidades\CaracteristicasHabilidad.cs" />

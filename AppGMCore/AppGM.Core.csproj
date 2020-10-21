@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{DC35C1D2-76B4-4FA9-A13E-E08AD9B9A433}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AppGM.Core</RootNamespace>
+    <AssemblyName>AppGM.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="SuperDll">
+      <HintPath>..\Dependencias\SuperDll.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Comandos\Comando.cs" />
+    <Compile Include="Controladores\Controlador.cs" />
+    <Compile Include="Controladores\Habilidades\ControladorCaracteristicasHabilidad.cs" />
+    <Compile Include="Controladores\Habilidades\ControladorHabilidad.cs" />
+    <Compile Include="Controladores\Juego\ControladorAdministradorDeCombate.cs" />
+    <Compile Include="Controladores\Juego\ControladorCondicion.cs" />
+    <Compile Include="Controladores\Juego\ControladorMapa.cs" />
+    <Compile Include="Controladores\Juego\ControladorParticipante.cs" />
+    <Compile Include="Controladores\Juego\ControladorRol.cs" />
+    <Compile Include="Controladores\Efectos\ControladorEfecto.cs" />
+    <Compile Include="Controladores\Juego\ControladorSlot.cs" />
+    <Compile Include="Controladores\Juego\ControladorTirada.cs" />
+    <Compile Include="Controladores\Modificadores\ControladorModificadorDeStat.cs" />
+    <Compile Include="Controladores\Personajes\ControladorInvocacion.cs" />
+    <Compile Include="Controladores\Personajes\ControladorPersonaje.cs" />
+    <Compile Include="Controladores\Utilizables\ControladorConsumible.cs" />
+    <Compile Include="Controladores\Utilizables\ControladorPortable.cs" />
+    <Compile Include="Controladores\Utilizables\ControladorUtilizable.cs" />
+    <Compile Include="Datos\DatosRol.cs" />
+    <Compile Include="Datos\RolContext.cs" />
+    <Compile Include="Helpers\MathHelpers.cs" />
+    <Compile Include="Helpers\StringHelpers.cs" />
+<<<<<<< Updated upstream
+    <Compile Include="Migrations\20201021184742_Inicial.cs" />
+    <Compile Include="Migrations\20201021184742_Inicial.designer.cs">
+      <DependentUpon>20201021184742_Inicial.cs</DependentUpon>
+=======
+    <Compile Include="Migrations\20201021185210_Inicial.cs" />
+    <Compile Include="Migrations\20201021185210_Inicial.designer.cs">
+      <DependentUpon>20201021185210_Inicial.cs</DependentUpon>
+>>>>>>> Stashed changes
+    </Compile>
+    <Compile Include="Migrations\RolContextModelSnapshot.cs" />
+    <Compile Include="Modelos\Habilidades\CaracteristicasHabilidad.cs" />
+    <Compile Include="Modelos\Habilidades\ModeloHabilidad.cs" />
+    <Compile Include="Modelos\Juego\ModeloAccion.cs" />
+    <Compile Include="Modelos\Juego\ModeloAdministradorDeCombate.cs" />
+    <Compile Include="Modelos\Juego\ModeloCaracteristicas.cs" />
+    <Compile Include="Modelos\Juego\ModeloCondicion.cs" />
+    <Compile Include="Modelos\Juego\ModeloMapa.cs" />
+    <Compile Include="Modelos\Juego\ModeloTirada.cs" />
+    <Compile Include="Modelos\Modificadores\ModeloModificadorDeStatBase.cs" />
+    <Compile Include="Modelos\Personajes\ModeloMaster.cs" />
+    <Compile Include="Modelos\Juego\ModeloParticipante.cs" />
+    <Compile Include="Modelos\Juego\ModeloSlot.cs" />
+    <Compile Include="Modelos\Personajes\ModeloInvocacion.cs" />
+    <Compile Include="Modelos\Personajes\ModeloPersonajeJugable.cs" />
+    <Compile Include="Modelos\Personajes\ModeloServant.cs" />
+    <Compile Include="Modelos\Utilizables\ModeloPortable.cs" />
+    <Compile Include="Modelos\Utilizables\ModeloItem.cs" />
+    <Compile Include="Modelos\Utilizables\ModeloUtilizable.cs" />
+    <Compile Include="Otros\Clases\Grosor.cs" />
+    <Compile Include="Otros\Enums\Enums.cs" />
+    <Compile Include="Otros\Interfaces\Interfaces.cs" />
+    <Compile Include="Modelos\Efectos\ModeloEfecto.cs" />
+    <Compile Include="Modelos\Juego\ModeloRol.cs" />
+    <Compile Include="Modelos\Personajes\ModeloPersonaje.cs" />
+    <Compile Include="Otros\ValorTemporal.cs" />
+    <Compile Include="Otros\ModeloVector2.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Relaciones\TICombate.cs" />
+    <Compile Include="Relaciones\TIEfecto.cs" />
+    <Compile Include="Relaciones\TIHabilidades.cs" />
+    <Compile Include="Relaciones\TIMapa.cs" />
+    <Compile Include="Relaciones\TIModificadores.cs" />
+    <Compile Include="Relaciones\TIPersonajes.cs" />
+    <Compile Include="Relaciones\TIUtilizables.cs" />
+    <Compile Include="Sistema\SistemaPrincipal.cs" />
+    <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\DesignModels\BaseDesignModel.cs" />
+    <Compile Include="ViewModels\DesignModels\DesignModelCombateItem.cs" />
+    <Compile Include="ViewModels\DesignModels\DesingModelListaRoles.cs" />
+    <Compile Include="ViewModels\Rol\AdministradorDeCombates\Combate\ViewModelCombate.cs" />
+    <Compile Include="ViewModels\Rol\AdministradorDeCombates\Combate\ViewModelListaParticipantes.cs" />
+    <Compile Include="ViewModels\Rol\AdministradorDeCombates\Combate\ViewModelParticipante.cs" />
+    <Compile Include="ViewModels\ViewModelsGlobos\ViewModelInfoCombateGlobo.cs" />
+    <Compile Include="ViewModels\Rol\AdministradorDeCombates\SeleccionDeCombate\ViewModelMenuSeleccionCombate.cs" />
+    <Compile Include="ViewModels\Rol\Fichas\ViewModelFichaItem.cs" />
+    <Compile Include="ViewModels\Rol\Fichas\ViewModelListaFichas.cs" />
+    <Compile Include="ViewModels\Rol\Fichas\ViewModelListaFichasVistaFichas.cs" />
+    <Compile Include="ViewModels\Rol\Mapas\ViewModelIngresoPosicion.cs" />
+    <Compile Include="ViewModels\Rol\Mapas\ViewModelMapa.cs" />
+    <Compile Include="ViewModels\Rol\Mapas\ViewModelMapaPrincipal.cs" />
+    <Compile Include="ViewModels\ViewModelAplicacion.cs" />
+    <Compile Include="ViewModels\Rol\Fichas\ViewModelMenuSeleccionTipoFicha.cs" />
+    <Compile Include="ViewModels\ViewModelCarta.cs" />
+    <Compile Include="ViewModels\ViewModelsGlobos\ViewModelContenidoGloboInfoRol.cs" />
+    <Compile Include="ViewModels\ViewModelsGlobos\ViewModelGlobo.cs" />
+    <Compile Include="ViewModels\Rol\AdministradorDeCombates\SeleccionDeCombate\ViewModelListaCombates.cs" />
+    <Compile Include="ViewModels\ViewModelPaginaPrincipal.cs" />
+    <Compile Include="ViewModels\Rol\AdministradorDeCombates\SeleccionDeCombate\ViewModelCombateItem.cs" />
+    <Compile Include="ViewModels\Rol\ViewModelPaginaPrincipalRol.cs" />
+    <Compile Include="ViewModels\ViewModelVector2.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Fody">
+      <Version>6.2.6</Version>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite">
+      <Version>3.1.9</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools">
+      <Version>3.1.9</Version>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Ninject">
+      <Version>3.3.4</Version>
+    </PackageReference>
+    <PackageReference Include="PropertyChanged.Fody">
+      <Version>3.2.6</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
