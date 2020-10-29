@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using System.Linq;
 
 namespace AppGM.Core
 {
@@ -7,7 +6,8 @@ namespace AppGM.Core
     {
         #region Miembros
 
-        public ViewModelMapa mapa;
+        public ViewModelMapa         mapa;
+        public ControladorUnidadMapa unidad;
 
         #endregion
 
@@ -33,11 +33,15 @@ namespace AppGM.Core
                     else
                         Posicion.X = mapa.TamañoCanvasX;
 
+                    DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PosicionImg)));
+
                     return;
                 }
 
                 if (value.EstaVacio())
                     Posicion.X = 0;
+
+                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PosicionImg)));
             }
         }
         public string TextoPosicionY
@@ -47,6 +51,7 @@ namespace AppGM.Core
             {
                 if (mapa == null)
                     return;
+
 
                 double tmp;
 
@@ -60,16 +65,35 @@ namespace AppGM.Core
                     else
                         Posicion.Y = mapa.TamañoCanvasY;
 
+                    DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PosicionImg)));
+
                     return;
                 }
 
                 if (value.EstaVacio())
-                    Posicion.X = 0;
+                    Posicion.Y = 0;
+
+                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PosicionImg)));
             }
         }
+
+        public string PathImagen => unidad.Path;
+        public string Nombre     => unidad.Nombre;
+        public ViewModelVector2 TamañoImagenesPosicion => mapa.TamañoImagenesPosicion;
+        public ViewModelVector2 MitadTamañoImagenesPosicion => mapa.MitadTamañoImagenesPosicion;
+        public Grosor           PosicionImg => new Grosor(Posicion.X, Posicion.Y, 0, 0);
+
         #endregion
 
         #region Constructores
+
+        public ViewModelIngresoPosicion(ViewModelMapa _mapa, ControladorUnidadMapa _unidad)
+        {
+            mapa   = _mapa;
+            unidad = _unidad;
+
+            Posicion = new ViewModelVector2(unidad.posicion);
+        }
         public ViewModelIngresoPosicion(ViewModelMapa _mapa, Vector2 _posicionInicial)
         {
             mapa = _mapa;

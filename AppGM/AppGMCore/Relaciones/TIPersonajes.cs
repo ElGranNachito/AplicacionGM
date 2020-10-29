@@ -120,4 +120,10 @@ namespace AppGM.Core
         public ModeloInvocacion Invocacion { get; set; }
     }
 
+    public class TIPersonajeUnidadMapa : TIPersonaje
+    {
+        public int IdUnidadMapa { get; set; }
+        public ModeloUnidadMapa Unidad { get; set; }
+    }
+
 }

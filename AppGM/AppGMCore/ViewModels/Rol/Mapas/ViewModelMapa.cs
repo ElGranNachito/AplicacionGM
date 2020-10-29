@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
-using System.Linq;
 
 namespace AppGM.Core
 {
@@ -9,12 +7,14 @@ namespace AppGM.Core
     {
         #region Miembros
 
-        protected ControladorMapa mControladorMapa;
+        public List<ViewModelIngresoPosicion>    Posiciones { get; set; } = new List<ViewModelIngresoPosicion>();
+
+        protected ControladorMapa                mControladorMapa;
 
         #endregion
 
         #region Propiedades
-        public string PathAImagen { get; set; }
+        public string PathImagen { get; set; }
         public double TamañoCanvasX
         {
             get => TamañoCanvas.X.Round(1);
@@ -40,9 +40,12 @@ namespace AppGM.Core
         public double MitadTamañoCanvasX => (TamañoCanvas.X / 2.0f).Round(1);
         public double MitadTamañoCanvasY => (TamañoCanvas.Y / 2.0f).Round(1);
 
+        public object ContenedorImagenes { get; set; }
+
         public ViewModelVector2 TamañoCanvas { get; set; } = new ViewModelVector2();
 
-        public ViewModelVector2 TamañoImagenesPosicion { get; set; } = new ViewModelVector2(100, 120);
+        //Tamaño de las imagenes
+        public ViewModelVector2 TamañoImagenesPosicion { get; set; } = new ViewModelVector2(101.25, 138.75);
 
         public ViewModelVector2 MitadTamañoImagenesPosicion => new ViewModelVector2(
             -(TamañoImagenesPosicion.X / 2.0f).Round(1),
@@ -56,8 +59,12 @@ namespace AppGM.Core
         {
             mControladorMapa = _controlador;
 
-            PathAImagen = "../../../Media/Imagenes/Mapas/" +
-                          mControladorMapa.modelo.NombreMapa + mControladorMapa.ObtenerExtension();
+            PathImagen = "../../../Media/Imagenes/Mapas/" +
+                          mControladorMapa.NombreMapa + mControladorMapa.ObtenerExtension();
+
+            //Creamos los view models para el ingreso de las diferentes posiciones
+            for(int i = 0; i < mControladorMapa.controladoresUnidadesMapa.Count; ++i)
+                Posiciones.Add(new ViewModelIngresoPosicion(this, mControladorMapa.controladoresUnidadesMapa[i]));
         }
         public ViewModelMapa()
         {
@@ -81,7 +88,7 @@ namespace AppGM.Core
                 }
             };
 
-            PathAImagen = "../../../Media/Imagenes/Mapas/" +
+            PathImagen = "../../../Media/Imagenes/Mapas/" +
                           mControladorMapa.modelo.NombreMapa + mControladorMapa.ObtenerExtension();
         } 
         #endregion

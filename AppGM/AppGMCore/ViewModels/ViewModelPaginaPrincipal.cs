@@ -91,7 +91,7 @@ namespace AppGM.Core
             {
                 await SistemaPrincipal.CargarRol(RolActual);
 
-                SistemaPrincipal.ObtenerInstancia<ViewModelAplicacion>().EPaginaActual =
+                SistemaPrincipal.Aplicacion.EPaginaActual =
                     EPaginaActual.PaginaPrincipalRol;
             });
 

@@ -66,6 +66,7 @@
     <Compile Include="AttachedProperties\BotonMenuRolConViewModelProperty.cs" />
     <Compile Include="AttachedProperties\BotonMenuRolProperty.cs" />
     <Compile Include="AttachedProperties\CampoDeTextoNumericoProperty.cs" />
+    <Compile Include="AttachedProperties\DragProperty.cs" />
     <Compile Include="AttachedProperties\ParametroProperty\BaseAttachedPropertyParametro.cs" />
     <Compile Include="AttachedProperties\CrearDesignTimeViewModelProperty.cs" />
     <Compile Include="AttachedProperties\LlamarComandoOnMouseEnterProperty.cs" />
@@ -115,8 +116,17 @@
     <Compile Include="Paginas\Rol\AdministradorDeCombate\SeleccionDeCombate\UserControlMenuSeleccionCombate.xaml.cs">
       <DependentUpon>UserControlMenuSeleccionCombate.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Paginas\Rol\Mapas\UserControlImagenPosicion.xaml.cs">
+      <DependentUpon>UserControlImagenPosicion.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Paginas\Rol\Mapas\UserControlIngresoPosicion.xaml.cs">
       <DependentUpon>UserControlIngresoPosicion.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Rol\Mapas\UserControlListaImagenPosicion.xaml.cs">
+      <DependentUpon>UserControlListaImagenPosicion.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Rol\Mapas\UserControlListaIngresoPosicion.xaml.cs">
+      <DependentUpon>UserControlListaIngresoPosicion.xaml</DependentUpon>
     </Compile>
     <Compile Include="Paginas\Rol\Mapas\UserControlMapa.xaml.cs">
       <DependentUpon>UserControlMapa.xaml</DependentUpon>
@@ -190,6 +200,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Paginas\Rol\Mapas\UserControlImagenPosicion.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Paginas\Rol\Mapas\UserControlListaImagenPosicion.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Paginas\Rol\Mapas\UserControlListaIngresoPosicion.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Paginas\Rol\UserControlBotonMenuRol.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -229,6 +251,10 @@
     <Page Include="Paginas\Rol\Fichas\SeleccionTipoFichas\UserControlMenuSeleccionTipoFicha.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Recursos\Controles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Ventanas\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -338,6 +364,45 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Media\Imagenes\Mapas\Seoul.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Media\Imagenes\Posiciones\Berserker.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Media\Imagenes\Posiciones\Assassin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Media\Imagenes\Posiciones\Master_Assassin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Media\Imagenes\Posiciones\Master_Berserker.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Media\Imagenes\Posiciones\Master_Saber.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Media\Imagenes\Posiciones\Saber.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Media\Imagenes\Posiciones\Lancer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Media\Imagenes\Posiciones\Archer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Media\Imagenes\Posiciones\Caster.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Media\Imagenes\Posiciones\Master_Archer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Media\Imagenes\Posiciones\Master_Caster.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Media\Imagenes\Posiciones\Master_Lancer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Media\Imagenes\Posiciones\Invocacion_Master_Caster.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

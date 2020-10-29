@@ -13,6 +13,9 @@ namespace AppGM
         public UserControlMapa()
         {
             InitializeComponent();
+
+            DataContext = SistemaPrincipal.ObtenerInstancia<ViewModelMapaPrincipal>();
+            ((ViewModelMapaPrincipal) DataContext).ContenedorImagenes = ContenedorImagenes;
         }
 
         private void OnMapaSizeXChanged(object sender, SizeChangedEventArgs e)

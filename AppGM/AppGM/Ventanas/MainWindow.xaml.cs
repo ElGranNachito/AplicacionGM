@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using AppGM.Core;
 using AppGM.Viewmodels;
 
 namespace AppGM
@@ -13,6 +14,7 @@ namespace AppGM
             InitializeComponent();
 
             DataContext = new ViewModelVentanaPrincipal(this);
+            SistemaPrincipal.Aplicacion.VentanaPrincipal = (IVentana)DataContext;
         }
     }
 }

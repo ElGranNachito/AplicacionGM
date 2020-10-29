@@ -11,6 +11,8 @@ namespace AppGM
         public override void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             TextBox textBox = (TextBox)d;
+
+            if(textBox.Text == String.Empty)
             textBox.Text = "0";
 
             textBox.TextChanged += (o, eargs) =>

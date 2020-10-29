@@ -9,7 +9,7 @@ namespace AppGM
     {
         #region Propiedades
 
-        public Grosor AnchoMargenCartas => SistemaPrincipal.Aplicacion.VentanaMaximizada ? new Grosor(20) : new Grosor(5, 20);
+        public Grosor AnchoMargenCartas => SistemaPrincipal.Aplicacion.VentanaPrincipal.EstaMaximizada() ? new Grosor(20) : new Grosor(5, 20);
         public ICommand ComandoBotonFichasServants { get; set; }
         public ICommand ComandoBotonFichasMasters { get; set; }
         public ICommand ComandoBotonFichasInvocaciones { get; set; }
@@ -37,10 +37,9 @@ namespace AppGM
 
             EstablecerComandos();
 
-            SistemaPrincipal.Aplicacion.PropertyChanged += (o, a) =>
+            SistemaPrincipal.Aplicacion.VentanaPrincipal.OnEstadoModificado += v =>
             {
-                if (a.PropertyName == nameof(ViewModelAplicacion.VentanaMaximizada))
-                    DispararPropertyChanged(new PropertyChangedEventArgs(nameof(AnchoMargenCartas)));
+                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(AnchoMargenCartas)));
             };
         }
 
@@ -49,10 +48,9 @@ namespace AppGM
         /// </summary>
         public ViewModelMenuSeleccionTipoFicha()
         {
-            SistemaPrincipal.Aplicacion.PropertyChanged += (o, a) =>
+            SistemaPrincipal.Aplicacion.VentanaPrincipal.OnEstadoModificado += v =>
             {
-                if (a.PropertyName == nameof(ViewModelAplicacion.VentanaMaximizada))
-                    DispararPropertyChanged(new PropertyChangedEventArgs(nameof(AnchoMargenCartas)));
+                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(AnchoMargenCartas)));
             };
 
             Servants = new List<ModeloServant>

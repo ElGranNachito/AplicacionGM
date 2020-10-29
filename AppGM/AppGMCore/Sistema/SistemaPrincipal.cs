@@ -40,7 +40,7 @@ namespace AppGM.Core
 
             CrearViewModelsRol(modelo);
 
-            Aplicacion.TituloVentana = modelo.Nombre;
+            Aplicacion.VentanaPrincipal.TituloVentana = modelo.Nombre;
         }
         public static T ObtenerInstancia<T>()
         {

@@ -60,6 +60,7 @@
     <Compile Include="Controladores\Efectos\ControladorEfecto.cs" />
     <Compile Include="Controladores\Juego\ControladorSlot.cs" />
     <Compile Include="Controladores\Juego\ControladorTirada.cs" />
+    <Compile Include="Controladores\Juego\ControladorUnidadMapa.cs" />
     <Compile Include="Controladores\Modificadores\ControladorModificadorDeStat.cs" />
     <Compile Include="Controladores\Personajes\ControladorInvocacion.cs" />
     <Compile Include="Controladores\Personajes\ControladorPersonaje.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="Modelos\Juego\ModeloCondicion.cs" />
     <Compile Include="Modelos\Juego\ModeloMapa.cs" />
     <Compile Include="Modelos\Juego\ModeloTirada.cs" />
+    <Compile Include="Modelos\Juego\ModeloUnidadMapa.cs" />
     <Compile Include="Modelos\Modificadores\ModeloModificadorDeStatBase.cs" />
     <Compile Include="Modelos\Personajes\ModeloMaster.cs" />
     <Compile Include="Modelos\Juego\ModeloParticipante.cs" />

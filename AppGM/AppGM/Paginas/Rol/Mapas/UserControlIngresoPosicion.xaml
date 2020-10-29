@@ -12,30 +12,34 @@
 
             <StackPanel>
 
-                <ContentPresenter/>
+                <TextBlock Text="{Binding Nombre}" 
+                           FontSize="{StaticResource TamañoFontPequeño}"
+                           TextAlignment="Center"
+                           Foreground="White"/>
 
                 <StackPanel Orientation="Horizontal" 
                         HorizontalAlignment="Center"
                             Margin="0 5">
 
-                    <TextBlock Text="X: "/>
+                    <TextBlock Text="X: " Foreground="White"/>
                     <TextBox 
                         local:CampoDeTextoNumericoProperty.Value="True"
                         HorizontalAlignment="Center"
                         MinWidth="20"
                         Width="50"
                         TextChanged="TextBoxPosX_TextChanged"
-                        Text="{Binding TextoPosicionX, Mode=OneWayToSource}"/>
+                        Text="{Binding TextoPosicionX, Mode=TwoWay}"/>
 
                     <TextBlock Text="Y: "
-                           Margin="10 0 0 0"/>
+                           Margin="10 0 0 0"
+                           Foreground="White"/>
                     <TextBox 
                         local:CampoDeTextoNumericoProperty.Value="True"
                         HorizontalAlignment="Center"
                         MinWidth="20"
                         Width="50"
                         TextChanged="TextBoxPosY_TextChanged"
-                        Text="{Binding TextoPosicionY, Mode=OneWayToSource}"/>
+                        Text="{Binding TextoPosicionY, Mode=TwoWay}"/>
 
                 </StackPanel>
 
