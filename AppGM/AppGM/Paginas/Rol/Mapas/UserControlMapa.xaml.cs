@@ -1,7 +1,5 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
 using AppGM.Core;
-using AppGM.Viewmodels;
 
 namespace AppGM
 {
@@ -15,7 +13,6 @@ namespace AppGM
             InitializeComponent();
 
             DataContext = SistemaPrincipal.ObtenerInstancia<ViewModelMapaPrincipal>();
-            ((ViewModelMapaPrincipal) DataContext).ContenedorImagenes = ContenedorImagenes;
         }
 
         private void OnMapaSizeXChanged(object sender, SizeChangedEventArgs e)

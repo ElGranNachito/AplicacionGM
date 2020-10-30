@@ -39,9 +39,6 @@ namespace AppGM.Core
 
         public double MitadTamañoCanvasX => (TamañoCanvas.X / 2.0f).Round(1);
         public double MitadTamañoCanvasY => (TamañoCanvas.Y / 2.0f).Round(1);
-
-        public object ContenedorImagenes { get; set; }
-
         public ViewModelVector2 TamañoCanvas { get; set; } = new ViewModelVector2();
 
         //Tamaño de las imagenes

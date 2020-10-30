@@ -67,6 +67,7 @@
     <Compile Include="AttachedProperties\BotonMenuRolProperty.cs" />
     <Compile Include="AttachedProperties\CampoDeTextoNumericoProperty.cs" />
     <Compile Include="AttachedProperties\DragProperty.cs" />
+    <Compile Include="Elementos\OutlinedText.cs" />
     <Compile Include="AttachedProperties\ParametroProperty\BaseAttachedPropertyParametro.cs" />
     <Compile Include="AttachedProperties\CrearDesignTimeViewModelProperty.cs" />
     <Compile Include="AttachedProperties\LlamarComandoOnMouseEnterProperty.cs" />
@@ -403,6 +404,37 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Media\Imagenes\Posiciones\Invocacion_Master_Caster.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Media\Imagenes\Posiciones\Invocacion_Archer.png" />
+    <Resource Include="Media\Imagenes\Posiciones\Invocacion_Assassin.png" />
+    <Resource Include="Media\Imagenes\Posiciones\Invocacion_Berserker.png" />
+    <Resource Include="Media\Imagenes\Posiciones\Invocacion_Caster.png" />
+    <Resource Include="Media\Imagenes\Posiciones\Invocacion_Lancer.png" />
+    <Resource Include="Media\Imagenes\Posiciones\Invocacion_Master_Archer.png" />
+    <Resource Include="Media\Imagenes\Posiciones\Invocacion_Master_Assassin.png" />
+    <Resource Include="Media\Imagenes\Posiciones\Invocacion_Master_Berserker.png" />
+    <Resource Include="Media\Imagenes\Posiciones\Invocacion_Master_Lancer.png" />
+    <Resource Include="Media\Imagenes\Posiciones\Invocacion_Master_Rider.png" />
+    <Resource Include="Media\Imagenes\Posiciones\Invocacion_Master_Saber.png" />
+    <Resource Include="Media\Imagenes\Posiciones\Invocacion_Rider.png" />
+    <Resource Include="Media\Imagenes\Posiciones\Invocacion_Saber.png" />
+    <Resource Include="Media\Imagenes\Posiciones\Master_Rider.png" />
+    <Resource Include="Media\Imagenes\Posiciones\Rider.png" />
+    <Resource Include="Media\Imagenes\Posiciones\Trampa_Archer.png" />
+    <Resource Include="Media\Imagenes\Posiciones\Trampa_Assassin.png" />
+    <Resource Include="Media\Imagenes\Posiciones\Trampa_Berserker.png" />
+    <Resource Include="Media\Imagenes\Posiciones\Trampa_Caster.png" />
+    <Resource Include="Media\Imagenes\Posiciones\Trampa_Lancer.png" />
+    <Resource Include="Media\Imagenes\Posiciones\Trampa_Master_Archer.png" />
+    <Resource Include="Media\Imagenes\Posiciones\Trampa_Master_Assassin.png" />
+    <Resource Include="Media\Imagenes\Posiciones\Trampa_Master_Berserker.png" />
+    <Resource Include="Media\Imagenes\Posiciones\Trampa_Master_Caster.png" />
+    <Resource Include="Media\Imagenes\Posiciones\Trampa_Master_Lancer.png" />
+    <Resource Include="Media\Imagenes\Posiciones\Trampa_Master_Rider.png" />
+    <Resource Include="Media\Imagenes\Posiciones\Trampa_Master_Saber.png" />
+    <Resource Include="Media\Imagenes\Posiciones\Trampa_Rider.png" />
+    <Resource Include="Media\Imagenes\Posiciones\Trampa_Saber.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

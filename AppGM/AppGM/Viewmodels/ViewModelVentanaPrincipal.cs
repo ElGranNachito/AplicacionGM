@@ -56,6 +56,8 @@ namespace AppGM.Viewmodels
                 DispararPropertyChanged(new PropertyChangedEventArgs(nameof(CaptionHeight)));
             };
 
+            mVentana.MouseMove += (obj, e) => { OnMouseMovido(this); };
+
             SistemaPrincipal.Aplicacion.PropertyChanged += (o, e) =>
             {
                 DispararPropertyChanged(e);
@@ -91,6 +93,7 @@ namespace AppGM.Viewmodels
         public event EventoVentana OnTamañoModificado = delegate{};
         public event EventoVentana OnEstadoModificado = delegate{};
         public event EventoVentana OnTituloModificado = delegate{};
+        public event EventoVentana OnMouseMovido      = delegate{};
         public string TituloVentana
         {
             get => mTituloVentana;

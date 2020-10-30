@@ -87,7 +87,7 @@
 
         </StackPanel>-->
 
-        <Border Padding="5" Grid.Column="1" Background="White">
+        <Border Padding="5" Grid.Column="1" Background="Gray">
 
             <Grid>
 
@@ -127,9 +127,9 @@
                     <Grid Grid.Row="1">
 
                         <ScrollViewer
-                            VerticalScrollBarVisibility="Visible"
-                            HorizontalScrollBarVisibility="Visible">
-                            <Canvas x:Name="ContenedorImagenes"
+                            VerticalScrollBarVisibility="Auto"
+                            HorizontalScrollBarVisibility="Auto">
+                            <Canvas
                                 SizeChanged="OnMapaSizeXChanged"
                                 Width="{Binding ElementName=mapa, Path=ActualWidth}"
                                 Height="{Binding ElementName=mapa, Path=ActualHeight}">

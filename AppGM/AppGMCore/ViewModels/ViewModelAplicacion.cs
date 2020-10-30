@@ -19,6 +19,7 @@
         event EventoVentana OnTamañoModificado;
         event EventoVentana OnEstadoModificado;
         event EventoVentana OnTituloModificado;
+        event EventoVentana OnMouseMovido;
     }
     public class ViewModelAplicacion : BaseViewModel
     {

@@ -12,7 +12,7 @@
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="6*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*" MaxWidth="150"/>
             </Grid.ColumnDefinitions>
 
             <!-- Contenido del recuadro izquierdo -->

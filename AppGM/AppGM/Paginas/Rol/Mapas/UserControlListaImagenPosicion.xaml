@@ -25,6 +25,5 @@
             </ItemsControl.ItemTemplate>
 
         </ItemsControl>
-            
     </Grid>
 </UserControl>

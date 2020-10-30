@@ -1,17 +1,20 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace AppGM.Core
 {
     /// <summary>
     /// Tipo de la unidad que esta posicionada sobre el mapa, se utiliza para determinar el tipo de imagen
     /// </summary>
+    [Flags]
     public enum ETipoUnidad
     {
-        Master,
-        Servant,
-        Invocacion,
-        Trampa,
-        Iglesia
+        NINGUNO    = 0,
+        Master     = 1,
+        Servant    = 2,
+        Invocacion = 4,
+        Trampa     = 8,
+        Iglesia    = 16
     }
     public class ModeloUnidadMapa
     {

@@ -33,7 +33,7 @@ namespace AppGM.Core
                     else
                         Posicion.X = mapa.TamañoCanvasX;
 
-                    DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PosicionImg)));
+                    DispararPropertyChangedPosImgPosCantUnidades();
 
                     return;
                 }
@@ -41,7 +41,7 @@ namespace AppGM.Core
                 if (value.EstaVacio())
                     Posicion.X = 0;
 
-                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PosicionImg)));
+                DispararPropertyChangedPosImgPosCantUnidades();
             }
         }
         public string TextoPosicionY
@@ -65,7 +65,7 @@ namespace AppGM.Core
                     else
                         Posicion.Y = mapa.TamañoCanvasY;
 
-                    DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PosicionImg)));
+                    DispararPropertyChangedPosImgPosCantUnidades();
 
                     return;
                 }
@@ -73,15 +73,18 @@ namespace AppGM.Core
                 if (value.EstaVacio())
                     Posicion.Y = 0;
 
-                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PosicionImg)));
+                DispararPropertyChangedPosImgPosCantUnidades();
             }
         }
 
-        public string PathImagen => unidad.Path;
-        public string Nombre     => unidad.Nombre;
-        public ViewModelVector2 TamañoImagenesPosicion => mapa.TamañoImagenesPosicion;
+        public string PathImagen                            => unidad.Path;
+        public string Nombre                                => EsInvocacionOTrampa ? string.Format($"{unidad.Nombre} ({Cantidad})") : unidad.Nombre;
+        public bool   EsInvocacionOTrampa                   => (unidad.TipoUnidad & (ETipoUnidad.Invocacion | ETipoUnidad.Trampa)) != 0;
+        public int    Cantidad                              => EsInvocacionOTrampa ? unidad.Cantidad : 0;
+        public ViewModelVector2 TamañoImagenesPosicion      => mapa.TamañoImagenesPosicion;
         public ViewModelVector2 MitadTamañoImagenesPosicion => mapa.MitadTamañoImagenesPosicion;
-        public Grosor           PosicionImg => new Grosor(Posicion.X, Posicion.Y, 0, 0);
+        public Grosor           PosicionImg                 => new Grosor(Posicion.X, Posicion.Y, 0, 0);
+        public Grosor           PosicionCantidadUnidades    => EsInvocacionOTrampa ? new Grosor(Posicion.X - Cantidad.Length() * 2.66, Posicion.Y + TamañoImagenesPosicion.Y * 0.25, 0, 0) : new Grosor(0);
 
         #endregion
 
@@ -107,6 +110,16 @@ namespace AppGM.Core
 
             Posicion = new ViewModelVector2(new Vector2(0, 0));
         }
+
+        #endregion
+
+        #region Funciones
+        public void DispararPropertyChangedPosImgPosCantUnidades()
+        {
+            DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PosicionImg)));
+            DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PosicionCantidadUnidades)));
+        }
+
         #endregion
     }
 }

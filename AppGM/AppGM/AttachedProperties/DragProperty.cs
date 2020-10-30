@@ -12,7 +12,6 @@ namespace AppGM
             if (d is FrameworkElement fe)
             {
                 ViewModelIngresoPosicion vm = null;
-                FrameworkElement contenedorImagenes = null;
 
                 RoutedEventHandler loadedEventHandler = null;
 
@@ -20,14 +19,13 @@ namespace AppGM
                 loadedEventHandler = (obj, ea) =>
                 {
                     vm = (ViewModelIngresoPosicion)fe.DataContext;
-                    contenedorImagenes = (FrameworkElement)vm.mapa.ContenedorImagenes;
 
                     fe.Loaded -= loadedEventHandler;
                 };
 
                 fe.Loaded += loadedEventHandler;
 
-                MouseEventHandler mouseMovedHandler = (obj, ea) =>
+                EventoVentana mouseMovedHandler = ventana =>
                 {
                     Point nuevaPosicion = Mouse.GetPosition((IInputElement)fe.Parent);
 
@@ -44,6 +42,7 @@ namespace AppGM
                     vm.DispararPropertyChanged(new PropertyChangedEventArgs(nameof(vm.TextoPosicionX)));
                     vm.DispararPropertyChanged(new PropertyChangedEventArgs(nameof(vm.TextoPosicionY)));
                     vm.DispararPropertyChanged(new PropertyChangedEventArgs(nameof(vm.PosicionImg)));
+                    vm.DispararPropertyChanged(new PropertyChangedEventArgs(nameof(vm.PosicionCantidadUnidades)));
                 };
 
                 MouseButtonEventHandler añadirMouseMovedHandler = null;
@@ -53,7 +52,7 @@ namespace AppGM
                 {
                     //Nos desuscribimos del evento para asegurarnos que no se pueda volver a disparar hasta que la imagen haya sido soltada
                     fe.MouseDown -= añadirMouseMovedHandler;
-                    contenedorImagenes.MouseMove += mouseMovedHandler;
+                    SistemaPrincipal.Aplicacion.VentanaPrincipal.OnMouseMovido += mouseMovedHandler;
 
                     fe.MouseUp += quitarMouseMovedHandler;
                 };
@@ -61,7 +60,7 @@ namespace AppGM
                 quitarMouseMovedHandler = (obj, ea) =>
                 {
                     fe.MouseUp -= quitarMouseMovedHandler;
-                    contenedorImagenes.MouseMove -= mouseMovedHandler;
+                    SistemaPrincipal.Aplicacion.VentanaPrincipal.OnMouseMovido -= mouseMovedHandler;
 
                     fe.MouseDown += añadirMouseMovedHandler;
                 };

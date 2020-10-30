@@ -14,5 +14,9 @@
         {
             return System.Math.Round(numero, decimales);
         }
+        public static int Length(this int numero)
+        {
+            return numero.ToString().Length;
+        }
     }
 }

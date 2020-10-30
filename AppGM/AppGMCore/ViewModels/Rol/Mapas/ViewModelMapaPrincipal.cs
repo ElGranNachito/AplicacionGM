@@ -26,8 +26,8 @@ namespace AppGM.Core
                     {
                         Posicion = new ModeloVector2
                         {
-                            X = 200,
-                            Y = 150
+                            X = 500,
+                            Y = 500
                         }
                     }
                 })),
@@ -41,8 +41,8 @@ namespace AppGM.Core
                     {
                         Posicion = new ModeloVector2
                         {
-                            X = 200,
-                            Y = 150
+                            X = 600,
+                            Y = 525
                         }
                     }
                 })),
@@ -56,8 +56,8 @@ namespace AppGM.Core
                     {
                         Posicion = new ModeloVector2
                         {
-                            X = 200,
-                            Y = 150
+                            X = 300,
+                            Y = 300
                         }
                     }
                 })),
@@ -71,10 +71,42 @@ namespace AppGM.Core
                     {
                         Posicion = new ModeloVector2
                         {
-                            X = 200,
-                            Y = 150
+                            X = 500,
+                            Y = 170
                         }
                     }
+                })),
+
+                new ViewModelIngresoPosicion(this, new ControladorUnidadMapa(new ModeloUnidadMapaInvocacionTrampa
+                {
+                    EClaseServant = EClaseServant.Caster,
+                    ETipoUnidad = ETipoUnidad.Invocacion,
+                    Nombre = "Trampa caster",
+                    Posicion = new TIUnidadMapaVector2
+                    {
+                        Posicion = new ModeloVector2
+                        {
+                            X = 100,
+                            Y = 500
+                        }
+                    },
+                    Cantidad = 6
+                })),
+
+                new ViewModelIngresoPosicion(this, new ControladorUnidadMapa(new ModeloUnidadMapaInvocacionTrampa
+                {
+                    EClaseServant = EClaseServant.Berserker,
+                    ETipoUnidad = ETipoUnidad.Trampa,
+                    Nombre = "Trampa berserker",
+                    Posicion = new TIUnidadMapaVector2
+                    {
+                        Posicion = new ModeloVector2
+                        {
+                            X = 50,
+                            Y = 75
+                        }
+                    },
+                    Cantidad = 20
                 }))
             };
             return;

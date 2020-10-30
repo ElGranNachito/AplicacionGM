@@ -32,7 +32,9 @@ namespace AppGM.Core
 
             if (modelo.ETipoUnidad == ETipoUnidad.Iglesia)
                 sb.Append("Iglesia");
-            else if (modelo is ModeloUnidadMapaMasterServant mms)
+            else if (
+                (modelo.ETipoUnidad & (ETipoUnidad.Master | ETipoUnidad.Servant)) != 0
+                && modelo is ModeloUnidadMapaMasterServant mms)
             {
                 if (modelo.ETipoUnidad == ETipoUnidad.Master)
                     sb.Append("Master_");
@@ -64,6 +66,12 @@ namespace AppGM.Core
         public bool        EsIglesia  => modelo.ETipoUnidad == ETipoUnidad.Iglesia;
         public string      Path       => ObtenerPathAImagen();
         public string      Nombre     => modelo.Nombre;
+
+        /// <summary>
+        /// Cantidad de unidades en el grupo. Asegurarse de que al llamar a esta propiedad
+        /// el modelo sea de tipo <see cref="ModeloUnidadMapaInvocacionTrampa"/>
+        /// </summary>
+        public int Cantidad           => ((ModeloUnidadMapaInvocacionTrampa) modelo).Cantidad;
         public ETipoUnidad TipoUnidad => modelo.ETipoUnidad; 
 
         #endregion
