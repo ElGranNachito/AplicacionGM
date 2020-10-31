@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
+using System.Windows.Input;
 
 namespace AppGM.Core
 {
@@ -7,6 +8,7 @@ namespace AppGM.Core
     {
         #region Miembros
 
+        public ICommand ComandoAñadirParticipante { get; set; } = new Comando(()=> SistemaPrincipal.Aplicacion.VentanaPopups.Mostrar(new ViewModelMensajeCrearUnidadMapa(), true));
         public List<ViewModelIngresoPosicion>    Posiciones { get; set; } = new List<ViewModelIngresoPosicion>();
 
         protected ControladorMapa                mControladorMapa;

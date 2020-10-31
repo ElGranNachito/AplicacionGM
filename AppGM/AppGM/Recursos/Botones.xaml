@@ -29,14 +29,15 @@
     <!-- Estilo para los botones de la barra superior de la ventana -->
     <Style TargetType="{x:Type ButtonBase}" x:Key="BotonVentanaPrincipal" BasedOn="{StaticResource BotonBase}">
 
-        <Setter Property="Padding" Value="3 0"></Setter>
+        <Setter Property="Padding" Value="3 0"/>
+        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
 
         <!-- Agrandamos el boton en el eje X -->
-        <Setter Property="LayoutTransform">
+        <!--<Setter Property="LayoutTransform">
             <Setter.Value>
                 <ScaleTransform ScaleX="1.5"/>
             </Setter.Value>
-        </Setter>
+        </Setter>-->
 
         <Setter Property="Template">
             <Setter.Value>
@@ -48,7 +49,11 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
 
-                        <TextBlock Text="{TemplateBinding Content}"/>
+                        <TextBlock Text="{TemplateBinding Content}">
+                            <TextBlock.RenderTransform>
+                                <TranslateTransform Y="5"/>
+                            </TextBlock.RenderTransform>
+                        </TextBlock>
                     </Border>
 
                 </ControlTemplate>

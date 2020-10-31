@@ -78,11 +78,13 @@
             <StackPanel Orientation="Horizontal">
                 <Button 
                     Command="{Binding ComandoRetrocederIndiceRol}"
-                    Content="(-" 
+                    FontFamily="{StaticResource 'Font Awesome Regular'}"
+                    Content="{StaticResource Fa-FlechaIzquierda}" 
                     Width="40"/>
                 <Button 
                     Command="{Binding ComandoAvanzarIndiceRol}"
-                    Content="->" 
+                    FontFamily="{StaticResource 'Font Awesome Regular'}"
+                    Content="{StaticResource Fa-FlechaDerecha}" 
                     Width="40" 
                     Margin="75 0 0 0"/>
             </StackPanel>

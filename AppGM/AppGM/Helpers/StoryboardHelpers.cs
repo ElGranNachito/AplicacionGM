@@ -35,5 +35,18 @@ namespace AppGM
 
             sb.Children.Add(animacion);
         }
+
+        public static void AñadirCambioOpacidad(this Storyboard sb, TimeSpan duracionAnimacion, double opacidadObjetivo)
+        {
+            DoubleAnimation da = new DoubleAnimation
+            {
+                Duration = duracionAnimacion,
+                To = opacidadObjetivo
+            };
+
+            Storyboard.SetTargetProperty(da, new PropertyPath("Opacity"));
+
+            sb.Children.Add(da);
+        }
     }
 }

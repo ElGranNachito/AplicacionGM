@@ -8,7 +8,11 @@ namespace AppGM.Helpers
 {
     public static class AnimationHelpers
     {
-        public static async Task AñadirRotacionYDesplazamiento(this FrameworkElement elemento, TimeSpan duracionAnimacion, double rotacionObjetivo, Thickness desplazamiento)
+        public static async Task AñadirRotacionYDesplazamiento(
+            this FrameworkElement elemento,
+            TimeSpan duracionAnimacion,
+            double rotacionObjetivo,
+            Thickness desplazamiento)
         {
             //Primero debemos revisar que tenga un rotate transform
             if (!(elemento.LayoutTransform is RotateTransform))
@@ -26,6 +30,20 @@ namespace AppGM.Helpers
             sb.Begin(elemento);
 
             //Esperamos a que finalice la animacion
+            await Task.Delay(duracionAnimacion);
+        }
+
+        public static async Task AñadirAnimacionOpacidad(
+            this FrameworkElement elemento,
+            TimeSpan duracionAnimacion,
+            double opacidadObjetivo)
+        {
+            Storyboard sb = new Storyboard();
+
+            sb.AñadirCambioOpacidad(duracionAnimacion, opacidadObjetivo);
+
+            sb.Begin(elemento);
+
             await Task.Delay(duracionAnimacion);
         }
     }

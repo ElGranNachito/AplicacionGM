@@ -3,11 +3,19 @@
                     xmlns:local="clr-namespace:AppGM"
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
+    <FontFamily x:Key="Font Awesome Regular">pack://application:,,,/Fonts/#Font Awesome 5 Free Regular</FontFamily>
+    <FontFamily x:Key="Font Awesome Solid">pack://application:,,,/Fonts/#Font Awesome 5 Free Solid</FontFamily>
 
     <system:Double x:Key="TamañoFontMuyPequeño">10</system:Double>
     <system:Double x:Key="TamañoFontPequeño">10</system:Double>
     <system:Double x:Key="TamañoFontMediano">15</system:Double>
     <system:Double x:Key="TamañoFontGrande">20</system:Double>
     <system:Double x:Key="TamañoFontMuyGrande">25</system:Double>
+
+    <system:String x:Key="Fa-Cruz">&#xf00d;</system:String>
+    <system:String x:Key="Fa-Maximizar">&#xf066;</system:String>
+    <system:String x:Key="Fa-Minimizar">&#xf2d1;</system:String>
+    <system:String x:Key="Fa-FlechaDerecha">&#xf061;</system:String>
+    <system:String x:Key="Fa-FlechaIzquierda">&#xf060;</system:String>
 
 </ResourceDictionary>

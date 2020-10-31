@@ -119,6 +119,8 @@
     <Compile Include="ViewModels\Rol\AdministradorDeCombates\Combate\ViewModelCombate.cs" />
     <Compile Include="ViewModels\Rol\AdministradorDeCombates\Combate\ViewModelListaParticipantes.cs" />
     <Compile Include="ViewModels\Rol\AdministradorDeCombates\Combate\ViewModelParticipante.cs" />
+    <Compile Include="ViewModels\Mensajes\ViewModelMensajeCrearUnidadMapa.cs" />
+    <Compile Include="ViewModels\Mensajes\ViewModelMensajeBase.cs" />
     <Compile Include="ViewModels\ViewModelsGlobos\ViewModelInfoCombateGlobo.cs" />
     <Compile Include="ViewModels\Rol\AdministradorDeCombates\SeleccionDeCombate\ViewModelMenuSeleccionCombate.cs" />
     <Compile Include="ViewModels\Rol\Fichas\ViewModelFichaItem.cs" />

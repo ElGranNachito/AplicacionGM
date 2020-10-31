@@ -15,14 +15,12 @@ namespace AppGM
             d.SetValue(DebeRealizarAnimacionProperty, nuevoValor);
         public static bool GetDebeRealizarAnimacion(DependencyObject d) => 
             (bool)d.GetValue(DebeRealizarAnimacionProperty);
-        public virtual async void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        protected virtual async void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is FrameworkElement fe)
-            {
                 await mInstancia.RealizarAnimacion(fe, (bool)e.NewValue);
-            }
         }
 
-        public virtual async Task RealizarAnimacion(FrameworkElement fe, bool valor){}
+        protected virtual async Task RealizarAnimacion(FrameworkElement fe, bool valor){}
     }
 }

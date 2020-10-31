@@ -7,7 +7,7 @@ namespace AppGM
 {
     public class AnimarRotacionProperty : BaseAnimarProperty<AnimarRotacionProperty>
     {
-        public override async Task RealizarAnimacion(FrameworkElement fe, bool valor)
+        protected override async Task RealizarAnimacion(FrameworkElement fe, bool valor)
         {
             if (valor)
                 await fe.AñadirRotacionYDesplazamiento(TimeSpan.FromSeconds(0.5f), 40f, new Thickness(120, 0,0, 0));

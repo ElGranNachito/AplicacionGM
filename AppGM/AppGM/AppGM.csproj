@@ -59,6 +59,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AttachedProperties\Animaciones\AnimarOpacidadProperty.cs" />
     <Compile Include="AttachedProperties\Animaciones\AnimarRotacionProperty.cs" />
     <Compile Include="AttachedProperties\AñadirMargenAElementosProperty.cs" />
     <Compile Include="AttachedProperties\Animaciones\BaseAnimarProperty.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="AttachedProperties\BotonMenuRolProperty.cs" />
     <Compile Include="AttachedProperties\CampoDeTextoNumericoProperty.cs" />
     <Compile Include="AttachedProperties\DragProperty.cs" />
+    <Compile Include="Converters\ViewModelToContenidoMensajeConverter.cs" />
     <Compile Include="Elementos\OutlinedText.cs" />
     <Compile Include="AttachedProperties\ParametroProperty\BaseAttachedPropertyParametro.cs" />
     <Compile Include="AttachedProperties\CrearDesignTimeViewModelProperty.cs" />
@@ -92,6 +94,9 @@
     </Compile>
     <Compile Include="Paginas\Inicio\UserControlCarta.xaml.cs">
       <DependentUpon>UserControlCarta.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Mensajes\UserControlMensajeCrearUnidadMapa.xaml.cs">
+      <DependentUpon>UserControlMensajeCrearUnidadMapa.xaml</DependentUpon>
     </Compile>
     <Compile Include="Paginas\Rol\AdministradorDeCombate\Combate\UserControlCombate.xaml.cs">
       <DependentUpon>UserControlCombate.xaml</DependentUpon>
@@ -156,6 +161,11 @@
     <Compile Include="Paginas\Rol\Fichas\SeleccionTipoFichas\UserControlMenuSeleccionTipoFicha.xaml.cs">
       <DependentUpon>UserControlMenuSeleccionTipoFicha.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Ventanas\VentanaMensaje.xaml.cs">
+      <DependentUpon>VentanaMensaje.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Viewmodels\ViewModelVentanaBase.cs" />
+    <Compile Include="Viewmodels\ViewModelVentanaMensaje.cs" />
     <Compile Include="Viewmodels\ViewModelVentanaPrincipal.cs" />
     <Page Include="Paginas\Globos\UserControlContenidoGloboInfoRol.xaml">
       <SubType>Designer</SubType>
@@ -166,6 +176,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Paginas\Inicio\UserControlCarta.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Paginas\Mensajes\UserControlMensajeCrearUnidadMapa.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -294,6 +308,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Ventanas\VentanaMensaje.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Paginas\Inicio\UserControlPaginaInicio.xaml.cs">
@@ -316,6 +334,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Resource Include="Fonts\Font Awesome 5 Brands-Regular-400.otf" />
+    <Resource Include="Fonts\Font Awesome 5 Free Regular.ttf" />
+    <Resource Include="Fonts\Font Awesome 5 Free Solid.ttf" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -435,6 +456,10 @@
     <Resource Include="Media\Imagenes\Posiciones\Trampa_Master_Saber.png" />
     <Resource Include="Media\Imagenes\Posiciones\Trampa_Rider.png" />
     <Resource Include="Media\Imagenes\Posiciones\Trampa_Saber.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Media\Imagenes\Posiciones\Cadaver_Master_Rider.png" />
+    <Resource Include="Media\Imagenes\Posiciones\Cadaver_Rider.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

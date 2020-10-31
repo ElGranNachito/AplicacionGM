@@ -14,78 +14,19 @@
             <ColumnDefinition Width="6*"/>
         </Grid.ColumnDefinitions>
 
-        <local:UserControlListaIngresoPosicion DataContext="{Binding Posiciones}"/>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
 
-        <!--<StackPanel Background="White"
-                    local:AñadirMargenAElementosProperty.Value="{x:Type local:UserControlIngresoPosicion}"
-                    local:ParametroThicknessProperty.Parametro="0 5 0 0">
+            <local:UserControlListaIngresoPosicion DataContext="{Binding Posiciones}"/>
 
-            <local:UserControlIngresoPosicion
-                DataContext="{Binding PosicionIglesia}">
-                
-                <TextBlock Text="Posicion Iglesia" 
-                           HorizontalAlignment="Center"/>
-                
-            </local:UserControlIngresoPosicion>
+            <Button  Grid.Row="1"
+                Content="Añadir Participante"
+                Command="{Binding ComandoAñadirParticipante}"/>
 
-            <local:UserControlIngresoPosicion
-                DataContext="{Binding PosicionIglesia}">
-
-                <TextBlock Text="Posicion Saber" 
-                           HorizontalAlignment="Center"/>
-
-            </local:UserControlIngresoPosicion>
-
-            <local:UserControlIngresoPosicion
-                DataContext="{Binding PosicionIglesia}">
-
-                <TextBlock Text="Posicion Lancer" 
-                           HorizontalAlignment="Center"/>
-
-            </local:UserControlIngresoPosicion>
-
-            <local:UserControlIngresoPosicion
-                DataContext="{Binding PosicionIglesia}">
-
-                <TextBlock Text="Posicion Assassin" 
-                           HorizontalAlignment="Center"/>
-
-            </local:UserControlIngresoPosicion>
-
-            <local:UserControlIngresoPosicion
-                DataContext="{Binding PosicionIglesia}">
-
-                <TextBlock Text="Posicion Rider" 
-                           HorizontalAlignment="Center"/>
-
-            </local:UserControlIngresoPosicion>
-
-            <local:UserControlIngresoPosicion
-                DataContext="{Binding PosicionIglesia}">
-
-                <TextBlock Text="Posicion Archer" 
-                           HorizontalAlignment="Center"/>
-
-            </local:UserControlIngresoPosicion>
-
-            <local:UserControlIngresoPosicion
-                DataContext="{Binding PosicionIglesia}">
-
-                <TextBlock Text="Posicion Caster" 
-                           HorizontalAlignment="Center"/>
-
-            </local:UserControlIngresoPosicion>
-
-            <local:UserControlIngresoPosicion
-                DataContext="{Binding PosicionIglesia}">
-
-                <TextBlock Text="Posicion Berserker" 
-                           HorizontalAlignment="Center"/>
-
-            </local:UserControlIngresoPosicion>
-
-
-        </StackPanel>-->
+        </Grid>
 
         <Border Padding="5" Grid.Column="1" Background="Gray">
 
@@ -141,37 +82,6 @@
                         </ScrollViewer>
 
                     </Grid>
-                    <!--<Grid Grid.Row="1">
-
-                    <ScrollViewer 
-                        VerticalScrollBarVisibility="Visible"
-                        HorizontalScrollBarVisibility="Visible">
-
-                        <Canvas  
-                            SizeChanged="OnMapaSizeXChanged"
-                                 Width="{Binding ElementName=mapa, Path=ActualWidth}"
-                                 Height="{Binding ElementName=mapa, Path=ActualHeight}">
-
-                            <Image x:Name="mapa" Source="{Binding PathAImagen}"/>
-
-                            <Image
-                                Source="../../../Media/Imagenes/Posiciones/Saber.png" 
-                                Width="{Binding TamañoImagenesPosicion.X, Mode=OneWay}" 
-                                Height="{Binding TamañoImagenesPosicion.Y, Mode=OneWay}"
-                                Canvas.Left="{Binding PosicionIglesia.Posicion.X, Mode=OneWay}"
-                                Canvas.Top="{Binding PosicionIglesia.Posicion.Y, Mode=OneWay}"
-                                >
-                                <Image.RenderTransform>
-                                        <TranslateTransform 
-                                            X="{Binding MitadTamañoImagenesPosicion.X, Mode=OneWay}"
-                                            Y="{Binding MitadTamañoImagenesPosicion.Y, Mode=OneWay}"/>
-                                </Image.RenderTransform>
-                            </Image>
-
-                        </Canvas>
-
-                    </ScrollViewer>
-                </Grid>-->
 
                 </Grid>
 
