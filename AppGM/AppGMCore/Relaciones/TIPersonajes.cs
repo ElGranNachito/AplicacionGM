@@ -1,9 +1,11 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AppGM.Core
 {
     public abstract class TIPersonaje
     {
+        [ForeignKey(nameof(Personaje))]
         public int IdPersonaje { get; set; }
         
         public ModeloPersonaje Personaje { get; set; }
@@ -122,6 +124,7 @@ namespace AppGM.Core
 
     public class TIPersonajeUnidadMapa : TIPersonaje
     {
+        [ForeignKey(nameof(Unidad))]
         public int IdUnidadMapa { get; set; }
         public ModeloUnidadMapa Unidad { get; set; }
     }

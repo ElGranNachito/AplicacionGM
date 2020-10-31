@@ -93,7 +93,7 @@
             Binding  VentanaPopups.DebeEsperarCierre,
             Converter={local:BooleanToVisibilityConverterColapsar}}"
             Background="DimGray" 
-            Opacity="0.5"
+            Opacity="0"
             Panel.ZIndex="10"/>
 
             <ContentControl Content="{Binding EPaginaActual, Converter={local:EnumToUserControlConverter}, ConverterParameter=1}"/>

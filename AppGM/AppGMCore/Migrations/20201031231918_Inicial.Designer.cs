@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AppGM.Core.Migrations
 {
     [DbContext(typeof(RolContext))]
-    [Migration("20201021192832_inicial")]
-    partial class inicial
+    [Migration("20201031231918_Inicial")]
+    partial class Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -338,6 +338,28 @@ namespace AppGM.Core.Migrations
                     b.HasDiscriminator<string>("Discriminator").HasValue("ModeloTiradaBase");
                 });
 
+            modelBuilder.Entity("AppGM.Core.ModeloUnidadMapa", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ETipoUnidad")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Nombre")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Tipo")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UnidadesMapa");
+
+                    b.HasDiscriminator<int>("Tipo").HasValue(1);
+                });
+
             modelBuilder.Entity("AppGM.Core.ModeloUtilizable", b =>
                 {
                     b.Property<int>("IdUtilizable")
@@ -374,7 +396,7 @@ namespace AppGM.Core.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ModeloVector2");
+                    b.ToTable("Vectores2");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIAdministradorDeCombateMapa", b =>
@@ -625,6 +647,21 @@ namespace AppGM.Core.Migrations
                     b.HasIndex("IdPersonaje");
 
                     b.ToTable("TIInvocacionPersonaje");
+                });
+
+            modelBuilder.Entity("AppGM.Core.TIMapaUnidadMapa", b =>
+                {
+                    b.Property<int>("IdMapa")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("IdUnidadMapa")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("IdMapa", "IdUnidadMapa");
+
+                    b.HasIndex("IdUnidadMapa");
+
+                    b.ToTable("MapasUnidadesMapa");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIMapaVector2", b =>
@@ -905,6 +942,22 @@ namespace AppGM.Core.Migrations
                     b.ToTable("PersonajeAliados");
                 });
 
+            modelBuilder.Entity("AppGM.Core.TIPersonajeUnidadMapa", b =>
+                {
+                    b.Property<int>("IdPersonaje")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("IdUnidadMapa")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("IdPersonaje", "IdUnidadMapa");
+
+                    b.HasIndex("IdUnidadMapa")
+                        .IsUnique();
+
+                    b.ToTable("PersonajesUnidadesMapa");
+                });
+
             modelBuilder.Entity("AppGM.Core.TIPersonajeUtilizable", b =>
                 {
                     b.Property<int>("IdPersonaje")
@@ -984,6 +1037,24 @@ namespace AppGM.Core.Migrations
                     b.HasIndex("ItemIdUtilizable");
 
                     b.ToTable("TISlotItem");
+                });
+
+            modelBuilder.Entity("AppGM.Core.TIUnidadMapaVector2", b =>
+                {
+                    b.Property<int>("IdUnidadMapa")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("IdVector")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("IdUnidadMapa", "IdVector");
+
+                    b.HasIndex("IdUnidadMapa")
+                        .IsUnique();
+
+                    b.HasIndex("IdVector");
+
+                    b.ToTable("UnidadesMapaVectores2");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIUtilizableEfecto", b =>
@@ -1157,6 +1228,16 @@ namespace AppGM.Core.Migrations
                     b.HasDiscriminator().HasValue("ModeloTiradaVariable");
                 });
 
+            modelBuilder.Entity("AppGM.Core.ModeloUnidadMapaMasterServant", b =>
+                {
+                    b.HasBaseType("AppGM.Core.ModeloUnidadMapa");
+
+                    b.Property<int>("EClaseServant")
+                        .HasColumnType("INTEGER");
+
+                    b.HasDiscriminator().HasValue(2);
+                });
+
             modelBuilder.Entity("AppGM.Core.ModeloItem", b =>
                 {
                     b.HasBaseType("AppGM.Core.ModeloUtilizable");
@@ -1231,6 +1312,23 @@ namespace AppGM.Core.Migrations
                         .HasColumnType("INTEGER");
 
                     b.HasDiscriminator().HasValue("ModeloTiradaDeDaño");
+                });
+
+            modelBuilder.Entity("AppGM.Core.ModeloUnidadMapaInvocacionTrampa", b =>
+                {
+                    b.HasBaseType("AppGM.Core.ModeloUnidadMapaMasterServant");
+
+                    b.Property<int>("Cantidad")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("EsDeMaster")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Inicial")
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(1);
+
+                    b.HasDiscriminator().HasValue(3);
                 });
 
             modelBuilder.Entity("AppGM.Core.ModeloConsumible", b =>
@@ -1524,6 +1622,21 @@ namespace AppGM.Core.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("AppGM.Core.TIMapaUnidadMapa", b =>
+                {
+                    b.HasOne("AppGM.Core.ModeloMapa", "Mapa")
+                        .WithMany("PosicionesUnidades")
+                        .HasForeignKey("IdMapa")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AppGM.Core.ModeloUnidadMapa", "Unidad")
+                        .WithMany()
+                        .HasForeignKey("IdUnidadMapa")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("AppGM.Core.TIMapaVector2", b =>
                 {
                     b.HasOne("AppGM.Core.ModeloMapa", "Mapa")
@@ -1748,6 +1861,21 @@ namespace AppGM.Core.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("AppGM.Core.TIPersonajeUnidadMapa", b =>
+                {
+                    b.HasOne("AppGM.Core.ModeloPersonaje", "Personaje")
+                        .WithMany()
+                        .HasForeignKey("IdPersonaje")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AppGM.Core.ModeloUnidadMapa", "Unidad")
+                        .WithOne("Personaje")
+                        .HasForeignKey("AppGM.Core.TIPersonajeUnidadMapa", "IdUnidadMapa")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("AppGM.Core.TIPersonajeUtilizable", b =>
                 {
                     b.HasOne("AppGM.Core.ModeloPersonaje", "Personaje")
@@ -1817,6 +1945,21 @@ namespace AppGM.Core.Migrations
                     b.HasOne("AppGM.Core.ModeloItem", "Item")
                         .WithMany()
                         .HasForeignKey("ItemIdUtilizable");
+                });
+
+            modelBuilder.Entity("AppGM.Core.TIUnidadMapaVector2", b =>
+                {
+                    b.HasOne("AppGM.Core.ModeloUnidadMapa", "Unidad")
+                        .WithOne("Posicion")
+                        .HasForeignKey("AppGM.Core.TIUnidadMapaVector2", "IdUnidadMapa")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AppGM.Core.ModeloVector2", "Posicion")
+                        .WithMany()
+                        .HasForeignKey("IdVector")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("AppGM.Core.TIUtilizableEfecto", b =>

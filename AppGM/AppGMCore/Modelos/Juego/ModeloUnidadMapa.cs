@@ -18,6 +18,8 @@ namespace AppGM.Core
     }
     public class ModeloUnidadMapa
     {
+        [Key]
+        public int Id { get; set; }
         public string Nombre { get; set; }
 
         public ETipoUnidad ETipoUnidad { get; set; }

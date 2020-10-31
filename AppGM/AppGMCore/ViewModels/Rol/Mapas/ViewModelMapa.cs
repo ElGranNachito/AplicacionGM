@@ -8,7 +8,7 @@ namespace AppGM.Core
     {
         #region Miembros
 
-        public ICommand ComandoAñadirParticipante { get; set; } = new Comando(()=> SistemaPrincipal.Aplicacion.VentanaPopups.Mostrar(new ViewModelMensajeCrearUnidadMapa(), true));
+        public ICommand ComandoAñadirParticipante { get; set; }
         public List<ViewModelIngresoPosicion>    Posiciones { get; set; } = new List<ViewModelIngresoPosicion>();
 
         protected ControladorMapa                mControladorMapa;
@@ -64,6 +64,8 @@ namespace AppGM.Core
             //Creamos los view models para el ingreso de las diferentes posiciones
             for(int i = 0; i < mControladorMapa.controladoresUnidadesMapa.Count; ++i)
                 Posiciones.Add(new ViewModelIngresoPosicion(this, mControladorMapa.controladoresUnidadesMapa[i]));
+
+            ComandoAñadirParticipante = new Comando(AñadirParticipante);
         }
         public ViewModelMapa()
         {
@@ -89,7 +91,16 @@ namespace AppGM.Core
 
             PathImagen = "../../../Media/Imagenes/Mapas/" +
                           mControladorMapa.modelo.NombreMapa + mControladorMapa.ObtenerExtension();
+
+            ComandoAñadirParticipante = new Comando(AñadirParticipante);
         } 
         #endregion
+
+        private void AñadirParticipante()
+        {
+            ViewModelMensajeCrearUnidadMapa vm = new ViewModelMensajeCrearUnidadMapa();
+
+            SistemaPrincipal.Aplicacion.VentanaPopups.Mostrar(vm, true);
+        }
     }
 }

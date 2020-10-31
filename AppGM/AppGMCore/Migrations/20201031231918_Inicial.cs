@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AppGM.Core.Migrations
 {
-    public partial class inicial : Migration
+    public partial class Inicial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -205,20 +205,6 @@ namespace AppGM.Core.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ModeloVector2",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    X = table.Column<double>(nullable: false),
-                    Y = table.Column<double>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ModeloVector2", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Rols",
                 columns: table => new
                 {
@@ -233,6 +219,39 @@ namespace AppGM.Core.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Rols", x => x.IdRol);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UnidadesMapa",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Nombre = table.Column<string>(nullable: true),
+                    ETipoUnidad = table.Column<int>(nullable: false),
+                    Tipo = table.Column<int>(nullable: false),
+                    EClaseServant = table.Column<int>(nullable: true),
+                    Inicial = table.Column<string>(maxLength: 1, nullable: true),
+                    Cantidad = table.Column<int>(nullable: true),
+                    EsDeMaster = table.Column<bool>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UnidadesMapa", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Vectores2",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    X = table.Column<double>(nullable: false),
+                    Y = table.Column<double>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Vectores2", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -720,6 +739,30 @@ namespace AppGM.Core.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "MapasUnidadesMapa",
+                columns: table => new
+                {
+                    IdMapa = table.Column<int>(nullable: false),
+                    IdUnidadMapa = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MapasUnidadesMapa", x => new { x.IdMapa, x.IdUnidadMapa });
+                    table.ForeignKey(
+                        name: "FK_MapasUnidadesMapa_Mapas_IdMapa",
+                        column: x => x.IdMapa,
+                        principalTable: "Mapas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MapasUnidadesMapa_UnidadesMapa_IdUnidadMapa",
+                        column: x => x.IdUnidadMapa,
+                        principalTable: "UnidadesMapa",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ModeloPersonaje",
                 columns: table => new
                 {
@@ -749,9 +792,9 @@ namespace AppGM.Core.Migrations
                 {
                     table.PrimaryKey("PK_ModeloPersonaje", x => x.IdPersonaje);
                     table.ForeignKey(
-                        name: "FK_ModeloPersonaje_ModeloVector2_PosicionId",
+                        name: "FK_ModeloPersonaje_Vectores2_PosicionId",
                         column: x => x.PosicionId,
-                        principalTable: "ModeloVector2",
+                        principalTable: "Vectores2",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -770,9 +813,9 @@ namespace AppGM.Core.Migrations
                 {
                     table.PrimaryKey("PK_Participantes", x => x.IdParticipante);
                     table.ForeignKey(
-                        name: "FK_Participantes_ModeloVector2_PosicionCombateId",
+                        name: "FK_Participantes_Vectores2_PosicionCombateId",
                         column: x => x.PosicionCombateId,
-                        principalTable: "ModeloVector2",
+                        principalTable: "Vectores2",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -794,9 +837,33 @@ namespace AppGM.Core.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_TIMapaVector2_ModeloVector2_IdVector",
+                        name: "FK_TIMapaVector2_Vectores2_IdVector",
                         column: x => x.IdVector,
-                        principalTable: "ModeloVector2",
+                        principalTable: "Vectores2",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UnidadesMapaVectores2",
+                columns: table => new
+                {
+                    IdUnidadMapa = table.Column<int>(nullable: false),
+                    IdVector = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UnidadesMapaVectores2", x => new { x.IdUnidadMapa, x.IdVector });
+                    table.ForeignKey(
+                        name: "FK_UnidadesMapaVectores2_UnidadesMapa_IdUnidadMapa",
+                        column: x => x.IdUnidadMapa,
+                        principalTable: "UnidadesMapa",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UnidadesMapaVectores2_Vectores2_IdVector",
+                        column: x => x.IdVector,
+                        principalTable: "Vectores2",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -996,6 +1063,30 @@ namespace AppGM.Core.Migrations
                         column: x => x.IdPersonaje,
                         principalTable: "ModeloPersonaje",
                         principalColumn: "IdPersonaje",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PersonajesUnidadesMapa",
+                columns: table => new
+                {
+                    IdPersonaje = table.Column<int>(nullable: false),
+                    IdUnidadMapa = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PersonajesUnidadesMapa", x => new { x.IdPersonaje, x.IdUnidadMapa });
+                    table.ForeignKey(
+                        name: "FK_PersonajesUnidadesMapa_ModeloPersonaje_IdPersonaje",
+                        column: x => x.IdPersonaje,
+                        principalTable: "ModeloPersonaje",
+                        principalColumn: "IdPersonaje",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PersonajesUnidadesMapa_UnidadesMapa_IdUnidadMapa",
+                        column: x => x.IdUnidadMapa,
+                        principalTable: "UnidadesMapa",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -1253,6 +1344,11 @@ namespace AppGM.Core.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_MapasUnidadesMapa_IdUnidadMapa",
+                table: "MapasUnidadesMapa",
+                column: "IdUnidadMapa");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ModeloPersonaje_PosicionId",
                 table: "ModeloPersonaje",
                 column: "PosicionId");
@@ -1317,6 +1413,12 @@ namespace AppGM.Core.Migrations
                 name: "IX_PersonajeSkills_IdHabilidad",
                 table: "PersonajeSkills",
                 column: "IdHabilidad");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PersonajesUnidadesMapa_IdUnidadMapa",
+                table: "PersonajesUnidadesMapa",
+                column: "IdUnidadMapa",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_PersonajeUtilizables_IdUtilizable",
@@ -1529,6 +1631,17 @@ namespace AppGM.Core.Migrations
                 table: "TIUtilizableTiradaBase",
                 column: "IdUtilizable",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UnidadesMapaVectores2_IdUnidadMapa",
+                table: "UnidadesMapaVectores2",
+                column: "IdUnidadMapa",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UnidadesMapaVectores2_IdVector",
+                table: "UnidadesMapaVectores2",
+                column: "IdVector");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -1538,6 +1651,9 @@ namespace AppGM.Core.Migrations
 
             migrationBuilder.DropTable(
                 name: "CombateParticipantes");
+
+            migrationBuilder.DropTable(
+                name: "MapasUnidadesMapa");
 
             migrationBuilder.DropTable(
                 name: "ParticipantePersonaje");
@@ -1565,6 +1681,9 @@ namespace AppGM.Core.Migrations
 
             migrationBuilder.DropTable(
                 name: "PersonajeSkills");
+
+            migrationBuilder.DropTable(
+                name: "PersonajesUnidadesMapa");
 
             migrationBuilder.DropTable(
                 name: "PersonajeUtilizables");
@@ -1654,6 +1773,9 @@ namespace AppGM.Core.Migrations
                 name: "TIUtilizableTiradaBase");
 
             migrationBuilder.DropTable(
+                name: "UnidadesMapaVectores2");
+
+            migrationBuilder.DropTable(
                 name: "Combates");
 
             migrationBuilder.DropTable(
@@ -1696,7 +1818,10 @@ namespace AppGM.Core.Migrations
                 name: "ModeloUtilizable");
 
             migrationBuilder.DropTable(
-                name: "ModeloVector2");
+                name: "UnidadesMapa");
+
+            migrationBuilder.DropTable(
+                name: "Vectores2");
         }
     }
 }

@@ -22,7 +22,9 @@ namespace AppGM.Core
         public DbSet<ModeloInvocacion> Invocaciones { get; set; }
         public DbSet<ModeloAdministradorDeCombate> Combates { get; set; }
         public DbSet<ModeloParticipante> Participantes { get; set; }
+        public DbSet<ModeloVector2> Vectores2 { get; set; }
         public DbSet<ModeloMapa> Mapas { get; set; }
+        public DbSet<ModeloUnidadMapa> UnidadesMapa { get; set; }
 
         // Relaciones ---
         public DbSet<TIPersonajeEfecto> PersonajeEfectos { get; set; }
@@ -38,6 +40,9 @@ namespace AppGM.Core
         public DbSet<TIAdministradorDeCombateParticipante> CombateParticipantes { get; set; }
         public DbSet<TIAdministradorDeCombateMapa> CombateMapas { get; set; }
         public DbSet<TIParticipantePersonaje> ParticipantePersonaje { get; set; }
+        public DbSet<TIMapaUnidadMapa> MapasUnidadesMapa { get; set; }
+        public DbSet<TIUnidadMapaVector2> UnidadesMapaVectores2 { get; set; }
+        public DbSet<TIPersonajeUnidadMapa> PersonajesUnidadesMapa { get; set; }
         #endregion
 
         public RolContext(){}
@@ -529,6 +534,34 @@ namespace AppGM.Core
 
             modelBuilder.Entity<TIMapaVector2>()
                 .HasOne(i => i.Posicion);
+
+            modelBuilder.Entity<ModeloUnidadMapa>()
+                .HasDiscriminator<int>("Tipo")
+                .HasValue<ModeloUnidadMapa>(1)
+                .HasValue<ModeloUnidadMapaMasterServant>(2)
+                .HasValue<ModeloUnidadMapaInvocacionTrampa>(3);
+
+            modelBuilder.Entity<TIMapaUnidadMapa>()
+                .HasKey(ti => new {ti.IdMapa, ti.IdUnidadMapa});
+
+            modelBuilder.Entity<TIMapaUnidadMapa>()
+                .HasOne(ti => ti.Mapa)
+                .WithMany(m => m.PosicionesUnidades)
+                .HasForeignKey(ti => ti.IdMapa);
+
+            modelBuilder.Entity<TIUnidadMapaVector2>()
+                .HasKey(ti => new {ti.IdUnidadMapa, ti.IdVector});
+
+            modelBuilder.Entity<TIUnidadMapaVector2>()
+                .HasOne(ti => ti.Unidad)
+                .WithOne(u => u.Posicion);
+
+            modelBuilder.Entity<TIPersonajeUnidadMapa>()
+                .HasKey(ti => new { ti.IdPersonaje, ti.IdUnidadMapa });
+
+            modelBuilder.Entity<TIPersonajeUnidadMapa>()
+                .HasOne(ti => ti.Unidad)
+                .WithOne(u => u.Personaje);
 
             modelBuilder.Entity<TIPersonajeArmaDistancia>()
                 .HasKey(e => new {e.IdArmaDistancia, e.IdPersonaje});
