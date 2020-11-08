@@ -173,7 +173,7 @@ namespace AppGM.Core
 
         public override string ToString()
         {
-            return string.Format($"Nombre={modelo.Nombre} Id={modelo.IdPersonaje}");
+            return string.Format($"Nombre={modelo.Nombre} Id={modelo.Id}");
         }
 
         #endregion
