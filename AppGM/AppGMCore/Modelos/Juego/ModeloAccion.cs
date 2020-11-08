@@ -2,12 +2,8 @@
 
 namespace AppGM.Core
 {
-    public class ModeloAccion
+    public class ModeloAccion : ModeloBase
     {
-        //Id
-        [Key]
-        public int IdAccion { get; set; }
-
         [StringLength(2000)]
         public string Descripcion { get; set; }
     }

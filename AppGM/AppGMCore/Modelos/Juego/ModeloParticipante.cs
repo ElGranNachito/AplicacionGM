@@ -3,11 +3,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AppGM.Core
 {
-    public class ModeloParticipante
+    public class ModeloParticipante : ModeloBase
     {
-        //Id
-        [Key]
-        public int IdParticipante { get; set; }
         public int TiradaIniciativa { get; set; }
         public bool EsSuTurno { get; set; }
 

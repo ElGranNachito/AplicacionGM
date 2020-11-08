@@ -3,10 +3,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AppGM.Core
 {
-    public class ModeloMapa
+    public class ModeloMapa : ModeloBase
     {
-        [Key]
-        public int Id { get; set; }
         public string NombreMapa { get; set; }
         public EFormatoImagen EFormatoImagen { get; set; }
 

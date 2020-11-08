@@ -2,12 +2,8 @@
 
 namespace AppGM.Core
 {
-    public class ModeloCaracteristicas
+    public class ModeloCaracteristicas : ModeloBase
     {
-        //Id
-        [Key]
-        public int IdCaracteristica { get; set; }
-
         //Edad del personaje
         public ushort Edad { get; set; }
         //Estatura del personaje

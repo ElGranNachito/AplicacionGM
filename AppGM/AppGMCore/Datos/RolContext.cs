@@ -121,7 +121,6 @@ namespace AppGM.Core
                 .WithMany(p => p.Perks)
                 .HasForeignKey(ip => ip.IdPersonaje);
 
-
             // - Personaje skills
             modelBuilder.Entity<TIPersonajeHabilidad>().HasKey(e => new { e.IdPersonaje, e.IdHabilidad });
 

@@ -3,13 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AppGM.Core
 {
-    //TODO: Decidir si es abstracta o no
-    public class ModeloUtilizable
+    //TODO: Decidir si es una clase abstracta o no
+    public class ModeloUtilizable : ModeloBase
     {
-        //Id
-        [Key]
-        public int IdUtilizable { get; set; }
-
         //Stats
         public EStat EStatQueAfecta { get; set; }
         public EStat EStatDeLaQueDepende { get; set; }

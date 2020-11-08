@@ -15,7 +15,7 @@
     public class ModeloInvocacionTemporal : ModeloInvocacion
     {
         //Turnos que dura la invocacion
-        public bool TurnosDeDuracion { get; set; }
+        public byte TurnosDeDuracion { get; set; }
     }
 
     public class ModeloInvocacionCondicionada : ModeloInvocacion

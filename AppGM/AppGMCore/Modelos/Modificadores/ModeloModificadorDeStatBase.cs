@@ -2,11 +2,8 @@
 
 namespace AppGM.Core
 {
-    public class ModeloModificadorDeStatBase
+    public class ModeloModificadorDeStatBase : ModeloBase
     {
-        //Id
-        [Key]
-        public int IdModificadorDeStat { get; set; }
         //Valor requerido para realizar tirada
         public int ValorRequeridoTirada { get; set; }
 
