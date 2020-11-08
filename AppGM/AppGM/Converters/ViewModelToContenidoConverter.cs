@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Globalization;
-using System.Windows.Markup.Localizer;
 using AppGM.Core;
 
 namespace AppGM

@@ -19,6 +19,7 @@ namespace AppGM.Core
         public static ViewModelPaginaPrincipalRol   RolSeleccionado       => ObtenerInstancia<ViewModelPaginaPrincipalRol>();
         public static ViewModelMenuSeleccionCombate MenuSeleccionCombate  => ObtenerInstancia<ViewModelMenuSeleccionCombate>();
         public static ViewModelCombate              CombateActual         => ObtenerInstancia<ViewModelCombate>();
+        public static DatosRol                      DatosRolSeleccionado  => RolSeleccionado.ControladorRol.datosRol;
 
         #endregion
 
@@ -35,8 +36,9 @@ namespace AppGM.Core
         public static async Task CargarRol(ModeloRol modelo)
         {
             //TODO: Cargar base da datos en base al nombre/id del rol
+            Kernel.Bind<ViewModelPaginaPrincipalRol>().ToConstant(new ViewModelPaginaPrincipalRol(modelo));
 
-            //await CargarDatosRol();
+            await CargarDatosRol();
 
             CrearViewModelsRol(modelo);
 
@@ -47,11 +49,28 @@ namespace AppGM.Core
             return Kernel.Get<T>();
         }
 
+        public static async Task GuardarDatosRolAsync()
+        {
+            await DatosRolSeleccionado.GuardarDatosAsync();
+        }
+        public static void GuardarDatosRol()
+        {
+            DatosRolSeleccionado.GuardarDatos();
+        }
+
+        public static void GuardarModelo(object modelo)
+        {
+            DatosRolSeleccionado.GuardarModelo(modelo);
+        }
+        public static void CerrarConexion()
+        {
+            DatosRolSeleccionado.CerrarConexion();
+        }
         private static async Task CargarDatosRol()
         {
-            await RolSeleccionado.ControladorRol.datosRol.CargarDatos();
-            RolSeleccionado.ControladorRol.datosRol.CerrarConexion();
+            await DatosRolSeleccionado.CargarDatos();
         }
+
         private static void CrearViewModels()
         {
             Kernel.Bind<ViewModelAplicacion>().ToConstant(new ViewModelAplicacion());
@@ -60,10 +79,9 @@ namespace AppGM.Core
 
         private static void CrearViewModelsRol(ModeloRol modelo)
         {
-            Kernel.Bind<ViewModelPaginaPrincipalRol>()    .ToConstant(new ViewModelPaginaPrincipalRol(modelo));
             Kernel.Bind<ViewModelMenuSeleccionTipoFicha>().ToConstant(new ViewModelMenuSeleccionTipoFicha());
             Kernel.Bind<ViewModelListaFichasVistaFichas>().ToConstant(new ViewModelListaFichasVistaFichas());
-            Kernel.Bind<ViewModelMapaPrincipal>()         .ToConstant(new ViewModelMapaPrincipal());
+            Kernel.Bind<ViewModelMapaPrincipal>()         .ToConstant(new ViewModelMapaPrincipal(DatosRolSeleccionado.Mapas[0]));
             Kernel.Bind<ViewModelMenuSeleccionCombate>()  .ToConstant(new ViewModelMenuSeleccionCombate());
             Kernel.Bind<ViewModelCombate>()               .ToConstant(new ViewModelCombate());
         }

@@ -44,7 +44,5 @@ namespace AppGM.Viewmodels
         }
 
         #endregion
-
-       
     }
 }

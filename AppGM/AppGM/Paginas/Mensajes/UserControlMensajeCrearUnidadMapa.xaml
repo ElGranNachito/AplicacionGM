@@ -6,7 +6,103 @@
              xmlns:local="clr-namespace:AppGM"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
-    </Grid>
+
+    <Border Background="White"
+            Padding="10">
+        <Grid >
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel>
+
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Left">
+
+                    <!-- Campo ingreso de nombre -->
+                    <TextBlock Text="Nombre: "/>
+                    <TextBox HorizontalAlignment="Center"
+                         MinWidth="150"
+                         Text="{Binding Nombre, Mode=OneWayToSource}"/>
+
+                </StackPanel>
+
+                <!-- Campos posicion inicial -->
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Left"
+                            Margin="0 10">
+
+                    <!-- X -->
+                    <TextBlock Text="X:"
+                               Margin="0 0 10 0"
+                               HorizontalAlignment="Left"/>
+                    <TextBox MinWidth="30"
+                             Text="{Binding PosInicialX}"/>
+
+                    <!-- Y -->
+                    <TextBlock Text="Y:"
+                               Margin="10 0"/>
+                    <TextBox MinWidth="30"
+                             Text="{Binding PosInicialY}"/>
+
+                    <TextBlock Text="(Opcional)"
+                               Margin="10 0"/>
+
+                </StackPanel>
+
+            </StackPanel>
+
+            <Grid Grid.Column="1">
+
+                <StackPanel>
+
+                    <!-- Tipo de unidad (Todos) -->
+                    <TextBlock Text="Tipo de unidad:"/>
+                    <ComboBox ItemsSource="{Binding TiposUnidades}"
+                              SelectedValue="{Binding TipoSeleccionado}"
+                              Margin="0 0 0 20"/>
+
+                    <!-- Clase de servant (Masters, Servants, Invocaciones y trampas) -->
+                    <StackPanel 
+                        Visibility="{Binding DebeSeleccionarClaseServant, Converter={local:BooleanToVisibilityConverterOcultar}}">
+
+                        <TextBlock Text="Clase de servant:"/>
+                        <ComboBox 
+                        ItemsSource="{Binding ClasesServants}"
+                          SelectedValue="{Binding ClaseSeleccionada}"/>
+
+                    </StackPanel>
+
+                    <!-- Personaje (Masters, Servants e invocaciones) -->
+                    <StackPanel 
+                        Visibility="{Binding DebeSeleccionarPersonaje, Converter={local:BooleanToVisibilityConverterOcultar}}">
+
+                        <TextBlock Text="Personaje:"/>
+                        <ComboBox 
+                            ItemsSource="{Binding PersonajesDisponibles}"
+                            SelectedValue="{Binding PersonajeSeleccionado}"/>
+
+                    </StackPanel>
+
+                    <!-- Cantidad (Invocaciones y trampas) -->
+                    <StackPanel 
+                        Visibility="{Binding DebeSeleccionarCantidad, Converter={local:BooleanToVisibilityConverterOcultar}}">
+
+                        <TextBlock Text="Cantidad:"/>
+                        <TextBox local:CampoDeTextoNumericoProperty.Value="True"/>
+
+                    </StackPanel>
+
+                </StackPanel>
+
+                <Button VerticalAlignment="Bottom" 
+                        Content="Confirmar"
+                        IsEnabled="{Binding PuedeFinalizarCreacion}"
+                        Command="{Binding ComandoFinalizar}"/>
+            </Grid>
+                
+        </Grid>
+    </Border>
 </UserControl>

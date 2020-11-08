@@ -46,7 +46,7 @@ namespace AppGM
                 };
 
                 MouseButtonEventHandler añadirMouseMovedHandler = null;
-                MouseButtonEventHandler quitarMouseMovedHandler = null;
+                EventoVentana quitarMouseMovedHandler = null;
 
                 añadirMouseMovedHandler = (obj, ea) =>
                 {
@@ -54,12 +54,12 @@ namespace AppGM
                     fe.MouseDown -= añadirMouseMovedHandler;
                     SistemaPrincipal.Aplicacion.VentanaPrincipal.OnMouseMovido += mouseMovedHandler;
 
-                    fe.MouseUp += quitarMouseMovedHandler;
+                    SistemaPrincipal.Aplicacion.VentanaPrincipal.OnMouseUp += quitarMouseMovedHandler;
                 };
 
-                quitarMouseMovedHandler = (obj, ea) =>
+                quitarMouseMovedHandler = v =>
                 {
-                    fe.MouseUp -= quitarMouseMovedHandler;
+                    SistemaPrincipal.Aplicacion.VentanaPrincipal.OnMouseUp -= quitarMouseMovedHandler;
                     SistemaPrincipal.Aplicacion.VentanaPrincipal.OnMouseMovido -= mouseMovedHandler;
 
                     fe.MouseDown += añadirMouseMovedHandler;

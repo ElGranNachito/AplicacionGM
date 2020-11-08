@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
 using AppGM.Core;
 
@@ -19,7 +20,7 @@ namespace AppGM.Viewmodels
         #endregion
 
         #region Implementacion Interfaz Ventana Mensaje
-        public async void Mostrar(ViewModelMensajeBase vm, bool esperarCierre)
+        public async Task Mostrar(ViewModelMensajeBase vm, bool esperarCierre)
         {
             ViewModelContenidoVentana = vm;
 

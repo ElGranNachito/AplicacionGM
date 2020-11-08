@@ -4,7 +4,7 @@ using AppGM.Core;
 
 namespace AppGM
 {
-    public class ViewModelToContenidoMensajeConverter : BaseConverter<ViewModelToContenidoConverter>
+    public class ViewModelToContenidoMensajeConverter : BaseConverter<ViewModelToContenidoMensajeConverter>
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

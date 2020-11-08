@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Windows.Input;
 
 namespace AppGM.Core
 {
@@ -8,6 +9,8 @@ namespace AppGM.Core
 
         public ViewModelMapa         mapa;
         public ControladorUnidadMapa unidad;
+
+        public ICommand EliminarUnidad { get; set; }
 
         #endregion
 

@@ -20,7 +20,7 @@ namespace AppGM.Core
         {
             modelo = _modeloMapa;
 
-            for (int i = 0; i < controladoresUnidadesMapa.Count; ++i)
+            for (int i = 0; i < modelo.PosicionesUnidades.Count; ++i)
                 controladoresUnidadesMapa.Add(new ControladorUnidadMapa(_modeloMapa.PosicionesUnidades[i].Unidad));
         }
 
@@ -28,6 +28,19 @@ namespace AppGM.Core
 
         #region Funciones
         public string ObtenerExtension() => string.Format($".{modelo.EFormatoImagen.ToString().ToLower()}");
+
+        public void AñadirUnidad(ModeloUnidadMapa unidad)
+        {
+            TIMapaUnidadMapa mapaUnidad = new TIMapaUnidadMapa
+            {
+                Unidad = unidad,
+                Mapa   = modelo
+            };
+
+            modelo.PosicionesUnidades.Add(mapaUnidad);
+
+            SistemaPrincipal.GuardarModelo(mapaUnidad);
+        }
 
         #endregion
 

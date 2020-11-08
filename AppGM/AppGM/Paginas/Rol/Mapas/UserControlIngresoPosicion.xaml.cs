@@ -1,5 +1,4 @@
-﻿using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 using AppGM.Core;
 
 namespace AppGM
@@ -16,12 +15,14 @@ namespace AppGM
 
         private void TextBoxPosX_TextChanged(object sender, TextChangedEventArgs e)
         {
-            ((ViewModelIngresoPosicion)DataContext).TextoPosicionX = ((TextBox)sender).Text;
+            if(DataContext is ViewModelIngresoPosicion vm)
+                vm.TextoPosicionX = ((TextBox)sender).Text;
         }
 
         private void TextBoxPosY_TextChanged(object sender, TextChangedEventArgs e)
         {
-            ((ViewModelIngresoPosicion)DataContext).TextoPosicionY = ((TextBox)sender).Text;
+            if (DataContext is ViewModelIngresoPosicion vm)
+                vm.TextoPosicionY = ((TextBox)sender).Text;
         }
     }
 }

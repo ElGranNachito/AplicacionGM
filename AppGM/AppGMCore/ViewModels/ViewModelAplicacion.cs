@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace AppGM.Core
 {
@@ -22,6 +23,8 @@ namespace AppGM.Core
         event EventoVentana OnEstadoModificado;
         event EventoVentana OnTituloModificado;
         event EventoVentana OnMouseMovido;
+        event EventoVentana OnMouseDown;
+        event EventoVentana OnMouseUp;
         event EventoVentana OnVentanaCerrada;
         event EventoVentana OnVentanaAbierta;
     }
@@ -33,7 +36,7 @@ namespace AppGM.Core
         /// </summary>
         /// <param name="vm">View model del contenido el mensaje</param>
         /// <param name="esperarCierre">Si el valor es <see cref="true"/>la ventana principal queda bloqueada hasta que el mensaje se cierre</param>
-        void Mostrar(ViewModelMensajeBase vm, bool esperarCierre);
+        Task Mostrar(ViewModelMensajeBase vm, bool esperarCierre);
 
         bool EstaAbierta { get; }
         bool DebeEsperarCierre { get; set; }

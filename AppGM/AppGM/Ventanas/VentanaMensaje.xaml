@@ -78,6 +78,6 @@
     </WindowChrome.WindowChrome>
 
     <Grid>
-        <ContentControl Content="{Binding ViewModelContenidoVentana, Converter={local:ViewModelToContenidoMensajeConverter}}"/>
+        <ContentControl Content="{Binding  Path=ViewModelContenidoVentana, Converter={local:ViewModelToContenidoMensajeConverter}}"/>
     </Grid>
 </Window>

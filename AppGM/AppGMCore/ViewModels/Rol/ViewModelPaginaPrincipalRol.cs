@@ -31,7 +31,7 @@ namespace AppGM.Core
 
             ComandoBotonSalir = new Comando(()=>
             {
-                //TODO: Limpiar los datos del rol actual
+                SistemaPrincipal.CerrarConexion();
 
                 SistemaPrincipal.Aplicacion.EPaginaActual =
                         EPaginaActual.PaginaPrincipal;

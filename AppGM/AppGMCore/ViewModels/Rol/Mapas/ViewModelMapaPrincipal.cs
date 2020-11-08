@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace AppGM.Core
@@ -7,21 +8,153 @@ namespace AppGM.Core
     {
         public ViewModelIngresoPosicion PosicionIglesia { get; set; }
 
-        public ViewModelMapaPrincipal(ControladorMapa _controlador) : base(_controlador)
-        {
-            
-        }
+        public ViewModelMapaPrincipal(ControladorMapa _controlador) : base(_controlador){}
         public ViewModelMapaPrincipal()
         {
             PathImagen = "../../../Media/Imagenes/Mapas/Seoul.png";
 
-            Posiciones = new List<ViewModelIngresoPosicion>
+            Posiciones = new ObservableCollection<ViewModelIngresoPosicion>
             {
                 new ViewModelIngresoPosicion(this, new ControladorUnidadMapa(new ModeloUnidadMapaMasterServant
                 {
                     EClaseServant = EClaseServant.Saber,
                     ETipoUnidad = ETipoUnidad.Servant,
                     Nombre = "Saber",
+                    Posicion = new TIUnidadMapaVector2
+                    {
+                        Posicion = new ModeloVector2
+                        {
+                            X = 500,
+                            Y = 500
+                        }
+                    }
+                })),
+
+                new ViewModelIngresoPosicion(this, new ControladorUnidadMapa(new ModeloUnidadMapaMasterServant
+                {
+                    EClaseServant = EClaseServant.Saber,
+                    ETipoUnidad = ETipoUnidad.Master,
+                    Nombre = "Master Saber",
+                    Posicion = new TIUnidadMapaVector2
+                    {
+                        Posicion = new ModeloVector2
+                        {
+                            X = 500,
+                            Y = 500
+                        }
+                    }
+                })),
+
+                new ViewModelIngresoPosicion(this, new ControladorUnidadMapa(new ModeloUnidadMapaMasterServant
+                {
+                    EClaseServant = EClaseServant.Berserker,
+                    ETipoUnidad = ETipoUnidad.Servant,
+                    Nombre = "Berserker",
+                    Posicion = new TIUnidadMapaVector2
+                    {
+                        Posicion = new ModeloVector2
+                        {
+                            X = 500,
+                            Y = 500
+                        }
+                    }
+                })),
+
+                new ViewModelIngresoPosicion(this, new ControladorUnidadMapa(new ModeloUnidadMapaMasterServant
+                {
+                    EClaseServant = EClaseServant.Berserker,
+                    ETipoUnidad = ETipoUnidad.Master,
+                    Nombre = "Master Berserker",
+                    Posicion = new TIUnidadMapaVector2
+                    {
+                        Posicion = new ModeloVector2
+                        {
+                            X = 500,
+                            Y = 500
+                        }
+                    }
+                })),
+
+                new ViewModelIngresoPosicion(this, new ControladorUnidadMapa(new ModeloUnidadMapaMasterServant
+                {
+                    EClaseServant = EClaseServant.Archer,
+                    ETipoUnidad = ETipoUnidad.Master,
+                    Nombre = "Master Archer",
+                    Posicion = new TIUnidadMapaVector2
+                    {
+                        Posicion = new ModeloVector2
+                        {
+                            X = 500,
+                            Y = 500
+                        }
+                    }
+                })),
+
+                new ViewModelIngresoPosicion(this, new ControladorUnidadMapa(new ModeloUnidadMapaMasterServant
+                {
+                    EClaseServant = EClaseServant.Archer,
+                    ETipoUnidad = ETipoUnidad.Servant,
+                    Nombre = "Archer",
+                    Posicion = new TIUnidadMapaVector2
+                    {
+                        Posicion = new ModeloVector2
+                        {
+                            X = 500,
+                            Y = 500
+                        }
+                    }
+                })),
+
+                new ViewModelIngresoPosicion(this, new ControladorUnidadMapa(new ModeloUnidadMapaMasterServant
+                {
+                    EClaseServant = EClaseServant.Rider,
+                    ETipoUnidad = ETipoUnidad.Servant,
+                    Nombre = "Rider",
+                    Posicion = new TIUnidadMapaVector2
+                    {
+                        Posicion = new ModeloVector2
+                        {
+                            X = 500,
+                            Y = 500
+                        }
+                    }
+                })),
+
+                new ViewModelIngresoPosicion(this, new ControladorUnidadMapa(new ModeloUnidadMapaMasterServant
+                {
+                    EClaseServant = EClaseServant.Rider,
+                    ETipoUnidad = ETipoUnidad.Master,
+                    Nombre = "Master Rider",
+                    Posicion = new TIUnidadMapaVector2
+                    {
+                        Posicion = new ModeloVector2
+                        {
+                            X = 500,
+                            Y = 500
+                        }
+                    }
+                })),
+
+                new ViewModelIngresoPosicion(this, new ControladorUnidadMapa(new ModeloUnidadMapaMasterServant
+                {
+                    EClaseServant = EClaseServant.Caster,
+                    ETipoUnidad = ETipoUnidad.Master,
+                    Nombre = "Master Caster",
+                    Posicion = new TIUnidadMapaVector2
+                    {
+                        Posicion = new ModeloVector2
+                        {
+                            X = 500,
+                            Y = 500
+                        }
+                    }
+                })),
+
+                new ViewModelIngresoPosicion(this, new ControladorUnidadMapa(new ModeloUnidadMapaMasterServant
+                {
+                    EClaseServant = EClaseServant.Caster,
+                    ETipoUnidad = ETipoUnidad.Servant,
+                    Nombre = "Caster",
                     Posicion = new TIUnidadMapaVector2
                     {
                         Posicion = new ModeloVector2
@@ -111,11 +244,11 @@ namespace AppGM.Core
             };
             return;
 
-            if (mControladorMapa.modelo.PosicionesElementos.Count != 0)
+            if (controladorMapa.modelo.PosicionesElementos.Count != 0)
             {
                 PosicionIglesia = new ViewModelIngresoPosicion(
                     this,
-                    new Vector2(mControladorMapa.modelo.PosicionesElementos.First().Posicion.X, mControladorMapa.modelo.PosicionesElementos.First().Posicion.Y));
+                    new Vector2(controladorMapa.modelo.PosicionesElementos.First().Posicion.X, controladorMapa.modelo.PosicionesElementos.First().Posicion.Y));
             }
         }
     }

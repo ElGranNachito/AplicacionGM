@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
 
@@ -8,10 +9,10 @@ namespace AppGM.Core
     {
         #region Miembros
 
-        public ICommand ComandoAñadirParticipante { get; set; }
-        public List<ViewModelIngresoPosicion>    Posiciones { get; set; } = new List<ViewModelIngresoPosicion>();
+        public ICommand                          ComandoAñadirParticipante { get; set; }
+        public ObservableCollection<ViewModelIngresoPosicion>    Posiciones                { get; set; } = new ObservableCollection<ViewModelIngresoPosicion>();
 
-        protected ControladorMapa                mControladorMapa;
+        public ControladorMapa                   controladorMapa;
 
         #endregion
 
@@ -56,20 +57,20 @@ namespace AppGM.Core
 
         public ViewModelMapa(ControladorMapa _controlador)
         {
-            mControladorMapa = _controlador;
+            controladorMapa = _controlador;
 
             PathImagen = "../../../Media/Imagenes/Mapas/" +
-                          mControladorMapa.NombreMapa + mControladorMapa.ObtenerExtension();
+                          controladorMapa.NombreMapa + controladorMapa.ObtenerExtension();
 
             //Creamos los view models para el ingreso de las diferentes posiciones
-            for(int i = 0; i < mControladorMapa.controladoresUnidadesMapa.Count; ++i)
-                Posiciones.Add(new ViewModelIngresoPosicion(this, mControladorMapa.controladoresUnidadesMapa[i]));
+            for(int i = 0; i < controladorMapa.controladoresUnidadesMapa.Count; ++i)
+                Posiciones.Add(new ViewModelIngresoPosicion(this, controladorMapa.controladoresUnidadesMapa[i]));
 
-            ComandoAñadirParticipante = new Comando(AñadirParticipante);
+            ComandoAñadirParticipante = new Comando(AñadirUnidad);
         }
         public ViewModelMapa()
         {
-            mControladorMapa = new ControladorMapa
+            controladorMapa = new ControladorMapa
             {
                 modelo = new ModeloMapa
                 {
@@ -90,17 +91,20 @@ namespace AppGM.Core
             };
 
             PathImagen = "../../../Media/Imagenes/Mapas/" +
-                          mControladorMapa.modelo.NombreMapa + mControladorMapa.ObtenerExtension();
+                          controladorMapa.modelo.NombreMapa + controladorMapa.ObtenerExtension();
 
-            ComandoAñadirParticipante = new Comando(AñadirParticipante);
+            ComandoAñadirParticipante = new Comando(AñadirUnidad);
         } 
         #endregion
 
-        private void AñadirParticipante()
+        private async void AñadirUnidad()
         {
-            ViewModelMensajeCrearUnidadMapa vm = new ViewModelMensajeCrearUnidadMapa();
+            ViewModelMensajeCrearUnidadMapa vm = new ViewModelMensajeCrearUnidadMapa(this);
 
-            SistemaPrincipal.Aplicacion.VentanaPopups.Mostrar(vm, true);
+            await SistemaPrincipal.Aplicacion.VentanaPopups.Mostrar(vm, true);
+
+            if (vm.vmResultado is ViewModelIngresoPosicion vmNuevaUndiad)
+                Posiciones.Add(vmNuevaUndiad);
         }
     }
 }
