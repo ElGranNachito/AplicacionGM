@@ -3,12 +3,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AppGM.Core
 {
-    public class ModeloSlot
+    public class ModeloSlot : ModeloBase
     {
-        //Id
-        [Key]
-        public int IdSlot { get; set; }
-
         //Espacio en la slot
         public decimal Espacio { get; set; }
 

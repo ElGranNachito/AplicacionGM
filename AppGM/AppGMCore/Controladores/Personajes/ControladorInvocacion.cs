@@ -20,6 +20,10 @@ namespace AppGM.Core
 
         public override void AvanzarTurno()
         {
+            for (int i = 0; i < Efectos.Count; ++i)
+                Efectos[i].AplicarEfecto(this);
+
+            //TODO: Aplicar los efectos
             //TODO: Si funciona de manera automatica chequear cada turno si puede actuar
         }
 
@@ -36,6 +40,11 @@ namespace AppGM.Core
 
         public override void AvanzarTurno()
         {
+            for (int i = 0; i < Efectos.Count; ++i)
+            {
+                Efectos[i].AplicarEfecto(this);
+            }
+            //TODO: Aplicar los efectos
             //TODO: Si funciona de manera automatica chequear cada turno si puede actuar. Restar los turnos de vida que le quedan
         }
 
@@ -52,6 +61,11 @@ namespace AppGM.Core
 
         public override void AvanzarTurno()
         {
+            for (int i = 0; i < Efectos.Count; ++i)
+            {
+                Efectos[i].AplicarEfecto(this);
+            }
+
             //TODO: Si funciona de manera automatica chequear cada turno si puede actuar. Revisar si se cumplen las condiciones para que desaparezca
         }
 

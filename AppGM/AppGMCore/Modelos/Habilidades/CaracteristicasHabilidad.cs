@@ -2,12 +2,8 @@
 
 namespace AppGM.Core
 {
-    public class ModeloLimitador
+    public class ModeloLimitador : ModeloBase
     {
-        //Id
-        [Key]
-        public int IdLimitador { get; set; }
-
         //Cantidad de veces que la habilidad puede ser utiliza
         public int LimiteDeUsos { get; set; }
         
@@ -15,10 +11,6 @@ namespace AppGM.Core
     }
     public class ModeloCargasHabilidad
     {
-        //Id
-        [Key]
-        public int IdCargasHabilidad { get; set; }
-        
         //Maximo de cargas para una habilidad
         public int CargasMaximas { get; set; }
     }

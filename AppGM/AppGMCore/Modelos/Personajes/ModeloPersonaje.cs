@@ -7,12 +7,8 @@ namespace AppGM.Core
     /// <summary>
     /// Modelo de datos para el personaje
     /// </summary>
-    public class ModeloPersonaje
+    public class ModeloPersonaje : ModeloBase
     {
-        //ID
-        [Key]
-        public int IdPersonaje { get; set; }
-
         //Nombre del personaje
         [StringLength(50)]
         public string Nombre { get; set; }

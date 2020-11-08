@@ -6,12 +6,8 @@ namespace AppGM.Core
     /// <summary>
     /// Modelo de datos para el rol
     /// </summary>
-    public class ModeloRol
+    public class ModeloRol : ModeloBase
     {
-        //Id
-        [Key]
-        public int IdRol { get; set; }
-
         //Dia dentro del mundo del rol
         public ushort Dia { get; set; }
 

@@ -3,12 +3,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AppGM.Core
 {
-    public class ModeloHabilidad : IDescripcion
+    public class ModeloHabilidad : ModeloBase, IDescripcion
     {
-        //Id
-        [Key]
-        public int IdHabilidad { get; set; }
-        
         //Costos de mana que tiene la habilidad para ser utilizada
         public ushort CostoDeMana { get; set; }
         //Turnos que dura la habilidad

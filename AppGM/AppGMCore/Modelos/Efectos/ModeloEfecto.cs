@@ -6,12 +6,8 @@ namespace AppGM.Core
     /// <summary>
     /// Modelo de datos para efecto
     /// </summary>
-    public class ModeloEfecto : IDescripcion
+    public class ModeloEfecto : ModeloBase, IDescripcion
     {
-        //Id
-        [Key]
-        public int IdEfecto { get; set; }
-
         //Nombre del efecto
         [StringLength(50)]
         public string Nombre { get; set; }

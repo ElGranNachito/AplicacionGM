@@ -57,7 +57,6 @@ namespace AppGM.Core
     public class ControladorPersonaje : Controlador<ModeloPersonaje>, IDañable
     {
         #region Controladores
-        //me abris el archivito? o si te parece subis y luego subo para utilizable y habilidad
    
         public List<ControladorEfecto> Efectos { get; set; }
         public List<ControladorUtilizable> Inventario { get; set; }
@@ -169,6 +168,7 @@ namespace AppGM.Core
         {
             OnQuitarItem(item, this);
         }
+        
         public bool EstaVido => modelo.Hp > 0;
 
         #endregion

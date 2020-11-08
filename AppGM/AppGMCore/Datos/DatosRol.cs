@@ -55,7 +55,7 @@ namespace AppGM.Core
                 {
                     mDBRol.Add(new ModeloAdministradorDeCombate
                     {
-                        IdAdministradorDeCombate = 0,
+                        Id = 0,
                         IndicePersonajeTurnoActual = 0,
                         Nombre = "SuperCombateFeroz",
                         TurnoActual = 0,

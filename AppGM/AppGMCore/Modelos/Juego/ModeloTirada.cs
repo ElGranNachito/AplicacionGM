@@ -2,10 +2,8 @@
 
 namespace AppGM.Core
 {
-    public class ModeloTiradaBase
+    public class ModeloTiradaBase : ModeloBase
     {
-        [Key]
-        public int IdTirada { get; set; }
     }
 
     public class ModeloTiradaVariable : ModeloTiradaBase

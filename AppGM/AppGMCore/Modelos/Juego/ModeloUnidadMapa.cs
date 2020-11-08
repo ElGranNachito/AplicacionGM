@@ -16,10 +16,8 @@ namespace AppGM.Core
         Trampa     = 8,
         Iglesia    = 16
     }
-    public class ModeloUnidadMapa
+    public class ModeloUnidadMapa : ModeloBase
     {
-        [Key]
-        public int Id { get; set; }
         public string Nombre { get; set; }
 
         public ETipoUnidad ETipoUnidad { get; set; }

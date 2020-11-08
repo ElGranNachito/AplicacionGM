@@ -85,6 +85,7 @@
     <Compile Include="Modelos\Juego\ModeloMapa.cs" />
     <Compile Include="Modelos\Juego\ModeloTirada.cs" />
     <Compile Include="Modelos\Juego\ModeloUnidadMapa.cs" />
+    <Compile Include="Modelos\ModeloBase.cs" />
     <Compile Include="Modelos\Modificadores\ModeloModificadorDeStatBase.cs" />
     <Compile Include="Modelos\Personajes\ModeloMaster.cs" />
     <Compile Include="Modelos\Juego\ModeloParticipante.cs" />
