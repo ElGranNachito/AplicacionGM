@@ -91,8 +91,7 @@ namespace AppGM.Core
                     ModeloMapa mapa = new ModeloMapa
                     {
                         EFormatoImagen = EFormatoImagen.Png,
-                        NombreMapa = "Seoul",
-                        PosicionesUnidades = new List<TIMapaUnidadMapa>()
+                        NombreMapa = "Seoul"
                     };
 
                     ModeloUnidadMapa elemento1 = new ModeloUnidadMapaMasterServant
@@ -229,9 +228,14 @@ namespace AppGM.Core
             mDBRol.SaveChanges();
         }
 
-        public void GuardarModelo(object modelo)
+        public void GuardarModelo(ModeloBaseSK modelo)
         {
             mDBRol.Add(modelo);
+        }
+
+        public void EliminarModelo(ModeloBaseSK modelo)
+        {
+            mDBRol.Remove(modelo);
         }
     }
 }

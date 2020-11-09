@@ -462,5 +462,13 @@
     <Resource Include="Media\Imagenes\Posiciones\Cadaver_Master_Rider.png" />
     <Resource Include="Media\Imagenes\Posiciones\Cadaver_Rider.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Media\Imagenes\Animaciones\FondoMenuPrincipal\FondoMenuPrincipal_1.jpg" />
+    <Resource Include="Media\Imagenes\Animaciones\FondoMenuPrincipal\FondoMenuPrincipal_2.jpg" />
+    <Resource Include="Media\Imagenes\Animaciones\FondoMenuPrincipal\FondoMenuPrincipal_3.jpg" />
+    <Resource Include="Media\Imagenes\Animaciones\FondoMenuPrincipal\FondoMenuPrincipal_4.jpg" />
+    <Resource Include="Media\Imagenes\Animaciones\FondoMenuPrincipal\FondoMenuPrincipal_5.jpg" />
+    <Resource Include="Media\Imagenes\Animaciones\FondoMenuPrincipal\FondoMenuPrincipal_6.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

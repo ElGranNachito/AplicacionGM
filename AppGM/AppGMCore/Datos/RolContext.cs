@@ -545,8 +545,7 @@ namespace AppGM.Core
 
             modelBuilder.Entity<TIMapaUnidadMapa>()
                 .HasOne(ti => ti.Mapa)
-                .WithMany(m => m.PosicionesUnidades)
-                .HasForeignKey(ti => ti.IdMapa);
+                .WithMany(m => m.PosicionesUnidades);
 
             modelBuilder.Entity<TIUnidadMapaVector2>()
                 .HasKey(ti => new {ti.IdUnidadMapa, ti.IdVector});

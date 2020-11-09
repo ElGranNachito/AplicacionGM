@@ -9,7 +9,7 @@ namespace AppGM.Core
         
         public int DiasDeEnfriamiento { get; set; }
     }
-    public class ModeloCargasHabilidad
+    public class ModeloCargasHabilidad : ModeloBase
     {
         //Maximo de cargas para una habilidad
         public int CargasMaximas { get; set; }

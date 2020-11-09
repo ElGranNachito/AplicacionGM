@@ -2,9 +2,7 @@
 
 namespace AppGM.Core
 {
-    public class ModeloTiradaBase : ModeloBase
-    {
-    }
+    public class ModeloTiradaBase : ModeloBase{}
 
     public class ModeloTiradaVariable : ModeloTiradaBase
     {

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AppGM.Core.Migrations
 {
-    public partial class Inicial : Migration
+    public partial class Inici : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,7 +11,7 @@ namespace AppGM.Core.Migrations
                 name: "Combates",
                 columns: table => new
                 {
-                    IdAdministradorDeCombate = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     IndicePersonajeTurnoActual = table.Column<int>(nullable: false),
                     TurnoActual = table.Column<uint>(nullable: false),
@@ -19,7 +19,7 @@ namespace AppGM.Core.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Combates", x => x.IdAdministradorDeCombate);
+                    table.PrimaryKey("PK_Combates", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -40,20 +40,20 @@ namespace AppGM.Core.Migrations
                 name: "ModeloAccion",
                 columns: table => new
                 {
-                    IdAccion = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Descripcion = table.Column<string>(maxLength: 2000, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ModeloAccion", x => x.IdAccion);
+                    table.PrimaryKey("PK_ModeloAccion", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "ModeloCaracteristicas",
                 columns: table => new
                 {
-                    IdCaracteristica = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Edad = table.Column<ushort>(nullable: false),
                     Estatura = table.Column<ushort>(nullable: false),
@@ -65,27 +65,27 @@ namespace AppGM.Core.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ModeloCaracteristicas", x => x.IdCaracteristica);
+                    table.PrimaryKey("PK_ModeloCaracteristicas", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "ModeloCargasHabilidad",
                 columns: table => new
                 {
-                    IdCargasHabilidad = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     CargasMaximas = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ModeloCargasHabilidad", x => x.IdCargasHabilidad);
+                    table.PrimaryKey("PK_ModeloCargasHabilidad", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "ModeloEfecto",
                 columns: table => new
                 {
-                    IdEfecto = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Nombre = table.Column<string>(maxLength: 50, nullable: true),
                     Descripcion = table.Column<string>(maxLength: 500, nullable: true),
@@ -94,14 +94,14 @@ namespace AppGM.Core.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ModeloEfecto", x => x.IdEfecto);
+                    table.PrimaryKey("PK_ModeloEfecto", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "ModeloHabilidad",
                 columns: table => new
                 {
-                    IdHabilidad = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     CostoDeMana = table.Column<ushort>(nullable: false),
                     TurnosDeDuracion = table.Column<ushort>(nullable: false),
@@ -114,28 +114,28 @@ namespace AppGM.Core.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ModeloHabilidad", x => x.IdHabilidad);
+                    table.PrimaryKey("PK_ModeloHabilidad", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "ModeloLimitador",
                 columns: table => new
                 {
-                    IdLimitador = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     LimiteDeUsos = table.Column<int>(nullable: false),
                     DiasDeEnfriamiento = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ModeloLimitador", x => x.IdLimitador);
+                    table.PrimaryKey("PK_ModeloLimitador", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "ModeloModificadorDeStatBase",
                 columns: table => new
                 {
-                    IdModificadorDeStat = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     ValorRequeridoTirada = table.Column<int>(nullable: false),
                     Tipo = table.Column<int>(nullable: false),
@@ -150,27 +150,27 @@ namespace AppGM.Core.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ModeloModificadorDeStatBase", x => x.IdModificadorDeStat);
+                    table.PrimaryKey("PK_ModeloModificadorDeStatBase", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "ModeloSlot",
                 columns: table => new
                 {
-                    IdSlot = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Espacio = table.Column<decimal>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ModeloSlot", x => x.IdSlot);
+                    table.PrimaryKey("PK_ModeloSlot", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "ModeloTiradaBase",
                 columns: table => new
                 {
-                    IdTirada = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Discriminator = table.Column<string>(nullable: false),
                     Dados = table.Column<ushort>(nullable: true),
@@ -179,14 +179,14 @@ namespace AppGM.Core.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ModeloTiradaBase", x => x.IdTirada);
+                    table.PrimaryKey("PK_ModeloTiradaBase", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "ModeloUtilizable",
                 columns: table => new
                 {
-                    IdUtilizable = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     EStatQueAfecta = table.Column<int>(nullable: false),
                     EStatDeLaQueDepende = table.Column<int>(nullable: false),
@@ -201,14 +201,14 @@ namespace AppGM.Core.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ModeloUtilizable", x => x.IdUtilizable);
+                    table.PrimaryKey("PK_ModeloUtilizable", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Rols",
                 columns: table => new
                 {
-                    IdRol = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Dia = table.Column<ushort>(nullable: false),
                     Nombre = table.Column<string>(maxLength: 50, nullable: true),
@@ -218,7 +218,7 @@ namespace AppGM.Core.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Rols", x => x.IdRol);
+                    table.PrimaryKey("PK_Rols", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -259,8 +259,7 @@ namespace AppGM.Core.Migrations
                 columns: table => new
                 {
                     IdAdministradorDeCombate = table.Column<int>(nullable: false),
-                    IdMapa = table.Column<int>(nullable: false),
-                    MapaId = table.Column<int>(nullable: true)
+                    IdMapa = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -269,14 +268,14 @@ namespace AppGM.Core.Migrations
                         name: "FK_CombateMapas_Combates_IdAdministradorDeCombate",
                         column: x => x.IdAdministradorDeCombate,
                         principalTable: "Combates",
-                        principalColumn: "IdAdministradorDeCombate",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CombateMapas_Mapas_MapaId",
-                        column: x => x.MapaId,
+                        name: "FK_CombateMapas_Mapas_IdMapa",
+                        column: x => x.IdMapa,
                         principalTable: "Mapas",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -293,13 +292,13 @@ namespace AppGM.Core.Migrations
                         name: "FK_TIHabilidadCargasHabilidad_ModeloCargasHabilidad_IdCargasHabilidad",
                         column: x => x.IdCargasHabilidad,
                         principalTable: "ModeloCargasHabilidad",
-                        principalColumn: "IdCargasHabilidad",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_TIHabilidadCargasHabilidad_ModeloHabilidad_IdHabilidad",
                         column: x => x.IdHabilidad,
                         principalTable: "ModeloHabilidad",
-                        principalColumn: "IdHabilidad",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -317,13 +316,13 @@ namespace AppGM.Core.Migrations
                         name: "FK_TIHabilidadEfecto_ModeloEfecto_IdEfecto",
                         column: x => x.IdEfecto,
                         principalTable: "ModeloEfecto",
-                        principalColumn: "IdEfecto",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_TIHabilidadEfecto_ModeloHabilidad_IdHabilidad",
                         column: x => x.IdHabilidad,
                         principalTable: "ModeloHabilidad",
-                        principalColumn: "IdHabilidad",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -341,13 +340,13 @@ namespace AppGM.Core.Migrations
                         name: "FK_TIHabilidadLimitador_ModeloHabilidad_IdHabilidad",
                         column: x => x.IdHabilidad,
                         principalTable: "ModeloHabilidad",
-                        principalColumn: "IdHabilidad",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_TIHabilidadLimitador_ModeloLimitador_IdLimitador",
                         column: x => x.IdLimitador,
                         principalTable: "ModeloLimitador",
-                        principalColumn: "IdLimitador",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -365,13 +364,13 @@ namespace AppGM.Core.Migrations
                         name: "FK_TIEfectoModificadorDeStatBase_ModeloEfecto_IdEfecto",
                         column: x => x.IdEfecto,
                         principalTable: "ModeloEfecto",
-                        principalColumn: "IdEfecto",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_TIEfectoModificadorDeStatBase_ModeloModificadorDeStatBase_IdModificadorDeStat",
                         column: x => x.IdModificadorDeStat,
                         principalTable: "ModeloModificadorDeStatBase",
-                        principalColumn: "IdModificadorDeStat",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -389,13 +388,13 @@ namespace AppGM.Core.Migrations
                         name: "FK_TIHabilidadTiradaBase_ModeloHabilidad_IdHabilidad",
                         column: x => x.IdHabilidad,
                         principalTable: "ModeloHabilidad",
-                        principalColumn: "IdHabilidad",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_TIHabilidadTiradaBase_ModeloTiradaBase_IdTirada",
                         column: x => x.IdTirada,
                         principalTable: "ModeloTiradaBase",
-                        principalColumn: "IdTirada",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -413,13 +412,13 @@ namespace AppGM.Core.Migrations
                         name: "FK_TIHabilidadTiradaDeDaño_ModeloHabilidad_IdHabilidad",
                         column: x => x.IdHabilidad,
                         principalTable: "ModeloHabilidad",
-                        principalColumn: "IdHabilidad",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_TIHabilidadTiradaDeDaño_ModeloTiradaBase_IdTirada",
                         column: x => x.IdTirada,
                         principalTable: "ModeloTiradaBase",
-                        principalColumn: "IdTirada",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -437,13 +436,13 @@ namespace AppGM.Core.Migrations
                         name: "FK_TIModificadorDeStatBaseTiradaBase_ModeloModificadorDeStatBase_IdModificadorDeStatBase",
                         column: x => x.IdModificadorDeStatBase,
                         principalTable: "ModeloModificadorDeStatBase",
-                        principalColumn: "IdModificadorDeStat",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_TIModificadorDeStatBaseTiradaBase_ModeloTiradaBase_IdTirada",
                         column: x => x.IdTirada,
                         principalTable: "ModeloTiradaBase",
-                        principalColumn: "IdTirada",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -461,13 +460,13 @@ namespace AppGM.Core.Migrations
                         name: "FK_TIArmasDistanciaEfecto_ModeloUtilizable_IdArmasDistancia",
                         column: x => x.IdArmasDistancia,
                         principalTable: "ModeloUtilizable",
-                        principalColumn: "IdUtilizable",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_TIArmasDistanciaEfecto_ModeloEfecto_IdEfecto",
                         column: x => x.IdEfecto,
                         principalTable: "ModeloEfecto",
-                        principalColumn: "IdEfecto",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -485,13 +484,13 @@ namespace AppGM.Core.Migrations
                         name: "FK_TIArmasDistanciaTiradaDeDaño_ModeloUtilizable_IdArmasDistancia",
                         column: x => x.IdArmasDistancia,
                         principalTable: "ModeloUtilizable",
-                        principalColumn: "IdUtilizable",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_TIArmasDistanciaTiradaDeDaño_ModeloTiradaBase_IdTirada",
                         column: x => x.IdTirada,
                         principalTable: "ModeloTiradaBase",
-                        principalColumn: "IdTirada",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -509,13 +508,13 @@ namespace AppGM.Core.Migrations
                         name: "FK_TIArmasDistanciaTiradaVariable_ModeloUtilizable_IdArmasDistancia",
                         column: x => x.IdArmasDistancia,
                         principalTable: "ModeloUtilizable",
-                        principalColumn: "IdUtilizable",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_TIArmasDistanciaTiradaVariable_ModeloTiradaBase_IdTirada",
                         column: x => x.IdTirada,
                         principalTable: "ModeloTiradaBase",
-                        principalColumn: "IdTirada",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -533,13 +532,13 @@ namespace AppGM.Core.Migrations
                         name: "FK_TIHabilidadItem_ModeloHabilidad_IdHabilidad",
                         column: x => x.IdHabilidad,
                         principalTable: "ModeloHabilidad",
-                        principalColumn: "IdHabilidad",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_TIHabilidadItem_ModeloUtilizable_IdItem",
                         column: x => x.IdItem,
                         principalTable: "ModeloUtilizable",
-                        principalColumn: "IdUtilizable",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -557,13 +556,13 @@ namespace AppGM.Core.Migrations
                         name: "FK_TIOfensivoEfecto_ModeloEfecto_IdEfecto",
                         column: x => x.IdEfecto,
                         principalTable: "ModeloEfecto",
-                        principalColumn: "IdEfecto",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_TIOfensivoEfecto_ModeloUtilizable_IdOfensivo",
                         column: x => x.IdOfensivo,
                         principalTable: "ModeloUtilizable",
-                        principalColumn: "IdUtilizable",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -572,8 +571,7 @@ namespace AppGM.Core.Migrations
                 columns: table => new
                 {
                     IdOfensivo = table.Column<int>(nullable: false),
-                    IdTiradaDeDaño = table.Column<int>(nullable: false),
-                    TiradaDeDañoIdTirada = table.Column<int>(nullable: true)
+                    IdTiradaDeDaño = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -582,14 +580,14 @@ namespace AppGM.Core.Migrations
                         name: "FK_TIOfensivoTiradaDeDaño_ModeloUtilizable_IdOfensivo",
                         column: x => x.IdOfensivo,
                         principalTable: "ModeloUtilizable",
-                        principalColumn: "IdUtilizable",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_TIOfensivoTiradaDeDaño_ModeloTiradaBase_TiradaDeDañoIdTirada",
-                        column: x => x.TiradaDeDañoIdTirada,
+                        name: "FK_TIOfensivoTiradaDeDaño_ModeloTiradaBase_IdTiradaDeDaño",
+                        column: x => x.IdTiradaDeDaño,
                         principalTable: "ModeloTiradaBase",
-                        principalColumn: "IdTirada",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -606,13 +604,13 @@ namespace AppGM.Core.Migrations
                         name: "FK_TIPortableModificadorDeStatBase_ModeloModificadorDeStatBase_IdModificadorDeStat",
                         column: x => x.IdModificadorDeStat,
                         principalTable: "ModeloModificadorDeStatBase",
-                        principalColumn: "IdModificadorDeStat",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_TIPortableModificadorDeStatBase_ModeloUtilizable_IdPortable",
                         column: x => x.IdPortable,
                         principalTable: "ModeloUtilizable",
-                        principalColumn: "IdUtilizable",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -630,13 +628,13 @@ namespace AppGM.Core.Migrations
                         name: "FK_TIPortableSlots_ModeloUtilizable_IdPortable",
                         column: x => x.IdPortable,
                         principalTable: "ModeloUtilizable",
-                        principalColumn: "IdUtilizable",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_TIPortableSlots_ModeloSlot_IdSlot",
                         column: x => x.IdSlot,
                         principalTable: "ModeloSlot",
-                        principalColumn: "IdSlot",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -645,24 +643,23 @@ namespace AppGM.Core.Migrations
                 columns: table => new
                 {
                     IdSlot = table.Column<int>(nullable: false),
-                    IdItem = table.Column<int>(nullable: false),
-                    ItemIdUtilizable = table.Column<int>(nullable: true)
+                    IdItem = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TISlotItem", x => new { x.IdSlot, x.IdItem });
                     table.ForeignKey(
+                        name: "FK_TISlotItem_ModeloUtilizable_IdItem",
+                        column: x => x.IdItem,
+                        principalTable: "ModeloUtilizable",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_TISlotItem_ModeloSlot_IdSlot",
                         column: x => x.IdSlot,
                         principalTable: "ModeloSlot",
-                        principalColumn: "IdSlot",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_TISlotItem_ModeloUtilizable_ItemIdUtilizable",
-                        column: x => x.ItemIdUtilizable,
-                        principalTable: "ModeloUtilizable",
-                        principalColumn: "IdUtilizable",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -679,13 +676,13 @@ namespace AppGM.Core.Migrations
                         name: "FK_TIUtilizableEfecto_ModeloEfecto_IdEfecto",
                         column: x => x.IdEfecto,
                         principalTable: "ModeloEfecto",
-                        principalColumn: "IdEfecto",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_TIUtilizableEfecto_ModeloUtilizable_IdUtilizable",
                         column: x => x.IdUtilizable,
                         principalTable: "ModeloUtilizable",
-                        principalColumn: "IdUtilizable",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -694,24 +691,23 @@ namespace AppGM.Core.Migrations
                 columns: table => new
                 {
                     IdUtilizable = table.Column<int>(nullable: false),
-                    IdModificadorStatBase = table.Column<int>(nullable: false),
-                    ModificadorDeStatBaseIdModificadorDeStat = table.Column<int>(nullable: true)
+                    IdModificadorStatBase = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TIUtilizableModificadorDeStatBase", x => new { x.IdUtilizable, x.IdModificadorStatBase });
                     table.ForeignKey(
+                        name: "FK_TIUtilizableModificadorDeStatBase_ModeloModificadorDeStatBase_IdModificadorStatBase",
+                        column: x => x.IdModificadorStatBase,
+                        principalTable: "ModeloModificadorDeStatBase",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_TIUtilizableModificadorDeStatBase_ModeloUtilizable_IdUtilizable",
                         column: x => x.IdUtilizable,
                         principalTable: "ModeloUtilizable",
-                        principalColumn: "IdUtilizable",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_TIUtilizableModificadorDeStatBase_ModeloModificadorDeStatBase_ModificadorDeStatBaseIdModificadorDeStat",
-                        column: x => x.ModificadorDeStatBaseIdModificadorDeStat,
-                        principalTable: "ModeloModificadorDeStatBase",
-                        principalColumn: "IdModificadorDeStat",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -728,13 +724,13 @@ namespace AppGM.Core.Migrations
                         name: "FK_TIUtilizableTiradaBase_ModeloTiradaBase_IdTirada",
                         column: x => x.IdTirada,
                         principalTable: "ModeloTiradaBase",
-                        principalColumn: "IdTirada",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_TIUtilizableTiradaBase_ModeloUtilizable_IdUtilizable",
                         column: x => x.IdUtilizable,
                         principalTable: "ModeloUtilizable",
-                        principalColumn: "IdUtilizable",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -766,7 +762,7 @@ namespace AppGM.Core.Migrations
                 name: "ModeloPersonaje",
                 columns: table => new
                 {
-                    IdPersonaje = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Nombre = table.Column<string>(maxLength: 50, nullable: true),
                     MaxHp = table.Column<int>(nullable: false),
@@ -780,7 +776,7 @@ namespace AppGM.Core.Migrations
                     PosicionId = table.Column<int>(nullable: true),
                     Clase = table.Column<int>(nullable: false),
                     EsAutomata = table.Column<bool>(nullable: true),
-                    TurnosDeDuracion = table.Column<bool>(nullable: true),
+                    TurnosDeDuracion = table.Column<byte>(nullable: true),
                     EClaseDeSuServant = table.Column<int>(nullable: true),
                     Chr = table.Column<ushort>(nullable: true),
                     CommandSpells = table.Column<ushort>(nullable: true),
@@ -790,7 +786,7 @@ namespace AppGM.Core.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ModeloPersonaje", x => x.IdPersonaje);
+                    table.PrimaryKey("PK_ModeloPersonaje", x => x.Id);
                     table.ForeignKey(
                         name: "FK_ModeloPersonaje_Vectores2_PosicionId",
                         column: x => x.PosicionId,
@@ -803,7 +799,7 @@ namespace AppGM.Core.Migrations
                 name: "Participantes",
                 columns: table => new
                 {
-                    IdParticipante = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     TiradaIniciativa = table.Column<int>(nullable: false),
                     EsSuTurno = table.Column<bool>(nullable: false),
@@ -811,7 +807,7 @@ namespace AppGM.Core.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Participantes", x => x.IdParticipante);
+                    table.PrimaryKey("PK_Participantes", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Participantes_Vectores2_PosicionCombateId",
                         column: x => x.PosicionCombateId,
@@ -873,23 +869,22 @@ namespace AppGM.Core.Migrations
                 columns: table => new
                 {
                     IdPersonaje = table.Column<int>(nullable: false),
-                    IdAliado = table.Column<int>(nullable: false),
-                    AliadoIdPersonaje = table.Column<int>(nullable: true)
+                    IdAliado = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PersonajeAliados", x => new { x.IdPersonaje, x.IdAliado });
                     table.ForeignKey(
-                        name: "FK_PersonajeAliados_ModeloPersonaje_AliadoIdPersonaje",
-                        column: x => x.AliadoIdPersonaje,
+                        name: "FK_PersonajeAliados_ModeloPersonaje_IdAliado",
+                        column: x => x.IdAliado,
                         principalTable: "ModeloPersonaje",
-                        principalColumn: "IdPersonaje",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_PersonajeAliados_ModeloPersonaje_IdPersonaje",
                         column: x => x.IdPersonaje,
                         principalTable: "ModeloPersonaje",
-                        principalColumn: "IdPersonaje",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -898,23 +893,22 @@ namespace AppGM.Core.Migrations
                 columns: table => new
                 {
                     IdPersonaje = table.Column<int>(nullable: false),
-                    IdArmaDistancia = table.Column<int>(nullable: false),
-                    ArmaDistanciaIdUtilizable = table.Column<int>(nullable: true)
+                    IdArmaDistancia = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PersonajeArmasDistancias", x => new { x.IdArmaDistancia, x.IdPersonaje });
                     table.ForeignKey(
-                        name: "FK_PersonajeArmasDistancias_ModeloUtilizable_ArmaDistanciaIdUtilizable",
-                        column: x => x.ArmaDistanciaIdUtilizable,
+                        name: "FK_PersonajeArmasDistancias_ModeloUtilizable_IdArmaDistancia",
+                        column: x => x.IdArmaDistancia,
                         principalTable: "ModeloUtilizable",
-                        principalColumn: "IdUtilizable",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_PersonajeArmasDistancias_ModeloPersonaje_IdPersonaje",
                         column: x => x.IdPersonaje,
                         principalTable: "ModeloPersonaje",
-                        principalColumn: "IdPersonaje",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -923,23 +917,22 @@ namespace AppGM.Core.Migrations
                 columns: table => new
                 {
                     IdPersonaje = table.Column<int>(nullable: false),
-                    IdDefensivo = table.Column<int>(nullable: false),
-                    DefensivoIdUtilizable = table.Column<int>(nullable: true)
+                    IdDefensivo = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PersonajeDefensivos", x => new { x.IdPersonaje, x.IdDefensivo });
                     table.ForeignKey(
-                        name: "FK_PersonajeDefensivos_ModeloUtilizable_DefensivoIdUtilizable",
-                        column: x => x.DefensivoIdUtilizable,
+                        name: "FK_PersonajeDefensivos_ModeloUtilizable_IdDefensivo",
+                        column: x => x.IdDefensivo,
                         principalTable: "ModeloUtilizable",
-                        principalColumn: "IdUtilizable",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_PersonajeDefensivos_ModeloPersonaje_IdPersonaje",
                         column: x => x.IdPersonaje,
                         principalTable: "ModeloPersonaje",
-                        principalColumn: "IdPersonaje",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -957,13 +950,13 @@ namespace AppGM.Core.Migrations
                         name: "FK_PersonajeEfectos_ModeloEfecto_IdEfecto",
                         column: x => x.IdEfecto,
                         principalTable: "ModeloEfecto",
-                        principalColumn: "IdEfecto",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_PersonajeEfectos_ModeloPersonaje_IdPersonaje",
                         column: x => x.IdPersonaje,
                         principalTable: "ModeloPersonaje",
-                        principalColumn: "IdPersonaje",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -972,24 +965,23 @@ namespace AppGM.Core.Migrations
                 columns: table => new
                 {
                     IdPersonaje = table.Column<int>(nullable: false),
-                    IdMagia = table.Column<int>(nullable: false),
-                    MagiaIdHabilidad = table.Column<int>(nullable: true)
+                    IdMagia = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PersonajeMagias", x => new { x.IdPersonaje, x.IdMagia });
                     table.ForeignKey(
+                        name: "FK_PersonajeMagias_ModeloHabilidad_IdMagia",
+                        column: x => x.IdMagia,
+                        principalTable: "ModeloHabilidad",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_PersonajeMagias_ModeloPersonaje_IdPersonaje",
                         column: x => x.IdPersonaje,
                         principalTable: "ModeloPersonaje",
-                        principalColumn: "IdPersonaje",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_PersonajeMagias_ModeloHabilidad_MagiaIdHabilidad",
-                        column: x => x.MagiaIdHabilidad,
-                        principalTable: "ModeloHabilidad",
-                        principalColumn: "IdHabilidad",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -997,24 +989,23 @@ namespace AppGM.Core.Migrations
                 columns: table => new
                 {
                     IdPersonaje = table.Column<int>(nullable: false),
-                    IdModificadorDefensa = table.Column<int>(nullable: false),
-                    ModificadorDeDefensaIdModificadorDeStat = table.Column<int>(nullable: true)
+                    IdModificadorDefensa = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PersonajeModificadoresDeDefensa", x => new { x.IdPersonaje, x.IdModificadorDefensa });
                     table.ForeignKey(
+                        name: "FK_PersonajeModificadoresDeDefensa_ModeloModificadorDeStatBase_IdModificadorDefensa",
+                        column: x => x.IdModificadorDefensa,
+                        principalTable: "ModeloModificadorDeStatBase",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_PersonajeModificadoresDeDefensa_ModeloPersonaje_IdPersonaje",
                         column: x => x.IdPersonaje,
                         principalTable: "ModeloPersonaje",
-                        principalColumn: "IdPersonaje",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_PersonajeModificadoresDeDefensa_ModeloModificadorDeStatBase_ModificadorDeDefensaIdModificadorDeStat",
-                        column: x => x.ModificadorDeDefensaIdModificadorDeStat,
-                        principalTable: "ModeloModificadorDeStatBase",
-                        principalColumn: "IdModificadorDeStat",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -1022,24 +1013,23 @@ namespace AppGM.Core.Migrations
                 columns: table => new
                 {
                     IdPersonaje = table.Column<int>(nullable: false),
-                    IdPerk = table.Column<int>(nullable: false),
-                    PerkIdHabilidad = table.Column<int>(nullable: true)
+                    IdPerk = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PersonajePerks", x => new { x.IdPersonaje, x.IdPerk });
                     table.ForeignKey(
+                        name: "FK_PersonajePerks_ModeloHabilidad_IdPerk",
+                        column: x => x.IdPerk,
+                        principalTable: "ModeloHabilidad",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_PersonajePerks_ModeloPersonaje_IdPersonaje",
                         column: x => x.IdPersonaje,
                         principalTable: "ModeloPersonaje",
-                        principalColumn: "IdPersonaje",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_PersonajePerks_ModeloHabilidad_PerkIdHabilidad",
-                        column: x => x.PerkIdHabilidad,
-                        principalTable: "ModeloHabilidad",
-                        principalColumn: "IdHabilidad",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -1056,13 +1046,13 @@ namespace AppGM.Core.Migrations
                         name: "FK_PersonajeSkills_ModeloHabilidad_IdHabilidad",
                         column: x => x.IdHabilidad,
                         principalTable: "ModeloHabilidad",
-                        principalColumn: "IdHabilidad",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_PersonajeSkills_ModeloPersonaje_IdPersonaje",
                         column: x => x.IdPersonaje,
                         principalTable: "ModeloPersonaje",
-                        principalColumn: "IdPersonaje",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -1080,7 +1070,7 @@ namespace AppGM.Core.Migrations
                         name: "FK_PersonajesUnidadesMapa_ModeloPersonaje_IdPersonaje",
                         column: x => x.IdPersonaje,
                         principalTable: "ModeloPersonaje",
-                        principalColumn: "IdPersonaje",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_PersonajesUnidadesMapa_UnidadesMapa_IdUnidadMapa",
@@ -1104,13 +1094,13 @@ namespace AppGM.Core.Migrations
                         name: "FK_PersonajeUtilizables_ModeloPersonaje_IdPersonaje",
                         column: x => x.IdPersonaje,
                         principalTable: "ModeloPersonaje",
-                        principalColumn: "IdPersonaje",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_PersonajeUtilizables_ModeloUtilizable_IdUtilizable",
                         column: x => x.IdUtilizable,
                         principalTable: "ModeloUtilizable",
-                        principalColumn: "IdUtilizable",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -1119,24 +1109,23 @@ namespace AppGM.Core.Migrations
                 columns: table => new
                 {
                     IdServant = table.Column<int>(nullable: false),
-                    IdNoblePhantasm = table.Column<int>(nullable: false),
-                    NoblePhantasmIdHabilidad = table.Column<int>(nullable: true)
+                    IdNoblePhantasm = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ServantNoblePhantasms", x => new { x.IdServant, x.IdNoblePhantasm });
                     table.ForeignKey(
+                        name: "FK_ServantNoblePhantasms_ModeloHabilidad_IdNoblePhantasm",
+                        column: x => x.IdNoblePhantasm,
+                        principalTable: "ModeloHabilidad",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_ServantNoblePhantasms_ModeloPersonaje_IdServant",
                         column: x => x.IdServant,
                         principalTable: "ModeloPersonaje",
-                        principalColumn: "IdPersonaje",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ServantNoblePhantasms_ModeloHabilidad_NoblePhantasmIdHabilidad",
-                        column: x => x.NoblePhantasmIdHabilidad,
-                        principalTable: "ModeloHabilidad",
-                        principalColumn: "IdHabilidad",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -1153,13 +1142,13 @@ namespace AppGM.Core.Migrations
                         name: "FK_TIHabilidadInvocacion_ModeloHabilidad_IdHabilidad",
                         column: x => x.IdHabilidad,
                         principalTable: "ModeloHabilidad",
-                        principalColumn: "IdHabilidad",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_TIHabilidadInvocacion_ModeloPersonaje_IdInvocacion",
                         column: x => x.IdInvocacion,
                         principalTable: "ModeloPersonaje",
-                        principalColumn: "IdPersonaje",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -1177,13 +1166,13 @@ namespace AppGM.Core.Migrations
                         name: "FK_TIInvocacionEfecto_ModeloEfecto_IdEfecto",
                         column: x => x.IdEfecto,
                         principalTable: "ModeloEfecto",
-                        principalColumn: "IdEfecto",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_TIInvocacionEfecto_ModeloPersonaje_IdInvocacion",
                         column: x => x.IdInvocacion,
                         principalTable: "ModeloPersonaje",
-                        principalColumn: "IdPersonaje",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -1201,13 +1190,13 @@ namespace AppGM.Core.Migrations
                         name: "FK_TIInvocacionPersonaje_ModeloPersonaje_IdInvocacion",
                         column: x => x.IdInvocacion,
                         principalTable: "ModeloPersonaje",
-                        principalColumn: "IdPersonaje",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_TIInvocacionPersonaje_ModeloPersonaje_IdPersonaje",
                         column: x => x.IdPersonaje,
                         principalTable: "ModeloPersonaje",
-                        principalColumn: "IdPersonaje",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -1225,13 +1214,13 @@ namespace AppGM.Core.Migrations
                         name: "FK_TIPersonajeJugableCaracteristicas_ModeloCaracteristicas_IdCaracteristica",
                         column: x => x.IdCaracteristica,
                         principalTable: "ModeloCaracteristicas",
-                        principalColumn: "IdCaracteristica",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_TIPersonajeJugableCaracteristicas_ModeloPersonaje_IdPersonajeJugable",
                         column: x => x.IdPersonajeJugable,
                         principalTable: "ModeloPersonaje",
-                        principalColumn: "IdPersonaje",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -1240,24 +1229,23 @@ namespace AppGM.Core.Migrations
                 columns: table => new
                 {
                     IdPersonajeJugable = table.Column<int>(nullable: false),
-                    IdInvocacion = table.Column<int>(nullable: false),
-                    InvocacionIdPersonaje = table.Column<int>(nullable: true)
+                    IdInvocacion = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TIPersonajeJugableInvocacion", x => new { x.IdPersonajeJugable, x.IdInvocacion });
                     table.ForeignKey(
+                        name: "FK_TIPersonajeJugableInvocacion_ModeloPersonaje_IdInvocacion",
+                        column: x => x.IdInvocacion,
+                        principalTable: "ModeloPersonaje",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_TIPersonajeJugableInvocacion_ModeloPersonaje_IdPersonajeJugable",
                         column: x => x.IdPersonajeJugable,
                         principalTable: "ModeloPersonaje",
-                        principalColumn: "IdPersonaje",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_TIPersonajeJugableInvocacion_ModeloPersonaje_InvocacionIdPersonaje",
-                        column: x => x.InvocacionIdPersonaje,
-                        principalTable: "ModeloPersonaje",
-                        principalColumn: "IdPersonaje",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -1274,13 +1262,13 @@ namespace AppGM.Core.Migrations
                         name: "FK_CombateParticipantes_Combates_IdAdministradorDeCombate",
                         column: x => x.IdAdministradorDeCombate,
                         principalTable: "Combates",
-                        principalColumn: "IdAdministradorDeCombate",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_CombateParticipantes_Participantes_IdParticipante",
                         column: x => x.IdParticipante,
                         principalTable: "Participantes",
-                        principalColumn: "IdParticipante",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -1298,13 +1286,13 @@ namespace AppGM.Core.Migrations
                         name: "FK_ParticipantePersonaje_Participantes_IdParticipante",
                         column: x => x.IdParticipante,
                         principalTable: "Participantes",
-                        principalColumn: "IdParticipante",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ParticipantePersonaje_ModeloPersonaje_IdPersonaje",
                         column: x => x.IdPersonaje,
                         principalTable: "ModeloPersonaje",
-                        principalColumn: "IdPersonaje",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -1322,20 +1310,20 @@ namespace AppGM.Core.Migrations
                         name: "FK_TIParticipanteAccion_ModeloAccion_IdAccion",
                         column: x => x.IdAccion,
                         principalTable: "ModeloAccion",
-                        principalColumn: "IdAccion",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_TIParticipanteAccion_Participantes_IdParticipante",
                         column: x => x.IdParticipante,
                         principalTable: "Participantes",
-                        principalColumn: "IdParticipante",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_CombateMapas_MapaId",
+                name: "IX_CombateMapas_IdMapa",
                 table: "CombateMapas",
-                column: "MapaId");
+                column: "IdMapa");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CombateParticipantes_IdParticipante",
@@ -1370,14 +1358,9 @@ namespace AppGM.Core.Migrations
                 column: "PosicionCombateId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PersonajeAliados_AliadoIdPersonaje",
+                name: "IX_PersonajeAliados_IdAliado",
                 table: "PersonajeAliados",
-                column: "AliadoIdPersonaje");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PersonajeArmasDistancias_ArmaDistanciaIdUtilizable",
-                table: "PersonajeArmasDistancias",
-                column: "ArmaDistanciaIdUtilizable");
+                column: "IdAliado");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PersonajeArmasDistancias_IdPersonaje",
@@ -1385,9 +1368,9 @@ namespace AppGM.Core.Migrations
                 column: "IdPersonaje");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PersonajeDefensivos_DefensivoIdUtilizable",
+                name: "IX_PersonajeDefensivos_IdDefensivo",
                 table: "PersonajeDefensivos",
-                column: "DefensivoIdUtilizable");
+                column: "IdDefensivo");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PersonajeEfectos_IdEfecto",
@@ -1395,19 +1378,19 @@ namespace AppGM.Core.Migrations
                 column: "IdEfecto");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PersonajeMagias_MagiaIdHabilidad",
+                name: "IX_PersonajeMagias_IdMagia",
                 table: "PersonajeMagias",
-                column: "MagiaIdHabilidad");
+                column: "IdMagia");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PersonajeModificadoresDeDefensa_ModificadorDeDefensaIdModificadorDeStat",
+                name: "IX_PersonajeModificadoresDeDefensa_IdModificadorDefensa",
                 table: "PersonajeModificadoresDeDefensa",
-                column: "ModificadorDeDefensaIdModificadorDeStat");
+                column: "IdModificadorDefensa");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PersonajePerks_PerkIdHabilidad",
+                name: "IX_PersonajePerks_IdPerk",
                 table: "PersonajePerks",
-                column: "PerkIdHabilidad");
+                column: "IdPerk");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PersonajeSkills_IdHabilidad",
@@ -1426,9 +1409,9 @@ namespace AppGM.Core.Migrations
                 column: "IdUtilizable");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ServantNoblePhantasms_NoblePhantasmIdHabilidad",
+                name: "IX_ServantNoblePhantasms_IdNoblePhantasm",
                 table: "ServantNoblePhantasms",
-                column: "NoblePhantasmIdHabilidad");
+                column: "IdNoblePhantasm");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TIArmasDistanciaEfecto_IdEfecto",
@@ -1565,9 +1548,9 @@ namespace AppGM.Core.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_TIOfensivoTiradaDeDaño_TiradaDeDañoIdTirada",
+                name: "IX_TIOfensivoTiradaDeDaño_IdTiradaDeDaño",
                 table: "TIOfensivoTiradaDeDaño",
-                column: "TiradaDeDañoIdTirada");
+                column: "IdTiradaDeDaño");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TIParticipanteAccion_IdAccion",
@@ -1586,9 +1569,9 @@ namespace AppGM.Core.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_TIPersonajeJugableInvocacion_InvocacionIdPersonaje",
+                name: "IX_TIPersonajeJugableInvocacion_IdInvocacion",
                 table: "TIPersonajeJugableInvocacion",
-                column: "InvocacionIdPersonaje");
+                column: "IdInvocacion");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TIPortableModificadorDeStatBase_IdModificadorDeStat",
@@ -1601,9 +1584,9 @@ namespace AppGM.Core.Migrations
                 column: "IdSlot");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TISlotItem_ItemIdUtilizable",
+                name: "IX_TISlotItem_IdItem",
                 table: "TISlotItem",
-                column: "ItemIdUtilizable");
+                column: "IdItem");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TIUtilizableEfecto_IdEfecto",
@@ -1611,15 +1594,15 @@ namespace AppGM.Core.Migrations
                 column: "IdEfecto");
 
             migrationBuilder.CreateIndex(
+                name: "IX_TIUtilizableModificadorDeStatBase_IdModificadorStatBase",
+                table: "TIUtilizableModificadorDeStatBase",
+                column: "IdModificadorStatBase");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TIUtilizableModificadorDeStatBase_IdUtilizable",
                 table: "TIUtilizableModificadorDeStatBase",
                 column: "IdUtilizable",
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TIUtilizableModificadorDeStatBase_ModificadorDeStatBaseIdModificadorDeStat",
-                table: "TIUtilizableModificadorDeStatBase",
-                column: "ModificadorDeStatBaseIdModificadorDeStat");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TIUtilizableTiradaBase_IdTirada",

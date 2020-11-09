@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AppGM.Core.Migrations
 {
     [DbContext(typeof(RolContext))]
-    [Migration("20201108164508_Inicial")]
-    partial class Inicial
+    [Migration("20201108235947_Inici")]
+    partial class Inici
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,7 +20,7 @@ namespace AppGM.Core.Migrations
 
             modelBuilder.Entity("AppGM.Core.ModeloAccion", b =>
                 {
-                    b.Property<int>("IdAccion")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -28,14 +28,14 @@ namespace AppGM.Core.Migrations
                         .HasColumnType("TEXT")
                         .HasMaxLength(2000);
 
-                    b.HasKey("IdAccion");
+                    b.HasKey("Id");
 
                     b.ToTable("ModeloAccion");
                 });
 
             modelBuilder.Entity("AppGM.Core.ModeloAdministradorDeCombate", b =>
                 {
-                    b.Property<int>("IdAdministradorDeCombate")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -48,14 +48,14 @@ namespace AppGM.Core.Migrations
                     b.Property<uint>("TurnoActual")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("IdAdministradorDeCombate");
+                    b.HasKey("Id");
 
                     b.ToTable("Combates");
                 });
 
             modelBuilder.Entity("AppGM.Core.ModeloCaracteristicas", b =>
                 {
-                    b.Property<int>("IdCaracteristica")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -82,28 +82,28 @@ namespace AppGM.Core.Migrations
                         .HasColumnType("TEXT")
                         .HasMaxLength(50);
 
-                    b.HasKey("IdCaracteristica");
+                    b.HasKey("Id");
 
                     b.ToTable("ModeloCaracteristicas");
                 });
 
             modelBuilder.Entity("AppGM.Core.ModeloCargasHabilidad", b =>
                 {
-                    b.Property<int>("IdCargasHabilidad")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("CargasMaximas")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("IdCargasHabilidad");
+                    b.HasKey("Id");
 
                     b.ToTable("ModeloCargasHabilidad");
                 });
 
             modelBuilder.Entity("AppGM.Core.ModeloEfecto", b =>
                 {
-                    b.Property<int>("IdEfecto")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -118,7 +118,7 @@ namespace AppGM.Core.Migrations
                     b.Property<int>("Tipo")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("IdEfecto");
+                    b.HasKey("Id");
 
                     b.ToTable("ModeloEfecto");
 
@@ -127,7 +127,7 @@ namespace AppGM.Core.Migrations
 
             modelBuilder.Entity("AppGM.Core.ModeloHabilidad", b =>
                 {
-                    b.Property<int>("IdHabilidad")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -148,7 +148,7 @@ namespace AppGM.Core.Migrations
                     b.Property<ushort>("TurnosDeDuracion")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("IdHabilidad");
+                    b.HasKey("Id");
 
                     b.ToTable("ModeloHabilidad");
 
@@ -157,7 +157,7 @@ namespace AppGM.Core.Migrations
 
             modelBuilder.Entity("AppGM.Core.ModeloLimitador", b =>
                 {
-                    b.Property<int>("IdLimitador")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -167,7 +167,7 @@ namespace AppGM.Core.Migrations
                     b.Property<int>("LimiteDeUsos")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("IdLimitador");
+                    b.HasKey("Id");
 
                     b.ToTable("ModeloLimitador");
                 });
@@ -191,7 +191,7 @@ namespace AppGM.Core.Migrations
 
             modelBuilder.Entity("AppGM.Core.ModeloModificadorDeStatBase", b =>
                 {
-                    b.Property<int>("IdModificadorDeStat")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -201,7 +201,7 @@ namespace AppGM.Core.Migrations
                     b.Property<int>("ValorRequeridoTirada")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("IdModificadorDeStat");
+                    b.HasKey("Id");
 
                     b.ToTable("ModeloModificadorDeStatBase");
 
@@ -210,7 +210,7 @@ namespace AppGM.Core.Migrations
 
             modelBuilder.Entity("AppGM.Core.ModeloParticipante", b =>
                 {
-                    b.Property<int>("IdParticipante")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -223,7 +223,7 @@ namespace AppGM.Core.Migrations
                     b.Property<int>("TiradaIniciativa")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("IdParticipante");
+                    b.HasKey("Id");
 
                     b.HasIndex("PosicionCombateId");
 
@@ -232,7 +232,7 @@ namespace AppGM.Core.Migrations
 
             modelBuilder.Entity("AppGM.Core.ModeloPersonaje", b =>
                 {
-                    b.Property<int>("IdPersonaje")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -270,7 +270,7 @@ namespace AppGM.Core.Migrations
                     b.Property<ushort>("Str")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("IdPersonaje");
+                    b.HasKey("Id");
 
                     b.HasIndex("PosicionId");
 
@@ -281,7 +281,7 @@ namespace AppGM.Core.Migrations
 
             modelBuilder.Entity("AppGM.Core.ModeloRol", b =>
                 {
-                    b.Property<int>("IdRol")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -302,28 +302,28 @@ namespace AppGM.Core.Migrations
                     b.Property<string>("Registros")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("IdRol");
+                    b.HasKey("Id");
 
                     b.ToTable("Rols");
                 });
 
             modelBuilder.Entity("AppGM.Core.ModeloSlot", b =>
                 {
-                    b.Property<int>("IdSlot")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<decimal>("Espacio")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("IdSlot");
+                    b.HasKey("Id");
 
                     b.ToTable("ModeloSlot");
                 });
 
             modelBuilder.Entity("AppGM.Core.ModeloTiradaBase", b =>
                 {
-                    b.Property<int>("IdTirada")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -331,7 +331,7 @@ namespace AppGM.Core.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("IdTirada");
+                    b.HasKey("Id");
 
                     b.ToTable("ModeloTiradaBase");
 
@@ -362,7 +362,7 @@ namespace AppGM.Core.Migrations
 
             modelBuilder.Entity("AppGM.Core.ModeloUtilizable", b =>
                 {
-                    b.Property<int>("IdUtilizable")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -375,7 +375,7 @@ namespace AppGM.Core.Migrations
                     b.Property<int>("Tipo")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("IdUtilizable");
+                    b.HasKey("Id");
 
                     b.ToTable("ModeloUtilizable");
 
@@ -407,12 +407,9 @@ namespace AppGM.Core.Migrations
                     b.Property<int>("IdMapa")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("MapaId")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("IdAdministradorDeCombate", "IdMapa");
 
-                    b.HasIndex("MapaId");
+                    b.HasIndex("IdMapa");
 
                     b.ToTable("CombateMapas");
                 });
@@ -723,12 +720,9 @@ namespace AppGM.Core.Migrations
                     b.Property<int>("IdTiradaDeDaño")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("TiradaDeDañoIdTirada")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("IdOfensivo", "IdTiradaDeDaño");
 
-                    b.HasIndex("TiradaDeDañoIdTirada");
+                    b.HasIndex("IdTiradaDeDaño");
 
                     b.ToTable("TIOfensivoTiradaDeDaño");
                 });
@@ -774,12 +768,7 @@ namespace AppGM.Core.Migrations
                     b.Property<int>("IdPersonaje")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("ArmaDistanciaIdUtilizable")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("IdArmaDistancia", "IdPersonaje");
-
-                    b.HasIndex("ArmaDistanciaIdUtilizable");
 
                     b.HasIndex("IdPersonaje");
 
@@ -794,12 +783,9 @@ namespace AppGM.Core.Migrations
                     b.Property<int>("IdDefensivo")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("DefensivoIdUtilizable")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("IdPersonaje", "IdDefensivo");
 
-                    b.HasIndex("DefensivoIdUtilizable");
+                    b.HasIndex("IdDefensivo");
 
                     b.ToTable("PersonajeDefensivos");
                 });
@@ -860,12 +846,9 @@ namespace AppGM.Core.Migrations
                     b.Property<int>("IdInvocacion")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("InvocacionIdPersonaje")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("IdPersonajeJugable", "IdInvocacion");
 
-                    b.HasIndex("InvocacionIdPersonaje");
+                    b.HasIndex("IdInvocacion");
 
                     b.ToTable("TIPersonajeJugableInvocacion");
                 });
@@ -878,12 +861,9 @@ namespace AppGM.Core.Migrations
                     b.Property<int>("IdMagia")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("MagiaIdHabilidad")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("IdPersonaje", "IdMagia");
 
-                    b.HasIndex("MagiaIdHabilidad");
+                    b.HasIndex("IdMagia");
 
                     b.ToTable("PersonajeMagias");
                 });
@@ -896,12 +876,9 @@ namespace AppGM.Core.Migrations
                     b.Property<int>("IdModificadorDefensa")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("ModificadorDeDefensaIdModificadorDeStat")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("IdPersonaje", "IdModificadorDefensa");
 
-                    b.HasIndex("ModificadorDeDefensaIdModificadorDeStat");
+                    b.HasIndex("IdModificadorDefensa");
 
                     b.ToTable("PersonajeModificadoresDeDefensa");
                 });
@@ -914,12 +891,9 @@ namespace AppGM.Core.Migrations
                     b.Property<int>("IdPerk")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("PerkIdHabilidad")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("IdPersonaje", "IdPerk");
 
-                    b.HasIndex("PerkIdHabilidad");
+                    b.HasIndex("IdPerk");
 
                     b.ToTable("PersonajePerks");
                 });
@@ -932,12 +906,9 @@ namespace AppGM.Core.Migrations
                     b.Property<int>("IdAliado")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("AliadoIdPersonaje")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("IdPersonaje", "IdAliado");
 
-                    b.HasIndex("AliadoIdPersonaje");
+                    b.HasIndex("IdAliado");
 
                     b.ToTable("PersonajeAliados");
                 });
@@ -1011,12 +982,9 @@ namespace AppGM.Core.Migrations
                     b.Property<int>("IdNoblePhantasm")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("NoblePhantasmIdHabilidad")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("IdServant", "IdNoblePhantasm");
 
-                    b.HasIndex("NoblePhantasmIdHabilidad");
+                    b.HasIndex("IdNoblePhantasm");
 
                     b.ToTable("ServantNoblePhantasms");
                 });
@@ -1029,12 +997,9 @@ namespace AppGM.Core.Migrations
                     b.Property<int>("IdItem")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("ItemIdUtilizable")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("IdSlot", "IdItem");
 
-                    b.HasIndex("ItemIdUtilizable");
+                    b.HasIndex("IdItem");
 
                     b.ToTable("TISlotItem");
                 });
@@ -1080,15 +1045,12 @@ namespace AppGM.Core.Migrations
                     b.Property<int>("IdModificadorStatBase")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("ModificadorDeStatBaseIdModificadorDeStat")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("IdUtilizable", "IdModificadorStatBase");
+
+                    b.HasIndex("IdModificadorStatBase");
 
                     b.HasIndex("IdUtilizable")
                         .IsUnique();
-
-                    b.HasIndex("ModificadorDeStatBaseIdModificadorDeStat");
 
                     b.ToTable("TIUtilizableModificadorDeStatBase");
                 });
@@ -1266,7 +1228,7 @@ namespace AppGM.Core.Migrations
                 {
                     b.HasBaseType("AppGM.Core.ModeloInvocacion");
 
-                    b.Property<bool>("TurnosDeDuracion")
+                    b.Property<byte>("TurnosDeDuracion")
                         .HasColumnType("INTEGER");
 
                     b.HasDiscriminator().HasValue(5);
@@ -1409,7 +1371,9 @@ namespace AppGM.Core.Migrations
 
                     b.HasOne("AppGM.Core.ModeloMapa", "Mapa")
                         .WithMany()
-                        .HasForeignKey("MapaId");
+                        .HasForeignKey("IdMapa")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("AppGM.Core.TIAdministradorDeCombateParticipante", b =>
@@ -1692,7 +1656,9 @@ namespace AppGM.Core.Migrations
 
                     b.HasOne("AppGM.Core.ModeloTiradaDeDaño", "TiradaDeDaño")
                         .WithMany()
-                        .HasForeignKey("TiradaDeDañoIdTirada");
+                        .HasForeignKey("IdTiradaDeDaño")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("AppGM.Core.TIParticipanteAccion", b =>
@@ -1729,7 +1695,9 @@ namespace AppGM.Core.Migrations
                 {
                     b.HasOne("AppGM.Core.ModeloArmasDistancia", "ArmaDistancia")
                         .WithMany()
-                        .HasForeignKey("ArmaDistanciaIdUtilizable");
+                        .HasForeignKey("IdArmaDistancia")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("AppGM.Core.ModeloPersonaje", "Personaje")
                         .WithMany("ArmasDistancia")
@@ -1742,7 +1710,9 @@ namespace AppGM.Core.Migrations
                 {
                     b.HasOne("AppGM.Core.ModeloDefensivo", "Defensivo")
                         .WithMany()
-                        .HasForeignKey("DefensivoIdUtilizable");
+                        .HasForeignKey("IdDefensivo")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("AppGM.Core.ModeloPersonaje", "Personaje")
                         .WithMany("Armadura")
@@ -1798,61 +1768,71 @@ namespace AppGM.Core.Migrations
 
             modelBuilder.Entity("AppGM.Core.TIPersonajeJugableInvocacion", b =>
                 {
+                    b.HasOne("AppGM.Core.ModeloInvocacion", "Invocacion")
+                        .WithMany()
+                        .HasForeignKey("IdInvocacion")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("AppGM.Core.ModeloPersonajeJugable", "PersonajeJugable")
                         .WithMany("Invocaciones")
                         .HasForeignKey("IdPersonajeJugable")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("AppGM.Core.ModeloInvocacion", "Invocacion")
-                        .WithMany()
-                        .HasForeignKey("InvocacionIdPersonaje");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIPersonajeMagia", b =>
                 {
+                    b.HasOne("AppGM.Core.ModeloMagia", "Magia")
+                        .WithMany()
+                        .HasForeignKey("IdMagia")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("AppGM.Core.ModeloPersonaje", "Personaje")
                         .WithMany("Magias")
                         .HasForeignKey("IdPersonaje")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("AppGM.Core.ModeloMagia", "Magia")
-                        .WithMany()
-                        .HasForeignKey("MagiaIdHabilidad");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIPersonajeModificadorDeDefensa", b =>
                 {
+                    b.HasOne("AppGM.Core.ModeloModificadorDeDefensa", "ModificadorDeDefensa")
+                        .WithMany()
+                        .HasForeignKey("IdModificadorDefensa")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("AppGM.Core.ModeloPersonaje", "Personaje")
                         .WithMany("ModificadoresDeDefensa")
                         .HasForeignKey("IdPersonaje")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("AppGM.Core.ModeloModificadorDeDefensa", "ModificadorDeDefensa")
-                        .WithMany()
-                        .HasForeignKey("ModificadorDeDefensaIdModificadorDeStat");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIPersonajePerk", b =>
                 {
+                    b.HasOne("AppGM.Core.ModeloPerk", "Perk")
+                        .WithMany()
+                        .HasForeignKey("IdPerk")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("AppGM.Core.ModeloPersonaje", "Personaje")
                         .WithMany("Perks")
                         .HasForeignKey("IdPersonaje")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("AppGM.Core.ModeloPerk", "Perk")
-                        .WithMany()
-                        .HasForeignKey("PerkIdHabilidad");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIPersonajePersonaje", b =>
                 {
                     b.HasOne("AppGM.Core.ModeloPersonaje", "Aliado")
                         .WithMany()
-                        .HasForeignKey("AliadoIdPersonaje");
+                        .HasForeignKey("IdAliado")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("AppGM.Core.ModeloPersonaje", "Personaje")
                         .WithMany("Aliados")
@@ -1923,28 +1903,32 @@ namespace AppGM.Core.Migrations
 
             modelBuilder.Entity("AppGM.Core.TIServantNoblePhantasm", b =>
                 {
+                    b.HasOne("AppGM.Core.ModeloNoblePhantasm", "NoblePhantasm")
+                        .WithMany()
+                        .HasForeignKey("IdNoblePhantasm")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("AppGM.Core.ModeloServant", "Servant")
                         .WithMany("NoblePhantasms")
                         .HasForeignKey("IdServant")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("AppGM.Core.ModeloNoblePhantasm", "NoblePhantasm")
-                        .WithMany()
-                        .HasForeignKey("NoblePhantasmIdHabilidad");
                 });
 
             modelBuilder.Entity("AppGM.Core.TISlotItem", b =>
                 {
+                    b.HasOne("AppGM.Core.ModeloItem", "Item")
+                        .WithMany()
+                        .HasForeignKey("IdItem")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("AppGM.Core.ModeloSlot", "Slot")
                         .WithMany("ItemsAlmacenados")
                         .HasForeignKey("IdSlot")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("AppGM.Core.ModeloItem", "Item")
-                        .WithMany()
-                        .HasForeignKey("ItemIdUtilizable");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIUnidadMapaVector2", b =>
@@ -1979,15 +1963,17 @@ namespace AppGM.Core.Migrations
 
             modelBuilder.Entity("AppGM.Core.TIUtilizableModificadorDeStatBase", b =>
                 {
+                    b.HasOne("AppGM.Core.ModeloModificadorDeStatBase", "ModificadorDeStatBase")
+                        .WithMany()
+                        .HasForeignKey("IdModificadorStatBase")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("AppGM.Core.ModeloUtilizable", "Utilizable")
                         .WithOne("VentajaAlUtilizarlo")
                         .HasForeignKey("AppGM.Core.TIUtilizableModificadorDeStatBase", "IdUtilizable")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("AppGM.Core.ModeloModificadorDeStatBase", "ModificadorDeStatBase")
-                        .WithMany()
-                        .HasForeignKey("ModificadorDeStatBaseIdModificadorDeStat");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIUtilizableTiradaBase", b =>
