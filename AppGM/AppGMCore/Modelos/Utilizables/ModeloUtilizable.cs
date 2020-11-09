@@ -17,6 +17,6 @@ namespace AppGM.Core
         public TIUtilizableModificadorDeStatBase VentajaAlUtilizarlo { get; set; }
 
         //Efectos al utilizarlo - Primer indice efecto sobre el usuario, Segundo indice efecto sobre el objetivo
-        public List<TIUtilizableEfecto> EfectoSobreUsuarioYObjetivo { get; set; }
+        public List<TIUtilizableEfecto> EfectoSobreUsuarioYObjetivo { get; set; } = new List<TIUtilizableEfecto>();
     }
 }

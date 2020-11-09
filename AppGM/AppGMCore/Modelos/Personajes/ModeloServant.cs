@@ -7,6 +7,6 @@ namespace AppGM.Core
         public EClaseServant mEClaseDeServant { get; set; }
         public ERango mERangoNP { get; set; }
 
-        public List<TIServantNoblePhantasm> NoblePhantasms { get; set; }
+        public List<TIServantNoblePhantasm> NoblePhantasms { get; set; } = new List<TIServantNoblePhantasm>();
     }
 }

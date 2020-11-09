@@ -7,7 +7,7 @@ namespace AppGM.Core
         public List<TIPortableSlots> Slots { get; set; }
 
         //Primer indice son las ventajas, Segundo indice son las desventajas
-        public List<TIPortableModificadorDeStatBase> VentajasYDesventajasDeEquiparlo { get; set; }
+        public List<TIPortableModificadorDeStatBase> VentajasYDesventajasDeEquiparlo { get; set; } = new List<TIPortableModificadorDeStatBase>();
     }
 
     public class ModeloDefensivo : ModeloPortable
@@ -24,7 +24,7 @@ namespace AppGM.Core
 
     public class ModeloOfensivo : ModeloPortable, IInfligeDaño
     {
-        public List<TIOfensivoTiradaDeDaño> TiradasDeDaño { get; set; }
+        public List<TIOfensivoTiradaDeDaño> TiradasDeDaño { get; set; } = new List<TIOfensivoTiradaDeDaño>();
 
         public int DañosQuePuedeInfligir { get; set; }
         

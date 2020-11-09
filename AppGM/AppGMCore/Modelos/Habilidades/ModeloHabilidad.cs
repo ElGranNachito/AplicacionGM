@@ -21,14 +21,14 @@ namespace AppGM.Core
         public TIHabilidadTiradaDeDaño TiradaDeDaño { get; set; }
         
         //Primer indice es el item que invoca, el resto de indices son los items que cuesta
-        public List<TIHabilidadItem> ItemsQueCuestaItemInvocacion { get; set; }
+        public List<TIHabilidadItem> ItemsQueCuestaItemInvocacion { get; set; }             = new List<TIHabilidadItem>();
 
-        public List<TIHabilidadInvocacion> Invocacion { get; set; }
+        public List<TIHabilidadInvocacion> Invocacion { get; set; }                         = new List<TIHabilidadInvocacion>();
         
-        public List<TIHabilidadTiradaBase> TiradasDeUso { get; set; }
+        public List<TIHabilidadTiradaBase> TiradasDeUso { get; set; }                       = new List<TIHabilidadTiradaBase>();
         
         //Primer indice son los efectos sobre el usuario, segundo indice son los efectos sobre el objetivo
-        public List<TIHabilidadEfecto> EfectosSobreUsuarioEfectoSobreObjetivo { get; set; }
+        public List<TIHabilidadEfecto> EfectosSobreUsuarioEfectoSobreObjetivo { get; set; } = new List<TIHabilidadEfecto>();
 
     }
 

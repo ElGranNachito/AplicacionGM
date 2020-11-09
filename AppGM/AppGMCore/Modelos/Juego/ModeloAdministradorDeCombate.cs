@@ -9,7 +9,7 @@ namespace AppGM.Core
         public uint TurnoActual { get; set; }
         public string Nombre { get; set; }
 
-        public List<TIAdministradorDeCombateParticipante> Participantes { get; set; }
-        public List<TIAdministradorDeCombateMapa> Mapas { get; set; }
+        public List<TIAdministradorDeCombateParticipante> Participantes { get; set; } = new List<TIAdministradorDeCombateParticipante>();
+        public List<TIAdministradorDeCombateMapa> Mapas { get; set; }                 = new List<TIAdministradorDeCombateMapa>();
     }
 }

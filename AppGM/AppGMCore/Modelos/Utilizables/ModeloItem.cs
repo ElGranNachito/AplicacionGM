@@ -21,6 +21,6 @@ namespace AppGM.Core
 
         public ETipoDeDaño TipoDeDañoQueInflige { get; set; }
 
-        public List<TIArmasDistanciaEfecto> EfectoQueInflige { get; set; }
+        public List<TIArmasDistanciaEfecto> EfectoQueInflige { get; set; } = new List<TIArmasDistanciaEfecto>();
     }
 }

@@ -15,7 +15,7 @@ namespace AppGM.Core
         public ModeloVector2 PosicionCombate { get; set; }
 
         //Acciones realizadas por el participante
-        public List<TIParticipanteAccion> AccionesRealizadas { get; set; }
+        public List<TIParticipanteAccion> AccionesRealizadas { get; set; } = new List<TIParticipanteAccion>();
 
         public TIAdministradorDeCombateParticipante Combate { get; set; }
     }
