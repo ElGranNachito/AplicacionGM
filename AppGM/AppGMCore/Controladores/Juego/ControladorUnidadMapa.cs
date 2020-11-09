@@ -20,7 +20,6 @@ namespace AppGM.Core
             modelo = _modelo;
 
             posicion  = new Vector2(modelo.Posicion.Posicion);
-            //TODO: Deberiamos obtener el controlador desde el sistema principal
         }
 
         #endregion
@@ -59,11 +58,18 @@ namespace AppGM.Core
             return sb.ToString();
         }
 
+        public override void Eliminar()
+        {
+            SistemaPrincipal.EliminarModelo(modelo.Posicion);
+            SistemaPrincipal.EliminarModelo(modelo.Personaje);
+            SistemaPrincipal.EliminarModelo(modelo);
+
+            posicion.Eliminar();
+        }
+
         #endregion
 
         #region Propiedades
-
-        public bool        EsIglesia  => modelo.ETipoUnidad == ETipoUnidad.Iglesia;
         public string      Path       => ObtenerPathAImagen();
         public string      Nombre     => modelo.Nombre;
 

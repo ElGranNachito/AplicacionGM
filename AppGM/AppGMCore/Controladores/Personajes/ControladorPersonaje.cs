@@ -171,10 +171,7 @@ namespace AppGM.Core
         
         public bool EstaVido => modelo.Hp > 0;
 
-        public override string ToString()
-        {
-            return string.Format($"Nombre={modelo.Nombre} Id={modelo.Id}");
-        }
+        public override string ToString() => string.Format($"Nombre={modelo.Nombre} Id={modelo.Id}");
 
         #endregion
     }

@@ -10,7 +10,7 @@ namespace AppGM.Core
         public ViewModelMapa         mapa;
         public ControladorUnidadMapa unidad;
 
-        public ICommand EliminarUnidad { get; set; }
+        public ICommand ComandoEliminarUnidad { get; set; }
 
         #endregion
 
@@ -55,7 +55,6 @@ namespace AppGM.Core
                 if (mapa == null)
                     return;
 
-
                 double tmp;
 
                 if (double.TryParse(value, out tmp))
@@ -99,19 +98,8 @@ namespace AppGM.Core
             unidad = _unidad;
 
             Posicion = new ViewModelVector2(unidad.posicion);
-        }
-        public ViewModelIngresoPosicion(ViewModelMapa _mapa, Vector2 _posicionInicial)
-        {
-            mapa = _mapa;
 
-            Posicion = new ViewModelVector2(_posicionInicial);
-        }
-
-        public ViewModelIngresoPosicion(ViewModelMapa _mapa)
-        {
-            mapa = _mapa;
-
-            Posicion = new ViewModelVector2(new Vector2(0, 0));
+            ComandoEliminarUnidad = new Comando(EliminarUnidad);
         }
 
         #endregion
@@ -121,6 +109,15 @@ namespace AppGM.Core
         {
             DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PosicionImg)));
             DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PosicionCantidadUnidades)));
+        }
+
+        private void EliminarUnidad()
+        {
+            mapa.Posiciones.Remove(this);
+
+            unidad.Eliminar();
+
+            SistemaPrincipal.GuardarDatosRolAsync();
         }
 
         #endregion

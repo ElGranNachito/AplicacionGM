@@ -2,16 +2,16 @@
 
 namespace AppGM.Core
 {
-    public class ModeloVector2
+    public class ModeloVector2 : ModeloBase
     {
-        [Key]
-        public int Id { get; set; }
         public double X { get; set; }
         public double Y { get; set; }
     }
 
     public class Vector2 : Controlador<ModeloVector2>
     {
+        #region Constructores
+
         public Vector2(double _x, double _y)
         {
             modelo = new ModeloVector2
@@ -25,6 +25,19 @@ namespace AppGM.Core
             modelo = _modelo;
         }
 
+        #endregion
+
+        #region Funciones
+
+        public override void Eliminar()
+        {
+            SistemaPrincipal.EliminarModelo(modelo);
+        } 
+
+        #endregion
+
+        #region Propiedades
+
         public double X
         {
             get => modelo.X;
@@ -35,6 +48,8 @@ namespace AppGM.Core
         {
             get => modelo.Y;
             set => modelo.Y = value;
-        }
+        } 
+
+        #endregion
     }
 }

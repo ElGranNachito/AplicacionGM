@@ -58,10 +58,22 @@ namespace AppGM.Core
             DatosRolSeleccionado.GuardarDatos();
         }
 
-        public static void GuardarModelo(object modelo)
+        public static void GuardarModelo(ModeloBaseSK modelo)
         {
+            if (modelo == null)
+                return;
+
             DatosRolSeleccionado.GuardarModelo(modelo);
         }
+
+        public static void EliminarModelo(ModeloBaseSK modelo)
+        {
+            if (modelo == null)
+                return;
+
+            DatosRolSeleccionado.EliminarModelo(modelo);
+        }
+
         public static void CerrarConexion()
         {
             DatosRolSeleccionado.CerrarConexion();

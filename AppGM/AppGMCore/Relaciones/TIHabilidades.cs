@@ -2,7 +2,7 @@
 
 namespace AppGM.Core
 {
-    public abstract class TIHabilidad
+    public abstract class TIHabilidad : ModeloBaseSK
     {
         [ForeignKey(nameof(Habilidad))]
         public int IdHabilidad { get; set; }

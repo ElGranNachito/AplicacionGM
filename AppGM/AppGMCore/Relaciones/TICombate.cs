@@ -2,39 +2,44 @@
 
 namespace AppGM.Core
 {
-    public abstract class TIParticipante
+    public abstract class TIParticipante : ModeloBaseSK
     {
+        [ForeignKey(nameof(Participante))]
         public int IdParticipante { get; set; }
         public ModeloParticipante Participante { get; set; }
     }
 
     public class TIParticipantePersonaje : TIParticipante
     {
+        [ForeignKey(nameof(Personaje))]
         public int IdPersonaje { get; set; }
         public ModeloPersonaje Personaje { get; set; }
     }
 
     public class TIParticipanteAccion : TIParticipante
     {
+        [ForeignKey(nameof(Accion))]
         public int IdAccion { get; set; }
         public ModeloAccion Accion { get; set; }
     }
 
-    public class TIAdministradorDeCombateParticipante
-    {
+    public class TIAdministradorDeCombate : ModeloBaseSK
+    { 
+        [ForeignKey(nameof(AdministradorDeCombate))]
         public int IdAdministradorDeCombate { get; set; }
         public ModeloAdministradorDeCombate AdministradorDeCombate { get; set; }
+    }
 
-        [ForeignKey("Participante")]
+    public class TIAdministradorDeCombateParticipante : TIAdministradorDeCombate
+    {
+        [ForeignKey(nameof(Participante))]
         public int IdParticipante { get; set; }
         public ModeloParticipante Participante { get; set; }
     }
 
-    public class TIAdministradorDeCombateMapa
+    public class TIAdministradorDeCombateMapa : TIAdministradorDeCombate
     {
-        public int IdAdministradorDeCombate { get; set; }
-        public ModeloAdministradorDeCombate AdministradorDeCombate { get; set; }
-
+        [ForeignKey(nameof(Mapa))]
         public int IdMapa { get; set; }
         public ModeloMapa Mapa { get; set; }
     }

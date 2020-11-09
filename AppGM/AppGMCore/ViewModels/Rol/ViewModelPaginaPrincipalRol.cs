@@ -31,6 +31,7 @@ namespace AppGM.Core
 
             ComandoBotonSalir = new Comando(()=>
             {
+                SistemaPrincipal.GuardarDatosRol();
                 SistemaPrincipal.CerrarConexion();
 
                 SistemaPrincipal.Aplicacion.EPaginaActual =
