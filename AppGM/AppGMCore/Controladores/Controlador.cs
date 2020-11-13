@@ -1,6 +1,6 @@
 ﻿namespace AppGM.Core
 {
-    public class ControladorBase {}
+    public abstract class ControladorBase {}
     public class Controlador<TipoModelo> : ControladorBase
         where TipoModelo: new()
     {

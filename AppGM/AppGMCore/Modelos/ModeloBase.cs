@@ -2,7 +2,7 @@
 
 namespace AppGM.Core
 {
-    public class ModeloBaseSK{}
+    public abstract class ModeloBaseSK{}
     public class ModeloBase : ModeloBaseSK
     {   
         //Id

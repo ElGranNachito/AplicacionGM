@@ -14,6 +14,9 @@ namespace AppGM.Core
 
         public bool MouseSobreCartaRol { get; set; } = false;
 
+        public string FotogramaActualAnimacionFondo { get; set; } =
+            "../../../Media/Imagenes/Animaciones/FondoMenuPrincipal/FondoMenuPrincipal_0.jpg";
+
         public ICommand ComandoAvanzarIndiceRol { get; set; }
         public ICommand ComandoRetrocederIndiceRol { get; set; }
 
@@ -81,6 +84,14 @@ namespace AppGM.Core
 
                 DispararPropertyChanged(new PropertyChangedEventArgs(nameof(RolActual)));
             });
+
+            ControladorDeAnimaciones.AñadirAnimacion(
+                new Animacion(()=>FotogramaActualAnimacionFondo,
+                    1.2f,
+                    6,
+                    "../../Media/Imagenes/Animaciones/FondoMenuPrincipal/FondoMenuPrincipal_",
+                    EFormatoImagen.Jpg,
+                    this));
         }
         #endregion
 

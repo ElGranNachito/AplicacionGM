@@ -85,7 +85,7 @@ namespace AppGM.Core
 
         private static void CrearViewModels()
         {
-            Kernel.Bind<ViewModelAplicacion>().ToConstant(new ViewModelAplicacion());
+            Kernel.Bind<ViewModelAplicacion>()     .ToConstant(new ViewModelAplicacion());
             Kernel.Bind<ViewModelPaginaPrincipal>().ToConstant(new ViewModelPaginaPrincipal());
         }
 

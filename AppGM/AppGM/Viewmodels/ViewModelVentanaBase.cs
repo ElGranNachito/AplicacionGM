@@ -172,6 +172,7 @@ namespace AppGM
         public event EventoVentana OnVentanaCerrada   = delegate { };
         public event EventoVentana OnMouseDown        = delegate { };
         public event EventoVentana OnMouseUp          = delegate { };
+        public event EventoVentana OnFotogramaActualizado = delegate { };
 
         #endregion
     }
