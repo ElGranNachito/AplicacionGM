@@ -16,6 +16,8 @@ namespace AppGM
 
             MainWindow = new MainWindow();
             MainWindow.Show();
+
+            ControladorDeAnimaciones.Inicializar();
         }
     }
 }

@@ -14,7 +14,7 @@
         <!-- Imagen de fondo -->
         <Grid.Background>
             <ImageBrush Stretch="UniformToFill"
-                        ImageSource="../../Media/Imagenes/UiFondoMenuPrincipal.png"/>
+                        ImageSource="{Binding FotogramaActualAnimacionFondo}"/>
         </Grid.Background>
 
         <Grid.ColumnDefinitions>

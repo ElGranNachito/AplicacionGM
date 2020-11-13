@@ -71,9 +71,9 @@
     <Compile Include="Datos\RolContext.cs" />
     <Compile Include="Helpers\MathHelpers.cs" />
     <Compile Include="Helpers\StringHelpers.cs" />
-    <Compile Include="Migrations\20201108235947_Inici.cs" />
-    <Compile Include="Migrations\20201108235947_Inici.designer.cs">
-      <DependentUpon>20201108235947_Inici.cs</DependentUpon>
+    <Compile Include="Migrations\20201113195355_Inicial.cs" />
+    <Compile Include="Migrations\20201113195355_Inicial.designer.cs">
+      <DependentUpon>20201113195355_Inicial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\RolContextModelSnapshot.cs" />
     <Compile Include="Modelos\Habilidades\CaracteristicasHabilidad.cs" />
@@ -96,6 +96,8 @@
     <Compile Include="Modelos\Utilizables\ModeloPortable.cs" />
     <Compile Include="Modelos\Utilizables\ModeloItem.cs" />
     <Compile Include="Modelos\Utilizables\ModeloUtilizable.cs" />
+    <Compile Include="Otros\Animaciones\Animacion.cs" />
+    <Compile Include="Otros\Animaciones\ControladorDeAnimaciones.cs" />
     <Compile Include="Otros\Clases\Grosor.cs" />
     <Compile Include="Otros\Enums\Enums.cs" />
     <Compile Include="Otros\Interfaces\Interfaces.cs" />

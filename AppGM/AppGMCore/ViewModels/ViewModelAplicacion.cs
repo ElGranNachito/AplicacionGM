@@ -27,6 +27,7 @@ namespace AppGM.Core
         event EventoVentana OnMouseUp;
         event EventoVentana OnVentanaCerrada;
         event EventoVentana OnVentanaAbierta;
+        event EventoVentana OnFotogramaActualizado;
     }
 
     public interface IVentanaMensaje : IVentana

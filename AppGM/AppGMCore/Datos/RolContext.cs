@@ -523,16 +523,6 @@ namespace AppGM.Core
             modelBuilder.Entity<TIAdministradorDeCombateMapa>()
                 .HasOne(i => i.Mapa);
 
-            modelBuilder.Entity<TIMapaVector2>()
-                .HasKey(e => new{e.IdMapa, e.IdVector});
-
-            modelBuilder.Entity<TIMapaVector2>()
-                .HasOne(i => i.Mapa)
-                .WithMany(m => m.PosicionesElementos)
-                .HasForeignKey(i => i.IdMapa);
-
-            modelBuilder.Entity<TIMapaVector2>()
-                .HasOne(i => i.Posicion);
 
             modelBuilder.Entity<ModeloUnidadMapa>()
                 .HasDiscriminator<int>("Tipo")

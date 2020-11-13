@@ -659,21 +659,6 @@ namespace AppGM.Core.Migrations
                     b.ToTable("MapasUnidadesMapa");
                 });
 
-            modelBuilder.Entity("AppGM.Core.TIMapaVector2", b =>
-                {
-                    b.Property<int>("IdMapa")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("IdVector")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("IdMapa", "IdVector");
-
-                    b.HasIndex("IdVector");
-
-                    b.ToTable("TIMapaVector2");
-                });
-
             modelBuilder.Entity("AppGM.Core.TIModificadorDeStatBaseTiradaBase", b =>
                 {
                     b.Property<int>("IdModificadorDeStatBase")
@@ -1595,21 +1580,6 @@ namespace AppGM.Core.Migrations
                     b.HasOne("AppGM.Core.ModeloUnidadMapa", "Unidad")
                         .WithMany()
                         .HasForeignKey("IdUnidadMapa")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("AppGM.Core.TIMapaVector2", b =>
-                {
-                    b.HasOne("AppGM.Core.ModeloMapa", "Mapa")
-                        .WithMany("PosicionesElementos")
-                        .HasForeignKey("IdMapa")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AppGM.Core.ModeloVector2", "Posicion")
-                        .WithMany()
-                        .HasForeignKey("IdVector")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

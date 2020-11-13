@@ -70,29 +70,6 @@ namespace AppGM.Core
         }
         public ViewModelMapa()
         {
-            controladorMapa = new ControladorMapa
-            {
-                modelo = new ModeloMapa
-                {
-                    EFormatoImagen = EFormatoImagen.Png,
-                    NombreMapa = "Seoul",
-                    PosicionesElementos = new List<TIMapaVector2>
-                    {
-                        new TIMapaVector2
-                        {
-                            Posicion = new ModeloVector2
-                            {
-                                X = 50,
-                                Y = 150
-                            }
-                        }
-                    }
-                }
-            };
-
-            PathImagen = "../../../Media/Imagenes/Mapas/" +
-                          controladorMapa.modelo.NombreMapa + controladorMapa.ObtenerExtension();
-
             ComandoAñadirParticipante = new Comando(AñadirUnidad);
         } 
         #endregion
