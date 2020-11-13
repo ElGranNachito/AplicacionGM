@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AppGM.Core.Migrations
 {
     [DbContext(typeof(RolContext))]
-    [Migration("20201108235947_Inici")]
-    partial class Inici
+    [Migration("20201113195355_Inicial")]
+    partial class Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -659,21 +659,6 @@ namespace AppGM.Core.Migrations
                     b.HasIndex("IdUnidadMapa");
 
                     b.ToTable("MapasUnidadesMapa");
-                });
-
-            modelBuilder.Entity("AppGM.Core.TIMapaVector2", b =>
-                {
-                    b.Property<int>("IdMapa")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("IdVector")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("IdMapa", "IdVector");
-
-                    b.HasIndex("IdVector");
-
-                    b.ToTable("TIMapaVector2");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIModificadorDeStatBaseTiradaBase", b =>
@@ -1597,21 +1582,6 @@ namespace AppGM.Core.Migrations
                     b.HasOne("AppGM.Core.ModeloUnidadMapa", "Unidad")
                         .WithMany()
                         .HasForeignKey("IdUnidadMapa")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("AppGM.Core.TIMapaVector2", b =>
-                {
-                    b.HasOne("AppGM.Core.ModeloMapa", "Mapa")
-                        .WithMany("PosicionesElementos")
-                        .HasForeignKey("IdMapa")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AppGM.Core.ModeloVector2", "Posicion")
-                        .WithMany()
-                        .HasForeignKey("IdVector")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AppGM.Core.Migrations
 {
-    public partial class Inici : Migration
+    public partial class Inicial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -817,30 +817,6 @@ namespace AppGM.Core.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TIMapaVector2",
-                columns: table => new
-                {
-                    IdMapa = table.Column<int>(nullable: false),
-                    IdVector = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TIMapaVector2", x => new { x.IdMapa, x.IdVector });
-                    table.ForeignKey(
-                        name: "FK_TIMapaVector2_Mapas_IdMapa",
-                        column: x => x.IdMapa,
-                        principalTable: "Mapas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_TIMapaVector2_Vectores2_IdVector",
-                        column: x => x.IdVector,
-                        principalTable: "Vectores2",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "UnidadesMapaVectores2",
                 columns: table => new
                 {
@@ -1521,11 +1497,6 @@ namespace AppGM.Core.Migrations
                 column: "IdPersonaje");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TIMapaVector2_IdVector",
-                table: "TIMapaVector2",
-                column: "IdVector");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_TIModificadorDeStatBaseTiradaBase_IdModificadorDeStatBase",
                 table: "TIModificadorDeStatBaseTiradaBase",
                 column: "IdModificadorDeStatBase",
@@ -1717,9 +1688,6 @@ namespace AppGM.Core.Migrations
                 name: "TIInvocacionPersonaje");
 
             migrationBuilder.DropTable(
-                name: "TIMapaVector2");
-
-            migrationBuilder.DropTable(
                 name: "TIModificadorDeStatBaseTiradaBase");
 
             migrationBuilder.DropTable(
@@ -1762,6 +1730,9 @@ namespace AppGM.Core.Migrations
                 name: "Combates");
 
             migrationBuilder.DropTable(
+                name: "Mapas");
+
+            migrationBuilder.DropTable(
                 name: "ModeloCargasHabilidad");
 
             migrationBuilder.DropTable(
@@ -1769,9 +1740,6 @@ namespace AppGM.Core.Migrations
 
             migrationBuilder.DropTable(
                 name: "ModeloHabilidad");
-
-            migrationBuilder.DropTable(
-                name: "Mapas");
 
             migrationBuilder.DropTable(
                 name: "ModeloAccion");

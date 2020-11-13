@@ -8,12 +8,6 @@ namespace AppGM.Core
         public int IdMapa { get; set; }
         public ModeloMapa Mapa { get; set; }
     }
-    public class TIMapaVector2 : TIMapa
-    {
-        [ForeignKey(nameof(Posicion))]
-        public int IdVector { get; set; }
-        public ModeloVector2 Posicion { get; set; }
-    }
     public class TIMapaUnidadMapa : TIMapa
     {
         [ForeignKey(nameof(Unidad))]
