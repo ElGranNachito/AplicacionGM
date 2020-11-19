@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace AppGM.Core
 {
@@ -167,6 +168,18 @@ namespace AppGM.Core
         public void QuitarItem(ControladorBase item)
         {
             OnQuitarItem(item, this);
+        }
+
+        public string ObtenerPathAImagen(byte nivelDelDirectorioActual)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            for(byte i = 0; i < nivelDelDirectorioActual; ++i)
+                sb.Append("../");
+
+            sb.Append(modelo.PathImagen + Enum.GetName(typeof(EFormatoImagen), modelo.FormatoImagen));
+
+            return sb.ToString();
         }
         
         public bool EstaVivo => modelo.Hp > 0;

@@ -13,6 +13,7 @@ namespace AppGM.Core
         //Nombre del personaje
         [StringLength(50)]
         public string Nombre { get; set; }
+        public ETipoPersonaje TipoPersonaje { get; set; }
 
         //Stats del personaje
         public int MaxHp { get; set; }
@@ -38,6 +39,10 @@ namespace AppGM.Core
         public List<TIPersonajeMagia>      Magias     { get; set; } = new List<TIPersonajeMagia>();
         public List<TIPersonajeModificadorDeDefensa> ModificadoresDeDefensa { get; set; } = new List<TIPersonajeModificadorDeDefensa>();
         public List<TIPersonajeArmaDistancia>        ArmasDistancia         { get; set; } = new List<TIPersonajeArmaDistancia>();
+
+        //Imagencita del personaje
+        public string PathImagen { get; set; }
+        public EFormatoImagen FormatoImagen { get; set; }
 
         public ControladorPersonaje controlador;
     }

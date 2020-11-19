@@ -470,5 +470,8 @@
     <Resource Include="Media\Imagenes\Animaciones\FondoMenuPrincipal\FondoMenuPrincipal_4.jpg" />
     <Resource Include="Media\Imagenes\Animaciones\FondoMenuPrincipal\FondoMenuPrincipal_5.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Media\Imagenes\Megumin.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
