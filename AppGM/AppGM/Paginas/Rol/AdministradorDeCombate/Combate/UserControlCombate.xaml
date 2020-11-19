@@ -50,10 +50,10 @@
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" MinWidth="600"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*" MaxWidth="200"/>
             </Grid.ColumnDefinitions>
 
-            <!--<local:UserControlMapa></local:UserControlMapa>-->
+            <local:UserControlMapa DataContext="{Binding MapaActual, Mode=OneWay}"/>
 
             <!-- Lista de participantes -->
             <Grid Grid.Column="1">

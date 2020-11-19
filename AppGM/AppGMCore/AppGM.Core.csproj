@@ -71,9 +71,9 @@
     <Compile Include="Datos\RolContext.cs" />
     <Compile Include="Helpers\MathHelpers.cs" />
     <Compile Include="Helpers\StringHelpers.cs" />
-    <Compile Include="Migrations\20201119125328_Inicial.cs" />
-    <Compile Include="Migrations\20201119125328_Inicial.designer.cs">
-      <DependentUpon>20201119125328_Inicial.cs</DependentUpon>
+    <Compile Include="Migrations\20201119162908_Inicial.cs" />
+    <Compile Include="Migrations\20201119162908_Inicial.designer.cs">
+      <DependentUpon>20201119162908_Inicial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\RolContextModelSnapshot.cs" />
     <Compile Include="Modelos\Habilidades\CaracteristicasHabilidad.cs" />

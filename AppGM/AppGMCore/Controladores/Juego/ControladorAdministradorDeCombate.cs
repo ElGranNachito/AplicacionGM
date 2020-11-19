@@ -6,8 +6,8 @@ namespace AppGM.Core
     public class ControladorAdministradorDeCombate : Controlador<ModeloAdministradorDeCombate>
     {
         #region Miembros
-        public List<ControladorParticipante> ControladoresParticipantes { get; set; }
-        public List<ControladorMapa> ControladoresMapas { get; set; }
+        public List<ControladorParticipante> ControladoresParticipantes { get; set; } = new List<ControladorParticipante>();
+        public List<ControladorMapa> ControladoresMapas { get; set; } = new List<ControladorMapa>();
 
         #endregion
 
@@ -29,10 +29,10 @@ namespace AppGM.Core
             modelo = _modeloAdministradorCombate;
 
             for (int i = 0; i < modelo.Participantes.Count; ++i) 
-                ControladoresParticipantes.Add(new ControladorParticipante(modelo.Participantes[i].Participante));
+                ControladoresParticipantes.Add(modelo.Participantes[i].Participante.controladorParticipante);
 
-            for (int i = 0; i < modelo.Participantes.Count; ++i)
-                ControladoresMapas.Add(new ControladorMapa(modelo.Mapas[i].Mapa));
+            for (int i = 0; i < modelo.Mapas.Count; ++i)
+                ControladoresMapas.Add(modelo.Mapas[i].Mapa.controladorMapa);
         }
 
         /// <summary>

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AppGM.Core.Migrations
 {
     [DbContext(typeof(RolContext))]
-    [Migration("20201119125328_Inicial")]
+    [Migration("20201119162908_Inicial")]
     partial class Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -30,7 +30,7 @@ namespace AppGM.Core.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ModeloAccion");
+                    b.ToTable("Acciones");
                 });
 
             modelBuilder.Entity("AppGM.Core.ModeloAdministradorDeCombate", b =>
@@ -217,15 +217,10 @@ namespace AppGM.Core.Migrations
                     b.Property<bool>("EsSuTurno")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("PosicionCombateId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("TiradaIniciativa")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PosicionCombateId");
 
                     b.ToTable("Participantes");
                 });
@@ -733,7 +728,7 @@ namespace AppGM.Core.Migrations
 
                     b.HasIndex("IdAccion");
 
-                    b.ToTable("TIParticipanteAccion");
+                    b.ToTable("ParticipanteAccion");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIParticipantePersonaje", b =>
@@ -1339,13 +1334,6 @@ namespace AppGM.Core.Migrations
                         .HasColumnType("INTEGER");
 
                     b.HasDiscriminator().HasValue(5);
-                });
-
-            modelBuilder.Entity("AppGM.Core.ModeloParticipante", b =>
-                {
-                    b.HasOne("AppGM.Core.ModeloVector2", "PosicionCombate")
-                        .WithMany()
-                        .HasForeignKey("PosicionCombateId");
                 });
 
             modelBuilder.Entity("AppGM.Core.ModeloPersonaje", b =>

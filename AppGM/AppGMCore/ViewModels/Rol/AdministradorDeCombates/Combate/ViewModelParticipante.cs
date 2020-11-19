@@ -33,7 +33,7 @@ namespace AppGM.Core
 
             NombreParticipante = controladorParticipante.modelo.Personaje.Personaje.Nombre;
             TipoPersonaje      = Enum.GetName(typeof(ETipoPersonaje), controladorParticipante.modelo.Personaje.Personaje.TipoPersonaje);
-            PathImagen         = controladorParticipante.ControladorPersonaje.ObtenerPathAImagen(4);
+            PathImagen         = String.IsNullOrEmpty(controladorParticipante.ControladorPersonaje.modelo.PathImagen) ? PathImagen : controladorParticipante.ControladorPersonaje.ObtenerPathAImagen(4);
 
             handlerTurnoCambio = (ref int turnoActual) =>
             {

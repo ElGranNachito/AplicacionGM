@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Text;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 
 namespace AppGM.Core
 {
@@ -21,35 +19,7 @@ namespace AppGM.Core
 
             EstablecerComandos();
         }
-        public ViewModelCombateItem()
-        {
-            Combate = new ControladorAdministradorDeCombate
-            {
-                modelo = new ModeloAdministradorDeCombate
-                {
-                    IndicePersonajeTurnoActual = 2,
-                    Nombre = "Combate super feroz",
-                    Participantes = new List<TIAdministradorDeCombateParticipante>
-                    {
-                        new TIAdministradorDeCombateParticipante
-                        {
-                            Participante = new ModeloParticipante
-                            {
-                                Personaje = new TIParticipantePersonaje
-                                {
-                                    Personaje = new ModeloPersonaje
-                                    {
-                                        Nombre = "Juanito"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            };
 
-            EstablecerComandos();
-        }
         #endregion
 
         private void EstablecerComandos()
@@ -78,6 +48,10 @@ namespace AppGM.Core
                     SistemaPrincipal.RolSeleccionado.EMenuActual = EMenuActualRol.Combate;
                 });
         }
+
+        public string Nombre    => Combate.modelo.Nombre;
+        public uint TurnoActual => Combate.modelo.TurnoActual;
+        public int CantidadParticipantes => Combate.modelo.Participantes.Count;
     }
 
 }

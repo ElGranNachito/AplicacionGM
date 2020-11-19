@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace AppGM.Core
 {
@@ -11,14 +10,11 @@ namespace AppGM.Core
         public bool EsSuTurno { get; set; }
 
         //Personaje participante
-        public TIParticipantePersonaje Personaje { get; set; }
-
-        //Posicion del participante en el mapa
-        public ModeloVector2 PosicionCombate { get; set; }
+        public virtual TIParticipantePersonaje Personaje { get; set; }
 
         //Acciones realizadas por el participante
-        public List<TIParticipanteAccion> AccionesRealizadas { get; set; } = new List<TIParticipanteAccion>();
+        public virtual List<TIParticipanteAccion> AccionesRealizadas { get; set; } = new List<TIParticipanteAccion>();
 
-        public TIAdministradorDeCombateParticipante Combate { get; set; }
+        public virtual TIAdministradorDeCombateParticipante Combate { get; set; }
     }
 }

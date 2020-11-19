@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:AppGM"
              mc:Ignorable="d" 
              d:DesignHeight="150" d:DesignWidth="300">
-    <Grid Background="White">
+    <Grid Background="White" Width="300">
 
 
         <StackPanel>
@@ -14,36 +14,36 @@
             <TextBlock>
                 <Run Text="Nombre: " 
                      FontWeight="Bold" 
-                     FontSize="{StaticResource TamañoFontPequeño}"/>
+                     FontSize="{StaticResource TamañoFontMediano}"/>
                 <Run Text="{Binding Combate.Nombre}"
-                     FontSize="{StaticResource TamañoFontPequeño}"/>
+                     FontSize="{StaticResource TamañoFontMediano}"/>
             </TextBlock>
 
             <!-- Turno acutal dentro del combate -->
             <TextBlock>
                 <Run Text="Turno actual: " 
                      FontWeight="Bold" 
-                     FontSize="{StaticResource TamañoFontPequeño}"/>
+                     FontSize="{StaticResource TamañoFontMediano}"/>
                 <Run Text="{Binding Combate.TurnoActual}"
-                     FontSize="{StaticResource TamañoFontPequeño}"/>
+                     FontSize="{StaticResource TamañoFontMediano}"/>
             </TextBlock>
 
             <!-- Cantidad de participantes -->
             <TextBlock>
                 <Run Text="Cantidad de participantes: " 
                      FontWeight="Bold" 
-                     FontSize="{StaticResource TamañoFontPequeño}"/>
+                     FontSize="{StaticResource TamañoFontMediano}"/>
                 <Run Text="{Binding Combate.Participantes.Count, Mode=OneWay}"
-                     FontSize="{StaticResource TamañoFontPequeño}"/>
+                     FontSize="{StaticResource TamañoFontMediano}"/>
             </TextBlock>
 
             <!-- Participantes -->
             <TextBlock>
                 <Run Text="Participantes: " 
                      FontWeight="Bold" 
-                     FontSize="{StaticResource TamañoFontPequeño}"/>
+                     FontSize="{StaticResource TamañoFontMediano}"/>
                 <Run Text="{Binding Participantes, Mode=OneWay}"
-                     FontSize="{StaticResource TamañoFontPequeño}"/>
+                     FontSize="{StaticResource TamañoFontMediano}"/>
             </TextBlock>
         </StackPanel>
             

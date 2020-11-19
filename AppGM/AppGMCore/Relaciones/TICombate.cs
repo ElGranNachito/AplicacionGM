@@ -6,14 +6,14 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(Participante))]
         public int IdParticipante { get; set; }
-        public ModeloParticipante Participante { get; set; }
+        public virtual ModeloParticipante Participante { get; set; }
     }
 
     public class TIParticipantePersonaje : TIParticipante
     {
         [ForeignKey(nameof(Personaje))]
         public int IdPersonaje { get; set; }
-        public ModeloPersonaje Personaje { get; set; }
+        public virtual ModeloPersonaje Personaje { get; set; }
     }
 
     public class TIParticipanteAccion : TIParticipante

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace AppGM.Core
 {
@@ -7,8 +6,8 @@ namespace AppGM.Core
     {
         public ControladorAdministradorDeCombate controladorAdministradorDeCombate;
 
-        public int IndicePersonajeTurnoActual { get; set; }
-        public uint TurnoActual { get; set; }
+        public int    IndicePersonajeTurnoActual { get; set; }
+        public uint   TurnoActual { get; set; }
         public string Nombre { get; set; }
 
         public List<TIAdministradorDeCombateParticipante> Participantes { get; set; } = new List<TIAdministradorDeCombateParticipante>();

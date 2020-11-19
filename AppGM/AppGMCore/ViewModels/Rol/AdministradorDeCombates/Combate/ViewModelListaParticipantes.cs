@@ -10,7 +10,7 @@ namespace AppGM.Core
         /// <summary>
         /// Participantes
         /// </summary>
-        public List<ViewModelParticipante> Participantes { get; set; }
+        public List<ViewModelParticipante> Participantes { get; set; } = new List<ViewModelParticipante>();
 
         /// <summary>
         /// Combate al que pertenece

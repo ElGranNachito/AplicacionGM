@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
 
@@ -9,10 +8,10 @@ namespace AppGM.Core
     {
         #region Miembros
 
-        public ICommand                          ComandoAñadirParticipante { get; set; }
-        public ObservableCollection<ViewModelIngresoPosicion>    Posiciones                { get; set; } = new ObservableCollection<ViewModelIngresoPosicion>();
+        public ICommand ComandoAñadirParticipante { get; set; }
+        public ObservableCollection<ViewModelIngresoPosicion> Posiciones { get; set; } = new ObservableCollection<ViewModelIngresoPosicion>();
 
-        public ControladorMapa                   controladorMapa;
+        public ControladorMapa controladorMapa;
 
         #endregion
 

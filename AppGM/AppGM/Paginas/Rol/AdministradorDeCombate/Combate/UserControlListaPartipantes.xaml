@@ -9,7 +9,7 @@
     <Grid Background="White">
 
         <ScrollViewer>
-            <ItemsControl ItemsSource="{Binding Partipantes}">
+            <ItemsControl ItemsSource="{Binding Participantes}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <local:UserControlParticipante></local:UserControlParticipante>

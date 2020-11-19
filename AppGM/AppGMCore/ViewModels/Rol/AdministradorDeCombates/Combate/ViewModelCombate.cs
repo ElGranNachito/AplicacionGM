@@ -8,6 +8,8 @@ namespace AppGM.Core
     {
         #region Miembros
 
+        private int indiceMapaActual = 0;
+
         public ControladorAdministradorDeCombate administradorDeCombate = new ControladorAdministradorDeCombate();
 
         public ControladorAdministradorDeCombate.dTurnoCambio HandlerTurnoCambio = delegate{};
@@ -35,7 +37,9 @@ namespace AppGM.Core
         /// <summary>
         /// Mapas del combate
         /// </summary>
-        public List<ViewModelMapa> Mapas { get; set; }
+        public List<ViewModelMapa> Mapas { get; set; } = new List<ViewModelMapa>();
+
+        public ViewModelMapa MapaActual => Mapas[indiceMapaActual];
 
         #endregion
 
@@ -72,9 +76,11 @@ namespace AppGM.Core
             administradorDeCombate = _administradorDeCombate;
 
             Participantes = new ViewModelListaParticipantes(_administradorDeCombate.ControladoresParticipantes, this);
-           
+
             for(int i = 0; i < administradorDeCombate.ControladoresMapas.Count; ++i)
                 Mapas.Add(new ViewModelMapa(administradorDeCombate.ControladoresMapas[i]));
+
+            DispararPropertyChanged(new PropertyChangedEventArgs(nameof(MapaActual)));
 
             administradorDeCombate.OnTurnoCambio    += HandlerTurnoCambio;
         } 

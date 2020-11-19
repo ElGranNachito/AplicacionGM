@@ -1,6 +1,4 @@
-﻿
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace AppGM.Core
 {
@@ -16,24 +14,13 @@ namespace AppGM.Core
         public ViewModelMenuSeleccionCombate(List<ControladorAdministradorDeCombate> _combates)
         {
             Combates = new ViewModelListaCombates(_combates);
-        }
-        public ViewModelMenuSeleccionCombate()
-        {
-            Combates = new ViewModelListaCombates
-            {
-                Combates = new List<ViewModelCombateItem>
-                {
-                    new ViewModelCombateItem(),
-                    new ViewModelCombateItem(),
-                    new ViewModelCombateItem()
-                }
-            };
 
             GloboInfoCombate = new ViewModelGlobo<ViewModelInfoCombateGlobo>
             {
-                ViewModelContenido = new ViewModelInfoCombateGlobo()
+                ViewModelContenido = new ViewModelInfoCombateGlobo(),
+                GloboVisible = false
             };
-        } 
+        }
         #endregion
     }
 }

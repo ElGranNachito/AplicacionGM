@@ -25,6 +25,7 @@ namespace AppGM.Core
         public DbSet<ModeloVector2> Vectores2 { get; set; }
         public DbSet<ModeloMapa> Mapas { get; set; }
         public DbSet<ModeloUnidadMapa> UnidadesMapa { get; set; }
+        public DbSet<ModeloAccion> Acciones { get; set; }
 
         // Relaciones ---
         public DbSet<TIPersonajeEfecto> PersonajeEfectos { get; set; }
@@ -43,13 +44,15 @@ namespace AppGM.Core
         public DbSet<TIMapaUnidadMapa> MapasUnidadesMapa { get; set; }
         public DbSet<TIUnidadMapaVector2> UnidadesMapaVectores2 { get; set; }
         public DbSet<TIPersonajeUnidadMapa> PersonajesUnidadesMapa { get; set; }
+        public DbSet<TIParticipanteAccion> ParticipanteAccion { get; set; }
         #endregion
 
         public RolContext(){}
 
         #region Configuracion de la base de datos
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.UseSqlite("Data Source = Db.db");
+        => optionsBuilder.UseSqlite("Data Source = Db.db");
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
