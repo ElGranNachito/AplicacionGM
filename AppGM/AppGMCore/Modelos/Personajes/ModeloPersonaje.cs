@@ -10,6 +10,8 @@ namespace AppGM.Core
     /// </summary>
     public class ModeloPersonaje : ModeloBase
     {
+        public ControladorPersonaje controladorPersonaje;
+
         //Nombre del personaje
         [StringLength(50)]
         public string Nombre { get; set; }

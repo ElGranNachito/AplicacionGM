@@ -9,12 +9,16 @@ namespace AppGM.Core
 
     public class ModeloConsumible : ModeloItem
     {
+        public ControladorConsumible controladorConsumible;
+
         public ushort Usos { get; set; }
         public ushort UsosRestantes { get; set; }
     }
 
     public class ModeloArmasDistancia : ModeloConsumible, IInfligeDaño
     {
+        public ControladorArmaDistancia controladorArmaDistancia;
+
         public TIArmasDistanciaTiradaDeDaño TiradaDeDaño { get; set; }
 
         public TIArmasDistanciaTiradaVariable TiradaRafaga { get; set; }
