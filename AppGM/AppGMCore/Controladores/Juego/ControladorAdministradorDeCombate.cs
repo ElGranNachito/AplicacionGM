@@ -13,13 +13,9 @@ namespace AppGM.Core
 
         #region Eventos
 
-        public delegate void dAvanzarTurno(ref int TurnoActual);
+        public delegate void dTurnoCambio(ref int TurnoActual);
 
-        public event dAvanzarTurno OnAvanzarTurno = delegate { };
-
-        public delegate void dRetrocederTurno(ref int TurnoActual);
-
-        public event dRetrocederTurno OnRetrocederTurno = delegate { };
+        public event dTurnoCambio OnTurnoCambio = delegate { };
 
         public delegate void dAvanzarTurnoPersonaje(ModeloAdministradorDeCombate modeloAdministradorDeCombate);
 
@@ -50,28 +46,28 @@ namespace AppGM.Core
 
         public void AvanzarTurno()
         {
-            if (modelo.IndicePersonajeTurnoActual == modelo.Participantes.Count - 1)
+            if (modelo.IndicePersonajeTurnoActual >= modelo.Participantes.Count)
                 modelo.IndicePersonajeTurnoActual = 0;
             else
                 ++modelo.IndicePersonajeTurnoActual;
 
             int turnoActualTmp = modelo.IndicePersonajeTurnoActual;
 
-            OnAvanzarTurno(ref turnoActualTmp);
+            OnTurnoCambio(ref turnoActualTmp);
 
             modelo.IndicePersonajeTurnoActual = turnoActualTmp;
         }
 
         public void RetrocederTurno()
         {
-            if (modelo.IndicePersonajeTurnoActual == 0)
+            if (modelo.IndicePersonajeTurnoActual < 0)
                 modelo.IndicePersonajeTurnoActual = modelo.Participantes.Count - 1;
             else
                 --modelo.IndicePersonajeTurnoActual;
 
             int turnoActualTmp = modelo.IndicePersonajeTurnoActual;
 
-            OnRetrocederTurno(ref turnoActualTmp);
+            OnTurnoCambio(ref turnoActualTmp);
 
             modelo.IndicePersonajeTurnoActual = turnoActualTmp;
         }

@@ -15,22 +15,29 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Border Width="5" Background="LimeGreen"/>
+        <!-- Indicador de turno -->
+        <Border 
+            Width="5"
+            Background="LimeGreen"
+            Visibility="{Binding EsSuTurno, Converter={local:BooleanToVisibilityConverterOcultar}}"/>
 
-        <!-- Nombre, Tipo -->
         <StackPanel Grid.Column="1" 
                     Margin="5">
 
-            <TextBlock Text="Juanito"/>
-            <TextBlock Text="Servant"/>
+            <!-- Nombre y tipo de participante -->
+            <TextBlock Text="{Binding NombreParticipante, Mode=OneWay, FallbackValue=Mr Sin Nombre}"/>
+            <TextBlock Text="{Binding TipoPersonaje, Mode=OneWay, FallbackValue=Es un misterio}"/>
 
         </StackPanel>
 
+        <!-- Fotito del personaje -->
         <Border Grid.Column="2"
                 CornerRadius="50"
                 Width="80"
-                Height="80"
-                Background="Black">
+                Height="80">
+            <Border.Background>
+                <ImageBrush ImageSource="{Binding PathImagen, Mode=OneWay}"/>
+            </Border.Background>
         </Border>
             
     </Grid>

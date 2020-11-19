@@ -4,7 +4,7 @@
     {
         #region Controladores
 
-        private ControladorPersonaje mControladorPersonaje { get; set; }
+        public ControladorPersonaje ControladorPersonaje { get; private set; }
 
         #endregion
 
@@ -14,7 +14,7 @@
         {
             modelo = _modeloParticipante;
 
-            mControladorPersonaje = new ControladorPersonaje(modelo.Personaje.Personaje);
+            ControladorPersonaje = modelo.Personaje.Personaje.controlador;
         }
 
         #endregion
