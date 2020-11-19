@@ -4,6 +4,8 @@ namespace AppGM.Core
 {
     public class ModeloModificadorDeStatBase : ModeloBase
     {
+        public ControladorModificadorDeStat controladorModificadorDeStat;
+
         //Valor requerido para realizar tirada
         public int ValorRequeridoTirada { get; set; }
 
@@ -22,6 +24,8 @@ namespace AppGM.Core
 
     public class ModeloModificadorDeStatClase : ModeloModificadorDeStatBase
     {
+        public ControladorModificadorDeStatClase controladorModificadorDeStatClase;
+
         //Nombre de la clase a modificar
         [StringLength(50)]
         public string NombreClase { get; set; }

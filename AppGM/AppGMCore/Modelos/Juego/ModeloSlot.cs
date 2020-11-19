@@ -5,6 +5,8 @@ namespace AppGM.Core
 {
     public class ModeloSlot : ModeloBase
     {
+        public ControladorSlot controladorSlot;
+
         //Espacio en la slot
         public decimal Espacio { get; set; }
 

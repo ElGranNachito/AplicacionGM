@@ -5,6 +5,8 @@ namespace AppGM.Core
 {
     public class ModeloParticipante : ModeloBase
     {
+        public ControladorParticipante controladorParticipante;
+
         public int TiradaIniciativa { get; set; }
         public bool EsSuTurno { get; set; }
 

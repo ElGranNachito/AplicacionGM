@@ -8,6 +8,8 @@ namespace AppGM.Core
     /// </summary>
     public class ModeloRol : ModeloBase
     {
+        public ControladorRol controladorRol;
+
         //Dia dentro del mundo del rol
         public ushort Dia { get; set; }
 

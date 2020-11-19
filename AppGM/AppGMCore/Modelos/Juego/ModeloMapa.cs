@@ -4,6 +4,8 @@ namespace AppGM.Core
 {
     public class ModeloMapa : ModeloBase
     {
+        public ControladorMapa controladorMapa;
+
         public string NombreMapa { get; set; }
         public EFormatoImagen EFormatoImagen { get; set; }
 

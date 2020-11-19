@@ -6,6 +6,8 @@ namespace AppGM.Core
     //TODO: Decidir si es una clase abstracta o no
     public class ModeloUtilizable : ModeloBase
     {
+        public ControladorUtilizable controladorUtilizable;
+
         //Stats
         public EStat EStatQueAfecta { get; set; }
         public EStat EStatDeLaQueDepende { get; set; }

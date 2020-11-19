@@ -8,6 +8,8 @@ namespace AppGM.Core
     /// </summary>
     public class ModeloEfecto : ModeloBase, IDescripcion
     {
+        public ControladorEfecto controladorEfecto;
+
         //Nombre del efecto
         [StringLength(50)]
         public string Nombre { get; set; }
@@ -19,6 +21,8 @@ namespace AppGM.Core
 
     public class ModeloEfectoTemporal : ModeloEfecto
     {
+        public ControladorEfectoTemporal controladorEfectoTemporal;
+
         //Turnos que dura el efecto
         public ushort TurnosDeDuracion { get; set; }
     }

@@ -5,6 +5,8 @@ namespace AppGM.Core
 {
     public class ModeloHabilidad : ModeloBase, IDescripcion
     {
+        public ControladorHabilidad controladorHabilidad;
+
         //Costos de mana que tiene la habilidad para ser utilizada
         public ushort CostoDeMana { get; set; }
         //Turnos que dura la habilidad
@@ -40,6 +42,8 @@ namespace AppGM.Core
 
     public class ModeloMagia : ModeloHabilidad
     {
+        public ControladorMagia controladorMagia;
+
         public byte Nivel { get; set; }
     }
 

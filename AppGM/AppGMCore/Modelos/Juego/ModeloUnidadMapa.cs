@@ -18,6 +18,8 @@ namespace AppGM.Core
     }
     public class ModeloUnidadMapa : ModeloBase
     {
+        public ControladorUnidadMapa controladorUnidadMapa;
+
         public string Nombre { get; set; }
 
         public ETipoUnidad ETipoUnidad { get; set; }

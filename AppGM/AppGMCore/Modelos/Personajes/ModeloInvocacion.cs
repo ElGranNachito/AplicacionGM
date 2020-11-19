@@ -2,6 +2,8 @@
 {
     public class ModeloInvocacion : ModeloPersonaje
     {
+        public ControladorInvocacion controladorInvocacion;
+
         //La invocacion es automata
         public bool EsAutomata { get; set; }
 
@@ -14,11 +16,14 @@
 
     public class ModeloInvocacionTemporal : ModeloInvocacion
     {
+        public ControladorInvocacionTemporal controladorInvocacionTemporal;
+
         //Turnos que dura la invocacion
         public byte TurnosDeDuracion { get; set; }
     }
 
     public class ModeloInvocacionCondicionada : ModeloInvocacion
     {
+        public ControladorInvocacionCondicionada controladorInvocacionCondicionada;
     }
 }
