@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AppGM.Core.Migrations
 {
-    public partial class inicial : Migration
+    public partial class Inicial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -765,6 +765,7 @@ namespace AppGM.Core.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Nombre = table.Column<string>(maxLength: 50, nullable: true),
+                    TipoPersonaje = table.Column<int>(nullable: false),
                     MaxHp = table.Column<int>(nullable: false),
                     Hp = table.Column<int>(nullable: false),
                     Str = table.Column<ushort>(nullable: false),
@@ -774,6 +775,8 @@ namespace AppGM.Core.Migrations
                     Lck = table.Column<ushort>(nullable: false),
                     EstaEnCombate = table.Column<bool>(nullable: false),
                     PosicionId = table.Column<int>(nullable: true),
+                    PathImagen = table.Column<string>(nullable: true),
+                    FormatoImagen = table.Column<int>(nullable: false),
                     Clase = table.Column<int>(nullable: false),
                     EsAutomata = table.Column<bool>(nullable: true),
                     TurnosDeDuracion = table.Column<byte>(nullable: true),

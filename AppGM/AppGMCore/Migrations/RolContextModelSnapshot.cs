@@ -246,6 +246,9 @@ namespace AppGM.Core.Migrations
                     b.Property<bool>("EstaEnCombate")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("FormatoImagen")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("Hp")
                         .HasColumnType("INTEGER");
 
@@ -262,10 +265,16 @@ namespace AppGM.Core.Migrations
                         .HasColumnType("TEXT")
                         .HasMaxLength(50);
 
+                    b.Property<string>("PathImagen")
+                        .HasColumnType("TEXT");
+
                     b.Property<int?>("PosicionId")
                         .HasColumnType("INTEGER");
 
                     b.Property<ushort>("Str")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("TipoPersonaje")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
