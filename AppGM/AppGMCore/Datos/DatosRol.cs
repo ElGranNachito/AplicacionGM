@@ -66,7 +66,8 @@ namespace AppGM.Core
                         Lck = 13,
                         Chr = 12,
 
-                        EClaseDeSuServant = EClaseServant.Berserker
+                        EClaseDeSuServant = EClaseServant.Berserker,
+                        TipoPersonaje = ETipoPersonaje.Master
                     };
 
                     ModeloMagia magia1 = new ModeloMagia

@@ -25,35 +25,47 @@ namespace AppGM.Core
         #endregion
 
         #region Funciones
+
+        /// <summary>
+        /// Genera el path a la imagen de la unidad actual en base a su tipo y estado
+        /// </summary>
+        /// <returns>Path a la imagen de la unidad</returns>
         public string ObtenerPathAImagen()
         {
             StringBuilder sb = new StringBuilder("../../../Media/Imagenes/Posiciones/");
 
-            if (modelo.Personaje != null && !modelo.Personaje.Personaje.controlador.EstaVivo)
-                sb.Append("Cadaver_");
-
-            if (modelo.ETipoUnidad == ETipoUnidad.Iglesia)
-                sb.Append("Iglesia");
-            else if (
-                (modelo.ETipoUnidad & (ETipoUnidad.Master | ETipoUnidad.Servant)) != 0
-                && modelo is ModeloUnidadMapaMasterServant mms)
+            switch (modelo)
             {
-                if (modelo.ETipoUnidad == ETipoUnidad.Master)
-                    sb.Append("Master_");
+                case ModeloUnidadMapaInvocacionTrampa mi:
 
-                sb.Append(mms.EClaseServant);
-            }
-            else if (modelo is ModeloUnidadMapaInvocacionTrampa mi)
-            {
-                if (modelo.ETipoUnidad == ETipoUnidad.Invocacion)
-                    sb.Append("Invocacion_");
-                else
-                    sb.Append("Trampa_");
+                    if (modelo.ETipoUnidad == ETipoUnidad.Invocacion)
+                        sb.Append("Invocacion_");
+                    else
+                        sb.Append("Trampa_");
 
-                if (mi.EsDeMaster)
-                    sb.Append("Master_");
+                    if (mi.EsDeMaster)
+                        sb.Append("Master_");
 
-                sb.Append(mi.EClaseServant);
+                    sb.Append(mi.EClaseServant);
+
+                    break;
+
+                case ModeloUnidadMapaMasterServant mms:
+
+                    if (modelo.Personaje != null && !modelo.Personaje.Personaje.controlador.EstaVivo)
+                        sb.Append("Cadaver_");
+
+                    if (modelo.ETipoUnidad == ETipoUnidad.Master)
+                        sb.Append("Master_");
+
+                    sb.Append(mms.EClaseServant);
+
+                    break;
+
+                default:
+                    sb.Append("Iglesia");
+                    break;
+
             }
 
             sb.Append(".png");
