@@ -131,6 +131,12 @@ namespace AppGM.Core
                         Posicion = posMaster
                     };
 
+                    TIPersonajeUnidadMapa tiMasterUnidadMapa = new TIPersonajeUnidadMapa
+                    {
+                        Unidad = elemento2,
+                        Personaje = master
+                    };
+
                     elemento1.Posicion = tiPosSaber;
                     elemento2.Posicion = tiPosMaster;
 
@@ -166,6 +172,7 @@ namespace AppGM.Core
                     mDBRol.Add(tiMapaMaster);
                     mDBRol.Add(tiPosSaber);
                     mDBRol.Add(tiPosMaster);
+                    mDBRol.Add(tiMasterUnidadMapa);
 
                     mDBRol.Add(master);
                     mDBRol.Add(magia1);
@@ -199,7 +206,12 @@ namespace AppGM.Core
                         select p).ToList();
 
                 for (int i = 0; i < masters.Count; ++i)
-                    Masters.Add(new ControladorPersonaje(masters[i]));
+                {
+                    ControladorPersonaje controladorActual = new ControladorPersonaje(masters[i]);
+
+                    Masters.Add(controladorActual);
+                    masters[i].controlador = controladorActual;
+                }
 
                 for (int i = 0; i < mapas.Count; ++i)
                     Mapas.Add(new ControladorMapa(mapas[i]));

@@ -29,6 +29,9 @@ namespace AppGM.Core
         {
             StringBuilder sb = new StringBuilder("../../../Media/Imagenes/Posiciones/");
 
+            if (modelo.Personaje != null && !modelo.Personaje.Personaje.controlador.EstaVivo)
+                sb.Append("Cadaver_");
+
             if (modelo.ETipoUnidad == ETipoUnidad.Iglesia)
                 sb.Append("Iglesia");
             else if (

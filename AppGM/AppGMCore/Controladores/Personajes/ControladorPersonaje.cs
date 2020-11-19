@@ -169,7 +169,7 @@ namespace AppGM.Core
             OnQuitarItem(item, this);
         }
         
-        public bool EstaVido => modelo.Hp > 0;
+        public bool EstaVivo => modelo.Hp > 0;
 
         public override string ToString() => string.Format($"Nombre={modelo.Nombre} Id={modelo.Id}");
 
