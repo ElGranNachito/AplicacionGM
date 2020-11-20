@@ -23,8 +23,8 @@
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
 
         <!-- Indicador de turno -->
@@ -45,8 +45,8 @@
         <!-- Fotito del personaje -->
         <Border Grid.Column="2"
                 CornerRadius="50"
-                Width="80"
-                Height="80"
+                Width="65"
+                Height="65"
                 BorderBrush="Black"
                 BorderThickness="1">
             <Border.Background>

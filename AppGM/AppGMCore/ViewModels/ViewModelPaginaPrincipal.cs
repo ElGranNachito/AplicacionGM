@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Input;
+using AppGM.Core.ViewModels.Mensajes;
 
 namespace AppGM.Core
 {
@@ -19,6 +20,7 @@ namespace AppGM.Core
 
         public ICommand ComandoAvanzarIndiceRol { get; set; }
         public ICommand ComandoRetrocederIndiceRol { get; set; }
+        public ICommand ComandoCrearRol { get; set; }
 
         public ModeloRol RolActual => Roles[mIndiceRolActual];
 
@@ -38,7 +40,8 @@ namespace AppGM.Core
 
         public ViewModelCarta CartaAñadirRol { get; set; } = new ViewModelCarta
         {
-            ZIndex = 1
+            ZIndex = 1,
+            Comando = new Comando(CrearRol)
         };
 
         public ViewModelCarta CartaSeleccionarRol { get; set; } = new ViewModelCarta
@@ -123,7 +126,14 @@ namespace AppGM.Core
                 MouseSobreCartaRol = false;
                 GloboInfoRol.GloboVisible = false;
             });
-        } 
+        }
+
+        private static async void CrearRol()
+        {
+            ViewModelMensajeCrearRol viemModelCreacionDeRol = new ViewModelMensajeCrearRol();
+
+            await SistemaPrincipal.Aplicacion.VentanaPopups.Mostrar(viemModelCreacionDeRol, true);
+        }
         #endregion
     }
 }

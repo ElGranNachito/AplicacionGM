@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using AppGM.Core;
+using AppGM.Core.ViewModels.Mensajes;
 
 namespace AppGM
 {
@@ -16,6 +17,12 @@ namespace AppGM
                         return new UserControlMensajeCrearUnidadMapa
                         {
                             DataContext = vcu
+                        };
+
+                    case ViewModelMensajeCrearRol vmc:
+                        return new UserControlMensajeConPasos
+                        {
+                            DataContext = vmc
                         };
                 }
             }

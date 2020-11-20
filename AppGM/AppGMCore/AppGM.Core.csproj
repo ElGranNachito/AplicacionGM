@@ -119,6 +119,9 @@
     <Compile Include="ViewModels\DesignModels\BaseDesignModel.cs" />
     <Compile Include="ViewModels\DesignModels\DesignModelCombateItem.cs" />
     <Compile Include="ViewModels\DesignModels\DesingModelListaRoles.cs" />
+    <Compile Include="ViewModels\Mensajes\CreacionDeRol\ViewModelMensajeCrearRol.cs" />
+    <Compile Include="ViewModels\Mensajes\CreacionDeRol\ViewModelMensajeCrearRol_DatosRol.cs" />
+    <Compile Include="ViewModels\Mensajes\ViewModelVentanaConPasos.cs" />
     <Compile Include="ViewModels\Rol\AdministradorDeCombates\Combate\ViewModelCombate.cs" />
     <Compile Include="ViewModels\Rol\AdministradorDeCombates\Combate\ViewModelListaParticipantes.cs" />
     <Compile Include="ViewModels\Rol\AdministradorDeCombates\Combate\ViewModelParticipante.cs" />

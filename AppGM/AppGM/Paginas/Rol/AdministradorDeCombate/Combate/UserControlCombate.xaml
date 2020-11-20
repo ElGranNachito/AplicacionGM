@@ -33,13 +33,15 @@
 
                 <Button 
                     FontFamily="{StaticResource 'Font Awesome Regular'}"
-                    Content="{StaticResource Fa-FlechaIzquierda}"/>
+                    Content="{StaticResource Fa-FlechaIzquierda}"
+                    Command="{Binding ComandoRetrocederTurno}"/>
                 
                 <TextBlock Text="5" Margin="5 0"/>
 
                 <Button 
                     FontFamily="{StaticResource 'Font Awesome Regular'}"
-                    Content="{StaticResource Fa-FlechaDerecha}"/>
+                    Content="{StaticResource Fa-FlechaDerecha}"
+                    Command="{Binding ComandoAvanzarTurno}"/>
 
             </StackPanel>
 
@@ -49,8 +51,8 @@
         <Grid Grid.Row="1">
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" MinWidth="600"/>
-                <ColumnDefinition Width="*" MaxWidth="200"/>
+                <ColumnDefinition Width="3*" MinWidth="300"/>
+                <ColumnDefinition Width="*" MaxWidth="200" MinWidth="125"/>
             </Grid.ColumnDefinitions>
 
             <local:UserControlMapa DataContext="{Binding MapaActual, Mode=OneWay}"/>

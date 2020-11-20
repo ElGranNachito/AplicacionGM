@@ -12,6 +12,8 @@ namespace AppGM
         {
             InitializeComponent();
 
+            //Si se trata del administrador de combates la propiedad viewmodel no se inicializa al momento de la creacion
+            //asi que para evitar nullreference esperamos a que se establezca el datacontext y luego establecemos el viewmodel
             DataContextChanged += (obj, args) =>
             {
                 if (ViewModel == null)

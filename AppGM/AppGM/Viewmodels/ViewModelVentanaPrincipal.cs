@@ -38,10 +38,7 @@ namespace AppGM.Viewmodels
         }
         
         #region Propiedades
-        public EPaginaActual EPaginaActual
-        {
-            get => SistemaPrincipal.Aplicacion.EPaginaActual;
-        }
+        public EPaginaActual EPaginaActual => SistemaPrincipal.Aplicacion.EPaginaActual;
 
         #endregion
     }

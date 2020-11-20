@@ -47,9 +47,10 @@
 
                     <Button  
                         Content="+Agregar" 
-                            Margin=" 0 15 0 10"
-                            HorizontalAlignment="Center"
-                            Width="100"/>
+                        Margin=" 0 15 0 10"
+                        HorizontalAlignment="Center"
+                        Width="100"
+                        Command="{Binding Comando}"/>
 
                 </local:UserControlCarta>
 

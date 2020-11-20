@@ -69,7 +69,8 @@
     <Compile Include="AttachedProperties\BotonMenuRolProperty.cs" />
     <Compile Include="AttachedProperties\CampoDeTextoNumericoProperty.cs" />
     <Compile Include="AttachedProperties\DragProperty.cs" />
-    <Compile Include="Converters\ViewModelToContenidoMensajeConverter.cs" />
+    <Compile Include="Converters\Mensajes\ViewModelToContenidoMensajeConverter.cs" />
+    <Compile Include="Converters\Mensajes\ViewModelToContenidoPaso.cs" />
     <Compile Include="Elementos\OutlinedText.cs" />
     <Compile Include="AttachedProperties\ParametroProperty\BaseAttachedPropertyParametro.cs" />
     <Compile Include="AttachedProperties\CrearDesignTimeViewModelProperty.cs" />
@@ -95,6 +96,12 @@
     </Compile>
     <Compile Include="Paginas\Inicio\UserControlCarta.xaml.cs">
       <DependentUpon>UserControlCarta.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Mensajes\CreacionDeRol\UserControlCreacionRol_DatosRol.xaml.cs">
+      <DependentUpon>UserControlCreacionRol_DatosRol.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Mensajes\UserControlMensajeConPasos.xaml.cs">
+      <DependentUpon>UserControlMensajeConPasos.xaml</DependentUpon>
     </Compile>
     <Compile Include="Paginas\Mensajes\UserControlMensajeCrearUnidadMapa.xaml.cs">
       <DependentUpon>UserControlMensajeCrearUnidadMapa.xaml</DependentUpon>
@@ -177,6 +184,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Paginas\Inicio\UserControlCarta.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Paginas\Mensajes\CreacionDeRol\UserControlCreacionRol_DatosRol.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Paginas\Mensajes\UserControlMensajeConPasos.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -473,5 +488,6 @@
   <ItemGroup>
     <Resource Include="Media\Imagenes\Megumin.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
