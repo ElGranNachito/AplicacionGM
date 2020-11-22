@@ -4,10 +4,10 @@ namespace AppGM
 {
     public class ViewModelMensajeCrearRol_DatosRol : BaseViewModel
     {
-        public ModeloRol modeloRol;
+        public ModeloRol ModeloRol { get; set; }
         public ViewModelMensajeCrearRol_DatosRol(ModeloRol _modeloRol)
         {
-            modeloRol = _modeloRol;
+            ModeloRol = _modeloRol;
         }
     }
 }

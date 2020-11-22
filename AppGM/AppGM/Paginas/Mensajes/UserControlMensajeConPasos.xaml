@@ -29,6 +29,7 @@
                 Content="{StaticResource Fa-FlechaIzquierda}"
                 FontSize="{StaticResource TamañoFontMediano}"
                 IsEnabled="{Binding PuedeRetroceder}"
+                Command="{Binding ComandoPasoAnterior}"
                 Width="40"
                 Margin="0 0 10 0"/>
 
@@ -38,6 +39,7 @@
                 Content="{StaticResource Fa-FlechaDerecha}"
                 FontSize="{StaticResource TamañoFontMediano}"
                 IsEnabled="{Binding PuedeAvanzar}"
+                Command="{Binding ComandoPasoSiguiente}"
                 Width="40"/>
 
 

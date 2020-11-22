@@ -100,6 +100,9 @@
     <Compile Include="Otros\Animaciones\ControladorDeAnimaciones.cs" />
     <Compile Include="Otros\Clases\Grosor.cs" />
     <Compile Include="Otros\Enums\Enums.cs" />
+    <Compile Include="Otros\Interfaces\Archivos\IArchivo.cs" />
+    <Compile Include="Otros\Interfaces\Archivos\IControladorDeArchivos.cs" />
+    <Compile Include="Otros\Interfaces\Archivos\IDirectorio.cs" />
     <Compile Include="Otros\Interfaces\Interfaces.cs" />
     <Compile Include="Modelos\Efectos\ModeloEfecto.cs" />
     <Compile Include="Modelos\Juego\ModeloRol.cs" />
@@ -119,6 +122,7 @@
     <Compile Include="ViewModels\DesignModels\BaseDesignModel.cs" />
     <Compile Include="ViewModels\DesignModels\DesignModelCombateItem.cs" />
     <Compile Include="ViewModels\DesignModels\DesingModelListaRoles.cs" />
+    <Compile Include="ViewModels\Mensajes\CreacionDeRol\ViewModelMensajeCrearRol_DatosMapa.cs" />
     <Compile Include="ViewModels\Mensajes\CreacionDeRol\ViewModelMensajeCrearRol.cs" />
     <Compile Include="ViewModels\Mensajes\CreacionDeRol\ViewModelMensajeCrearRol_DatosRol.cs" />
     <Compile Include="ViewModels\Mensajes\ViewModelVentanaConPasos.cs" />

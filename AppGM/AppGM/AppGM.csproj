@@ -60,6 +60,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Archivos\Archivo_Windows.cs" />
+    <Compile Include="Archivos\ControladorDeArchivos_Windows.cs" />
+    <Compile Include="Archivos\Directorio_Windows.cs" />
     <Compile Include="AttachedProperties\Animaciones\AnimarOpacidadProperty.cs" />
     <Compile Include="AttachedProperties\Animaciones\AnimarRotacionProperty.cs" />
     <Compile Include="AttachedProperties\AñadirMargenAElementosProperty.cs" />
@@ -69,6 +72,7 @@
     <Compile Include="AttachedProperties\BotonMenuRolProperty.cs" />
     <Compile Include="AttachedProperties\CampoDeTextoNumericoProperty.cs" />
     <Compile Include="AttachedProperties\DragProperty.cs" />
+    <Compile Include="Converters\FullPathToImageConverter.cs" />
     <Compile Include="Converters\Mensajes\ViewModelToContenidoMensajeConverter.cs" />
     <Compile Include="Converters\Mensajes\ViewModelToContenidoPaso.cs" />
     <Compile Include="Elementos\OutlinedText.cs" />
@@ -96,6 +100,9 @@
     </Compile>
     <Compile Include="Paginas\Inicio\UserControlCarta.xaml.cs">
       <DependentUpon>UserControlCarta.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Mensajes\CreacionDeRol\UserControlCreacionRol_DatosMapa.xaml.cs">
+      <DependentUpon>UserControlCreacionRol_DatosMapa.xaml</DependentUpon>
     </Compile>
     <Compile Include="Paginas\Mensajes\CreacionDeRol\UserControlCreacionRol_DatosRol.xaml.cs">
       <DependentUpon>UserControlCreacionRol_DatosRol.xaml</DependentUpon>
@@ -184,6 +191,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Paginas\Inicio\UserControlCarta.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Paginas\Mensajes\CreacionDeRol\UserControlCreacionRol_DatosMapa.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

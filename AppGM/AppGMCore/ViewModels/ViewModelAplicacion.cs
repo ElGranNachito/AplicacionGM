@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace AppGM.Core
 {
@@ -8,6 +7,7 @@ namespace AppGM.Core
     { 
         string TituloVentana { get; set; }
 
+        object ObtenerInstanciaVentana();
         void CerrarVentana();
         void Maximizar();
         void Minimizar();

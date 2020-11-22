@@ -6,8 +6,11 @@
 
         public ViewModelMensajeCrearRol()
         {
-            mViewModelsPasos.AddRange(new []
-                {new ViewModelMensajeCrearRol_DatosRol(rol)});
+            mViewModelsPasos.AddRange(new BaseViewModel[]
+            {
+                new ViewModelMensajeCrearRol_DatosRol(rol),
+                new ViewModelMensajeCrearRol_DatosMapa() 
+            });
         }
     }
 }

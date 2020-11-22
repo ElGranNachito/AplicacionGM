@@ -1,0 +1,61 @@
+﻿<UserControl x:Class="AppGM.UserControlCreacionRol_DatosMapa"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AppGM"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Background="White">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Textbox nombre mapa -->
+            <TextBox
+                Style="{StaticResource TextoDescriptivo}"
+                TextAlignment="Center"
+                VerticalAlignment="Center"
+                Margin="15 10"
+                Tag="Nombre mapa"/>
+
+            <!-- Boton buscar archivo mapa -->
+            <Button Grid.Column="1"
+                    Margin="15 10"
+                    Content="Seleccionar archivo"
+                    FontFamily="{StaticResource 'Font Awesome Regular'}"
+                    FontSize="{StaticResource TamañoFontMediano}"
+                    Command="{Binding ComandoSeleccionarImagenMapa}"/>
+
+        </Grid>
+
+        <!-- Preview mapa -->
+        <ScrollViewer
+            Grid.Row="1"
+            HorizontalScrollBarVisibility="Auto"
+            VerticalScrollBarVisibility="Auto">
+            <Border
+                Padding=" 10"
+                Height="{Binding ElementName=Fondo, Path=ActualHeight}"
+                Width="{Binding ElementName=Fondo, Path= ActualWidth}">
+
+                <Border.Background>
+                    <ImageBrush 
+                        x:Name="Fondo"
+                        ImageSource="{Binding PathImagenMapa, Converter={local:FullPathToImageConverter}}"/>
+                </Border.Background>
+
+            </Border>
+        </ScrollViewer>
+
+    </Grid>
+</UserControl>

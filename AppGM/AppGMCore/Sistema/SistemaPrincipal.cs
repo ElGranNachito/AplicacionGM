@@ -15,6 +15,8 @@ namespace AppGM.Core
         #region Propiedades
         public static IKernel Kernel { get; set; } = new StandardKernel();
 
+        public static IControladorDeArchivos ControladorDeArchivos        => ObtenerInstancia<IControladorDeArchivos>();
+
         public static ViewModelAplicacion           Aplicacion            => ObtenerInstancia<ViewModelAplicacion>();
         public static ViewModelPaginaPrincipalRol   RolSeleccionado       => ObtenerInstancia<ViewModelPaginaPrincipalRol>();
         public static ViewModelMenuSeleccionCombate MenuSeleccionCombate  => ObtenerInstancia<ViewModelMenuSeleccionCombate>();
@@ -32,6 +34,10 @@ namespace AppGM.Core
         public static void Inicializar()
         {
             CrearViewModels();
+        }
+        public static void CrearControladorDeArchivos(IControladorDeArchivos controladorDeArchivos)
+        {
+            Kernel.Bind<IControladorDeArchivos>().ToConstant(controladorDeArchivos);
         }
         public static async Task CargarRol(ModeloRol modelo)
         {

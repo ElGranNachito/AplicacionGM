@@ -27,6 +27,9 @@ namespace AppGM
             //Establecemos los viewm models de las ventanas
             vm.DataContext = ventanaPopups;
             DataContext    = ventanaPrincipal;
+
+            //Creamos el controlador de archivos
+            SistemaPrincipal.CrearControladorDeArchivos(new ControladorDeArchivos_Windows());
         }
     }
 }

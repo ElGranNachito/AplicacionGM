@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using AppGM.Core;
 
 namespace AppGM
 {
@@ -13,6 +14,12 @@ namespace AppGM
                     return new UserControlCreacionRol_DatosRol
                     {
                         DataContext = crdr
+                    };
+
+                case ViewModelMensajeCrearRol_DatosMapa crdt:
+                    return new UserControlCreacionRol_DatosMapa
+                    {
+                        DataContext = crdt
                     };
              
                 default:

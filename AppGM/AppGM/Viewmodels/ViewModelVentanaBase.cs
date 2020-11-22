@@ -76,6 +76,8 @@ namespace AppGM
 
         #region Implementacion Interfaz Ventana
 
+        public virtual object ObtenerInstanciaVentana() => mVentana;
+
         public virtual void CerrarVentana() => mVentana.Close();
 
         public virtual void Maximizar()
