@@ -2,30 +2,36 @@
 using System.ComponentModel;
 using System.Windows.Input;
 
-namespace AppGM.Core.ViewModels.Mensajes
+namespace AppGM.Core
 {
+    public delegate void dPasoCambio(BaseViewModel vmAnterior, BaseViewModel vmNuevo);
+
     /// <summary>
     /// View model para una ventana en la que se haya que seguir varios pasos
     /// </summary>
-    public class ViewModelVentanaConPasos : ViewModelMensajeBase
+    public class ViewModelVentanaConPasos<TipoViewModel> : ViewModelMensajeBase
+        where TipoViewModel: ViewModelVentanaConPasos<TipoViewModel>
     {
         protected int mIndicePasoActual = 0;
 
-        protected List<BaseViewModel> mViewModelsPasos = new List<BaseViewModel>();
+        protected List<ViewModelPaso<TipoViewModel>> mViewModelsPasos = new List<ViewModelPaso<TipoViewModel>>();
 
-        public BaseViewModel PasoActual => mViewModelsPasos[mIndicePasoActual];
+        public ViewModelPaso<TipoViewModel> PasoActual => mViewModelsPasos[mIndicePasoActual];
 
         public ICommand ComandoPasoSiguiente { get; private set; }
         public ICommand ComandoPasoAnterior { get; private set; }
 
-        public bool PuedeAvanzar => mIndicePasoActual < mViewModelsPasos.Count;
+        public bool PuedeAvanzar => mIndicePasoActual < mViewModelsPasos.Count - 1;
         public bool PuedeRetroceder => mIndicePasoActual > 0;
+
+        public event dPasoCambio OnAvanzarPaso    = delegate{};
+        public event dPasoCambio OnRetrocederPaso = delegate{};
 
         public ViewModelVentanaConPasos()
         {
             EstablecerComandos();
         }
-        public ViewModelVentanaConPasos(List<BaseViewModel> _viewModelsPasos)
+        public ViewModelVentanaConPasos(List<ViewModelPaso<TipoViewModel>> _viewModelsPasos)
         {
             mViewModelsPasos = _viewModelsPasos;
 
@@ -37,7 +43,16 @@ namespace AppGM.Core.ViewModels.Mensajes
             if (nuevoIndice < 0 || nuevoIndice >= mViewModelsPasos.Count)
                 return;
 
+            if (mIndicePasoActual < nuevoIndice)
+                OnAvanzarPaso(PasoActual, mViewModelsPasos[nuevoIndice]);
+            else
+                OnRetrocederPaso(PasoActual, mViewModelsPasos[nuevoIndice]);
+
+            PasoActual.Desactivar((TipoViewModel)this);
+
             mIndicePasoActual = nuevoIndice;
+
+            PasoActual.Activar((TipoViewModel)this);
 
             DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PasoActual)));
             DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PuedeAvanzar)));
@@ -46,8 +61,8 @@ namespace AppGM.Core.ViewModels.Mensajes
 
         private void EstablecerComandos()
         {
-            ComandoPasoSiguiente = new Comando(()=>EstablecerIndiceActual(++mIndicePasoActual));
-            ComandoPasoAnterior = new Comando(()=>EstablecerIndiceActual(--mIndicePasoActual));
+            ComandoPasoSiguiente = new Comando(()=>EstablecerIndiceActual(mIndicePasoActual + 1));
+            ComandoPasoAnterior  = new Comando(()=>EstablecerIndiceActual(mIndicePasoActual - 1));
         }
     }
 }

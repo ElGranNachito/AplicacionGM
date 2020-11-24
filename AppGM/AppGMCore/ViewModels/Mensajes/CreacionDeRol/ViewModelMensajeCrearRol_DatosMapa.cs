@@ -1,27 +1,54 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
 
 namespace AppGM.Core
 {
-    public class ViewModelMensajeCrearRol_DatosMapa : BaseViewModel
+    public class ViewModelMensajeCrearRol_DatosMapa : ViewModelPaso<ViewModelMensajeCrearRol>
     {
+        private IArchivo mArchivoMapa;
+
         public ICommand ComandoSeleccionarImagenMapa { get; set; }
 
         public string NombreMapa { get; set; }
 
         public string PathImagenMapa { get; set; } = string.Empty;
 
-        public ViewModelMensajeCrearRol_DatosMapa()
+        public bool BorrarImagenDeLaUbicacionAnterior { get; set; }
+
+        public ViewModelMensajeCrearRol_DatosMapa(ViewModelMensajeCrearRol viewModelCrearRol)
         {
             ComandoSeleccionarImagenMapa = new Comando(() =>
             {
-                IArchivo archivoMapa = SistemaPrincipal.ControladorDeArchivos.MostrarDialogoAbrirArchivo(
+                mArchivoMapa = SistemaPrincipal.ControladorDeArchivos.MostrarDialogoAbrirArchivo(
                     "Seleccionar Imagen Mapa",
-                    "Formatos imagen (*.jpg *.png)|*.jpg;*.png", SistemaPrincipal.Aplicacion.VentanaPrincipal);
+                    "Formatos imagen (*.jpg *.png)|*.jpg;*.png", 
+                    SistemaPrincipal.Aplicacion.VentanaPopups);
 
-                PathImagenMapa = archivoMapa.Ruta;
+                PathImagenMapa = mArchivoMapa.Ruta;
 
                 //TODO: Mover mapa a la carpeta de imagenes y cambiarle el nombre al del mapa
             });
+        }
+
+        public override void Desactivar(ViewModelMensajeCrearRol vm)
+        {
+            if (String.IsNullOrEmpty(NombreMapa) || String.IsNullOrEmpty(PathImagenMapa))
+                return;
+
+            if(mArchivoMapa.NombreSinExtension == NombreMapa)
+                return;
+
+            IArchivo archivoViejo = mArchivoMapa.CopiarADirectorio(SistemaPrincipal.ControladorDeArchivos.DirectorioImagenesMapas, true);
+            mArchivoMapa.CambiarNombre(NombreMapa);
+
+            PathImagenMapa = mArchivoMapa.Ruta;
+
+            //Borramos el archivo al salir de la aplicacion porque de intentar hacerlo aqui no podremos
+            if (BorrarImagenDeLaUbicacionAnterior)
+                SistemaPrincipal.Aplicacion.VentanaPrincipal.OnVentanaCerrada += ventana =>
+                { 
+                    archivoViejo.Borrar();
+                };
         }
     }
 }

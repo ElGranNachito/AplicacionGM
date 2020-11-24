@@ -11,6 +11,11 @@ namespace AppGM
         public string DirectorioDeTrabajo { get; set; }
         public string DirectorioEjecutable { get; set; }
         public string DirectorioImagenes { get; set; }
+        public string DirectorioImagenesMapas
+        {
+            get => Path.Combine(DirectorioImagenes, @"Mapas\");
+            set { }
+        }
 
         public ControladorDeArchivos_Windows()
         {
@@ -26,12 +31,12 @@ namespace AppGM
 
         public string ObtenerPathArchivo(string path, string[] carpetasPosteriores, string nombreArchivo)
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder(path);
 
             if (Directory.Exists(path))
             {
                 for (int i = 0; i < carpetasPosteriores.Length; ++i)
-                    sb.Append($@"{carpetasPosteriores[i]}/");
+                    sb.Append($@"{carpetasPosteriores[i]}\");
 
                 if (Directory.Exists(sb.ToString()))
                     sb.Append(nombreArchivo);
@@ -62,11 +67,6 @@ namespace AppGM
             dialogoAbrirArchivo.ShowDialog((Window)ventanaPadre.ObtenerInstanciaVentana());
 
             return new Archivo_Windows(new FileInfo(dialogoAbrirArchivo.FileName));
-        }
-
-        public void MoverArchivo(IArchivo archivo, IDirectorio destino)
-        {
-            File.Move(archivo.Ruta, destino.Ruta);
         }
     }
 }

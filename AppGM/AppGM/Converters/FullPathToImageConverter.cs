@@ -8,10 +8,12 @@ namespace AppGM
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (String.IsNullOrEmpty((string) value))
+            string tmp = (string) value;
+
+            if (String.IsNullOrEmpty(tmp))
                 return null;
 
-            return new BitmapImage(new Uri((string)value, UriKind.Absolute));
+            return new BitmapImage(new Uri(tmp, UriKind.Absolute));
         }
     }
 }

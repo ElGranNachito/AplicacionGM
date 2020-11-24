@@ -2,7 +2,7 @@
 
 namespace AppGM
 {
-    public class ViewModelMensajeCrearRol_DatosRol : BaseViewModel
+    public class ViewModelMensajeCrearRol_DatosRol : ViewModelPaso<ViewModelMensajeCrearRol>
     {
         public ModeloRol ModeloRol { get; set; }
         public ViewModelMensajeCrearRol_DatosRol(ModeloRol _modeloRol)

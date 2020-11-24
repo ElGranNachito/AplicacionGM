@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Windows.Input;
-using AppGM.Core.ViewModels.Mensajes;
 
 namespace AppGM.Core
 {
@@ -13,10 +13,11 @@ namespace AppGM.Core
 
         private int mIndiceRolActual = 0;
 
+        private Animacion AnimacionFondoMenuPrincipalLoop;
+
         public bool MouseSobreCartaRol { get; set; } = false;
 
-        public string FotogramaActualAnimacionFondo { get; set; } =
-            "../../../Media/Imagenes/Animaciones/FondoMenuPrincipal/FondoMenuPrincipal_0.jpg";
+        public string FotogramaActualAnimacionFondo { get; set; }
 
         public ICommand ComandoAvanzarIndiceRol { get; set; }
         public ICommand ComandoRetrocederIndiceRol { get; set; }
@@ -88,13 +89,17 @@ namespace AppGM.Core
                 DispararPropertyChanged(new PropertyChangedEventArgs(nameof(RolActual)));
             });
 
-            ControladorDeAnimaciones.AñadirAnimacion(
-                new Animacion(()=>FotogramaActualAnimacionFondo,
-                    1.2f,
-                    6,
-                    "../../Media/Imagenes/Animaciones/FondoMenuPrincipal/FondoMenuPrincipal_",
-                    EFormatoImagen.Jpg,
-                    this));
+            AnimacionFondoMenuPrincipalLoop = new Animacion(() => FotogramaActualAnimacionFondo,
+                1.2f,
+                6,
+                Path.Combine(SistemaPrincipal.ControladorDeArchivos.ObtenerPathArchivo(
+                    SistemaPrincipal.ControladorDeArchivos.DirectorioImagenes,
+                    new[] { "Animaciones" }, "FondoMenuPrincipal"), "FondoMenuPrincipal_"),
+                EFormatoImagen.Jpg,
+                this,
+                true);
+
+            ControladorDeAnimaciones.AñadirAnimacion(AnimacionFondoMenuPrincipalLoop);
         }
         #endregion
 

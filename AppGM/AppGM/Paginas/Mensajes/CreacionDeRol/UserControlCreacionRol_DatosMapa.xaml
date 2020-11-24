@@ -23,18 +23,33 @@
             <!-- Textbox nombre mapa -->
             <TextBox
                 Style="{StaticResource TextoDescriptivo}"
+                Text="{Binding NombreMapa, Mode=OneWayToSource}"
                 TextAlignment="Center"
-                VerticalAlignment="Center"
+                VerticalAlignment="Top"
                 Margin="15 10"
                 Tag="Nombre mapa"/>
 
-            <!-- Boton buscar archivo mapa -->
-            <Button Grid.Column="1"
-                    Margin="15 10"
-                    Content="Seleccionar archivo"
-                    FontFamily="{StaticResource 'Font Awesome Regular'}"
-                    FontSize="{StaticResource TamañoFontMediano}"
-                    Command="{Binding ComandoSeleccionarImagenMapa}"/>
+            <StackPanel Grid.Column="1"
+                        Margin="15 10">
+
+                <!-- Boton buscar archivo mapa -->
+                <Button Grid.Column="1"
+                        Content="Seleccionar archivo"
+                        FontFamily="{StaticResource 'Font Awesome Regular'}"
+                        FontSize="{StaticResource TamañoFontMediano}"
+                        Command="{Binding ComandoSeleccionarImagenMapa}"/>
+
+                <StackPanel Orientation="Horizontal"
+                            Margin="0 10 0 0">
+
+                    <!-- Checkbox borrar imagen -->
+                    <CheckBox IsChecked="{Binding BorrarImagenDeLaUbicacionAnterior}"/>
+                    <TextBlock Text="   Eliminar imagen de la ubicacion anterior"/>
+
+                </StackPanel>
+
+            </StackPanel>
+
 
         </Grid>
 

@@ -125,6 +125,7 @@
     <Compile Include="ViewModels\Mensajes\CreacionDeRol\ViewModelMensajeCrearRol_DatosMapa.cs" />
     <Compile Include="ViewModels\Mensajes\CreacionDeRol\ViewModelMensajeCrearRol.cs" />
     <Compile Include="ViewModels\Mensajes\CreacionDeRol\ViewModelMensajeCrearRol_DatosRol.cs" />
+    <Compile Include="ViewModels\Mensajes\ViewModelPaso.cs" />
     <Compile Include="ViewModels\Mensajes\ViewModelVentanaConPasos.cs" />
     <Compile Include="ViewModels\Rol\AdministradorDeCombates\Combate\ViewModelCombate.cs" />
     <Compile Include="ViewModels\Rol\AdministradorDeCombates\Combate\ViewModelListaParticipantes.cs" />

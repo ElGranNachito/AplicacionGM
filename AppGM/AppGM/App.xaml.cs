@@ -11,6 +11,9 @@ namespace AppGM
         {
             base.OnStartup(e);
 
+            //Creamos el controlador de archivos
+            SistemaPrincipal.CrearControladorDeArchivos(new ControladorDeArchivos_Windows());
+
             //Inicializamos el sistema principal
             SistemaPrincipal.Inicializar();
 

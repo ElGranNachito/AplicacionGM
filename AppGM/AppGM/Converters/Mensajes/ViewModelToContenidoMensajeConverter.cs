@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Globalization;
 using AppGM.Core;
-using AppGM.Core.ViewModels.Mensajes;
 
 namespace AppGM
 {

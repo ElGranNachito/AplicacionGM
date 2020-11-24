@@ -11,8 +11,6 @@ namespace AppGM
     {
         public MainWindow()
         {
-            InitializeComponent();
-
             //Creamos la ventana para los popups
             VentanaMensaje vm = new VentanaMensaje();
 
@@ -28,8 +26,7 @@ namespace AppGM
             vm.DataContext = ventanaPopups;
             DataContext    = ventanaPrincipal;
 
-            //Creamos el controlador de archivos
-            SistemaPrincipal.CrearControladorDeArchivos(new ControladorDeArchivos_Windows());
+            InitializeComponent();
         }
     }
 }

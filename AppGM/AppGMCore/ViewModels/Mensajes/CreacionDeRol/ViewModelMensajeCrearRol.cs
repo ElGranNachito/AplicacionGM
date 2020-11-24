@@ -1,15 +1,15 @@
-﻿namespace AppGM.Core.ViewModels.Mensajes
+﻿namespace AppGM.Core
 {
-    public class ViewModelMensajeCrearRol : ViewModelVentanaConPasos
+    public class ViewModelMensajeCrearRol : ViewModelVentanaConPasos<ViewModelMensajeCrearRol>
     {
         public ModeloRol rol { get; set; } = new ModeloRol();
 
         public ViewModelMensajeCrearRol()
         {
-            mViewModelsPasos.AddRange(new BaseViewModel[]
+            mViewModelsPasos.AddRange(new ViewModelPaso<ViewModelMensajeCrearRol>[]
             {
                 new ViewModelMensajeCrearRol_DatosRol(rol),
-                new ViewModelMensajeCrearRol_DatosMapa() 
+                new ViewModelMensajeCrearRol_DatosMapa(this) 
             });
         }
     }
