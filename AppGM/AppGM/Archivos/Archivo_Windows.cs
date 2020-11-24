@@ -5,40 +5,52 @@ namespace AppGM
 {
     class Archivo_Windows : IArchivo
     {
-        private FileInfo mArchivo;
+        #region Miembros
 
+        private FileInfo mArchivo; 
+
+        #endregion
+
+        #region Propiedades
         public string Nombre
         {
-            get => mArchivo.Name; 
-            set{}
+            get => mArchivo.Name;
+            set { }
         }
 
         public string NombreSinExtension
         {
             get => Nombre.Remove(Nombre.Length - Extension.Length);
-            set{}
+            set { }
         }
 
         public string Extension
         {
-            get => mArchivo.Extension; 
-            set{}
+            get => mArchivo.Extension;
+            set { }
         }
 
         public string Ruta
         {
             get => mArchivo.FullName;
-            set{}
+            set { }
         }
 
         public IDirectorio DirectorioPadre
         {
             get => new Directorio_Windows(new DirectoryInfo(Path.GetFullPath(Path.Combine(Ruta, @"../"))));
-            set{}
+            set { }
         }
 
-        public Archivo_Windows(FileInfo infoArchivo) => mArchivo = infoArchivo;
+        #endregion
 
+        #region Constructor
+
+        public Archivo_Windows(FileInfo infoArchivo) => mArchivo = infoArchivo; 
+
+        #endregion
+
+        #region Funciones
         public void CambiarNombre(string nuevoNombre)
         {
             string nuevaRuta = Path.Combine(Ruta.Remove(Ruta.Length - Nombre.Length, Nombre.Length), nuevoNombre + Extension);
@@ -75,6 +87,7 @@ namespace AppGM
             mArchivo = new FileInfo(nuevaRuta);
         }
 
-        public void Borrar() => mArchivo.Delete();
+        public void Borrar() => mArchivo.Delete(); 
+        #endregion
     }
 }

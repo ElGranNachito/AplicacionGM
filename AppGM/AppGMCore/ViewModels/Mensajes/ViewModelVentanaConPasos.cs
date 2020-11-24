@@ -12,32 +12,57 @@ namespace AppGM.Core
     public class ViewModelVentanaConPasos<TipoViewModel> : ViewModelMensajeBase
         where TipoViewModel: ViewModelVentanaConPasos<TipoViewModel>
     {
+        #region Miembros
+
+        protected PropertyChangedEventHandler mHandlerPasoActualPropertyChanged;
+
         protected int mIndicePasoActual = 0;
 
         protected List<ViewModelPaso<TipoViewModel>> mViewModelsPasos = new List<ViewModelPaso<TipoViewModel>>();
 
+        public event dPasoCambio OnAvanzarPaso = delegate { };
+        public event dPasoCambio OnRetrocederPaso = delegate { };
+
+        #endregion
+
+        #region Propiedades
+
         public ViewModelPaso<TipoViewModel> PasoActual => mViewModelsPasos[mIndicePasoActual];
+        public bool PuedeAvanzar    => mIndicePasoActual < mViewModelsPasos.Count - 1 && PasoActual.PuedeAvanzar();
+        public bool PuedeRetroceder => mIndicePasoActual > 0;
 
         public ICommand ComandoPasoSiguiente { get; private set; }
         public ICommand ComandoPasoAnterior { get; private set; }
 
-        public bool PuedeAvanzar => mIndicePasoActual < mViewModelsPasos.Count - 1;
-        public bool PuedeRetroceder => mIndicePasoActual > 0;
+        #endregion
 
-        public event dPasoCambio OnAvanzarPaso    = delegate{};
-        public event dPasoCambio OnRetrocederPaso = delegate{};
+        #region Constructores
 
         public ViewModelVentanaConPasos()
         {
+            mHandlerPasoActualPropertyChanged = (sender, args) =>
+            {
+                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PuedeAvanzar)));
+            };
+
             EstablecerComandos();
         }
         public ViewModelVentanaConPasos(List<ViewModelPaso<TipoViewModel>> _viewModelsPasos)
         {
             mViewModelsPasos = _viewModelsPasos;
 
+            mHandlerPasoActualPropertyChanged = (sender, args) =>
+            {
+                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PuedeAvanzar)));
+            };
+
+            PasoActual.PropertyChanged += mHandlerPasoActualPropertyChanged;
+
             EstablecerComandos();
         }
+        #endregion
 
+        #region Funciones
         public void EstablecerIndiceActual(int nuevoIndice)
         {
             if (nuevoIndice < 0 || nuevoIndice >= mViewModelsPasos.Count)
@@ -49,10 +74,12 @@ namespace AppGM.Core
                 OnRetrocederPaso(PasoActual, mViewModelsPasos[nuevoIndice]);
 
             PasoActual.Desactivar((TipoViewModel)this);
+            PasoActual.PropertyChanged -= mHandlerPasoActualPropertyChanged;
 
             mIndicePasoActual = nuevoIndice;
 
             PasoActual.Activar((TipoViewModel)this);
+            PasoActual.PropertyChanged += mHandlerPasoActualPropertyChanged;
 
             DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PasoActual)));
             DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PuedeAvanzar)));
@@ -61,8 +88,9 @@ namespace AppGM.Core
 
         private void EstablecerComandos()
         {
-            ComandoPasoSiguiente = new Comando(()=>EstablecerIndiceActual(mIndicePasoActual + 1));
-            ComandoPasoAnterior  = new Comando(()=>EstablecerIndiceActual(mIndicePasoActual - 1));
-        }
+            ComandoPasoSiguiente = new Comando(() => EstablecerIndiceActual(mIndicePasoActual + 1));
+            ComandoPasoAnterior = new Comando(() => EstablecerIndiceActual(mIndicePasoActual - 1));
+        } 
+        #endregion
     }
 }

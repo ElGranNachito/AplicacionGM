@@ -8,6 +8,8 @@ namespace AppGM
 {
     class ControladorDeArchivos_Windows : IControladorDeArchivos
     {
+        #region Propiedades
+
         public string DirectorioDeTrabajo { get; set; }
         public string DirectorioEjecutable { get; set; }
         public string DirectorioImagenes { get; set; }
@@ -17,6 +19,9 @@ namespace AppGM
             set { }
         }
 
+        #endregion
+
+        #region Constructor
         public ControladorDeArchivos_Windows()
         {
             DirectorioDeTrabajo = Directory.GetCurrentDirectory();
@@ -28,6 +33,9 @@ namespace AppGM
 
             DirectorioImagenes = Path.Combine(DirectorioImagenes, @"Imagenes\");
         }
+        #endregion
+
+        #region Funciones
 
         public string ObtenerPathArchivo(string path, string[] carpetasPosteriores, string nombreArchivo)
         {
@@ -49,7 +57,7 @@ namespace AppGM
         {
             string pathDirectorio = Path.Combine(path, nombre);
 
-            if(Directory.Exists(pathDirectorio))
+            if (Directory.Exists(pathDirectorio))
                 return new Directorio_Windows(new DirectoryInfo(pathDirectorio));
 
             return null;
@@ -59,14 +67,16 @@ namespace AppGM
         {
             OpenFileDialog dialogoAbrirArchivo = new OpenFileDialog();
 
-            dialogoAbrirArchivo.DefaultExt       = extensionesBuscadas;
+            dialogoAbrirArchivo.DefaultExt = extensionesBuscadas;
             dialogoAbrirArchivo.InitialDirectory = DirectorioDeTrabajo;
-            dialogoAbrirArchivo.Title            = titulo;
-            dialogoAbrirArchivo.Filter           = extensionesBuscadas;
+            dialogoAbrirArchivo.Title = titulo;
+            dialogoAbrirArchivo.Filter = extensionesBuscadas;
 
             dialogoAbrirArchivo.ShowDialog((Window)ventanaPadre.ObtenerInstanciaVentana());
 
             return new Archivo_Windows(new FileInfo(dialogoAbrirArchivo.FileName));
-        }
+        } 
+
+        #endregion
     }
 }

@@ -11,6 +11,8 @@
                 new ViewModelMensajeCrearRol_DatosRol(rol),
                 new ViewModelMensajeCrearRol_DatosMapa(this) 
             });
+
+            PasoActual.PropertyChanged += mHandlerPasoActualPropertyChanged;
         }
     }
 }

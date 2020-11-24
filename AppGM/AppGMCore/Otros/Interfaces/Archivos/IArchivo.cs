@@ -2,6 +2,8 @@
 {
     public interface IArchivo
     {
+        #region Propiedades
+
         string Nombre { get; set; }
         string NombreSinExtension { get; set; }
         string Extension { get; set; }
@@ -11,6 +13,10 @@
         /// Devuelve la carpeta contenedora
         /// </summary>
         IDirectorio DirectorioPadre { get; set; }
+
+        #endregion
+
+        #region Funciones
 
         /// <summary>
         /// Copia un archivo a otro directorio
@@ -35,6 +41,8 @@
         /// <summary>
         /// Borra el archivo
         /// </summary>
-        void Borrar();
+        void Borrar(); 
+
+        #endregion
     }
 }

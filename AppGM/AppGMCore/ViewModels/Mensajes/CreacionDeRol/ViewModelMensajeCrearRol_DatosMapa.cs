@@ -25,14 +25,12 @@ namespace AppGM.Core
                     SistemaPrincipal.Aplicacion.VentanaPopups);
 
                 PathImagenMapa = mArchivoMapa.Ruta;
-
-                //TODO: Mover mapa a la carpeta de imagenes y cambiarle el nombre al del mapa
             });
         }
 
         public override void Desactivar(ViewModelMensajeCrearRol vm)
         {
-            if (String.IsNullOrEmpty(NombreMapa) || String.IsNullOrEmpty(PathImagenMapa))
+            if (string.IsNullOrEmpty(NombreMapa) || string.IsNullOrEmpty(PathImagenMapa))
                 return;
 
             if(mArchivoMapa.NombreSinExtension == NombreMapa)
@@ -50,5 +48,7 @@ namespace AppGM.Core
                     archivoViejo.Borrar();
                 };
         }
+
+        public override bool PuedeAvanzar() => !(String.IsNullOrEmpty(NombreMapa) || String.IsNullOrEmpty(PathImagenMapa));
     }
 }
