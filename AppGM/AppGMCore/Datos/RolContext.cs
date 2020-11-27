@@ -1,17 +1,9 @@
-﻿using System;
-using System.Linq.Expressions;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace AppGM.Core
 {
     public class RolContext : DbContext
     {
-        #region Miembros
-
-        private string mNombreRolSeleccionado;
-
-        #endregion
 
         #region Propiedades
         // Modelos ---
@@ -589,15 +581,6 @@ namespace AppGM.Core
             modelBuilder.Entity<TIRolMapa>()
                 .HasOne<ModeloMapa>();
         }
-        #endregion
-
-        #region Constructores
-
-        public RolContext(string _nombreRolSeleccionado)
-        {
-            mNombreRolSeleccionado = _nombreRolSeleccionado;
-        }
-
         #endregion
     }
 }

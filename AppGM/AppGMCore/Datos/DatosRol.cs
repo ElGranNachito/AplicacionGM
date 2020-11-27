@@ -9,6 +9,7 @@ namespace AppGM.Core
 		#region Miembros
 
 		private RolContext mDBRol;
+        private ModeloRol mRolSeleccionado;
 
 		#endregion
 
@@ -44,9 +45,11 @@ namespace AppGM.Core
 		/// Crea la clase y abre conexion con la base de datos
 		/// </summary>
 		/// <param name="_modeloRol"></param>
-		public DatosRol(ModeloRol _modeloRol)
-		{
-			mDBRol = new RolContext(_modeloRol.Nombre);
+		public DatosRol(ModeloRol _rolSeleccionado)
+        {
+            mRolSeleccionado = _rolSeleccionado;
+
+			mDBRol = new RolContext();
 		}
 		public async Task CargarDatos()
 		{
