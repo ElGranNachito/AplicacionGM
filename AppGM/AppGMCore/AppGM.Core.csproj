@@ -67,13 +67,14 @@
     <Compile Include="Controladores\Utilizables\ControladorConsumible.cs" />
     <Compile Include="Controladores\Utilizables\ControladorPortable.cs" />
     <Compile Include="Controladores\Utilizables\ControladorUtilizable.cs" />
+    <Compile Include="Datos\DatosCreacionRol.cs" />
     <Compile Include="Datos\DatosRol.cs" />
     <Compile Include="Datos\RolContext.cs" />
     <Compile Include="Helpers\MathHelpers.cs" />
     <Compile Include="Helpers\StringHelpers.cs" />
-    <Compile Include="Migrations\20201119162908_Inicial.cs" />
-    <Compile Include="Migrations\20201119162908_Inicial.designer.cs">
-      <DependentUpon>20201119162908_Inicial.cs</DependentUpon>
+    <Compile Include="Migrations\20201127010833_Inicial.cs" />
+    <Compile Include="Migrations\20201127010833_Inicial.designer.cs">
+      <DependentUpon>20201127010833_Inicial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\RolContextModelSnapshot.cs" />
     <Compile Include="Modelos\Habilidades\CaracteristicasHabilidad.cs" />
@@ -116,6 +117,7 @@
     <Compile Include="Relaciones\TIMapa.cs" />
     <Compile Include="Relaciones\TIModificadores.cs" />
     <Compile Include="Relaciones\TIPersonajes.cs" />
+    <Compile Include="Relaciones\TIRol.cs" />
     <Compile Include="Relaciones\TIUtilizables.cs" />
     <Compile Include="Sistema\SistemaPrincipal.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
@@ -124,6 +126,7 @@
     <Compile Include="ViewModels\DesignModels\DesingModelListaRoles.cs" />
     <Compile Include="ViewModels\Mensajes\CreacionDeRol\ViewModelMensajeCrearRol_DatosMapa.cs" />
     <Compile Include="ViewModels\Mensajes\CreacionDeRol\ViewModelMensajeCrearRol.cs" />
+    <Compile Include="ViewModels\Mensajes\CreacionDeRol\ViewModelMensajeCrearRol_DatosPersonajes.cs" />
     <Compile Include="ViewModels\Mensajes\CreacionDeRol\ViewModelMensajeCrearRol_DatosRol.cs" />
     <Compile Include="ViewModels\Mensajes\ViewModelPaso.cs" />
     <Compile Include="ViewModels\Mensajes\ViewModelVentanaConPasos.cs" />

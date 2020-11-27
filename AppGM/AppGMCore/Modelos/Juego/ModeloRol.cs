@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace AppGM.Core
@@ -26,5 +27,9 @@ namespace AppGM.Core
 
         // Ultima fecha de uso del rol (sesion)
         public DateTime FechaUltimaSesion { get; set; }
+
+        public List<TIRolPersonaje> Personajes { get; set; } = new List<TIRolPersonaje>();
+        public List<TIRolCombate> Combates { get; set; } = new List<TIRolCombate>();
+        public List<TIRolMapa> Mapas { get; set; } = new List<TIRolMapa>();
     }
 }

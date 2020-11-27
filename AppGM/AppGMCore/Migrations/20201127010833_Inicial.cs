@@ -797,6 +797,88 @@ namespace AppGM.Core.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CombatesRol",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    IdRol = table.Column<int>(nullable: false),
+                    IdCombate = table.Column<int>(nullable: false),
+                    ModeloAdministradorDeCombateId = table.Column<int>(nullable: true),
+                    ModeloRolId = table.Column<int>(nullable: false),
+                    ModeloRolId1 = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CombatesRol", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CombatesRol_Combates_IdCombate",
+                        column: x => x.IdCombate,
+                        principalTable: "Combates",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CombatesRol_Rols_IdRol",
+                        column: x => x.IdRol,
+                        principalTable: "Rols",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CombatesRol_Combates_ModeloAdministradorDeCombateId",
+                        column: x => x.ModeloAdministradorDeCombateId,
+                        principalTable: "Combates",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_CombatesRol_Rols_ModeloRolId1",
+                        column: x => x.ModeloRolId1,
+                        principalTable: "Rols",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MapasRol",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    IdRol = table.Column<int>(nullable: false),
+                    IdMapa = table.Column<int>(nullable: false),
+                    ModeloMapaId = table.Column<int>(nullable: true),
+                    ModeloRolId = table.Column<int>(nullable: false),
+                    ModeloRolId1 = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MapasRol", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_MapasRol_Mapas_IdMapa",
+                        column: x => x.IdMapa,
+                        principalTable: "Mapas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MapasRol_Rols_IdRol",
+                        column: x => x.IdRol,
+                        principalTable: "Rols",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MapasRol_Mapas_ModeloMapaId",
+                        column: x => x.ModeloMapaId,
+                        principalTable: "Mapas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_MapasRol_Rols_ModeloRolId1",
+                        column: x => x.ModeloRolId1,
+                        principalTable: "Rols",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "MapasUnidadesMapa",
                 columns: table => new
                 {
@@ -1101,6 +1183,47 @@ namespace AppGM.Core.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PersonajesRol",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    IdRol = table.Column<int>(nullable: false),
+                    IdPersonaje = table.Column<int>(nullable: false),
+                    ModeloPersonajeId = table.Column<int>(nullable: true),
+                    ModeloRolId = table.Column<int>(nullable: false),
+                    ModeloRolId1 = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PersonajesRol", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PersonajesRol_ModeloPersonaje_IdPersonaje",
+                        column: x => x.IdPersonaje,
+                        principalTable: "ModeloPersonaje",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PersonajesRol_Rols_IdRol",
+                        column: x => x.IdRol,
+                        principalTable: "Rols",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PersonajesRol_ModeloPersonaje_ModeloPersonajeId",
+                        column: x => x.ModeloPersonajeId,
+                        principalTable: "ModeloPersonaje",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_PersonajesRol_Rols_ModeloRolId1",
+                        column: x => x.ModeloRolId1,
+                        principalTable: "Rols",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PersonajesUnidadesMapa",
                 columns: table => new
                 {
@@ -1304,6 +1427,46 @@ namespace AppGM.Core.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_CombatesRol_IdCombate",
+                table: "CombatesRol",
+                column: "IdCombate");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CombatesRol_IdRol",
+                table: "CombatesRol",
+                column: "IdRol");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CombatesRol_ModeloAdministradorDeCombateId",
+                table: "CombatesRol",
+                column: "ModeloAdministradorDeCombateId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CombatesRol_ModeloRolId1",
+                table: "CombatesRol",
+                column: "ModeloRolId1");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MapasRol_IdMapa",
+                table: "MapasRol",
+                column: "IdMapa");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MapasRol_IdRol",
+                table: "MapasRol",
+                column: "IdRol");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MapasRol_ModeloMapaId",
+                table: "MapasRol",
+                column: "ModeloMapaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MapasRol_ModeloRolId1",
+                table: "MapasRol",
+                column: "ModeloRolId1");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_MapasUnidadesMapa_IdUnidadMapa",
                 table: "MapasUnidadesMapa",
                 column: "IdUnidadMapa");
@@ -1368,6 +1531,26 @@ namespace AppGM.Core.Migrations
                 name: "IX_PersonajeSkills_IdHabilidad",
                 table: "PersonajeSkills",
                 column: "IdHabilidad");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PersonajesRol_IdPersonaje",
+                table: "PersonajesRol",
+                column: "IdPersonaje");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PersonajesRol_IdRol",
+                table: "PersonajesRol",
+                column: "IdRol");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PersonajesRol_ModeloPersonajeId",
+                table: "PersonajesRol",
+                column: "ModeloPersonajeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PersonajesRol_ModeloRolId1",
+                table: "PersonajesRol",
+                column: "ModeloRolId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PersonajesUnidadesMapa_IdUnidadMapa",
@@ -1598,6 +1781,12 @@ namespace AppGM.Core.Migrations
                 name: "CombateParticipantes");
 
             migrationBuilder.DropTable(
+                name: "CombatesRol");
+
+            migrationBuilder.DropTable(
+                name: "MapasRol");
+
+            migrationBuilder.DropTable(
                 name: "MapasUnidadesMapa");
 
             migrationBuilder.DropTable(
@@ -1631,13 +1820,13 @@ namespace AppGM.Core.Migrations
                 name: "PersonajeSkills");
 
             migrationBuilder.DropTable(
+                name: "PersonajesRol");
+
+            migrationBuilder.DropTable(
                 name: "PersonajesUnidadesMapa");
 
             migrationBuilder.DropTable(
                 name: "PersonajeUtilizables");
-
-            migrationBuilder.DropTable(
-                name: "Rols");
 
             migrationBuilder.DropTable(
                 name: "ServantNoblePhantasms");
@@ -1728,6 +1917,9 @@ namespace AppGM.Core.Migrations
 
             migrationBuilder.DropTable(
                 name: "Participantes");
+
+            migrationBuilder.DropTable(
+                name: "Rols");
 
             migrationBuilder.DropTable(
                 name: "ModeloCargasHabilidad");

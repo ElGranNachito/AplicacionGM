@@ -5,6 +5,7 @@ namespace AppGM.Core
 {
     public class ViewModelMensajeCrearRol_DatosMapa : ViewModelPaso<ViewModelMensajeCrearRol>
     {
+        private ModeloMapa mMapa;
         private IArchivo mArchivoMapa;
 
         public ICommand ComandoSeleccionarImagenMapa { get; set; }
@@ -15,8 +16,10 @@ namespace AppGM.Core
 
         public bool BorrarImagenDeLaUbicacionAnterior { get; set; }
 
-        public ViewModelMensajeCrearRol_DatosMapa(ViewModelMensajeCrearRol viewModelCrearRol)
+        public ViewModelMensajeCrearRol_DatosMapa(ModeloMapa _mapa)
         {
+            mMapa = _mapa;
+
             ComandoSeleccionarImagenMapa = new Comando(() =>
             {
                 mArchivoMapa = SistemaPrincipal.ControladorDeArchivos.MostrarDialogoAbrirArchivo(

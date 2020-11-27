@@ -2,14 +2,18 @@
 {
     public class ViewModelMensajeCrearRol : ViewModelVentanaConPasos<ViewModelMensajeCrearRol>
     {
-        public ModeloRol rol { get; set; } = new ModeloRol();
+        public DatosCreacionRol datosRol { get; set; } = new DatosCreacionRol();
 
         public ViewModelMensajeCrearRol()
         {
+            ModeloMapa mapaPrincipal = new ModeloMapa();
+
+            datosRol.mapas.Add(mapaPrincipal);
+
             mViewModelsPasos.AddRange(new ViewModelPaso<ViewModelMensajeCrearRol>[]
             {
-                new ViewModelMensajeCrearRol_DatosRol(rol),
-                new ViewModelMensajeCrearRol_DatosMapa(this) 
+                new ViewModelMensajeCrearRol_DatosRol(datosRol.modeloRol),
+                new ViewModelMensajeCrearRol_DatosMapa(mapaPrincipal) 
             });
 
             PasoActual.PropertyChanged += mHandlerPasoActualPropertyChanged;

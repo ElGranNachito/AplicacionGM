@@ -961,6 +961,108 @@ namespace AppGM.Core.Migrations
                     b.ToTable("TIPortableSlots");
                 });
 
+            modelBuilder.Entity("AppGM.Core.TIRolCombate", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("IdCombate")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("IdRol")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("ModeloAdministradorDeCombateId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ModeloRolId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("ModeloRolId1")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdCombate");
+
+                    b.HasIndex("IdRol");
+
+                    b.HasIndex("ModeloAdministradorDeCombateId");
+
+                    b.HasIndex("ModeloRolId1");
+
+                    b.ToTable("CombatesRol");
+                });
+
+            modelBuilder.Entity("AppGM.Core.TIRolMapa", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("IdMapa")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("IdRol")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("ModeloMapaId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ModeloRolId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("ModeloRolId1")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdMapa");
+
+                    b.HasIndex("IdRol");
+
+                    b.HasIndex("ModeloMapaId");
+
+                    b.HasIndex("ModeloRolId1");
+
+                    b.ToTable("MapasRol");
+                });
+
+            modelBuilder.Entity("AppGM.Core.TIRolPersonaje", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("IdPersonaje")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("IdRol")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("ModeloPersonajeId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ModeloRolId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("ModeloRolId1")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdPersonaje");
+
+                    b.HasIndex("IdRol");
+
+                    b.HasIndex("ModeloPersonajeId");
+
+                    b.HasIndex("ModeloRolId1");
+
+                    b.ToTable("PersonajesRol");
+                });
+
             modelBuilder.Entity("AppGM.Core.TIServantNoblePhantasm", b =>
                 {
                     b.Property<int>("IdServant")
@@ -1864,6 +1966,75 @@ namespace AppGM.Core.Migrations
                         .HasForeignKey("IdSlot")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("AppGM.Core.TIRolCombate", b =>
+                {
+                    b.HasOne("AppGM.Core.ModeloAdministradorDeCombate", "Combate")
+                        .WithMany()
+                        .HasForeignKey("IdCombate")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AppGM.Core.ModeloRol", "Rol")
+                        .WithMany()
+                        .HasForeignKey("IdRol")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AppGM.Core.ModeloAdministradorDeCombate", null)
+                        .WithMany()
+                        .HasForeignKey("ModeloAdministradorDeCombateId");
+
+                    b.HasOne("AppGM.Core.ModeloRol", null)
+                        .WithMany("Combates")
+                        .HasForeignKey("ModeloRolId1");
+                });
+
+            modelBuilder.Entity("AppGM.Core.TIRolMapa", b =>
+                {
+                    b.HasOne("AppGM.Core.ModeloMapa", "Mapa")
+                        .WithMany()
+                        .HasForeignKey("IdMapa")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AppGM.Core.ModeloRol", "Rol")
+                        .WithMany()
+                        .HasForeignKey("IdRol")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AppGM.Core.ModeloMapa", null)
+                        .WithMany()
+                        .HasForeignKey("ModeloMapaId");
+
+                    b.HasOne("AppGM.Core.ModeloRol", null)
+                        .WithMany("Mapas")
+                        .HasForeignKey("ModeloRolId1");
+                });
+
+            modelBuilder.Entity("AppGM.Core.TIRolPersonaje", b =>
+                {
+                    b.HasOne("AppGM.Core.ModeloPersonaje", "Personaje")
+                        .WithMany()
+                        .HasForeignKey("IdPersonaje")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AppGM.Core.ModeloRol", "Rol")
+                        .WithMany()
+                        .HasForeignKey("IdRol")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AppGM.Core.ModeloPersonaje", null)
+                        .WithMany()
+                        .HasForeignKey("ModeloPersonajeId");
+
+                    b.HasOne("AppGM.Core.ModeloRol", null)
+                        .WithMany("Personajes")
+                        .HasForeignKey("ModeloRolId1");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIServantNoblePhantasm", b =>

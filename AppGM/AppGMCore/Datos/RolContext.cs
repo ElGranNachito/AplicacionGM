@@ -45,6 +45,9 @@ namespace AppGM.Core
         public DbSet<TIUnidadMapaVector2> UnidadesMapaVectores2 { get; set; }
         public DbSet<TIPersonajeUnidadMapa> PersonajesUnidadesMapa { get; set; }
         public DbSet<TIParticipanteAccion> ParticipanteAccion { get; set; }
+        public DbSet<TIRolCombate> CombatesRol { get; set; }
+        public DbSet<TIRolMapa> MapasRol { get; set; } 
+        public DbSet<TIRolPersonaje> PersonajesRol { get; set; }
         #endregion
 
         public RolContext(){}
@@ -52,7 +55,7 @@ namespace AppGM.Core
         #region Configuracion de la base de datos
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlite("Data Source = Db.db");
+        => optionsBuilder.UseSqlite("Data Source = bb.db");
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -565,6 +568,26 @@ namespace AppGM.Core
             modelBuilder.Entity<TIPersonajeArmaDistancia>()
                 .HasOne(i => i.ArmaDistancia);
 
+            modelBuilder.Entity<TIRolPersonaje>()
+                .HasOne<ModeloRol>()
+                .WithMany(m => m.Personajes);
+
+            modelBuilder.Entity<TIRolPersonaje>()
+                .HasOne<ModeloPersonaje>();
+
+            modelBuilder.Entity<TIRolCombate>()
+                .HasOne<ModeloRol>()
+                .WithMany(m => m.Combates);
+
+            modelBuilder.Entity<TIRolCombate>()
+                .HasOne<ModeloAdministradorDeCombate>();
+
+            modelBuilder.Entity<TIRolMapa>()
+                .HasOne<ModeloRol>()
+                .WithMany(m => m.Mapas);
+
+            modelBuilder.Entity<TIRolMapa>()
+                .HasOne<ModeloMapa>();
         }
         #endregion
 
