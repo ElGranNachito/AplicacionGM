@@ -14,9 +14,10 @@
 
             <!-- boton agregar -->
             <Button 
+                Padding="5 2 "
                 Content="Agregar"
                 HorizontalAlignment="Center"
-                Padding="5 2 "/>
+                Command="{Binding ComandoAñadirPersonaje}"/>
 
             <!-- Filtros -->
             <StackPanel 
@@ -26,10 +27,18 @@
                 local:AñadirMargenAElementosProperty.Value="{x:Type CheckBox}"
                 local:ParametroThicknessProperty.Parametro="0 5">
 
-                <CheckBox Content="Servants"/>
-                <CheckBox Content="Masters"/>
-                <CheckBox Content="Invocaciones"/>
-                <CheckBox Content="NPCs"/>
+                <CheckBox 
+                    Content="Servants"
+                    IsChecked="{Binding MostrarServants}"/>
+                <CheckBox 
+                    Content="Masters"
+                    IsChecked="{Binding MostrarMasters}"/>
+                <CheckBox 
+                    Content="Invocaciones"
+                    IsChecked="{Binding MostrarInvocaciones}"/>
+                <CheckBox 
+                    Content="NPCs"
+                    IsChecked="{Binding MostrarNPCs}"/>
 
             </StackPanel>
 
@@ -39,10 +48,8 @@
                 BorderThickness="1" 
                 Margin="1"
 >
-                <!-- Scroll -->
-                <ScrollViewer>
-
-                </ScrollViewer>
+                <!-- Lista de personajes -->
+                <local:UserControlCreacionRol_ListaPersonajes/>
 
             </Border>
 

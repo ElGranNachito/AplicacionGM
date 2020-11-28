@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AppGM.Core
 {
@@ -18,16 +16,21 @@ namespace AppGM.Core
         public ETipoPersonaje TipoPersonaje { get; set; }
 
         //Stats del personaje
-        public int MaxHp { get; set; }
-        public int Hp { get; set; }
-        public ushort Str { get; set; }
-        public ushort End { get; set; }
-        public ushort Agi { get; set; }
+        public int    MaxHp { get; set; }
+        public int    Hp    { get; set; }
+        public ushort Str   { get; set; }
+        public ushort End   { get; set; }
+        public ushort Agi   { get; set; }
         public ushort Intel { get; set; }
-        public ushort Lck { get; set; }
+        public ushort Lck   { get; set; }
+
+        //Imagencita del personaje
+        public string PathImagen { get; set; }
 
         //Estado del personaje (en combate o no en combate)
         public bool EstaEnCombate { get; set; }
+
+        public EFormatoImagen FormatoImagen { get; set; }
 
         //Posicion del personaje en el mapa
         public ModeloVector2 Posicion { get; set; }
@@ -41,10 +44,6 @@ namespace AppGM.Core
         public List<TIPersonajeMagia>      Magias     { get; set; } = new List<TIPersonajeMagia>();
         public List<TIPersonajeModificadorDeDefensa> ModificadoresDeDefensa { get; set; } = new List<TIPersonajeModificadorDeDefensa>();
         public List<TIPersonajeArmaDistancia>        ArmasDistancia         { get; set; } = new List<TIPersonajeArmaDistancia>();
-
-        //Imagencita del personaje
-        public string PathImagen { get; set; }
-        public EFormatoImagen FormatoImagen { get; set; }
 
         public ControladorPersonaje controlador;
     }

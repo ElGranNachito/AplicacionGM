@@ -101,8 +101,14 @@
     <Compile Include="Paginas\Inicio\UserControlCarta.xaml.cs">
       <DependentUpon>UserControlCarta.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Paginas\Mensajes\CreacionDeRol\UserControlCreacionRol_CreacionPersonaje.xaml.cs">
+    <Compile Include="Paginas\Mensajes\CreacionDeRol\Creacion De Personajes\UserControlCreacionRol_CreacionPersonaje.xaml.cs">
       <DependentUpon>UserControlCreacionRol_CreacionPersonaje.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Mensajes\CreacionDeRol\Creacion De Personajes\UserControlCreacionRol_ListaPersonajes.xaml.cs">
+      <DependentUpon>UserControlCreacionRol_ListaPersonajes.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Mensajes\CreacionDeRol\Creacion De Personajes\UserControlCreacionRol_PersonajeItem.xaml.cs">
+      <DependentUpon>UserControlCreacionRol_PersonajeItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="Paginas\Mensajes\CreacionDeRol\UserControlCreacionRol_DatosMapa.xaml.cs">
       <DependentUpon>UserControlCreacionRol_DatosMapa.xaml</DependentUpon>
@@ -110,7 +116,7 @@
     <Compile Include="Paginas\Mensajes\CreacionDeRol\UserControlCreacionRol_DatosRol.xaml.cs">
       <DependentUpon>UserControlCreacionRol_DatosRol.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Paginas\Mensajes\CreacionDeRol\UserControlCreacionRol_Personajes.xaml.cs">
+    <Compile Include="Paginas\Mensajes\CreacionDeRol\Creacion De Personajes\UserControlCreacionRol_Personajes.xaml.cs">
       <DependentUpon>UserControlCreacionRol_Personajes.xaml</DependentUpon>
     </Compile>
     <Compile Include="Paginas\Mensajes\UserControlMensajeConPasos.xaml.cs">
@@ -200,7 +206,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Paginas\Mensajes\CreacionDeRol\UserControlCreacionRol_CreacionPersonaje.xaml">
+    <Page Include="Paginas\Mensajes\CreacionDeRol\Creacion De Personajes\UserControlCreacionRol_CreacionPersonaje.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Paginas\Mensajes\CreacionDeRol\Creacion De Personajes\UserControlCreacionRol_ListaPersonajes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Paginas\Mensajes\CreacionDeRol\Creacion De Personajes\UserControlCreacionRol_PersonajeItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -212,7 +226,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Paginas\Mensajes\CreacionDeRol\UserControlCreacionRol_Personajes.xaml">
+    <Page Include="Paginas\Mensajes\CreacionDeRol\Creacion De Personajes\UserControlCreacionRol_Personajes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -516,5 +530,6 @@
   <ItemGroup>
     <Resource Include="Media\Imagenes\camarita.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

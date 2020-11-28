@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AppGM.Core.Migrations
 {
     [DbContext(typeof(RolContext))]
-    [Migration("20201127010833_Inicial")]
+    [Migration("20201128191904_Inicial")]
     partial class Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1265,6 +1265,9 @@ namespace AppGM.Core.Migrations
                 {
                     b.HasBaseType("AppGM.Core.ModeloPersonaje");
 
+                    b.Property<int>("EClaseServant")
+                        .HasColumnType("INTEGER");
+
                     b.HasDiscriminator().HasValue(1);
                 });
 
@@ -1348,8 +1351,8 @@ namespace AppGM.Core.Migrations
                 {
                     b.HasBaseType("AppGM.Core.ModeloPersonajeJugable");
 
-                    b.Property<int>("mEClaseDeServant")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("NombreReal")
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("mERangoNP")
                         .HasColumnType("INTEGER");

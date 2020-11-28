@@ -72,9 +72,9 @@
     <Compile Include="Datos\RolContext.cs" />
     <Compile Include="Helpers\MathHelpers.cs" />
     <Compile Include="Helpers\StringHelpers.cs" />
-    <Compile Include="Migrations\20201127010833_Inicial.cs" />
-    <Compile Include="Migrations\20201127010833_Inicial.designer.cs">
-      <DependentUpon>20201127010833_Inicial.cs</DependentUpon>
+    <Compile Include="Migrations\20201128191904_Inicial.cs" />
+    <Compile Include="Migrations\20201128191904_Inicial.designer.cs">
+      <DependentUpon>20201128191904_Inicial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\RolContextModelSnapshot.cs" />
     <Compile Include="Modelos\Habilidades\CaracteristicasHabilidad.cs" />
@@ -124,10 +124,12 @@
     <Compile Include="ViewModels\DesignModels\BaseDesignModel.cs" />
     <Compile Include="ViewModels\DesignModels\DesignModelCombateItem.cs" />
     <Compile Include="ViewModels\DesignModels\DesingModelListaRoles.cs" />
-    <Compile Include="ViewModels\Mensajes\CreacionDeRol\ViewModelMensajeCrearRol_CrearPersonaje.cs" />
+    <Compile Include="ViewModels\Mensajes\CreacionDeRol\Creacion de personajes\ViewModelMensajeCrearRol_ListaPersonajes.cs" />
+    <Compile Include="ViewModels\Mensajes\CreacionDeRol\Creacion de personajes\ViewModelMensajeCrearRol_CrearPersonaje.cs" />
+    <Compile Include="ViewModels\Mensajes\CreacionDeRol\Creacion de personajes\ViewModelMensajeCrearRol_PersonajeItem.cs" />
     <Compile Include="ViewModels\Mensajes\CreacionDeRol\ViewModelMensajeCrearRol_DatosMapa.cs" />
     <Compile Include="ViewModels\Mensajes\CreacionDeRol\ViewModelMensajeCrearRol.cs" />
-    <Compile Include="ViewModels\Mensajes\CreacionDeRol\ViewModelMensajeCrearRol_DatosPersonajes.cs" />
+    <Compile Include="ViewModels\Mensajes\CreacionDeRol\Creacion de personajes\ViewModelMensajeCrearRol_DatosPersonajes.cs" />
     <Compile Include="ViewModels\Mensajes\CreacionDeRol\ViewModelMensajeCrearRol_DatosRol.cs" />
     <Compile Include="ViewModels\Mensajes\ViewModelPaso.cs" />
     <Compile Include="ViewModels\Mensajes\ViewModelVentanaConPasos.cs" />

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace AppGM.Core
 {
@@ -6,11 +7,12 @@ namespace AppGM.Core
     {
         public ModeloRol modeloRol = new ModeloRol();
 
-		public List<ModeloMapa> mapas                             = new List<ModeloMapa>();
 		public List<ModeloPersonaje> personajes                   = new List<ModeloPersonaje>();
 		public List<ModeloPersonaje> servants                     = new List<ModeloPersonaje>();
 		public List<ModeloPersonaje> masters                      = new List<ModeloPersonaje>();
 		public List<ModeloPersonaje> invocaciones                 = new List<ModeloPersonaje>();
+        public List<ModeloPersonaje> npcs                         = new List<ModeloPersonaje>();
+		public List<ModeloMapa> mapas                             = new List<ModeloMapa>();
 		public List<ModeloUtilizable> items                       = new List<ModeloUtilizable>();
 		public List<ModeloPortable> portables                     = new List<ModeloPortable>();
 		public List<ModeloPortable> portableOfensivo              = new List<ModeloPortable>();

@@ -46,11 +46,8 @@
                         BorderThickness="1">
 
                         <Border.Background>
-                            <ImageBrush>
-                                <ImageBrush.ImageSource>
-                                    <BitmapImage BaseUri="{Binding PathImagen, Converter={local:FullPathToImageConverter}}"/>
-                                </ImageBrush.ImageSource>
-                            </ImageBrush>
+                            <ImageBrush
+                                ImageSource="{Binding PathImagen, Converter={local:FullPathToImageConverter}}"/>
                         </Border.Background>
 
                         <Border.InputBindings>

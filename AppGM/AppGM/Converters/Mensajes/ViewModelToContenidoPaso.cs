@@ -21,7 +21,7 @@ namespace AppGM
                     {
                         DataContext = crdt
                     };
-             
+
                 default:
                     return null;
             }
