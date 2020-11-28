@@ -13,7 +13,10 @@
         <StackPanel>
 
             <!-- boton agregar -->
-            <Button Content="Agregar"/>
+            <Button 
+                Content="Agregar"
+                HorizontalAlignment="Center"
+                Padding="5 2 "/>
 
             <!-- Filtros -->
             <StackPanel 
@@ -29,6 +32,19 @@
                 <CheckBox Content="NPCs"/>
 
             </StackPanel>
+
+            <!-- Lista de personajes -->
+            <Border
+                BorderBrush="Black"
+                BorderThickness="1" 
+                Margin="1"
+>
+                <!-- Scroll -->
+                <ScrollViewer>
+
+                </ScrollViewer>
+
+            </Border>
 
         </StackPanel>
 

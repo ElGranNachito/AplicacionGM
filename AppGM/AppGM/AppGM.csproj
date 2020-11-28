@@ -101,6 +101,9 @@
     <Compile Include="Paginas\Inicio\UserControlCarta.xaml.cs">
       <DependentUpon>UserControlCarta.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Paginas\Mensajes\CreacionDeRol\UserControlCreacionRol_CreacionPersonaje.xaml.cs">
+      <DependentUpon>UserControlCreacionRol_CreacionPersonaje.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Paginas\Mensajes\CreacionDeRol\UserControlCreacionRol_DatosMapa.xaml.cs">
       <DependentUpon>UserControlCreacionRol_DatosMapa.xaml</DependentUpon>
     </Compile>
@@ -194,6 +197,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Paginas\Inicio\UserControlCarta.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Paginas\Mensajes\CreacionDeRol\UserControlCreacionRol_CreacionPersonaje.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -506,6 +513,8 @@
   <ItemGroup>
     <Resource Include="Media\Imagenes\Megumin.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Media\Imagenes\camarita.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

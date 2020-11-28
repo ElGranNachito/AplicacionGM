@@ -20,14 +20,19 @@ namespace AppGM.Core
         public string PosInicialX { get; set; } = "0";
         public string PosInicialY { get; set; } = "0";
         public string PersonajeSeleccionado { get; set; } = string.Empty;
+
         public int CantidadInicialDeUnidades { get; set; } = 0;
+
         public bool DebeSeleccionarClaseServant   => TipoSeleccionado != ETipoUnidad.NINGUNO && TipoSeleccionado != ETipoUnidad.Iglesia;
         public bool DebeSeleccionarPersonaje      => (TipoSeleccionado & (ETipoUnidad.Master | ETipoUnidad.Servant | ETipoUnidad.Invocacion)) != 0;
         public bool DebeSeleccionarCantidad       => (TipoSeleccionado & (ETipoUnidad.Invocacion | ETipoUnidad.Trampa)) != 0;
-        public List<ETipoUnidad>   TiposUnidades  => Enum.GetValues(typeof(ETipoUnidad)).Cast<ETipoUnidad>().ToList();
-        public List<EClaseServant> ClasesServants => Enum.GetValues(typeof(EClaseServant)).Cast<EClaseServant>().ToList();
+
         public ETipoUnidad TipoSeleccionado { get; set; }
         public EClaseServant ClaseSeleccionada { get; set; }
+
+        public List<ETipoUnidad>   TiposUnidades  => Enum.GetValues(typeof(ETipoUnidad)).Cast<ETipoUnidad>().ToList();
+        public List<EClaseServant> ClasesServants => Enum.GetValues(typeof(EClaseServant)).Cast<EClaseServant>().ToList();
+
         public ICommand ComandoFinalizar { get; set; }
 
         #endregion

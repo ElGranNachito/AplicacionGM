@@ -1,0 +1,351 @@
+﻿<UserControl x:Class="AppGM.UserControlCreacionRol_CreacionPersonaje"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AppGM"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <Border Background="White"
+            Padding="5">
+        <Grid>
+
+            <Grid.ColumnDefinitions>
+
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+
+            </Grid.ColumnDefinitions>
+
+            <!-- Propiedades generales -->
+            <Grid>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+            <StackPanel
+                Margin="0 0 5 0">
+
+                <Grid>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Foto/Ilustracion personaje -->
+                    <Border 
+                        Height="50"
+                        Width="{Binding RelativeSource={RelativeSource Mode=Self}, Path=ActualHeight}"
+                        CornerRadius="{Binding RelativeSource={RelativeSource Mode=Self}, Path=ActualHeight}"
+                        BorderBrush="Black"
+                        BorderThickness="1">
+
+                        <Border.Background>
+                            <ImageBrush>
+                                <ImageBrush.ImageSource>
+                                    <BitmapImage BaseUri="{Binding PathImagen, Converter={local:FullPathToImageConverter}}"/>
+                                </ImageBrush.ImageSource>
+                            </ImageBrush>
+                        </Border.Background>
+
+                        <Border.InputBindings>
+                            <MouseBinding MouseAction="LeftClick" Command="{Binding ComandoSeleccionarImagen}"/>
+                        </Border.InputBindings>
+
+                    </Border>
+
+                    <!-- Nombre de personaje -->
+                    <TextBox
+                        Grid.Column="1"
+                        Margin="10 5 0 0"
+                        Style="{StaticResource TextoDescriptivo}"
+                        VerticalAlignment="Top"
+                        Tag="Nombre"/>
+
+                    <!-- Nombre de personaje -->
+                    <TextBox
+                        Grid.Column="1"
+                        Margin="10 30 0 0"
+                        Visibility="{Binding EsServant, Converter={local:BooleanToVisibilityConverterColapsar}}"
+                        Style="{StaticResource TextoDescriptivo}"
+                        VerticalAlignment="Top"
+                        Tag="Nombre real"/>
+
+                    </Grid>
+                
+
+                <!-- Seleccionar tipo de personaje -->
+                <ComboBox
+                    Margin="0 10"
+                    ItemsSource="{Binding TiposDePersonajeDisponibles}"
+                    SelectedValue="{Binding TipoPersonajeSeleccionado}"/>
+
+                <!-- Seleccionar clase de servant -->
+                <ComboBox
+                    Margin="0 0 0 20"
+                    Visibility="{Binding EsMasterOServant, Converter={local:BooleanToVisibilityConverterColapsar}}"
+                    ItemsSource="{Binding ClasesDeServantDisponibles}"
+                    SelectedValue="{Binding ClaseServantSeleccionada}"/>
+
+                <CheckBox
+                    Margin="0 0 0 5"
+                    Visibility="{Binding EsInvocacion, Converter={local:BooleanToVisibilityConverterColapsar}}"
+                    IsChecked="{Binding CheckUsarRangos}"
+                    Content="Usar rangos"/>
+
+                <Grid>
+
+                    <!-- Stats master -->
+
+                    <StackPanel
+                        local:ParametroThicknessProperty.Parametro="0 0 0 5"
+                        local:AñadirMargenAElementosProperty.Value="{x:Type TextBox}">
+
+                        <TextBox
+                            Style="{StaticResource TextoDescriptivo}"
+                            Tag="HP"
+                            Text="{Binding HP}"/>
+
+                        <TextBox
+                            Style="{StaticResource TextoDescriptivo}"
+                            Tag="STR"
+                            Text="{Binding STR}"/>
+
+                        <TextBox
+                            Style="{StaticResource TextoDescriptivo}"
+                            Tag="END"
+                            Text="{Binding END}"/>
+
+                        <TextBox
+                            Style="{StaticResource TextoDescriptivo}"
+                            Tag="AGI"
+                            Text="{Binding AGI}"/>
+
+                        <TextBox
+                            Style="{StaticResource TextoDescriptivo}"
+                            Tag="INT"
+                            Text="{Binding INT}"/>
+
+                        <TextBox
+                            Style="{StaticResource TextoDescriptivo}"
+                            Tag="LCK"
+                            Text="{Binding LCK}"/>
+
+                        <TextBox
+                            Style="{StaticResource TextoDescriptivo}"
+                            Tag="CHR"
+                            Text="{Binding CHR}"/>
+
+                        <!-- Puntos de habilidad restantes -->
+                        <TextBlock
+                            Visibility="{Binding EsMaster, Converter={local:BooleanToVisibilityConverterColapsar}}"
+                            Text="{Binding TextoPuntosDeHabilidadRestantes}"/>
+
+                    </StackPanel>
+
+                    <!-- Stats servant -->
+                    <StackPanel
+                        local:ParametroThicknessProperty.Parametro="0 0 0 5"
+                        local:AñadirMargenAElementosProperty.Value="{x:Type ComboBox}"
+                        Visibility="{Binding UsarRangos, Converter={local:BooleanToVisibilityConverterColapsar}
+                        , FallbackValue=Collapsed}">
+
+                        <ComboBox
+                            ItemsSource="{Binding RangosDisponibles}"
+                            SelectedValue="{Binding STR}"/>
+
+                        <ComboBox
+                            ItemsSource="{Binding RangosDisponibles}"
+                            SelectedValue="{Binding END}"/>
+
+                        <ComboBox
+                            ItemsSource="{Binding RangosDisponibles}"
+                            SelectedValue="{Binding AGI}"/>
+
+                        <ComboBox
+                            ItemsSource="{Binding RangosDisponibles}"
+                            SelectedValue="{Binding INT}"/>
+
+                        <ComboBox
+                            ItemsSource="{Binding RangosDisponibles}"
+                            SelectedValue="{Binding LCK}"/>
+
+
+                        <!-- NP -->
+                        <ComboBox
+                            Visibility="{Binding EsServant, Converter={local:BooleanToVisibilityConverterColapsar}}"
+                            ItemsSource="{Binding RangosDisponibles}"
+                            SelectedValue="{Binding NP}"/>
+
+                        </StackPanel>
+
+                </Grid>
+
+
+                <!-- Alineamiento -->
+                <ComboBox
+                    Margin="0 10 0 0"
+                    Visibility="{Binding EsMasterOServant, Converter={local:BooleanToVisibilityConverterColapsar}}"
+                    ItemsSource="{Binding AlineamientosDisponibles}"
+                    SelectedValue="{Binding AlineamientoSeleccionado}"/>
+
+            </StackPanel>
+
+                <!-- Botones confirmar y cancelar -->
+                <Grid Grid.Row="1">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button
+                        Content="Confirmar"
+                        VerticalAlignment="Bottom"
+                        HorizontalAlignment="Center"
+                        Width="90"
+                        Command="{Binding ComandoConfirmar}"/>
+
+                    <Button
+                        Grid.Column="1"
+                        Content="Cancelar"
+                        VerticalAlignment="Bottom"
+                        HorizontalAlignment="Center"
+                        Width="90"
+                        Command="{Binding ComandoCancelar}"/>
+
+                </Grid>
+
+            </Grid>
+
+            <Grid Grid.Column="1">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- Perks -->
+                <StackPanel>
+
+                    <Grid>
+
+                        <TextBlock
+                            Text="Perks"
+                            TextAlignment="Center"/>
+
+                        <Button
+                            Content="+"
+                            HorizontalAlignment="Right"
+                            Margin="2 0"></Button>
+
+                    </Grid>
+
+                    <Border
+                        BorderBrush="Black"
+                        BorderThickness="1"
+                        Height="200">
+
+
+                    </Border>
+
+                </StackPanel>
+
+                <!-- Magias -->
+                <StackPanel
+                    Grid.Row="1">
+
+                    <Grid>
+
+                        <TextBlock
+                        Text="Magias"
+                        TextAlignment="Center"/>
+
+                    <Button
+                        Content="+"
+                        HorizontalAlignment="Right"
+                        Margin="2 0"></Button>
+
+                    </Grid>
+
+                    <Border
+                        BorderBrush="Black"
+                        BorderThickness="1"
+                        Height="200">
+
+                    </Border>
+
+                </StackPanel>
+
+            </Grid>
+
+            <Grid Grid.Column="2">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- Skills -->
+
+                <StackPanel>
+
+                    <Grid>
+                        <TextBlock
+                        Text="Skills"
+                        TextAlignment="Center"/>
+
+                        <Button
+                            Content="+"
+                            HorizontalAlignment="Right"
+                            Margin="2 0"></Button>
+    
+                    </Grid>
+
+                    <Border
+                        BorderBrush="Black"
+                        BorderThickness="1"
+                        Height="200">
+
+                    </Border>
+
+                </StackPanel>
+
+                <!-- NPs -->
+                <StackPanel
+                    Visibility="{Binding EsServant, Converter={local:BooleanToVisibilityConverterColapsar}}"
+                    Grid.Row="1">
+
+                    <Grid>
+
+                        <TextBlock
+                        Text="NPs"
+                        TextAlignment="Center"/>
+
+                        <Button
+                            Content="+"
+                            HorizontalAlignment="Right"
+                            Margin="2 0"/>
+
+                </Grid>
+
+                    <Border
+                        BorderBrush="Black"
+                        BorderThickness="1"
+                        Height="200">
+
+                    </Border>
+
+                </StackPanel>
+
+            </Grid>
+                
+        </Grid>
+    </Border>
+
+</UserControl>

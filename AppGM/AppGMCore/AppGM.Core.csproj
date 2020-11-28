@@ -124,6 +124,7 @@
     <Compile Include="ViewModels\DesignModels\BaseDesignModel.cs" />
     <Compile Include="ViewModels\DesignModels\DesignModelCombateItem.cs" />
     <Compile Include="ViewModels\DesignModels\DesingModelListaRoles.cs" />
+    <Compile Include="ViewModels\Mensajes\CreacionDeRol\ViewModelMensajeCrearRol_CrearPersonaje.cs" />
     <Compile Include="ViewModels\Mensajes\CreacionDeRol\ViewModelMensajeCrearRol_DatosMapa.cs" />
     <Compile Include="ViewModels\Mensajes\CreacionDeRol\ViewModelMensajeCrearRol.cs" />
     <Compile Include="ViewModels\Mensajes\CreacionDeRol\ViewModelMensajeCrearRol_DatosPersonajes.cs" />

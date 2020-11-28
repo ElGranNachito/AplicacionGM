@@ -4,7 +4,8 @@ namespace AppGM.Core
 {
     public class ModeloServant : ModeloPersonajeJugable
     {
-        public EClaseServant mEClaseDeServant { get; set; }
+        public string NombreReal { get; set; }
+
         public ERango mERangoNP { get; set; }
 
         public List<TIServantNoblePhantasm> NoblePhantasms { get; set; } = new List<TIServantNoblePhantasm>();

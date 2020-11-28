@@ -17,7 +17,7 @@
         {
             modelo = _modelo;
 
-            datosRol = new DatosRol();
+            datosRol = new DatosRol(_modelo);
         } 
 
         #endregion

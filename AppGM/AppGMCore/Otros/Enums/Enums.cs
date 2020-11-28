@@ -89,15 +89,20 @@ namespace AppGM.Core
     public enum ERango
     {
         NINGUNO = 0,
-        F = 0,
-        E = 1,
-        D = 2,
-        C = 4,
-        B = 8,
-        A = 16,
-        AMas = 32,
-        AMasMas = 64,
-        Ex = 128
+        F = 1,
+        E = 2,
+        D = 4,
+        C = 8,
+        B = 16,
+        A = 32,
+        AMas = 64,
+        AMasMas = 128,
+        Ex = 256
+    }
+
+    public static class Rango
+    {
+        public static ushort ToUshort(this ERango rango) => (ushort)(13 + rango);
     }
 
     [Flags]
