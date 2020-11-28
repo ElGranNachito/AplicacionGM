@@ -13,7 +13,8 @@
             mViewModelsPasos.AddRange(new ViewModelPaso<ViewModelMensajeCrearRol>[]
             {
                 new ViewModelMensajeCrearRol_DatosRol(datosRol.modeloRol),
-                new ViewModelMensajeCrearRol_DatosMapa(mapaPrincipal) 
+                new ViewModelMensajeCrearRol_DatosMapa(mapaPrincipal),
+                new ViewModelMensajeCrearRol_DatosPersonajes(datosRol, this) 
             });
 
             PasoActual.PropertyChanged += mHandlerPasoActualPropertyChanged;

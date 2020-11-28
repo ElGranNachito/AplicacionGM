@@ -22,6 +22,12 @@ namespace AppGM
                         DataContext = crdt
                     };
 
+                case ViewModelMensajeCrearRol_DatosPersonajes crdp:
+                    return new UserControlCreacionRol_Personajes
+                    {
+                        DataContext = crdp
+                    };
+
                 default:
                     return null;
             }

@@ -10,11 +10,12 @@ namespace AppGM.Core
     /// <summary>
     /// Viewmodel para la creacion de un personaje
     /// </summary>
-    class ViewModelMensajeCrearRol_CrearPersonaje : BaseViewModel
+    public class ViewModelMensajeCrearRol_CrearPersonaje : ViewModelMensajeBase
     {
         #region Miembros
 
-        private DatosCreacionRol mDatosCreacionRol;
+        private DatosCreacionRol         mDatosCreacionRol;
+        private ViewModelMensajeCrearRol mViewModelCrearRol;
 
         private int    mHP  { get; set; } = 20;
         private ushort mSTR { get; set; } = 10;
@@ -49,6 +50,8 @@ namespace AppGM.Core
         public bool EsInvocacion => TipoPersonajeSeleccionado == ETipoPersonaje.Invocacion;
         public bool UsarRangos   => EsServant || EsInvocacion && CheckUsarRangos;
 
+        public bool PuedeFinalizar => PuedeCrearPersonaje();
+
         public List<ETipoPersonaje> TiposDePersonajeDisponibles => Enum.GetValues(typeof(ETipoPersonaje)).Cast<ETipoPersonaje>().ToList();
         public List<EAlineamiento>  AlineamientosDisponibles    => Enum.GetValues(typeof(EAlineamiento)).Cast<EAlineamiento>().ToList();
         public List<ERango>         RangosDisponibles           => Enum.GetValues(typeof(ERango)).Cast<ERango>().ToList();
@@ -68,9 +71,10 @@ namespace AppGM.Core
 
         #region Constructor
 
-        public ViewModelMensajeCrearRol_CrearPersonaje(DatosCreacionRol _datosCreacionRol)
+        public ViewModelMensajeCrearRol_CrearPersonaje(DatosCreacionRol _datosCreacionRol, ViewModelMensajeCrearRol _viewModelCrearRol)
         {
-            mDatosCreacionRol = _datosCreacionRol;
+            mDatosCreacionRol  = _datosCreacionRol;
+            mViewModelCrearRol = _viewModelCrearRol;
 
             PropertyChanged += (sender, args) =>
             {
@@ -83,7 +87,40 @@ namespace AppGM.Core
                     DispararPropertyChanged(new PropertyChangedEventArgs(nameof(EsInvocacion)));
                     DispararPropertyChanged(new PropertyChangedEventArgs(nameof(UsarRangos)));
                 }
+
+                if(args.PropertyName != nameof(PuedeFinalizar))
+                    DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PuedeFinalizar)));
             };
+
+            ComandoConfirmar = new Comando(() =>
+            {
+                ModeloPersonaje nuevoPersonaje = CrearPersonaje();
+
+                mDatosCreacionRol.personajes.Add(nuevoPersonaje);
+
+                switch (nuevoPersonaje)
+                {
+                    case ModeloMaster mm:
+                        mDatosCreacionRol.masters.Add(mm);
+                        break;
+                    case ModeloServant ms:
+                        mDatosCreacionRol.servants.Add(ms);
+                        break;
+                    case ModeloInvocacion mi:
+                        mDatosCreacionRol.invocaciones.Add(mi);
+                        break;
+                    default:
+                        mDatosCreacionRol.npcs.Add(nuevoPersonaje);
+                        break;
+                }
+
+                SistemaPrincipal.Aplicacion.VentanaPopups.EstablecerViewModel(_viewModelCrearRol);
+            });
+
+            ComandoCancelar = new Comando(() =>
+            {
+                SistemaPrincipal.Aplicacion.VentanaPopups.EstablecerViewModel(_viewModelCrearRol);
+            });
         }
 
         #endregion
@@ -116,6 +153,67 @@ namespace AppGM.Core
             return true;
         }
 
+        private bool PuedeCrearPersonaje()
+        {
+            if (string.IsNullOrWhiteSpace(Nombre))
+                return false;
+
+            if (EsServant)
+            {
+                if(string.IsNullOrWhiteSpace(NombreReal))
+                    return false;
+
+                if ((ERango)STR == ERango.NINGUNO)
+                    return false;
+                if ((ERango)END == ERango.NINGUNO)
+                    return false;
+                if ((ERango)AGI == ERango.NINGUNO)
+                    return false;
+                if ((ERango)INT == ERango.NINGUNO)
+                    return false;
+                if ((ERango)LCK == ERango.NINGUNO)
+                    return false;
+                if (NP == ERango.NINGUNO)
+                    return false;
+            }
+
+            if (EsMasterOServant && (ClaseServantSeleccionada == EClaseServant.NINGUNO || AlineamientoSeleccionado == EAlineamiento.NINGUNO))
+                return false;
+
+            return true;
+        }
+
+        private ModeloPersonaje CrearPersonaje()
+        {
+            switch (TipoPersonajeSeleccionado)
+            {
+                case ETipoPersonaje.Master:
+                    ModeloMaster nuevoMaster = new ModeloMaster();
+
+
+                    return nuevoMaster;
+
+                case ETipoPersonaje.Servant:
+                    ModeloServant nuevoServant = new ModeloServant();
+
+                    return nuevoServant;
+
+                case ETipoPersonaje.Invocacion:
+                    ModeloInvocacion nuevaInvocacion = new ModeloInvocacion();
+
+                    return nuevaInvocacion;
+
+                case ETipoPersonaje.NPC:
+                    ModeloPersonaje nuevoPersonaje = new ModeloPersonaje();
+
+                    return nuevoPersonaje;
+
+                default:
+                    return null;
+                    
+            }
+        }
+
         #endregion
 
         public int HP
@@ -131,8 +229,11 @@ namespace AppGM.Core
             {
                 if (value is ERango rango)
                     mSTR = rango.ToUshort();
+                else if (value is string s)
+                    mSTR = ushort.Parse(s);
                 else
-                    mSTR = (ushort)value;
+                    mSTR = (ushort) value;
+
 
                 DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PuntosHabilidadRestantes)));
             }
@@ -145,6 +246,8 @@ namespace AppGM.Core
             {
                 if (value is ERango rango)
                     mEND = rango.ToUshort();
+                else if (value is string s)
+                    mEND = ushort.Parse(s);
                 else
                     mEND = (ushort)value;
 
@@ -159,6 +262,8 @@ namespace AppGM.Core
             {
                 if (value is ERango rango)
                     mAGI = rango.ToUshort();
+                else if (value is string s)
+                    mAGI = ushort.Parse(s);
                 else
                     mAGI = (ushort)value;
 
@@ -173,6 +278,8 @@ namespace AppGM.Core
             {
                 if (value is ERango rango)
                     mINT = rango.ToUshort();
+                else if (value is string s)
+                    mINT = ushort.Parse(s);
                 else
                     mINT = (ushort)value;
 
@@ -187,6 +294,8 @@ namespace AppGM.Core
             {
                 if (value is ERango rango)
                     mLCK = rango.ToUshort();
+                else if (value is string s)
+                    mLCK = ushort.Parse(s);
                 else
                     mLCK = (ushort)value;
 
@@ -201,6 +310,8 @@ namespace AppGM.Core
             {
                 if (value is ERango rango)
                     mCHR = rango.ToUshort();
+                else if (value is string s)
+                    mCHR = ushort.Parse(s);
                 else
                     mCHR = (ushort)value;
 

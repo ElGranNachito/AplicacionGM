@@ -39,6 +39,8 @@ namespace AppGM.Core
         /// <param name="esperarCierre">Si el valor es <see cref="true"/>la ventana principal queda bloqueada hasta que el mensaje se cierre</param>
         Task Mostrar(ViewModelMensajeBase vm, bool esperarCierre);
 
+        void EstablecerViewModel(ViewModelMensajeBase nuevoVM);
+
         bool EstaAbierta { get; }
         bool DebeEsperarCierre { get; set; }
     }

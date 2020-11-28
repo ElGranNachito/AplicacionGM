@@ -62,6 +62,7 @@
                         Margin="10 5 0 0"
                         Style="{StaticResource TextoDescriptivo}"
                         VerticalAlignment="Top"
+                        TextAlignment="Center"
                         Tag="Nombre"/>
 
                     <!-- Nombre de personaje -->
@@ -71,6 +72,7 @@
                         Visibility="{Binding EsServant, Converter={local:BooleanToVisibilityConverterColapsar}}"
                         Style="{StaticResource TextoDescriptivo}"
                         VerticalAlignment="Top"
+                        TextAlignment="Center"
                         Tag="Nombre real"/>
 
                     </Grid>
@@ -101,7 +103,8 @@
 
                     <StackPanel
                         local:ParametroThicknessProperty.Parametro="0 0 0 5"
-                        local:AñadirMargenAElementosProperty.Value="{x:Type TextBox}">
+                        local:AñadirMargenAElementosProperty.Value="{x:Type TextBox}"
+                        Visibility="{Binding UsarRangos, Converter={local:BooleanToVisibilityConverterColapsar}, ConverterParameter=True}">
 
                         <TextBox
                             Style="{StaticResource TextoDescriptivo}"

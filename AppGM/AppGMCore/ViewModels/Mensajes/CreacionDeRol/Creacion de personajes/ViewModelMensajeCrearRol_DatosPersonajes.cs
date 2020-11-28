@@ -27,11 +27,16 @@ namespace AppGM.Core
 
         #region Constructor
 
-        public ViewModelMensajeCrearRol_DatosPersonajes(DatosCreacionRol _datosRol)
+        public ViewModelMensajeCrearRol_DatosPersonajes(DatosCreacionRol _datosRol, ViewModelMensajeCrearRol vmCrearRol)
         {
             mDatosCreacionRol = _datosRol;
 
             ActualizarListaDePersonajes();
+
+            ComandoAñadirPersonaje = new Comando(() =>
+            {
+                SistemaPrincipal.Aplicacion.VentanaPopups.EstablecerViewModel(new ViewModelMensajeCrearRol_CrearPersonaje(mDatosCreacionRol, vmCrearRol));
+            });
         }
 
         #endregion

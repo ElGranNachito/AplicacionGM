@@ -43,6 +43,8 @@ namespace AppGM.Viewmodels
             mVentana.Show();
         }
 
+        public void EstablecerViewModel(ViewModelMensajeBase nuevoVM) => ViewModelContenidoVentana = nuevoVM;
+
         public bool EstaAbierta => mVentana.IsVisible;
 
         public override void CerrarVentana() => mVentana.Hide();
