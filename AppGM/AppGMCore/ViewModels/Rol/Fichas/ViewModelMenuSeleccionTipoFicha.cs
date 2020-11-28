@@ -58,7 +58,7 @@ namespace AppGM
                 new ModeloServant
                 {
                     Nombre = "Stephen Hawking",
-                    mEClaseDeServant = EClaseServant.Caster,
+                    EClaseServant = EClaseServant.Caster,
                     Agi = 0,
                     Str = 0,
                     Intel = 20,
