@@ -17,5 +17,6 @@
     <system:String x:Key="Fa-Minimizar">&#xf2d1;</system:String>
     <system:String x:Key="Fa-FlechaDerecha">&#xf061;</system:String>
     <system:String x:Key="Fa-FlechaIzquierda">&#xf060;</system:String>
+    <system:String x:Key="Fa-BotonPlus">&#xf0fe;</system:String>
 
 </ResourceDictionary>

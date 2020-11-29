@@ -17,6 +17,8 @@
                 Padding="5 2 "
                 Content="Agregar"
                 HorizontalAlignment="Center"
+                BorderBrush="Black"
+                Style="{StaticResource BotonFondoResaltable}"
                 Command="{Binding ComandoAñadirPersonaje}"/>
 
             <!-- Filtros -->

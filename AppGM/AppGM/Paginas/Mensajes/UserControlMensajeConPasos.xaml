@@ -25,21 +25,25 @@
     
             <!-- Flecha izquierda -->
             <Button
+                Style="{StaticResource BotonFondoResaltable}"
                 FontFamily="{StaticResource 'Font Awesome Regular'}"
                 Content="{StaticResource Fa-FlechaIzquierda}"
                 FontSize="{StaticResource TamañoFontMediano}"
                 IsEnabled="{Binding PuedeRetroceder}"
                 Command="{Binding ComandoPasoAnterior}"
+                HorizontalContentAlignment="Center"
                 Width="40"
                 Margin="0 0 10 0"/>
 
             <!-- Flecha derecha -->
             <Button
+                Style="{StaticResource BotonFondoResaltable}"
                 FontFamily="{StaticResource 'Font Awesome Regular'}"
                 Content="{StaticResource Fa-FlechaDerecha}"
                 FontSize="{StaticResource TamañoFontMediano}"
                 IsEnabled="{Binding PuedeAvanzar}"
                 Command="{Binding ComandoPasoSiguiente}"
+                HorizontalContentAlignment="Center"
                 Width="40"/>
 
 

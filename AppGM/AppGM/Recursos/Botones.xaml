@@ -7,7 +7,7 @@
 
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
-        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Foreground" Value="Black"/>
 
         <Setter Property="Template">
@@ -15,14 +15,23 @@
                 <ControlTemplate TargetType="{x:Type ButtonBase}">
                     <Border Padding="{TemplateBinding Padding}" 
                             Background="{TemplateBinding Background}" 
+                            BorderThickness="{TemplateBinding BorderThickness}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
 
-                        <TextBlock Text="{TemplateBinding Content}"/>
+                        <TextBlock 
+                            Text="{TemplateBinding Content}"
+                            TextAlignment="Center"/>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="DimGray"/>
+            </Trigger>
+        </Style.Triggers>
 
     </Style>
 
@@ -176,6 +185,40 @@
 
             </Setter.Value>
         </Setter>
+
+    </Style>
+
+    <Style x:Key="BotonFondoResaltable" TargetType="{x:Type Button}" BasedOn="{StaticResource BotonBase}">
+
+        <Style.Triggers>
+
+            <EventTrigger RoutedEvent="MouseEnter">
+
+                <BeginStoryboard>
+                    <Storyboard
+                        TargetProperty="Background.Color">
+
+                        <ColorAnimation Duration="0:0:0.2" Storyboard.TargetProperty="Background.Color" To="DarkGray"/>
+
+                    </Storyboard>
+                </BeginStoryboard>
+
+            </EventTrigger>
+
+            <EventTrigger RoutedEvent="MouseLeave">
+
+                <BeginStoryboard>
+                    <Storyboard 
+                        TargetProperty="Background.Color">
+
+                        <ColorAnimation Duration="0:0:0.2" To="Transparent"/>
+
+                    </Storyboard>
+                </BeginStoryboard>
+
+            </EventTrigger>
+
+        </Style.Triggers>
 
     </Style>
 

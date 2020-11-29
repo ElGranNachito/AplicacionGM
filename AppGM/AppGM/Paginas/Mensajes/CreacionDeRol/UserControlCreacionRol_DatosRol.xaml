@@ -16,6 +16,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
+            <!-- Nombre -->
             <TextBox Style="{StaticResource TextoDescriptivo}" 
                      Text="{Binding NombreRol, Mode=TwoWay}"
                      Tag="Nombre"
@@ -23,11 +24,13 @@
                      TextAlignment="Center"
                      TextWrapping="Wrap"/>
 
+            <!-- Descripcion -->
             <TextBox Grid.Row="1"
                      Style="{StaticResource TextoDescriptivo}"
                      Text="{Binding DescripcionRol, Mode=TwoWay}"
                      Tag="Descripcion"
                      MaxLength="1000"
+                     TextAlignment="Center"
                      TextWrapping="Wrap"
                      Margin="0 10 0 0"/>
         </Grid>
