@@ -13,7 +13,7 @@ namespace AppGM
                 case ViewModelMensajeCrearRol_DatosRol crdr:
                     return new UserControlCreacionRol_DatosRol
                     {
-                        DataContext = crdr
+                        ViewModel = crdr
                     };
 
                 case ViewModelMensajeCrearRol_DatosMapa crdt:

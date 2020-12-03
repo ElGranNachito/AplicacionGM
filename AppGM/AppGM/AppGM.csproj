@@ -191,6 +191,12 @@
     <Compile Include="Paginas\Rol\Fichas\SeleccionTipoFichas\UserControlMenuSeleccionTipoFicha.xaml.cs">
       <DependentUpon>UserControlMenuSeleccionTipoFicha.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Paginas\UserControlComboBoxConDescripcion.xaml.cs">
+      <DependentUpon>UserControlComboBoxConDescripcion.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\UserControlListaItems.xaml.cs">
+      <DependentUpon>UserControlListaItems.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Ventanas\VentanaMensaje.xaml.cs">
       <DependentUpon>VentanaMensaje.xaml</DependentUpon>
     </Compile>
@@ -328,6 +334,14 @@
     <Page Include="Paginas\Rol\Fichas\SeleccionTipoFichas\UserControlMenuSeleccionTipoFicha.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Paginas\UserControlComboBoxConDescripcion.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Paginas\UserControlListaItems.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Recursos\Controles.xaml">
       <SubType>Designer</SubType>

@@ -53,7 +53,8 @@ namespace AppGM.Core
 
             mHandlerPasoActualPropertyChanged = (sender, args) =>
             {
-                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PuedeAvanzar)));
+                if(args.PropertyName != nameof(PuedeAvanzar))
+                    DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PuedeAvanzar)));
             };
 
             PasoActual.PropertyChanged += mHandlerPasoActualPropertyChanged;

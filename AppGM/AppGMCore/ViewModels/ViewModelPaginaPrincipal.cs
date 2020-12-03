@@ -137,7 +137,7 @@ namespace AppGM.Core
         {
             ViewModelMensajeCrearRol viemModelCreacionDeRol = new ViewModelMensajeCrearRol();
 
-            await SistemaPrincipal.Aplicacion.VentanaPopups.Mostrar(viemModelCreacionDeRol, true);
+            await SistemaPrincipal.Aplicacion.VentanaPopups.Mostrar(viemModelCreacionDeRol, true, 550, -1);
         }
         #endregion
     }

@@ -23,7 +23,7 @@
             <!-- Textbox nombre mapa -->
             <TextBox
                 Style="{StaticResource TextoDescriptivo}"
-                Text="{Binding NombreMapa, Mode=OneWayToSource}"
+                Text="{Binding NombreMapa}"
                 TextAlignment="Center"
                 VerticalAlignment="Top"
                 Margin="15 10"

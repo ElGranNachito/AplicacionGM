@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AppGM"
+             xmlns:core="clr-namespace:AppGM.Core;assembly=AppGM.Core"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
@@ -19,9 +20,11 @@
             </Grid.ColumnDefinitions>
 
             <Grid>
+
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
                 <StackPanel>
@@ -34,9 +37,12 @@
                         MaxLength="50"/>
 
                     <!-- Tipo de la habilidad -->
-                    <ComboBox
+                    <local:UserControlComboBoxConDescripcion
+                        Descripcion="Tipo de habilidad:"
+                        ItemsSource="{Binding Source={x:Static core:EnumHelpers.TiposDeHabilidadDisponibles}}"
+                        SelectedValue="{Binding TipoDeHabilidadSeleccionado}"
                         Margin="0 15 0 30"
-                    ></ComboBox>
+                    />
 
                     <!-- Descripcion de la habilidad -->
                     <TextBox
@@ -49,31 +55,34 @@
                 </StackPanel>
 
                 <!-- Efectos -->
-                <StackPanel 
+                <local:UserControlListaItems
                     Grid.Row="1"
-                    Margin="0 10 0 0">
+                    DataContext="{Binding ListaEfectos}">
 
-                    <Grid>
+                </local:UserControlListaItems>
 
-                        <TextBlock
-                            Text="Efectos que causa"
-                            HorizontalAlignment="Center"/>
+                <Grid Grid.Row="2">
 
-                        <!-- Boton agregar efecto -->
-                        <Button 
-                            HorizontalAlignment="Right"
-                            FontFamily="{StaticResource 'Font Awesome Regular'}"
-                            Content="{StaticResource Fa-BotonPlus}"/>
-
-                    </Grid>
-
-                    <!-- Lista de efectos -->
-                    <Border
+                    <!-- Boton cancelar -->
+                    <Button
+                        Margin="10 10 0 0"
+                        HorizontalAlignment="Left"
+                        Content="Cancelar"
                         BorderBrush="Black"
-                        BorderThickness="1"
-                        Height="180"></Border>
+                        Width="70"
+                        Style="{StaticResource BotonFondoResaltable}"
+                        />
 
-                </StackPanel>
+                    <!-- Boton finalizar -->
+                    <Button
+                        Margin="0 10 10 0"
+                        HorizontalAlignment="Right"
+                        Content="Finalizar"
+                        BorderBrush="Black"
+                        Width="70"
+                        Style="{StaticResource BotonFondoResaltable}"/>
+
+                </Grid>
 
             </Grid>
 
@@ -84,7 +93,38 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <Grid></Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Condiciones para utilizar habilidad -->
+                <local:UserControlListaItems
+                    Padding="5"
+                    DataContext="{Binding ListaCondiciones}">
+                </local:UserControlListaItems>
+
+                <!--  Items que consume el utilizar esta habilidad -->
+                <local:UserControlListaItems
+                    Grid.Column="1"
+                    Padding="5"
+                    DataContext="{Binding ListaItemsQueConsume}">
+                </local:UserControlListaItems>
+
+                <!-- Limitadores -->
+                <local:UserControlListaItems
+                    Grid.Row="1"
+                    Padding="5"
+                    DataContext="{Binding ListaLimitadores}">
+
+                </local:UserControlListaItems>
+
+                <local:UserControlListaItems
+                    Grid.Row="1" Grid.Column="1"
+                    Padding="5"
+                    DataContext="{Binding ListaTiradas}">
+
+                </local:UserControlListaItems>
 
             </Grid>
         </Grid>

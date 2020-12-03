@@ -61,7 +61,7 @@ namespace AppGM.Core
     [Flags]
     public enum EManoDominante
     {
-        NINGUNA = 0, Izquierda = 1, Derecha = 2, Ambidiestro = 4
+        NINGUNA = 0, Izquierda = 1, Derecha = 2, Ambidiestro = Izquierda | Derecha
     }
 
     [Flags]
@@ -85,28 +85,22 @@ namespace AppGM.Core
         NP = 128
     }
 
-    [Flags]
     public enum ERango
     {
         NINGUNO = 0,
-        F = 1,
-        E = 2,
-        D = 4,
-        C = 8,
-        B = 16,
-        A = 32,
-        AMas = 64,
-        AMasMas = 128,
-        Ex = 256
-    }
-
-    public static class Rango
-    {
-        public static ushort ToUshort(this ERango rango) => (ushort)(13 + rango);
+        F = 0,
+        E = 1,
+        D = 2,
+        C = 3,
+        B = 4,
+        A = 5,
+        AMas = 6,
+        AMasMas = 7,
+        Ex = 8
     }
 
     [Flags]
-    public enum ETipoDeHabilidad
+    public enum EUsoDeHabilidad
     {
         NINGUNA = 0, Personal = 1, Soporte = 2, Defensa = 4, Ataque = 8
     }

@@ -27,7 +27,11 @@ namespace AppGM.Core
 
         private bool mCheckUsarRangos = false;
 
-        private ERango mNP  { get; set; } = ERango.NINGUNO;
+        private Action mAccionAñadirHabilidad = delegate{};
+        private Action mAccionAñadirItem      = delegate{};
+        private Action mAccionAñadirNP        = delegate{};
+
+        private ERango mNP  { get; set; } = ERango.F;
 
         #endregion
 
@@ -40,21 +44,29 @@ namespace AppGM.Core
 
         public int PuntosHabilidadRestantes => 75 - mSTR - mEND - mAGI - mINT - mLCK - mCHR;
 
-        public ETipoPersonaje TipoPersonajeSeleccionado { get; set; } = ETipoPersonaje.Servant;
-        public EClaseServant  ClaseServantSeleccionada { get; set; }  = EClaseServant.NINGUNO;
-        public EAlineamiento  AlineamientoSeleccionado { get; set; }  = EAlineamiento.NINGUNO;
+        public ETipoPersonaje TipoPersonajeSeleccionado => VMSeleccionTipoPersonaje.OpcionSeleccionada;
+        public EClaseServant  ClaseServantSeleccionada  => VMSeleccionClaseServant.OpcionSeleccionada;
+        public EAlineamiento  AlineamientoSeleccionado  => VMSeleccionAlineamito.OpcionSeleccionada;
+        public ESexo          SexoSeleccionado          => VMSeleccionSexo.OpcionSeleccionada;
 
         public bool EsMasterOServant => (TipoPersonajeSeleccionado & (ETipoPersonaje.Master | ETipoPersonaje.Servant)) != 0;
         public bool EsServant    => TipoPersonajeSeleccionado == ETipoPersonaje.Servant;
         public bool EsMaster     => TipoPersonajeSeleccionado == ETipoPersonaje.Master;
         public bool EsInvocacion => TipoPersonajeSeleccionado == ETipoPersonaje.Invocacion;
-        public bool UsarRangos   => EsServant || EsInvocacion && CheckUsarRangos;
+        public bool UsarRangos   => EsServant || (EsInvocacion && CheckUsarRangos);
 
         public bool PuedeFinalizar => PuedeCrearPersonaje();
 
-        public List<ETipoPersonaje> TiposDePersonajeDisponibles => Enum.GetValues(typeof(ETipoPersonaje)).Cast<ETipoPersonaje>().ToList();
-        public List<EAlineamiento>  AlineamientosDisponibles    => Enum.GetValues(typeof(EAlineamiento)).Cast<EAlineamiento>().ToList();
-        public List<ERango>         RangosDisponibles           => Enum.GetValues(typeof(ERango)).Cast<ERango>().ToList();
+        public ViewModelListaItems ListaItems { get; set; }
+        public ViewModelListaItems ListaHabilidades { get; set; }
+        public ViewModelListaItems ListaNPs { get; set; }
+
+        public ViewModelComboBoxConDescripcion<ETipoPersonaje> VMSeleccionTipoPersonaje { get; set; } = new ViewModelComboBoxConDescripcion<ETipoPersonaje>();
+        public ViewModelComboBoxConDescripcion<EClaseServant>  VMSeleccionClaseServant  { get; set; } = new ViewModelComboBoxConDescripcion<EClaseServant>();
+        public ViewModelComboBoxConDescripcion<EAlineamiento>  VMSeleccionAlineamito    { get; set; } = new ViewModelComboBoxConDescripcion<EAlineamiento>();
+        public ViewModelComboBoxConDescripcion<ESexo>          VMSeleccionSexo          { get; set; } = new ViewModelComboBoxConDescripcion<ESexo>();
+        public ViewModelComboBoxConDescripcion<EManoDominante> VMSeleccionManoDominante { get; set; } = new ViewModelComboBoxConDescripcion<EManoDominante>();
+
         public List<EClaseServant>  ClasesDeServantDisponibles  => ObtenerClasesDeServantDisponibles();
 
         public ICommand ComandoConfirmar { get; set; }
@@ -76,18 +88,22 @@ namespace AppGM.Core
             mDatosCreacionRol  = _datosCreacionRol;
             mViewModelCrearRol = _viewModelCrearRol;
 
+            ListaHabilidades = new ViewModelListaItems(mAccionAñadirHabilidad, true, "Habilidades");
+            ListaItems       = new ViewModelListaItems(mAccionAñadirItem, true, "Items");
+            ListaNPs         = new ViewModelListaItems(mAccionAñadirNP, true, "NPs");
+
+            VMSeleccionTipoPersonaje.PropertyChanged += (sender, args) =>
+            {
+                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(ClasesDeServantDisponibles)));
+                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(EsMasterOServant)));
+                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(EsServant)));
+                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(EsMaster)));
+                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(EsInvocacion)));
+                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(UsarRangos)));
+            };
+
             PropertyChanged += (sender, args) =>
             {
-                if (args.PropertyName == nameof(TipoPersonajeSeleccionado))
-                {
-                    DispararPropertyChanged(new PropertyChangedEventArgs(nameof(ClasesDeServantDisponibles)));
-                    DispararPropertyChanged(new PropertyChangedEventArgs(nameof(EsMasterOServant)));
-                    DispararPropertyChanged(new PropertyChangedEventArgs(nameof(EsServant)));
-                    DispararPropertyChanged(new PropertyChangedEventArgs(nameof(EsMaster)));
-                    DispararPropertyChanged(new PropertyChangedEventArgs(nameof(EsInvocacion)));
-                    DispararPropertyChanged(new PropertyChangedEventArgs(nameof(UsarRangos)));
-                }
-
                 if(args.PropertyName != nameof(PuedeFinalizar))
                     DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PuedeFinalizar)));
             };
@@ -163,17 +179,17 @@ namespace AppGM.Core
                 if(string.IsNullOrWhiteSpace(NombreReal))
                     return false;
 
-                if ((ERango)STR == ERango.NINGUNO)
-                    return false;
+                //Omitimos algunas stats porque pueden existir servants que no posean algunas stats
+
                 if ((ERango)END == ERango.NINGUNO)
-                    return false;
-                if ((ERango)AGI == ERango.NINGUNO)
                     return false;
                 if ((ERango)INT == ERango.NINGUNO)
                     return false;
                 if ((ERango)LCK == ERango.NINGUNO)
                     return false;
                 if (NP == ERango.NINGUNO)
+                    return false;
+                if (AlineamientoSeleccionado == EAlineamiento.NINGUNO)
                     return false;
             }
 

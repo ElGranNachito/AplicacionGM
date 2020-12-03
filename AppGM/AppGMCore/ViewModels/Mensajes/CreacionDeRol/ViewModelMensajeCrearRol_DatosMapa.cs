@@ -10,7 +10,7 @@ namespace AppGM.Core
 
         public ICommand ComandoSeleccionarImagenMapa { get; set; }
 
-        public string NombreMapa { get; set; }
+        public string NombreMapa     { get; set; } = string.Empty;
 
         public string PathImagenMapa { get; set; } = string.Empty;
 
@@ -39,10 +39,12 @@ namespace AppGM.Core
             if(mArchivoMapa.NombreSinExtension == NombreMapa)
                 return;
 
+            #if !NO_COPIAR_IMAGENES
+
             IArchivo archivoViejo = mArchivoMapa.CopiarADirectorio(SistemaPrincipal.ControladorDeArchivos.DirectorioImagenesMapas, true);
             mArchivoMapa.CambiarNombre(NombreMapa);
 
-            PathImagenMapa = mArchivoMapa.Ruta;
+            
 
             //Borramos el archivo al salir de la aplicacion porque de intentar hacerlo aqui no podremos
             if (BorrarImagenDeLaUbicacionAnterior)
@@ -50,6 +52,10 @@ namespace AppGM.Core
                 { 
                     archivoViejo.Borrar();
                 };
+
+            #endif
+
+            PathImagenMapa = mArchivoMapa.Ruta;
         }
 
         public override bool PuedeAvanzar() => !(String.IsNullOrEmpty(NombreMapa) || String.IsNullOrEmpty(PathImagenMapa));

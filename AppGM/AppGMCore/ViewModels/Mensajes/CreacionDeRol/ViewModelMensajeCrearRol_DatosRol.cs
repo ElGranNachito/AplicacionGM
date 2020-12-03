@@ -1,6 +1,6 @@
-﻿using AppGM.Core;
+﻿using System;
 
-namespace AppGM
+namespace AppGM.Core
 {
     public class ViewModelMensajeCrearRol_DatosRol : ViewModelPaso<ViewModelMensajeCrearRol>
     {
@@ -11,12 +11,18 @@ namespace AppGM
         #endregion
 
         #region Propiedades
-        public string NombreRol { get; set; }
-        public string DescripcionRol { get; set; }
+
+        public string NombreRol      { get; set; } = string.Empty;
+        public string DescripcionRol { get; set; } = string.Empty;
+        public string TextoLetrasRestantes => 1000 - DescripcionRol.Length + "/1000";
 
         #endregion
 
         #region Constructor
+        /// <summary>
+        /// No usar para construir instancia de la clase!
+        /// </summary>
+        public ViewModelMensajeCrearRol_DatosRol(){}
         public ViewModelMensajeCrearRol_DatosRol(ModeloRol _modeloRol)
         {
             mModeloRol = _modeloRol;
@@ -32,7 +38,7 @@ namespace AppGM
             mModeloRol.Descripcion = DescripcionRol;
         }
 
-        public override bool PuedeAvanzar() => !(string.IsNullOrEmpty(NombreRol) || string.IsNullOrEmpty(DescripcionRol)); 
+        public override bool PuedeAvanzar() => !(string.IsNullOrEmpty(NombreRol) || string.IsNullOrEmpty(DescripcionRol));
 
         #endregion
     }

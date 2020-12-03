@@ -20,7 +20,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NO_COPIAR_IMAGENES</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -70,6 +70,7 @@
     <Compile Include="Datos\DatosCreacionRol.cs" />
     <Compile Include="Datos\DatosRol.cs" />
     <Compile Include="Datos\RolContext.cs" />
+    <Compile Include="Helpers\EnumHelpers.cs" />
     <Compile Include="Helpers\MathHelpers.cs" />
     <Compile Include="Helpers\StringHelpers.cs" />
     <Compile Include="Migrations\20201128191904_Inicial.cs" />
@@ -124,6 +125,7 @@
     <Compile Include="ViewModels\DesignModels\BaseDesignModel.cs" />
     <Compile Include="ViewModels\DesignModels\DesignModelCombateItem.cs" />
     <Compile Include="ViewModels\DesignModels\DesingModelListaRoles.cs" />
+    <Compile Include="ViewModels\Mensajes\CreacionDeRol\Creacion de personajes\ViewModelMensajeCrearRol_CrearHabilidad.cs" />
     <Compile Include="ViewModels\Mensajes\CreacionDeRol\Creacion de personajes\ViewModelMensajeCrearRol_ListaPersonajes.cs" />
     <Compile Include="ViewModels\Mensajes\CreacionDeRol\Creacion de personajes\ViewModelMensajeCrearRol_CrearPersonaje.cs" />
     <Compile Include="ViewModels\Mensajes\CreacionDeRol\Creacion de personajes\ViewModelMensajeCrearRol_PersonajeItem.cs" />
@@ -138,6 +140,8 @@
     <Compile Include="ViewModels\Rol\AdministradorDeCombates\Combate\ViewModelParticipante.cs" />
     <Compile Include="ViewModels\Mensajes\ViewModelMensajeCrearUnidadMapa.cs" />
     <Compile Include="ViewModels\Mensajes\ViewModelMensajeBase.cs" />
+    <Compile Include="ViewModels\ViewModelComboBoxConDescripcion.cs" />
+    <Compile Include="ViewModels\ViewModelListaItems.cs" />
     <Compile Include="ViewModels\ViewModelsGlobos\ViewModelInfoCombateGlobo.cs" />
     <Compile Include="ViewModels\Rol\AdministradorDeCombates\SeleccionDeCombate\ViewModelMenuSeleccionCombate.cs" />
     <Compile Include="ViewModels\Rol\Fichas\ViewModelFichaItem.cs" />

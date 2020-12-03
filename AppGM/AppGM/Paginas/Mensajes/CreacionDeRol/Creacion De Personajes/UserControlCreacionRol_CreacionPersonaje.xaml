@@ -4,8 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AppGM"
+             xmlns:core="clr-namespace:AppGM.Core;assembly=AppGM.Core"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+
+             MinHeight="500"
+
+             d:DesignHeight="500" d:DesignWidth="800">
 
     <Border Background="White"
             Padding="5">
@@ -14,8 +18,7 @@
             <Grid.ColumnDefinitions>
 
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
 
             </Grid.ColumnDefinitions>
 
@@ -27,37 +30,37 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-            <StackPanel
+                <StackPanel
                 Margin="0 0 5 0">
 
-                <Grid>
+                    <Grid>
 
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
 
-                    <!-- Foto/Ilustracion personaje -->
-                    <Border 
+                        <!-- Foto/Ilustracion personaje -->
+                        <Border 
                         Height="50"
                         Width="{Binding RelativeSource={RelativeSource Mode=Self}, Path=ActualHeight}"
                         CornerRadius="{Binding RelativeSource={RelativeSource Mode=Self}, Path=ActualHeight}"
                         BorderBrush="Black"
                         BorderThickness="1">
 
-                        <Border.Background>
-                            <ImageBrush
+                            <Border.Background>
+                                <ImageBrush
                                 ImageSource="{Binding PathImagen, Converter={local:FullPathToImageConverter}}"/>
-                        </Border.Background>
+                            </Border.Background>
 
-                        <Border.InputBindings>
-                            <MouseBinding MouseAction="LeftClick" Command="{Binding ComandoSeleccionarImagen}"/>
-                        </Border.InputBindings>
+                            <Border.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ComandoSeleccionarImagen}"/>
+                            </Border.InputBindings>
 
-                    </Border>
+                        </Border>
 
-                    <!-- Nombre de personaje -->
-                    <TextBox
+                        <!-- Nombre de personaje -->
+                        <TextBox
                         Grid.Column="1"
                         Margin="10 5 0 0"
                         Style="{StaticResource TextoDescriptivo}"
@@ -65,8 +68,8 @@
                         TextAlignment="Center"
                         Tag="Nombre"/>
 
-                    <!-- Nombre de personaje -->
-                    <TextBox
+                        <!-- Nombre de personaje -->
+                        <TextBox
                         Grid.Column="1"
                         Margin="10 30 0 0"
                         Visibility="{Binding EsServant, Converter={local:BooleanToVisibilityConverterColapsar}}"
@@ -76,125 +79,167 @@
                         Tag="Nombre real"/>
 
                     </Grid>
-                
 
-                <!-- Seleccionar tipo de personaje -->
-                <ComboBox
+
+                    <!-- Seleccionar tipo de personaje -->
+                    <local:UserControlComboBoxConDescripcion
                     Margin="0 10"
-                    ItemsSource="{Binding TiposDePersonajeDisponibles}"
-                    SelectedValue="{Binding TipoPersonajeSeleccionado}"/>
+                    Descripcion="Tipo de personaje:"
+                    ItemsSource="{Binding Source={x:Static core:EnumHelpers.TiposDePersonajesDisponibles}}"
+                    DataContext="{Binding VMSeleccionTipoPersonaje}"/>
 
-                <!-- Seleccionar clase de servant -->
-                <ComboBox
+                    <!-- Seleccionar clase de servant -->
+                    <local:UserControlComboBoxConDescripcion
                     Margin="0 0 0 20"
+                    Descripcion="Clase servant:"
                     Visibility="{Binding EsMasterOServant, Converter={local:BooleanToVisibilityConverterColapsar}}"
                     ItemsSource="{Binding ClasesDeServantDisponibles}"
-                    SelectedValue="{Binding ClaseServantSeleccionada}"/>
+                    DataContext="{Binding VMSeleccionClaseServant}"/>
 
-                <CheckBox
+                    <CheckBox
                     Margin="0 0 0 5"
                     Visibility="{Binding EsInvocacion, Converter={local:BooleanToVisibilityConverterColapsar}}"
                     IsChecked="{Binding CheckUsarRangos}"
                     Content="Usar rangos"/>
 
-                <Grid>
+                    <Grid>
 
-                    <!-- Stats master -->
+                        <!-- Stats master -->
 
-                    <StackPanel
+                        <StackPanel
                         local:ParametroThicknessProperty.Parametro="0 0 0 5"
                         local:AñadirMargenAElementosProperty.Value="{x:Type TextBox}"
                         Visibility="{Binding UsarRangos, Converter={local:BooleanToVisibilityConverterColapsar}, ConverterParameter=True}">
 
-                        <TextBox
+                            <TextBox
                             Style="{StaticResource TextoDescriptivo}"
                             Tag="HP"
+                            MaxLength="2"
                             Text="{Binding HP}"/>
 
-                        <TextBox
+                            <TextBox
                             Style="{StaticResource TextoDescriptivo}"
                             Tag="STR"
+                            MaxLength="2"
                             Text="{Binding STR}"/>
 
-                        <TextBox
+                            <TextBox
                             Style="{StaticResource TextoDescriptivo}"
                             Tag="END"
+                            MaxLength="2"
                             Text="{Binding END}"/>
 
-                        <TextBox
+                            <TextBox
                             Style="{StaticResource TextoDescriptivo}"
                             Tag="AGI"
+                            MaxLength="2"
                             Text="{Binding AGI}"/>
 
-                        <TextBox
+                            <TextBox
                             Style="{StaticResource TextoDescriptivo}"
                             Tag="INT"
+                            MaxLength="2"
                             Text="{Binding INT}"/>
 
-                        <TextBox
+                            <TextBox
                             Style="{StaticResource TextoDescriptivo}"
                             Tag="LCK"
+                            MaxLength="2"
                             Text="{Binding LCK}"/>
 
-                        <TextBox
+                            <TextBox
                             Style="{StaticResource TextoDescriptivo}"
                             Tag="CHR"
+                            MaxLength="2"
                             Text="{Binding CHR}"/>
 
-                        <!-- Puntos de habilidad restantes -->
-                        <TextBlock
+                            <!-- Puntos de habilidad restantes -->
+                            <TextBlock
                             Visibility="{Binding EsMaster, Converter={local:BooleanToVisibilityConverterColapsar}}"
                             Text="{Binding TextoPuntosDeHabilidadRestantes}"/>
 
-                    </StackPanel>
+                        </StackPanel>
 
-                    <!-- Stats servant -->
-                    <StackPanel
+                        <!-- Stats servant -->
+                        <StackPanel
                         local:ParametroThicknessProperty.Parametro="0 0 0 5"
                         local:AñadirMargenAElementosProperty.Value="{x:Type ComboBox}"
                         Visibility="{Binding UsarRangos, Converter={local:BooleanToVisibilityConverterColapsar}
                         , FallbackValue=Collapsed}">
 
-                        <ComboBox
-                            ItemsSource="{Binding RangosDisponibles}"
-                            SelectedValue="{Binding STR}"/>
+                            <!-- Str -->
+                            <local:UserControlComboBoxConDescripcion
+                                Descripcion="STR:"
+                                ItemsSource="{Binding Source={x:Static core:EnumHelpers.RangosDisponibles}}"
+                                SelectedValue="{Binding STR}"/>
 
-                        <ComboBox
-                            ItemsSource="{Binding RangosDisponibles}"
-                            SelectedValue="{Binding END}"/>
+                            <!-- END -->
+                            <local:UserControlComboBoxConDescripcion
+                                Descripcion="END:"
+                                ItemsSource="{Binding Source={x:Static core:EnumHelpers.RangosDisponibles}}"
+                                SelectedValue="{Binding END}"/>
 
-                        <ComboBox
-                            ItemsSource="{Binding RangosDisponibles}"
-                            SelectedValue="{Binding AGI}"/>
+                            <!-- AGI -->
+                            <local:UserControlComboBoxConDescripcion
+                                Descripcion="AGI:"
+                                ItemsSource="{Binding Source={x:Static core:EnumHelpers.RangosDisponibles}}"
+                                SelectedValue="{Binding AGI}"/>
 
-                        <ComboBox
-                            ItemsSource="{Binding RangosDisponibles}"
-                            SelectedValue="{Binding INT}"/>
+                            <!-- INT -->
+                            <local:UserControlComboBoxConDescripcion
+                                Descripcion="INT:"
+                                ItemsSource="{Binding Source={x:Static core:EnumHelpers.RangosDisponibles}}"
+                                SelectedValue="{Binding INT}"/>
 
-                        <ComboBox
-                            ItemsSource="{Binding RangosDisponibles}"
-                            SelectedValue="{Binding LCK}"/>
+                            <!-- LCK -->
+                            <local:UserControlComboBoxConDescripcion
+                                Descripcion="LCK:"
+                                ItemsSource="{Binding Source={x:Static core:EnumHelpers.RangosDisponibles}}"
+                                SelectedValue="{Binding LCK}"/>
 
 
-                        <!-- NP -->
-                        <ComboBox
-                            Visibility="{Binding EsServant, Converter={local:BooleanToVisibilityConverterColapsar}}"
-                            ItemsSource="{Binding RangosDisponibles}"
-                            SelectedValue="{Binding NP}"/>
+                            <!-- NP -->
+                            <local:UserControlComboBoxConDescripcion
+                                Descripcion="NP:"
+                                Visibility="{Binding EsServant, Converter={local:BooleanToVisibilityConverterColapsar}}"
+                                ItemsSource="{Binding Source={x:Static core:EnumHelpers.RangosDisponibles}}"
+                                SelectedValue="{Binding NP}"/>
 
                         </StackPanel>
 
-                </Grid>
+                    </Grid>
 
+                    <!-- Alineamiento -->
+                    <local:UserControlComboBoxConDescripcion
+                        Margin="0 10 0 0"
+                        Descripcion="Alineamiento: "
+                        Visibility="{Binding EsMasterOServant, Converter={local:BooleanToVisibilityConverterColapsar}}"
+                        ItemsSource="{Binding Source={x:Static core:EnumHelpers.AlineamientosDisponibles}}"
+                        DataContext="{Binding VMSeleccionAlineamito}"/>
 
-                <!-- Alineamiento -->
-                <ComboBox
-                    Margin="0 10 0 0"
-                    Visibility="{Binding EsMasterOServant, Converter={local:BooleanToVisibilityConverterColapsar}}"
-                    ItemsSource="{Binding AlineamientosDisponibles}"
-                    SelectedValue="{Binding AlineamientoSeleccionado}"/>
+                    <!-- Sexo -->
+                    <local:UserControlComboBoxConDescripcion
+                        Margin="0 5 0 0"
+                        Descripcion="Sexo:"
+                        ItemsSource="{Binding Source={x:Static core:EnumHelpers.SexosDisponibles}}"
+                        DataContext="{Binding VMSeleccionSexo}"/>
 
-            </StackPanel>
+                    <!-- Mano dominante -->
+                    <local:UserControlComboBoxConDescripcion
+                        Margin="0 5 0 0"
+                        Descripcion="Mano Dominante:"
+                        ItemsSource="{Binding Source={x:Static core:EnumHelpers.TiposDeManoDominanteDisponibles}}"
+                        DataContext="{Binding VMSeleccionManoDominante}"/>
+
+                    <TextBox
+                        Margin="0 5 0 0"
+                        Tag="Fisico"
+                        MaxLength="200"
+                        TextWrapping="Wrap"
+                        AcceptsReturn="True"
+                        Style="{StaticResource TextoDescriptivo}"/>
+
+                </StackPanel>
 
                 <!-- Botones confirmar y cancelar -->
                 <Grid Grid.Row="1">
@@ -234,130 +279,45 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <!-- Perks -->
-                <StackPanel>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="37*"/>
+                    <ColumnDefinition Width="228*"/>
+                    <ColumnDefinition Width="263*"/>
+                </Grid.ColumnDefinitions>
 
-                    <Grid>
+                <!-- Items -->
+                <local:UserControlListaItems
+                    Margin="5"
+                    BorderBrush="Black"
+                    BorderThickness="1"
+                    DataContext="{Binding ListaItems}" Grid.ColumnSpan="2">
 
-                        <TextBlock
-                            Text="Perks"
-                            TextAlignment="Center"/>
+                </local:UserControlListaItems>
 
-                        <Button
-                            Style="{StaticResource BotonFondoResaltable}"
-                            FontFamily="{StaticResource 'Font Awesome Regular'}"
-                            Content="{StaticResource Fa-BotonPlus}"
-                            HorizontalAlignment="Right"
-                            Margin="2 0"/>
+                <!-- Habilidades -->
+                <local:UserControlListaItems
+                    Grid.Row="1"
+                    Margin="5"
+                    BorderBrush="Black"
+                    BorderThickness="1"
+                    DataContext="{Binding ListaHabilidades}" Grid.ColumnSpan="2">
 
-                    </Grid>
-
-                    <Border
-                        BorderBrush="Black"
-                        BorderThickness="1"
-                        Height="200">
-
-
-                    </Border>
-
-                </StackPanel>
-
-                <!-- Magias -->
-                <StackPanel
-                    Grid.Row="1">
-
-                    <Grid>
-
-                        <TextBlock
-                        Text="Magias"
-                        TextAlignment="Center"/>
-
-                    <Button
-                        Style="{StaticResource BotonFondoResaltable}"
-                        FontFamily="{StaticResource 'Font Awesome Regular'}"
-                        Content="{StaticResource Fa-BotonPlus}"
-                        HorizontalAlignment="Right"
-                        Margin="2 0"/>
-
-                    </Grid>
-
-                    <Border
-                        BorderBrush="Black"
-                        BorderThickness="1"
-                        Height="200">
-
-                    </Border>
-
-                </StackPanel>
-
-            </Grid>
-
-            <Grid Grid.Column="2">
-
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-
-                <!-- Skills -->
-
-                <StackPanel>
-
-                    <Grid>
-                        <TextBlock
-                        Text="Skills"
-                        TextAlignment="Center"/>
-
-                        <Button
-                            Style="{StaticResource BotonFondoResaltable}"
-                            FontFamily="{StaticResource 'Font Awesome Regular'}"
-                            Content="{StaticResource Fa-BotonPlus}"
-                            HorizontalAlignment="Right"
-                            Margin="2 0"/>
-    
-                    </Grid>
-
-                    <Border
-                        BorderBrush="Black"
-                        BorderThickness="1"
-                        Height="200">
-
-                    </Border>
-
-                </StackPanel>
+                </local:UserControlListaItems>
 
                 <!-- NPs -->
-                <StackPanel
+                <local:UserControlListaItems
+                    Grid.Column="2"
+                    Margin="5"
+                    BorderBrush="Black"
+                    BorderThickness="1"
                     Visibility="{Binding EsServant, Converter={local:BooleanToVisibilityConverterColapsar}}"
-                    Grid.Row="1">
+                    DataContext="{Binding ListaNPs}">
 
-                    <Grid>
-
-                        <TextBlock
-                        Text="NPs"
-                        TextAlignment="Center"/>
-
-                        <Button
-                            Style="{StaticResource BotonFondoResaltable}"
-                            FontFamily="{StaticResource 'Font Awesome Regular'}"
-                            Content="{StaticResource Fa-BotonPlus}"
-                            HorizontalAlignment="Right"
-                            Margin="2 0"/>
-
-                </Grid>
-
-                    <Border
-                        BorderBrush="Black"
-                        BorderThickness="1"
-                        Height="200">
-
-                    </Border>
-
-                </StackPanel>
-
+                </local:UserControlListaItems>
             </Grid>
-                
+
         </Grid>
+
     </Border>
 
 </UserControl>
