@@ -101,16 +101,22 @@
     <Compile Include="Paginas\Inicio\UserControlCarta.xaml.cs">
       <DependentUpon>UserControlCarta.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Paginas\Mensajes\CreacionDeRol\Creacion De Personajes\UserControlCreacionRol_CreacionHabilidad.xaml.cs">
+    <Compile Include="Paginas\Mensajes\CreacionDeRol\Creacion de personajes\Creacion de habilidades\UserControlHabilidadItem.xaml.cs">
+      <DependentUpon>UserControlHabilidadItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Mensajes\CreacionDeRol\Creacion de personajes\Creacion de habilidades\UserControlListaHabilidades.xaml.cs">
+      <DependentUpon>UserControlListaHabilidades.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Mensajes\CreacionDeRol\Creacion de personajes\UserControlCreacionRol_CreacionHabilidad.xaml.cs">
       <DependentUpon>UserControlCreacionRol_CreacionHabilidad.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Paginas\Mensajes\CreacionDeRol\Creacion De Personajes\UserControlCreacionRol_CreacionPersonaje.xaml.cs">
+    <Compile Include="Paginas\Mensajes\CreacionDeRol\Creacion de personajes\UserControlCreacionRol_CreacionPersonaje.xaml.cs">
       <DependentUpon>UserControlCreacionRol_CreacionPersonaje.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Paginas\Mensajes\CreacionDeRol\Creacion De Personajes\UserControlCreacionRol_ListaPersonajes.xaml.cs">
+    <Compile Include="Paginas\Mensajes\CreacionDeRol\Creacion de personajes\UserControlCreacionRol_ListaPersonajes.xaml.cs">
       <DependentUpon>UserControlCreacionRol_ListaPersonajes.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Paginas\Mensajes\CreacionDeRol\Creacion De Personajes\UserControlCreacionRol_PersonajeItem.xaml.cs">
+    <Compile Include="Paginas\Mensajes\CreacionDeRol\Creacion de personajes\UserControlCreacionRol_PersonajeItem.xaml.cs">
       <DependentUpon>UserControlCreacionRol_PersonajeItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="Paginas\Mensajes\CreacionDeRol\UserControlCreacionRol_DatosMapa.xaml.cs">
@@ -119,7 +125,7 @@
     <Compile Include="Paginas\Mensajes\CreacionDeRol\UserControlCreacionRol_DatosRol.xaml.cs">
       <DependentUpon>UserControlCreacionRol_DatosRol.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Paginas\Mensajes\CreacionDeRol\Creacion De Personajes\UserControlCreacionRol_Personajes.xaml.cs">
+    <Compile Include="Paginas\Mensajes\CreacionDeRol\Creacion de personajes\UserControlCreacionRol_Personajes.xaml.cs">
       <DependentUpon>UserControlCreacionRol_Personajes.xaml</DependentUpon>
     </Compile>
     <Compile Include="Paginas\Mensajes\UserControlMensajeConPasos.xaml.cs">
@@ -215,19 +221,27 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Paginas\Mensajes\CreacionDeRol\Creacion De Personajes\UserControlCreacionRol_CreacionHabilidad.xaml">
+    <Page Include="Paginas\Mensajes\CreacionDeRol\Creacion de personajes\Creacion de habilidades\UserControlHabilidadItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Paginas\Mensajes\CreacionDeRol\Creacion De Personajes\UserControlCreacionRol_CreacionPersonaje.xaml">
+    <Page Include="Paginas\Mensajes\CreacionDeRol\Creacion de personajes\Creacion de habilidades\UserControlListaHabilidades.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Paginas\Mensajes\CreacionDeRol\Creacion De Personajes\UserControlCreacionRol_ListaPersonajes.xaml">
+    <Page Include="Paginas\Mensajes\CreacionDeRol\Creacion de personajes\UserControlCreacionRol_CreacionHabilidad.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Paginas\Mensajes\CreacionDeRol\Creacion De Personajes\UserControlCreacionRol_PersonajeItem.xaml">
+    <Page Include="Paginas\Mensajes\CreacionDeRol\Creacion de personajes\UserControlCreacionRol_CreacionPersonaje.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Paginas\Mensajes\CreacionDeRol\Creacion de personajes\UserControlCreacionRol_ListaPersonajes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Paginas\Mensajes\CreacionDeRol\Creacion de personajes\UserControlCreacionRol_PersonajeItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -239,7 +253,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Paginas\Mensajes\CreacionDeRol\Creacion De Personajes\UserControlCreacionRol_Personajes.xaml">
+    <Page Include="Paginas\Mensajes\CreacionDeRol\Creacion de personajes\UserControlCreacionRol_Personajes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

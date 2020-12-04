@@ -3,7 +3,7 @@ using System.Windows.Input;
 
 namespace AppGM.Core
 {
-    class ViewModelMensajeCrearRol_CrearHabilidad : ViewModelMensajeBase
+    public class ViewModelMensajeCrearRol_CrearHabilidad : ViewModelMensajeBase
     {
         #region Miembros
 
@@ -18,16 +18,16 @@ namespace AppGM.Core
         public ushort CostoDeMana { get; set; }
 
         public ETipoHabilidad TipoDeHabilidadSeleccionado { get; set; } = ETipoHabilidad.NINGUNO;
-        public ERango RangoHabilidadSeleccionado { get; set; }
+        public ERango RangoHabilidadSeleccionado          { get; set; }
 
-        public ViewModelListaItems ListaEfectos { get; set; }
-        public ViewModelListaItems ListaItemsQueConsume { get; set; }
-        public ViewModelListaItems ListaCondiciones { get; set; }
-        public ViewModelListaItems ListaLimitadores { get; set; }
-        public ViewModelListaItems ListaTiradas { get; set; }
+        public ViewModelListaItems ContenedorListaEfectos          { get; set; }
+        public ViewModelListaItems ContenedorListaItemsQueConsume  { get; set; }
+        public ViewModelListaItems ContenedorListaCondiciones      { get; set; }
+        public ViewModelListaItems ContenedorListaLimitadores      { get; set; }
+        public ViewModelListaItems ContenedorListaTiradas          { get; set; }
 
         public ICommand ComandoFinalizar { get; set; }
-        public ICommand ComandoCancelar { get; set; }
+        public ICommand ComandoCancelar  { get; set; }
 
         #endregion
 
@@ -37,11 +37,11 @@ namespace AppGM.Core
         {
             mVMCrearPersonaje = _vmCrearPersonaje;
 
-            ListaCondiciones     = new ViewModelListaItems(()=>{}, true, "Condiciones");
-            ListaEfectos         = new ViewModelListaItems(()=>{}, true, "Efectos");
-            ListaLimitadores     = new ViewModelListaItems(()=>{}, true, "Limitadores");
-            ListaTiradas         = new ViewModelListaItems(()=>{}, true, "Tiradas");
-            ListaItemsQueConsume = new ViewModelListaItems(()=>{}, true, "Items que consume");
+            ContenedorListaCondiciones     = new ViewModelListaItems(()=>{}, true, "Condiciones");
+            ContenedorListaEfectos         = new ViewModelListaItems(()=>{}, true, "Efectos");
+            ContenedorListaLimitadores     = new ViewModelListaItems(()=>{}, true, "Limitadores");
+            ContenedorListaTiradas         = new ViewModelListaItems(()=>{}, true, "Tiradas");
+            ContenedorListaItemsQueConsume = new ViewModelListaItems(()=>{}, true, "Items que consume");
 
             ComandoCancelar = new Comando(() =>
             {

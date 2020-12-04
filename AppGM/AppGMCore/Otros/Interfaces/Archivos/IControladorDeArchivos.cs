@@ -1,4 +1,6 @@
-﻿namespace AppGM.Core
+﻿using System;
+
+namespace AppGM.Core
 {
     public interface IControladorDeArchivos
     {

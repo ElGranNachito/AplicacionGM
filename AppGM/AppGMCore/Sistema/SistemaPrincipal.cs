@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.IO;
+using System.Threading.Tasks;
 using Ninject;
 
 namespace AppGM.Core
@@ -12,6 +13,12 @@ namespace AppGM.Core
     //TODO: Extender esta clase cuando tengamos el programa mas desarrollado
     public static class SistemaPrincipal
     {
+        #region Miembros
+
+        public static readonly char CaracterSeparadorDeDirectorios = Path.DirectorySeparatorChar; 
+
+        #endregion
+
         #region Propiedades
         public static IKernel Kernel { get; set; } = new StandardKernel();
 

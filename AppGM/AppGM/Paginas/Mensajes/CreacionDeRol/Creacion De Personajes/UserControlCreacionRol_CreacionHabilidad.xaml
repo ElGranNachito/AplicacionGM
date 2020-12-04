@@ -14,17 +14,22 @@
 
         <Grid>
                 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="2*"/>
-            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
             <Grid>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
                 <StackPanel>
@@ -57,32 +62,41 @@
                 <!-- Efectos -->
                 <local:UserControlListaItems
                     Grid.Row="1"
-                    DataContext="{Binding ListaEfectos}">
+                    DataContext="{Binding ContenedorListaEfectos}">
 
                 </local:UserControlListaItems>
 
-                <Grid Grid.Row="2">
+                <!-- Condiciones para utilizar habilidad -->
+                <local:UserControlListaItems
+                    Grid.Column="1"
+                    Padding="5"
+                    DataContext="{Binding ContenedorListaCondiciones}">
+                </local:UserControlListaItems>
 
-                    <!-- Boton cancelar -->
-                    <Button
-                        Margin="10 10 0 0"
-                        HorizontalAlignment="Left"
-                        Content="Cancelar"
-                        BorderBrush="Black"
-                        Width="70"
-                        Style="{StaticResource BotonFondoResaltable}"
-                        />
+                <!--  Items que consume el utilizar esta habilidad -->
+                <local:UserControlListaItems
+                    Grid.Column="2"
+                    Padding="5"
+                    DataContext="{Binding ContenedorListaItemsQueConsume}">
+                </local:UserControlListaItems>
 
-                    <!-- Boton finalizar -->
-                    <Button
-                        Margin="0 10 10 0"
-                        HorizontalAlignment="Right"
-                        Content="Finalizar"
-                        BorderBrush="Black"
-                        Width="70"
-                        Style="{StaticResource BotonFondoResaltable}"/>
+                <!-- Limitadores -->
+                <local:UserControlListaItems
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Padding="5"
+                    DataContext="{Binding ContenedorListaLimitadores}">
 
-                </Grid>
+                </local:UserControlListaItems>
+
+                <!-- Tiradas de la habilidad -->
+                <local:UserControlListaItems
+                    Grid.Row="1" 
+                    Grid.Column="2"
+                    Padding="5"
+                    DataContext="{Binding ContenedorListaTiradas}">
+
+                </local:UserControlListaItems>
 
             </Grid>
 
@@ -98,35 +112,33 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- Condiciones para utilizar habilidad -->
-                <local:UserControlListaItems
-                    Padding="5"
-                    DataContext="{Binding ListaCondiciones}">
-                </local:UserControlListaItems>
-
-                <!--  Items que consume el utilizar esta habilidad -->
-                <local:UserControlListaItems
-                    Grid.Column="1"
-                    Padding="5"
-                    DataContext="{Binding ListaItemsQueConsume}">
-                </local:UserControlListaItems>
-
-                <!-- Limitadores -->
-                <local:UserControlListaItems
-                    Grid.Row="1"
-                    Padding="5"
-                    DataContext="{Binding ListaLimitadores}">
-
-                </local:UserControlListaItems>
-
-                <local:UserControlListaItems
-                    Grid.Row="1" Grid.Column="1"
-                    Padding="5"
-                    DataContext="{Binding ListaTiradas}">
-
-                </local:UserControlListaItems>
 
             </Grid>
+
+            <Grid Grid.Row="1">
+
+                <!-- Boton cancelar -->
+                <Button
+                    Margin="10 10 0 0"
+                    HorizontalAlignment="Left"
+                    Content="Cancelar"
+                    BorderBrush="Black"
+                    Width="70"
+                    Style="{StaticResource BotonFondoResaltable}"
+                    Command="{Binding ComandoCancelar}"
+                />
+
+                <!-- Boton finalizar -->
+                <Button
+                    Margin="0 10 10 0"
+                    HorizontalAlignment="Right"
+                    Content="Finalizar"
+                    BorderBrush="Black"
+                    Width="70"
+                    Style="{StaticResource BotonFondoResaltable}"/>
+
+            </Grid>
+
         </Grid>
 
     </Border>

@@ -29,6 +29,12 @@ namespace AppGM
                         {
                             DataContext = vmc
                         };
+
+                    case ViewModelMensajeCrearRol_CrearHabilidad vmc:
+                        return new UserControlCreacionRol_CreacionHabilidad
+                        {
+                            DataContext = vmc
+                        };
                 }
             }
 

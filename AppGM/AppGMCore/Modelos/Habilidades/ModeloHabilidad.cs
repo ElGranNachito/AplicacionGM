@@ -17,17 +17,22 @@ namespace AppGM.Core
         [StringLength(2000)]
         public string Descripcion { get; set; }
 
-        public TIHabilidadLimitador LimiteDeUsos { get; set; }
+        public ETipoHabilidad TipoDeHabilidad { get; set; }
+
+        //Si es magia no se utiliza
+        public ERango Rango { get; set; }
+
+        public TIHabilidadLimitador       LimiteDeUsos    { get; set; }
         public TIHabilidadCargasHabilidad CargasHabilidad { get; set; }
         
-        public TIHabilidadTiradaDeDaño TiradaDeDaño { get; set; }
+        public TIHabilidadTiradaDeDaño    TiradaDeDaño    { get; set; }
         
         //Primer indice es el item que invoca, el resto de indices son los items que cuesta
-        public List<TIHabilidadItem> ItemsQueCuestaItemInvocacion { get; set; }             = new List<TIHabilidadItem>();
+        public List<TIHabilidadItem>       ItemsQueCuestaItemInvocacion { get; set; } = new List<TIHabilidadItem>();
 
-        public List<TIHabilidadInvocacion> Invocacion { get; set; }                         = new List<TIHabilidadInvocacion>();
+        public List<TIHabilidadInvocacion> Invocacion                   { get; set; } = new List<TIHabilidadInvocacion>();
         
-        public List<TIHabilidadTiradaBase> TiradasDeUso { get; set; }                       = new List<TIHabilidadTiradaBase>();
+        public List<TIHabilidadTiradaBase> TiradasDeUso                 { get; set; } = new List<TIHabilidadTiradaBase>();
         
         //Primer indice son los efectos sobre el usuario, segundo indice son los efectos sobre el objetivo
         public List<TIHabilidadEfecto> EfectosSobreUsuarioEfectoSobreObjetivo { get; set; } = new List<TIHabilidadEfecto>();
@@ -36,8 +41,8 @@ namespace AppGM.Core
 
     public class ModeloPerk : ModeloHabilidad
     {
-        //Rango de la Perk
-        public ERango Rango { get; set; }
+       
+        
     }
 
     public class ModeloMagia : ModeloHabilidad
@@ -49,6 +54,6 @@ namespace AppGM.Core
 
     public class ModeloNoblePhantasm : ModeloHabilidad
     {
-        public ERango Rango { get; set; }
+        
     }
 }

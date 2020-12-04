@@ -57,9 +57,11 @@ namespace AppGM.Core
 
         public bool PuedeFinalizar => PuedeCrearPersonaje();
 
-        public ViewModelListaItems ListaItems { get; set; }
-        public ViewModelListaItems ListaHabilidades { get; set; }
-        public ViewModelListaItems ListaNPs { get; set; }
+        public ViewModelListaItems ContenedorListaItems       { get; set; }
+        public ViewModelListaItems ContenedorListaHabilidades { get; set; }
+        public ViewModelListaItems ContendorListaNPs          { get; set; }
+
+        public ViewModelListaDeHabilidades ListaHabilidades { get; set; }
 
         public ViewModelComboBoxConDescripcion<ETipoPersonaje> VMSeleccionTipoPersonaje { get; set; } = new ViewModelComboBoxConDescripcion<ETipoPersonaje>();
         public ViewModelComboBoxConDescripcion<EClaseServant>  VMSeleccionClaseServant  { get; set; } = new ViewModelComboBoxConDescripcion<EClaseServant>();
@@ -67,7 +69,7 @@ namespace AppGM.Core
         public ViewModelComboBoxConDescripcion<ESexo>          VMSeleccionSexo          { get; set; } = new ViewModelComboBoxConDescripcion<ESexo>();
         public ViewModelComboBoxConDescripcion<EManoDominante> VMSeleccionManoDominante { get; set; } = new ViewModelComboBoxConDescripcion<EManoDominante>();
 
-        public List<EClaseServant>  ClasesDeServantDisponibles  => ObtenerClasesDeServantDisponibles();
+        public List<EClaseServant>  ClasesDeServantDisponibles => ObtenerClasesDeServantDisponibles();
 
         public ICommand ComandoConfirmar { get; set; }
         public ICommand ComandoCancelar  { get; set; }
@@ -88,9 +90,14 @@ namespace AppGM.Core
             mDatosCreacionRol  = _datosCreacionRol;
             mViewModelCrearRol = _viewModelCrearRol;
 
-            ListaHabilidades = new ViewModelListaItems(mAccionAñadirHabilidad, true, "Habilidades");
-            ListaItems       = new ViewModelListaItems(mAccionAñadirItem, true, "Items");
-            ListaNPs         = new ViewModelListaItems(mAccionAñadirNP, true, "NPs");
+            mAccionAñadirHabilidad = () =>
+            {
+                SistemaPrincipal.Aplicacion.VentanaPopups.EstablecerViewModel(new ViewModelMensajeCrearRol_CrearHabilidad(this));
+            };
+
+            ContenedorListaHabilidades = new ViewModelListaItems(mAccionAñadirHabilidad, true, "Habilidades");
+            ContenedorListaItems       = new ViewModelListaItems(mAccionAñadirItem, true, "Items");
+            ContendorListaNPs          = new ViewModelListaItems(mAccionAñadirNP, true, "NPs");
 
             VMSeleccionTipoPersonaje.PropertyChanged += (sender, args) =>
             {

@@ -92,8 +92,8 @@
                     <local:UserControlComboBoxConDescripcion
                     Margin="0 0 0 20"
                     Descripcion="Clase servant:"
-                    Visibility="{Binding EsMasterOServant, Converter={local:BooleanToVisibilityConverterColapsar}}"
-                    ItemsSource="{Binding ClasesDeServantDisponibles}"
+                    Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Grid}, Path=DataContext.EsMasterOServant, Converter={local:BooleanToVisibilityConverterColapsar}}"
+                    ItemsSource="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Grid}, Path=DataContext.ClasesDeServantDisponibles}"
                     DataContext="{Binding VMSeleccionClaseServant}"/>
 
                     <CheckBox
@@ -280,9 +280,8 @@
                 </Grid.RowDefinitions>
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="37*"/>
-                    <ColumnDefinition Width="228*"/>
-                    <ColumnDefinition Width="263*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
                 <!-- Items -->
@@ -290,17 +289,21 @@
                     Margin="5"
                     BorderBrush="Black"
                     BorderThickness="1"
-                    DataContext="{Binding ListaItems}" Grid.ColumnSpan="2">
+                    DataContext="{Binding ContenedorListaItems}">
 
                 </local:UserControlListaItems>
 
                 <!-- Habilidades -->
                 <local:UserControlListaItems
                     Grid.Row="1"
+                    Grid.ColumnSpan="2"
                     Margin="5"
                     BorderBrush="Black"
                     BorderThickness="1"
-                    DataContext="{Binding ListaHabilidades}" Grid.ColumnSpan="2">
+                    DataContext="{Binding ContenedorListaHabilidades}">
+
+                    <local:UserControlListaHabilidades
+                        DataContext="{Binding ListaHabilidades}"/>
 
                 </local:UserControlListaItems>
 
@@ -311,7 +314,7 @@
                     BorderBrush="Black"
                     BorderThickness="1"
                     Visibility="{Binding EsServant, Converter={local:BooleanToVisibilityConverterColapsar}}"
-                    DataContext="{Binding ListaNPs}">
+                    DataContext="{Binding ContenedorListaNPs}">
 
                 </local:UserControlListaItems>
             </Grid>

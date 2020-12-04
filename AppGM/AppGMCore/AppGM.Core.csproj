@@ -125,7 +125,9 @@
     <Compile Include="ViewModels\DesignModels\BaseDesignModel.cs" />
     <Compile Include="ViewModels\DesignModels\DesignModelCombateItem.cs" />
     <Compile Include="ViewModels\DesignModels\DesingModelListaRoles.cs" />
-    <Compile Include="ViewModels\Mensajes\CreacionDeRol\Creacion de personajes\ViewModelMensajeCrearRol_CrearHabilidad.cs" />
+    <Compile Include="ViewModels\Mensajes\CreacionDeRol\Creacion de personajes\Creacion de habilidades\ViewModelHabilidadItem.cs" />
+    <Compile Include="ViewModels\Mensajes\CreacionDeRol\Creacion de personajes\Creacion de habilidades\ViewModelListaDeHabilidades.cs" />
+    <Compile Include="ViewModels\Mensajes\CreacionDeRol\Creacion de personajes\Creacion de habilidades\ViewModelMensajeCrearRol_CrearHabilidad.cs" />
     <Compile Include="ViewModels\Mensajes\CreacionDeRol\Creacion de personajes\ViewModelMensajeCrearRol_ListaPersonajes.cs" />
     <Compile Include="ViewModels\Mensajes\CreacionDeRol\Creacion de personajes\ViewModelMensajeCrearRol_CrearPersonaje.cs" />
     <Compile Include="ViewModels\Mensajes\CreacionDeRol\Creacion de personajes\ViewModelMensajeCrearRol_PersonajeItem.cs" />
