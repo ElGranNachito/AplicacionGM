@@ -7,9 +7,9 @@
              xmlns:core="clr-namespace:AppGM.Core;assembly=AppGM.Core"
              mc:Ignorable="d" 
 
-             MinHeight="500"
+             MinHeight="550"
 
-             d:DesignHeight="500" d:DesignWidth="800">
+             d:DesignHeight="550" d:DesignWidth="800">
 
     <Border Background="White"
             Padding="5">
@@ -209,6 +209,14 @@
 
                     </Grid>
 
+                    <Button
+                        Margin="0 10 0 0"
+                        Content="Actualizar Stats"
+                        BorderThickness = " 1"
+                        BorderBrush="Black"
+                        Style="{StaticResource BotonFondoResaltable}"
+                        Command="{Binding ComandoActualizarStats}"/>
+
                     <!-- Alineamiento -->
                     <local:UserControlComboBoxConDescripcion
                         Margin="0 10 0 0"
@@ -300,6 +308,7 @@
                     Margin="5"
                     BorderBrush="Black"
                     BorderThickness="1"
+                    IsEnabled="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Grid}, Path=DataContext.PuedeAñadirHabilidades, FallbackValue=False}"
                     DataContext="{Binding ContenedorListaHabilidades}">
 
                     <local:UserControlListaHabilidades

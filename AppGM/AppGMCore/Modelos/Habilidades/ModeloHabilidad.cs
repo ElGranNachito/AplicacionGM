@@ -49,6 +49,7 @@ namespace AppGM.Core
     {
         public ControladorMagia controladorMagia;
 
+        public bool EsParticular { get; set; }
         public byte Nivel { get; set; }
     }
 

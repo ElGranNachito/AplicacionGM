@@ -107,7 +107,7 @@
     <Compile Include="Paginas\Mensajes\CreacionDeRol\Creacion de personajes\Creacion de habilidades\UserControlListaHabilidades.xaml.cs">
       <DependentUpon>UserControlListaHabilidades.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Paginas\Mensajes\CreacionDeRol\Creacion de personajes\UserControlCreacionRol_CreacionHabilidad.xaml.cs">
+    <Compile Include="Paginas\Mensajes\CreacionDeRol\Creacion de personajes\Creacion de habilidades\UserControlCreacionRol_CreacionHabilidad.xaml.cs">
       <DependentUpon>UserControlCreacionRol_CreacionHabilidad.xaml</DependentUpon>
     </Compile>
     <Compile Include="Paginas\Mensajes\CreacionDeRol\Creacion de personajes\UserControlCreacionRol_CreacionPersonaje.xaml.cs">
@@ -229,7 +229,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Paginas\Mensajes\CreacionDeRol\Creacion de personajes\UserControlCreacionRol_CreacionHabilidad.xaml">
+    <Page Include="Paginas\Mensajes\CreacionDeRol\Creacion de personajes\Creacion de habilidades\UserControlCreacionRol_CreacionHabilidad.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

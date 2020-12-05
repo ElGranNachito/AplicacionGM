@@ -16,6 +16,7 @@ namespace AppGM.Core
 
         private DatosCreacionRol         mDatosCreacionRol;
         private ViewModelMensajeCrearRol mViewModelCrearRol;
+        private ModeloPersonaje          mModeloPersonaje;
 
         private int    mHP  { get; set; } = 20;
         private ushort mSTR { get; set; } = 10;
@@ -54,6 +55,7 @@ namespace AppGM.Core
         public bool EsMaster     => TipoPersonajeSeleccionado == ETipoPersonaje.Master;
         public bool EsInvocacion => TipoPersonajeSeleccionado == ETipoPersonaje.Invocacion;
         public bool UsarRangos   => EsServant || (EsInvocacion && CheckUsarRangos);
+        public bool PuedeAñadirHabilidades => mModeloPersonaje != null;
 
         public bool PuedeFinalizar => PuedeCrearPersonaje();
 
@@ -81,6 +83,8 @@ namespace AppGM.Core
         public ICommand ComandoAñadirMagia { get; set; }
         public ICommand ComandoAñadirNP    { get; set; }
 
+        public ICommand ComandoActualizarStats { get; set; }
+
         #endregion
 
         #region Constructor
@@ -92,7 +96,7 @@ namespace AppGM.Core
 
             mAccionAñadirHabilidad = () =>
             {
-                SistemaPrincipal.Aplicacion.VentanaPopups.EstablecerViewModel(new ViewModelMensajeCrearRol_CrearHabilidad(this));
+                SistemaPrincipal.Aplicacion.VentanaPopups.EstablecerViewModel(new ViewModelMensajeCrearRol_CrearHabilidad(this, mModeloPersonaje));
             };
 
             ContenedorListaHabilidades = new ViewModelListaItems(mAccionAñadirHabilidad, true, "Habilidades");
@@ -115,25 +119,27 @@ namespace AppGM.Core
                     DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PuedeFinalizar)));
             };
 
+            ComandoActualizarStats = new Comando(ActualizarStatsPersonaje);
+
             ComandoConfirmar = new Comando(() =>
             {
-                ModeloPersonaje nuevoPersonaje = CrearPersonaje();
+                CrearPersonaje();
 
-                mDatosCreacionRol.personajes.Add(nuevoPersonaje);
+                mDatosCreacionRol.personajes.Add(mModeloPersonaje);
 
-                switch (nuevoPersonaje)
+                switch (mModeloPersonaje.TipoPersonaje)
                 {
-                    case ModeloMaster mm:
-                        mDatosCreacionRol.masters.Add(mm);
+                    case ETipoPersonaje.Master:
+                        mDatosCreacionRol.masters.Add(mModeloPersonaje);
                         break;
-                    case ModeloServant ms:
-                        mDatosCreacionRol.servants.Add(ms);
+                    case ETipoPersonaje.Servant:
+                        mDatosCreacionRol.servants.Add(mModeloPersonaje);
                         break;
-                    case ModeloInvocacion mi:
-                        mDatosCreacionRol.invocaciones.Add(mi);
+                    case ETipoPersonaje.Invocacion:
+                        mDatosCreacionRol.invocaciones.Add(mModeloPersonaje);
                         break;
                     default:
-                        mDatosCreacionRol.npcs.Add(nuevoPersonaje);
+                        mDatosCreacionRol.npcs.Add(mModeloPersonaje);
                         break;
                 }
 
@@ -206,35 +212,29 @@ namespace AppGM.Core
             return true;
         }
 
-        private ModeloPersonaje CrearPersonaje()
+        private void ActualizarStatsPersonaje()
         {
-            switch (TipoPersonajeSeleccionado)
-            {
-                case ETipoPersonaje.Master:
-                    ModeloMaster nuevoMaster = new ModeloMaster();
+            if (mModeloPersonaje == null)
+                mModeloPersonaje = Creador.CrearPersonaje(TipoPersonajeSeleccionado);
 
+            mModeloPersonaje.MaxHp = mHP;
+            mModeloPersonaje.Str   = mSTR;
+            mModeloPersonaje.End   = mEND;
+            mModeloPersonaje.Agi   = mAGI;
+            mModeloPersonaje.Intel = mINT;
+            mModeloPersonaje.Lck   = mLCK;
 
-                    return nuevoMaster;
+            if (EsServant)
+                ((ModeloServant)mModeloPersonaje).mERangoNP = mNP;
+            else if (EsMaster)
+                ((ModeloMaster) mModeloPersonaje).Chr = mCHR;
 
-                case ETipoPersonaje.Servant:
-                    ModeloServant nuevoServant = new ModeloServant();
+            DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PuedeAñadirHabilidades)));
+        }
 
-                    return nuevoServant;
-
-                case ETipoPersonaje.Invocacion:
-                    ModeloInvocacion nuevaInvocacion = new ModeloInvocacion();
-
-                    return nuevaInvocacion;
-
-                case ETipoPersonaje.NPC:
-                    ModeloPersonaje nuevoPersonaje = new ModeloPersonaje();
-
-                    return nuevoPersonaje;
-
-                default:
-                    return null;
-                    
-            }
+        private void CrearPersonaje()
+        {
+            
         }
 
         #endregion
@@ -253,7 +253,10 @@ namespace AppGM.Core
                 if (value is ERango rango)
                     mSTR = rango.ToUshort();
                 else if (value is string s)
-                    mSTR = ushort.Parse(s);
+                {
+                    if (!string.IsNullOrWhiteSpace(s))
+                        mSTR = ushort.Parse(s);
+                }
                 else
                     mSTR = (ushort) value;
 
@@ -270,7 +273,10 @@ namespace AppGM.Core
                 if (value is ERango rango)
                     mEND = rango.ToUshort();
                 else if (value is string s)
-                    mEND = ushort.Parse(s);
+                {
+                    if(!string.IsNullOrWhiteSpace(s))
+                        mEND = ushort.Parse(s);
+                }
                 else
                     mEND = (ushort)value;
 
@@ -286,7 +292,10 @@ namespace AppGM.Core
                 if (value is ERango rango)
                     mAGI = rango.ToUshort();
                 else if (value is string s)
-                    mAGI = ushort.Parse(s);
+                {
+                    if(!string.IsNullOrWhiteSpace(s))
+                        mAGI = ushort.Parse(s);
+                }
                 else
                     mAGI = (ushort)value;
 
@@ -302,7 +311,10 @@ namespace AppGM.Core
                 if (value is ERango rango)
                     mINT = rango.ToUshort();
                 else if (value is string s)
-                    mINT = ushort.Parse(s);
+                {
+                    if(!string.IsNullOrWhiteSpace(s))
+                        mINT = ushort.Parse(s);
+                }
                 else
                     mINT = (ushort)value;
 
@@ -318,7 +330,10 @@ namespace AppGM.Core
                 if (value is ERango rango)
                     mLCK = rango.ToUshort();
                 else if (value is string s)
-                    mLCK = ushort.Parse(s);
+                {
+                    if(!string.IsNullOrWhiteSpace(s))
+                        mLCK = ushort.Parse(s);
+                }
                 else
                     mLCK = (ushort)value;
 
@@ -334,7 +349,10 @@ namespace AppGM.Core
                 if (value is ERango rango)
                     mCHR = rango.ToUshort();
                 else if (value is string s)
-                    mCHR = ushort.Parse(s);
+                {
+                    if(!string.IsNullOrWhiteSpace(s))
+                        mCHR = ushort.Parse(s);
+                }
                 else
                     mCHR = (ushort)value;
 

@@ -70,6 +70,7 @@
     <Compile Include="Datos\DatosCreacionRol.cs" />
     <Compile Include="Datos\DatosRol.cs" />
     <Compile Include="Datos\RolContext.cs" />
+    <Compile Include="Helpers\Creador.cs" />
     <Compile Include="Helpers\EnumHelpers.cs" />
     <Compile Include="Helpers\MathHelpers.cs" />
     <Compile Include="Helpers\StringHelpers.cs" />
