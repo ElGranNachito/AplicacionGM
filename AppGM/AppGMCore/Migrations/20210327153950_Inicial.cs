@@ -107,10 +107,11 @@ namespace AppGM.Core.Migrations
                     TurnosDeDuracion = table.Column<ushort>(nullable: false),
                     Nombre = table.Column<string>(maxLength: 50, nullable: true),
                     Descripcion = table.Column<string>(maxLength: 2000, nullable: true),
+                    TipoDeHabilidad = table.Column<int>(nullable: false),
+                    Rango = table.Column<int>(nullable: false),
                     Tipo = table.Column<int>(nullable: false),
-                    Nivel = table.Column<byte>(nullable: true),
-                    Rango = table.Column<int>(nullable: true),
-                    ModeloPerk_Rango = table.Column<int>(nullable: true)
+                    EsParticular = table.Column<bool>(nullable: true),
+                    Nivel = table.Column<byte>(nullable: true)
                 },
                 constraints: table =>
                 {

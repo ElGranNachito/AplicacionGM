@@ -140,7 +140,13 @@ namespace AppGM.Core.Migrations
                         .HasColumnType("TEXT")
                         .HasMaxLength(50);
 
+                    b.Property<int>("Rango")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("Tipo")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("TipoDeHabilidad")
                         .HasColumnType("INTEGER");
 
                     b.Property<ushort>("TurnosDeDuracion")
@@ -1176,6 +1182,9 @@ namespace AppGM.Core.Migrations
                 {
                     b.HasBaseType("AppGM.Core.ModeloHabilidad");
 
+                    b.Property<bool>("EsParticular")
+                        .HasColumnType("INTEGER");
+
                     b.Property<byte>("Nivel")
                         .HasColumnType("INTEGER");
 
@@ -1186,19 +1195,12 @@ namespace AppGM.Core.Migrations
                 {
                     b.HasBaseType("AppGM.Core.ModeloHabilidad");
 
-                    b.Property<int>("Rango")
-                        .HasColumnType("INTEGER");
-
                     b.HasDiscriminator().HasValue(4);
                 });
 
             modelBuilder.Entity("AppGM.Core.ModeloPerk", b =>
                 {
                     b.HasBaseType("AppGM.Core.ModeloHabilidad");
-
-                    b.Property<int>("Rango")
-                        .HasColumnName("ModeloPerk_Rango")
-                        .HasColumnType("INTEGER");
 
                     b.HasDiscriminator().HasValue(2);
                 });

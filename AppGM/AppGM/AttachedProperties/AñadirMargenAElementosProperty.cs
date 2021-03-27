@@ -12,29 +12,29 @@ namespace AppGM
     {
         public override void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            StackPanel sp = (StackPanel) d;
+            Panel panel = (Panel) d;
 
             RoutedEventHandler loadedEventListener = null;
 
             loadedEventListener = (o, re) =>
             {
                 //Desuscribimos la lambda
-                sp.Loaded -= loadedEventListener;
+                panel.Loaded -= loadedEventListener;
 
                 //Obtenemos el tipo de elemento que estamos buscando
                 Type tipo = (Type)e.NewValue;
 
-                for (int i = 0; i < sp.Children.Count; ++i)
+                for (int i = 0; i < panel.Children.Count; ++i)
                 {
-                    FrameworkElement doc = (FrameworkElement) sp.Children[i];
-
+                    FrameworkElement doc = (FrameworkElement)panel.Children[i];
+                    
                     //Si el tipo del child actual es igual al que estamos buscando establecemos su margen
-                    if (doc.GetType() == tipo)
+                    if (doc != null && doc.GetType() == tipo)
                         doc.Margin = ParametroThicknessProperty.GetParametro(d);
                 }
             };
 
-            sp.Loaded += loadedEventListener;
+            panel.Loaded += loadedEventListener;
         }
     }
 }

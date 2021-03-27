@@ -53,9 +53,6 @@ namespace AppGM.Core
             {
                 DispararPropertyChanged(new PropertyChangedEventArgs(nameof(TurnoActual)));
 
-                if (turno >= Participantes.Participantes.Count)
-                    turno = 0;
-
                 ParticipanteTurnoActual = Participantes.Participantes[turno];
             };
         }

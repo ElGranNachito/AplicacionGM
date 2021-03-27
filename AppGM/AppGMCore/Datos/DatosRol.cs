@@ -238,7 +238,7 @@ namespace AppGM.Core
 					mDBRol.Add(accion);
 					mDBRol.Add(accionParticipante);
 					mDBRol.Add(participantesCombate);
-
+					
 					mDBRol.SaveChanges();
 				}
 
