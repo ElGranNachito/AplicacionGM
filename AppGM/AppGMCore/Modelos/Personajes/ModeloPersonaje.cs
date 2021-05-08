@@ -8,7 +8,7 @@ namespace AppGM.Core
     /// </summary>
     public class ModeloPersonaje : ModeloBase
     {
-        public ControladorPersonaje controladorPersonaje;
+        public ControladorPersonaje controlador;
 
         //Nombre del personaje
         [StringLength(50)]
@@ -21,7 +21,7 @@ namespace AppGM.Core
         public ushort Str   { get; set; }
         public ushort End   { get; set; }
         public ushort Agi   { get; set; }
-        public ushort Intel { get; set; }
+        public ushort Int   { get; set; }
         public ushort Lck   { get; set; }
 
         //Imagencita del personaje
@@ -44,7 +44,5 @@ namespace AppGM.Core
         public List<TIPersonajeMagia>      Magias     { get; set; } = new List<TIPersonajeMagia>();
         public List<TIPersonajeModificadorDeDefensa> ModificadoresDeDefensa { get; set; } = new List<TIPersonajeModificadorDeDefensa>();
         public List<TIPersonajeArmaDistancia>        ArmasDistancia         { get; set; } = new List<TIPersonajeArmaDistancia>();
-
-        public ControladorPersonaje controlador;
     }
 }

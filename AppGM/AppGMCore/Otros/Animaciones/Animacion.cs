@@ -1,12 +1,11 @@
-﻿using System;
-using System.Linq.Expressions;
-using System.Reflection;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading;
 
 namespace AppGM.Core
 {
     public delegate void dEventoAnimacion(Animacion animacion);
-
+    
     public class Animacion
     {
         public string  pathFotogramas;
@@ -19,13 +18,14 @@ namespace AppGM.Core
 
         private string mExtensionImagen;
 
-        private BaseViewModel elementoContenedor;
-        private PropertyInfo  propiedad;
-        private Stopwatch     reloj = new Stopwatch();
+        private SendOrPostCallback actualizarFotogramaActual;
+        private Stopwatch          reloj = new Stopwatch();
+
+        private Dictionary<int, string> mPathsCacheados;
 
         public event dEventoAnimacion OnAnimacionFinalizada = delegate{};
         public Animacion(
-            Expression<Func<string>> _propiedad,
+            SendOrPostCallback _actualizarFotogramaActual,
             float _iteracionesPorSegundo,
             ushort _cantidadDeFotogramas,
             string _pathFotogramas,
@@ -35,17 +35,19 @@ namespace AppGM.Core
         {
             pathFotogramas            = _pathFotogramas;
             mCantidadDeFotogramas     = _cantidadDeFotogramas;
-            mIntervaloEntreFotogramas = ((1.0f / mCantidadDeFotogramas) / _iteracionesPorSegundo) * 1000f;
             mRepetir                  = _repetir;
+            actualizarFotogramaActual = _actualizarFotogramaActual;
+
+            mIntervaloEntreFotogramas = ((1.0f / mCantidadDeFotogramas) / _iteracionesPorSegundo) * 1000f;
 
             mExtensionImagen = _formatoFotogramas == EFormatoImagen.Png ? ".png" : ".jpg";
 
-            
-            MemberExpression mex = _propiedad.Body as MemberExpression;
+            mPathsCacheados = new Dictionary<int, string>(mCantidadDeFotogramas);
 
-            propiedad = mex.Member as PropertyInfo;
-
-            elementoContenedor = _elementoContenedor;
+            for (; _cantidadDeFotogramas > 0; --_cantidadDeFotogramas)
+            {
+                mPathsCacheados.Add(_cantidadDeFotogramas, pathFotogramas + _cantidadDeFotogramas + mExtensionImagen);
+            }
 
             reloj.Start();
         }
@@ -54,9 +56,9 @@ namespace AppGM.Core
         {
             if (reloj.ElapsedMilliseconds > mIntervaloEntreFotogramas)
             {
-                mFotogramaActual = ++mFotogramaActual % mCantidadDeFotogramas;
+                SistemaPrincipal.ThreadUISyncContext.Post(actualizarFotogramaActual, mPathsCacheados[mFotogramaActual + 1]);
 
-                propiedad.SetValue(elementoContenedor, pathFotogramas + mFotogramaActual + mExtensionImagen);
+                mFotogramaActual = ++mFotogramaActual % mCantidadDeFotogramas;
 
                 if (mFotogramaActual >= mCantidadDeFotogramas - 1 && !mRepetir)
                     OnAnimacionFinalizada(this);

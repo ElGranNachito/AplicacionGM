@@ -12,7 +12,7 @@ namespace AppGM
     /// </summary>
     public class LlamarComandoOnMouseEnterProperty : BaseAttachedProperty<ICommand, LlamarComandoOnMouseEnterProperty>
     {
-        public override void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        public override void OnValueChanged_Impl(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is FrameworkElement fe)
             {

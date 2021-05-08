@@ -90,7 +90,6 @@
     <Compile Include="Converters\ViewModelToContenidoConverter.cs" />
     <Compile Include="Helpers\AnimationHelpers.cs" />
     <Compile Include="Helpers\StoryboardHelpers.cs" />
-    <Compile Include="Helpers\WindowHelpers.cs" />
     <Compile Include="Paginas\BaseUserControl.cs" />
     <Compile Include="Paginas\Globos\UserControlContenidoGloboInfoRol.xaml.cs">
       <DependentUpon>UserControlContenidoGloboInfoRol.xaml</DependentUpon>
@@ -552,7 +551,6 @@
     <Resource Include="Media\Imagenes\Posiciones\Cadaver_Rider.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Media\Imagenes\Animaciones\FondoMenuPrincipal\FondoMenuPrincipal_0.jpg" />
     <Resource Include="Media\Imagenes\Animaciones\FondoMenuPrincipal\FondoMenuPrincipal_1.jpg" />
     <Resource Include="Media\Imagenes\Animaciones\FondoMenuPrincipal\FondoMenuPrincipal_2.jpg" />
     <Resource Include="Media\Imagenes\Animaciones\FondoMenuPrincipal\FondoMenuPrincipal_3.jpg" />
@@ -565,6 +563,8 @@
   <ItemGroup>
     <Resource Include="Media\Imagenes\camarita.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Media\Imagenes\Animaciones\FondoMenuPrincipal\FondoMenuPrincipal_6.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

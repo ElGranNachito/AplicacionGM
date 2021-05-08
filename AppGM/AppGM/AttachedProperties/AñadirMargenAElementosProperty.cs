@@ -10,7 +10,7 @@ namespace AppGM
     /// </summary>
     public class AñadirMargenAElementosProperty : BaseAttachedProperty<Type, AñadirMargenAElementosProperty>
     {
-        public override void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        public override void OnValueChanged_Impl(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Panel panel = (Panel) d;
 

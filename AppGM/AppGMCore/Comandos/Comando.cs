@@ -9,17 +9,16 @@ namespace AppGM.Core
         private event EventHandler mCanExecuteChanged;
 
         private Action mLambda;
-        private Predicate<object> mPuedeEjecutarse;
+        private Predicate<object> mPuedeEjecutarse = obj => true;
 
         public Comando(Action lambda)
         {
             mLambda = lambda;
-            mPuedeEjecutarse = (obj) => true;
         }
 
         public Comando(Action lambda, Predicate<object> puedeEjecutarse)
         {
-            mLambda = lambda;
+            mLambda          = lambda;
             mPuedeEjecutarse = puedeEjecutarse;
         }
 
@@ -35,7 +34,7 @@ namespace AppGM.Core
 
         public event EventHandler CanExecuteChanged
         {
-            add => mCanExecuteChanged += value;
+            add    => mCanExecuteChanged += value;
             remove => mCanExecuteChanged -= value;
         }
 

@@ -253,7 +253,7 @@ namespace AppGM.Core.Migrations
                     b.Property<int>("Hp")
                         .HasColumnType("INTEGER");
 
-                    b.Property<ushort>("Intel")
+                    b.Property<ushort>("Int")
                         .HasColumnType("INTEGER");
 
                     b.Property<ushort>("Lck")

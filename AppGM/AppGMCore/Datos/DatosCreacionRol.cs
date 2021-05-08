@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace AppGM.Core
 {
+	/// <summary>
+	/// Clase que contiene todos los datos necesarios para la creacion de un rol
+	/// </summary>
     public class DatosCreacionRol
     {
         public ModeloRol modeloRol = new ModeloRol();

@@ -45,7 +45,7 @@ namespace AppGM.Core
                 {
                     SistemaPrincipal.CombateActual.ActualizarCombateActual(Combate);
 
-                    SistemaPrincipal.RolSeleccionado.EMenuActual = EMenuActualRol.Combate;
+                    SistemaPrincipal.RolSeleccionado.EMenu = EMenuRol.Combate;
                 });
         }
 

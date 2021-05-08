@@ -1,10 +1,6 @@
-﻿using System.ComponentModel;
-using System.Reflection;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
-using System.Windows.Navigation;
 using AppGM.Core;
-using AppGM.Helpers;
 
 namespace AppGM.Viewmodels
 {
@@ -26,6 +22,7 @@ namespace AppGM.Viewmodels
         /// <param name="ventana">Ventana principal de la aplicacion</param>
         public ViewModelVentanaPrincipal(Window _ventana) : base(_ventana)
         {
+            ComandoCerrarVentana    = new Comando(() => Application.Current.Shutdown(0));
             ComandoMinimizarVentana = new Comando(() => mVentana.WindowState = WindowState.Minimized);
             ComandoMaximizarVentana = new Comando(() => mVentana.WindowState = EstaMaximizada()
                 ? WindowState.Normal
@@ -38,7 +35,7 @@ namespace AppGM.Viewmodels
         }
         
         #region Propiedades
-        public EPaginaActual EPaginaActual => SistemaPrincipal.Aplicacion.EPaginaActual;
+        public EPagina EPagina => SistemaPrincipal.Aplicacion.EPagina;
 
         #endregion
     }

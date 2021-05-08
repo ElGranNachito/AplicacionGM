@@ -916,7 +916,7 @@ namespace AppGM.Core.Migrations
                     Str = table.Column<ushort>(nullable: false),
                     End = table.Column<ushort>(nullable: false),
                     Agi = table.Column<ushort>(nullable: false),
-                    Intel = table.Column<ushort>(nullable: false),
+                    Int = table.Column<ushort>(nullable: false),
                     Lck = table.Column<ushort>(nullable: false),
                     PathImagen = table.Column<string>(nullable: true),
                     EstaEnCombate = table.Column<bool>(nullable: false),

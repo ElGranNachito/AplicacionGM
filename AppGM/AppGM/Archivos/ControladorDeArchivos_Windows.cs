@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Text;
 using System.Windows;
 using AppGM.Core;
@@ -10,14 +11,14 @@ namespace AppGM
     {
         #region Propiedades
 
+        public char CaracterSeparadorDeCarpetas => Path.DirectorySeparatorChar;
+
         public string DirectorioDeTrabajo { get; set; }
         public string DirectorioEjecutable { get; set; }
         public string DirectorioImagenes { get; set; }
-        public string DirectorioImagenesMapas
-        {
-            get => Path.Combine(DirectorioImagenes, @"Mapas\");
-            set { }
-        }
+        public string DirectorioImagenesMapas { get; set; }
+
+        public string DirectorioAnimaciones { get; set; }
 
         #endregion
 
@@ -28,6 +29,10 @@ namespace AppGM
 
             DirectorioImagenes = Path.Combine(DirectorioDeTrabajo, @"Media\");
 
+            DirectorioImagenesMapas = Path.Combine(DirectorioImagenes, @"Imagenes\Mapas\");
+
+            DirectorioAnimaciones = Path.Combine(DirectorioImagenes, @"Imagenes\Animaciones\");
+
             while (!Directory.Exists(DirectorioImagenes))
                 DirectorioImagenes = Path.GetFullPath(Path.Combine(DirectorioImagenes, @"../"));
 
@@ -37,25 +42,9 @@ namespace AppGM
 
         #region Funciones
 
-        public string ObtenerPathArchivo(string path, string[] carpetasPosteriores, string nombreArchivo)
+        public IDirectorio EncontrarDirectorio(string path)
         {
-            StringBuilder sb = new StringBuilder(path);
-
-            if (Directory.Exists(path))
-            {
-                for (int i = 0; i < carpetasPosteriores.Length; ++i)
-                    sb.Append($@"{carpetasPosteriores[i]}\");
-
-                if (Directory.Exists(sb.ToString()))
-                    sb.Append(nombreArchivo);
-            }
-
-            return sb.ToString();
-        }
-
-        public IDirectorio EncontrarDirectorio(string path, string nombre)
-        {
-            string pathDirectorio = Path.Combine(path, nombre);
+            string pathDirectorio = Path.Combine(path);
 
             if (Directory.Exists(pathDirectorio))
                 return new Directorio_Windows(new DirectoryInfo(pathDirectorio));
@@ -74,7 +63,12 @@ namespace AppGM
 
             dialogoAbrirArchivo.ShowDialog((Window)ventanaPadre.ObtenerInstanciaVentana());
 
-            return new Archivo_Windows(new FileInfo(dialogoAbrirArchivo.FileName));
+            //Si el archivo seleccionado es valido creamos una nueva interfaz y la devolvemos
+            if (File.Exists(dialogoAbrirArchivo.FileName))
+                return new Archivo_Windows(new FileInfo(dialogoAbrirArchivo.FileName));
+            
+            //Si el archivo no es valido simplemente retornamos null
+            return null;
         } 
 
         #endregion

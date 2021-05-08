@@ -6,7 +6,7 @@ namespace AppGM
 {
     public class CrearDesignTimeViewModelProperty : BaseAttachedProperty<Type, CrearDesignTimeViewModelProperty>
     {
-        public override void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        public override void OnValueChanged_Impl(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (!DesignerProperties.GetIsInDesignMode(d))
                 return;

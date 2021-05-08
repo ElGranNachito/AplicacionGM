@@ -2,13 +2,13 @@
 
 namespace AppGM.Core
 {
-    public enum EPaginaActual
+    public enum EPagina
     {
         PaginaPrincipal = 1,
         PaginaPrincipalRol = 2
     }
 
-    public enum EMenuActualRol
+    public enum EMenuRol
     {
         NINGUNO = 0,
         SeleccionTipoFichas = 1,
@@ -88,27 +88,35 @@ namespace AppGM.Core
     public enum ERango
     {
         NINGUNO = 0,
-        F = 0,
-        E = 1,
-        D = 2,
-        C = 3,
-        B = 4,
-        A = 5,
-        AMas = 6,
-        AMasMas = 7,
-        Ex = 8
+        F = 14,
+        E = 15,
+        D = 16,
+        C = 17,
+        B = 18,
+        A = 19,
+        AMas = 20,
+        AMasMas = 21,
+        Ex = 22
     }
 
     [Flags]
     public enum EUsoDeHabilidad
     {
-        NINGUNA = 0, Personal = 1, Soporte = 2, Defensa = 4, Ataque = 8
+        NINGUNA = 0, 
+        Personal = 1, 
+        Soporte = 2, 
+        Defensa = 4,
+        Ataque = 8
     }
 
     [Flags]
     public enum ETipoHabilidad
     {
-        NINGUNO = 0, Perk = 1, Skill = 2, Magia = 4, NoblePhantasm = 8
+        NINGUNO = 0, 
+        Perk = 1, 
+        Skill = 2, 
+        Magia = 4, 
+        NoblePhantasm = 8
     }
 
     [Flags]

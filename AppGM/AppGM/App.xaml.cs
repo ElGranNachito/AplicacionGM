@@ -1,5 +1,7 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using AppGM.Core;
+
 namespace AppGM
 {
     /// <summary>
@@ -10,6 +12,8 @@ namespace AppGM
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+
+            Current.Dispatcher.Thread.Name = "AppGM - Main";
 
             //Creamos el controlador de archivos
             SistemaPrincipal.CrearControladorDeArchivos(new ControladorDeArchivos_Windows());

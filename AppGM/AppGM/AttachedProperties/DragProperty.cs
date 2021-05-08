@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
 using AppGM.Core;
@@ -7,7 +8,7 @@ namespace AppGM
 {
     public class DragProperty : BaseAttachedProperty<bool, DragProperty>
     {
-        public override void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        public override void OnValueChanged_Impl(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is FrameworkElement fe)
             {
@@ -21,6 +22,7 @@ namespace AppGM
                     vm = (ViewModelIngresoPosicion)fe.DataContext;
 
                     fe.Loaded -= loadedEventHandler;
+                    loadedEventHandler = null;
                 };
 
                 fe.Loaded += loadedEventHandler;
@@ -46,7 +48,7 @@ namespace AppGM
                 };
 
                 MouseButtonEventHandler añadirMouseMovedHandler = null;
-                EventoVentana quitarMouseMovedHandler = null;
+                EventoVentana quitarMouseMovedHandler           = null;
 
                 añadirMouseMovedHandler = (obj, ea) =>
                 {
@@ -66,6 +68,12 @@ namespace AppGM
                 };
 
                 fe.MouseDown += añadirMouseMovedHandler;
+
+                fe.Unloaded += (sender, args) =>
+                {
+                    añadirMouseMovedHandler = null;
+                    quitarMouseMovedHandler = null;
+                };
             }
         }
     }

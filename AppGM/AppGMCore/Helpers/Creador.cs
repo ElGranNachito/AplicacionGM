@@ -1,7 +1,11 @@
 ﻿namespace AppGM.Core
 {
+    /// <summary>
+    /// Clase encargada de crear <see cref="ModeloPersonaje"/>, <see cref="ModeloHabilidad"/>
+    /// </summary>
     public static class Creador
     {
+        //TODO: Expandir
         public static ModeloPersonaje CrearPersonaje(ETipoPersonaje tipo)
         {
             switch (tipo)

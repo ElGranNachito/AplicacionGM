@@ -8,7 +8,7 @@ namespace AppGM
 {
     public class BotonMenuRolConViewModelProperty : BaseAttachedProperty<BaseViewModel, BotonMenuRolConViewModelProperty>
     {
-        public override void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        public override void OnValueChanged_Impl(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             BaseViewModel vm = ((IViewModelConBotonSeleccionado)(BaseViewModel)e.NewValue).ViewModelConBotonSeleccionado;
             IBotonSeleccionado<BaseViewModel> botonSeleccionado = (IBotonSeleccionado<BaseViewModel>) vm;

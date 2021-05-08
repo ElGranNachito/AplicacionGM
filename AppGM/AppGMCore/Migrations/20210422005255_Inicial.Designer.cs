@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AppGM.Core.Migrations
 {
     [DbContext(typeof(RolContext))]
-    [Migration("20210327153950_Inicial")]
+    [Migration("20210422005255_Inicial")]
     partial class Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -255,7 +255,7 @@ namespace AppGM.Core.Migrations
                     b.Property<int>("Hp")
                         .HasColumnType("INTEGER");
 
-                    b.Property<ushort>("Intel")
+                    b.Property<ushort>("Int")
                         .HasColumnType("INTEGER");
 
                     b.Property<ushort>("Lck")

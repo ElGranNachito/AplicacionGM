@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -7,22 +8,86 @@ namespace AppGM.Core
     public static class ControladorDeAnimaciones
     {
         private static List<Animacion> animaciones = new List<Animacion>();
+        private static Thread threadAnimaciones = null;
+        private static object mLock = new object();
 
         public static void Inicializar()
         {
-            Task.Run(() =>
+            threadAnimaciones = new Thread(() =>
             {
+                bool lockObtenido = false;
+
                 while (true)
                 {
-                    for (int i = 0; i < animaciones.Count; ++i)
-                        animaciones[i].Tick();
+                    try
+                    {
+                        Monitor.TryEnter(mLock, Int32.MaxValue, ref lockObtenido);
 
-                    Thread.Sleep(20);
+                        if (lockObtenido)
+                        {
+                            for (int i = 0; i < animaciones.Count; ++i)
+                                animaciones[i].Tick();
+                        }
+                    }
+                    finally
+                    {
+                        if (lockObtenido)
+                        {
+                            Monitor.Exit(mLock); 
+                            lockObtenido = false;
+                        }
+                    }
                 }
+
             });
+
+            threadAnimaciones.Name = "AppGM - Animaciones";
+            threadAnimaciones.IsBackground = true;
+            threadAnimaciones.Start();
         }
 
-        public static void AñadirAnimacion(Animacion animacion) => animaciones.Add(animacion);
-        public static void QuitarAnimacion(Animacion animacion) => animaciones.Remove(animacion);
+        public static async Task AñadirAnimacion(Animacion animacion)
+        {
+            await Task.Run(() =>
+            {
+                bool lockObtenido = false;
+
+                try
+                {
+                    Monitor.TryEnter(mLock, Int32.MaxValue, ref lockObtenido);
+
+                    if (lockObtenido)
+                        animaciones.Add(animacion);
+                }
+                finally
+                {
+                    if(lockObtenido)
+                        Monitor.Exit(mLock);
+                }
+            });
+            animaciones.Add(animacion);
+        }
+
+        public static async Task QuitarAnimacion(Animacion animacion)
+        {
+            await Task.Run(() =>
+            {
+                bool lockObtenido = false;
+
+                try
+                {
+                    Monitor.TryEnter(mLock, Int32.MaxValue, ref lockObtenido);
+
+                    if (lockObtenido)
+                        animaciones.Remove(animacion);
+                }
+                finally
+                {
+                    if (lockObtenido)
+                        Monitor.Exit(mLock);
+                }
+            });
+            animaciones.Add(animacion);
+        }
     }
 }

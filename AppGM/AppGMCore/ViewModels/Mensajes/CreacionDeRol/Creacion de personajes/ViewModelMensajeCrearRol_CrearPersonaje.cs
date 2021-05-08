@@ -221,7 +221,7 @@ namespace AppGM.Core
             mModeloPersonaje.Str   = mSTR;
             mModeloPersonaje.End   = mEND;
             mModeloPersonaje.Agi   = mAGI;
-            mModeloPersonaje.Intel = mINT;
+            mModeloPersonaje.Int = mINT;
             mModeloPersonaje.Lck   = mLCK;
 
             if (EsServant)
@@ -245,116 +245,67 @@ namespace AppGM.Core
             set => mHP = value;
         }
 
-        public object STR
+        public ushort STR
         {
             get => mSTR;
             set
             {
-                if (value is ERango rango)
-                    mSTR = rango.ToUshort();
-                else if (value is string s)
-                {
-                    if (!string.IsNullOrWhiteSpace(s))
-                        mSTR = ushort.Parse(s);
-                }
-                else
-                    mSTR = (ushort) value;
-
+                mSTR = value;
 
                 DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PuntosHabilidadRestantes)));
             }
         }
 
-        public object END
+        public ushort END
         {
             get => mEND;
             set
-            {
-                if (value is ERango rango)
-                    mEND = rango.ToUshort();
-                else if (value is string s)
-                {
-                    if(!string.IsNullOrWhiteSpace(s))
-                        mEND = ushort.Parse(s);
-                }
-                else
-                    mEND = (ushort)value;
+            { 
+                mEND = value;
 
                 DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PuntosHabilidadRestantes)));
             }
         }
 
-        public object AGI
+        public ushort AGI
         {
             get => mAGI;
             set
             {
-                if (value is ERango rango)
-                    mAGI = rango.ToUshort();
-                else if (value is string s)
-                {
-                    if(!string.IsNullOrWhiteSpace(s))
-                        mAGI = ushort.Parse(s);
-                }
-                else
-                    mAGI = (ushort)value;
+                mAGI = value;
 
                 DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PuntosHabilidadRestantes)));
             }
         }
 
-        public object INT
+        public ushort INT
         {
             get => mINT;
             set
             {
-                if (value is ERango rango)
-                    mINT = rango.ToUshort();
-                else if (value is string s)
-                {
-                    if(!string.IsNullOrWhiteSpace(s))
-                        mINT = ushort.Parse(s);
-                }
-                else
-                    mINT = (ushort)value;
+                mINT = value;
 
                 DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PuntosHabilidadRestantes)));
             }
         }
 
-        public object LCK
+        public ushort LCK
         {
             get => mLCK;
             set
             {
-                if (value is ERango rango)
-                    mLCK = rango.ToUshort();
-                else if (value is string s)
-                {
-                    if(!string.IsNullOrWhiteSpace(s))
-                        mLCK = ushort.Parse(s);
-                }
-                else
-                    mLCK = (ushort)value;
+                mLCK = value;
 
                 DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PuntosHabilidadRestantes)));
             }
         }
 
-        public object CHR
+        public ushort CHR
         {
             get => mCHR;
             set
             {
-                if (value is ERango rango)
-                    mCHR = rango.ToUshort();
-                else if (value is string s)
-                {
-                    if(!string.IsNullOrWhiteSpace(s))
-                        mCHR = ushort.Parse(s);
-                }
-                else
-                    mCHR = (ushort)value;
+                mCHR = value;
 
                 DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PuntosHabilidadRestantes)));
             }

@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Input;
+using AppGM.Core.Delegados;
 
 namespace AppGM.Core
 {
-    public delegate void dPasoCambio(BaseViewModel vmAnterior, BaseViewModel vmNuevo);
-
     /// <summary>
     /// View model para una ventana en la que se haya que seguir varios pasos
     /// </summary>
@@ -20,8 +19,8 @@ namespace AppGM.Core
 
         protected List<ViewModelPaso<TipoViewModel>> mViewModelsPasos = new List<ViewModelPaso<TipoViewModel>>();
 
-        public event dPasoCambio OnAvanzarPaso = delegate { };
-        public event dPasoCambio OnRetrocederPaso = delegate { };
+        public event DVariableCambio<BaseViewModel> OnAvanzarPaso    = delegate { };
+        public event DVariableCambio<BaseViewModel> OnRetrocederPaso = delegate { };
 
         #endregion
 

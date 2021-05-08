@@ -149,19 +149,6 @@
                         <TextBlock Text="{TemplateBinding Content}" 
                                    IsHitTestVisible="False"/>
 
-                        <!--<Border.Triggers>
-                            <EventTrigger RoutedEvent="MouseLeftButtonDown">
-                                <BeginStoryboard>
-                                    <Storyboard TargetName="border" 
-                                                TargetProperty="BorderThickness">
-
-                                        <ThicknessAnimation To="0 0 2 0" Duration="00:00:00:00" />
-
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </EventTrigger>
-                        </Border.Triggers>-->
-
                     </Border>
 
                     <ControlTemplate.Triggers>

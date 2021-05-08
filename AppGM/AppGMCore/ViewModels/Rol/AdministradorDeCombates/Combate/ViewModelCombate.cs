@@ -67,7 +67,7 @@ namespace AppGM.Core
         /// <param name="_administradorDeCombate"></param>
         public void ActualizarCombateActual(ControladorAdministradorDeCombate _administradorDeCombate)
         {
-            //Desuscribimos los delegado del controlador anterior
+            //Desubscribimos los delegado del controlador anterior
             administradorDeCombate.OnTurnoCambio    -= HandlerTurnoCambio;
 
             administradorDeCombate = _administradorDeCombate;

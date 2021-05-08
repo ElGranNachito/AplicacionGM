@@ -19,8 +19,6 @@ namespace AppGM.Core
         public static List<EUsoDeHabilidad> UsosDeHabilidadDisponibles      => Enum.GetValues(typeof(EUsoDeHabilidad)).Cast<EUsoDeHabilidad>().ToList();
         public static List<ETipoHabilidad>  TiposDeHabilidadDisponibles     => Enum.GetValues(typeof(ETipoHabilidad)).Cast<ETipoHabilidad>().ToList();
 
-        public static ushort ToUshort(this ERango rango) => (ushort)(14 + rango);
-
         public static int ObtenerModificador(this ERango rango)
         {
             //Hacemos este if pare prevenir una division por cero

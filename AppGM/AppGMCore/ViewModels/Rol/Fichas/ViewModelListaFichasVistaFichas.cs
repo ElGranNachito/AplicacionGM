@@ -12,7 +12,8 @@ namespace AppGM
         {
             get => FichaSeleccionada;
             set => FichaSeleccionada = (ViewModelFichaItem)value;
-        } 
+        }
+
         #endregion
     }
 }

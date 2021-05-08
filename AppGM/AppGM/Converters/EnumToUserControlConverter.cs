@@ -18,32 +18,32 @@ namespace AppGM
             switch (int.Parse(parameter.ToString()))
             {
                 case 1:
-                    switch ((EPaginaActual)value)
+                    switch ((EPagina)value)
                     {
-                        case EPaginaActual.PaginaPrincipal:
+                        case EPagina.PaginaPrincipal:
                             return new UserControlPaginaInicio();
-                        case EPaginaActual.PaginaPrincipalRol:
+                        case EPagina.PaginaPrincipalRol:
                             return new UserControlPaginaPrincipalRol();
                     }
                     break;
 
                 case 2:
-                    switch ((EMenuActualRol)value)
+                    switch ((EMenuRol)value)
                     {
-                        case EMenuActualRol.NINGUNO:
+                        case EMenuRol.NINGUNO:
                             return null;
-                        case EMenuActualRol.SeleccionTipoFichas:
+                        case EMenuRol.SeleccionTipoFichas:
                             return new UserControlMenuSeleccionTipoFicha();
-                        case EMenuActualRol.VistaFichas:
+                        case EMenuRol.VistaFichas:
                             return new UserControlListaFichasViewFichas();
-                        case EMenuActualRol.Mapas:
+                        case EMenuRol.Mapas:
                             return new UserControlMapa
                             {
                                 ViewModel = SistemaPrincipal.ObtenerInstancia<ViewModelMapaPrincipal>()
                             };
-                        case EMenuActualRol.AdministrarCombates:
+                        case EMenuRol.AdministrarCombates:
                             return new UserControlMenuSeleccionCombate();
-                        case EMenuActualRol.Combate:
+                        case EMenuRol.Combate:
                             return new UserControlCombate();
                     }
                     break;

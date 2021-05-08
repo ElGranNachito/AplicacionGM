@@ -24,6 +24,7 @@ namespace AppGM.Core
     }
 
     public interface IBotonSeleccionado<T>
+        where T: class
     {
         T BotonSeleccionado { get; set; }
     }

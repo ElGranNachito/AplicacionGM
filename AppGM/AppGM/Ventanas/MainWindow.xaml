@@ -96,7 +96,7 @@
             Opacity="0"
             Panel.ZIndex="10"/>
 
-            <ContentControl Content="{Binding EPaginaActual, Converter={local:EnumToUserControlConverter}, ConverterParameter=1}"/>
+            <ContentControl Content="{Binding EPagina, Converter={local:EnumToUserControlConverter}, ConverterParameter=1}"/>
     </Grid>
 
 </Window>

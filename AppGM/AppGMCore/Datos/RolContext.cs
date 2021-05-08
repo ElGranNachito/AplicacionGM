@@ -47,7 +47,7 @@ namespace AppGM.Core
         #region Configuracion de la base de datos
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlite("Data Source = bb.db");
+        => optionsBuilder.UseSqlite($"Data Source = bb.db");
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

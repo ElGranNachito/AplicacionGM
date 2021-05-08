@@ -19,7 +19,7 @@ namespace AppGM.Core
         /// </summary>
         public string TituloHabilidad     => Habilidad.Nombre + $".{(EsMagia ? (Habilidad as ModeloMagia)?.Nivel.ToString() : Habilidad.Rango.ToString())}";
 
-        public string PathImagenHabilidad => Path.Combine(Path.Combine(SistemaPrincipal.ControladorDeArchivos.DirectorioImagenes, "Habilidades" + SistemaPrincipal.CaracterSeparadorDeDirectorios), Habilidad.TipoDeHabilidad + ".png");
+        public string PathImagenHabilidad => Path.Combine(Path.Combine(SistemaPrincipal.ControladorDeArchivos.DirectorioImagenes, "Habilidades" + SistemaPrincipal.ControladorDeArchivos.CaracterSeparadorDeCarpetas), Habilidad.TipoDeHabilidad + ".png");
 
         #endregion
 
