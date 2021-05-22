@@ -66,6 +66,9 @@ namespace AppGM.Core
 					{
 						Nombre = "Un pibe",
 
+						PesoMaximoCargable = 100,
+						PesoCargado = 10,
+
 						MaxHp = 20,
 						Hp = 20,
 						Str = 12,
