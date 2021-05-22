@@ -1,0 +1,79 @@
+2021-05-22 18:47:08.801 -03:00 [INF] MSBuild registered from c:\program files\dotnet\sdk\5.0.202\
+2021-05-22 18:47:08.858 -03:00 [INF] Registered 1 extensions:
+	Default extension
+2021-05-22 18:47:10.867 -03:00 [INF] Initializing upgrade step Select an entrypoint
+2021-05-22 18:47:10.873 -03:00 [INF] Setting entrypoint to only project in solution: C:\Users\Nashito\Documents\C#\AppGM\AplicacionGM\AppGM\AppGMCore\AppGM.Core.csproj
+2021-05-22 18:47:10.885 -03:00 [INF] Initializing upgrade step Select project to upgrade
+2021-05-22 18:47:11.006 -03:00 [INF] Initializing upgrade step Back up project
+2021-05-22 18:47:11.087 -03:00 [INF] Saving upgrade progress file at C:\Users\Nashito\Documents\C#\AppGM\AplicacionGM\AppGM\AppGMCore\.upgrade-assistant
+2021-05-22 18:47:11.141 -03:00 [ERR] Unexpected error during upgrade.
+System.InvalidOperationException: Sequence contains no matching element
+   at System.Linq.ThrowHelper.ThrowNoMatchException()
+   at System.Linq.Enumerable.First[TSource](IEnumerable`1 source, Func`2 predicate)
+   at Microsoft.DotNet.UpgradeAssistant.MSBuild.MSBuildProject.GetAllDependencies(TargetFrameworkMoniker tfm) in /_/src/components/Microsoft.DotNet.UpgradeAssistant.MSBuild/MSBuildProject.NuGetPackages.cs:line 158
+   at Microsoft.DotNet.UpgradeAssistant.MSBuild.MSBuildProject.ContainsDependency(TargetFrameworkMoniker tfm, Func`2 filter) in /_/src/components/Microsoft.DotNet.UpgradeAssistant.MSBuild/MSBuildProject.NuGetPackages.cs:line 140
+   at Microsoft.DotNet.UpgradeAssistant.MSBuild.MSBuildProject.<>c__DisplayClass65_0.<IsTransitivelyAvailable>b__0(TargetFrameworkMoniker tfm) in /_/src/components/Microsoft.DotNet.UpgradeAssistant.MSBuild/MSBuildProject.NuGetPackages.cs:line 99
+   at System.Linq.Enumerable.Any[TSource](IEnumerable`1 source, Func`2 predicate)
+   at Microsoft.DotNet.UpgradeAssistant.MSBuild.MSBuildProject.IsTransitivelyAvailable(String packageName) in /_/src/components/Microsoft.DotNet.UpgradeAssistant.MSBuild/MSBuildProject.NuGetPackages.cs:line 99
+   at Microsoft.DotNet.UpgradeAssistant.MSBuild.ComponentIdentifier.<>c__DisplayClass2_0.<GetGeneralProjectComponentsAsync>b__1(String package) in /_/src/components/Microsoft.DotNet.UpgradeAssistant.MSBuild/ComponentIdentifier.cs:line 92
+   at System.Linq.Enumerable.Any[TSource](IEnumerable`1 source, Func`2 predicate)
+   at Microsoft.DotNet.UpgradeAssistant.MSBuild.ComponentIdentifier.GetGeneralProjectComponentsAsync(IProject project, IProjectFile file, CancellationToken token) in /_/src/components/Microsoft.DotNet.UpgradeAssistant.MSBuild/ComponentIdentifier.cs:line 92
+   at Microsoft.DotNet.UpgradeAssistant.MSBuild.ComponentIdentifier.GetComponentsAsync(IProject project, CancellationToken token) in /_/src/components/Microsoft.DotNet.UpgradeAssistant.MSBuild/ComponentIdentifier.cs:line 25
+   at Microsoft.DotNet.UpgradeAssistant.ProjectExtensions.AppliesToProjectAsync(Type type, IProject project, CancellationToken token) in /_/src/common/Microsoft.DotNet.UpgradeAssistant.Abstractions/ProjectExtensions.cs:line 60
+   at Microsoft.DotNet.UpgradeAssistant.Steps.Configuration.ConfigUpdaterSubStep.IsApplicableImplAsync(IUpgradeContext context, CancellationToken token) in /_/src/steps/Microsoft.DotNet.UpgradeAssistant.Steps.Configuration/ConfigUpdaterSubStep.cs:line 40
+   at Microsoft.DotNet.UpgradeAssistant.UpgradeStep.IsApplicableAsync(IUpgradeContext context, CancellationToken token) in /_/src/common/Microsoft.DotNet.UpgradeAssistant.Abstractions/UpgradeStep.cs:line 212
+   at Microsoft.DotNet.UpgradeAssistant.Cli.ConsoleUpgrade.<>c__DisplayClass9_0.<<ShowUpgradeStepsAsync>b__0>d.MoveNext() in /_/src/cli/Microsoft.DotNet.UpgradeAssistant.Cli/ConsoleUpgrade.cs:line 134
+--- End of stack trace from previous location ---
+   at System.Linq.AsyncEnumerable.WhereEnumerableAsyncIteratorWithTask`1.MoveNextCore() in /_/Ix.NET/Source/System.Linq.Async/System/Linq/Operators/Where.cs:line 277
+   at System.Linq.AsyncIteratorBase`1.MoveNextAsync() in /_/Ix.NET/Source/System.Linq.Async/System/Linq/AsyncIterator.cs:line 70
+   at System.Linq.AsyncIteratorBase`1.MoveNextAsync() in /_/Ix.NET/Source/System.Linq.Async/System/Linq/AsyncIterator.cs:line 75
+   at Microsoft.DotNet.UpgradeAssistant.Cli.ConsoleUpgrade.ShowUpgradeStepsAsync(IEnumerable`1 steps, IUpgradeContext context, CancellationToken token, UpgradeStep currentStep, Int32 offset) in /_/src/cli/Microsoft.DotNet.UpgradeAssistant.Cli/ConsoleUpgrade.cs:line 134
+   at Microsoft.DotNet.UpgradeAssistant.Cli.ConsoleUpgrade.ShowUpgradeStepsAsync(IEnumerable`1 steps, IUpgradeContext context, CancellationToken token, UpgradeStep currentStep, Int32 offset) in /_/src/cli/Microsoft.DotNet.UpgradeAssistant.Cli/ConsoleUpgrade.cs:line 134
+   at Microsoft.DotNet.UpgradeAssistant.Cli.ConsoleUpgrade.ShowUpgradeStepsAsync(IEnumerable`1 steps, IUpgradeContext context, CancellationToken token, UpgradeStep currentStep, Int32 offset) in /_/src/cli/Microsoft.DotNet.UpgradeAssistant.Cli/ConsoleUpgrade.cs:line 148
+   at Microsoft.DotNet.UpgradeAssistant.Cli.ConsoleUpgrade.ShowUpgradeStepsAsync(IEnumerable`1 steps, IUpgradeContext context, CancellationToken token, UpgradeStep currentStep, Int32 offset) in /_/src/cli/Microsoft.DotNet.UpgradeAssistant.Cli/ConsoleUpgrade.cs:line 134
+   at Microsoft.DotNet.UpgradeAssistant.Cli.ConsoleUpgrade.RunAsync(CancellationToken token) in /_/src/cli/Microsoft.DotNet.UpgradeAssistant.Cli/ConsoleUpgrade.cs:line 59
+   at Microsoft.DotNet.UpgradeAssistant.Cli.ConsoleUpgrade.RunAsync(CancellationToken token) in /_/src/cli/Microsoft.DotNet.UpgradeAssistant.Cli/ConsoleUpgrade.cs:line 94
+   at Microsoft.DotNet.UpgradeAssistant.Cli.ConsoleRunner.RunCommandAsync(CancellationToken token) in /_/src/cli/Microsoft.DotNet.UpgradeAssistant.Cli/ConsoleRunner.cs:line 86
+   at Microsoft.DotNet.UpgradeAssistant.Cli.ConsoleRunner.StartAsync(CancellationToken token) in /_/src/cli/Microsoft.DotNet.UpgradeAssistant.Cli/ConsoleRunner.cs:line 44
+2021-05-22 18:51:15.542 -03:00 [INF] MSBuild registered from c:\program files\dotnet\sdk\5.0.202\
+2021-05-22 18:51:15.601 -03:00 [INF] Registered 1 extensions:
+	Default extension
+2021-05-22 18:51:17.381 -03:00 [INF] Loading upgrade progress file at C:\Users\Nashito\Documents\C#\AppGM\AplicacionGM\AppGM\AppGMCore\.upgrade-assistant
+2021-05-22 18:51:17.429 -03:00 [INF] Initializing upgrade step Back up project
+2021-05-22 18:51:33.480 -03:00 [INF] Skipping upgrade step Back up project
+2021-05-22 18:51:33.480 -03:00 [INF] Upgrade step Back up project skipped
+2021-05-22 18:51:47.826 -03:00 [INF] Initializing upgrade step Convert project file to SDK style
+2021-05-22 18:51:54.422 -03:00 [INF] Applying upgrade step Convert project file to SDK style
+2021-05-22 18:51:54.481 -03:00 [INF] Converting project file format with try-convert, version 0.7.222801
+2021-05-22 18:51:58.442 -03:00 [INF] [try-convert] Conversion complete!
+2021-05-22 18:51:59.128 -03:00 [INF] Project file converted successfully! The project may require additional changes to build successfully against the new .NET target.
+2021-05-22 18:52:01.836 -03:00 [INF] Upgrade step Convert project file to SDK style applied successfully
+2021-05-22 18:52:03.205 -03:00 [INF] Initializing upgrade step Clean up NuGet package references
+2021-05-22 18:52:05.178 -03:00 [INF] Marking package Microsoft.CSharp for removal because it appears to be a transitive dependency
+2021-05-22 18:52:06.675 -03:00 [WRN] .NET Upgrade Assistant analyzer NuGet package reference cannot be added because the package cannot be found
+2021-05-22 18:52:06.684 -03:00 [INF] Packages to be removed: Microsoft.CSharp, Version=4.7.0
+2021-05-22 18:52:12.615 -03:00 [INF] Applying upgrade step Clean up NuGet package references
+2021-05-22 18:52:12.619 -03:00 [INF] Removing outdated package reference: Microsoft.CSharp, Version=4.7.0
+2021-05-22 18:52:15.364 -03:00 [WRN] .NET Upgrade Assistant analyzer NuGet package reference cannot be added because the package cannot be found
+2021-05-22 18:52:15.370 -03:00 [INF] Upgrade step Clean up NuGet package references applied successfully
+2021-05-22 18:52:17.402 -03:00 [INF] Initializing upgrade step Update TFM
+2021-05-22 18:52:17.412 -03:00 [INF] TFM needs updated to netstandard2.0
+2021-05-22 18:52:20.575 -03:00 [INF] Applying upgrade step Update TFM
+2021-05-22 18:52:25.151 -03:00 [INF] Updated TFM to netstandard2.0
+2021-05-22 18:52:25.152 -03:00 [INF] Upgrade step Update TFM applied successfully
+2021-05-22 18:52:26.680 -03:00 [INF] Initializing upgrade step Update NuGet Packages
+2021-05-22 18:52:28.767 -03:00 [WRN] .NET Upgrade Assistant analyzer NuGet package reference cannot be added because the package cannot be found
+2021-05-22 18:52:28.793 -03:00 [INF] No package updates needed
+2021-05-22 18:52:28.794 -03:00 [INF] Initializing upgrade step Add template files
+2021-05-22 18:52:28.836 -03:00 [INF] 0 expected template items needed
+2021-05-22 18:52:28.837 -03:00 [INF] Initializing upgrade step Upgrade app config files
+2021-05-22 18:52:28.852 -03:00 [INF] Found 0 app settings for upgrade: 
+2021-05-22 18:52:28.893 -03:00 [INF] Initializing upgrade step Update source code
+2021-05-22 18:52:31.362 -03:00 [INF] Initializing upgrade step Move to next project
+2021-05-22 18:52:36.992 -03:00 [INF] Applying upgrade step Move to next project
+2021-05-22 18:52:36.993 -03:00 [INF] Upgrade step Move to next project applied successfully
+2021-05-22 18:52:40.329 -03:00 [INF] Initializing upgrade step Finalize upgrade
+2021-05-22 18:52:51.512 -03:00 [INF] Applying upgrade step Finalize upgrade
+2021-05-22 18:52:51.513 -03:00 [INF] Upgrade step Finalize upgrade applied successfully
+2021-05-22 18:52:52.936 -03:00 [INF] Upgrade has completed. Please review any changes.
+2021-05-22 18:52:52.938 -03:00 [INF] Saving upgrade progress file at C:\Users\Nashito\Documents\C#\AppGM\AplicacionGM\AppGM\AppGMCore\.upgrade-assistant

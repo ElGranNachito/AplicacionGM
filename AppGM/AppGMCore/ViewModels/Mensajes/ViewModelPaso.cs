@@ -1,6 +1,4 @@
-﻿using System.Runtime.Remoting.Messaging;
-
-namespace AppGM.Core
+﻿namespace AppGM.Core
 {
     /// <summary>
     /// Base para viewmodels de pasos
