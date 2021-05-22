@@ -227,7 +227,7 @@ namespace AppGM.Core
             modelBuilder.Entity<TIInvocacionDatosInvocacion>()
                 .HasOne(i => i.Invocacion)
                 .WithOne(p => p.DatosInvocacion)
-                .HasForeignKey<TIInvocacionPersonaje>(i => i.IdInvocacion);
+                .HasForeignKey<TIInvocacionDatosInvocacion>(i => i.IdInvocacion);
 
             // - Invocacion efecto
             modelBuilder.Entity<TIInvocacionEfecto>().HasKey(e => new { e.IdInvocacion, e.IdEfecto });
