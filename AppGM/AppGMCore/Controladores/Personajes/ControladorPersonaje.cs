@@ -102,7 +102,7 @@ namespace AppGM.Core
 
         protected void ModificarVida(int cantidad)
         {
-            if ((modelo.Hp = Math.Clamp(modelo.Hp + cantidad, int.MinValue, modelo.MaxHp)) <= 0)
+            if ((modelo.Hp = SuperDll.SuperUtilidades.Math.Clamp(modelo.Hp + cantidad, int.MinValue, modelo.MaxHp)) <= 0)
                 OnMorir(this);
         }
 

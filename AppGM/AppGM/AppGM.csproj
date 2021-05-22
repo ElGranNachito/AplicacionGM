@@ -1,16 +1,444 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
-    <TargetFramework>net5.0-windows</TargetFramework>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6C51BA22-40EB-4FEF-9BBA-30532B7C889F}</ProjectGuid>
     <OutputType>WinExe</OutputType>
+    <RootNamespace>AppGM</RootNamespace>
+    <AssemblyName>AppGM</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <StartWorkingDirectory>$(MSBuildProjectDirectory)</StartWorkingDirectory>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <UseWPF>true</UseWPF>
-    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Archivos\Archivo_Windows.cs" />
+    <Compile Include="Archivos\ControladorDeArchivos_Windows.cs" />
+    <Compile Include="Archivos\Directorio_Windows.cs" />
+    <Compile Include="AttachedProperties\Animaciones\AnimarOpacidadProperty.cs" />
+    <Compile Include="AttachedProperties\Animaciones\AnimarRotacionProperty.cs" />
+    <Compile Include="AttachedProperties\AñadirMargenAElementosProperty.cs" />
+    <Compile Include="AttachedProperties\Animaciones\BaseAnimarProperty.cs" />
+    <Compile Include="AttachedProperties\BaseAttachedProperty.cs" />
+    <Compile Include="AttachedProperties\BotonMenuRolConViewModelProperty.cs" />
+    <Compile Include="AttachedProperties\BotonMenuRolProperty.cs" />
+    <Compile Include="AttachedProperties\CampoDeTextoNumericoProperty.cs" />
+    <Compile Include="AttachedProperties\DragProperty.cs" />
+    <Compile Include="Converters\FullPathToImageConverter.cs" />
+    <Compile Include="Converters\Mensajes\ViewModelToContenidoMensajeConverter.cs" />
+    <Compile Include="Converters\Mensajes\ViewModelToContenidoPaso.cs" />
+    <Compile Include="Elementos\OutlinedText.cs" />
+    <Compile Include="AttachedProperties\ParametroProperty\BaseAttachedPropertyParametro.cs" />
+    <Compile Include="AttachedProperties\CrearDesignTimeViewModelProperty.cs" />
+    <Compile Include="AttachedProperties\LlamarComandoOnMouseEnterProperty.cs" />
+    <Compile Include="AttachedProperties\ParametroProperty\ParametroComandoOnLeaveProperty.cs" />
+    <Compile Include="AttachedProperties\ParametroProperty\ParametroThicknessProperty.cs" />
+    <Compile Include="Converters\BooleanToVisibilityConverterColapsar.cs" />
+    <Compile Include="Converters\BooleanToVisibilityConverterOcultar.cs" />
+    <Compile Include="Converters\EnumToUserControlConverter.cs" />
+    <Compile Include="Converters\GrosorToThicknessConverter.cs" />
+    <Compile Include="Converters\IntToThicknessConverter.cs" />
+    <Compile Include="Converters\StringToSolidColorBrushConverter.cs" />
+    <Compile Include="Converters\ViewModelToContenidoConverter.cs" />
+    <Compile Include="Helpers\AnimationHelpers.cs" />
+    <Compile Include="Helpers\StoryboardHelpers.cs" />
+    <Compile Include="Paginas\BaseUserControl.cs" />
+    <Compile Include="Paginas\Globos\UserControlContenidoGloboInfoRol.xaml.cs">
+      <DependentUpon>UserControlContenidoGloboInfoRol.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Globos\UserControlGlobo.xaml.cs">
+      <DependentUpon>UserControlGlobo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Inicio\UserControlCarta.xaml.cs">
+      <DependentUpon>UserControlCarta.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Mensajes\CreacionDeRol\Creacion de personajes\Creacion de habilidades\UserControlHabilidadItem.xaml.cs">
+      <DependentUpon>UserControlHabilidadItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Mensajes\CreacionDeRol\Creacion de personajes\Creacion de habilidades\UserControlListaHabilidades.xaml.cs">
+      <DependentUpon>UserControlListaHabilidades.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Mensajes\CreacionDeRol\Creacion de personajes\Creacion de habilidades\UserControlCreacionRol_CreacionHabilidad.xaml.cs">
+      <DependentUpon>UserControlCreacionRol_CreacionHabilidad.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Mensajes\CreacionDeRol\Creacion de personajes\UserControlCreacionRol_CreacionPersonaje.xaml.cs">
+      <DependentUpon>UserControlCreacionRol_CreacionPersonaje.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Mensajes\CreacionDeRol\Creacion de personajes\UserControlCreacionRol_ListaPersonajes.xaml.cs">
+      <DependentUpon>UserControlCreacionRol_ListaPersonajes.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Mensajes\CreacionDeRol\Creacion de personajes\UserControlCreacionRol_PersonajeItem.xaml.cs">
+      <DependentUpon>UserControlCreacionRol_PersonajeItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Mensajes\CreacionDeRol\UserControlCreacionRol_DatosMapa.xaml.cs">
+      <DependentUpon>UserControlCreacionRol_DatosMapa.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Mensajes\CreacionDeRol\UserControlCreacionRol_DatosRol.xaml.cs">
+      <DependentUpon>UserControlCreacionRol_DatosRol.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Mensajes\CreacionDeRol\Creacion de personajes\UserControlCreacionRol_Personajes.xaml.cs">
+      <DependentUpon>UserControlCreacionRol_Personajes.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Mensajes\UserControlMensajeConPasos.xaml.cs">
+      <DependentUpon>UserControlMensajeConPasos.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Mensajes\UserControlMensajeCrearUnidadMapa.xaml.cs">
+      <DependentUpon>UserControlMensajeCrearUnidadMapa.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Rol\AdministradorDeCombate\Combate\UserControlCombate.xaml.cs">
+      <DependentUpon>UserControlCombate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Rol\AdministradorDeCombate\Combate\UserControlListaPartipantes.xaml.cs">
+      <DependentUpon>UserControlListaPartipantes.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Rol\AdministradorDeCombate\Combate\UserControlParticipante.xaml.cs">
+      <DependentUpon>UserControlParticipante.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Rol\AdministradorDeCombate\SeleccionDeCombate\UserControlInfoCombateGlobo.xaml.cs">
+      <DependentUpon>UserControlInfoCombateGlobo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Rol\AdministradorDeCombate\SeleccionDeCombate\UserControlListaCombates.xaml.cs">
+      <DependentUpon>UserControlListaCombates.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Inicio\UserControlRolItem.xaml.cs">
+      <DependentUpon>UserControlRolItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Rol\AdministradorDeCombate\SeleccionDeCombate\UserControlCombateItem.xaml.cs">
+      <DependentUpon>UserControlCombateItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Rol\AdministradorDeCombate\SeleccionDeCombate\UserControlMenuSeleccionCombate.xaml.cs">
+      <DependentUpon>UserControlMenuSeleccionCombate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Rol\Mapas\UserControlImagenPosicion.xaml.cs">
+      <DependentUpon>UserControlImagenPosicion.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Rol\Mapas\UserControlIngresoPosicion.xaml.cs">
+      <DependentUpon>UserControlIngresoPosicion.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Rol\Mapas\UserControlListaImagenPosicion.xaml.cs">
+      <DependentUpon>UserControlListaImagenPosicion.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Rol\Mapas\UserControlListaIngresoPosicion.xaml.cs">
+      <DependentUpon>UserControlListaIngresoPosicion.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Rol\Mapas\UserControlMapa.xaml.cs">
+      <DependentUpon>UserControlMapa.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Rol\UserControlBotonMenuRol.xaml.cs">
+      <DependentUpon>UserControlBotonMenuRol.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Rol\Fichas\UserControlFichaItem.xaml.cs">
+      <DependentUpon>UserControlFichaItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Rol\Fichas\UserControlListaFichas.xaml.cs">
+      <DependentUpon>UserControlListaFichas.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Rol\Fichas\UserControlListaFichasViewFichas.xaml.cs">
+      <DependentUpon>UserControlListaFichasViewFichas.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Rol\Fichas\SeleccionTipoFichas\UserControlSeleccionTipoFicha.xaml.cs">
+      <DependentUpon>UserControlSeleccionTipoFicha.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Rol\Fichas\UserControlVistaFicha.xaml.cs">
+      <DependentUpon>UserControlVistaFicha.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Rol\UserControlPaginaPrincipalRol.xaml.cs">
+      <DependentUpon>UserControlPaginaPrincipalRol.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Rol\Fichas\SeleccionTipoFichas\UserControlMenuSeleccionTipoFicha.xaml.cs">
+      <DependentUpon>UserControlMenuSeleccionTipoFicha.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\UserControlComboBoxConDescripcion.xaml.cs">
+      <DependentUpon>UserControlComboBoxConDescripcion.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\UserControlListaItems.xaml.cs">
+      <DependentUpon>UserControlListaItems.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Ventanas\VentanaMensaje.xaml.cs">
+      <DependentUpon>VentanaMensaje.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Viewmodels\ViewModelVentanaBase.cs" />
+    <Compile Include="Viewmodels\ViewModelVentanaMensaje.cs" />
+    <Compile Include="Viewmodels\ViewModelVentanaPrincipal.cs" />
+    <Page Include="Paginas\Globos\UserControlContenidoGloboInfoRol.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Paginas\Globos\UserControlGlobo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Paginas\Inicio\UserControlCarta.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Paginas\Mensajes\CreacionDeRol\Creacion de personajes\Creacion de habilidades\UserControlHabilidadItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Paginas\Mensajes\CreacionDeRol\Creacion de personajes\Creacion de habilidades\UserControlListaHabilidades.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Paginas\Mensajes\CreacionDeRol\Creacion de personajes\Creacion de habilidades\UserControlCreacionRol_CreacionHabilidad.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Paginas\Mensajes\CreacionDeRol\Creacion de personajes\UserControlCreacionRol_CreacionPersonaje.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Paginas\Mensajes\CreacionDeRol\Creacion de personajes\UserControlCreacionRol_ListaPersonajes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Paginas\Mensajes\CreacionDeRol\Creacion de personajes\UserControlCreacionRol_PersonajeItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Paginas\Mensajes\CreacionDeRol\UserControlCreacionRol_DatosMapa.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Paginas\Mensajes\CreacionDeRol\UserControlCreacionRol_DatosRol.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Paginas\Mensajes\CreacionDeRol\Creacion de personajes\UserControlCreacionRol_Personajes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Paginas\Mensajes\UserControlMensajeConPasos.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Paginas\Mensajes\UserControlMensajeCrearUnidadMapa.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Paginas\Rol\AdministradorDeCombate\Combate\UserControlCombate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Paginas\Rol\AdministradorDeCombate\Combate\UserControlListaPartipantes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Paginas\Rol\AdministradorDeCombate\Combate\UserControlParticipante.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Paginas\Rol\AdministradorDeCombate\SeleccionDeCombate\UserControlInfoCombateGlobo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Paginas\Rol\AdministradorDeCombate\SeleccionDeCombate\UserControlListaCombates.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Paginas\Inicio\UserControlRolItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Paginas\Rol\AdministradorDeCombate\SeleccionDeCombate\UserControlCombateItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Paginas\Rol\AdministradorDeCombate\SeleccionDeCombate\UserControlMenuSeleccionCombate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Paginas\Rol\Mapas\UserControlImagenPosicion.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Paginas\Rol\Mapas\UserControlListaImagenPosicion.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Paginas\Rol\Mapas\UserControlListaIngresoPosicion.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Paginas\Rol\UserControlBotonMenuRol.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Paginas\Rol\Fichas\UserControlFichaItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Paginas\Rol\Fichas\UserControlListaFichas.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Paginas\Rol\Fichas\UserControlListaFichasViewFichas.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Paginas\Rol\Fichas\SeleccionTipoFichas\UserControlSeleccionTipoFicha.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Paginas\Rol\Fichas\UserControlVistaFicha.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Paginas\Rol\Mapas\UserControlIngresoPosicion.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Paginas\Rol\Mapas\UserControlMapa.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Paginas\Rol\UserControlPaginaPrincipalRol.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Paginas\Rol\Fichas\SeleccionTipoFichas\UserControlMenuSeleccionTipoFicha.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Paginas\UserControlComboBoxConDescripcion.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Paginas\UserControlListaItems.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Recursos\Controles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Ventanas\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Converters\BaseConverter.cs" />
+    <Compile Include="Ventanas\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Paginas\Inicio\UserControlPaginaInicio.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Recursos\Botones.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Recursos\CamposDeTexto.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Recursos\Colores.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Recursos\Fonts.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Recursos\Ventanas.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Ventanas\VentanaMensaje.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Paginas\Inicio\UserControlPaginaInicio.xaml.cs">
+      <DependentUpon>UserControlPaginaInicio.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <Resource Include="Fonts\Font Awesome 5 Brands-Regular-400.otf" />
     <Resource Include="Fonts\Font Awesome 5 Free Regular.ttf" />
     <Resource Include="Fonts\Font Awesome 5 Free Solid.ttf" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AppGMCore\AppGM.Core.csproj">
+      <Project>{dc35c1d2-76b4-4fa9-a13e-e08ad9b9a433}</Project>
+      <Name>AppGM.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Media\Imagenes\Carta_Servant.png" />
@@ -31,13 +459,19 @@
     <Resource Include="Media\Imagenes\Carta_NPC.png" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Fody">
+      <Version>6.2.4</Version>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
       <Version>3.1.9</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-	<PackageReference Include="PropertyChanged.Fody" Version="3.3.3" />
-    <PackageReference Include="Microsoft.Windows.Compatibility" Version="5.0.2" />
+    <PackageReference Include="PropertyChanged.Fody">
+      <Version>3.2.6</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Media\Imagenes\Mapas\Seoul.png" />
@@ -132,13 +566,5 @@
   <ItemGroup>
     <Resource Include="Media\Imagenes\Animaciones\FondoMenuPrincipal\FondoMenuPrincipal_6.jpg" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\AppGMCore\AppGM.Core.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Remove="BaseDesignModel.cs" />
-    <Compile Remove="DesignModelRolItem.cs" />
-    <Compile Remove="Viewmodels\BaseViewModel.cs" />
-    <Page Remove="Estilos\Colores.xaml" />
-  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

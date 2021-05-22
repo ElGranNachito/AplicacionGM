@@ -71,8 +71,8 @@ namespace AppGM.Core
             TIUnidadMapaVector2   tiUnidadPosicion      = new TIUnidadMapaVector2();
 
             //Nos aseguramos que los valores ingresados queden dentro de los limites del mapa
-            double PosY = Math.Clamp(double.Parse(PosInicialX), 0, mapa.TamañoCanvasX);
-            double PosX = Math.Clamp(double.Parse(PosInicialY), 0, mapa.TamañoCanvasY);
+            double PosY = SuperDll.SuperUtilidades.Math.Clamp(double.Parse(PosInicialX), 0, mapa.TamañoCanvasX);
+            double PosX = SuperDll.SuperUtilidades.Math.Clamp(double.Parse(PosInicialY), 0, mapa.TamañoCanvasY);
 
             posicionUnidad.X = PosX;
             posicionUnidad.Y = PosY;
