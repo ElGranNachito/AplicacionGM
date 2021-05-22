@@ -4,6 +4,9 @@ namespace AppGM.Core
 {
     public class ModeloAdministradorDeCombate : ModeloBase
     {
+        //Relacion rol
+        public TIRolCombate RolCombate { get; set; }
+
         public ControladorAdministradorDeCombate controladorAdministradorDeCombate;
 
         public int    IndicePersonajeTurnoActual { get; set; }

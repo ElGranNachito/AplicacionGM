@@ -8,6 +8,9 @@ namespace AppGM.Core
     /// </summary>
     public class ModeloPersonaje : ModeloBase
     {
+        //Relacion rol
+        public TIRolPersonaje RolPersonaje { get; set; }
+
         public ControladorPersonaje controlador;
 
         //Nombre del personaje
