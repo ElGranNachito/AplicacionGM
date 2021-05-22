@@ -57,11 +57,12 @@ namespace AppGM.Core.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Edad = table.Column<ushort>(nullable: false),
                     Estatura = table.Column<ushort>(nullable: false),
-                    EAlineamiento = table.Column<int>(nullable: false),
-                    EManoDominante = table.Column<int>(nullable: false),
+                    Peso = table.Column<ushort>(nullable: false),
                     ESexo = table.Column<int>(nullable: false),
-                    Nacionalidad = table.Column<string>(maxLength: 50, nullable: true),
-                    Contextura = table.Column<string>(maxLength: 100, nullable: true)
+                    EArquetipo = table.Column<int>(nullable: false),
+                    EManoDominante = table.Column<int>(nullable: false),
+                    Fisico = table.Column<string>(maxLength: 100, nullable: true),
+                    Nacionalidad = table.Column<string>(maxLength: 50, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -74,11 +75,24 @@ namespace AppGM.Core.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    CargasMaximas = table.Column<int>(nullable: false)
+                    CargasMaximas = table.Column<int>(nullable: false),
+                    CargasActuales = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ModeloCargasHabilidad", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ModeloDatosInvocacionBase",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ModeloDatosInvocacionBase", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -87,10 +101,9 @@ namespace AppGM.Core.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
+                    TurnosDeDuracion = table.Column<ushort>(nullable: false),
                     Nombre = table.Column<string>(maxLength: 50, nullable: true),
-                    Descripcion = table.Column<string>(maxLength: 500, nullable: true),
-                    Tipo = table.Column<int>(nullable: false),
-                    TurnosDeDuracion = table.Column<ushort>(nullable: true)
+                    Descripcion = table.Column<string>(maxLength: 500, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -125,7 +138,9 @@ namespace AppGM.Core.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     LimiteDeUsos = table.Column<int>(nullable: false),
-                    DiasDeEnfriamiento = table.Column<int>(nullable: false)
+                    UsosRestantes = table.Column<int>(nullable: false),
+                    DiasDeEnfriamiento = table.Column<int>(nullable: false),
+                    DiasRestantes = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -141,7 +156,6 @@ namespace AppGM.Core.Migrations
                     ValorRequeridoTirada = table.Column<int>(nullable: false),
                     Tipo = table.Column<int>(nullable: false),
                     TiposDeDaño = table.Column<int>(nullable: true),
-                    AlineamientosDelInstigador = table.Column<int>(nullable: true),
                     ModificacionPorcentual = table.Column<byte>(nullable: true),
                     ModificacionFija = table.Column<byte>(nullable: true),
                     NombreClase = table.Column<string>(maxLength: 50, nullable: true),
@@ -160,7 +174,8 @@ namespace AppGM.Core.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Espacio = table.Column<decimal>(nullable: false)
+                    EspacioTotal = table.Column<decimal>(nullable: false),
+                    EspacioDisponible = table.Column<decimal>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -189,6 +204,7 @@ namespace AppGM.Core.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
+                    Peso = table.Column<decimal>(nullable: false),
                     EStatQueAfecta = table.Column<int>(nullable: false),
                     EStatDeLaQueDepende = table.Column<int>(nullable: false),
                     Tipo = table.Column<int>(nullable: false),
@@ -918,6 +934,8 @@ namespace AppGM.Core.Migrations
                     Agi = table.Column<ushort>(nullable: false),
                     Int = table.Column<ushort>(nullable: false),
                     Lck = table.Column<ushort>(nullable: false),
+                    PesoMaximoCargable = table.Column<decimal>(nullable: false),
+                    PesoCargado = table.Column<decimal>(nullable: false),
                     PathImagen = table.Column<string>(nullable: true),
                     EstaEnCombate = table.Column<bool>(nullable: false),
                     FormatoImagen = table.Column<int>(nullable: false),
@@ -926,12 +944,22 @@ namespace AppGM.Core.Migrations
                     EsAutomata = table.Column<bool>(nullable: true),
                     TurnosDeDuracion = table.Column<byte>(nullable: true),
                     EClaseServant = table.Column<int>(nullable: true),
+                    RangoHechiceria = table.Column<ushort>(nullable: true),
                     EClaseDeSuServant = table.Column<int>(nullable: true),
+                    EBienestar = table.Column<int>(nullable: true),
+                    Od = table.Column<int>(nullable: true),
+                    OdActual = table.Column<int>(nullable: true),
+                    Mana = table.Column<int>(nullable: true),
+                    ManaActual = table.Column<int>(nullable: true),
                     Chr = table.Column<ushort>(nullable: true),
                     CommandSpells = table.Column<ushort>(nullable: true),
                     Lore = table.Column<string>(nullable: true),
-                    NombreReal = table.Column<string>(nullable: true),
-                    mERangoNP = table.Column<int>(nullable: true)
+                    Origen = table.Column<string>(nullable: true),
+                    Afinidad = table.Column<string>(nullable: true),
+                    mERangoNP = table.Column<int>(nullable: true),
+                    Prana = table.Column<int>(nullable: true),
+                    PranaActual = table.Column<int>(nullable: true),
+                    Fuente = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -1322,6 +1350,30 @@ namespace AppGM.Core.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TIInvocacionDatosInvocacion",
+                columns: table => new
+                {
+                    IdInvocacion = table.Column<int>(nullable: false),
+                    IdDatos = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TIInvocacionDatosInvocacion", x => new { x.IdInvocacion, x.IdDatos });
+                    table.ForeignKey(
+                        name: "FK_TIInvocacionDatosInvocacion_ModeloDatosInvocacionBase_IdDatos",
+                        column: x => x.IdDatos,
+                        principalTable: "ModeloDatosInvocacionBase",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TIInvocacionDatosInvocacion_ModeloPersonaje_IdInvocacion",
+                        column: x => x.IdInvocacion,
+                        principalTable: "ModeloPersonaje",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TIInvocacionEfecto",
                 columns: table => new
                 {
@@ -1431,7 +1483,8 @@ namespace AppGM.Core.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_CombatesRol_IdCombate",
                 table: "CombatesRol",
-                column: "IdCombate");
+                column: "IdCombate",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_CombatesRol_IdRol",
@@ -1451,7 +1504,8 @@ namespace AppGM.Core.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_MapasRol_IdMapa",
                 table: "MapasRol",
-                column: "IdMapa");
+                column: "IdMapa",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_MapasRol_IdRol",
@@ -1537,7 +1591,8 @@ namespace AppGM.Core.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_PersonajesRol_IdPersonaje",
                 table: "PersonajesRol",
-                column: "IdPersonaje");
+                column: "IdPersonaje",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_PersonajesRol_IdRol",
@@ -1654,6 +1709,17 @@ namespace AppGM.Core.Migrations
                 name: "IX_TIHabilidadTiradaDeDaño_IdTirada",
                 table: "TIHabilidadTiradaDeDaño",
                 column: "IdTirada");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TIInvocacionDatosInvocacion_IdDatos",
+                table: "TIInvocacionDatosInvocacion",
+                column: "IdDatos");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TIInvocacionDatosInvocacion_IdInvocacion",
+                table: "TIInvocacionDatosInvocacion",
+                column: "IdInvocacion",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_TIInvocacionEfecto_IdEfecto",
@@ -1867,6 +1933,9 @@ namespace AppGM.Core.Migrations
                 name: "TIHabilidadTiradaDeDaño");
 
             migrationBuilder.DropTable(
+                name: "TIInvocacionDatosInvocacion");
+
+            migrationBuilder.DropTable(
                 name: "TIInvocacionEfecto");
 
             migrationBuilder.DropTable(
@@ -1931,6 +2000,9 @@ namespace AppGM.Core.Migrations
 
             migrationBuilder.DropTable(
                 name: "ModeloHabilidad");
+
+            migrationBuilder.DropTable(
+                name: "ModeloDatosInvocacionBase");
 
             migrationBuilder.DropTable(
                 name: "ModeloCaracteristicas");

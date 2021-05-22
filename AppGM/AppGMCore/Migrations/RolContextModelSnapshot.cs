@@ -57,11 +57,7 @@ namespace AppGM.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Contextura")
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(100);
-
-                    b.Property<int>("EAlineamiento")
+                    b.Property<int>("EArquetipo")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("EManoDominante")
@@ -76,9 +72,16 @@ namespace AppGM.Core.Migrations
                     b.Property<ushort>("Estatura")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Fisico")
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(100);
+
                     b.Property<string>("Nacionalidad")
                         .HasColumnType("TEXT")
                         .HasMaxLength(50);
+
+                    b.Property<ushort>("Peso")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -91,12 +94,26 @@ namespace AppGM.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("CargasActuales")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("CargasMaximas")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
                     b.ToTable("ModeloCargasHabilidad");
+                });
+
+            modelBuilder.Entity("AppGM.Core.ModeloDatosInvocacionBase", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ModeloDatosInvocacionBase");
                 });
 
             modelBuilder.Entity("AppGM.Core.ModeloEfecto", b =>
@@ -113,14 +130,14 @@ namespace AppGM.Core.Migrations
                         .HasColumnType("TEXT")
                         .HasMaxLength(50);
 
-                    b.Property<int>("Tipo")
+                    b.Property<ushort>("TurnosDeDuracion")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
                     b.ToTable("ModeloEfecto");
 
-                    b.HasDiscriminator<int>("Tipo").HasValue(1);
+                    b.HasDiscriminator();
                 });
 
             modelBuilder.Entity("AppGM.Core.ModeloHabilidad", b =>
@@ -168,7 +185,13 @@ namespace AppGM.Core.Migrations
                     b.Property<int>("DiasDeEnfriamiento")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("DiasRestantes")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("LimiteDeUsos")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("UsosRestantes")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -269,6 +292,12 @@ namespace AppGM.Core.Migrations
                     b.Property<string>("PathImagen")
                         .HasColumnType("TEXT");
 
+                    b.Property<decimal>("PesoCargado")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("PesoMaximoCargable")
+                        .HasColumnType("TEXT");
+
                     b.Property<int?>("PosicionId")
                         .HasColumnType("INTEGER");
 
@@ -321,7 +350,10 @@ namespace AppGM.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<decimal>("Espacio")
+                    b.Property<decimal>("EspacioDisponible")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("EspacioTotal")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -379,6 +411,9 @@ namespace AppGM.Core.Migrations
 
                     b.Property<int>("EStatQueAfecta")
                         .HasColumnType("INTEGER");
+
+                    b.Property<decimal>("Peso")
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("Tipo")
                         .HasColumnType("INTEGER");
@@ -616,6 +651,24 @@ namespace AppGM.Core.Migrations
                     b.HasIndex("IdTirada");
 
                     b.ToTable("TIHabilidadTiradaDeDaño");
+                });
+
+            modelBuilder.Entity("AppGM.Core.TIInvocacionDatosInvocacion", b =>
+                {
+                    b.Property<int>("IdInvocacion")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("IdDatos")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("IdInvocacion", "IdDatos");
+
+                    b.HasIndex("IdDatos");
+
+                    b.HasIndex("IdInvocacion")
+                        .IsUnique();
+
+                    b.ToTable("TIInvocacionDatosInvocacion");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIInvocacionEfecto", b =>
@@ -990,7 +1043,8 @@ namespace AppGM.Core.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdCombate");
+                    b.HasIndex("IdCombate")
+                        .IsUnique();
 
                     b.HasIndex("IdRol");
 
@@ -1024,7 +1078,8 @@ namespace AppGM.Core.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdMapa");
+                    b.HasIndex("IdMapa")
+                        .IsUnique();
 
                     b.HasIndex("IdRol");
 
@@ -1058,7 +1113,8 @@ namespace AppGM.Core.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdPersonaje");
+                    b.HasIndex("IdPersonaje")
+                        .IsUnique();
 
                     b.HasIndex("IdRol");
 
@@ -1168,16 +1224,6 @@ namespace AppGM.Core.Migrations
                     b.ToTable("TIUtilizableTiradaBase");
                 });
 
-            modelBuilder.Entity("AppGM.Core.ModeloEfectoTemporal", b =>
-                {
-                    b.HasBaseType("AppGM.Core.ModeloEfecto");
-
-                    b.Property<ushort>("TurnosDeDuracion")
-                        .HasColumnType("INTEGER");
-
-                    b.HasDiscriminator().HasValue(2);
-                });
-
             modelBuilder.Entity("AppGM.Core.ModeloMagia", b =>
                 {
                     b.HasBaseType("AppGM.Core.ModeloHabilidad");
@@ -1208,9 +1254,6 @@ namespace AppGM.Core.Migrations
             modelBuilder.Entity("AppGM.Core.ModeloModificadorDeDefensa", b =>
                 {
                     b.HasBaseType("AppGM.Core.ModeloModificadorDeStatBase");
-
-                    b.Property<int>("AlineamientosDelInstigador")
-                        .HasColumnType("INTEGER");
 
                     b.Property<byte>("ModificacionFija")
                         .HasColumnType("INTEGER");
@@ -1268,6 +1311,9 @@ namespace AppGM.Core.Migrations
                     b.Property<int>("EClaseServant")
                         .HasColumnType("INTEGER");
 
+                    b.Property<ushort>("RangoHechiceria")
+                        .HasColumnType("INTEGER");
+
                     b.HasDiscriminator().HasValue(1);
                 });
 
@@ -1308,6 +1354,9 @@ namespace AppGM.Core.Migrations
                 {
                     b.HasBaseType("AppGM.Core.ModeloUtilizable");
 
+                    b.Property<int>("Estado")
+                        .HasColumnType("INTEGER");
+
                     b.HasDiscriminator().HasValue(2);
                 });
 
@@ -1332,16 +1381,37 @@ namespace AppGM.Core.Migrations
                 {
                     b.HasBaseType("AppGM.Core.ModeloPersonajeJugable");
 
+                    b.Property<string>("Afinidad")
+                        .HasColumnType("TEXT");
+
                     b.Property<ushort>("Chr")
                         .HasColumnType("INTEGER");
 
                     b.Property<ushort>("CommandSpells")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("EBienestar")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("EClaseDeSuServant")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Lore")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Mana")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ManaActual")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Od")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("OdActual")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Origen")
                         .HasColumnType("TEXT");
 
                     b.HasDiscriminator().HasValue(6);
@@ -1351,8 +1421,14 @@ namespace AppGM.Core.Migrations
                 {
                     b.HasBaseType("AppGM.Core.ModeloPersonajeJugable");
 
-                    b.Property<string>("NombreReal")
+                    b.Property<string>("Fuente")
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("Prana")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("PranaActual")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("mERangoNP")
                         .HasColumnType("INTEGER");
@@ -1403,9 +1479,6 @@ namespace AppGM.Core.Migrations
             modelBuilder.Entity("AppGM.Core.ModeloDefensivo", b =>
                 {
                     b.HasBaseType("AppGM.Core.ModeloPortable");
-
-                    b.Property<int>("Estado")
-                        .HasColumnType("INTEGER");
 
                     b.HasDiscriminator().HasValue(4);
                 });
@@ -1639,6 +1712,21 @@ namespace AppGM.Core.Migrations
                     b.HasOne("AppGM.Core.ModeloTiradaDeDaño", "TiradaDeDaño")
                         .WithMany()
                         .HasForeignKey("IdTirada")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("AppGM.Core.TIInvocacionDatosInvocacion", b =>
+                {
+                    b.HasOne("AppGM.Core.ModeloDatosInvocacionBase", "DatosInvocacion")
+                        .WithMany()
+                        .HasForeignKey("IdDatos")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AppGM.Core.ModeloInvocacion", "Invocacion")
+                        .WithOne("DatosInvocacion")
+                        .HasForeignKey("AppGM.Core.TIInvocacionDatosInvocacion", "IdInvocacion")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -1976,8 +2064,8 @@ namespace AppGM.Core.Migrations
             modelBuilder.Entity("AppGM.Core.TIRolCombate", b =>
                 {
                     b.HasOne("AppGM.Core.ModeloAdministradorDeCombate", "Combate")
-                        .WithMany()
-                        .HasForeignKey("IdCombate")
+                        .WithOne("RolCombate")
+                        .HasForeignKey("AppGM.Core.TIRolCombate", "IdCombate")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1999,8 +2087,8 @@ namespace AppGM.Core.Migrations
             modelBuilder.Entity("AppGM.Core.TIRolMapa", b =>
                 {
                     b.HasOne("AppGM.Core.ModeloMapa", "Mapa")
-                        .WithMany()
-                        .HasForeignKey("IdMapa")
+                        .WithOne("RolMapa")
+                        .HasForeignKey("AppGM.Core.TIRolMapa", "IdMapa")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -2022,8 +2110,8 @@ namespace AppGM.Core.Migrations
             modelBuilder.Entity("AppGM.Core.TIRolPersonaje", b =>
                 {
                     b.HasOne("AppGM.Core.ModeloPersonaje", "Personaje")
-                        .WithMany()
-                        .HasForeignKey("IdPersonaje")
+                        .WithOne("RolPersonaje")
+                        .HasForeignKey("AppGM.Core.TIRolPersonaje", "IdPersonaje")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
