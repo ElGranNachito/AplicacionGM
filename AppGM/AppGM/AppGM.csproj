@@ -141,4 +141,9 @@
     <Compile Remove="Viewmodels\BaseViewModel.cs" />
     <Page Remove="Estilos\Colores.xaml" />
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="CoolLogs">
+      <HintPath>..\Dependencias\CoolLogs.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 </Project>

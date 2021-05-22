@@ -1,5 +1,7 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
+using CoolLogs;
 using Ninject;
 
 namespace AppGM.Core
@@ -53,6 +55,16 @@ namespace AppGM.Core
         public static DatosRol                      DatosRolSeleccionado  => RolSeleccionado.ControladorRol.datosRol;
 
         /// <summary>
+        /// Logger global
+        /// </summary>
+        public static LoggerFactory                 LoggerFactoryGlobal   => ObtenerInstancia<LoggerFactory>();
+
+        /// <summary>
+        /// Logger global
+        /// </summary>
+        public static Logger                        LoggerGlobal          => ObtenerInstancia<Logger>();
+
+        /// <summary>
         /// Contexto del thread principal
         /// </summary>
         public static SynchronizationContext ThreadUISyncContext;
@@ -70,6 +82,11 @@ namespace AppGM.Core
         {
             //Obtenemos el contexto del hilo que nos llamo
             ThreadUISyncContext = SynchronizationContext.Current;
+  
+            Kernel.Bind<LoggerFactory>().ToConstant(new CoolFactory(ESeveridad.TODOS, "%t-T [%a>%f:%l %s-u]: %m"));
+            Kernel.Bind<Logger>().ToConstant(new CoolLogger(LoggerFactoryGlobal, "LoggerPrincipal", "log"));
+
+            LoggerGlobal.Log("Inicializando sistema", ESeveridad.Info);
 
             Kernel.Bind<IControladorDeArchivos>().ToConstant(controladorDeArchivos);
 

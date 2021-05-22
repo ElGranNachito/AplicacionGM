@@ -42,4 +42,9 @@
     <Compile Remove="Migrations\20201021184742_Inicial.cs" />
     <Compile Remove="Migrations\20201021184742_Inicial.Designer.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="CoolLogs">
+      <HintPath>..\Dependencias\CoolLogs.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 </Project>
