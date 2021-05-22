@@ -20,7 +20,7 @@
                 BorderBrush="Aqua"
                 BorderThickness="2">
 
-                <ContentControl Content="{Binding EMenuActual, Converter={local:EnumToUserControlConverter}, ConverterParameter=2}"/>
+                <ContentControl Content="{Binding EMenu, Converter={local:EnumToUserControlConverter}, ConverterParameter=2}"/>
             </Border>
 
 

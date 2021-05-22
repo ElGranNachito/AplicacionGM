@@ -5,30 +5,85 @@ using AppGM.Core;
 
 namespace AppGM
 {
+    /// <summary>
+    /// Clase abstracta que provee campos, propiedades y una implementacion por defecto de la interfaz <see cref="IVentana"/>
+    /// para que hereden viewmodels destinados a representar una ventana
+    /// </summary>
     public abstract class ViewModelVentanaBase : BaseViewModel, IVentana
     {
         #region Miembros
 
+        /// <summary>
+        /// Instancia de la ventana
+        /// </summary>
         protected Window mVentana;
 
+        /// <summary>
+        /// Altura del titulo
+        /// </summary>
         protected int    mCaptionHeight = 25;
+
+        /// <summary>
+        /// Titulo de la ventana
+        /// </summary>
         protected string mTituloVentana = "Aplicacion GM";
 
+        /// <summary>
+        /// Altura del titulo
+        /// </summary>
         protected GridLength mAlturaTitulo          = new GridLength(25);
+
+        /// <summary>
+        /// Grueso de los bordes para cambiar el tamaño de la ventana
+        /// </summary>
         protected Thickness  mResizeBorderThickness = new Thickness(4);
+
+
+        //----------------------------PROPIEDADES--------------------------------------
+
+
+        /// <summary>
+        /// Comando que se ejecutara al presionar la x de la ventana
+        /// </summary>
         public ICommand ComandoCerrarVentana { get; set; }
+
+        /// <summary>
+        /// Propiedad que permite obtener la altura del titulo de la ventana. Esta propiedad esta destinada para ser usada en xaml solamente.
+        /// Para modificar su valor hacerlo a traves de <see cref="CaptionHeight"/>
+        /// </summary>
+        public GridLength AlturaTitulo => EstaMaximizada() ? new GridLength(0) : new GridLength(mCaptionHeight);
+
+        /// <summary>
+        /// Propiedad que permite obtener y establecer el grosor de los bordes para cambiar de tamaño de la ventana
+        /// </summary>
+        public Thickness ResizeBorderThickness
+        {
+	        get => EstaMaximizada() ? new Thickness(0) : mResizeBorderThickness;
+	        set => mResizeBorderThickness = value;
+        }
+
+        /// <summary>
+        /// Propiedad que permite obtener y modificar el tamaño del titulo de la ventana
+        /// </summary>
+        public int CaptionHeight
+        {
+	        get => EstaMaximizada() ? 0 : mCaptionHeight;
+	        set => mCaptionHeight = value;
+        }
 
         #endregion
 
         #region Constructores
+
         /// <summary>
         /// Constructor default
         /// </summary>
-        /// <param name="_ventana">Ventana</param>
+        /// <param name="_ventana">Instanacia de la ventana que representara este viewmodel</param>
         public ViewModelVentanaBase(Window _ventana)
         {
             mVentana = _ventana;
 
+            //Conectamos varios eventos de la ventana para que llamen a los delegados correspondientes de la interfaz IVentana
             mVentana.Closed    += (obj, e)        => { OnVentanaCerrada(this); };
             mVentana.Loaded    += (obj, e)    => { OnVentanaAbierta(this); };
             mVentana.MouseMove += (obj, e)     => { OnMouseMovido(this); };
@@ -50,31 +105,51 @@ namespace AppGM
         /// <summary>
         /// Constructor vacion por si alguna clase hijo necesita hacer algo distinto en los primeros pasos
         /// </summary>
-        protected ViewModelVentanaBase() { } 
+        protected ViewModelVentanaBase() { }
 
-        #endregion
+		#endregion
 
-        #region Propiedades
-        public GridLength AlturaTitulo
+		#region Metodos
+
+		protected void DispararEvento(string nombre)
+		{
+			switch (nombre)
+			{
+				case nameof(OnTamañoModificado):
+					OnTamañoModificado(this);
+					break;
+				case nameof(OnEstadoModificado):
+					OnEstadoModificado(this);
+					break;
+				case nameof(OnTituloModificado):
+					OnTituloModificado(this);
+					break;
+				case nameof(OnMouseMovido):
+					OnMouseMovido(this);
+					break;
+				case nameof(OnVentanaAbierta):
+					OnVentanaAbierta(this);
+					break;
+				case nameof(OnVentanaCerrada):
+					OnVentanaCerrada(this);
+					break;
+			}
+		} 
+
+		#endregion
+
+		#region Implementacion Interfaz Ventana
+
+		public virtual string TituloVentana
         {
-            get => EstaMaximizada() ? new GridLength(0) : mAlturaTitulo;
-            set => mAlturaTitulo = value;
+	        get => mTituloVentana;
+	        set
+	        {
+		        mTituloVentana = value;
+
+		        OnTituloModificado(this);
+	        }
         }
-        public Thickness ResizeBorderThickness
-        {
-            get => EstaMaximizada() ? new Thickness(0) : mResizeBorderThickness;
-            set => mResizeBorderThickness = value;
-        }
-
-        public int CaptionHeight
-        {
-            get => EstaMaximizada() ? 0 : mCaptionHeight;
-            set => mCaptionHeight = value;
-        } 
-
-        #endregion
-
-        #region Implementacion Interfaz Ventana
 
         public virtual object ObtenerInstanciaVentana() => mVentana;
 
@@ -100,8 +175,6 @@ namespace AppGM
 
             OnEstadoModificado(this);
         }
-
-        public virtual Vector2 ObtenerTamaño() => new Vector2(mVentana.Width, mVentana.Height);
 
         public virtual void EstablecerTamañoX(float x)
         {
@@ -130,41 +203,11 @@ namespace AppGM
 
             return new Vector2(v.X, v.Y);
         }
-        public virtual bool EstaMaximizada() => mVentana.WindowState == WindowState.Maximized;
-        public virtual string TituloVentana
-        {
-            get => mTituloVentana;
-            set
-            {
-                mTituloVentana = value;
 
-                OnTituloModificado(this);
-            }
-        }
-        protected void DispararEvento(string nombre)
-        {
-            switch (nombre)
-            {
-                case nameof(OnTamañoModificado):
-                    OnTamañoModificado(this);
-                    break;
-                case nameof(OnEstadoModificado):
-                    OnEstadoModificado(this);
-                    break;
-                case nameof(OnTituloModificado):
-                    OnTituloModificado(this);
-                    break;
-                case nameof(OnMouseMovido):
-                    OnMouseMovido(this);
-                    break;
-                case nameof(OnVentanaAbierta):
-                    OnVentanaAbierta(this);
-                    break;
-                case nameof(OnVentanaCerrada):
-                    OnVentanaCerrada(this);
-                    break;
-            }
-        }
+        public virtual Vector2 ObtenerTamaño() => new Vector2(mVentana.Width, mVentana.Height);
+        public virtual bool EstaMaximizada() => mVentana.WindowState == WindowState.Maximized;
+
+        //Eventos de la interfaz
 
         public event EventoVentana OnTamañoModificado = delegate { };
         public event EventoVentana OnEstadoModificado = delegate { };

@@ -1,4 +1,6 @@
-﻿namespace AppGM.Core
+﻿using System.Text.RegularExpressions;
+
+namespace AppGM.Core
 {
     /// <summary>
     /// Contiene varios helpers para lidiar con strings y chars
@@ -10,9 +12,9 @@
         /// </summary>
         /// <param name="caracter">Caracter a revisar</param>
         /// <returns>true si el caracter es un numero</returns>
-        public static bool EsUnNumero(this char caracter)
+        public static bool EsUnNumero(this string cadena)
         {
-            return (caracter > 47 && caracter < 58);
+	        return Regex.IsMatch(cadena, "[0-9]+$");
         }
 
         /// <summary>
@@ -30,9 +32,9 @@
         /// </summary>
         /// <param name="cadena">string a evaluar</param>
         /// <returns>true si el string esta vacio</returns>
-        public static bool EstaVacio(this string cadena)
+        public static bool IsNullOrWhiteSpace(this string cadena)
         {
-            return cadena.Length == 0;
+	        return string.IsNullOrWhiteSpace(cadena);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿namespace AppGM.Core
 {
+    //TODO: Considerar eliminar
     public class ValorTemporal
     {
         public int ValorActual { get; set; }

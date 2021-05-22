@@ -133,7 +133,7 @@ namespace AppGM.Core
             SistemaPrincipal.GuardarModelo(modeloUnidad);
             SistemaPrincipal.GuardarModelo(tiPersonajeUnidadMapa);
             SistemaPrincipal.GuardarModelo(tiUnidadPosicion);
-            SistemaPrincipal.GuardarDatosRolAsync();
+            SistemaPrincipal.GuardarDatosRolAsincronicamente();
 
             mVentana.CerrarVentana();
         }

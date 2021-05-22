@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using AppGM.Core;
 
 namespace AppGM
@@ -15,11 +14,8 @@ namespace AppGM
 
             Current.Dispatcher.Thread.Name = "AppGM - Main";
 
-            //Creamos el controlador de archivos
-            SistemaPrincipal.CrearControladorDeArchivos(new ControladorDeArchivos_Windows());
-
             //Inicializamos el sistema principal
-            SistemaPrincipal.Inicializar();
+            SistemaPrincipal.Inicializar(new ControladorDeArchivos_Windows());
 
             MainWindow = new MainWindow();
             MainWindow.Show();

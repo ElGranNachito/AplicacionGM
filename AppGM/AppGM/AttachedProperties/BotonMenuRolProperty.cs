@@ -19,6 +19,8 @@ namespace AppGM
                     if (botonSeleccionado.BotonSeleccionado == o)
                         return;
 
+                    botonSeleccionado.BotonSeleccionado = o;
+
                     ((Button)o).BorderThickness = new Thickness(0, 0, 2, 0);
 
                     PropertyChangedEventHandler propertyChangedEventListener = null;

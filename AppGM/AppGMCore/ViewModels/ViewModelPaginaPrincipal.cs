@@ -89,18 +89,17 @@ namespace AppGM.Core
                 DispararPropertyChanged(new PropertyChangedEventArgs(nameof(RolActual)));
             });
 
-            AnimacionFondoMenuPrincipalLoop = new Animacion(s =>
+            AnimacionFondoMenuPrincipalLoop = new Animacion(path =>
                 {
-                    FotogramaActualAnimacionFondo = (string)s;
+                    FotogramaActualAnimacionFondo = (string)path;
                 },
                 1.2f,
                 6,
                 Path.Combine(SistemaPrincipal.ControladorDeArchivos.DirectorioAnimaciones, $"FondoMenuPrincipal{Path.DirectorySeparatorChar}FondoMenuPrincipal_"),
                     EFormatoImagen.Jpg,
-                this,
                 true);
 
-            ControladorDeAnimaciones.AñadirAnimacion(AnimacionFondoMenuPrincipalLoop);
+            ControladorDeAnimaciones.AñadirAnimacionAsincronicamente(AnimacionFondoMenuPrincipalLoop);
         }
         #endregion
 
@@ -109,7 +108,7 @@ namespace AppGM.Core
         {
             CartaSeleccionarRol.Comando = new Comando(async () =>
             {
-                await SistemaPrincipal.CargarRol(RolActual);
+                await SistemaPrincipal.CargarRolAsincronicamente(RolActual);
 
                 SistemaPrincipal.Aplicacion.EPagina =
                     EPagina.PaginaPrincipalRol;

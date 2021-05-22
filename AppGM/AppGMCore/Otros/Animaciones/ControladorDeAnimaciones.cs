@@ -5,15 +5,32 @@ using System.Threading.Tasks;
 
 namespace AppGM.Core
 {
+    /// <summary>
+    /// Clase estatica que agrupa todas las mAnimaciones de la aplicacion y se encarga de reproducirlas
+    /// </summary>
     public static class ControladorDeAnimaciones
     {
-        private static List<Animacion> animaciones = new List<Animacion>();
-        private static Thread threadAnimaciones = null;
+        /// <summary>
+        /// Lista con todas las mAnimaciones
+        /// </summary>
+        private static List<Animacion> mAnimaciones = new List<Animacion>();
+
+        /// <summary>
+        /// Thread encargada de actualizar las animaciones
+        /// </summary>
+        private static Thread mThreadAnimaciones = null;
+
+        /// <summary>
+        /// Lock para sincronizar el acceso a <see cref="mAnimaciones"/>
+        /// </summary>
         private static object mLock = new object();
 
+        /// <summary>
+        /// Inicializa el controlador
+        /// </summary>
         public static void Inicializar()
         {
-            threadAnimaciones = new Thread(() =>
+            mThreadAnimaciones = new Thread(() =>
             {
                 bool lockObtenido = false;
 
@@ -25,14 +42,15 @@ namespace AppGM.Core
 
                         if (lockObtenido)
                         {
-                            for (int i = 0; i < animaciones.Count; ++i)
-                                animaciones[i].Tick();
+                            for (int i = 0; i < mAnimaciones.Count; ++i)
+                                mAnimaciones[i].Tick();
                         }
                     }
                     finally
                     {
                         if (lockObtenido)
                         {
+                            Monitor.Pulse(mLock);
                             Monitor.Exit(mLock); 
                             lockObtenido = false;
                         }
@@ -41,12 +59,22 @@ namespace AppGM.Core
 
             });
 
-            threadAnimaciones.Name = "AppGM - Animaciones";
-            threadAnimaciones.IsBackground = true;
-            threadAnimaciones.Start();
+            //Le cambiamos el nombre al hilo para poder identificarlo
+            mThreadAnimaciones.Name = "AppGM - Animaciones";
+
+            //Lo hacemos un hilo de fondo para que no nos de problemas si cerramos la app mientras aun esta corriendo
+            mThreadAnimaciones.IsBackground = true;
+
+            //Iniciamos el hilo
+            mThreadAnimaciones.Start();
         }
 
-        public static async Task AñadirAnimacion(Animacion animacion)
+        /// <summary>
+        /// Añade una animacion a la lista de animaciones
+        /// </summary>
+        /// <param name="animacion">Animacion a añadir</param>
+        /// <returns></returns>
+        public static async Task AñadirAnimacionAsincronicamente(Animacion animacion)
         {
             await Task.Run(() =>
             {
@@ -57,18 +85,25 @@ namespace AppGM.Core
                     Monitor.TryEnter(mLock, Int32.MaxValue, ref lockObtenido);
 
                     if (lockObtenido)
-                        animaciones.Add(animacion);
+                        mAnimaciones.Add(animacion);
                 }
                 finally
                 {
-                    if(lockObtenido)
-                        Monitor.Exit(mLock);
+	                if (lockObtenido)
+	                {
+                        Monitor.Pulse(mLock);
+		                Monitor.Exit(mLock);
+	                }
                 }
             });
-            animaciones.Add(animacion);
         }
 
-        public static async Task QuitarAnimacion(Animacion animacion)
+        /// <summary>
+        /// Quita una animacion de la lista de animaciones
+        /// </summary>
+        /// <param name="animacion">Animacion a quitar</param>
+        /// <returns></returns>
+        public static async Task QuitarAnimacionAsincronicamente(Animacion animacion)
         {
             await Task.Run(() =>
             {
@@ -79,15 +114,17 @@ namespace AppGM.Core
                     Monitor.TryEnter(mLock, Int32.MaxValue, ref lockObtenido);
 
                     if (lockObtenido)
-                        animaciones.Remove(animacion);
+                        mAnimaciones.Remove(animacion);
                 }
                 finally
                 {
-                    if (lockObtenido)
-                        Monitor.Exit(mLock);
+	                if (lockObtenido)
+	                {
+                        Monitor.Pulse(mLock);
+		                Monitor.Exit(mLock);
+	                }
                 }
             });
-            animaciones.Add(animacion);
         }
     }
 }

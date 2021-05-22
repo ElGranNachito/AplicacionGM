@@ -75,6 +75,7 @@
     <Compile Include="Helpers\EnumHelpers.cs" />
     <Compile Include="Helpers\MathHelpers.cs" />
     <Compile Include="Helpers\StringHelpers.cs" />
+    <Compile Include="Interfaces\IVentana.cs" />
     <Compile Include="Migrations\20210422005255_Inicial.cs" />
     <Compile Include="Migrations\20210422005255_Inicial.designer.cs">
       <DependentUpon>20210422005255_Inicial.cs</DependentUpon>
@@ -104,10 +105,10 @@
     <Compile Include="Otros\Animaciones\ControladorDeAnimaciones.cs" />
     <Compile Include="Otros\Clases\Grosor.cs" />
     <Compile Include="Otros\Enums\Enums.cs" />
-    <Compile Include="Otros\Interfaces\Archivos\IArchivo.cs" />
-    <Compile Include="Otros\Interfaces\Archivos\IControladorDeArchivos.cs" />
-    <Compile Include="Otros\Interfaces\Archivos\IDirectorio.cs" />
-    <Compile Include="Otros\Interfaces\Interfaces.cs" />
+    <Compile Include="Interfaces\Archivos\IArchivo.cs" />
+    <Compile Include="Interfaces\Archivos\IControladorDeArchivos.cs" />
+    <Compile Include="Interfaces\Archivos\IDirectorio.cs" />
+    <Compile Include="Interfaces\Interfaces.cs" />
     <Compile Include="Modelos\Efectos\ModeloEfecto.cs" />
     <Compile Include="Modelos\Juego\ModeloRol.cs" />
     <Compile Include="Modelos\Personajes\ModeloPersonaje.cs" />

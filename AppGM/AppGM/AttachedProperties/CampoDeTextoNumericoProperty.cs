@@ -20,7 +20,7 @@ namespace AppGM
                 if (textBox.Text.Length == 0)
                     return;
 
-                if (!textBox.Text.Last().EsUnNumero())
+                if (!textBox.Text.Last().ToString().EsUnNumero())
                     textBox.Text = textBox.Text.Remove(textBox.Text.Length - 1);
             };
 

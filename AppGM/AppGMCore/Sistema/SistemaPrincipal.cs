@@ -1,32 +1,60 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using Ninject;
-using AppGM.Core.Delegados;
 
 namespace AppGM.Core
 {
     /// <summary>
-    /// Controlador del programa, se encarga de lidiar con la carga de datos y view models
-    /// Es un intermediario entre la UI y los datos
+    /// Controlador del programa, se encarga de lidiar con la carga de datos y view models.
+    /// Permite la facil comunicacion entre varias partes de la aplicacion
     /// </summary>
-    
-    //TODO: Extender esta clase cuando tengamos el programa mas desarrollado
     public static class SistemaPrincipal
     {
         #region Propiedades
 
-        private static ServiceContainer mServicios;
+        /// <summary>
+        /// Instancia de <see cref="StandardKernel"/> de Ninject.
+        /// </summary>
         public static IKernel Kernel { get; set; } = new StandardKernel();
 
+        /// <summary>
+        /// Instancia global de <see cref="IControladorDeArchivos"/>
+        /// </summary>
         public static IControladorDeArchivos ControladorDeArchivos        => ObtenerInstancia<IControladorDeArchivos>();
 
+        /// <summary>
+        /// View model de la aplicacion
+        /// </summary>
         public static ViewModelAplicacion           Aplicacion            => ObtenerInstancia<ViewModelAplicacion>();
+
+        /// <summary>
+        /// Viewm model de la pagina principal del rol
+        /// </summary>
         public static ViewModelPaginaPrincipalRol   RolSeleccionado       => ObtenerInstancia<ViewModelPaginaPrincipalRol>();
+
+        /// <summary>
+        /// View model del menu de seleccion de combate
+        /// </summary>
         public static ViewModelMenuSeleccionCombate MenuSeleccionCombate  => ObtenerInstancia<ViewModelMenuSeleccionCombate>();
+
+        /// <summary>
+        /// Viewm model del controlador de combate
+        /// </summary>
         public static ViewModelCombate              CombateActual         => ObtenerInstancia<ViewModelCombate>();
+
+        /// <summary>
+        /// Modelo del rol actualmente abierto
+        /// </summary>
         public static ModeloRol                     ModeloRolActual       => ObtenerInstancia<ModeloRol>();
+
+        /// <summary>
+        /// Controladores de personajes, habilidades, etc. Del rol actualmente seleccionado
+        /// </summary>
         public static DatosRol                      DatosRolSeleccionado  => RolSeleccionado.ControladorRol.datosRol;
 
+        /// <summary>
+        /// Contexto del thread principal
+        /// </summary>
         public static SynchronizationContext ThreadUISyncContext;
 
         #endregion
@@ -37,47 +65,88 @@ namespace AppGM.Core
         /// Funcion que se llama antes de que se inicie la primera ventana. Se encarga de la carga
         /// de datos y creacion de view models
         /// </summary>
-        public static void Inicializar()
+        /// <param name="controladorDeArchivos">Instancia de un <see cref="IControladorDeArchivos"/> para atar al IoC</param>
+        public static void Inicializar(IControladorDeArchivos controladorDeArchivos)
         {
+            //Obtenemos el contexto del hilo que nos llamo
             ThreadUISyncContext = SynchronizationContext.Current;
 
-            CrearViewModels();
+            Kernel.Bind<IControladorDeArchivos>().ToConstant(controladorDeArchivos);
+
+            //Atamos los view models basicos, es decir que necesitamos independientemente del rol que se seleccione
+            Kernel.Bind<ViewModelAplicacion>().ToConstant(new ViewModelAplicacion());
+            Kernel.Bind<ViewModelPaginaPrincipal>().ToConstant(new ViewModelPaginaPrincipal());
 
             Aplicacion.OnPaginaActualCambio += PaginaActualCambioHandler;
         }
-        public static void CrearControladorDeArchivos(IControladorDeArchivos controladorDeArchivos)
-        {
-            Kernel.Bind<IControladorDeArchivos>().ToConstant(controladorDeArchivos);
-        }
-        public static async Task CargarRol(ModeloRol modelo)
-        {
-            await CrearViewModelsRol(modelo);
 
+        /// <summary>
+        /// Carga los datos del rol asincronicamente
+        /// </summary>
+        /// <param name="modelo">Modelo cuyos datos seran cargados</param>
+        /// <returns></returns>
+        public static async Task CargarRolAsincronicamente(ModeloRol modelo)
+        {
+            //Atamos primero estos das clases al IoC porque son necesarias para la carga
+	        Kernel.Bind<ModeloRol>().ToConstant(modelo);
+            Kernel.Bind<ViewModelPaginaPrincipalRol>().ToConstant(new ViewModelPaginaPrincipalRol());
+
+            //Cargamos los datos
+            await DatosRolSeleccionado.CargarDatos();
+
+            //Ahora creamos los view models que necesitan de los datos que acabamos de cargar
+            CrearViewModelsRol();
+
+            //Le damos a la ventana el nombre del rol
             Aplicacion.VentanaPrincipal.TituloVentana = modelo.Nombre;
         }
 
+        /// <summary>
+        /// Cierra la conexion a la base de datos y desato los viewmodels del rol del IoC
+        /// </summary>
         private static void DescargarRol()
         {
+            //Cerramos la conexion
             DatosRolSeleccionado.CerrarConexion();
 
-            EliminarViewModelsRol();
+            //Desatamos los view models del IoC
+            DesatarViewModelsRol();
 
+            //Cambiamos el titulo de la ventana
             Aplicacion.VentanaPrincipal.TituloVentana = "AppGM";
         }
+
+        /// <summary>
+        /// Obtiene la instancia de una clase del IoC
+        /// </summary>
+        /// <typeparam name="T">Tipo de la clase cuya instancia queremos obtener</typeparam>
+        /// <returns>Instancia de la clase</returns>
         public static T ObtenerInstancia<T>()
         {
             return Kernel.Get<T>();
         }
 
-        public static async Task GuardarDatosRolAsync()
+        /// <summary>
+        /// Guarda todos los cambios realizados a los modelos asincronicamente
+        /// </summary>
+        /// <returns></returns>
+        public static async Task GuardarDatosRolAsincronicamente()
         {
             await DatosRolSeleccionado.GuardarDatosAsync();
         }
+
+        /// <summary>
+        /// Guarda todos los cambios realizados a los modelos sincronicamente
+        /// </summary>
         public static void GuardarDatosRol()
         {
             DatosRolSeleccionado.GuardarDatos();
         }
 
+        /// <summary>
+        /// Guarda un modelo en la base de datos
+        /// </summary>
+        /// <param name="modelo">Modelo a guardar</param>
         public static void GuardarModelo(ModeloBaseSK modelo)
         {
             if (modelo == null)
@@ -86,6 +155,10 @@ namespace AppGM.Core
             DatosRolSeleccionado.GuardarModelo(modelo);
         }
 
+        /// <summary>
+        /// Elimina un modelo de la base de datos
+        /// </summary>
+        /// <param name="modelo">Modelo a eliminar</param>
         public static void EliminarModelo(ModeloBaseSK modelo)
         {
             if (modelo == null)
@@ -94,27 +167,22 @@ namespace AppGM.Core
             DatosRolSeleccionado.EliminarModelo(modelo);
         }
 
-        private static void CrearViewModels()
+        /// <summary>
+        /// Crea los view models necesarios para el rol y los ata al IoC
+        /// </summary>
+        private static void CrearViewModelsRol()
         {
-            Kernel.Bind<ViewModelAplicacion>()     .ToConstant(new ViewModelAplicacion());
-            Kernel.Bind<ViewModelPaginaPrincipal>().ToConstant(new ViewModelPaginaPrincipal());
-        }
-
-        private static async Task CrearViewModelsRol(ModeloRol modelo)
-        {
-            Kernel.Bind<ViewModelPaginaPrincipalRol>().ToConstant(new ViewModelPaginaPrincipalRol(modelo));
-
-            await DatosRolSeleccionado.CargarDatos();
-
-            Kernel.Bind<ModeloRol>()                      .ToConstant(modelo);
-            Kernel.Bind<ViewModelMenuSeleccionTipoFicha>().ToConstant(new ViewModelMenuSeleccionTipoFicha());
+	        Kernel.Bind<ViewModelMenuSeleccionTipoFicha>().ToConstant(new ViewModelMenuSeleccionTipoFicha());
             Kernel.Bind<ViewModelListaFichasVistaFichas>().ToConstant(new ViewModelListaFichasVistaFichas());
             Kernel.Bind<ViewModelMapaPrincipal>()         .ToConstant(new ViewModelMapaPrincipal(DatosRolSeleccionado.Mapas[0]));
             Kernel.Bind<ViewModelMenuSeleccionCombate>()  .ToConstant(new ViewModelMenuSeleccionCombate(DatosRolSeleccionado.CombatesActivos));
             Kernel.Bind<ViewModelCombate>()               .ToConstant(new ViewModelCombate());
         }
 
-        private static void EliminarViewModelsRol()
+        /// <summary>
+        /// Desata los view models especificos del rol del IoC para que puedan ser recolectados por el GC
+        /// </summary>
+        private static void DesatarViewModelsRol()
         {
             Kernel.Unbind<ViewModelMenuSeleccionTipoFicha>();
             Kernel.Unbind<ViewModelListaFichasVistaFichas>();
@@ -125,8 +193,14 @@ namespace AppGM.Core
             Kernel.Unbind<ModeloRol>();
         }
 
+        /// <summary>
+        /// Funcion que se encarga de lidiar con el evento de cambio de pagina actual
+        /// </summary>
+        /// <param name="paginaAnterior">Pagina anterior</param>
+        /// <param name="paginaActual">Pagina actual</param>
         private static void PaginaActualCambioHandler(EPagina paginaAnterior, EPagina paginaActual)
         {
+            //Si volvimos a la pagina principal descargamos los datos del rol
             if (paginaActual == EPagina.PaginaPrincipal)
                 DescargarRol();
         }

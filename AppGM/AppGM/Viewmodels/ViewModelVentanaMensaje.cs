@@ -42,7 +42,7 @@ namespace AppGM.Viewmodels
             {
                 DebeEsperarCierre = true;
 
-                await mVentana.Dispatcher.BeginInvoke(new Action(() =>
+                await mVentana.Dispatcher.BeginInvoke( new Action(() =>
                 {
                     mVentana.ShowDialog();
                 }));

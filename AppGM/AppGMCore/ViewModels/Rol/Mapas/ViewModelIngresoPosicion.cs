@@ -41,7 +41,7 @@ namespace AppGM.Core
                     return;
                 }
 
-                if (value.EstaVacio())
+                if (value.IsNullOrWhiteSpace())
                     Posicion.X = 0;
 
                 DispararPropertyChangedPosImgPosCantUnidades();
@@ -72,7 +72,7 @@ namespace AppGM.Core
                     return;
                 }
 
-                if (value.EstaVacio())
+                if (value.IsNullOrWhiteSpace())
                     Posicion.Y = 0;
 
                 DispararPropertyChangedPosImgPosCantUnidades();
@@ -117,7 +117,7 @@ namespace AppGM.Core
 
             unidad.Eliminar();
 
-            SistemaPrincipal.GuardarDatosRolAsync();
+            SistemaPrincipal.GuardarDatosRolAsincronicamente();
         }
 
         #endregion

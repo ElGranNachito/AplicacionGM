@@ -2,7 +2,7 @@
 {
     public abstract class ControladorBase {}
     public class Controlador<TipoModelo> : ControladorBase
-        where TipoModelo: new()
+        where TipoModelo: ModeloBaseSK, new()
     {
         #region Miembros
 

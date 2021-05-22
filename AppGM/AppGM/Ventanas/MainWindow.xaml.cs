@@ -22,7 +22,7 @@ namespace AppGM
             SistemaPrincipal.Aplicacion.VentanaPrincipal = ventanaPrincipal;
             SistemaPrincipal.Aplicacion.VentanaPopups    = ventanaPopups;
 
-            //Establecemos los viewm models de las ventanas
+            //Establecemos los view models de las ventanas
             vm.DataContext = ventanaPopups;
             DataContext    = ventanaPrincipal;
 

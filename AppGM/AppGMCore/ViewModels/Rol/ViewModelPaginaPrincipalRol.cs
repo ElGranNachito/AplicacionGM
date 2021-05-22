@@ -43,9 +43,9 @@ namespace AppGM.Core
         #endregion
 
         #region Constructores
-        public ViewModelPaginaPrincipalRol(ModeloRol modelo)
+        public ViewModelPaginaPrincipalRol()
         {
-            ControladorRol = new ControladorRol(modelo);
+            ControladorRol = new ControladorRol(SistemaPrincipal.ModeloRolActual);
 
             ComandoBotonFichas   = new Comando(() => SistemaPrincipal.RolSeleccionado.EMenu = EMenuRol.SeleccionTipoFichas);
             ComandoBotonMapas    = new Comando(() => SistemaPrincipal.RolSeleccionado.EMenu = EMenuRol.Mapas);
