@@ -59,12 +59,13 @@ namespace AppGM
             {
                 new ModeloServant
                 {
-                    Nombre = "Stephen Hawking",
-                    EClaseServant = EClaseServant.Caster,
-                    Agi = 0,
-                    Str = 0,
-                    Int = 20,
-                    Lck = 12
+                    Nombre = "King Pellinore",
+                    EClaseServant = EClaseServant.Saber,
+                    Str = 15,
+                    End = 13,
+                    Agi = 15,
+                    Int = 14,
+                    Lck = 10
                 }
             };
 
@@ -72,26 +73,27 @@ namespace AppGM
             {
                 new ModeloMaster
                 {
-                    Nombre = "Lepibe",
-                    EClaseDeSuServant = EClaseServant.Berserker,
-                    Str = 10,
-                    Agi = 11,
-                    End = 10,
-                    Int = 13,
-                    Lck = 16,
-                    Chr = 15,
+                    Nombre = "Charles",
+                    EClaseDeSuServant = EClaseServant.Saber,
+                    Origen = "Traicion",
+                    Afinidad = "Escudo",
+                    Str = 14,
+                    Agi = 13,
+                    End = 14,
+                    Int = 15,
+                    Lck = 14,
+                    Chr = 8,
 
                     Caracteristicas = new TIPersonajeJugableCaracteristicas
                     {
                         Caracteristicas = new ModeloCaracteristicas
                         {
-                            Contextura = "Fuera de forma",
-                            EAlineamiento = EAlineamiento.NeutralGood,
-                            Edad = 19,
+                            Fisico = "1.90, Mamadisimo",
+                            EArquetipo = EArquetipo.Mago,
+                            Edad = 32,
                             EManoDominante = EManoDominante.Derecha,
                             ESexo = ESexo.Masculino,
-                            Estatura = 170,
-                            Nacionalidad = "Estadounidense"
+                            Nacionalidad = "Britanico"
                         }
                     }
                 }

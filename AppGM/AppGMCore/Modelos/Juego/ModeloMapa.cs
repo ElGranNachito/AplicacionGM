@@ -4,6 +4,9 @@ namespace AppGM.Core
 {
     public class ModeloMapa : ModeloBase
     {
+        //Relacion rol
+        public TIRolMapa RolMapa { get; set; }
+
         public ControladorMapa controladorMapa;
 
         public string NombreMapa { get; set; }

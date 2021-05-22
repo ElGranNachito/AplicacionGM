@@ -29,7 +29,7 @@ namespace AppGM.Core
         public DateTime FechaUltimaSesion { get; set; }
 
         public List<TIRolPersonaje> Personajes { get; set; } = new List<TIRolPersonaje>();
-        public List<TIRolCombate> Combates { get; set; } = new List<TIRolCombate>();
-        public List<TIRolMapa> Mapas { get; set; } = new List<TIRolMapa>();
+        public List<TIRolCombate>   Combates   { get; set; } = new List<TIRolCombate>();
+        public List<TIRolMapa>      Mapas      { get; set; } = new List<TIRolMapa>();
     }
 }

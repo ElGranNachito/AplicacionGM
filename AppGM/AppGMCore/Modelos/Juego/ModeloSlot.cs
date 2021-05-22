@@ -7,8 +7,10 @@ namespace AppGM.Core
     {
         public ControladorSlot controladorSlot;
 
-        //Espacio en la slot
-        public decimal Espacio { get; set; }
+        //Espacio total en la slot
+        public decimal EspacioTotal      { get; set; }
+        //Espacio disponible en la slot
+        public decimal EspacioDisponible { get; set; }
 
         //Items almacenados en la slot
         public List<TISlotItem> ItemsAlmacenados { get; set; } = new List<TISlotItem>();

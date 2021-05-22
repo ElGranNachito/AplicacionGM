@@ -44,18 +44,24 @@ namespace AppGM.Core
     }
 
     [Flags]
-    public enum EAlineamiento
+    public enum EArquetipo
     {
         NINGUNO = 0, 
-        LawfulGood = 1,
-        LawfulNeutral = 2,
-        LawfulEvil = 4,
-        NeutralGood = 8,
-        Neutral = 16,
-        NeutralEvil = 32,
-        ChaoticGood = 64,
-        ChaoticNeutral = 128,
-        ChaoticEvil = 256
+        Inocente = 1,
+        Amigo = 2,
+        Heroe = 4,
+        Cuidador = 8,
+        Explorador = 16,
+        Rebelde = 32,
+        Amante = 64,
+        Creador = 128,
+        Bufon = 256,
+        Sabio = 512,
+        Mago = 1024,
+        Gobernante = 2048,
+        Sombra = 4096,
+        Persona = 8192,
+        UnoMismo = 16384,
     }
 
     [Flags]
@@ -100,6 +106,18 @@ namespace AppGM.Core
     }
 
     [Flags]
+    public enum EBienestar
+    {
+        NINGUNO = 0,
+        MuyBueno = 1,
+        Bueno = 2,
+        Neutro = 3,
+        Malo = 4,
+        MuyMalo = 5,
+        Deplorable = 6
+    }
+
+    [Flags]
     public enum EUsoDeHabilidad
     {
         NINGUNA = 0, 
@@ -117,17 +135,6 @@ namespace AppGM.Core
         Skill = 2, 
         Magia = 4, 
         NoblePhantasm = 8
-    }
-
-    [Flags]
-    public enum EEstado
-    {
-        NINGUNO = 0,
-        MuyBueno = 1,
-        Bueno = 2,
-        Utilizable = 4,
-        Malo = 8,
-        Irreparable = 16,
     }
 
     [Flags]

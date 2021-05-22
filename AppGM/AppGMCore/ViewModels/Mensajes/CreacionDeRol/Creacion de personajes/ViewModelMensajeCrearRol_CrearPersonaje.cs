@@ -26,6 +26,10 @@ namespace AppGM.Core
         private ushort mLCK { get; set; } = 10;
         private ushort mCHR { get; set; } = 10;
 
+        private ushort mEdad     { get; set; }
+        private ushort mEstatura { get; set; }
+        private ushort mPeso     { get; set; }
+
         private bool mCheckUsarRangos = false;
 
         private Action mAccionAñadirHabilidad = delegate{};
@@ -47,7 +51,7 @@ namespace AppGM.Core
 
         public ETipoPersonaje TipoPersonajeSeleccionado => VMSeleccionTipoPersonaje.OpcionSeleccionada;
         public EClaseServant  ClaseServantSeleccionada  => VMSeleccionClaseServant.OpcionSeleccionada;
-        public EAlineamiento  AlineamientoSeleccionado  => VMSeleccionAlineamito.OpcionSeleccionada;
+        public EArquetipo     ArquetipoSeleccionado     => VMSeleccionArquetipo.OpcionSeleccionada;
         public ESexo          SexoSeleccionado          => VMSeleccionSexo.OpcionSeleccionada;
 
         public bool EsMasterOServant => (TipoPersonajeSeleccionado & (ETipoPersonaje.Master | ETipoPersonaje.Servant)) != 0;
@@ -67,7 +71,7 @@ namespace AppGM.Core
 
         public ViewModelComboBoxConDescripcion<ETipoPersonaje> VMSeleccionTipoPersonaje { get; set; } = new ViewModelComboBoxConDescripcion<ETipoPersonaje>();
         public ViewModelComboBoxConDescripcion<EClaseServant>  VMSeleccionClaseServant  { get; set; } = new ViewModelComboBoxConDescripcion<EClaseServant>();
-        public ViewModelComboBoxConDescripcion<EAlineamiento>  VMSeleccionAlineamito    { get; set; } = new ViewModelComboBoxConDescripcion<EAlineamiento>();
+        public ViewModelComboBoxConDescripcion<EArquetipo>     VMSeleccionArquetipo     { get; set; } = new ViewModelComboBoxConDescripcion<EArquetipo>();
         public ViewModelComboBoxConDescripcion<ESexo>          VMSeleccionSexo          { get; set; } = new ViewModelComboBoxConDescripcion<ESexo>();
         public ViewModelComboBoxConDescripcion<EManoDominante> VMSeleccionManoDominante { get; set; } = new ViewModelComboBoxConDescripcion<EManoDominante>();
 
@@ -202,11 +206,11 @@ namespace AppGM.Core
                     return false;
                 if (NP == ERango.NINGUNO)
                     return false;
-                if (AlineamientoSeleccionado == EAlineamiento.NINGUNO)
+                if (ArquetipoSeleccionado == EArquetipo.NINGUNO)
                     return false;
             }
 
-            if (EsMasterOServant && (ClaseServantSeleccionada == EClaseServant.NINGUNO || AlineamientoSeleccionado == EAlineamiento.NINGUNO))
+            if (EsMasterOServant && (ClaseServantSeleccionada == EClaseServant.NINGUNO || ArquetipoSeleccionado == EArquetipo.NINGUNO))
                 return false;
 
             return true;
@@ -221,7 +225,7 @@ namespace AppGM.Core
             mModeloPersonaje.Str   = mSTR;
             mModeloPersonaje.End   = mEND;
             mModeloPersonaje.Agi   = mAGI;
-            mModeloPersonaje.Int = mINT;
+            mModeloPersonaje.Int   = mINT;
             mModeloPersonaje.Lck   = mLCK;
 
             if (EsServant)
@@ -310,6 +314,25 @@ namespace AppGM.Core
                 DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PuntosHabilidadRestantes)));
             }
         }
+
+        public ushort Edad
+        {
+            get => mEdad;
+            set => mEdad = value;
+        }
+
+        public ushort Estatura
+        {
+            get => mEstatura;
+            set => mEstatura = value;
+        }
+
+        public ushort Peso
+        {
+            get => mPeso;
+            set => mPeso = value;
+        }
+
 
         public ERango NP
         {

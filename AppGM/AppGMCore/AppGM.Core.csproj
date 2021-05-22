@@ -104,6 +104,7 @@
     <Compile Include="Otros\Animaciones\Animacion.cs" />
     <Compile Include="Otros\Animaciones\ControladorDeAnimaciones.cs" />
     <Compile Include="Otros\Clases\Grosor.cs" />
+    <Compile Include="Modelos\Juego\DatosInvocacion.cs" />
     <Compile Include="Otros\Enums\Enums.cs" />
     <Compile Include="Interfaces\Archivos\IArchivo.cs" />
     <Compile Include="Interfaces\Archivos\IControladorDeArchivos.cs" />

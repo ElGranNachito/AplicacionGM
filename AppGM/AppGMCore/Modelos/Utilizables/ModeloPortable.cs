@@ -6,6 +6,8 @@ namespace AppGM.Core
     {
         public ControladorPortable controladorPortable;
 
+        public int Estado { get; set; }
+
         public List<TIPortableSlots> Slots { get; set; }
 
         //Primer indice son las ventajas, Segundo indice son las desventajas
@@ -15,8 +17,6 @@ namespace AppGM.Core
     public class ModeloDefensivo : ModeloPortable
     {
         public ControladorDefensivo controladorDefensivo;
-
-        public EEstado Estado { get; set; }
     }
 
     public class ModeloDefensivoAbsoluto : ModeloDefensivo

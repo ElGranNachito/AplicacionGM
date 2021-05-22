@@ -8,17 +8,21 @@ namespace AppGM.Core
         public ushort Edad { get; set; }
         //Estatura del personaje
         public ushort Estatura { get; set; }
+        //Peso del personaje
+        public ushort Peso { get; set; }
 
-        //Mas datos de suma importancia
-        public EAlineamiento EAlineamiento { get; set; }
+        //Datos relevantes
+        public ESexo          ESexo          { get; set; }
+        public EArquetipo     EArquetipo     { get; set; }
         public EManoDominante EManoDominante { get; set; }
-        public ESexo ESexo { get; set; }
+
+        //Breve descripcion de su contextura fisica
+        [StringLength(100)]
+        public string Fisico { get; set; }
 
         //Nacionalidad del personaje
         [StringLength(50)]
         public string Nacionalidad { get; set; }
-        //Contextura fisica
-        [StringLength(100)]
-        public string Contextura { get; set; }
+        
     }
 }

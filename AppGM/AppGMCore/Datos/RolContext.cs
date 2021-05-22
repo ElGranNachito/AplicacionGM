@@ -64,6 +64,14 @@ namespace AppGM.Core
                 .HasValue<ModeloMaster>(6)
                 .HasValue<ModeloServant>(7);
 
+            // - Personaje unidad mapa
+            modelBuilder.Entity<TIPersonajeUnidadMapa>()
+                .HasKey(ti => new { ti.IdPersonaje, ti.IdUnidadMapa });
+
+            modelBuilder.Entity<TIPersonajeUnidadMapa>()
+                .HasOne(ti => ti.Unidad)
+                .WithOne(u => u.Personaje);
+
             // - Personaje efectos
             modelBuilder.Entity<TIPersonajeEfecto>().HasKey(e => new { e.IdPersonaje, e.IdEfecto });
 
@@ -96,6 +104,18 @@ namespace AppGM.Core
                 .HasOne(i => i.Personaje)
                 .WithMany(p => p.Armadura)
                 .HasForeignKey(ip => ip.IdPersonaje);
+
+            // - Personaje arma a distancia
+            modelBuilder.Entity<TIPersonajeArmaDistancia>()
+                .HasKey(e => new {e.IdArmaDistancia, e.IdPersonaje});
+
+            modelBuilder.Entity<TIPersonajeArmaDistancia>()
+                .HasOne(i => i.Personaje)
+                .WithMany(p => p.ArmasDistancia)
+                .HasForeignKey(i => i.IdPersonaje);
+
+            modelBuilder.Entity<TIPersonajeArmaDistancia>()
+                .HasOne(i => i.ArmaDistancia);
 
             // - Personaje aliados
             modelBuilder.Entity<TIPersonajePersonaje>().HasKey(e => new { e.IdPersonaje, e.IdAliado });
@@ -198,6 +218,17 @@ namespace AppGM.Core
                 .WithOne(p => p.Invocador)
                 .HasForeignKey<TIInvocacionPersonaje>(i => i.IdInvocacion);
 
+            // - Invocacion datos_invocacion
+            modelBuilder.Entity<TIInvocacionDatosInvocacion>().HasKey(e => new { e.IdInvocacion, e.IdDatos });
+
+            modelBuilder.Entity<TIInvocacionDatosInvocacion>()
+                .HasOne(i => i.DatosInvocacion);
+
+            modelBuilder.Entity<TIInvocacionDatosInvocacion>()
+                .HasOne(i => i.Invocacion)
+                .WithOne(p => p.DatosInvocacion)
+                .HasForeignKey<TIInvocacionPersonaje>(i => i.IdInvocacion);
+
             // - Invocacion efecto
             modelBuilder.Entity<TIInvocacionEfecto>().HasKey(e => new { e.IdInvocacion, e.IdEfecto });
 
@@ -244,10 +275,7 @@ namespace AppGM.Core
                 .HasForeignKey(ip => ip.IdAdministradorDeCombate);
 
             // Efectos:
-            modelBuilder.Entity<ModeloEfecto>().ToTable("ModeloEfecto")
-                .HasDiscriminator<int>("Tipo")
-                .HasValue<ModeloEfecto>(1)
-                .HasValue<ModeloEfectoTemporal>(2);
+            modelBuilder.Entity<ModeloEfecto>().ToTable("ModeloEfecto").HasNoDiscriminator();
 
             modelBuilder.Entity<TIEfectoModificadorDeStatBase>().HasKey(e => new { e.IdEfecto, e.IdModificadorDeStat });
 
@@ -521,7 +549,7 @@ namespace AppGM.Core
             modelBuilder.Entity<TIAdministradorDeCombateMapa>()
                 .HasOne(i => i.Mapa);
 
-
+            //Mapa:
             modelBuilder.Entity<ModeloUnidadMapa>()
                 .HasDiscriminator<int>("Tipo")
                 .HasValue<ModeloUnidadMapa>(1)
@@ -542,24 +570,7 @@ namespace AppGM.Core
                 .HasOne(ti => ti.Unidad)
                 .WithOne(u => u.Posicion);
 
-            modelBuilder.Entity<TIPersonajeUnidadMapa>()
-                .HasKey(ti => new { ti.IdPersonaje, ti.IdUnidadMapa });
-
-            modelBuilder.Entity<TIPersonajeUnidadMapa>()
-                .HasOne(ti => ti.Unidad)
-                .WithOne(u => u.Personaje);
-
-            modelBuilder.Entity<TIPersonajeArmaDistancia>()
-                .HasKey(e => new {e.IdArmaDistancia, e.IdPersonaje});
-
-            modelBuilder.Entity<TIPersonajeArmaDistancia>()
-                .HasOne(i => i.Personaje)
-                .WithMany(p => p.ArmasDistancia)
-                .HasForeignKey(i => i.IdPersonaje);
-
-            modelBuilder.Entity<TIPersonajeArmaDistancia>()
-                .HasOne(i => i.ArmaDistancia);
-
+            //Rol:
             modelBuilder.Entity<TIRolPersonaje>()
                 .HasOne<ModeloRol>()
                 .WithMany(m => m.Personajes);

@@ -7,6 +7,8 @@ namespace AppGM.Core
     {
         #region Propiedades
 
+        public ushort TurnosRestantes { get; set; }
+
         public bool EstaSiendoAplicado { get; set; }
 
         #endregion
@@ -37,7 +39,15 @@ namespace AppGM.Core
         public delegate void dAplicarEfecto(ControladorPersonaje instigador, ControladorPersonaje[] objetivos,
             ControladorEfecto efectoAplicado);
 
-        public event dAplicarEfecto OnAplicarEfecto = delegate { };
+        public delegate void dReducirTurno(ControladorPersonaje instigador,
+            ControladorPersonaje[] objetivos, ControladorEfecto efectoAplicado);
+
+        public delegate void dQuitarEfecto(ControladorPersonaje instigador, ControladorPersonaje[] objetivos,
+            ControladorEfecto efectoAplicado);
+
+        public event dAplicarEfecto OnAplicarEfecto  = delegate { };
+        public event dReducirTurno  OnReducirEfecto  = delegate { };
+        public event dQuitarEfecto  OnQuitarEfecto   = delegate { };
 
         #endregion
 
@@ -52,53 +62,7 @@ namespace AppGM.Core
 
         public virtual void AplicarEfecto(ControladorPersonaje personaje)
         {
-            //TODO: Separamos el string con los valores correspondientes para cada stat y sumamos
-        }
-
-        #endregion
-    }
-
-    public class ControladorEfectoTemporal : ControladorEfecto
-    {
-        #region Constructor
-
-        public ControladorEfectoTemporal(ModeloEfectoTemporal _modeloEfectoTemporal)
-        {
-            modelo = _modeloEfectoTemporal;
-        }
-
-        #endregion
-
-        #region Propiedades
-
-        public ushort TurnosRestantes { get; set; }
-
-        #endregion
-
-        #region Eventos
-
-        public delegate void dQuitarEfecto(ControladorPersonaje instigador, ControladorPersonaje[] objetivos,
-            ControladorEfecto efectoAplicado);
-
-        public event dQuitarEfecto OnQuitarEfecto = delegate { };
-
-        public delegate void dReducirTurno(ControladorPersonaje instigador,
-            ControladorPersonaje[] objetivos, ControladorEfecto efectoAplicado);
-
-        public event dReducirTurno OnReducirEfecto = delegate { };
-
-        #endregion
-
-        #region Funciones
-
-        public override void AplicarEfecto(ControladorPersonaje personaje)
-        {
-            base.AplicarEfecto(personaje);
-        }
-
-        public void AlPasarTurno()
-        {
-            //TODO: Disminuir turnos restantes
+            //TODO: Separamos el string con los valores correspondientes para cada stat y sumamos, disminuimos un turno si la duracion es superior a 0
         }
 
         #endregion

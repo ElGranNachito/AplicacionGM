@@ -4,9 +4,14 @@ namespace AppGM.Core
 {
     public class ModeloServant : ModeloPersonajeJugable
     {
-        public string NombreReal { get; set; }
-
         public ERango mERangoNP { get; set; }
+
+        // Energia magica del servant
+        public int Prana       { get; set; }
+        public int PranaActual { get; set; }
+
+        // Origenes de la leyenda del personaje
+        public string Fuente { get; set; }
 
         public List<TIServantNoblePhantasm> NoblePhantasms { get; set; } = new List<TIServantNoblePhantasm>();
     }
