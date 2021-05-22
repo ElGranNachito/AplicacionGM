@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30309.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppGM", "AppGM\AppGM.csproj", "{6C51BA22-40EB-4FEF-9BBA-30532B7C889F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppGM", "AppGM\AppGM.csproj", "{6C51BA22-40EB-4FEF-9BBA-30532B7C889F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppGM.Core", "AppGMCore\AppGM.Core.csproj", "{DC35C1D2-76B4-4FA9-A13E-E08AD9B9A433}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppGM.Core", "AppGMCore\AppGM.Core.csproj", "{DC35C1D2-76B4-4FA9-A13E-E08AD9B9A433}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
