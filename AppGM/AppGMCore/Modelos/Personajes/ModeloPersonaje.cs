@@ -13,7 +13,8 @@ namespace AppGM.Core
         //Nombre del personaje
         [StringLength(50)]
         public string Nombre { get; set; }
-        public ETipoPersonaje TipoPersonaje { get; set; }
+
+        public ETipoPersonaje TipoPersonaje{ get; set; }
 
         //Stats del personaje
         public int    MaxHp { get; set; }
@@ -23,6 +24,9 @@ namespace AppGM.Core
         public ushort Agi   { get; set; }
         public ushort Int   { get; set; }
         public ushort Lck   { get; set; }
+
+        public decimal PesoMaximoCargable   { get; set; }
+        public decimal PesoCargado { get; set; }
 
         //Imagencita del personaje
         public string PathImagen { get; set; }

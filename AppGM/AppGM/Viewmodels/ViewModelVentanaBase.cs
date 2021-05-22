@@ -48,7 +48,7 @@ namespace AppGM
         }
 
         /// <summary>
-        /// Constructor vacion por si alguna clase hijo necesita hacer algo distinto en los primeros pasos
+        /// Constructor vacio por si alguna clase hijo necesita hacer algo distinto en los primeros pasos
         /// </summary>
         protected ViewModelVentanaBase() { } 
 
@@ -166,14 +166,14 @@ namespace AppGM
             }
         }
 
-        public event EventoVentana OnTamañoModificado = delegate { };
-        public event EventoVentana OnEstadoModificado = delegate { };
-        public event EventoVentana OnTituloModificado = delegate { };
-        public event EventoVentana OnMouseMovido      = delegate { };
-        public event EventoVentana OnVentanaAbierta   = delegate { };
-        public event EventoVentana OnVentanaCerrada   = delegate { };
-        public event EventoVentana OnMouseDown        = delegate { };
-        public event EventoVentana OnMouseUp          = delegate { };
+        public event EventoVentana OnTamañoModificado     = delegate { };
+        public event EventoVentana OnEstadoModificado     = delegate { };
+        public event EventoVentana OnTituloModificado     = delegate { };
+        public event EventoVentana OnMouseMovido          = delegate { };
+        public event EventoVentana OnVentanaAbierta       = delegate { };
+        public event EventoVentana OnVentanaCerrada       = delegate { };
+        public event EventoVentana OnMouseDown            = delegate { };
+        public event EventoVentana OnMouseUp              = delegate { };
         public event EventoVentana OnFotogramaActualizado = delegate { };
 
         #endregion

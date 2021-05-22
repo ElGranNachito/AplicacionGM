@@ -102,6 +102,62 @@
                     IsChecked="{Binding CheckUsarRangos}"
                     Content="Usar rangos"/>
 
+                    <!-- Arquetipo -->
+                    <local:UserControlComboBoxConDescripcion
+                        Margin="0 10 0 0"
+                        Descripcion="Arquetipo: "
+                        Visibility="{Binding EsMasterOServant, Converter={local:BooleanToVisibilityConverterColapsar}}"
+                        ItemsSource="{Binding Source={x:Static core:EnumHelpers.ArquetiposDisponibles}}"
+                        DataContext="{Binding VMSeleccionArquetipo}"/>
+
+                    <!-- Sexo -->
+                    <local:UserControlComboBoxConDescripcion
+                        Margin="0 5 0 0"
+                        Descripcion="Sexo:"
+                        ItemsSource="{Binding Source={x:Static core:EnumHelpers.SexosDisponibles}}"
+                        DataContext="{Binding VMSeleccionSexo}"/>
+
+                    <!-- Mano dominante -->
+                    <local:UserControlComboBoxConDescripcion
+                        Margin="0 5 0 0"
+                        Descripcion="Mano Dominante:"
+                        ItemsSource="{Binding Source={x:Static core:EnumHelpers.TiposDeManoDominanteDisponibles}}"
+
+                        DataContext="{Binding VMSeleccionManoDominante}"/>
+
+                    <!--Edad-->
+                    <TextBox
+                        Margin="0 10 0 5"
+                        Tag="Edad"
+                        MaxLength="2"
+                        Text="{Binding Edad}"
+                        Style="{StaticResource TextoDescriptivo}"/>
+
+                    <!--Estatura-->
+                    <TextBox
+                        Margin="0 0 0 5"
+                        Tag="Estatura"
+                        MaxLength="2"
+                        Text="{Binding Estatura}"
+                        Style="{StaticResource TextoDescriptivo}"/>
+
+                    <!--Peso-->
+                    <TextBox
+                        Margin="0 0 0 5"
+                        Tag="Peso"
+                        MaxLength="2"
+                        Text="{Binding Peso}"
+                        Style="{StaticResource TextoDescriptivo}"/>
+
+                    <!--Fisico-->
+                    <TextBox
+                        Margin="0 5 0 5"
+                        Tag="Fisico"
+                        MaxLength="200"
+                        TextWrapping="Wrap"
+                        AcceptsReturn="True"
+                        Style="{StaticResource TextoDescriptivo}"/>
+
                     <Grid>
 
                         <!-- Stats master -->
@@ -111,52 +167,70 @@
                         local:AñadirMargenAElementosProperty.Value="{x:Type TextBox}"
                         Visibility="{Binding UsarRangos, Converter={local:BooleanToVisibilityConverterColapsar}, ConverterParameter=True}">
 
+                            <!--Origen-->
                             <TextBox
-                            Style="{StaticResource TextoDescriptivo}"
-                            Tag="HP"
-                            MaxLength="2"
-                            Text="{Binding HP}"/>
+                                Margin="0 5 0 0"
+                                Tag="Origen"
+                                MaxLength="200"
+                                TextWrapping="Wrap"
+                                AcceptsReturn="True"
+                                Style="{StaticResource TextoDescriptivo}"/>
+
+                            <!--Afinidad-->
+                            <TextBox
+                                Margin="0 5 0 0"
+                                Tag="Afinidad"
+                                MaxLength="200"
+                                TextWrapping="Wrap"
+                                AcceptsReturn="True"
+                                Style="{StaticResource TextoDescriptivo}"/>
 
                             <TextBox
-                            Style="{StaticResource TextoDescriptivo}"
-                            Tag="STR"
-                            MaxLength="2"
-                            Text="{Binding STR}"/>
+                                Style="{StaticResource TextoDescriptivo}"
+                                Tag="HP"
+                                MaxLength="2"
+                                Text="{Binding HP}"/>
 
                             <TextBox
-                            Style="{StaticResource TextoDescriptivo}"
-                            Tag="END"
-                            MaxLength="2"
-                            Text="{Binding END}"/>
+                                Style="{StaticResource TextoDescriptivo}"
+                                Tag="STR"
+                                MaxLength="2"
+                                Text="{Binding STR}"/>
 
                             <TextBox
-                            Style="{StaticResource TextoDescriptivo}"
-                            Tag="AGI"
-                            MaxLength="2"
-                            Text="{Binding AGI}"/>
+                                Style="{StaticResource TextoDescriptivo}"
+                                Tag="END"
+                                MaxLength="2"
+                                Text="{Binding END}"/>
 
                             <TextBox
-                            Style="{StaticResource TextoDescriptivo}"
-                            Tag="INT"
-                            MaxLength="2"
-                            Text="{Binding INT}"/>
+                                Style="{StaticResource TextoDescriptivo}"
+                                Tag="AGI"
+                                MaxLength="2"
+                                Text="{Binding AGI}"/>
 
                             <TextBox
-                            Style="{StaticResource TextoDescriptivo}"
-                            Tag="LCK"
-                            MaxLength="2"
-                            Text="{Binding LCK}"/>
+                                Style="{StaticResource TextoDescriptivo}"
+                                Tag="INT"
+                                MaxLength="2"
+                                Text="{Binding INT}"/>
 
                             <TextBox
-                            Style="{StaticResource TextoDescriptivo}"
-                            Tag="CHR"
-                            MaxLength="2"
-                            Text="{Binding CHR}"/>
+                                Style="{StaticResource TextoDescriptivo}"
+                                Tag="LCK"
+                                MaxLength="2"
+                                Text="{Binding LCK}"/>
+
+                            <TextBox
+                                Style="{StaticResource TextoDescriptivo}"
+                                Tag="CHR"
+                                MaxLength="2"
+                                Text="{Binding CHR}"/>
 
                             <!-- Puntos de habilidad restantes -->
                             <TextBlock
-                            Visibility="{Binding EsMaster, Converter={local:BooleanToVisibilityConverterColapsar}}"
-                            Text="{Binding TextoPuntosDeHabilidadRestantes}"/>
+                                Visibility="{Binding EsMaster, Converter={local:BooleanToVisibilityConverterColapsar}}"
+                                Text="{Binding TextoPuntosDeHabilidadRestantes}"/>
 
                         </StackPanel>
 
@@ -216,36 +290,6 @@
                         BorderBrush="Black"
                         Style="{StaticResource BotonFondoResaltable}"
                         Command="{Binding ComandoActualizarStats}"/>
-
-                    <!-- Alineamiento -->
-                    <local:UserControlComboBoxConDescripcion
-                        Margin="0 10 0 0"
-                        Descripcion="Alineamiento: "
-                        Visibility="{Binding EsMasterOServant, Converter={local:BooleanToVisibilityConverterColapsar}}"
-                        ItemsSource="{Binding Source={x:Static core:EnumHelpers.AlineamientosDisponibles}}"
-                        DataContext="{Binding VMSeleccionAlineamito}"/>
-
-                    <!-- Sexo -->
-                    <local:UserControlComboBoxConDescripcion
-                        Margin="0 5 0 0"
-                        Descripcion="Sexo:"
-                        ItemsSource="{Binding Source={x:Static core:EnumHelpers.SexosDisponibles}}"
-                        DataContext="{Binding VMSeleccionSexo}"/>
-
-                    <!-- Mano dominante -->
-                    <local:UserControlComboBoxConDescripcion
-                        Margin="0 5 0 0"
-                        Descripcion="Mano Dominante:"
-                        ItemsSource="{Binding Source={x:Static core:EnumHelpers.TiposDeManoDominanteDisponibles}}"
-                        DataContext="{Binding VMSeleccionManoDominante}"/>
-
-                    <TextBox
-                        Margin="0 5 0 0"
-                        Tag="Fisico"
-                        MaxLength="200"
-                        TextWrapping="Wrap"
-                        AcceptsReturn="True"
-                        Style="{StaticResource TextoDescriptivo}"/>
 
                 </StackPanel>
 

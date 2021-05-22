@@ -198,6 +198,17 @@ namespace AppGM.Core
                 .WithOne(p => p.Invocador)
                 .HasForeignKey<TIInvocacionPersonaje>(i => i.IdInvocacion);
 
+            // - Invocacion datos_invocacion
+            modelBuilder.Entity<TIInvocacionDatosInvocacion>().HasKey(e => new { e.IdInvocacion, e.IdDatos });
+
+            modelBuilder.Entity<TIInvocacionDatosInvocacion>()
+                .HasOne(i => i.DatosInvocacion);
+
+            modelBuilder.Entity<TIInvocacionDatosInvocacion>()
+                .HasOne(i => i.Invocacion)
+                .WithOne(p => p.DatosInvocacion)
+                .HasForeignKey<TIInvocacionPersonaje>(i => i.IdInvocacion);
+
             // - Invocacion efecto
             modelBuilder.Entity<TIInvocacionEfecto>().HasKey(e => new { e.IdInvocacion, e.IdEfecto });
 
@@ -244,10 +255,7 @@ namespace AppGM.Core
                 .HasForeignKey(ip => ip.IdAdministradorDeCombate);
 
             // Efectos:
-            modelBuilder.Entity<ModeloEfecto>().ToTable("ModeloEfecto")
-                .HasDiscriminator<int>("Tipo")
-                .HasValue<ModeloEfecto>(1)
-                .HasValue<ModeloEfectoTemporal>(2);
+            modelBuilder.Entity<ModeloEfecto>().ToTable("ModeloEfecto").HasNoDiscriminator();
 
             modelBuilder.Entity<TIEfectoModificadorDeStatBase>().HasKey(e => new { e.IdEfecto, e.IdModificadorDeStat });
 

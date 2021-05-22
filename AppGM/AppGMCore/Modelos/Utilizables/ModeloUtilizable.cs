@@ -3,10 +3,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AppGM.Core
 {
-    //TODO: Decidir si es una clase abstracta o no
     public class ModeloUtilizable : ModeloBase
     {
         public ControladorUtilizable controladorUtilizable;
+
+        //Peso del utilizable
+        public decimal Peso { get; set; }
 
         //Stats
         public EStat EStatQueAfecta { get; set; }

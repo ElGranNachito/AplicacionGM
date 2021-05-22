@@ -38,8 +38,6 @@ namespace AppGM.Core
     {
         //Tener en cuenta los valores de ETipoDeDaño
         public int TiposDeDaño { get; set; }
-        //Tener en cuenta los valores de EAlineamiento
-        public int AlineamientosDelInstigador { get; set; }
 
         public byte ModificacionPorcentual { get; set; }
         public byte ModificacionFija { get; set; }

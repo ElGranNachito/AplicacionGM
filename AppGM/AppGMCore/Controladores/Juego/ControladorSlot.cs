@@ -21,6 +21,14 @@ namespace AppGM.Core
 
         #region Funciones
 
+        public bool PuedeAlmacenarItem(ControladorUtilizable item)
+        {
+            //TODO:
+            //Devuelve un booleano indicando si cierto item puede ser almacenado por este slot
+
+            return false;
+        }
+
         public bool AlmacenarItem(ControladorUtilizable item)
         {
             //TODO: Chequear si queda espacio para almacenar dicho item y almacenarlo.

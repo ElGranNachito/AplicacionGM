@@ -10,20 +10,16 @@ namespace AppGM.Core
     {
         public ControladorEfecto controladorEfecto;
 
+        //Turnos que dura el efecto
+        public ushort TurnosDeDuracion { get; set; }
+
         //Nombre del efecto
         [StringLength(50)]
         public string Nombre { get; set; }
         //Descripcion del efecto
         [StringLength(500)]
         public string Descripcion { get; set; }
+
         public List<TIEfectoModificadorDeStatBase> Modificaciones { get; set; } = new List<TIEfectoModificadorDeStatBase>();
-    }
-
-    public class ModeloEfectoTemporal : ModeloEfecto
-    {
-        public ControladorEfectoTemporal controladorEfectoTemporal;
-
-        //Turnos que dura el efecto
-        public ushort TurnosDeDuracion { get; set; }
     }
 }

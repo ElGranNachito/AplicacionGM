@@ -34,7 +34,7 @@ namespace AppGM.Core
     public interface IVentanaMensaje : IVentana
     {
         /// <summary>
-        /// Muestra la el mensaje en pantalla por sobre la ventana principal
+        /// Muestra el mensaje en pantalla por sobre la ventana principal
         /// </summary>
         /// <param name="vm">View model del contenido el mensaje</param>
         /// <param name="esperarCierre">Si el valor es <see cref="true"/>la ventana principal queda bloqueada hasta que el mensaje se cierre</param>

@@ -3,10 +3,7 @@
     public class ControladorLimitador : Controlador<ModeloLimitador>
     {
         #region Miembros
-
-        private int mUsosRestantes;
-        private int mDiasRestantes;
-
+        
         #endregion
 
         #region Constructor
@@ -22,8 +19,6 @@
     public class ControladorCargasHabilidad : Controlador<ModeloCargasHabilidad>
     {
         #region Miembros
-
-        private int CargasActuales;
 
         #endregion
 

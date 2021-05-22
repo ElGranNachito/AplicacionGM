@@ -110,6 +110,13 @@ namespace AppGM.Core
         public ModeloPersonaje PersonajeInvocador { get; set; }
     }
 
+    public class TIInvocacionDatosInvocacion : TIInvocacion
+    {
+        [ForeignKey(nameof(DatosInvocacion))]
+        public int IdDatos { get; set; }
+        public ModeloDatosInvocacionBase DatosInvocacion { get; set; }
+    }
+
     public class TIInvocacionEfecto : TIInvocacion
     {
         [ForeignKey(nameof(Efecto))]
