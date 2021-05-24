@@ -14,14 +14,8 @@
 
         #region Constructores
 
-        public ControladorUtilizable()
-        {
-        }
-
         public ControladorUtilizable(ModeloUtilizable _modeloUtilizable)
-        {
-            modelo = _modeloUtilizable;
-        }
+            :base(_modeloUtilizable){}
 
         #endregion
 

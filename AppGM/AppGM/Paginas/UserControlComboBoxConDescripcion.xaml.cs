@@ -11,12 +11,18 @@ namespace AppGM
     {
         public UserControlComboBoxConDescripcion() => InitializeComponent();
 
+        /// <summary>
+        /// Contiene la descipcion
+        /// </summary>
         public static readonly DependencyProperty DescripcionProperty =
             DependencyProperty.Register("Descripcion",
                 typeof(string),
                 typeof(UserControlComboBoxConDescripcion),
                 new PropertyMetadata(OnDescripcionChanged));
 
+        /// <summary>
+        /// 
+        /// </summary>
         public static readonly DependencyProperty ItemsSourceProperty =
             DependencyProperty.Register("ItemsSource",
                 typeof(IEnumerable),

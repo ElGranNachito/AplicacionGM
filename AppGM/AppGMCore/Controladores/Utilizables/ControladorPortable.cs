@@ -20,14 +20,8 @@ namespace AppGM.Core
 
         #region Constructor
 
-        public ControladorPortable()
-        {
-        }
-        
         public ControladorPortable(ModeloPortable _modeloPortable)
-        {
-            modelo = _modeloPortable;
-        }
+			:base(_modeloPortable) {}
 
         #endregion
 
@@ -50,14 +44,8 @@ namespace AppGM.Core
     {
         #region Constructor
 
-        public ControladorDefensivo()
-        {
-        }
-
         public ControladorDefensivo(ModeloDefensivo _modeloDefensivo)
-        {
-            modelo = _modeloDefensivo;
-        }
+			:base(_modeloDefensivo) {}
 
         #endregion
 
@@ -77,9 +65,7 @@ namespace AppGM.Core
         #region Constructor
 
         public ControladorDefensivoAbsoluto(ModeloDefensivoAbsoluto _modeloDefensivoAbsoluto)
-        {
-            modelo = _modeloDefensivoAbsoluto;
-        }
+			:base(_modeloDefensivoAbsoluto) {}
 
         #endregion
 

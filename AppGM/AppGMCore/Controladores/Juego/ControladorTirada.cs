@@ -48,7 +48,7 @@ namespace AppGM.Core
     public abstract class ControladorTirada<TipoTirada> : Controlador<TipoTirada>, IControladorTiradaBase
         where TipoTirada : ModeloTiradaBase, new()
     {
-        #region Implementacion Interfaz
+	    #region Implementacion Interfaz
 
         public int Resultado { get; set; }
 

@@ -13,9 +13,7 @@ namespace AppGM.Core
         #region Constructor
 
         public ControladorSlot(ModeloSlot _modeloSlot)
-        {
-            modelo = _modeloSlot;
-        }
+            :base(_modeloSlot){}
 
         #endregion
 

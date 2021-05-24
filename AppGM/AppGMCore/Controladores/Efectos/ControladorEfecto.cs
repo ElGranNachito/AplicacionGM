@@ -5,32 +5,18 @@ namespace AppGM.Core
 {
     public class ControladorEfecto : Controlador<ModeloEfecto>
     {
-        #region Propiedades
+        #region Propiedades & Campos
 
-        public ushort TurnosRestantes { get; set; }
-
-        public bool EstaSiendoAplicado { get; set; }
-
-        #endregion
-
-        #region Controladores
+        private ControladorCondicion mCondicion;
 
         public List<IControladorModificadorDeStatBase> ControladoresModificaciones { get; set; }
 
         #endregion
 
-        public Func<ControladorPersonaje, bool> PuedeSerAplicado;
-
         #region Constructor
 
-        public ControladorEfecto()
-        {
-        }
-
         public ControladorEfecto(ModeloEfecto _modeloEfecto)
-        {
-            modelo = _modeloEfecto;
-        }
+			:base(_modeloEfecto) {}
 
         #endregion
 

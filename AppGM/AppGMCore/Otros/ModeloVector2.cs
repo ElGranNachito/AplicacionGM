@@ -21,9 +21,7 @@ namespace AppGM.Core
             };
         }
         public Vector2(ModeloVector2 _modelo)
-        {
-            modelo = _modelo;
-        }
+            :base(_modelo){}
 
         #endregion
 

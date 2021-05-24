@@ -6,14 +6,8 @@ namespace AppGM.Core
     {
         #region Constructor
 
-        public ControladorConsumible()
-        {
-        }
-
         public ControladorConsumible(ModeloConsumible _modeloConsumible)
-        {
-            modelo = _modeloConsumible;
-        }
+			:base(_modeloConsumible) {}
 
         #endregion
 
@@ -41,9 +35,7 @@ namespace AppGM.Core
         #region Constructor
 
         public ControladorArmaDistancia(ModeloArmasDistancia _modeloArmasDistancia)
-        {
-            modelo = _modeloArmasDistancia;
-        }
+			:base(_modeloArmasDistancia) {}
 
         #endregion
 

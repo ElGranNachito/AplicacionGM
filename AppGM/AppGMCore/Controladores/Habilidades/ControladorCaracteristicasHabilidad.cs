@@ -9,9 +9,7 @@
         #region Constructor
 
         public ControladorLimitador(ModeloLimitador _modeloLimitador)
-        {
-            modelo = _modeloLimitador;
-        }
+			:base(_modeloLimitador) {}
 
         #endregion
     }
@@ -25,9 +23,7 @@
         #region Constructor
 
         public ControladorCargasHabilidad(ModeloCargasHabilidad _modeloCargasHabilidad)
-        {
-            modelo = _modeloCargasHabilidad;
-        }
+			:base(_modeloCargasHabilidad) { }
 
         #endregion
     }

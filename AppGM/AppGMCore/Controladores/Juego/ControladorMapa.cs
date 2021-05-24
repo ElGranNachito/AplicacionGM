@@ -11,16 +11,11 @@ namespace AppGM.Core
         #endregion
 
         #region Constructores
-        //Constructor temporal, despues se eliminara
-        public ControladorMapa()
-        {
 
-        }
         public ControladorMapa(ModeloMapa _modeloMapa)
+			:base(_modeloMapa)
         {
-            modelo = _modeloMapa;
-
-            for (int i = 0; i < modelo.PosicionesUnidades.Count; ++i)
+	        for (int i = 0; i < modelo.PosicionesUnidades.Count; ++i)
                 controladoresUnidadesMapa.Add(new ControladorUnidadMapa(_modeloMapa.PosicionesUnidades[i].Unidad));
         }
 

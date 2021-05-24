@@ -10,7 +10,7 @@ namespace AppGM.Core
 
         private int indiceMapaActual = 0;
 
-        public ControladorAdministradorDeCombate administradorDeCombate = new ControladorAdministradorDeCombate();
+        public ControladorAdministradorDeCombate administradorDeCombate;
 
         public ControladorAdministradorDeCombate.dTurnoCambio HandlerTurnoCambio = delegate{};
 
@@ -68,7 +68,8 @@ namespace AppGM.Core
         public void ActualizarCombateActual(ControladorAdministradorDeCombate _administradorDeCombate)
         {
             //Desubscribimos los delegado del controlador anterior
-            administradorDeCombate.OnTurnoCambio    -= HandlerTurnoCambio;
+            if(administradorDeCombate != null)
+				administradorDeCombate.OnTurnoCambio    -= HandlerTurnoCambio;
 
             administradorDeCombate = _administradorDeCombate;
 

@@ -11,10 +11,9 @@
         #region Constructores
 
         public ControladorParticipante(ModeloParticipante _modeloParticipante)
+			:base(_modeloParticipante)
         {
-            modelo = _modeloParticipante;
-
-            ControladorPersonaje = modelo.Personaje.Personaje.controlador;
+	        ControladorPersonaje = modelo.Personaje.Personaje.controlador;
         }
 
         #endregion

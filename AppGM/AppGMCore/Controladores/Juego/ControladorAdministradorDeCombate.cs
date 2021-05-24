@@ -24,20 +24,14 @@ namespace AppGM.Core
 
         #region Constructores
         public ControladorAdministradorDeCombate(ModeloAdministradorDeCombate _modeloAdministradorCombate)
+			:base(_modeloAdministradorCombate)
         {
-            modelo = _modeloAdministradorCombate;
-
-            for (int i = 0; i < modelo.Participantes.Count; ++i) 
+	        for (int i = 0; i < modelo.Participantes.Count; ++i) 
                 ControladoresParticipantes.Add(modelo.Participantes[i].Participante.controladorParticipante);
 
             for (int i = 0; i < modelo.Mapas.Count; ++i)
                 ControladoresMapas.Add(modelo.Mapas[i].Mapa.controladorMapa);
         }
-
-        /// <summary>
-        /// Constructor default, solo para pruebas
-        /// </summary>
-        public ControladorAdministradorDeCombate(){}
 
         #endregion
 

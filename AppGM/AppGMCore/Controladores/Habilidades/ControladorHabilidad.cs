@@ -74,14 +74,8 @@ namespace AppGM.Core
 
         #region Constructor
 
-        public ControladorHabilidad()
-        {
-        }
-
         public ControladorHabilidad(ModeloHabilidad _modeloHabilidad)
-        {
-            modelo = _modeloHabilidad;
-        }
+            :base(_modeloHabilidad){}
 
         #endregion
 
@@ -114,9 +108,7 @@ namespace AppGM.Core
         #region Constructor
 
         public ControladorMagia(ModeloMagia _modeloMagia)
-        {
-            modelo = _modeloMagia;
-        }
+            :base(_modeloMagia){}
 
         #endregion
 

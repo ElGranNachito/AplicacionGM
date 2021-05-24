@@ -20,6 +20,9 @@ namespace AppGM.Core
 
     public class ControladorModificadorDeStat : Controlador<ModeloModificadorDeStatBase>, IControladorModificadorDeStatBase
     {
+	    public ControladorModificadorDeStat(ModeloModificadorDeStatBase _modelo)
+		    : base(_modelo) { }
+
         #region Implementacion Interfaz
 
         #region Controladores
@@ -56,9 +59,7 @@ namespace AppGM.Core
         #region Constructor
 
         public ControladorModificadorDeStatClase(ModeloModificadorDeStatClase _modeloModificadorDeStatClase)
-        {
-            modelo = _modeloModificadorDeStatClase;
-        }
+            :base(_modeloModificadorDeStatClase){}
 
         #endregion
 

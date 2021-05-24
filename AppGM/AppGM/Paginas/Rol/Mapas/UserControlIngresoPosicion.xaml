@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:local="clr-namespace:AppGM"
              mc:Ignorable="d" 
              d:DesignHeight="100" d:DesignWidth="200">
@@ -15,18 +16,40 @@
                 <Grid>
 
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Text="{Binding Nombre}" 
-                               FontSize="{StaticResource TamañoFontPequeño}"
-                               Grid.ColumnSpan="2"
-                               TextAlignment="Center"
-                               HorizontalAlignment="Center"
-                               Foreground="White"/>
+                    <CheckBox
+                        Grid.Column="0"
+                        IsChecked="True"/>
 
-                    <Button  Grid.Column="1"
+                    <Button x:Name="boton"
+                        Grid.Column="1"
+                        FontFamily="{StaticResource 'Font Awesome Regular'}"
+                        Content="{StaticResource Fa-FlechaDerecha-Chevron}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <local:TriggerActionFlipFlop
+                                    Nombre="Content"
+                                    Destino="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}}"
+                                    Valor="{StaticResource Fa-FlechaAbajo-Chevron}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+
+                    <TextBlock
+                        Grid.Column="2"
+                        Text="{Binding Nombre, FallbackValue=Mr.Sin Nombre}" 
+                        FontSize="{StaticResource TamañoFontPequeño}"
+                        Grid.ColumnSpan="2"
+                        TextAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Foreground="White"/>
+
+                    <Button  Grid.Column="3"
                              Content="{StaticResource Fa-Cruz}"
                              FontFamily="{StaticResource 'Font Awesome Regular'}"
                              Command="{Binding ComandoEliminarUnidad}"
@@ -38,9 +61,10 @@
 
                 </Grid>
 
-                <StackPanel Orientation="Horizontal" 
-                        HorizontalAlignment="Center"
-                            Margin="0 5">
+                <StackPanel 
+                    Orientation="Horizontal" 
+                    HorizontalAlignment="Center"
+                    Margin="0 5">
 
                     <TextBlock Text="X: " Foreground="White"/>
                     <TextBox 

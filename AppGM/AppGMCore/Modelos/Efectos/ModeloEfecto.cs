@@ -10,6 +10,10 @@ namespace AppGM.Core
     {
         public ControladorEfecto controladorEfecto;
 
+        public ushort TurnosRestantes { get; set; }
+
+        public bool EstaSiendoAplicado { get; set; }
+
         //Turnos que dura el efecto
         public ushort TurnosDeDuracion { get; set; }
 

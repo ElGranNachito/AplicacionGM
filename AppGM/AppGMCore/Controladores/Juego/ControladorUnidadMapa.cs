@@ -16,10 +16,9 @@ namespace AppGM.Core
         #region Constructores
 
         public ControladorUnidadMapa(ModeloUnidadMapa _modelo)
+			:base(_modelo)
         {
-            modelo = _modelo;
-
-            posicion  = new Vector2(modelo.Posicion.Posicion);
+	        posicion  = new Vector2(modelo.Posicion.Posicion);
         }
 
         #endregion

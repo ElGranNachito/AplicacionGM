@@ -14,10 +14,9 @@
 
         #region Constructores
         public ControladorRol(ModeloRol _modelo)
+			:base(_modelo)
         {
-            modelo = _modelo;
-
-            datosRol = new DatosRol(_modelo);
+	        datosRol = new DatosRol(_modelo);
         } 
 
         #endregion
