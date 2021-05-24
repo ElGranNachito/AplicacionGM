@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AppGM.Core.Migrations
 {
-    public partial class Inicial : Migration
+    public partial class inicial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,9 +11,9 @@ namespace AppGM.Core.Migrations
                 name: "Acciones",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Descripcion = table.Column<string>(maxLength: 2000, nullable: true)
+                    Descripcion = table.Column<string>(type: "TEXT", maxLength: 2000, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -24,11 +24,11 @@ namespace AppGM.Core.Migrations
                 name: "Combates",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    IndicePersonajeTurnoActual = table.Column<int>(nullable: false),
-                    TurnoActual = table.Column<uint>(nullable: false),
-                    Nombre = table.Column<string>(nullable: true)
+                    IndicePersonajeTurnoActual = table.Column<int>(type: "INTEGER", nullable: false),
+                    TurnoActual = table.Column<uint>(type: "INTEGER", nullable: false),
+                    Nombre = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -39,10 +39,10 @@ namespace AppGM.Core.Migrations
                 name: "Mapas",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    NombreMapa = table.Column<string>(nullable: true),
-                    EFormatoImagen = table.Column<int>(nullable: false)
+                    NombreMapa = table.Column<string>(type: "TEXT", nullable: true),
+                    EFormatoImagen = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -53,11 +53,11 @@ namespace AppGM.Core.Migrations
                 name: "ModeloAlianza",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Nombre = table.Column<string>(maxLength: 50, nullable: true),
-                    Descripcion = table.Column<string>(maxLength: 500, nullable: true),
-                    EsVigente = table.Column<bool>(nullable: false)
+                    Nombre = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
+                    Descripcion = table.Column<string>(type: "TEXT", maxLength: 500, nullable: true),
+                    EsVigente = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -68,16 +68,16 @@ namespace AppGM.Core.Migrations
                 name: "ModeloCaracteristicas",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Edad = table.Column<ushort>(nullable: false),
-                    Estatura = table.Column<ushort>(nullable: false),
-                    Peso = table.Column<ushort>(nullable: false),
-                    ESexo = table.Column<int>(nullable: false),
-                    EArquetipo = table.Column<int>(nullable: false),
-                    EManoDominante = table.Column<int>(nullable: false),
-                    Fisico = table.Column<string>(maxLength: 100, nullable: true),
-                    Nacionalidad = table.Column<string>(maxLength: 50, nullable: true)
+                    Edad = table.Column<ushort>(type: "INTEGER", nullable: false),
+                    Estatura = table.Column<ushort>(type: "INTEGER", nullable: false),
+                    Peso = table.Column<ushort>(type: "INTEGER", nullable: false),
+                    ESexo = table.Column<int>(type: "INTEGER", nullable: false),
+                    EArquetipo = table.Column<int>(type: "INTEGER", nullable: false),
+                    EManoDominante = table.Column<int>(type: "INTEGER", nullable: false),
+                    Fisico = table.Column<string>(type: "TEXT", maxLength: 100, nullable: true),
+                    Nacionalidad = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -88,10 +88,10 @@ namespace AppGM.Core.Migrations
                 name: "ModeloCargasHabilidad",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    CargasMaximas = table.Column<int>(nullable: false),
-                    CargasActuales = table.Column<int>(nullable: false)
+                    CargasMaximas = table.Column<int>(type: "INTEGER", nullable: false),
+                    CargasActuales = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -102,11 +102,11 @@ namespace AppGM.Core.Migrations
                 name: "ModeloContrato",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Nombre = table.Column<string>(maxLength: 50, nullable: true),
-                    Descripcion = table.Column<string>(maxLength: 500, nullable: true),
-                    EsVigente = table.Column<bool>(nullable: false)
+                    Nombre = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
+                    Descripcion = table.Column<string>(type: "TEXT", maxLength: 500, nullable: true),
+                    EsVigente = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -117,7 +117,7 @@ namespace AppGM.Core.Migrations
                 name: "ModeloDatosInvocacionBase",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true)
                 },
                 constraints: table =>
@@ -129,11 +129,13 @@ namespace AppGM.Core.Migrations
                 name: "ModeloEfecto",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    TurnosDeDuracion = table.Column<ushort>(nullable: false),
-                    Nombre = table.Column<string>(maxLength: 50, nullable: true),
-                    Descripcion = table.Column<string>(maxLength: 500, nullable: true)
+                    TurnosRestantes = table.Column<ushort>(type: "INTEGER", nullable: false),
+                    EstaSiendoAplicado = table.Column<bool>(type: "INTEGER", nullable: false),
+                    TurnosDeDuracion = table.Column<ushort>(type: "INTEGER", nullable: false),
+                    Nombre = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
+                    Descripcion = table.Column<string>(type: "TEXT", maxLength: 500, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -144,17 +146,18 @@ namespace AppGM.Core.Migrations
                 name: "ModeloHabilidad",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    CostoDeMana = table.Column<ushort>(nullable: false),
-                    TurnosDeDuracion = table.Column<ushort>(nullable: false),
-                    Nombre = table.Column<string>(maxLength: 50, nullable: true),
-                    Descripcion = table.Column<string>(maxLength: 2000, nullable: true),
-                    TipoDeHabilidad = table.Column<int>(nullable: false),
-                    Rango = table.Column<int>(nullable: false),
-                    Tipo = table.Column<int>(nullable: false),
-                    EsParticular = table.Column<bool>(nullable: true),
-                    Nivel = table.Column<byte>(nullable: true)
+                    CostoDeOdOPrana = table.Column<ushort>(type: "INTEGER", nullable: false),
+                    CostoDeMana = table.Column<ushort>(type: "INTEGER", nullable: false),
+                    TurnosDeDuracion = table.Column<ushort>(type: "INTEGER", nullable: false),
+                    Nombre = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
+                    Descripcion = table.Column<string>(type: "TEXT", maxLength: 2000, nullable: true),
+                    TipoDeHabilidad = table.Column<int>(type: "INTEGER", nullable: false),
+                    Rango = table.Column<int>(type: "INTEGER", nullable: false),
+                    Tipo = table.Column<int>(type: "INTEGER", nullable: false),
+                    Nivel = table.Column<byte>(type: "INTEGER", nullable: true),
+                    EsParticular = table.Column<bool>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -165,12 +168,12 @@ namespace AppGM.Core.Migrations
                 name: "ModeloLimitador",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    LimiteDeUsos = table.Column<int>(nullable: false),
-                    UsosRestantes = table.Column<int>(nullable: false),
-                    DiasDeEnfriamiento = table.Column<int>(nullable: false),
-                    DiasRestantes = table.Column<int>(nullable: false)
+                    LimiteDeUsos = table.Column<int>(type: "INTEGER", nullable: false),
+                    UsosRestantes = table.Column<int>(type: "INTEGER", nullable: false),
+                    DiasDeEnfriamiento = table.Column<int>(type: "INTEGER", nullable: false),
+                    DiasRestantes = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -181,17 +184,17 @@ namespace AppGM.Core.Migrations
                 name: "ModeloModificadorDeStatBase",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    ValorRequeridoTirada = table.Column<int>(nullable: false),
-                    Tipo = table.Column<int>(nullable: false),
-                    TiposDeDaño = table.Column<int>(nullable: true),
-                    ModificacionPorcentual = table.Column<byte>(nullable: true),
-                    ModificacionFija = table.Column<byte>(nullable: true),
-                    NombreClase = table.Column<string>(maxLength: 50, nullable: true),
-                    IdObjeto = table.Column<int>(nullable: true),
-                    StatsQueAfecta = table.Column<int>(nullable: true),
-                    Valor = table.Column<byte>(nullable: true)
+                    ValorRequeridoTirada = table.Column<int>(type: "INTEGER", nullable: false),
+                    Tipo = table.Column<int>(type: "INTEGER", nullable: false),
+                    TiposDeDaño = table.Column<int>(type: "INTEGER", nullable: true),
+                    ModificacionPorcentual = table.Column<byte>(type: "INTEGER", nullable: true),
+                    ModificacionFija = table.Column<byte>(type: "INTEGER", nullable: true),
+                    NombreClase = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
+                    IdObjeto = table.Column<int>(type: "INTEGER", nullable: true),
+                    StatsQueAfecta = table.Column<int>(type: "INTEGER", nullable: true),
+                    Valor = table.Column<byte>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -202,10 +205,10 @@ namespace AppGM.Core.Migrations
                 name: "ModeloSlot",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    EspacioTotal = table.Column<decimal>(nullable: false),
-                    EspacioDisponible = table.Column<decimal>(nullable: false)
+                    EspacioTotal = table.Column<decimal>(type: "TEXT", nullable: false),
+                    EspacioDisponible = table.Column<decimal>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -216,12 +219,12 @@ namespace AppGM.Core.Migrations
                 name: "ModeloTiradaBase",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Discriminator = table.Column<string>(nullable: false),
-                    Dados = table.Column<ushort>(nullable: true),
-                    Caras = table.Column<ushort>(nullable: true),
-                    TipoDeDaño = table.Column<int>(nullable: true)
+                    Discriminator = table.Column<string>(type: "TEXT", nullable: false),
+                    Dados = table.Column<ushort>(type: "INTEGER", nullable: true),
+                    Caras = table.Column<ushort>(type: "INTEGER", nullable: true),
+                    TipoDeDaño = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -232,19 +235,20 @@ namespace AppGM.Core.Migrations
                 name: "ModeloUtilizable",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Peso = table.Column<decimal>(nullable: false),
-                    EStatQueAfecta = table.Column<int>(nullable: false),
-                    EStatDeLaQueDepende = table.Column<int>(nullable: false),
-                    Tipo = table.Column<int>(nullable: false),
-                    StatsQueOcupa = table.Column<decimal>(nullable: true),
-                    Usos = table.Column<ushort>(nullable: true),
-                    UsosRestantes = table.Column<ushort>(nullable: true),
-                    TipoDeDañoQueInflige = table.Column<int>(nullable: true),
-                    Estado = table.Column<int>(nullable: true),
-                    ModeloDefensivoAbsoluto_Usos = table.Column<short>(nullable: true),
-                    DañosQuePuedeInfligir = table.Column<int>(nullable: true)
+                    Peso = table.Column<decimal>(type: "TEXT", nullable: false),
+                    EStatQueAfecta = table.Column<int>(type: "INTEGER", nullable: false),
+                    EStatDeLaQueDepende = table.Column<int>(type: "INTEGER", nullable: false),
+                    Tipo = table.Column<int>(type: "INTEGER", nullable: false),
+                    SlotsQueOcupa = table.Column<decimal>(type: "TEXT", nullable: true),
+                    Usos = table.Column<ushort>(type: "INTEGER", nullable: true),
+                    UsosRestantes = table.Column<ushort>(type: "INTEGER", nullable: true),
+                    TipoDeDañoQueInflige = table.Column<int>(type: "INTEGER", nullable: true),
+                    Estado = table.Column<int>(type: "INTEGER", nullable: true),
+                    ModeloDefensivoAbsoluto_Usos = table.Column<short>(type: "INTEGER", nullable: true),
+                    ModeloDefensivoAbsoluto_UsosRestantes = table.Column<short>(type: "INTEGER", nullable: true),
+                    DañosQuePuedeInfligir = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -255,10 +259,10 @@ namespace AppGM.Core.Migrations
                 name: "Participantes",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    TiradaIniciativa = table.Column<int>(nullable: false),
-                    EsSuTurno = table.Column<bool>(nullable: false)
+                    TiradaIniciativa = table.Column<int>(type: "INTEGER", nullable: false),
+                    EsSuTurno = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -269,13 +273,13 @@ namespace AppGM.Core.Migrations
                 name: "Rols",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Dia = table.Column<ushort>(nullable: false),
-                    Nombre = table.Column<string>(maxLength: 50, nullable: true),
-                    Descripcion = table.Column<string>(maxLength: 2000, nullable: true),
-                    Registros = table.Column<string>(nullable: true),
-                    FechaUltimaSesion = table.Column<DateTime>(nullable: false)
+                    Dia = table.Column<ushort>(type: "INTEGER", nullable: false),
+                    Nombre = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
+                    Descripcion = table.Column<string>(type: "TEXT", maxLength: 2000, nullable: true),
+                    Registros = table.Column<string>(type: "TEXT", nullable: true),
+                    FechaUltimaSesion = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -286,15 +290,15 @@ namespace AppGM.Core.Migrations
                 name: "UnidadesMapa",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Nombre = table.Column<string>(nullable: true),
-                    ETipoUnidad = table.Column<int>(nullable: false),
-                    Tipo = table.Column<int>(nullable: false),
-                    EClaseServant = table.Column<int>(nullable: true),
-                    Inicial = table.Column<string>(maxLength: 1, nullable: true),
-                    Cantidad = table.Column<int>(nullable: true),
-                    EsDeMaster = table.Column<bool>(nullable: true)
+                    Nombre = table.Column<string>(type: "TEXT", nullable: true),
+                    ETipoUnidad = table.Column<int>(type: "INTEGER", nullable: false),
+                    Tipo = table.Column<int>(type: "INTEGER", nullable: false),
+                    EClaseServant = table.Column<int>(type: "INTEGER", nullable: true),
+                    Inicial = table.Column<string>(type: "TEXT", maxLength: 1, nullable: true),
+                    Cantidad = table.Column<int>(type: "INTEGER", nullable: true),
+                    EsDeMaster = table.Column<bool>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -305,10 +309,10 @@ namespace AppGM.Core.Migrations
                 name: "Vectores2",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    X = table.Column<double>(nullable: false),
-                    Y = table.Column<double>(nullable: false)
+                    X = table.Column<double>(type: "REAL", nullable: false),
+                    Y = table.Column<double>(type: "REAL", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -319,8 +323,8 @@ namespace AppGM.Core.Migrations
                 name: "CombateMapas",
                 columns: table => new
                 {
-                    IdAdministradorDeCombate = table.Column<int>(nullable: false),
-                    IdMapa = table.Column<int>(nullable: false)
+                    IdAdministradorDeCombate = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdMapa = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -343,8 +347,8 @@ namespace AppGM.Core.Migrations
                 name: "TIAlianzaContrato",
                 columns: table => new
                 {
-                    IdAlianza = table.Column<int>(nullable: false),
-                    IdContrato = table.Column<int>(nullable: false)
+                    IdAlianza = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdContrato = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -367,8 +371,8 @@ namespace AppGM.Core.Migrations
                 name: "TIHabilidadCargasHabilidad",
                 columns: table => new
                 {
-                    IdHabilidad = table.Column<int>(nullable: false),
-                    IdCargasHabilidad = table.Column<int>(nullable: false)
+                    IdHabilidad = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdCargasHabilidad = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -391,8 +395,8 @@ namespace AppGM.Core.Migrations
                 name: "TIHabilidadEfecto",
                 columns: table => new
                 {
-                    IdHabilidad = table.Column<int>(nullable: false),
-                    IdEfecto = table.Column<int>(nullable: false)
+                    IdHabilidad = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdEfecto = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -415,8 +419,8 @@ namespace AppGM.Core.Migrations
                 name: "TIHabilidadLimitador",
                 columns: table => new
                 {
-                    IdHabilidad = table.Column<int>(nullable: false),
-                    IdLimitador = table.Column<int>(nullable: false)
+                    IdHabilidad = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdLimitador = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -439,8 +443,8 @@ namespace AppGM.Core.Migrations
                 name: "TIEfectoModificadorDeStatBase",
                 columns: table => new
                 {
-                    IdEfecto = table.Column<int>(nullable: false),
-                    IdModificadorDeStat = table.Column<int>(nullable: false)
+                    IdEfecto = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdModificadorDeStat = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -463,8 +467,8 @@ namespace AppGM.Core.Migrations
                 name: "TIHabilidadTiradaBase",
                 columns: table => new
                 {
-                    IdHabilidad = table.Column<int>(nullable: false),
-                    IdTirada = table.Column<int>(nullable: false)
+                    IdHabilidad = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdTirada = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -487,8 +491,8 @@ namespace AppGM.Core.Migrations
                 name: "TIHabilidadTiradaDeDaño",
                 columns: table => new
                 {
-                    IdHabilidad = table.Column<int>(nullable: false),
-                    IdTirada = table.Column<int>(nullable: false)
+                    IdHabilidad = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdTirada = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -511,8 +515,8 @@ namespace AppGM.Core.Migrations
                 name: "TIModificadorDeStatBaseTiradaBase",
                 columns: table => new
                 {
-                    IdModificadorDeStatBase = table.Column<int>(nullable: false),
-                    IdTirada = table.Column<int>(nullable: false)
+                    IdModificadorDeStatBase = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdTirada = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -535,22 +539,22 @@ namespace AppGM.Core.Migrations
                 name: "TIArmasDistanciaEfecto",
                 columns: table => new
                 {
-                    IdArmasDistancia = table.Column<int>(nullable: false),
-                    IdEfecto = table.Column<int>(nullable: false)
+                    IdArmasDistancia = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdEfecto = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TIArmasDistanciaEfecto", x => new { x.IdArmasDistancia, x.IdEfecto });
                     table.ForeignKey(
-                        name: "FK_TIArmasDistanciaEfecto_ModeloUtilizable_IdArmasDistancia",
-                        column: x => x.IdArmasDistancia,
-                        principalTable: "ModeloUtilizable",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_TIArmasDistanciaEfecto_ModeloEfecto_IdEfecto",
                         column: x => x.IdEfecto,
                         principalTable: "ModeloEfecto",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TIArmasDistanciaEfecto_ModeloUtilizable_IdArmasDistancia",
+                        column: x => x.IdArmasDistancia,
+                        principalTable: "ModeloUtilizable",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -559,22 +563,22 @@ namespace AppGM.Core.Migrations
                 name: "TIArmasDistanciaTiradaDeDaño",
                 columns: table => new
                 {
-                    IdArmasDistancia = table.Column<int>(nullable: false),
-                    IdTirada = table.Column<int>(nullable: false)
+                    IdArmasDistancia = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdTirada = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TIArmasDistanciaTiradaDeDaño", x => new { x.IdArmasDistancia, x.IdTirada });
                     table.ForeignKey(
-                        name: "FK_TIArmasDistanciaTiradaDeDaño_ModeloUtilizable_IdArmasDistancia",
-                        column: x => x.IdArmasDistancia,
-                        principalTable: "ModeloUtilizable",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_TIArmasDistanciaTiradaDeDaño_ModeloTiradaBase_IdTirada",
                         column: x => x.IdTirada,
                         principalTable: "ModeloTiradaBase",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TIArmasDistanciaTiradaDeDaño_ModeloUtilizable_IdArmasDistancia",
+                        column: x => x.IdArmasDistancia,
+                        principalTable: "ModeloUtilizable",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -583,22 +587,22 @@ namespace AppGM.Core.Migrations
                 name: "TIArmasDistanciaTiradaVariable",
                 columns: table => new
                 {
-                    IdArmasDistancia = table.Column<int>(nullable: false),
-                    IdTirada = table.Column<int>(nullable: false)
+                    IdArmasDistancia = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdTirada = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TIArmasDistanciaTiradaVariable", x => new { x.IdArmasDistancia, x.IdTirada });
                     table.ForeignKey(
-                        name: "FK_TIArmasDistanciaTiradaVariable_ModeloUtilizable_IdArmasDistancia",
-                        column: x => x.IdArmasDistancia,
-                        principalTable: "ModeloUtilizable",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_TIArmasDistanciaTiradaVariable_ModeloTiradaBase_IdTirada",
                         column: x => x.IdTirada,
                         principalTable: "ModeloTiradaBase",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TIArmasDistanciaTiradaVariable_ModeloUtilizable_IdArmasDistancia",
+                        column: x => x.IdArmasDistancia,
+                        principalTable: "ModeloUtilizable",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -607,8 +611,8 @@ namespace AppGM.Core.Migrations
                 name: "TIHabilidadItem",
                 columns: table => new
                 {
-                    IdHabilidad = table.Column<int>(nullable: false),
-                    IdItem = table.Column<int>(nullable: false)
+                    IdHabilidad = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdItem = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -631,8 +635,8 @@ namespace AppGM.Core.Migrations
                 name: "TIOfensivoEfecto",
                 columns: table => new
                 {
-                    IdOfensivo = table.Column<int>(nullable: false),
-                    IdEfecto = table.Column<int>(nullable: false)
+                    IdOfensivo = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdEfecto = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -655,22 +659,22 @@ namespace AppGM.Core.Migrations
                 name: "TIOfensivoTiradaDeDaño",
                 columns: table => new
                 {
-                    IdOfensivo = table.Column<int>(nullable: false),
-                    IdTiradaDeDaño = table.Column<int>(nullable: false)
+                    IdOfensivo = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdTiradaDeDaño = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TIOfensivoTiradaDeDaño", x => new { x.IdOfensivo, x.IdTiradaDeDaño });
                     table.ForeignKey(
-                        name: "FK_TIOfensivoTiradaDeDaño_ModeloUtilizable_IdOfensivo",
-                        column: x => x.IdOfensivo,
-                        principalTable: "ModeloUtilizable",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_TIOfensivoTiradaDeDaño_ModeloTiradaBase_IdTiradaDeDaño",
                         column: x => x.IdTiradaDeDaño,
                         principalTable: "ModeloTiradaBase",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TIOfensivoTiradaDeDaño_ModeloUtilizable_IdOfensivo",
+                        column: x => x.IdOfensivo,
+                        principalTable: "ModeloUtilizable",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -679,8 +683,8 @@ namespace AppGM.Core.Migrations
                 name: "TIPortableModificadorDeStatBase",
                 columns: table => new
                 {
-                    IdPortable = table.Column<int>(nullable: false),
-                    IdModificadorDeStat = table.Column<int>(nullable: false)
+                    IdPortable = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdModificadorDeStat = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -703,22 +707,22 @@ namespace AppGM.Core.Migrations
                 name: "TIPortableSlots",
                 columns: table => new
                 {
-                    IdPortable = table.Column<int>(nullable: false),
-                    IdSlot = table.Column<int>(nullable: false)
+                    IdPortable = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdSlot = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TIPortableSlots", x => new { x.IdPortable, x.IdSlot });
                     table.ForeignKey(
-                        name: "FK_TIPortableSlots_ModeloUtilizable_IdPortable",
-                        column: x => x.IdPortable,
-                        principalTable: "ModeloUtilizable",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_TIPortableSlots_ModeloSlot_IdSlot",
                         column: x => x.IdSlot,
                         principalTable: "ModeloSlot",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TIPortableSlots_ModeloUtilizable_IdPortable",
+                        column: x => x.IdPortable,
+                        principalTable: "ModeloUtilizable",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -727,22 +731,22 @@ namespace AppGM.Core.Migrations
                 name: "TISlotItem",
                 columns: table => new
                 {
-                    IdSlot = table.Column<int>(nullable: false),
-                    IdItem = table.Column<int>(nullable: false)
+                    IdSlot = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdItem = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TISlotItem", x => new { x.IdSlot, x.IdItem });
                     table.ForeignKey(
-                        name: "FK_TISlotItem_ModeloUtilizable_IdItem",
-                        column: x => x.IdItem,
-                        principalTable: "ModeloUtilizable",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_TISlotItem_ModeloSlot_IdSlot",
                         column: x => x.IdSlot,
                         principalTable: "ModeloSlot",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TISlotItem_ModeloUtilizable_IdItem",
+                        column: x => x.IdItem,
+                        principalTable: "ModeloUtilizable",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -751,8 +755,8 @@ namespace AppGM.Core.Migrations
                 name: "TIUtilizableEfecto",
                 columns: table => new
                 {
-                    IdUtilizable = table.Column<int>(nullable: false),
-                    IdEfecto = table.Column<int>(nullable: false)
+                    IdUtilizable = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdEfecto = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -775,8 +779,8 @@ namespace AppGM.Core.Migrations
                 name: "TIUtilizableModificadorDeStatBase",
                 columns: table => new
                 {
-                    IdUtilizable = table.Column<int>(nullable: false),
-                    IdModificadorStatBase = table.Column<int>(nullable: false)
+                    IdUtilizable = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdModificadorStatBase = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -799,8 +803,8 @@ namespace AppGM.Core.Migrations
                 name: "TIUtilizableTiradaBase",
                 columns: table => new
                 {
-                    IdUtilizable = table.Column<int>(nullable: false),
-                    IdTirada = table.Column<int>(nullable: false)
+                    IdUtilizable = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdTirada = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -823,8 +827,8 @@ namespace AppGM.Core.Migrations
                 name: "CombateParticipantes",
                 columns: table => new
                 {
-                    IdAdministradorDeCombate = table.Column<int>(nullable: false),
-                    IdParticipante = table.Column<int>(nullable: false)
+                    IdAdministradorDeCombate = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdParticipante = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -847,8 +851,8 @@ namespace AppGM.Core.Migrations
                 name: "ParticipanteAccion",
                 columns: table => new
                 {
-                    IdParticipante = table.Column<int>(nullable: false),
-                    IdAccion = table.Column<int>(nullable: false)
+                    IdParticipante = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdAccion = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -871,13 +875,13 @@ namespace AppGM.Core.Migrations
                 name: "CombatesRol",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    IdRol = table.Column<int>(nullable: false),
-                    IdCombate = table.Column<int>(nullable: false),
-                    ModeloAdministradorDeCombateId = table.Column<int>(nullable: true),
-                    ModeloRolId = table.Column<int>(nullable: false),
-                    ModeloRolId1 = table.Column<int>(nullable: true)
+                    IdCombate = table.Column<int>(type: "INTEGER", nullable: false),
+                    ModeloAdministradorDeCombateId = table.Column<int>(type: "INTEGER", nullable: true),
+                    ModeloRolId = table.Column<int>(type: "INTEGER", nullable: false),
+                    ModeloRolId1 = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdRol = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -889,36 +893,36 @@ namespace AppGM.Core.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CombatesRol_Rols_IdRol",
-                        column: x => x.IdRol,
-                        principalTable: "Rols",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_CombatesRol_Combates_ModeloAdministradorDeCombateId",
                         column: x => x.ModeloAdministradorDeCombateId,
                         principalTable: "Combates",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
+                        name: "FK_CombatesRol_Rols_IdRol",
+                        column: x => x.IdRol,
+                        principalTable: "Rols",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_CombatesRol_Rols_ModeloRolId1",
                         column: x => x.ModeloRolId1,
                         principalTable: "Rols",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "MapasRol",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    IdRol = table.Column<int>(nullable: false),
-                    IdMapa = table.Column<int>(nullable: false),
-                    ModeloMapaId = table.Column<int>(nullable: true),
-                    ModeloRolId = table.Column<int>(nullable: false),
-                    ModeloRolId1 = table.Column<int>(nullable: true)
+                    IdMapa = table.Column<int>(type: "INTEGER", nullable: false),
+                    ModeloMapaId = table.Column<int>(type: "INTEGER", nullable: true),
+                    ModeloRolId = table.Column<int>(type: "INTEGER", nullable: false),
+                    ModeloRolId1 = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdRol = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -930,31 +934,31 @@ namespace AppGM.Core.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_MapasRol_Rols_IdRol",
-                        column: x => x.IdRol,
-                        principalTable: "Rols",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_MapasRol_Mapas_ModeloMapaId",
                         column: x => x.ModeloMapaId,
                         principalTable: "Mapas",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
+                        name: "FK_MapasRol_Rols_IdRol",
+                        column: x => x.IdRol,
+                        principalTable: "Rols",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_MapasRol_Rols_ModeloRolId1",
                         column: x => x.ModeloRolId1,
                         principalTable: "Rols",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "MapasUnidadesMapa",
                 columns: table => new
                 {
-                    IdMapa = table.Column<int>(nullable: false),
-                    IdUnidadMapa = table.Column<int>(nullable: false)
+                    IdMapa = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdUnidadMapa = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -977,43 +981,49 @@ namespace AppGM.Core.Migrations
                 name: "ModeloPersonaje",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Nombre = table.Column<string>(maxLength: 50, nullable: true),
-                    TipoPersonaje = table.Column<int>(nullable: false),
-                    MaxHp = table.Column<int>(nullable: false),
-                    Hp = table.Column<int>(nullable: false),
-                    Str = table.Column<ushort>(nullable: false),
-                    End = table.Column<ushort>(nullable: false),
-                    Agi = table.Column<ushort>(nullable: false),
-                    Int = table.Column<ushort>(nullable: false),
-                    Lck = table.Column<ushort>(nullable: false),
-                    PesoMaximoCargable = table.Column<decimal>(nullable: false),
-                    PesoCargado = table.Column<decimal>(nullable: false),
-                    PathImagen = table.Column<string>(nullable: true),
-                    EstaEnCombate = table.Column<bool>(nullable: false),
-                    FormatoImagen = table.Column<int>(nullable: false),
-                    PosicionId = table.Column<int>(nullable: true),
-                    Clase = table.Column<int>(nullable: false),
-                    EsAutomata = table.Column<bool>(nullable: true),
-                    TurnosDeDuracion = table.Column<byte>(nullable: true),
-                    EClaseServant = table.Column<int>(nullable: true),
-                    RangoHechiceria = table.Column<ushort>(nullable: true),
-                    EClaseDeSuServant = table.Column<int>(nullable: true),
-                    EBienestar = table.Column<int>(nullable: true),
-                    Od = table.Column<int>(nullable: true),
-                    OdActual = table.Column<int>(nullable: true),
-                    Mana = table.Column<int>(nullable: true),
-                    ManaActual = table.Column<int>(nullable: true),
-                    Chr = table.Column<ushort>(nullable: true),
-                    CommandSpells = table.Column<ushort>(nullable: true),
-                    Lore = table.Column<string>(nullable: true),
-                    Origen = table.Column<string>(nullable: true),
-                    Afinidad = table.Column<string>(nullable: true),
-                    mERangoNP = table.Column<int>(nullable: true),
-                    Prana = table.Column<int>(nullable: true),
-                    PranaActual = table.Column<int>(nullable: true),
-                    Fuente = table.Column<string>(nullable: true)
+                    Nombre = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
+                    TipoPersonaje = table.Column<int>(type: "INTEGER", nullable: false),
+                    MaxHp = table.Column<int>(type: "INTEGER", nullable: false),
+                    Hp = table.Column<int>(type: "INTEGER", nullable: false),
+                    Str = table.Column<ushort>(type: "INTEGER", nullable: false),
+                    End = table.Column<ushort>(type: "INTEGER", nullable: false),
+                    Agi = table.Column<ushort>(type: "INTEGER", nullable: false),
+                    Int = table.Column<ushort>(type: "INTEGER", nullable: false),
+                    Lck = table.Column<ushort>(type: "INTEGER", nullable: false),
+                    VentajaStr = table.Column<ushort>(type: "INTEGER", nullable: false),
+                    VentajaEnd = table.Column<ushort>(type: "INTEGER", nullable: false),
+                    VentajaAgi = table.Column<ushort>(type: "INTEGER", nullable: false),
+                    VentajaInt = table.Column<ushort>(type: "INTEGER", nullable: false),
+                    VentajaLck = table.Column<ushort>(type: "INTEGER", nullable: false),
+                    PesoMaximoCargable = table.Column<decimal>(type: "TEXT", nullable: false),
+                    PesoCargado = table.Column<decimal>(type: "TEXT", nullable: false),
+                    PathImagen = table.Column<string>(type: "TEXT", nullable: true),
+                    EstaEnCombate = table.Column<bool>(type: "INTEGER", nullable: false),
+                    FormatoImagen = table.Column<int>(type: "INTEGER", nullable: false),
+                    PosicionId = table.Column<int>(type: "INTEGER", nullable: true),
+                    Clase = table.Column<int>(type: "INTEGER", nullable: false),
+                    EsAutomata = table.Column<bool>(type: "INTEGER", nullable: true),
+                    TurnosDeDuracion = table.Column<byte>(type: "INTEGER", nullable: true),
+                    EClaseServant = table.Column<int>(type: "INTEGER", nullable: true),
+                    RangoHechiceria = table.Column<ushort>(type: "INTEGER", nullable: true),
+                    EClaseDeSuServant = table.Column<int>(type: "INTEGER", nullable: true),
+                    EBienestar = table.Column<int>(type: "INTEGER", nullable: true),
+                    Od = table.Column<int>(type: "INTEGER", nullable: true),
+                    OdActual = table.Column<int>(type: "INTEGER", nullable: true),
+                    Mana = table.Column<int>(type: "INTEGER", nullable: true),
+                    ManaActual = table.Column<int>(type: "INTEGER", nullable: true),
+                    Chr = table.Column<ushort>(type: "INTEGER", nullable: true),
+                    VentajaChr = table.Column<ushort>(type: "INTEGER", nullable: true),
+                    CommandSpells = table.Column<ushort>(type: "INTEGER", nullable: true),
+                    Lore = table.Column<string>(type: "TEXT", nullable: true),
+                    Origen = table.Column<string>(type: "TEXT", nullable: true),
+                    Afinidad = table.Column<string>(type: "TEXT", nullable: true),
+                    mERangoNP = table.Column<int>(type: "INTEGER", nullable: true),
+                    Prana = table.Column<int>(type: "INTEGER", nullable: true),
+                    PranaActual = table.Column<int>(type: "INTEGER", nullable: true),
+                    Fuente = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -1030,8 +1040,8 @@ namespace AppGM.Core.Migrations
                 name: "UnidadesMapaVectores2",
                 columns: table => new
                 {
-                    IdUnidadMapa = table.Column<int>(nullable: false),
-                    IdVector = table.Column<int>(nullable: false)
+                    IdUnidadMapa = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdVector = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -1054,22 +1064,22 @@ namespace AppGM.Core.Migrations
                 name: "ParticipantePersonaje",
                 columns: table => new
                 {
-                    IdParticipante = table.Column<int>(nullable: false),
-                    IdPersonaje = table.Column<int>(nullable: false)
+                    IdParticipante = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdPersonaje = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ParticipantePersonaje", x => new { x.IdParticipante, x.IdPersonaje });
                     table.ForeignKey(
-                        name: "FK_ParticipantePersonaje_Participantes_IdParticipante",
-                        column: x => x.IdParticipante,
-                        principalTable: "Participantes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_ParticipantePersonaje_ModeloPersonaje_IdPersonaje",
                         column: x => x.IdPersonaje,
                         principalTable: "ModeloPersonaje",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ParticipantePersonaje_Participantes_IdParticipante",
+                        column: x => x.IdParticipante,
+                        principalTable: "Participantes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -1078,8 +1088,8 @@ namespace AppGM.Core.Migrations
                 name: "PersonajeAlianzas",
                 columns: table => new
                 {
-                    IdPersonaje = table.Column<int>(nullable: false),
-                    IdAlianza = table.Column<int>(nullable: false)
+                    IdPersonaje = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdAlianza = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -1102,22 +1112,22 @@ namespace AppGM.Core.Migrations
                 name: "PersonajeArmasDistancias",
                 columns: table => new
                 {
-                    IdPersonaje = table.Column<int>(nullable: false),
-                    IdArmaDistancia = table.Column<int>(nullable: false)
+                    IdPersonaje = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdArmaDistancia = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PersonajeArmasDistancias", x => new { x.IdArmaDistancia, x.IdPersonaje });
                     table.ForeignKey(
-                        name: "FK_PersonajeArmasDistancias_ModeloUtilizable_IdArmaDistancia",
-                        column: x => x.IdArmaDistancia,
-                        principalTable: "ModeloUtilizable",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_PersonajeArmasDistancias_ModeloPersonaje_IdPersonaje",
                         column: x => x.IdPersonaje,
                         principalTable: "ModeloPersonaje",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PersonajeArmasDistancias_ModeloUtilizable_IdArmaDistancia",
+                        column: x => x.IdArmaDistancia,
+                        principalTable: "ModeloUtilizable",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -1126,8 +1136,8 @@ namespace AppGM.Core.Migrations
                 name: "PersonajeContratos",
                 columns: table => new
                 {
-                    IdPersonaje = table.Column<int>(nullable: false),
-                    IdContrato = table.Column<int>(nullable: false)
+                    IdPersonaje = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdContrato = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -1150,22 +1160,22 @@ namespace AppGM.Core.Migrations
                 name: "PersonajeDefensivos",
                 columns: table => new
                 {
-                    IdPersonaje = table.Column<int>(nullable: false),
-                    IdDefensivo = table.Column<int>(nullable: false)
+                    IdPersonaje = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdDefensivo = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PersonajeDefensivos", x => new { x.IdPersonaje, x.IdDefensivo });
                     table.ForeignKey(
-                        name: "FK_PersonajeDefensivos_ModeloUtilizable_IdDefensivo",
-                        column: x => x.IdDefensivo,
-                        principalTable: "ModeloUtilizable",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_PersonajeDefensivos_ModeloPersonaje_IdPersonaje",
                         column: x => x.IdPersonaje,
                         principalTable: "ModeloPersonaje",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PersonajeDefensivos_ModeloUtilizable_IdDefensivo",
+                        column: x => x.IdDefensivo,
+                        principalTable: "ModeloUtilizable",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -1174,8 +1184,8 @@ namespace AppGM.Core.Migrations
                 name: "PersonajeEfectos",
                 columns: table => new
                 {
-                    IdPersonaje = table.Column<int>(nullable: false),
-                    IdEfecto = table.Column<int>(nullable: false)
+                    IdPersonaje = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdEfecto = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -1198,8 +1208,8 @@ namespace AppGM.Core.Migrations
                 name: "PersonajeMagias",
                 columns: table => new
                 {
-                    IdPersonaje = table.Column<int>(nullable: false),
-                    IdMagia = table.Column<int>(nullable: false)
+                    IdPersonaje = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdMagia = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -1222,8 +1232,8 @@ namespace AppGM.Core.Migrations
                 name: "PersonajeModificadoresDeDefensa",
                 columns: table => new
                 {
-                    IdPersonaje = table.Column<int>(nullable: false),
-                    IdModificadorDefensa = table.Column<int>(nullable: false)
+                    IdPersonaje = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdModificadorDefensa = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -1246,8 +1256,8 @@ namespace AppGM.Core.Migrations
                 name: "PersonajePerks",
                 columns: table => new
                 {
-                    IdPersonaje = table.Column<int>(nullable: false),
-                    IdPerk = table.Column<int>(nullable: false)
+                    IdPersonaje = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdPerk = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -1270,8 +1280,8 @@ namespace AppGM.Core.Migrations
                 name: "PersonajeSkills",
                 columns: table => new
                 {
-                    IdPersonaje = table.Column<int>(nullable: false),
-                    IdHabilidad = table.Column<int>(nullable: false)
+                    IdPersonaje = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdHabilidad = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -1294,13 +1304,13 @@ namespace AppGM.Core.Migrations
                 name: "PersonajesRol",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    IdRol = table.Column<int>(nullable: false),
-                    IdPersonaje = table.Column<int>(nullable: false),
-                    ModeloPersonajeId = table.Column<int>(nullable: true),
-                    ModeloRolId = table.Column<int>(nullable: false),
-                    ModeloRolId1 = table.Column<int>(nullable: true)
+                    IdPersonaje = table.Column<int>(type: "INTEGER", nullable: false),
+                    ModeloPersonajeId = table.Column<int>(type: "INTEGER", nullable: true),
+                    ModeloRolId = table.Column<int>(type: "INTEGER", nullable: false),
+                    ModeloRolId1 = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdRol = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -1312,31 +1322,31 @@ namespace AppGM.Core.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PersonajesRol_Rols_IdRol",
-                        column: x => x.IdRol,
-                        principalTable: "Rols",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_PersonajesRol_ModeloPersonaje_ModeloPersonajeId",
                         column: x => x.ModeloPersonajeId,
                         principalTable: "ModeloPersonaje",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
+                        name: "FK_PersonajesRol_Rols_IdRol",
+                        column: x => x.IdRol,
+                        principalTable: "Rols",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_PersonajesRol_Rols_ModeloRolId1",
                         column: x => x.ModeloRolId1,
                         principalTable: "Rols",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "PersonajesUnidadesMapa",
                 columns: table => new
                 {
-                    IdPersonaje = table.Column<int>(nullable: false),
-                    IdUnidadMapa = table.Column<int>(nullable: false)
+                    IdPersonaje = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdUnidadMapa = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -1359,8 +1369,8 @@ namespace AppGM.Core.Migrations
                 name: "PersonajeUtilizables",
                 columns: table => new
                 {
-                    IdPersonaje = table.Column<int>(nullable: false),
-                    IdUtilizable = table.Column<int>(nullable: false)
+                    IdPersonaje = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdUtilizable = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -1383,8 +1393,8 @@ namespace AppGM.Core.Migrations
                 name: "ServantNoblePhantasms",
                 columns: table => new
                 {
-                    IdServant = table.Column<int>(nullable: false),
-                    IdNoblePhantasm = table.Column<int>(nullable: false)
+                    IdServant = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdNoblePhantasm = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -1407,8 +1417,8 @@ namespace AppGM.Core.Migrations
                 name: "TIHabilidadInvocacion",
                 columns: table => new
                 {
-                    IdHabilidad = table.Column<int>(nullable: false),
-                    IdInvocacion = table.Column<int>(nullable: false)
+                    IdHabilidad = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdInvocacion = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -1431,8 +1441,8 @@ namespace AppGM.Core.Migrations
                 name: "TIInvocacionDatosInvocacion",
                 columns: table => new
                 {
-                    IdInvocacion = table.Column<int>(nullable: false),
-                    IdDatos = table.Column<int>(nullable: false)
+                    IdInvocacion = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdDatos = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -1455,8 +1465,8 @@ namespace AppGM.Core.Migrations
                 name: "TIInvocacionEfecto",
                 columns: table => new
                 {
-                    IdInvocacion = table.Column<int>(nullable: false),
-                    IdEfecto = table.Column<int>(nullable: false)
+                    IdInvocacion = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdEfecto = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -1479,8 +1489,8 @@ namespace AppGM.Core.Migrations
                 name: "TIInvocacionPersonaje",
                 columns: table => new
                 {
-                    IdInvocacion = table.Column<int>(nullable: false),
-                    IdPersonaje = table.Column<int>(nullable: false)
+                    IdInvocacion = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdPersonaje = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -1503,8 +1513,8 @@ namespace AppGM.Core.Migrations
                 name: "TIPersonajeJugableCaracteristicas",
                 columns: table => new
                 {
-                    IdPersonajeJugable = table.Column<int>(nullable: false),
-                    IdCaracteristica = table.Column<int>(nullable: false)
+                    IdPersonajeJugable = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdCaracteristica = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -1527,8 +1537,8 @@ namespace AppGM.Core.Migrations
                 name: "TIPersonajeJugableInvocacion",
                 columns: table => new
                 {
-                    IdPersonajeJugable = table.Column<int>(nullable: false),
-                    IdInvocacion = table.Column<int>(nullable: false)
+                    IdPersonajeJugable = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdInvocacion = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {

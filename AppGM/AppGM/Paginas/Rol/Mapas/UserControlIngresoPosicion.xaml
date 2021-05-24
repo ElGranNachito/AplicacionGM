@@ -22,24 +22,33 @@
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
+                    <!-- Checkbox mostrar unidad -->
                     <CheckBox
                         Grid.Column="0"
-                        IsChecked="True"/>
+                        IsChecked="True"
+                        ToolTip="Indica si se debe mostrar la unidad en el mapa"/>
 
-                    <Button x:Name="boton"
+                    <!-- Boton expandir -->
+                    <Button
                         Grid.Column="1"
                         FontFamily="{StaticResource 'Font Awesome Regular'}"
-                        Content="{StaticResource Fa-FlechaDerecha-Chevron}">
+                        Content="{StaticResource Fa-FlechaDerecha-Chevron}"
+                        ToolTip="Expande la seccion de datos extra">
+
+                        <!-- Evento de click -->
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Click">
                                 <local:TriggerActionFlipFlop
                                     Nombre="Content"
+                                    NombrePropiedadVM="DebeMostrarDatosExtra"
                                     Destino="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}}"
                                     Valor="{StaticResource Fa-FlechaAbajo-Chevron}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
+
                     </Button>
 
+                    <!-- Nombre personaje -->
                     <TextBlock
                         Grid.Column="2"
                         Text="{Binding Nombre, FallbackValue=Mr.Sin Nombre}" 
@@ -61,32 +70,42 @@
 
                 </Grid>
 
-                <StackPanel 
-                    Orientation="Horizontal" 
-                    HorizontalAlignment="Center"
-                    Margin="0 5">
+                <!-- Elementos que oculta la flecha -->
+                <Grid
+                    Visibility="{Binding DebeMostrarDatosExtra, Converter={local:BooleanToVisibilityConverterColapsar}}"
+                    >
 
-                    <TextBlock Text="X: " Foreground="White"/>
-                    <TextBox 
-                        local:CampoDeTextoNumericoProperty.Value="True"
+                    <!-- Campos de ingreso de posicion -->
+                    <StackPanel 
+                        Orientation="Horizontal" 
                         HorizontalAlignment="Center"
-                        MinWidth="20"
-                        Width="50"
-                        TextChanged="TextBoxPosX_TextChanged"
-                        Text="{Binding TextoPosicionX, Mode=TwoWay}"/>
+                        Margin="0 5">
 
-                    <TextBlock Text="Y: "
-                           Margin="10 0 0 0"
-                           Foreground="White"/>
-                    <TextBox 
-                        local:CampoDeTextoNumericoProperty.Value="True"
-                        HorizontalAlignment="Center"
-                        MinWidth="20"
-                        Width="50"
-                        TextChanged="TextBoxPosY_TextChanged"
-                        Text="{Binding TextoPosicionY, Mode=TwoWay}"/>
+                        <!--Posicion X-->
+                        <TextBlock Text="X: " Foreground="White"/>
+                        <TextBox 
+                            local:CampoDeTextoNumericoProperty.Value="True"
+                            HorizontalAlignment="Center"
+                            MinWidth="20"
+                            Width="50"
+                            TextChanged="TextBoxPosX_TextChanged"
+                            Text="{Binding TextoPosicionX, Mode=TwoWay}"/>
 
-                </StackPanel>
+                        <!--Posicion Y-->
+                        <TextBlock Text="Y: "
+                               Margin="10 0 0 0"
+                               Foreground="White"/>
+                        <TextBox 
+                            local:CampoDeTextoNumericoProperty.Value="True"
+                            HorizontalAlignment="Center"
+                            MinWidth="20"
+                            Width="50"
+                            TextChanged="TextBoxPosY_TextChanged"
+                            Text="{Binding TextoPosicionY, Mode=TwoWay}"/>
+
+                    </StackPanel>
+
+                </Grid>
 
             </StackPanel>
 

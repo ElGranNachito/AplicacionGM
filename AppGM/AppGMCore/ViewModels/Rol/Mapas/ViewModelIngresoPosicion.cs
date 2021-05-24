@@ -39,6 +39,11 @@ namespace AppGM.Core
         public ViewModelVector2 Posicion { get; set; }
 
         /// <summary>
+        /// Indica si debe mostrar la seccion de datos extra en el control de ingreso de posicion
+        /// </summary>
+        public bool DebeMostrarDatosExtra { get; set; } = false;
+
+        /// <summary>
         /// Ruta de la imagen de la unidad
         /// </summary>
         public string PathImagen => unidad.Path;

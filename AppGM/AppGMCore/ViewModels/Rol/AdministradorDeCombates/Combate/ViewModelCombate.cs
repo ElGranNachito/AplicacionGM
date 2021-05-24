@@ -46,10 +46,7 @@ namespace AppGM.Core
         #region Constructores
         public ViewModelCombate()
         {
-            ComandoAvanzarTurno    = new Comando(administradorDeCombate.AvanzarTurno);
-            ComandoRetrocederTurno = new Comando(administradorDeCombate.RetrocederTurno);
-
-            HandlerTurnoCambio = (ref int turno) =>
+	        HandlerTurnoCambio = (ref int turno) =>
             {
                 DispararPropertyChanged(new PropertyChangedEventArgs(nameof(TurnoActual)));
 

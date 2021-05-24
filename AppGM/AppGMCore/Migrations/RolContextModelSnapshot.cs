@@ -14,7 +14,7 @@ namespace AppGM.Core.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.9");
+                .HasAnnotation("ProductVersion", "5.0.6");
 
             modelBuilder.Entity("AppGM.Core.ModeloAccion", b =>
                 {
@@ -23,8 +23,8 @@ namespace AppGM.Core.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Descripcion")
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(2000);
+                        .HasMaxLength(2000)
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -58,21 +58,19 @@ namespace AppGM.Core.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Descripcion")
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(500);
+                        .HasMaxLength(500)
+                        .HasColumnType("TEXT");
 
                     b.Property<bool>("EsVigente")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Nombre")
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(50);
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
                     b.ToTable("ModeloAlianza");
-
-                    b.HasDiscriminator();
                 });
 
             modelBuilder.Entity("AppGM.Core.ModeloCaracteristicas", b =>
@@ -97,12 +95,12 @@ namespace AppGM.Core.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Fisico")
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(100);
+                        .HasMaxLength(100)
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Nacionalidad")
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(50);
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT");
 
                     b.Property<ushort>("Peso")
                         .HasColumnType("INTEGER");
@@ -136,15 +134,15 @@ namespace AppGM.Core.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Descripcion")
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(500);
+                        .HasMaxLength(500)
+                        .HasColumnType("TEXT");
 
                     b.Property<bool>("EsVigente")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Nombre")
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(50);
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -169,21 +167,25 @@ namespace AppGM.Core.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Descripcion")
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(500);
+                        .HasMaxLength(500)
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("EstaSiendoAplicado")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Nombre")
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(50);
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT");
 
                     b.Property<ushort>("TurnosDeDuracion")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<ushort>("TurnosRestantes")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
                     b.ToTable("ModeloEfecto");
-
-                    b.HasDiscriminator();
                 });
 
             modelBuilder.Entity("AppGM.Core.ModeloHabilidad", b =>
@@ -195,13 +197,16 @@ namespace AppGM.Core.Migrations
                     b.Property<ushort>("CostoDeMana")
                         .HasColumnType("INTEGER");
 
+                    b.Property<ushort>("CostoDeOdOPrana")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Descripcion")
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(2000);
+                        .HasMaxLength(2000)
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Nombre")
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(50);
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("Rango")
                         .HasColumnType("INTEGER");
@@ -332,8 +337,8 @@ namespace AppGM.Core.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Nombre")
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(50);
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("PathImagen")
                         .HasColumnType("TEXT");
@@ -353,6 +358,21 @@ namespace AppGM.Core.Migrations
                     b.Property<int>("TipoPersonaje")
                         .HasColumnType("INTEGER");
 
+                    b.Property<ushort>("VentajaAgi")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<ushort>("VentajaEnd")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<ushort>("VentajaInt")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<ushort>("VentajaLck")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<ushort>("VentajaStr")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
 
                     b.HasIndex("PosicionId");
@@ -369,8 +389,8 @@ namespace AppGM.Core.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Descripcion")
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(2000);
+                        .HasMaxLength(2000)
+                        .HasColumnType("TEXT");
 
                     b.Property<ushort>("Dia")
                         .HasColumnType("INTEGER");
@@ -379,8 +399,8 @@ namespace AppGM.Core.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Nombre")
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(50);
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Registros")
                         .HasColumnType("TEXT");
@@ -1117,7 +1137,7 @@ namespace AppGM.Core.Migrations
                     b.Property<int>("ModeloRolId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("ModeloRolId1")
+                    b.Property<int>("ModeloRolId1")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -1152,7 +1172,7 @@ namespace AppGM.Core.Migrations
                     b.Property<int>("ModeloRolId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("ModeloRolId1")
+                    b.Property<int>("ModeloRolId1")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -1187,7 +1207,7 @@ namespace AppGM.Core.Migrations
                     b.Property<int>("ModeloRolId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("ModeloRolId1")
+                    b.Property<int>("ModeloRolId1")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -1354,8 +1374,8 @@ namespace AppGM.Core.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("NombreClase")
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(50);
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT");
 
                     b.HasDiscriminator().HasValue(3);
                 });
@@ -1423,7 +1443,7 @@ namespace AppGM.Core.Migrations
                 {
                     b.HasBaseType("AppGM.Core.ModeloUtilizable");
 
-                    b.Property<decimal>("StatsQueOcupa")
+                    b.Property<decimal>("SlotsQueOcupa")
                         .HasColumnType("TEXT");
 
                     b.HasDiscriminator().HasValue(3);
@@ -1493,6 +1513,9 @@ namespace AppGM.Core.Migrations
                     b.Property<string>("Origen")
                         .HasColumnType("TEXT");
 
+                    b.Property<ushort>("VentajaChr")
+                        .HasColumnType("INTEGER");
+
                     b.HasDiscriminator().HasValue(6);
                 });
 
@@ -1536,8 +1559,8 @@ namespace AppGM.Core.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Inicial")
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(1);
+                        .HasMaxLength(1)
+                        .HasColumnType("TEXT");
 
                     b.HasDiscriminator().HasValue(3);
                 });
@@ -1587,8 +1610,12 @@ namespace AppGM.Core.Migrations
                     b.HasBaseType("AppGM.Core.ModeloDefensivo");
 
                     b.Property<short>("Usos")
-                        .HasColumnName("ModeloDefensivoAbsoluto_Usos")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("ModeloDefensivoAbsoluto_Usos");
+
+                    b.Property<short>("UsosRestantes")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("ModeloDefensivoAbsoluto_UsosRestantes");
 
                     b.HasDiscriminator().HasValue(5);
                 });
@@ -1598,6 +1625,8 @@ namespace AppGM.Core.Migrations
                     b.HasOne("AppGM.Core.ModeloVector2", "Posicion")
                         .WithMany()
                         .HasForeignKey("PosicionId");
+
+                    b.Navigation("Posicion");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIAdministradorDeCombateMapa", b =>
@@ -1613,6 +1642,10 @@ namespace AppGM.Core.Migrations
                         .HasForeignKey("IdMapa")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("AdministradorDeCombate");
+
+                    b.Navigation("Mapa");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIAdministradorDeCombateParticipante", b =>
@@ -1628,6 +1661,10 @@ namespace AppGM.Core.Migrations
                         .HasForeignKey("AppGM.Core.TIAdministradorDeCombateParticipante", "IdParticipante")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("AdministradorDeCombate");
+
+                    b.Navigation("Participante");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIAlianzaContrato", b =>
@@ -1643,6 +1680,10 @@ namespace AppGM.Core.Migrations
                         .HasForeignKey("IdContrato")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Alianza");
+
+                    b.Navigation("Contrato");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIArmasDistanciaEfecto", b =>
@@ -1658,6 +1699,10 @@ namespace AppGM.Core.Migrations
                         .HasForeignKey("IdEfecto")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("ArmasDistancia");
+
+                    b.Navigation("Efecto");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIArmasDistanciaTiradaDeDaño", b =>
@@ -1673,6 +1718,10 @@ namespace AppGM.Core.Migrations
                         .HasForeignKey("IdTirada")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("ArmasDistancia");
+
+                    b.Navigation("TiradaDaño");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIArmasDistanciaTiradaVariable", b =>
@@ -1688,6 +1737,10 @@ namespace AppGM.Core.Migrations
                         .HasForeignKey("IdTirada")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("ArmasDistancia");
+
+                    b.Navigation("TiradaVariable");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIEfectoModificadorDeStatBase", b =>
@@ -1703,6 +1756,10 @@ namespace AppGM.Core.Migrations
                         .HasForeignKey("IdModificadorDeStat")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Efecto");
+
+                    b.Navigation("Modificador");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIHabilidadCargasHabilidad", b =>
@@ -1718,6 +1775,10 @@ namespace AppGM.Core.Migrations
                         .HasForeignKey("AppGM.Core.TIHabilidadCargasHabilidad", "IdHabilidad")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Habilidad");
+
+                    b.Navigation("ModeloCargasHabilidad");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIHabilidadEfecto", b =>
@@ -1733,6 +1794,10 @@ namespace AppGM.Core.Migrations
                         .HasForeignKey("IdHabilidad")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Efecto");
+
+                    b.Navigation("Habilidad");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIHabilidadInvocacion", b =>
@@ -1748,6 +1813,10 @@ namespace AppGM.Core.Migrations
                         .HasForeignKey("IdInvocacion")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Habilidad");
+
+                    b.Navigation("Invocacion");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIHabilidadItem", b =>
@@ -1763,6 +1832,10 @@ namespace AppGM.Core.Migrations
                         .HasForeignKey("IdItem")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Habilidad");
+
+                    b.Navigation("Item");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIHabilidadLimitador", b =>
@@ -1778,6 +1851,10 @@ namespace AppGM.Core.Migrations
                         .HasForeignKey("IdLimitador")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Habilidad");
+
+                    b.Navigation("ModeloLimitador");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIHabilidadTiradaBase", b =>
@@ -1793,6 +1870,10 @@ namespace AppGM.Core.Migrations
                         .HasForeignKey("IdTirada")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Habilidad");
+
+                    b.Navigation("TiradaBase");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIHabilidadTiradaDeDaño", b =>
@@ -1808,6 +1889,10 @@ namespace AppGM.Core.Migrations
                         .HasForeignKey("IdTirada")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Habilidad");
+
+                    b.Navigation("TiradaDeDaño");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIInvocacionDatosInvocacion", b =>
@@ -1823,6 +1908,10 @@ namespace AppGM.Core.Migrations
                         .HasForeignKey("AppGM.Core.TIInvocacionDatosInvocacion", "IdInvocacion")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("DatosInvocacion");
+
+                    b.Navigation("Invocacion");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIInvocacionEfecto", b =>
@@ -1838,6 +1927,10 @@ namespace AppGM.Core.Migrations
                         .HasForeignKey("AppGM.Core.TIInvocacionEfecto", "IdInvocacion")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Efecto");
+
+                    b.Navigation("Invocacion");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIInvocacionPersonaje", b =>
@@ -1853,6 +1946,10 @@ namespace AppGM.Core.Migrations
                         .HasForeignKey("IdPersonaje")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Invocacion");
+
+                    b.Navigation("PersonajeInvocador");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIMapaUnidadMapa", b =>
@@ -1868,6 +1965,10 @@ namespace AppGM.Core.Migrations
                         .HasForeignKey("IdUnidadMapa")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Mapa");
+
+                    b.Navigation("Unidad");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIModificadorDeStatBaseTiradaBase", b =>
@@ -1883,6 +1984,10 @@ namespace AppGM.Core.Migrations
                         .HasForeignKey("IdTirada")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("ModificadorDeStatBase");
+
+                    b.Navigation("TiradaBase");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIOfensivoEfecto", b =>
@@ -1898,6 +2003,10 @@ namespace AppGM.Core.Migrations
                         .HasForeignKey("AppGM.Core.TIOfensivoEfecto", "IdOfensivo")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Efecto");
+
+                    b.Navigation("Ofensivo");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIOfensivoTiradaDeDaño", b =>
@@ -1913,6 +2022,10 @@ namespace AppGM.Core.Migrations
                         .HasForeignKey("IdTiradaDeDaño")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Ofensivo");
+
+                    b.Navigation("TiradaDeDaño");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIParticipanteAccion", b =>
@@ -1928,6 +2041,10 @@ namespace AppGM.Core.Migrations
                         .HasForeignKey("IdParticipante")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Accion");
+
+                    b.Navigation("Participante");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIParticipantePersonaje", b =>
@@ -1943,6 +2060,10 @@ namespace AppGM.Core.Migrations
                         .HasForeignKey("IdPersonaje")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Participante");
+
+                    b.Navigation("Personaje");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIPersonajeAlianza", b =>
@@ -1958,6 +2079,10 @@ namespace AppGM.Core.Migrations
                         .HasForeignKey("IdPersonaje")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Alianza");
+
+                    b.Navigation("Personaje");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIPersonajeArmaDistancia", b =>
@@ -1973,6 +2098,10 @@ namespace AppGM.Core.Migrations
                         .HasForeignKey("IdPersonaje")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("ArmaDistancia");
+
+                    b.Navigation("Personaje");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIPersonajeContrato", b =>
@@ -1988,6 +2117,10 @@ namespace AppGM.Core.Migrations
                         .HasForeignKey("IdPersonaje")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Contrato");
+
+                    b.Navigation("Personaje");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIPersonajeDefensivo", b =>
@@ -2003,6 +2136,10 @@ namespace AppGM.Core.Migrations
                         .HasForeignKey("IdPersonaje")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Defensivo");
+
+                    b.Navigation("Personaje");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIPersonajeEfecto", b =>
@@ -2018,6 +2155,10 @@ namespace AppGM.Core.Migrations
                         .HasForeignKey("IdPersonaje")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Efecto");
+
+                    b.Navigation("Personaje");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIPersonajeHabilidad", b =>
@@ -2033,6 +2174,10 @@ namespace AppGM.Core.Migrations
                         .HasForeignKey("IdPersonaje")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Habilidad");
+
+                    b.Navigation("Personaje");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIPersonajeJugableCaracteristicas", b =>
@@ -2048,6 +2193,10 @@ namespace AppGM.Core.Migrations
                         .HasForeignKey("AppGM.Core.TIPersonajeJugableCaracteristicas", "IdPersonajeJugable")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Caracteristicas");
+
+                    b.Navigation("PersonajeJugable");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIPersonajeJugableInvocacion", b =>
@@ -2063,6 +2212,10 @@ namespace AppGM.Core.Migrations
                         .HasForeignKey("IdPersonajeJugable")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Invocacion");
+
+                    b.Navigation("PersonajeJugable");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIPersonajeMagia", b =>
@@ -2078,6 +2231,10 @@ namespace AppGM.Core.Migrations
                         .HasForeignKey("IdPersonaje")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Magia");
+
+                    b.Navigation("Personaje");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIPersonajeModificadorDeDefensa", b =>
@@ -2093,6 +2250,10 @@ namespace AppGM.Core.Migrations
                         .HasForeignKey("IdPersonaje")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("ModificadorDeDefensa");
+
+                    b.Navigation("Personaje");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIPersonajePerk", b =>
@@ -2108,6 +2269,10 @@ namespace AppGM.Core.Migrations
                         .HasForeignKey("IdPersonaje")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Perk");
+
+                    b.Navigation("Personaje");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIPersonajeUnidadMapa", b =>
@@ -2123,6 +2288,10 @@ namespace AppGM.Core.Migrations
                         .HasForeignKey("AppGM.Core.TIPersonajeUnidadMapa", "IdUnidadMapa")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Personaje");
+
+                    b.Navigation("Unidad");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIPersonajeUtilizable", b =>
@@ -2138,6 +2307,10 @@ namespace AppGM.Core.Migrations
                         .HasForeignKey("IdUtilizable")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Personaje");
+
+                    b.Navigation("Utilizable");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIPortableModificadorDeStatBase", b =>
@@ -2153,6 +2326,10 @@ namespace AppGM.Core.Migrations
                         .HasForeignKey("IdPortable")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Modificador");
+
+                    b.Navigation("Portable");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIPortableSlots", b =>
@@ -2168,6 +2345,10 @@ namespace AppGM.Core.Migrations
                         .HasForeignKey("IdSlot")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Portable");
+
+                    b.Navigation("Slot");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIRolCombate", b =>
@@ -2190,7 +2371,13 @@ namespace AppGM.Core.Migrations
 
                     b.HasOne("AppGM.Core.ModeloRol", null)
                         .WithMany("Combates")
-                        .HasForeignKey("ModeloRolId1");
+                        .HasForeignKey("ModeloRolId1")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Combate");
+
+                    b.Navigation("Rol");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIRolMapa", b =>
@@ -2213,7 +2400,13 @@ namespace AppGM.Core.Migrations
 
                     b.HasOne("AppGM.Core.ModeloRol", null)
                         .WithMany("Mapas")
-                        .HasForeignKey("ModeloRolId1");
+                        .HasForeignKey("ModeloRolId1")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Mapa");
+
+                    b.Navigation("Rol");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIRolPersonaje", b =>
@@ -2236,7 +2429,13 @@ namespace AppGM.Core.Migrations
 
                     b.HasOne("AppGM.Core.ModeloRol", null)
                         .WithMany("Personajes")
-                        .HasForeignKey("ModeloRolId1");
+                        .HasForeignKey("ModeloRolId1")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Personaje");
+
+                    b.Navigation("Rol");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIServantNoblePhantasm", b =>
@@ -2252,6 +2451,10 @@ namespace AppGM.Core.Migrations
                         .HasForeignKey("IdServant")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("NoblePhantasm");
+
+                    b.Navigation("Servant");
                 });
 
             modelBuilder.Entity("AppGM.Core.TISlotItem", b =>
@@ -2267,6 +2470,10 @@ namespace AppGM.Core.Migrations
                         .HasForeignKey("IdSlot")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Item");
+
+                    b.Navigation("Slot");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIUnidadMapaVector2", b =>
@@ -2282,6 +2489,10 @@ namespace AppGM.Core.Migrations
                         .HasForeignKey("IdVector")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Posicion");
+
+                    b.Navigation("Unidad");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIUtilizableEfecto", b =>
@@ -2297,6 +2508,10 @@ namespace AppGM.Core.Migrations
                         .HasForeignKey("IdUtilizable")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Efecto");
+
+                    b.Navigation("Utilizable");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIUtilizableModificadorDeStatBase", b =>
@@ -2312,6 +2527,10 @@ namespace AppGM.Core.Migrations
                         .HasForeignKey("AppGM.Core.TIUtilizableModificadorDeStatBase", "IdUtilizable")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("ModificadorDeStatBase");
+
+                    b.Navigation("Utilizable");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIUtilizableTiradaBase", b =>
@@ -2327,6 +2546,173 @@ namespace AppGM.Core.Migrations
                         .HasForeignKey("AppGM.Core.TIUtilizableTiradaBase", "IdUtilizable")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("TiradaBase");
+
+                    b.Navigation("Utilizable");
+                });
+
+            modelBuilder.Entity("AppGM.Core.ModeloAdministradorDeCombate", b =>
+                {
+                    b.Navigation("Mapas");
+
+                    b.Navigation("Participantes");
+
+                    b.Navigation("RolCombate");
+                });
+
+            modelBuilder.Entity("AppGM.Core.ModeloAlianza", b =>
+                {
+                    b.Navigation("ContratoDeAlianza");
+
+                    b.Navigation("PersonajesAfectados");
+                });
+
+            modelBuilder.Entity("AppGM.Core.ModeloContrato", b =>
+                {
+                    b.Navigation("PersonajesAfectados");
+                });
+
+            modelBuilder.Entity("AppGM.Core.ModeloEfecto", b =>
+                {
+                    b.Navigation("Modificaciones");
+                });
+
+            modelBuilder.Entity("AppGM.Core.ModeloHabilidad", b =>
+                {
+                    b.Navigation("CargasHabilidad");
+
+                    b.Navigation("EfectosSobreUsuarioEfectoSobreObjetivo");
+
+                    b.Navigation("Invocacion");
+
+                    b.Navigation("ItemsQueCuestaItemInvocacion");
+
+                    b.Navigation("LimiteDeUsos");
+
+                    b.Navigation("TiradaDeDaño");
+
+                    b.Navigation("TiradasDeUso");
+                });
+
+            modelBuilder.Entity("AppGM.Core.ModeloMapa", b =>
+                {
+                    b.Navigation("PosicionesUnidades");
+
+                    b.Navigation("RolMapa");
+                });
+
+            modelBuilder.Entity("AppGM.Core.ModeloModificadorDeStatBase", b =>
+                {
+                    b.Navigation("ValorTirada");
+                });
+
+            modelBuilder.Entity("AppGM.Core.ModeloParticipante", b =>
+                {
+                    b.Navigation("AccionesRealizadas");
+
+                    b.Navigation("Combate");
+
+                    b.Navigation("Personaje");
+                });
+
+            modelBuilder.Entity("AppGM.Core.ModeloPersonaje", b =>
+                {
+                    b.Navigation("Alianzas");
+
+                    b.Navigation("Armadura");
+
+                    b.Navigation("ArmasDistancia");
+
+                    b.Navigation("Contratos");
+
+                    b.Navigation("Efectos");
+
+                    b.Navigation("Inventario");
+
+                    b.Navigation("Magias");
+
+                    b.Navigation("ModificadoresDeDefensa");
+
+                    b.Navigation("Perks");
+
+                    b.Navigation("RolPersonaje");
+
+                    b.Navigation("Skills");
+                });
+
+            modelBuilder.Entity("AppGM.Core.ModeloRol", b =>
+                {
+                    b.Navigation("Combates");
+
+                    b.Navigation("Mapas");
+
+                    b.Navigation("Personajes");
+                });
+
+            modelBuilder.Entity("AppGM.Core.ModeloSlot", b =>
+                {
+                    b.Navigation("ItemsAlmacenados");
+                });
+
+            modelBuilder.Entity("AppGM.Core.ModeloUnidadMapa", b =>
+                {
+                    b.Navigation("Personaje");
+
+                    b.Navigation("Posicion");
+                });
+
+            modelBuilder.Entity("AppGM.Core.ModeloUtilizable", b =>
+                {
+                    b.Navigation("EfectoSobreUsuarioYObjetivo");
+
+                    b.Navigation("TiradaDeUso");
+
+                    b.Navigation("VentajaAlUtilizarlo");
+                });
+
+            modelBuilder.Entity("AppGM.Core.ModeloInvocacion", b =>
+                {
+                    b.Navigation("DatosInvocacion");
+
+                    b.Navigation("Efecto");
+
+                    b.Navigation("Invocador");
+                });
+
+            modelBuilder.Entity("AppGM.Core.ModeloPersonajeJugable", b =>
+                {
+                    b.Navigation("Caracteristicas");
+
+                    b.Navigation("Invocaciones");
+                });
+
+            modelBuilder.Entity("AppGM.Core.ModeloPortable", b =>
+                {
+                    b.Navigation("Slots");
+
+                    b.Navigation("VentajasYDesventajasDeEquiparlo");
+                });
+
+            modelBuilder.Entity("AppGM.Core.ModeloServant", b =>
+                {
+                    b.Navigation("NoblePhantasms");
+                });
+
+            modelBuilder.Entity("AppGM.Core.ModeloOfensivo", b =>
+                {
+                    b.Navigation("EfectoQueInflige");
+
+                    b.Navigation("TiradasDeDaño");
+                });
+
+            modelBuilder.Entity("AppGM.Core.ModeloArmasDistancia", b =>
+                {
+                    b.Navigation("EfectoQueInflige");
+
+                    b.Navigation("TiradaDeDaño");
+
+                    b.Navigation("TiradaRafaga");
                 });
 #pragma warning restore 612, 618
         }
