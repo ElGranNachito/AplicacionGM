@@ -3,7 +3,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AppGM.Core
 {
-    public class ModeloHabilidad : ModeloBase, IDescripcion
+    /// <summary>
+    /// Modelo de datos para la habilidad
+    /// </summary>
+    public class ModeloHabilidad : ModeloBase
     {
         public ControladorHabilidad controladorHabilidad;
 

@@ -45,7 +45,8 @@ namespace AppGM.Core
         public List<TIPersonajeEfecto>     Efectos    { get; set; } = new List<TIPersonajeEfecto>();
         public List<TIPersonajeUtilizable> Inventario { get; set; } = new List<TIPersonajeUtilizable>();
         public List<TIPersonajeDefensivo>  Armadura   { get; set; } = new List<TIPersonajeDefensivo>();
-        public List<TIPersonajePersonaje>  Aliados    { get; set; } = new List<TIPersonajePersonaje>();
+        public List<TIPersonajeContrato>   Contratos  { get; set; } = new List<TIPersonajeContrato>();
+        public List<TIPersonajeAlianza>    Alianzas   { get; set; } = new List<TIPersonajeAlianza>();
         public List<TIPersonajePerk>       Perks      { get; set; } = new List<TIPersonajePerk>();
         public List<TIPersonajeHabilidad>  Skills     { get; set; } = new List<TIPersonajeHabilidad>();
         public List<TIPersonajeMagia>      Magias     { get; set; } = new List<TIPersonajeMagia>();
