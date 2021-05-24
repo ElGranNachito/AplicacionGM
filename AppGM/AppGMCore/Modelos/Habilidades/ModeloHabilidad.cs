@@ -7,6 +7,9 @@ namespace AppGM.Core
     {
         public ControladorHabilidad controladorHabilidad;
 
+        private ushort TurnosRestantes;
+        private bool EstaActiva;
+
         //Costos de mana que tiene la habilidad para ser utilizada
         public ushort CostoDeMana { get; set; }
         //Turnos que dura la habilidad

@@ -5,31 +5,70 @@ namespace AppGM.Core
 {
     public class ControladorHabilidad : Controlador<ModeloHabilidad>
     {
-        #region Controladores
+        #region Campos & Propiedades
 
+        //-------------------------CAMPOS---------------------------
+
+        /// <summary>
+        /// Funcion que toma un control de personaje y devuelve un booleano indicando si el personaje puede utilizar la habilidad
+        /// </summary>
+        private Func<ControladorPersonaje, bool> mPuedeSerUtilizada;
+
+        /// <summary>
+        /// Funcion que toma un control de personaje y devuelve un booleano indicando si el personaje puede utilizar la habilidad.
+        /// Version para habilidades que tengan objetivos
+        /// </summary>
+        private Func<ControladorPersonaje, ControladorPersonaje[], bool> mPuedeSerUtilizadaConObjetivos;
+
+
+        //-----------------------PROPIEDADES-----------------------
+
+        /// <summary>
+        /// Controlador del limitador de usos de la habilidad.
+        /// Null si la habilidad no tiene un limite de usos
+        /// </summary>
         public ControladorLimitador ControladorLimiteDeUsos { get; set; }
+
+        /// <summary>
+        /// Controlador de cargas de la habilidad.
+        /// Null si la habilidad no tiene cargas
+        /// </summary>
         public ControladorCargasHabilidad ControladorCargasHabilidad { get; set; }
 
+        /// <summary>
+        /// Lista de las tiradas que tienen que realizarse al utilizar la habilidad
+        /// </summary>
         public List<IControladorTiradaBase> ControladorTiradasDeUso { get; set; }
-        public ControladorTiradaVariable ControladorTiradaDeDaño { get; set; }
 
+        /// <summary>
+        /// Tirada de daño de la habilidad
+        /// </summary>
+        public ControladorTiradaDaño ControladorTiradaDeDaño { get; set; }
+
+        /// <summary>
+        /// Items que invoca
+        /// </summary>
         public List<ControladorUtilizable> ControladorItemInvocacion { get; set; }
+
+        /// <summary>
+        /// Items que cuesta
+        /// </summary>
         public List<ControladorUtilizable> ControladorItemsQueCuesta { get; set; }
 
+        /// <summary>
+        /// Invocacion que crea
+        /// </summary>
         public List<ControladorInvocacion> ControladorInvocacion { get; set; }
 
+        /// <summary>
+        /// Efectos sobre su usuario
+        /// </summary>
         public List<ControladorEfecto> ControladorEfectosSobreUsuario { get; set; }
+
+        /// <summary>
+        /// Efectos sobre su objetivo
+        /// </summary>
         public List<ControladorEfecto> ControladorEfectoSobreObjetivo { get; set; }
-
-        #endregion
-
-        #region Miembros
-
-        private ushort TurnosRestantes;
-        private bool EstaActiva;
-
-        private Func<ControladorPersonaje, bool> mPuedeSerUtilizada;
-        private Func<ControladorPersonaje, ControladorPersonaje[], bool> mPuedeSerUtilizadaConObjetivos;
 
         #endregion
 
@@ -58,7 +97,7 @@ namespace AppGM.Core
 
         public virtual void IntentarUtilizar(ControladorPersonaje usuario)
         {
-            //TODO: Realizar una tirada de casteo sin activar la habilidad y devolver el resultado.
+            //TODO: Realizar una tirada de casteo sin activar la habilidad y devuelve el resultado.
         }
         private void AlAvanzarTurno()
         {
