@@ -4,16 +4,24 @@
     {
         public ControladorInvocacion controladorInvocacion;
 
-        //La invocacion es automata
+        /// <summary>
+        /// La invocacion es automata
+        /// </summary>
         public bool EsAutomata { get; set; }
 
-        //Personaje que la invoca
+        /// <summary>
+        /// Personaje que la invoca
+        /// </summary>
         public TIInvocacionPersonaje Invocador { get; set; }
 
-        //Datos de la invocacion
+        /// <summary>
+        /// Datos de la invocacion
+        /// </summary>
         public TIInvocacionDatosInvocacion DatosInvocacion { get; set; }
 
-        //Efecto que la invocacion produce
+        /// <summary>
+        /// Efecto que la invocacion produce
+        /// </summary>
         public TIInvocacionEfecto Efecto { get; set; }
     }
 
@@ -21,7 +29,9 @@
     {
         public ControladorInvocacionTemporal controladorInvocacionTemporal;
 
-        //Turnos que dura la invocacion
+        /// <summary>
+        /// Turnos que dura la invocacion
+        /// </summary>
         public byte TurnosDeDuracion { get; set; }
     }
 

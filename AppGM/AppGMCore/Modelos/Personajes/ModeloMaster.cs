@@ -2,27 +2,48 @@
 {
     public class ModeloMaster : ModeloPersonajeJugable
     {
-        //Clase de servant que posee el master
+        /// <summary>
+        /// Clase de servant que posee el master
+        /// </summary>
         public EClaseServant EClaseDeSuServant { get; set; }
-        //Estado de bienestar del master
+        /// <summary>
+        /// Estado de bienestar del master
+        /// </summary>
         public EBienestar EBienestar           { get; set; }
 
-        //Energia magica del personaje
+        /// <summary>
+        /// Energia magica del personaje
+        /// </summary>
         public int Od         { get; set; }
         public int OdActual   { get; set; }
         public int Mana       { get; set; }
         public int ManaActual { get; set; }
 
-        //Stat de carisma
-        public ushort Chr           { get; set; }
-        //Command spells disponibles
+        /// <summary>
+        /// Stat de carisma
+        /// </summary>
+        public ushort Chr        { get; set; }
+        /// <summary>
+        /// Ventaja en stat de carisma
+        /// </summary>
+        public ushort VentajaChr { get; set; }
+
+        /// <summary>
+        /// Command spells disponibles
+        /// </summary>
         public ushort CommandSpells { get; set; }
 
-        //Lore del personaje
+        /// <summary>
+        /// Lore del personaje
+        /// </summary>
         public string Lore     { get; set; }
-        //Condicion relacionada al lore del personaje
+        /// <summary>
+        /// Condicion relacionada al lore del personaje
+        /// </summary>
         public string Origen   { get; set; } 
-        //Conceptos dominados por el master
+        /// <summary>
+        /// Conceptos dominados por el master
+        /// </summary>
         public string Afinidad { get; set; }
     }
 }

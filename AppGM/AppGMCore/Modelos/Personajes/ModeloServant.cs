@@ -6,13 +6,20 @@ namespace AppGM.Core
     {
         public ERango mERangoNP { get; set; }
 
-        // Energia magica del servant
+        /// <summary>
+        /// Energia magica del servant
+        /// </summary>
         public int Prana       { get; set; }
         public int PranaActual { get; set; }
 
-        // Origenes de la leyenda del personaje
+        /// <summary>
+        /// Origenes de la leyenda del personaje
+        /// </summary>
         public string Fuente { get; set; }
 
+        /// <summary>
+        /// NoblePhantasms que posee el servant
+        /// </summary>
         public List<TIServantNoblePhantasm> NoblePhantasms { get; set; } = new List<TIServantNoblePhantasm>();
     }
 }

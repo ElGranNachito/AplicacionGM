@@ -10,20 +10,33 @@ namespace AppGM.Core
     {
         public ControladorUtilizable controladorUtilizable;
 
-        //Peso del utilizable
+        /// <summary>
+        /// Peso del utilizable
+        /// </summary>
         public decimal Peso { get; set; }
 
-        //Stats
+        /// <summary>
+        /// Stats afectadas por el utilizable
+        /// </summary>
         public EStat EStatQueAfecta { get; set; }
+        /// <summary>
+        /// Stats de las que depende el utilizable
+        /// </summary>
         public EStat EStatDeLaQueDepende { get; set; }
 
-        //Tirada requerida para poder se utilizado
+        /// <summary>
+        /// Tirada requerida para poder se utilizado
+        /// </summary>
         public TIUtilizableTiradaBase TiradaDeUso { get; set; }
 
-        //Modificador para la stat afectada por el utilizable
+        /// <summary>
+        /// Modificador para la stat afectada por el utilizable
+        /// </summary>
         public TIUtilizableModificadorDeStatBase VentajaAlUtilizarlo { get; set; }
 
-        //Efectos al utilizarlo - Primer indice efecto sobre el usuario, Segundo indice efecto sobre el objetivo
+        /// <summary>
+        /// Efectos al utilizarlo - Primer indice efecto sobre el usuario, Segundo indice efecto sobre el objetivo
+        /// </summary>
         public List<TIUtilizableEfecto> EfectoSobreUsuarioYObjetivo { get; set; } = new List<TIUtilizableEfecto>();
     }
 }

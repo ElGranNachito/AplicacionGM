@@ -6,12 +6,19 @@ namespace AppGM.Core
     {
         public EClaseServant EClaseServant { get; set; }
 
-        // Rango en el que el personaje puede realizar hechiceria
+        /// <summary>
+        /// Rango en el que el personaje puede realizar hechiceria
+        /// </summary>
         public ushort RangoHechiceria { get; set; }
-        // Caracteristicas del personaje
+
+        /// <summary>
+        /// Caracteristicas del personaje
+        /// </summary>
         public TIPersonajeJugableCaracteristicas Caracteristicas { get; set; }
 
-        // Invocaciones activas
+        /// <summary>
+        /// Invocaciones activas
+        /// </summary>
         public List<TIPersonajeJugableInvocacion> Invocaciones { get; set; } = new List<TIPersonajeJugableInvocacion>();
     }
 }
