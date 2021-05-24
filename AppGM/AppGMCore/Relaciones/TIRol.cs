@@ -2,6 +2,9 @@
 
 namespace AppGM.Core
 {
+    /// <summary>
+    /// Representa una relacion con <see cref="ModeloRol"/>
+    /// </summary>
     public class TIRol : ModeloBase
     {
         [ForeignKey(nameof(Rol))]
@@ -9,6 +12,9 @@ namespace AppGM.Core
         public ModeloRol Rol { get; set; }
     }
 
+    /// <summary>
+    /// Representa una relacion de un <see cref="ModeloRol"/> con el <see cref="ModeloPersonaje"/> que incluye
+    /// </summary>
     public class TIRolPersonaje : TIRol
     {
         [ForeignKey(nameof(Personaje))]
@@ -16,6 +22,9 @@ namespace AppGM.Core
         public ModeloPersonaje Personaje { get; set; }
     }
 
+    /// <summary>
+    /// Representa una relacion de un <see cref="ModeloRol"/> con el <see cref="ModeloAdministradorDeCombate"/> que incluye
+    /// </summary>
     public class TIRolCombate : TIRol
     {
         [ForeignKey(nameof(Combate))]
@@ -23,6 +32,9 @@ namespace AppGM.Core
         public ModeloAdministradorDeCombate Combate { get; set; }
     }
 
+    /// <summary>
+    /// Representa una relacion de un <see cref="ModeloRol"/> con el <see cref="ModeloMapa"/> que incluye
+    /// </summary>
     public class TIRolMapa : TIRol
     {
         [ForeignKey(nameof(Mapa))]

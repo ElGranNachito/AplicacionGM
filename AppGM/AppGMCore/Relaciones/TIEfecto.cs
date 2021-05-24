@@ -2,6 +2,9 @@
 
 namespace AppGM.Core
 {
+    /// <summary>
+    /// Representa una relacion de un <see cref="ModeloEfecto"/> con el <see cref="ModeloModificadorDeStatBase"/> que tenga
+    /// </summary>
     public class TIEfectoModificadorDeStatBase : ModeloBaseSK
     {
         [ForeignKey(nameof(Efecto))]

@@ -7,12 +7,6 @@ namespace AppGM.Core
         // public void InfringirDaño(ModeloPersonaje usuario, ModeloPersonaje[] objetivos, EParteDelCuerpo EObjetivo, ETipoDeDaño ETipoDeDañoAInfligir);
     }
 
-    public interface IDescripcion
-    {
-        string Nombre { get; set; }
-        string Descripcion { get; set; }
-    }
-
     public interface IUtilizableConObjetivos
     {
         void Utilizar(ControladorPersonaje usuario, ControladorPersonaje[] objetivos, object parametroExtra, object segundoParametroExtra);

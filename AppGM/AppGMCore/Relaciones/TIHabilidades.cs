@@ -2,6 +2,9 @@
 
 namespace AppGM.Core
 {
+    /// <summary>
+    /// Representa una relacion de un <see cref="ModeloHabilidad"/>
+    /// </summary>
     public abstract class TIHabilidad : ModeloBaseSK
     {
         [ForeignKey(nameof(Habilidad))]
@@ -10,6 +13,9 @@ namespace AppGM.Core
         public ModeloHabilidad Habilidad { get; set; }
     }
 
+    /// <summary>
+    /// Representa una relacion de un <see cref="ModeloHabilidad"/> con el <see cref="ModeloLimitador"/> que tenga
+    /// </summary>
     public class TIHabilidadLimitador : TIHabilidad
     {
         [ForeignKey(nameof(ModeloLimitador))]
@@ -17,6 +23,9 @@ namespace AppGM.Core
         public ModeloLimitador ModeloLimitador { get; set; }
     }
 
+    /// <summary>
+    /// Representa una relacion de un <see cref="ModeloHabilidad"/> con el <see cref="ModeloCargasHabilidad"/> que tenga
+    /// </summary>
     public class TIHabilidadCargasHabilidad : TIHabilidad
     {
         [ForeignKey(nameof(ModeloCargasHabilidad))]
@@ -24,6 +33,9 @@ namespace AppGM.Core
         public ModeloCargasHabilidad ModeloCargasHabilidad { get; set; }
     }
 
+    /// <summary>
+    /// Representa una relacion de un <see cref="ModeloHabilidad"/> con la <see cref="ModeloTiradaBase"/> que le corresponda
+    /// </summary>
     public class TIHabilidadTiradaBase : TIHabilidad
     {
         [ForeignKey(nameof(TiradaBase))]
@@ -31,6 +43,9 @@ namespace AppGM.Core
         public ModeloTiradaBase TiradaBase { get; set; }
     }
 
+    /// <summary>
+    /// Representa una relacion de un <see cref="ModeloHabilidad"/> con la <see cref="ModeloTiradaDeDaño"/> que le corresponda
+    /// </summary>
     public class TIHabilidadTiradaDeDaño : TIHabilidad
     {
         [ForeignKey(nameof(TiradaDeDaño))]
@@ -38,6 +53,9 @@ namespace AppGM.Core
         public ModeloTiradaDeDaño TiradaDeDaño { get; set; }
     }
 
+    /// <summary>
+    /// Representa una relacion de un <see cref="ModeloHabilidad"/> con el <see cref="ModeloItem"/> que utilice
+    /// </summary>
     public class TIHabilidadItem : TIHabilidad
     {
         [ForeignKey(nameof(Item))]
@@ -45,6 +63,9 @@ namespace AppGM.Core
         public ModeloItem Item { get; set; }
     }
 
+    /// <summary>
+    /// Representa una relacion de un <see cref="ModeloHabilidad"/> con la <see cref="ModeloInvocacion"/> que involucre
+    /// </summary>
     public class TIHabilidadInvocacion : TIHabilidad
     {
         [ForeignKey(nameof(Invocacion))]
@@ -53,6 +74,9 @@ namespace AppGM.Core
         public ModeloInvocacion Invocacion { get; set; }
     }
 
+    /// <summary>
+    /// Representa una relacion de un <see cref="ModeloHabilidad"/> con el <see cref="ModeloEfecto"/> que aplique
+    /// </summary>
     public class TIHabilidadEfecto : TIHabilidad
     {
         [ForeignKey(nameof(Efecto))]

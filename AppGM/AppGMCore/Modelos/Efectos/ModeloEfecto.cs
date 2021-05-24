@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 namespace AppGM.Core
 {
     /// <summary>
-    /// Modelo de datos para efecto
+    /// Modelo de datos para un efecto
     /// </summary>
-    public class ModeloEfecto : ModeloBase, IDescripcion
+    public class ModeloEfecto : ModeloBase
     {
         public ControladorEfecto controladorEfecto;
 
