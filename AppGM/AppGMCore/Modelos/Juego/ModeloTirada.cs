@@ -11,9 +11,13 @@ namespace AppGM.Core
     {
         public ControladorTiradaVariable controladorTiradaVariable;
 
-        //Cantidad de dados
+        /// <summary>
+        /// Cantidad de dados
+        /// </summary>
         public ushort Dados { get; set; }
-        //Caras de los dados
+        /// <summary>
+        /// Caras de los dados
+        /// </summary>
         public ushort Caras { get; set; }
     }
 
@@ -21,6 +25,9 @@ namespace AppGM.Core
     {
         public ControladorTiradaStat controladorTiradaStat;
 
+        /// <summary>
+        /// Stat a tener en cuenta durante la tirada
+        /// </summary>
         public EStat StatDeLaQueDepende { get; set; }
     }
 
@@ -28,6 +35,9 @@ namespace AppGM.Core
     {
         public ControladorTiradaDaño controladorTiradaDaño;
 
+        /// <summary>
+        /// Tipo de daño que aplica la tirada
+        /// </summary>
         public ETipoDeDaño TipoDeDaño { get; set; }
     }
 }
