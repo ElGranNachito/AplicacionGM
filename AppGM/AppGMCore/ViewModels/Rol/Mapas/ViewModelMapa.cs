@@ -77,7 +77,7 @@ namespace AppGM.Core
         {
             ViewModelMensajeCrearUnidadMapa vm = new ViewModelMensajeCrearUnidadMapa(this);
 
-            await SistemaPrincipal.Aplicacion.VentanaPopups.Mostrar(vm, true, -1, -1);
+            await SistemaPrincipal.Aplicacion.VentanaPopups.Mostrar(vm, "Añadir Unidad", true, -1, -1);
 
             if (vm.vmResultado is ViewModelIngresoPosicion vmNuevaUndiad)
                 Posiciones.Add(vmNuevaUndiad);

@@ -6,25 +6,59 @@ using System.Windows.Input;
 
 namespace AppGM.Core
 {
-    //TODO: Probablemente hacer este view model una clase estatica para que no sea tanto lio
+    
     public class ViewModelPaginaPrincipal : BaseViewModel
     {
-        #region Propiedades
+        #region Campos & Propiedades
 
+        //------------------------CAMPOS-----------------------------
+
+        /// <summary>
+        /// Indice del rol actualmente seleccionado.
+        /// </summary>
         private int mIndiceRolActual = 0;
 
-        private Animacion AnimacionFondoMenuPrincipalLoop;
+        /// <summary>
+        /// Animacion del fondo.
+        /// </summary>
+        private Animacion mAnimacionFondoMenuPrincipalLoop;
 
-        public bool MouseSobreCartaRol { get; set; } = false;
 
-        public string FotogramaActualAnimacionFondo { get; set; }
+        //----------------------PROPIEDADES--------------------------
 
+        /// <summary>
+        /// Comando que se ejecuta para avanzar en la lista de roles disponibles
+        /// </summary>
         public ICommand ComandoAvanzarIndiceRol { get; set; }
+
+        /// <summary>
+        /// Comando que se ejecuta para retroceder en la lista de roles disponibles
+        /// </summary>
         public ICommand ComandoRetrocederIndiceRol { get; set; }
+
+        /// <summary>
+        /// Comando que se ejecuta cuando se presiona el boton crear rol
+        /// </summary>
         public ICommand ComandoCrearRol { get; set; }
 
+        /// <summary>
+        /// Indica si el mouse esta actualmente sobre una carta de rol
+        /// </summary>
+        public bool MouseSobreCartaRol { get; set; } = false;
+
+        /// <summary>
+        /// Ruta del fotograma actual
+        /// </summary>
+        public string FotogramaActualAnimacionFondo { get; set; }
+
+        /// <summary>
+        /// Devuelve el rol seleccionado actualmente
+        /// </summary>
         public ModeloRol RolActual => Roles[mIndiceRolActual];
 
+        /// <summary>
+        /// Viewmodel del globo que muestra la info del rol actualmente seleccionado
+        /// </summary>
         public ViewModelGlobo<ViewModelContenidoGloboInfoRol> GloboInfoRol { get; set; } = new ViewModelGlobo<ViewModelContenidoGloboInfoRol>
         {
             ColaGloboVisible = false,
@@ -39,17 +73,26 @@ namespace AppGM.Core
             }
         };
 
+        /// <summary>
+        /// VM Carta de creacion de rol
+        /// </summary>
         public ViewModelCarta CartaAñadirRol { get; set; } = new ViewModelCarta
         {
             ZIndex = 1,
             Comando = new Comando(CrearRol)
         };
 
+        /// <summary>
+        /// VM Carta de seleccion de rol
+        /// </summary>
         public ViewModelCarta CartaSeleccionarRol { get; set; } = new ViewModelCarta
         {
             ZIndex = 0,
         };
 
+        /// <summary>
+        /// Lista de los roles disponibles
+        /// </summary>
         public List<ModeloRol> Roles = new List<ModeloRol>
         {
             new ModeloRol
@@ -69,9 +112,40 @@ namespace AppGM.Core
         #endregion
 
         #region Constructor
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public ViewModelPaginaPrincipal()
         {
-            EstablecerComandosCartaSeleccionarRol();
+            //Comando que se ejecuta al presionar la carta de seleccionar rol
+	        CartaSeleccionarRol.Comando = new Comando(async () =>
+            {
+	            await SistemaPrincipal.CargarRolAsincronicamente(RolActual);
+
+	            SistemaPrincipal.Aplicacion.EPagina =
+		            EPagina.PaginaPrincipalRol;
+            });
+
+            //Comando que se ejecuta cuando el mouse se posiciona sobre la carta de seleccionar rol
+            CartaSeleccionarRol.ComandoMouseEnter = new Comando(() =>
+            {
+	            CartaSeleccionarRol.ZIndex = 1;
+
+	            MouseSobreCartaRol = true;
+	            GloboInfoRol.GloboVisible = true;
+
+	            GloboInfoRol.ViewModelContenido.ModeloRol = RolActual;
+            });
+
+            //Comando que se ejecuta cuando el mouse deja de estar sobre la carta de seleccionar rol
+            CartaSeleccionarRol.ComandoMouseLeave = new Comando(() =>
+            {
+	            CartaSeleccionarRol.ZIndex = 0;
+
+	            MouseSobreCartaRol = false;
+	            GloboInfoRol.GloboVisible = false;
+            });
 
             ComandoAvanzarIndiceRol = new Comando(() =>
             {
@@ -89,7 +163,8 @@ namespace AppGM.Core
                 DispararPropertyChanged(new PropertyChangedEventArgs(nameof(RolActual)));
             });
 
-            AnimacionFondoMenuPrincipalLoop = new Animacion(path =>
+            //Creamos la animacion del fondo
+            mAnimacionFondoMenuPrincipalLoop = new Animacion(path =>
                 {
                     FotogramaActualAnimacionFondo = (string)path;
                 },
@@ -99,45 +174,23 @@ namespace AppGM.Core
                     EFormatoImagen.Jpg,
                 true);
 
-            ControladorDeAnimaciones.AñadirAnimacionAsincronicamente(AnimacionFondoMenuPrincipalLoop);
+            //Añadimos la animacion al controlador
+            ControladorDeAnimaciones.AñadirAnimacionAsincronicamente(mAnimacionFondoMenuPrincipalLoop);
         }
+
         #endregion
 
         #region Funciones
-        private void EstablecerComandosCartaSeleccionarRol()
-        {
-            CartaSeleccionarRol.Comando = new Comando(async () =>
-            {
-                await SistemaPrincipal.CargarRolAsincronicamente(RolActual);
 
-                SistemaPrincipal.Aplicacion.EPagina =
-                    EPagina.PaginaPrincipalRol;
-            });
-
-            CartaSeleccionarRol.ComandoMouseEnter = new Comando(() =>
-            {
-                CartaSeleccionarRol.ZIndex = 1;
-
-                MouseSobreCartaRol = true;
-                GloboInfoRol.GloboVisible = true;
-
-                GloboInfoRol.ViewModelContenido.ModeloRol = RolActual;
-            });
-
-            CartaSeleccionarRol.ComandoMouseLeave = new Comando(() =>
-            {
-                CartaSeleccionarRol.ZIndex = 0;
-
-                MouseSobreCartaRol = false;
-                GloboInfoRol.GloboVisible = false;
-            });
-        }
-
+        /// <summary>
+        /// Crea el popup de creacion de rol
+        /// </summary>
         private static async void CrearRol()
         {
-            ViewModelMensajeCrearRol viemModelCreacionDeRol = new ViewModelMensajeCrearRol();
+            ViewModelMensajeCrearRol viewModelCreacionDeRol = new ViewModelMensajeCrearRol();
 
-            await SistemaPrincipal.Aplicacion.VentanaPopups.Mostrar(viemModelCreacionDeRol, true, 575, -1);
+            //Creamos el popup de creacion de rol
+            await SistemaPrincipal.Aplicacion.VentanaPopups.Mostrar(viewModelCreacionDeRol, "Creacion de Rol", true, 575, -1);
         }
         #endregion
     }

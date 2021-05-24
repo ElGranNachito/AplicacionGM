@@ -2,18 +2,38 @@
 
 namespace AppGM.Core
 {
+    /// <summary>
+    /// Viewmodel que representa el contenido de la ventana de la aplicacion y cualquiera de sus popups
+    /// </summary>
 	public class ViewModelAplicacion : BaseViewModel
     {
-        #region Miembros
+        #region Campos & Propiedades
 
+        //--------------------------CAMPOS--------------------------------
+
+
+        /// <summary>
+        /// Pagina actual de la app
+        /// </summary>
         private EPagina mEPagina = EPagina.PaginaPrincipal;
 
-        #endregion
 
-        #region Propiedades
+        //------------------------PROPIEDADES-------------------------
+
+
+        /// <summary>
+        /// Ventana principal
+        /// </summary>
         public IVentana VentanaPrincipal { get; set; }
+
+        /// <summary>
+        /// Ventana de popups
+        /// </summary>
         public IVentanaMensaje VentanaPopups { get; set; }
 
+        /// <summary>
+        /// Pagina actual de la aplicacion
+        /// </summary>
         public EPagina EPagina
         {
             get => mEPagina;
@@ -37,6 +57,9 @@ namespace AppGM.Core
 
         #region Delegatos & Eventos
 
+        /// <summary>
+        /// Evento que se dispara cuando la pagina actaul de la aplicacion cambia
+        /// </summary>
         public event DVariableCambio<EPagina> OnPaginaActualCambio = delegate{};
 
         #endregion

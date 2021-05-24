@@ -2,14 +2,28 @@
 
 namespace AppGM.Core
 {
+    /// <summary>
+    /// Viewmodel para el contenido de un globo que muestra la informacion de un combate
+    /// </summary>
     public class ViewModelInfoCombateGlobo : BaseViewModel
     {
-        public ModeloAdministradorDeCombate Combate { get; set; }
+		#region Propiedades
 
-        public string Participantes => ObtenerParticipantes();
+		/// <summary>
+		/// Modelo del combate
+		/// </summary>
+		public ModeloAdministradorDeCombate Combate { get; set; }
 
-        #region Funciones
-        public string ObtenerParticipantes()
+		/// <summary>
+		/// Obtiene una lista de los participantes
+		/// </summary>
+		public string Participantes => ObtenerParticipantes(); 
+
+		#endregion
+
+		#region Funciones
+
+		public string ObtenerParticipantes()
         {
             if (Combate == null)
                 return string.Empty;
@@ -20,11 +34,16 @@ namespace AppGM.Core
             {
                 ModeloPersonaje pj = Combate.Participantes[i].Participante.Personaje.Personaje;
 
-                listaPartcipantes.Append(i == Combate.Participantes.Count - 1 ? $"{pj.Nombre}" : $"{pj.Nombre}, ");
+                listaPartcipantes.Append(i == Combate.Participantes.Count - 1 
+					//Si este es el ultimo personaje de la lista...
+	                ? $"{pj.Nombre}" 
+                    //Sino...
+	                : $"{pj.Nombre}, ");
             }
 
             return listaPartcipantes.ToString();
         }
+
         #endregion
     }
 }

@@ -3,95 +3,168 @@ using System.Windows.Input;
 
 namespace AppGM.Core
 {
+    /// <summary>
+    /// View model que representa el control para la modificacion de la posicion de un personaje en un mapa
+    /// </summary>
     public class ViewModelIngresoPosicion : BaseViewModel
     {
-        #region Miembros
+        #region Campos & Propiedades
 
+
+        // -------------------------CAMPOS----------------------------
+
+
+        /// <summary>
+        /// Viewmodel del mapa
+        /// </summary>
         public ViewModelMapa         mapa;
+
+        /// <summary>
+        /// Controlador de la unidad
+        /// </summary>
         public ControladorUnidadMapa unidad;
 
+
+        // -----------------------PROPIEDADES----------------------------------
+
+
+        /// <summary>
+        /// Comando que se ejecuta al presionar el boton de eliminar unidad
+        /// </summary>
         public ICommand ComandoEliminarUnidad { get; set; }
 
-        #endregion
-
-        #region Propiedades
+        /// <summary>
+        /// Posicion de la unidad
+        /// </summary>
         public ViewModelVector2 Posicion { get; set; }
+
+        /// <summary>
+        /// Ruta de la imagen de la unidad
+        /// </summary>
+        public string PathImagen => unidad.Path;
+
+        /// <summary>
+        /// Nombre de la unidad
+        /// </summary>
+        public string Nombre => EsInvocacionOTrampa ? string.Format($"{unidad.Nombre} ({Cantidad})") : unidad.Nombre;
+
+        /// <summary>
+        /// Devuelve verdadero si esta unidad es una invocacion o una trampa
+        /// </summary>
+        public bool EsInvocacionOTrampa => (unidad.TipoUnidad & (ETipoUnidad.Invocacion | ETipoUnidad.Trampa)) != 0;
+
+        /// <summary>
+        /// Cantidad de elementos que representa
+        /// </summary>
+        public int Cantidad => EsInvocacionOTrampa ? unidad.Cantidad : 0;
+
+        /// <summary>
+        /// Tamaño de la imagen
+        /// </summary>
+        public ViewModelVector2 TamañoImagenesPosicion => mapa.TamañoImagenesPosicion;
+
+        /// <summary>
+        /// Mitad del tamaño de la imagen
+        /// </summary>
+        public ViewModelVector2 MitadTamañoImagenesPosicion => mapa.MitadTamañoImagenesPosicion;
+
+        /// <summary>
+        /// Posicion de la imagen en el mapa
+        /// </summary>
+        public Grosor PosicionImg => new Grosor(Posicion.X, Posicion.Y, 0, 0);
+
+        /// <summary>
+        /// Posicion del texto de cantidad de unidades
+        /// </summary>
+        public Grosor PosicionCantidadUnidades => EsInvocacionOTrampa ? new Grosor(Posicion.X - Cantidad.Length() * 2.66, Posicion.Y + TamañoImagenesPosicion.Y * 0.25, 0, 0) : new Grosor(0);
+
+        /// <summary>
+        /// Texto del campo de texto que representa la posicion en el eje x
+        /// </summary>
         public string TextoPosicionX
         {
-            get => Posicion.X == 0 ? "" : Posicion.X.Round(1).ToString();
-            set
-            {
-                if (mapa == null)
-                    return;
+	        get => Posicion.X == 0 ? "" : Posicion.X.Round(1).ToString();
+	        set
+	        {
+		        if (mapa == null)
+			        return;
 
-                double tmp;
+		        double tmp;
 
+		        //Intentamos parsear el nuevo valor
                 if (double.TryParse(value, out tmp))
-                {
-                    if (tmp < 0)
-                        return;
+		        {
+			        if (tmp < 0)
+				        return;
 
+			        //Si el valor esta dentro de los limites del mapa actualizamos
                     if (tmp < mapa.TamañoCanvasX)
-                        Posicion.X = tmp;
+				        Posicion.X = tmp;
+                    //Si no lo esta simplemente ponemos como posicion el final del mapa
                     else
                         Posicion.X = mapa.TamañoCanvasX;
 
+                    //Le avisamos a la UI que la posicion de la imagen cambio
                     DispararPropertyChangedPosImgPosCantUnidades();
 
-                    return;
-                }
+			        return;
+		        }
 
-                if (value.IsNullOrWhiteSpace())
-                    Posicion.X = 0;
+		        if (value.IsNullOrWhiteSpace())
+			        Posicion.X = 0;
 
-                DispararPropertyChangedPosImgPosCantUnidades();
-            }
+		        DispararPropertyChangedPosImgPosCantUnidades();
+	        }
         }
+
+        /// <summary>
+        /// Texto del campo de texto que representa la posicion en el eje y
+        /// </summary>
         public string TextoPosicionY
         {
-            get => Posicion.Y.Round(1).ToString();
-            set
-            {
-                if (mapa == null)
-                    return;
+	        get => Posicion.Y.Round(1).ToString();
+	        set
+	        {
+		        if (mapa == null)
+			        return;
 
-                double tmp;
+		        double tmp;
 
-                if (double.TryParse(value, out tmp))
-                {
-                    if (tmp < 0)
-                        return;
+                //Intentamos parsear el nuevo valor
+		        if (double.TryParse(value, out tmp))
+		        {
+			        if (tmp < 0)
+				        return;
 
-                    if (tmp < mapa.TamañoCanvasY)
-                        Posicion.Y = tmp;
-                    else
-                        Posicion.Y = mapa.TamañoCanvasY;
+                    //Si el valor esta dentro de los limites del mapa actualizamos
+			        if (tmp < mapa.TamañoCanvasY)
+				        Posicion.Y = tmp;
+                    //Si no lo esta simplemente ponemos como posicion el final del mapa
+			        else
+				        Posicion.Y = mapa.TamañoCanvasY;
 
-                    DispararPropertyChangedPosImgPosCantUnidades();
+                    //Le avisamos a la UI que la posicion de la imagen cambio
+			        DispararPropertyChangedPosImgPosCantUnidades();
 
-                    return;
-                }
+			        return;
+		        }
 
-                if (value.IsNullOrWhiteSpace())
-                    Posicion.Y = 0;
+		        if (value.IsNullOrWhiteSpace())
+			        Posicion.Y = 0;
 
                 DispararPropertyChangedPosImgPosCantUnidades();
-            }
+	        }
         }
-
-        public string PathImagen                            => unidad.Path;
-        public string Nombre                                => EsInvocacionOTrampa ? string.Format($"{unidad.Nombre} ({Cantidad})") : unidad.Nombre;
-        public bool   EsInvocacionOTrampa                   => (unidad.TipoUnidad & (ETipoUnidad.Invocacion | ETipoUnidad.Trampa)) != 0;
-        public int    Cantidad                              => EsInvocacionOTrampa ? unidad.Cantidad : 0;
-        public ViewModelVector2 TamañoImagenesPosicion      => mapa.TamañoImagenesPosicion;
-        public ViewModelVector2 MitadTamañoImagenesPosicion => mapa.MitadTamañoImagenesPosicion;
-        public Grosor           PosicionImg                 => new Grosor(Posicion.X, Posicion.Y, 0, 0);
-        public Grosor           PosicionCantidadUnidades    => EsInvocacionOTrampa ? new Grosor(Posicion.X - Cantidad.Length() * 2.66, Posicion.Y + TamañoImagenesPosicion.Y * 0.25, 0, 0) : new Grosor(0);
 
         #endregion
 
         #region Constructores
 
+        /// <summary>
+        /// Constrcutor
+        /// </summary>
+        /// <param name="_mapa">Viewmodel del mapa</param>
+        /// <param name="_unidad">Contralador de la unidad</param>
         public ViewModelIngresoPosicion(ViewModelMapa _mapa, ControladorUnidadMapa _unidad)
         {
             mapa   = _mapa;
@@ -105,12 +178,19 @@ namespace AppGM.Core
         #endregion
 
         #region Funciones
+
+        /// <summary>
+        /// Dispara el evento property changed para las propiedades <see cref="PosicionImg" y <see cref="PosicionCantidadUnidades"/>/>
+        /// </summary>
         public void DispararPropertyChangedPosImgPosCantUnidades()
         {
             DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PosicionImg)));
             DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PosicionCantidadUnidades)));
         }
 
+        /// <summary>
+        /// Elimina esta unidad del mapa y de la base de datos
+        /// </summary>
         private void EliminarUnidad()
         {
             mapa.Posiciones.Remove(this);

@@ -97,7 +97,7 @@ namespace AppGM.Core
 		/// </summary>
 		/// <param name="vm">View model del contenido el mensaje</param>
 		/// <param name="esperarCierre">Si el valor es <see cref="true"/>la ventana principal queda bloqueada hasta que el mensaje se cierre</param>
-		Task Mostrar(ViewModelMensajeBase vm, bool esperarCierre, int alto, int ancho);
+		Task Mostrar(ViewModelMensajeBase vm, string titulo, bool esperarCierre, int alto, int ancho);
 
 		/// <summary>
 		/// Establece el viewmodel de la ventana
