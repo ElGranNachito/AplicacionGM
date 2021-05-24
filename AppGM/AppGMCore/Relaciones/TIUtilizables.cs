@@ -2,7 +2,11 @@
 
 namespace AppGM.Core
 {
-    // Slot
+    // Slot:
+
+    /// <summary>
+    /// Representa una relacion de un <see cref="ModeloSlot"/> con un <see cref="ModeloItem"/> que almacena
+    /// </summary>
     public class TISlotItem : ModeloBaseSK
     {
         [ForeignKey(nameof(Slot))]
@@ -14,7 +18,11 @@ namespace AppGM.Core
         public ModeloItem Item { get; set; }
     }
 
-    // Utilizables 
+    // Utilizables:
+
+    /// <summary>
+    /// Representa una relacion de un <see cref="ModeloUtilizable"/>
+    /// </summary>
     public abstract class TIUtilizable
     {
         [ForeignKey(nameof(Utilizable))]
@@ -22,6 +30,9 @@ namespace AppGM.Core
         public ModeloUtilizable Utilizable { get; set; }
     }
 
+    /// <summary>
+    /// Representa una relacion de un <see cref="ModeloUtilizable"/> con la <see cref="ModeloTiradaBase"/> que le corresponde
+    /// </summary>
     public class TIUtilizableTiradaBase : TIUtilizable
     {
         [ForeignKey(nameof(TiradaBase))]
@@ -29,6 +40,9 @@ namespace AppGM.Core
         public ModeloTiradaBase TiradaBase { get; set; }
     }
 
+    /// <summary>
+    /// Representa una relacion de un <see cref="ModeloUtilizable"/> con el <see cref="ModeloModificadorDeStatBase"/> que tenga
+    /// </summary>
     public class TIUtilizableModificadorDeStatBase : TIUtilizable
     {
         [ForeignKey(nameof(ModificadorDeStatBase))]
@@ -36,6 +50,9 @@ namespace AppGM.Core
         public ModeloModificadorDeStatBase ModificadorDeStatBase { get; set; }
     }
 
+    /// <summary>
+    /// Representa una relacion de un <see cref="ModeloUtilizable"/> con el <see cref="ModeloEfecto"/> que aplique
+    /// </summary>
     public class TIUtilizableEfecto : TIUtilizable
     {
         [ForeignKey(nameof(Efecto))]
@@ -43,7 +60,11 @@ namespace AppGM.Core
         public ModeloEfecto Efecto { get; set; }
     }
 
-    // Utilizables portables
+    // Utilizables portables:
+
+    /// <summary>
+    /// Representa una relacion de un <see cref="ModeloPortable"/>
+    /// </summary>
     public abstract class TIPortable
     {
         [ForeignKey(nameof(Portable))]
@@ -51,6 +72,9 @@ namespace AppGM.Core
         public ModeloPortable Portable { get; set; }
     }
 
+    /// <summary>
+    /// Representa una relacion de un <see cref="ModeloPortable"/> con la <see cref="ModeloSlot"/> que aporte
+    /// </summary>
     public class TIPortableSlots : TIPortable
     {
         [ForeignKey(nameof(Slot))]
@@ -58,6 +82,9 @@ namespace AppGM.Core
         public ModeloSlot Slot { get; set; }
     }
 
+    /// <summary>
+    /// Representa una relacion de un <see cref="ModeloPortable"/> con el <see cref="ModeloModificadorDeStatBase"/> que tenga
+    /// </summary>
     public class TIPortableModificadorDeStatBase : TIPortable
     {
         [ForeignKey(nameof(Modificador))]
@@ -65,7 +92,11 @@ namespace AppGM.Core
         public ModeloModificadorDeStatBase Modificador { get; set; }
     }
 
-    // Utilizable portable ofensivo
+    // Utilizable portable ofensivo:
+
+    /// <summary>
+    /// Representa una relacion de un <see cref="ModeloOfensivo"/>
+    /// </summary>
     public abstract class TIOfensivo
     {
         [ForeignKey(nameof(Ofensivo))]
@@ -73,6 +104,9 @@ namespace AppGM.Core
         public ModeloOfensivo Ofensivo { get; set; }
     }
 
+    /// <summary>
+    /// Representa una relacion de un <see cref="ModeloOfensivo"/> con la <see cref="ModeloTiradaDeDaño"/> que le corresponda
+    /// </summary>
     public class TIOfensivoTiradaDeDaño : TIOfensivo
     {
         [ForeignKey(nameof(TiradaDeDaño))]
@@ -80,6 +114,9 @@ namespace AppGM.Core
         public ModeloTiradaDeDaño TiradaDeDaño { get; set; }
     }
 
+    /// <summary>
+    /// Representa una relacion de un <see cref="ModeloOfensivo"/> con el <see cref="ModeloEfecto"/> que aplique
+    /// </summary>
     public class TIOfensivoEfecto : TIOfensivo
     {
         [ForeignKey(nameof(Efecto))]
@@ -87,7 +124,11 @@ namespace AppGM.Core
         public ModeloEfecto Efecto { get; set; }
     }
 
-    // Consumible armas
+    // Consumible armas:
+
+    /// <summary>
+    /// Representa una relacion de un <see cref="ModeloArmasDistancia"/>
+    /// </summary>
     public abstract class TIArmasDistancia
     {
         [ForeignKey(nameof(ArmasDistancia))]
@@ -95,6 +136,9 @@ namespace AppGM.Core
         public ModeloArmasDistancia ArmasDistancia { get; set; }
     }
 
+    /// <summary>
+    /// Representa una relacion de un <see cref="ModeloArmasDistancia"/> con la <see cref="ModeloTiradaVariable"/> que le corresponda
+    /// </summary>
     public class TIArmasDistanciaTiradaVariable : TIArmasDistancia
     {
         [ForeignKey(nameof(TiradaVariable))]
@@ -102,6 +146,9 @@ namespace AppGM.Core
         public ModeloTiradaVariable TiradaVariable { get; set; }
     }
 
+    /// <summary>
+    /// Representa una relacion de un <see cref="ModeloArmasDistancia"/> con la <see cref="ModeloTiradaDeDaño"/> que le corresponda
+    /// </summary>
     public class TIArmasDistanciaTiradaDeDaño : TIArmasDistancia
     {
         [ForeignKey(nameof(TiradaDaño))]
@@ -109,6 +156,9 @@ namespace AppGM.Core
         public ModeloTiradaDeDaño TiradaDaño { get; set; }
     }
 
+    /// <summary>
+    /// Representa una relacion de un <see cref="ModeloArmasDistancia"/> con el <see cref="ModeloEfecto"/> que aplique
+    /// </summary>
     public class TIArmasDistanciaEfecto : TIArmasDistancia
     {
         [ForeignKey(nameof(Efecto))]

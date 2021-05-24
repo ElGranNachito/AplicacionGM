@@ -51,6 +51,30 @@ namespace AppGM.Core.Migrations
                     b.ToTable("Combates");
                 });
 
+            modelBuilder.Entity("AppGM.Core.ModeloAlianza", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Descripcion")
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(500);
+
+                    b.Property<bool>("EsVigente")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Nombre")
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(50);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ModeloAlianza");
+
+                    b.HasDiscriminator();
+                });
+
             modelBuilder.Entity("AppGM.Core.ModeloCaracteristicas", b =>
                 {
                     b.Property<int>("Id")
@@ -103,6 +127,28 @@ namespace AppGM.Core.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ModeloCargasHabilidad");
+                });
+
+            modelBuilder.Entity("AppGM.Core.ModeloContrato", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Descripcion")
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(500);
+
+                    b.Property<bool>("EsVigente")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Nombre")
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(50);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ModeloContrato");
                 });
 
             modelBuilder.Entity("AppGM.Core.ModeloDatosInvocacionBase", b =>
@@ -473,6 +519,24 @@ namespace AppGM.Core.Migrations
                     b.ToTable("CombateParticipantes");
                 });
 
+            modelBuilder.Entity("AppGM.Core.TIAlianzaContrato", b =>
+                {
+                    b.Property<int>("IdAlianza")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("IdContrato")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("IdAlianza", "IdContrato");
+
+                    b.HasIndex("IdAlianza")
+                        .IsUnique();
+
+                    b.HasIndex("IdContrato");
+
+                    b.ToTable("TIAlianzaContrato");
+                });
+
             modelBuilder.Entity("AppGM.Core.TIArmasDistanciaEfecto", b =>
                 {
                     b.Property<int>("IdArmasDistancia")
@@ -806,6 +870,21 @@ namespace AppGM.Core.Migrations
                     b.ToTable("ParticipantePersonaje");
                 });
 
+            modelBuilder.Entity("AppGM.Core.TIPersonajeAlianza", b =>
+                {
+                    b.Property<int>("IdPersonaje")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("IdAlianza")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("IdPersonaje", "IdAlianza");
+
+                    b.HasIndex("IdAlianza");
+
+                    b.ToTable("PersonajeAlianzas");
+                });
+
             modelBuilder.Entity("AppGM.Core.TIPersonajeArmaDistancia", b =>
                 {
                     b.Property<int>("IdArmaDistancia")
@@ -819,6 +898,21 @@ namespace AppGM.Core.Migrations
                     b.HasIndex("IdPersonaje");
 
                     b.ToTable("PersonajeArmasDistancias");
+                });
+
+            modelBuilder.Entity("AppGM.Core.TIPersonajeContrato", b =>
+                {
+                    b.Property<int>("IdPersonaje")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("IdContrato")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("IdPersonaje", "IdContrato");
+
+                    b.HasIndex("IdContrato");
+
+                    b.ToTable("PersonajeContratos");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIPersonajeDefensivo", b =>
@@ -942,21 +1036,6 @@ namespace AppGM.Core.Migrations
                     b.HasIndex("IdPerk");
 
                     b.ToTable("PersonajePerks");
-                });
-
-            modelBuilder.Entity("AppGM.Core.TIPersonajePersonaje", b =>
-                {
-                    b.Property<int>("IdPersonaje")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("IdAliado")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("IdPersonaje", "IdAliado");
-
-                    b.HasIndex("IdAliado");
-
-                    b.ToTable("PersonajeAliados");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIPersonajeUnidadMapa", b =>
@@ -1551,6 +1630,21 @@ namespace AppGM.Core.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("AppGM.Core.TIAlianzaContrato", b =>
+                {
+                    b.HasOne("AppGM.Core.ModeloAlianza", "Alianza")
+                        .WithOne("ContratoDeAlianza")
+                        .HasForeignKey("AppGM.Core.TIAlianzaContrato", "IdAlianza")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AppGM.Core.ModeloContrato", "Contrato")
+                        .WithMany()
+                        .HasForeignKey("IdContrato")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("AppGM.Core.TIArmasDistanciaEfecto", b =>
                 {
                     b.HasOne("AppGM.Core.ModeloArmasDistancia", "ArmasDistancia")
@@ -1851,6 +1945,21 @@ namespace AppGM.Core.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("AppGM.Core.TIPersonajeAlianza", b =>
+                {
+                    b.HasOne("AppGM.Core.ModeloAlianza", "Alianza")
+                        .WithMany("PersonajesAfectados")
+                        .HasForeignKey("IdAlianza")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AppGM.Core.ModeloPersonaje", "Personaje")
+                        .WithMany("Alianzas")
+                        .HasForeignKey("IdPersonaje")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("AppGM.Core.TIPersonajeArmaDistancia", b =>
                 {
                     b.HasOne("AppGM.Core.ModeloArmasDistancia", "ArmaDistancia")
@@ -1861,6 +1970,21 @@ namespace AppGM.Core.Migrations
 
                     b.HasOne("AppGM.Core.ModeloPersonaje", "Personaje")
                         .WithMany("ArmasDistancia")
+                        .HasForeignKey("IdPersonaje")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("AppGM.Core.TIPersonajeContrato", b =>
+                {
+                    b.HasOne("AppGM.Core.ModeloContrato", "Contrato")
+                        .WithMany("PersonajesAfectados")
+                        .HasForeignKey("IdContrato")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AppGM.Core.ModeloPersonaje", "Personaje")
+                        .WithMany("Contratos")
                         .HasForeignKey("IdPersonaje")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1981,21 +2105,6 @@ namespace AppGM.Core.Migrations
 
                     b.HasOne("AppGM.Core.ModeloPersonaje", "Personaje")
                         .WithMany("Perks")
-                        .HasForeignKey("IdPersonaje")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("AppGM.Core.TIPersonajePersonaje", b =>
-                {
-                    b.HasOne("AppGM.Core.ModeloPersonaje", "Aliado")
-                        .WithMany()
-                        .HasForeignKey("IdAliado")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AppGM.Core.ModeloPersonaje", "Personaje")
-                        .WithMany("Aliados")
                         .HasForeignKey("IdPersonaje")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

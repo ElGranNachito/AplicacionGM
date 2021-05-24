@@ -24,7 +24,8 @@ namespace AppGM.Core
         public DbSet<TIPersonajeUtilizable> PersonajeUtilizables { get; set; }
         public DbSet<TIPersonajeDefensivo> PersonajeDefensivos { get; set; }
         public DbSet<TIPersonajeArmaDistancia> PersonajeArmasDistancias { get; set; }
-        public DbSet<TIPersonajePersonaje> PersonajeAliados { get; set; }
+        public DbSet<TIPersonajeContrato> PersonajeContratos { get; set; }
+        public DbSet<TIPersonajeAlianza> PersonajeAlianzas { get; set; }
         public DbSet<TIPersonajePerk> PersonajePerks { get; set; }
         public DbSet<TIPersonajeHabilidad> PersonajeSkills { get; set; }
         public DbSet<TIPersonajeMagia> PersonajeMagias { get; set; }
@@ -117,15 +118,26 @@ namespace AppGM.Core
             modelBuilder.Entity<TIPersonajeArmaDistancia>()
                 .HasOne(i => i.ArmaDistancia);
 
-            // - Personaje aliados
-            modelBuilder.Entity<TIPersonajePersonaje>().HasKey(e => new { e.IdPersonaje, e.IdAliado });
+            // - Personaje contratos
+            modelBuilder.Entity<TIPersonajeContrato>().HasKey(e => new { e.IdPersonaje, e.IdContrato });
 
-            modelBuilder.Entity<TIPersonajePersonaje>()
-                .HasOne(i => i.Aliado);
+            modelBuilder.Entity<TIPersonajeContrato>()
+                .HasOne(i => i.Contrato);
 
-            modelBuilder.Entity<TIPersonajePersonaje>()
+            modelBuilder.Entity<TIPersonajeContrato>()
                 .HasOne(i => i.Personaje)
-                .WithMany(p => p.Aliados)
+                .WithMany(p => p.Contratos)
+                .HasForeignKey(ip => ip.IdPersonaje);
+
+            // - Personaje alianzas
+            modelBuilder.Entity<TIPersonajeAlianza>().HasKey(e => new { e.IdPersonaje, e.IdAlianza });
+
+            modelBuilder.Entity<TIPersonajeAlianza>()
+                .HasOne(i => i.Alianza);
+
+            modelBuilder.Entity<TIPersonajeAlianza>()
+                .HasOne(i => i.Personaje)
+                .WithMany(p => p.Alianzas)
                 .HasForeignKey(ip => ip.IdPersonaje);
 
             // - Personaje perks
@@ -286,6 +298,19 @@ namespace AppGM.Core
                 .HasOne(i => i.Efecto)
                 .WithMany(p => p.Modificaciones)
                 .HasForeignKey(ip => ip.IdEfecto);
+
+            // Alianzas:
+            modelBuilder.Entity<ModeloAlianza>().ToTable("ModeloAlianza").HasNoDiscriminator();
+
+            modelBuilder.Entity<TIAlianzaContrato>().HasKey(e => new { e.IdAlianza, e.IdContrato });
+
+            modelBuilder.Entity<TIAlianzaContrato>()
+                .HasOne(i => i.Contrato);
+
+            modelBuilder.Entity<TIAlianzaContrato>()
+                .HasOne(i => i.Alianza)
+                .WithOne(p => p.ContratoDeAlianza)
+                .HasForeignKey<TIAlianzaContrato>(ip => ip.IdAlianza);
 
             // Slot item: 
             modelBuilder.Entity<TISlotItem>().HasKey(e => new { e.IdSlot, e.IdItem });

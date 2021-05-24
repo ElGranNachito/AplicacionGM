@@ -50,6 +50,21 @@ namespace AppGM.Core.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ModeloAlianza",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Nombre = table.Column<string>(maxLength: 50, nullable: true),
+                    Descripcion = table.Column<string>(maxLength: 500, nullable: true),
+                    EsVigente = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ModeloAlianza", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ModeloCaracteristicas",
                 columns: table => new
                 {
@@ -81,6 +96,21 @@ namespace AppGM.Core.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ModeloCargasHabilidad", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ModeloContrato",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Nombre = table.Column<string>(maxLength: 50, nullable: true),
+                    Descripcion = table.Column<string>(maxLength: 500, nullable: true),
+                    EsVigente = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ModeloContrato", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -305,6 +335,30 @@ namespace AppGM.Core.Migrations
                         name: "FK_CombateMapas_Mapas_IdMapa",
                         column: x => x.IdMapa,
                         principalTable: "Mapas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TIAlianzaContrato",
+                columns: table => new
+                {
+                    IdAlianza = table.Column<int>(nullable: false),
+                    IdContrato = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TIAlianzaContrato", x => new { x.IdAlianza, x.IdContrato });
+                    table.ForeignKey(
+                        name: "FK_TIAlianzaContrato_ModeloAlianza_IdAlianza",
+                        column: x => x.IdAlianza,
+                        principalTable: "ModeloAlianza",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TIAlianzaContrato_ModeloContrato_IdContrato",
+                        column: x => x.IdContrato,
+                        principalTable: "ModeloContrato",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -1021,23 +1075,23 @@ namespace AppGM.Core.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PersonajeAliados",
+                name: "PersonajeAlianzas",
                 columns: table => new
                 {
                     IdPersonaje = table.Column<int>(nullable: false),
-                    IdAliado = table.Column<int>(nullable: false)
+                    IdAlianza = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PersonajeAliados", x => new { x.IdPersonaje, x.IdAliado });
+                    table.PrimaryKey("PK_PersonajeAlianzas", x => new { x.IdPersonaje, x.IdAlianza });
                     table.ForeignKey(
-                        name: "FK_PersonajeAliados_ModeloPersonaje_IdAliado",
-                        column: x => x.IdAliado,
-                        principalTable: "ModeloPersonaje",
+                        name: "FK_PersonajeAlianzas_ModeloAlianza_IdAlianza",
+                        column: x => x.IdAlianza,
+                        principalTable: "ModeloAlianza",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PersonajeAliados_ModeloPersonaje_IdPersonaje",
+                        name: "FK_PersonajeAlianzas_ModeloPersonaje_IdPersonaje",
                         column: x => x.IdPersonaje,
                         principalTable: "ModeloPersonaje",
                         principalColumn: "Id",
@@ -1062,6 +1116,30 @@ namespace AppGM.Core.Migrations
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_PersonajeArmasDistancias_ModeloPersonaje_IdPersonaje",
+                        column: x => x.IdPersonaje,
+                        principalTable: "ModeloPersonaje",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PersonajeContratos",
+                columns: table => new
+                {
+                    IdPersonaje = table.Column<int>(nullable: false),
+                    IdContrato = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PersonajeContratos", x => new { x.IdPersonaje, x.IdContrato });
+                    table.ForeignKey(
+                        name: "FK_PersonajeContratos_ModeloContrato_IdContrato",
+                        column: x => x.IdContrato,
+                        principalTable: "ModeloContrato",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PersonajeContratos_ModeloPersonaje_IdPersonaje",
                         column: x => x.IdPersonaje,
                         principalTable: "ModeloPersonaje",
                         principalColumn: "Id",
@@ -1549,14 +1627,19 @@ namespace AppGM.Core.Migrations
                 column: "IdPersonaje");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PersonajeAliados_IdAliado",
-                table: "PersonajeAliados",
-                column: "IdAliado");
+                name: "IX_PersonajeAlianzas_IdAlianza",
+                table: "PersonajeAlianzas",
+                column: "IdAlianza");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PersonajeArmasDistancias_IdPersonaje",
                 table: "PersonajeArmasDistancias",
                 column: "IdPersonaje");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PersonajeContratos_IdContrato",
+                table: "PersonajeContratos",
+                column: "IdContrato");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PersonajeDefensivos_IdDefensivo",
@@ -1624,6 +1707,17 @@ namespace AppGM.Core.Migrations
                 name: "IX_ServantNoblePhantasms_IdNoblePhantasm",
                 table: "ServantNoblePhantasms",
                 column: "IdNoblePhantasm");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TIAlianzaContrato_IdAlianza",
+                table: "TIAlianzaContrato",
+                column: "IdAlianza",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TIAlianzaContrato_IdContrato",
+                table: "TIAlianzaContrato",
+                column: "IdContrato");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TIArmasDistanciaEfecto_IdEfecto",
@@ -1864,10 +1958,13 @@ namespace AppGM.Core.Migrations
                 name: "ParticipantePersonaje");
 
             migrationBuilder.DropTable(
-                name: "PersonajeAliados");
+                name: "PersonajeAlianzas");
 
             migrationBuilder.DropTable(
                 name: "PersonajeArmasDistancias");
+
+            migrationBuilder.DropTable(
+                name: "PersonajeContratos");
 
             migrationBuilder.DropTable(
                 name: "PersonajeDefensivos");
@@ -1898,6 +1995,9 @@ namespace AppGM.Core.Migrations
 
             migrationBuilder.DropTable(
                 name: "ServantNoblePhantasms");
+
+            migrationBuilder.DropTable(
+                name: "TIAlianzaContrato");
 
             migrationBuilder.DropTable(
                 name: "TIArmasDistanciaEfecto");
@@ -1991,6 +2091,12 @@ namespace AppGM.Core.Migrations
 
             migrationBuilder.DropTable(
                 name: "Rols");
+
+            migrationBuilder.DropTable(
+                name: "ModeloAlianza");
+
+            migrationBuilder.DropTable(
+                name: "ModeloContrato");
 
             migrationBuilder.DropTable(
                 name: "ModeloCargasHabilidad");

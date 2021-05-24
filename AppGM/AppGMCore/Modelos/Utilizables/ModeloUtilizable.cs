@@ -3,6 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AppGM.Core
 {
+    /// <summary>
+    /// Modelo de datos para el utilizable
+    /// </summary>
     public class ModeloUtilizable : ModeloBase
     {
         public ControladorUtilizable controladorUtilizable;
