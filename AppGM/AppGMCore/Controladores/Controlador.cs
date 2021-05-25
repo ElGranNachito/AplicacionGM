@@ -8,7 +8,7 @@
 	/// <summary>
 	/// Clase base de todos los controladores
 	/// </summary>
-	/// <typeparam name="TipoModelo">Tipo del modelo que este controladore representa</typeparam>
+	/// <typeparam name="TipoModelo">Tipo del modelo que este controlador representa</typeparam>
     public class Controlador<TipoModelo> : ControladorBase
         where TipoModelo: ModeloBaseSK, new()
     {
