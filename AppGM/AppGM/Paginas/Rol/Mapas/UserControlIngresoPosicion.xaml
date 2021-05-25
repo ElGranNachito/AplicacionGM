@@ -11,99 +11,74 @@
     <UserControl.Template>
         <ControlTemplate TargetType="{x:Type UserControl}">
 
-            <StackPanel>
+            <Border
+                Padding="3">
 
-                <Grid>
+                <StackPanel>
 
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
+                    <Grid>
 
-                    <!-- Checkbox mostrar unidad -->
-                    <CheckBox
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Nombre personaje -->
+                        <TextBlock
+                            Grid.Column="0"
+                            TextAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Grid.ColumnSpan="4"
+                            Text="{Binding Nombre, FallbackValue=Mr.Sin Nombre}" 
+                            FontSize="{StaticResource TamañoFontPequeño}"
+                            Foreground="White"/>
+
+                        <!-- Checkbox mostrar unidad -->
+                        <CheckBox
                         Grid.Column="0"
-                        IsChecked="True"
+                        IsChecked="{Binding ImagenPosicionEsVisible}"
                         ToolTip="Indica si se debe mostrar la unidad en el mapa">
+                        </CheckBox>
 
-                        <!--Eventos checked y unchecked-->
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Checked">
-                                <local:TriggerActionFlipFlop
-                                    Nombre="IsChecked"
-                                    NombrePropiedadVM="ImagenPosicionEsVisible"
-                                    Destino="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type CheckBox}}}"
-                                    Valor="{Binding ImagenPosicionEsVisible}"/>
-                            </i:EventTrigger>
-                            <i:EventTrigger EventName="Unchecked">
-                                <local:TriggerActionFlipFlop
-                                    Nombre="IsChecked"
-                                    NombrePropiedadVM="ImagenPosicionEsVisible"
-                                    Destino="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type CheckBox}}}"
-                                    Valor="{Binding ImagenPosicionEsVisible}"/>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-
-                    </CheckBox>
-
-                    <!-- Boton expandir -->
-                    <Button
+                        <!-- Boton expandir -->
+                        <CheckBox
                         Grid.Column="1"
-                        FontFamily="{StaticResource 'Font Awesome Regular'}"
-                        Content="{StaticResource Fa-FlechaDerecha-Chevron}"
+                        Margin="5 0 0 0"
+                        Foreground="White"
+                        MinWidth="20"
+                        Style="{StaticResource CheckBoxDropDown}"
+                        IsChecked="{Binding DebeMostrarDatosExtra}"
                         ToolTip="Expande la seccion de datos extra">
+                        </CheckBox>
 
-                        <!-- Evento de click -->
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Click">
-                                <local:TriggerActionFlipFlop
-                                    Nombre="Content"
-                                    NombrePropiedadVM="DebeMostrarDatosExtra"
-                                    Destino="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}}"
-                                    Valor="{StaticResource Fa-FlechaAbajo-Chevron}"/>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
+                        <Button  Grid.Column="3"
+                                 Content="{StaticResource Fa-Cruz}"
+                                 FontFamily="{StaticResource 'Font Awesome Regular'}"
+                                 Command="{Binding ComandoEliminarUnidad}"
+                                 Style="{StaticResource BotonBase}"
+                                 Foreground="White"
+                                 Margin="0 0 5 0"
+                                 ToolTip="Click para eliminar la unidad"
+                        />
 
-                    </Button>
+                    </Grid>
 
-                    <!-- Nombre personaje -->
-                    <TextBlock
-                        Grid.Column="2"
-                        Text="{Binding Nombre, FallbackValue=Mr.Sin Nombre}" 
-                        FontSize="{StaticResource TamañoFontPequeño}"
-                        Grid.ColumnSpan="2"
-                        TextAlignment="Center"
-                        HorizontalAlignment="Center"
-                        Foreground="White"/>
-
-                    <Button  Grid.Column="3"
-                             Content="{StaticResource Fa-Cruz}"
-                             FontFamily="{StaticResource 'Font Awesome Regular'}"
-                             Command="{Binding ComandoEliminarUnidad}"
-                             Style="{StaticResource BotonBase}"
-                             Foreground="White"
-                             Margin="0 0 5 0"
-                             ToolTip="Click para eliminar la unidad"
-                            />
-
-                </Grid>
-
-                <!-- Elementos que oculta la flecha -->
-                <Grid
+                    <!-- Elementos que oculta la flecha -->
+                    <Grid
                     Visibility="{Binding DebeMostrarDatosExtra, Converter={local:BooleanToVisibilityConverterColapsar}}"
                     >
 
-                    <!-- Campos de ingreso de posicion -->
-                    <StackPanel 
+                        <!-- Campos de ingreso de posicion -->
+                        <StackPanel 
                         Orientation="Horizontal" 
                         HorizontalAlignment="Center"
                         Margin="0 5">
 
-                        <!--Posicion X-->
-                        <TextBlock Text="X: " Foreground="White"/>
-                        <TextBox 
+                            <!--Posicion X-->
+                            <TextBlock Text="X: " Foreground="White"/>
+                            <TextBox 
                             local:CampoDeTextoNumericoProperty.Value="True"
                             HorizontalAlignment="Center"
                             MinWidth="20"
@@ -111,11 +86,11 @@
                             TextChanged="TextBoxPosX_TextChanged"
                             Text="{Binding TextoPosicionX, Mode=TwoWay}"/>
 
-                        <!--Posicion Y-->
-                        <TextBlock Text="Y: "
+                            <!--Posicion Y-->
+                            <TextBlock Text="Y: "
                                Margin="10 0 0 0"
                                Foreground="White"/>
-                        <TextBox 
+                            <TextBox 
                             local:CampoDeTextoNumericoProperty.Value="True"
                             HorizontalAlignment="Center"
                             MinWidth="20"
@@ -123,11 +98,13 @@
                             TextChanged="TextBoxPosY_TextChanged"
                             Text="{Binding TextoPosicionY, Mode=TwoWay}"/>
 
-                    </StackPanel>
+                        </StackPanel>
 
-                </Grid>
+                    </Grid>
 
-            </StackPanel>
+                </StackPanel>
+
+            </Border>
 
         </ControlTemplate>
     </UserControl.Template>

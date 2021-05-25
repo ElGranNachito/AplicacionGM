@@ -209,4 +209,45 @@
 
     </Style>
 
+    <!-- Estilo para checkboxes que cambia el tilde por una flecha -->
+    <Style TargetType="{x:Type CheckBox}" x:Key="CheckBoxDropDown">
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type CheckBox}">
+
+                    <!-- El unico elemento que necesitamos es un bloque de texto -->
+                    <TextBlock 
+                        x:Name="Texto"
+                        MinWidth="30"
+                        Foreground="{TemplateBinding Foreground}"
+                        FontFamily="{StaticResource 'Font Awesome Regular'}"
+                        Text="{StaticResource Fa-FlechaDerecha-Chevron}"/>
+
+                    <ControlTemplate.Triggers>
+
+                        <!-- Cuando el cursor este sobre el control el fondo cambia de color -->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.Setters>
+                                <Setter TargetName="Texto" Property="Background" 
+                                        Value="#88A9A9A9"></Setter>
+                            </Trigger.Setters>
+                        </Trigger>
+
+                        <!-- Cuando el usuario presiona la flecha esta pasa a apuntar hacia abajo -->
+                        <Trigger Property="IsChecked" Value="True">
+                            <Trigger.Setters>
+                                <Setter TargetName="Texto" Property="Text" 
+                                        Value="{StaticResource Fa-FlechaAbajo-Chevron}"/>
+                            </Trigger.Setters>
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+    </Style>
+
 </ResourceDictionary>
