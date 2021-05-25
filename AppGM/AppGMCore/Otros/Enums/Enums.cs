@@ -505,28 +505,6 @@ namespace AppGM.Core
     }
 
     /// <summary>
-    /// 
-    /// </summary>
-    [Flags]
-    public enum ETipoValorTemporal
-    {
-        NINGUNO = 0,
-        Usos = 1,
-        Cargas = 2,
-        Dias = 4,
-        Turnos = 8
-    }
-
-    [Flags]
-    public enum ETipoClaseConElValorTemporal
-    {
-        NINGUNO = 0,
-        Utilizable = 1,
-        Habilidad = 2,
-        Efecto = 4
-    }
-
-    /// <summary>
     /// Tipo de daño que inflige un ataque, arma, etc.
     /// </summary>
     [Flags]
