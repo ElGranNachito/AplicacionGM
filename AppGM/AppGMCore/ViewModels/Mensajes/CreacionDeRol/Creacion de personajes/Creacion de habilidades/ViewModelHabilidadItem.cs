@@ -11,7 +11,7 @@ namespace AppGM.Core
         public bool CuestaMana => Habilidad.CostoDeMana != 0;
         public bool EsPerk     => Habilidad.TipoDeHabilidad == ETipoHabilidad.Perk;
         public bool EsSkill    => Habilidad.TipoDeHabilidad == ETipoHabilidad.Skill;
-        public bool EsMagia    => Habilidad.TipoDeHabilidad == ETipoHabilidad.Magia;
+        public bool EsMagia    => Habilidad.TipoDeHabilidad == ETipoHabilidad.Hechizo;
         public bool EsNP       => Habilidad.TipoDeHabilidad == ETipoHabilidad.NoblePhantasm;
 
         /// <summary>

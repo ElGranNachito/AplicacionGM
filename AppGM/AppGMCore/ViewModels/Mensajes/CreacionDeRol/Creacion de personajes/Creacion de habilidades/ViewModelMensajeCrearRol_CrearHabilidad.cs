@@ -20,7 +20,7 @@ namespace AppGM.Core
         public string TextoNivelMagia => $"Lv.{ObtenerNivelDeMagia()}";
 
         public bool PuedeFinalizar => PuedeFinalizarCreacion();
-        public bool EsMagia        => VMSeleccionTipoHabilidad.OpcionSeleccionada == ETipoHabilidad.Magia;
+        public bool EsMagia        => VMSeleccionTipoHabilidad.OpcionSeleccionada == ETipoHabilidad.Hechizo;
         public bool PuedeElegirSiEsMagiaParticular => PuedeAñadirMagiasParticulares();
         public bool RequiereRango           { get; set; }
         public bool PuedeElegirSiTieneRango { get; set; }

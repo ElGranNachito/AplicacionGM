@@ -2220,7 +2220,7 @@ namespace AppGM.Core.Migrations
 
             modelBuilder.Entity("AppGM.Core.TIPersonajeMagia", b =>
                 {
-                    b.HasOne("AppGM.Core.ModeloMagia", "Magia")
+                    b.HasOne("AppGM.Core.ModeloMagia", "Hechizo")
                         .WithMany()
                         .HasForeignKey("IdMagia")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -2232,7 +2232,7 @@ namespace AppGM.Core.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Magia");
+                    b.Navigation("Hechizo");
 
                     b.Navigation("Personaje");
                 });
