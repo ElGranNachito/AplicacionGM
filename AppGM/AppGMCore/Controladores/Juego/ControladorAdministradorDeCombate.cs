@@ -12,12 +12,26 @@ namespace AppGM.Core
 
         #region Eventos
 
+        /// <summary>
+        /// Representa un metodo que lidia con el cambio de turnos durante el combate
+        /// </summary>
+        /// <param name="TurnoActual"></param>
         public delegate void dTurnoCambio(ref int TurnoActual);
 
+        /// <summary>
+        /// Evento que se dispara cuando se cambia de turno
+        /// </summary>
         public event dTurnoCambio OnTurnoCambio = delegate { };
 
+        /// <summary>
+        /// Representa un metodo que lidia con el avance de turno del personaje
+        /// </summary>
+        /// <param name="modeloAdministradorDeCombate"></param>
         public delegate void dAvanzarTurnoPersonaje(ModeloAdministradorDeCombate modeloAdministradorDeCombate);
 
+        /// <summary>
+        /// Evento que se dispara cuando se avanza con el turno de un personaje
+        /// </summary>
         public event dAvanzarTurnoPersonaje OnAvanzarTurnoPersonaje = delegate { };
 
         #endregion

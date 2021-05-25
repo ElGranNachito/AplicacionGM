@@ -26,7 +26,27 @@
                     <CheckBox
                         Grid.Column="0"
                         IsChecked="True"
-                        ToolTip="Indica si se debe mostrar la unidad en el mapa"/>
+                        ToolTip="Indica si se debe mostrar la unidad en el mapa">
+
+                        <!--Eventos checked y unchecked-->
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Checked">
+                                <local:TriggerActionFlipFlop
+                                    Nombre="IsChecked"
+                                    NombrePropiedadVM="ImagenPosicionEsVisible"
+                                    Destino="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type CheckBox}}}"
+                                    Valor="{Binding ImagenPosicionEsVisible}"/>
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="Unchecked">
+                                <local:TriggerActionFlipFlop
+                                    Nombre="IsChecked"
+                                    NombrePropiedadVM="ImagenPosicionEsVisible"
+                                    Destino="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type CheckBox}}}"
+                                    Valor="{Binding ImagenPosicionEsVisible}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+
+                    </CheckBox>
 
                     <!-- Boton expandir -->
                     <Button

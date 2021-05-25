@@ -19,7 +19,8 @@
                     Margin="{Binding PosicionImg,
                     Converter={local:GrosorToThicknessConverter},
                     Mode=OneWay}"
-                    SnapsToDevicePixels="True">
+                    SnapsToDevicePixels="True"
+                    Visibility="{Binding ImagenPosicionEsVisible, Converter={local:BooleanToVisibilityConverterOcultar}}">
 
                     <Image.RenderTransform>
                         <TranslateTransform 

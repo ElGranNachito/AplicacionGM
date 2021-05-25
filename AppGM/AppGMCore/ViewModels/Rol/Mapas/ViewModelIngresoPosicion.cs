@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Windows.Input;
 
 namespace AppGM.Core
@@ -42,6 +43,11 @@ namespace AppGM.Core
         /// Indica si debe mostrar la seccion de datos extra en el control de ingreso de posicion
         /// </summary>
         public bool DebeMostrarDatosExtra { get; set; } = false;
+
+        /// <summary>
+        /// Indica si el indicador en el mapa debe ser visible o no
+        /// </summary>
+        public bool ImagenPosicionEsVisible { get; set; } = true;
 
         /// <summary>
         /// Ruta de la imagen de la unidad
