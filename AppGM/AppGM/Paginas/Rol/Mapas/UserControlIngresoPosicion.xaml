@@ -53,6 +53,7 @@
                         ToolTip="Expande la seccion de datos extra">
                         </CheckBox>
 
+                        <!-- Boton eliminar unidad -->
                         <Button  Grid.Column="3"
                                  Content="{StaticResource Fa-Cruz}"
                                  FontFamily="{StaticResource 'Font Awesome Regular'}"

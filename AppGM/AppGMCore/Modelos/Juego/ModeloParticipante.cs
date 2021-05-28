@@ -9,12 +9,19 @@ namespace AppGM.Core
         public int TiradaIniciativa { get; set; }
         public bool EsSuTurno { get; set; }
 
-        //Personaje participante
+        /// <summary>
+        /// Personaje participante del combate
+        /// </summary>
         public virtual TIParticipantePersonaje Personaje { get; set; }
 
-        //Acciones realizadas por el participante
+        /// <summary>
+        /// Acciones realizadas por el participante
+        /// </summary>
         public virtual List<TIParticipanteAccion> AccionesRealizadas { get; set; } = new List<TIParticipanteAccion>();
 
-        public virtual TIAdministradorDeCombateParticipante Combate { get; set; }
+        /// <summary>
+        /// Combate en el que participa
+        /// </summary>
+        public virtual TIAdministradorDeCombateParticipante CombateActual { get; set; }
     }
 }

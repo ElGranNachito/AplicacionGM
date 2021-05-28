@@ -22,6 +22,7 @@ namespace AppGM.Core
         #endregion
 
         #region Funciones
+
         public string ObtenerExtension() => string.Format($".{modelo.EFormatoImagen.ToString().ToLower()}");
 
         public void AñadirUnidad(ModeloUnidadMapa unidad)
@@ -40,6 +41,7 @@ namespace AppGM.Core
         #endregion
 
         #region Propiedades
+
         public string NombreMapa => modelo.NombreMapa; 
 
         #endregion

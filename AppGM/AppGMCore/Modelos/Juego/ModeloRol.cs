@@ -11,6 +11,9 @@ namespace AppGM.Core
     {
         public ControladorRol controladorRol;
 
+        //Hora dentro del mundo del rol
+        public int Hour { get; set; }
+
         //Dia dentro del mundo del rol
         public ushort Dia { get; set; }
 

@@ -69,6 +69,99 @@ namespace AppGM.Core
     }
 
     /// <summary>
+    /// Indica en que estacion del año transcurre el rol 
+    /// </summary>
+    public enum ETemporada
+    {
+        /// <summary>
+        /// Temperaturas muy bajas, las posibilidades de nieve son mayores 
+        /// </summary>
+        Invierno = 1,
+
+        /// <summary>
+        /// Temperaturas estandares, flores y petalos por doquier 
+        /// </summary>
+        Primavera = 2,
+
+        /// <summary>
+        /// Temperaturas altas, naturaleza en su esplendor
+        /// </summary>
+        Verano = 3,
+
+        /// <summary>
+        /// Hojitas coloridas y temperaturas bajas 
+        /// </summary>
+        Otoño = 4,
+
+        /// <summary>
+        /// Un misterio como pudo pasar tal cosa
+        /// </summary>
+        NINGUNO = 0
+    }
+
+    /// <summary>
+    /// Condiciones climaticas que pueden transcurrir en un dia del rol
+    /// </summary>
+    public enum ECondicionClimatica
+    {
+        /// <summary>
+        /// El clima esta soleado, buena iluminacion 
+        /// </summary>
+        Soleado = 1,
+
+        /// <summary>
+        /// El clima esta nublado, mala iluminacion y posible humedad
+        /// </summary>
+        Nublado = 2,
+
+        /// <summary>
+        /// Mojado, mala visibilidad
+        /// </summary>
+        Lluvia = 4,
+
+        /// <summary>
+        /// Mala iluminacion, posibilidad de rayos
+        /// </summary>
+        TormentaElectrica = 8,
+
+        /// <summary>
+        /// Mala iluminacion, poca visibilidad y granizo :u
+        /// </summary>
+        Granizo = 16,
+
+        /// <summary>
+        /// Frio extremo, mala iluminacion y bajo rango de vision
+        /// </summary>
+        Nieve = 32,
+
+        /// <summary>
+        /// El suelo es cubierto por una ligera capa de hielo
+        /// Humedad, muy bajas temperaturas
+        /// </summary>
+        Helada = 64,
+
+        /// <summary>
+        /// Muy humedo, la visibilidad es infima 
+        /// </summary>
+        Niebla = 128, 
+
+        /// <summary>
+        /// Humedo y baja visibilidad a distancia
+        /// </summary>
+        Neblina = 256,
+
+        /// <summary>
+        /// Airecito, puede influenciar vuelos y caidas desde sitios altos, asi como soplar objetos de poco peso
+        /// </summary>
+        Viento = 512,
+
+        /// <summary>
+        /// A lo mejor el mundo deja de existir, puede ser
+        /// </summary>
+        NINGUNO = 0
+    }
+
+    /// <summary>
     /// Rango de una <see cref="ModeloHabilidad"/> o <see cref="EStat"/>.
     /// Estos rangos se utilizan solo para servants o invocaciones.
     /// Los valores numericos que tienen asignados son lo que equivaldrian en stats de <see cref="ModeloMaster"/>
