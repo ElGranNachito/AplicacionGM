@@ -8,20 +8,31 @@ namespace AppGM.Core
     /// </summary>
     public class ModeloAlianza : ModeloBase
     {
-        //Titulo de la alianza
+        /// <summary>
+        /// Nombre de la alianza
+        /// </summary>
         [StringLength(50)]
         public string Nombre { get; set; }
-        //Descripcion de la alianza
+
+        /// <summary>
+        /// Descripcion de la alianza
+        /// </summary>
         [StringLength(500)]
         public string Descripcion { get; set; }
 
-        //Estado de la alianza
+        /// <summary>
+        /// <see cref="bool"/> indicando si actualmente esta vigente
+        /// </summary>
         public bool EsVigente { get; set; }
 
-        //Contrato magico adicional a la alianza
+        /// <summary>
+        /// <see cref="ModeloContrato"/> de la alianza. Puede ser no haber
+        /// </summary>
         public TIAlianzaContrato ContratoDeAlianza { get; set; }
 
-        //Personajes que participen en la alianza
+        /// <summary>
+        /// <see cref="ModeloPersonajeJugable"/> que forman parte de esta alianza
+        /// </summary>
         public List<TIPersonajeAlianza> PersonajesAfectados { get; set; } = new List<TIPersonajeAlianza>();
     }
 }

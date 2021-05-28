@@ -1,7 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace AppGM.Core
+﻿namespace AppGM.Core
 {
+    //TODO: Verificar si esta clase aun es necesaria teniendo en cuenta los cambios en el diseño.
     public class ModeloCondicion : ModeloBase
     {
         public ControladorCondicion controladorCondicion;

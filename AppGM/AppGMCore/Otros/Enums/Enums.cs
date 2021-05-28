@@ -731,6 +731,43 @@ namespace AppGM.Core
     }
 
     /// <summary>
+    /// Tipo de la unidad que esta posicionada sobre el mapa, se utiliza para determinar el tipo de imagen
+    /// </summary>
+    [Flags]
+    public enum ETipoUnidad
+    {
+        /// <summary>
+        /// Master
+        /// </summary>
+	    Master = 1,
+
+        /// <summary>
+        /// Servant
+        /// </summary>
+	    Servant = 2,
+
+        /// <summary>
+        /// Invocacion
+        /// </summary>
+	    Invocacion = 4,
+
+        /// <summary>
+        /// Trampa
+        /// </summary>
+	    Trampa = 8,
+
+        /// <summary>
+        /// Iglesia
+        /// </summary>
+	    Iglesia = 16,
+
+        /// <summary>
+        /// Un fantasma con toda probabilidad
+        /// </summary>
+	    NINGUNO = 0
+    }
+
+    /// <summary>
     /// Representa el formato de una imagen
     /// </summary>
     public enum EFormatoImagen
