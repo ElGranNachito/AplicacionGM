@@ -89,5 +89,8 @@ namespace AppGM.Core
         //Modificadores de defensa del personaje
         public List<TIPersonajeModificadorDeDefensa> ModificadoresDeDefensa { get; set; } = new List<TIPersonajeModificadorDeDefensa>();
         
+        //Es participante en algun combate:
+        public List<TIParticipantePersonaje> ParticipacionEnCombates { get; set; } = new List<TIParticipantePersonaje>();
+
     }
 }

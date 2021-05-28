@@ -10,7 +10,9 @@
     <Border
         VerticalAlignment="Top"
         HorizontalAlignment="Left">
-        <Grid>
+        <Grid
+            Visibility="{Binding ImagenPosicionEsVisible, Converter={local:BooleanToVisibilityConverterOcultar}}"
+            >
             <Image
                 local:DragProperty.Value="True"
                     Source="{Binding PathImagen, Mode=OneWay}"
@@ -20,7 +22,7 @@
                     Converter={local:GrosorToThicknessConverter},
                     Mode=OneWay}"
                     SnapsToDevicePixels="True"
-                    Visibility="{Binding ImagenPosicionEsVisible, Converter={local:BooleanToVisibilityConverterOcultar}}">
+                    >
 
                     <Image.RenderTransform>
                         <TranslateTransform 

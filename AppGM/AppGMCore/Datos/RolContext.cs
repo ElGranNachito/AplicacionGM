@@ -561,7 +561,7 @@ namespace AppGM.Core
 
             modelBuilder.Entity<TIAdministradorDeCombateParticipante>()
                 .HasOne(i => i.Participante)
-                .WithOne(p => p.Combate);
+                .WithOne(p => p.CombateActual);
 
             modelBuilder.Entity<TIAdministradorDeCombateMapa>()
                 .HasKey(e => new { e.IdAdministradorDeCombate, e.IdMapa });

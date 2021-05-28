@@ -20,11 +20,20 @@ namespace AppGM.Core
     {
         public ControladorUnidadMapa controladorUnidadMapa;
 
+        /// <summary>
+        /// Nombre de la unidad
+        /// </summary>
         public string Nombre { get; set; }
 
         public ETipoUnidad ETipoUnidad { get; set; }
 
+        /// <summary>
+        /// Posicion de la unidad sobre el mapa
+        /// </summary>
         public TIUnidadMapaVector2   Posicion { get; set; }
+        /// <summary>
+        /// Personaje que representa la unidad
+        /// </summary>
         public TIPersonajeUnidadMapa Personaje { get; set; }
     }
     public class ModeloUnidadMapaMasterServant : ModeloUnidadMapa
@@ -36,7 +45,15 @@ namespace AppGM.Core
     {
         [StringLength(1)]
         public string Inicial { get; set; }
+
+        /// <summary>
+        /// Cantidad de trampas o invocaciones sobre esa unidad
+        /// </summary>
         public int Cantidad { get; set; }
+        
+        /// <summary>
+        /// Siendo que puede ser de un master o un servant, su imagen imagen cambiara independientemente de la clase del servant
+        /// </summary>
         public bool EsDeMaster { get; set; }
     }
 }

@@ -88,8 +88,8 @@ namespace AppGM.Core
         public string      Nombre     => modelo.Nombre;
 
         /// <summary>
-        /// Cantidad de unidades en el grupo. Asegurarse de que al llamar a esta propiedad
-        /// el modelo sea de tipo <see cref="ModeloUnidadMapaInvocacionTrampa"/>
+        /// Cantidad de unidades en el grupo
+        /// Asegurarse de que al llamar a esta propiedad el modelo sea de tipo <see cref="ModeloUnidadMapaInvocacionTrampa"/>
         /// </summary>
         public int Cantidad           => ((ModeloUnidadMapaInvocacionTrampa) modelo).Cantidad;
         public ETipoUnidad TipoUnidad => modelo.ETipoUnidad; 

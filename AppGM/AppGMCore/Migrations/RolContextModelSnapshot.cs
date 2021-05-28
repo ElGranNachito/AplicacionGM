@@ -398,6 +398,9 @@ namespace AppGM.Core.Migrations
                     b.Property<DateTime>("FechaUltimaSesion")
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("Hour")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Nombre")
                         .HasMaxLength(50)
                         .HasColumnType("TEXT");
@@ -1657,7 +1660,7 @@ namespace AppGM.Core.Migrations
                         .IsRequired();
 
                     b.HasOne("AppGM.Core.ModeloParticipante", "Participante")
-                        .WithOne("Combate")
+                        .WithOne("CombateActual")
                         .HasForeignKey("AppGM.Core.TIAdministradorDeCombateParticipante", "IdParticipante")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -2056,7 +2059,7 @@ namespace AppGM.Core.Migrations
                         .IsRequired();
 
                     b.HasOne("AppGM.Core.ModeloPersonaje", "Personaje")
-                        .WithMany()
+                        .WithMany("ParticipacionEnCombates")
                         .HasForeignKey("IdPersonaje")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -2220,7 +2223,7 @@ namespace AppGM.Core.Migrations
 
             modelBuilder.Entity("AppGM.Core.TIPersonajeMagia", b =>
                 {
-                    b.HasOne("AppGM.Core.ModeloMagia", "Hechizo")
+                    b.HasOne("AppGM.Core.ModeloMagia", "Magia")
                         .WithMany()
                         .HasForeignKey("IdMagia")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -2232,7 +2235,7 @@ namespace AppGM.Core.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Hechizo");
+                    b.Navigation("Magia");
 
                     b.Navigation("Personaje");
                 });
@@ -2611,7 +2614,7 @@ namespace AppGM.Core.Migrations
                 {
                     b.Navigation("AccionesRealizadas");
 
-                    b.Navigation("Combate");
+                    b.Navigation("CombateActual");
 
                     b.Navigation("Personaje");
                 });
@@ -2633,6 +2636,8 @@ namespace AppGM.Core.Migrations
                     b.Navigation("Magias");
 
                     b.Navigation("ModificadoresDeDefensa");
+
+                    b.Navigation("ParticipacionEnCombates");
 
                     b.Navigation("Perks");
 
