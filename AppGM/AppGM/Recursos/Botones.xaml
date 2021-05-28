@@ -27,9 +27,13 @@
             </Setter.Value>
         </Setter>
 
+        <!-- Cuando el boton esta desabilitado cambiamos los colores del texto y del fondo -->
         <Style.Triggers>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Foreground" Value="DimGray"/>
+                <Trigger.Setters>
+                    <Setter Property="Foreground" Value="DimGray"/>
+                    <Setter Property="Background" Value="DarkGray"/>
+                </Trigger.Setters>
             </Trigger>
         </Style.Triggers>
 
@@ -39,14 +43,9 @@
     <Style TargetType="{x:Type ButtonBase}" x:Key="BotonVentanaPrincipal" BasedOn="{StaticResource BotonBase}">
 
         <Setter Property="Padding" Value="3 0"/>
-        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
 
-        <!-- Agrandamos el boton en el eje X -->
-        <!--<Setter Property="LayoutTransform">
-            <Setter.Value>
-                <ScaleTransform ScaleX="1.5"/>
-            </Setter.Value>
-        </Setter>-->
+        <!-- Hacemos este boton testeable para hits dentro del chrome porque el titulo cae dentro del chrome de la ventana -->
+        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
 
         <Setter Property="Template">
             <Setter.Value>
@@ -58,10 +57,9 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
 
-                        <TextBlock Text="{TemplateBinding Content}">
-                            <TextBlock.RenderTransform>
-                                <TranslateTransform Y="5"/>
-                            </TextBlock.RenderTransform>
+                        <TextBlock 
+                            Text="{TemplateBinding Content}"
+                            VerticalAlignment="Center">
                         </TextBlock>
                     </Border>
 
@@ -74,7 +72,7 @@
 
             <!-- Cuando el mouse pasa sobre el boton cambiar el color del fondo -->
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="DarkGray"></Setter>
+                <Setter Property="Background" Value="DarkGray"/>
             </Trigger>
 
         </Style.Triggers>
@@ -95,6 +93,7 @@
 
     </Style>
 
+    <!-- Boton cuyo marco se resalta cuando el cursor se encuentra sobre ellos -->
     <Style TargetType="{x:Type ButtonBase}" x:Key="BotonMarcoResaltable" BasedOn="{StaticResource BotonBase}">
 
         <Setter Property="Template">
@@ -114,6 +113,7 @@
                         <TextBlock Text="{TemplateBinding Content}"/>
                     </Border>
 
+                    <!-- Cuando el cursor esta sobre el boton cambiar el color del borde -->
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="border" Property="BorderBrush" Value="Aqua"/>
@@ -127,6 +127,7 @@
 
     </Style>
 
+    <!-- Botones de la barra derecha del menu principal del rol -->
     <Style TargetType="{x:Type Button}" x:Key="BotonMenuRol" BasedOn="{StaticResource BotonBase}">
 
         <Setter Property="Foreground" Value="White"/>
@@ -154,12 +155,14 @@
                     <ControlTemplate.Triggers>
 
                         <MultiTrigger>
-
+                            
+                            <!-- Cuando el mouse esta sobre el boton y el borde tiene una anchura de cero -->
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsMouseOver" Value="True"/>
                                 <Condition SourceName="border" Property="BorderThickness" Value="0"/>
                             </MultiTrigger.Conditions>
 
+                            <!-- Cambiamos el color del fondo -->
                             <MultiTrigger.Setters>
                                 <Setter TargetName="border" Property="Background" Value="Aqua"/>
                             </MultiTrigger.Setters>
@@ -175,10 +178,12 @@
 
     </Style>
 
+    <!-- Boton cuyo fondo se resalta con una transicion suave cuando el cursor se posa sobre el -->
     <Style x:Key="BotonFondoResaltable" TargetType="{x:Type Button}" BasedOn="{StaticResource BotonBase}">
 
         <Style.Triggers>
 
+            <!-- Cuando el mouse entre en el area del boton -->
             <EventTrigger RoutedEvent="MouseEnter">
 
                 <BeginStoryboard>
@@ -192,6 +197,7 @@
 
             </EventTrigger>
 
+            <!-- Cuando el boton sale del area del boton -->
             <EventTrigger RoutedEvent="MouseLeave">
 
                 <BeginStoryboard>

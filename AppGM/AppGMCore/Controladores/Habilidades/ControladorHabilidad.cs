@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace AppGM.Core
 {
-    public class ControladorHabilidad : Controlador<ModeloHabilidad>
+    public class ControladorHabilidad : Controlador<ModeloHabilidad>, IUtilizable
     {
         #region Campos & Propiedades
 
@@ -12,14 +12,22 @@ namespace AppGM.Core
         /// <summary>
         /// Funcion que toma un control de personaje y devuelve un booleano indicando si el personaje puede utilizar la habilidad
         /// </summary>
-        private Func<ControladorPersonaje, bool> mPuedeSerUtilizada;
+        private Func<ControladorPersonaje, ControladorPersonaje[], bool> mPuedeSerUtilizada;
 
         /// <summary>
-        /// Funcion que toma un control de personaje y devuelve un booleano indicando si el personaje puede utilizar la habilidad.
-        /// Version para habilidades que tengan objetivos
+        /// Funcion que realiza la habilidad
         /// </summary>
-        private Func<ControladorPersonaje, ControladorPersonaje[], bool> mPuedeSerUtilizadaConObjetivos;
+        private Action<ControladorPersonaje, ControladorPersonaje[], object, object> mUtilizarHabilidad;
 
+        /// <summary>
+        /// Funcion que se encarga de realizar acciones necesaria por cada paso de turno
+        /// </summary>
+        private Action<ControladorPersonaje> mAvanzarTurno;
+
+        /// <summary>
+        /// Funcion que se encarga de realizar las acciones necesarias cuando pasa un dia
+        /// </summary>
+        private Action<ControladorPersonaje> mAvanzarDia;
 
         //-----------------------PROPIEDADES-----------------------
 
@@ -89,15 +97,31 @@ namespace AppGM.Core
 
         #region Funciones
 
-        public virtual void IntentarUtilizar(ControladorPersonaje usuario)
+        public void Utilizar(
+	        ControladorPersonaje usuario, ControladorPersonaje[] objetivos,
+	        object parametroExtra, object segundoParametroExtra)
         {
-            //TODO: Realizar una tirada de casteo sin activar la habilidad y devuelve el resultado.
+	        mUtilizarHabilidad(usuario, objetivos, parametroExtra, segundoParametroExtra);
         }
-        private void AlAvanzarTurno()
+
+        public void Utilizar(
+	        ControladorPersonaje usuario,
+	        object parametroExtra, object segundoParametroExtra)
         {
+	        mUtilizarHabilidad(usuario, null, parametroExtra, segundoParametroExtra);
         }
-        private void AlCambiarDeDia(int dia)
+
+        public virtual bool PuedeUtilizar(ControladorPersonaje usuario, ControladorPersonaje[] objetivos)
         {
+	        return mPuedeSerUtilizada(usuario, objetivos);
+        }
+        protected virtual void AlAvanzarTurno(ControladorPersonaje usuario)
+        {
+	        mAvanzarTurno(usuario);
+        }
+        protected virtual void AlCambiarDeDia(ControladorPersonaje usuario)
+        {
+	        mAvanzarDia(usuario);
         }
 
         #endregion

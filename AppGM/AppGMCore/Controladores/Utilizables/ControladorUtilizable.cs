@@ -1,7 +1,7 @@
 ﻿namespace AppGM.Core
 {
     //TODO: Decidir si es abstracta o no
-    public class ControladorUtilizable : Controlador<ModeloUtilizable>, IUtilizableConObjetivos, IUtilizableSinObjetivos
+    public class ControladorUtilizable : Controlador<ModeloUtilizable>, IUtilizable
     {
         #region Controladores
 
@@ -37,6 +37,11 @@
         public virtual void Utilizar(ControladorPersonaje usuario, object parametroExtra, object segundoParametroExtra)
         {
             //TODO: Realizar la tirada de utilizacion.
+        }
+
+        public virtual bool PuedeUtilizar()
+        {
+	        return false;
         }
 
         #endregion
