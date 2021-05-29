@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace AppGM.Core
 {
@@ -25,6 +26,15 @@ namespace AppGM.Core
         {
             //Hacemos este if pare prevenir una division por cero
             return rango == ERango.F ? 2 : 2 + (int)rango / 2;
-        } 
+        }
+
+        /// <summary>
+        /// Converte un rango a su valor numerico correspondiente.
+        /// </summary>
+        /// <param name="rango">Rango que convertir</param>
+        /// <returns>Valor numerico equivalente a este rango</returns>
+        /// La verdad es que esta funcion no hace mucho pero me parece que queda mas prolijo que hacer un casteo
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static int AValorNumerico(this ERango rango) => (int) rango;
     }
 }

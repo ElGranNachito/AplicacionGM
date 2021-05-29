@@ -5,25 +5,76 @@ using AppGM.Core;
 
 namespace AppGM
 {
+    /// <summary>
+    /// VM que representa un control que permite seleccionar el tipo de fichas que explorar
+    /// </summary>
     public class ViewModelMenuSeleccionTipoFicha : BaseViewModel
     {
         #region Propiedades
 
-        public Grosor AnchoMargenCartas => SistemaPrincipal.Aplicacion.VentanaPrincipal.EstaMaximizada() ? new Grosor(20) : new Grosor(5, 20);
+        /// <summary>
+        /// Margen de las cartas que representan los tipos de las fichas disponibles
+        /// </summary>
+        public Grosor AnchoMargenCartas 
+	        => SistemaPrincipal.Aplicacion.VentanaPrincipal.EstaMaximizada() 
+		        ? new Grosor(20) 
+		        : new Grosor(5, 20);
+
+        /// <summary>
+        /// Comando a ejecutar cuando el usuario presiona la carte que representa las fichas de servants
+        /// </summary>
         public ICommand ComandoBotonFichasServants { get; set; }
+
+        /// <summary>
+        /// Comando a ejecutar cuando el usuario presiona la carte que representa las fichas de masters
+        /// </summary>
         public ICommand ComandoBotonFichasMasters { get; set; }
+
+        /// <summary>
+        /// Comando a ejecutar cuando el usuario presiona la carte que representa las fichas de invocaciones
+        /// </summary>
         public ICommand ComandoBotonFichasInvocaciones { get; set; }
+
+        /// <summary>
+        /// Comando a ejecutar cuando el usuario presiona la carte que representa las fichas de NPCs
+        /// </summary>
         public ICommand ComandoBotonFichasNPCs { get; set; }
 
+        //TODO: Seguramente remover todas estas listas ya que podemos acceder a ellas desde el sistema principal----------------
+
+        /// <summary>
+        /// Lista de los <see cref="ModeloServant"/> disponibles
+        /// </summary>
         public List<ModeloServant> Servants { get; set; }
+
+        /// <summary>
+        /// Lista de los <see cref="ModeloMaster"/> disponibles
+        /// </summary>
         public List<ModeloMaster> Masters { get; set; }
+
+        /// <summary>
+        /// Lista de los <see cref="ModeloInvocacion"/> disponibles
+        /// </summary>
         public List<ModeloInvocacion> Invocaciones { get; set; }
+
+        /// <summary>
+        /// Lista de los <see cref="ModeloPersonaje"/> disponibles
+        /// </summary>
         public List<ModeloPersonaje> NPCs { get; set; }
+
+        //TODO----------------------------------------------------------------------------------------------------------------------
 
         #endregion
 
         #region Constructores
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="_servants"></param>
+        /// <param name="_masters"></param>
+        /// <param name="_invocaciones"></param>
+        /// <param name="_npcs"></param>
         public ViewModelMenuSeleccionTipoFicha(
             List<ModeloServant> _servants,
             List<ModeloMaster> _masters,
@@ -59,11 +110,11 @@ namespace AppGM
                 {
                     Nombre = "King Pellinore",
                     EClaseServant = EClaseServant.Saber,
-                    Str = 15,
-                    End = 13,
-                    Agi = 15,
-                    Int = 14,
-                    Lck = 10
+                    Str = ERango.A.AValorNumerico(),
+                    End = ERango.A.AValorNumerico(),
+                    Agi = ERango.C.AValorNumerico(),
+                    Int = ERango.D.AValorNumerico(),
+                    Lck = ERango.B.AValorNumerico()
                 }
             };
 
@@ -102,6 +153,10 @@ namespace AppGM
         #endregion
 
         #region Funciones
+
+        /// <summary>
+        /// Asigna los comandos correspondientes a cada boton de seleccion
+        /// </summary>
         private void EstablecerComandos()
         {
             ComandoBotonFichasServants = new Comando(() =>

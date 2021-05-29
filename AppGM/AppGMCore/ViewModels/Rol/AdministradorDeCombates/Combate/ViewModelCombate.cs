@@ -4,9 +4,15 @@ using System.Windows.Input;
 
 namespace AppGM.Core
 {
+    /// <summary>
+    /// VM que representa un <see cref="ModeloAdministradorDeCombate"/>
+    /// </summary>
     public class ViewModelCombate : BaseViewModel
     {
-        #region Miembros
+        #region Campos & Propiedades
+
+        //-----------------------------------CAMPOS-------------------------------------------
+
 
         private int indiceMapaActual = 0;
 
@@ -14,14 +20,32 @@ namespace AppGM.Core
 
         public ControladorAdministradorDeCombate.dTurnoCambio HandlerTurnoCambio = delegate{};
 
-        #endregion
 
-        #region Propiedades
+        //--------------------------------PROPIEDADES------------------------------------------
+
+        /// <summary>
+        /// Comando que se ejecuta cuando el usuario presiona el boton de avanzar turno
+        /// </summary>
         public ICommand ComandoAvanzarTurno { get; set; }
+
+        /// <summary>
+        /// Comando que se ejecuta cuando el usuario presiona el boton de retroceder turno
+        /// </summary>
         public ICommand ComandoRetrocederTurno { get; set; }
+
+        /// <summary>
+        /// Comando que se ejecuta cuando el usuario presiona el boton 'Salir'
+        /// </summary>
         public ICommand ComandoSalir { get; set; }
+
+        /// <summary>
+        /// Comando que se ejecuta cuando el usuario presiona el boton 'Tirada'
+        /// </summary>
         public ICommand ComandoTirada { get; set; }
 
+        /// <summary>
+        /// Turno actual del combate
+        /// </summary>
         public uint TurnoActual => administradorDeCombate.modelo.TurnoActual;
 
         /// <summary>
@@ -39,6 +63,9 @@ namespace AppGM.Core
         /// </summary>
         public List<ViewModelMapa> Mapas { get; set; } = new List<ViewModelMapa>();
 
+        /// <summary>
+        /// Mapa actualmente siendo mostrado
+        /// </summary>
         public ViewModelMapa MapaActual => Mapas[indiceMapaActual];
 
         #endregion

@@ -7,7 +7,7 @@ namespace AppGM.Core
     /// </summary>
     public class TIAlianzaContrato : ModeloBaseSK
     {
-        [ForeignKey(nameof(Alianza))]
+	    [ForeignKey(nameof(Alianza))]
         public int IdAlianza { get; set; }
         public ModeloAlianza Alianza { get; set; }
 
