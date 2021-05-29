@@ -3,43 +3,82 @@ using System.Windows.Input;
 
 namespace AppGM.Core
 {
+    /// <summary>
+    /// VM para la creacion de un mapa de un nuevo rol
+    /// </summary>
     public class ViewModelMensajeCrearRol_DatosMapa : ViewModelPaso<ViewModelMensajeCrearRol>
     {
-        private ModeloMapa mMapa;
-        private IArchivo mArchivoMapa;
+	    #region Campos & Propiedades
 
-        public ICommand ComandoSeleccionarImagenMapa { get; set; }
+        //----------------------------------CAMPOS---------------------------------------
 
+        /// <summary>
+        /// Modelo del mapa que crearemos
+        /// </summary>
+		private ModeloMapa mMapa;
+
+        /// <summary>
+        /// Archivo de la imagen del mapa
+        /// </summary>
+		private IArchivo mArchivoMapa;
+
+
+        //-------------------------------PROPIEDADES--------------------------------------
+
+        /// <summary>
+        /// Comando que se ejecutara cuando el usuario presione el boton 'Seleccionar Imagen'
+        /// </summary>
+		public ICommand ComandoSeleccionarImagenMapa { get; set; }
+
+        /// <summary>
+        /// Nombre del mapa
+        /// </summary>
         public string NombreMapa     { get; set; } = string.Empty;
 
+        /// <summary>
+        /// Ruta a la imagen del mapa
+        /// </summary>
         public string PathImagenMapa { get; set; } = string.Empty;
 
+        /// <summary>
+        /// Indica si borrar la imagen de su ubicacion anterior
+        /// </summary>
         public bool BorrarImagenDeLaUbicacionAnterior { get; set; }
 
-        public ViewModelMensajeCrearRol_DatosMapa(ModeloMapa _mapa)
-        {
-            mMapa = _mapa;
+		#endregion
 
-            ComandoSeleccionarImagenMapa = new Comando(() =>
-            {
-                mArchivoMapa = SistemaPrincipal.ControladorDeArchivos.MostrarDialogoAbrirArchivo(
-                    "Seleccionar Imagen Mapa",
-                    "Formatos imagen (*.jpg *.png)|*.jpg;*.png", 
-                    SistemaPrincipal.Aplicacion.VentanaPopups);
+		#region Constructor
 
-                PathImagenMapa = mArchivoMapa.Ruta;
-            });
-        }
+		public ViewModelMensajeCrearRol_DatosMapa(ModeloMapa _mapa)
+		{
+			mMapa = _mapa;
 
-        public override void Desactivar(ViewModelMensajeCrearRol vm)
-        {
-            if (string.IsNullOrEmpty(NombreMapa) || string.IsNullOrEmpty(PathImagenMapa))
-                return;
+			ComandoSeleccionarImagenMapa = new Comando(() =>
+			{
+				mArchivoMapa = SistemaPrincipal.ControladorDeArchivos.MostrarDialogoAbrirArchivo(
+					"Seleccionar Imagen Mapa",
+					"Formatos imagen (*.jpg *.png)|*.jpg;*.png",
+					SistemaPrincipal.Aplicacion.VentanaPopups);
 
-            if(mArchivoMapa.NombreSinExtension == NombreMapa)
-                return;
+				PathImagenMapa = mArchivoMapa.Ruta;
+			});
+		}
 
-            #if !NO_COPIAR_IMAGENES
+		#endregion
+
+		#region Funciones
+
+		public override void Desactivar(ViewModelMensajeCrearRol vm)
+		{
+			if (string.IsNullOrEmpty(NombreMapa) || string.IsNullOrEmpty(PathImagenMapa))
+				return;
+
+			if (mArchivoMapa.NombreSinExtension == NombreMapa)
+				return;
+
+            //Simbolo que indica si debemos copiar la imagen.
+            //Solamente existe para no copiar imagenes durante las pruebas
+			#if !NO_COPIAR_IMAGENES
 
             IArchivo archivoViejo = mArchivoMapa.CopiarADirectorio(SistemaPrincipal.ControladorDeArchivos.DirectorioImagenesMapas, true);
             mArchivoMapa.CambiarNombre(NombreMapa);
@@ -53,11 +92,13 @@ namespace AppGM.Core
                     archivoViejo.Borrar();
                 };
 
-            #endif
+			#endif
 
-            PathImagenMapa = mArchivoMapa.Ruta;
-        }
+			PathImagenMapa = mArchivoMapa.Ruta;
+		}
 
-        public override bool PuedeAvanzar() => !(String.IsNullOrEmpty(NombreMapa) || String.IsNullOrEmpty(PathImagenMapa));
-    }
+		public override bool PuedeAvanzar() => !(String.IsNullOrEmpty(NombreMapa) || String.IsNullOrEmpty(PathImagenMapa)); 
+
+		#endregion
+	}
 }
