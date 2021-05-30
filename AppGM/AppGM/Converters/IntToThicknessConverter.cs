@@ -15,7 +15,7 @@ namespace AppGM
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if(parameter == null)
-            return new Thickness((int)value);
+				return new Thickness((int)value);
 
             int valorParametro = (int) parameter;
             int valor = (int) value;

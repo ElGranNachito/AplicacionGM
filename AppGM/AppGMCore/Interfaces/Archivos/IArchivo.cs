@@ -30,7 +30,7 @@
         /// <summary>
         /// Devuelve la carpeta contenedora
         /// </summary>
-        IDirectorio DirectorioPadre { get; set; }
+        IDirectorio DirectorioPadre { get; }
 
         #endregion
 

@@ -22,7 +22,7 @@ namespace AppGM.Core
         /// <summary>
         /// <see cref="IDirectorio"/> que precede a este en la jerarquia y por lo tanto lo contiene
         /// </summary>
-        IDirectorio DirectorioPadre { get; set; }
+        IDirectorio DirectorioPadre { get; }
 
         #endregion
 

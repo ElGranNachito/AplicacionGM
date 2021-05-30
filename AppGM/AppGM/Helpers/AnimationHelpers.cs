@@ -6,8 +6,19 @@ using System.Windows.Media.Animation;
 
 namespace AppGM.Helpers
 {
+    /// <summary>
+    /// Varios helpers para facilitar la adicion de animaciones a un <see cref="FrameworkElement"/>
+    /// </summary>
     public static class AnimationHelpers
     {
+        /// <summary>
+        /// Añade animaciones de rotacion y desplazamiento a un <see cref="FrameworkElement"/>
+        /// </summary>
+        /// <param name="elemento">Elemento sobre el que se realizaran las animaciones</param>
+        /// <param name="duracionAnimacion">Intervalo de tiempo que durara la animacion</param>
+        /// <param name="rotacionObjetivo">Rotacion que pasara a tener el <paramref name="elemento"/></param>
+        /// <param name="desplazamiento">Margen que pasara a tener el <paramref name="elemento"/></param>
+        /// <returns></returns>
         public static async Task AñadirRotacionYDesplazamiento(
             this FrameworkElement elemento,
             TimeSpan duracionAnimacion,
@@ -33,6 +44,13 @@ namespace AppGM.Helpers
             await Task.Delay(duracionAnimacion);
         }
 
+        /// <summary>
+        /// Añade una animacion de cambio de opacidad a un <see cref="FrameworkElement"/>
+        /// </summary>
+        /// <param name="elemento">Elemento sobre el que se realizara la animacion</param>
+        /// <param name="duracionAnimacion">Intervalo de tiempo que durara la animacion</param>
+        /// <param name="opacidadObjetivo">Opacidad que pasara a tener el <paramref name="elemento"/></param>
+        /// <returns></returns>
         public static async Task AñadirAnimacionOpacidad(
             this FrameworkElement elemento,
             TimeSpan duracionAnimacion,
