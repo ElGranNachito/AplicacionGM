@@ -29,15 +29,22 @@
                 local:AñadirMargenAElementosProperty.Value="{x:Type CheckBox}"
                 local:ParametroThicknessProperty.Parametro="0 5">
 
+                <!-- Checkbox servants -->
                 <CheckBox 
                     Content="Servants"
                     IsChecked="{Binding MostrarServants}"/>
+
+                <!-- Checkbox masters -->
                 <CheckBox 
                     Content="Masters"
                     IsChecked="{Binding MostrarMasters}"/>
+
+                <!-- Checkbox invocaciones -->
                 <CheckBox 
                     Content="Invocaciones"
                     IsChecked="{Binding MostrarInvocaciones}"/>
+
+                <!-- Checkbox NPCs -->
                 <CheckBox 
                     Content="NPCs"
                     IsChecked="{Binding MostrarNPCs}"/>
@@ -50,7 +57,7 @@
                 BorderThickness="1" 
                 Margin="1"
 >
-                <!-- Lista de personajes -->
+                <!-- Lista de personajes actualmente creados -->
                 <local:UserControlCreacionRol_ListaPersonajes/>
 
             </Border>

@@ -8,6 +8,7 @@
              d:DesignHeight="500" d:DesignWidth="400">
     <Grid Background="White">
 
+        <!-- Lista de participantes de un combate -->
         <ScrollViewer>
             <ItemsControl ItemsSource="{Binding Participantes}">
                 <ItemsControl.ItemTemplate>

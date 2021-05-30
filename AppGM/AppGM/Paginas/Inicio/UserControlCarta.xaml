@@ -9,23 +9,35 @@
              Panel.ZIndex="{Binding ZIndex}"
              local:ParametroComandoOnLeaveProperty.Parametro="{Binding ComandoMouseLeave}"
              local:LlamarComandoOnMouseEnterProperty.Value="{Binding ComandoMouseEnter}">
+
     <UserControl.Template>
         <ControlTemplate TargetType="{x:Type UserControl}">
 
             <Grid>
-            <Grid.Background>
-                <ImageBrush ImageSource="../../Media/Imagenes/CartasCompletita.png"/>
-            </Grid.Background>
+                <!-- Imagen carta -->
+                <Grid.Background>
+                    <ImageBrush ImageSource="../../Media/Imagenes/CartasCompletita.png"/>
+                </Grid.Background>
 
-            <Button Style="{StaticResource BotonBase}"
-                    Command="{Binding Comando}"/>
+                <!-- Accion click izquierdo -->
+                <Grid.InputBindings>
+                    <MouseBinding 
+                        MouseAction="LeftClick"
+                        Command="{Binding Comando}"/>
+                </Grid.InputBindings>
 
-            <ContentPresenter HorizontalAlignment="Right" VerticalAlignment="Center">
-                <ContentPresenter.LayoutTransform>
-                    <RotateTransform Angle="90"/>
-                </ContentPresenter.LayoutTransform>
-            </ContentPresenter>
-        </Grid>
+                <!-- Rotamos el contnenido que se coloque en este control
+                90 grados.
+                TODO: Seguramente remover esto cuando quitemos el boton 'Agregar' de la carta para añadir roles-->
+                <ContentPresenter 
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center">
+
+                    <ContentPresenter.LayoutTransform>
+                        <RotateTransform Angle="90"/>
+                    </ContentPresenter.LayoutTransform>
+                </ContentPresenter>
+            </Grid>
 
         </ControlTemplate>
     </UserControl.Template>

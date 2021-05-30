@@ -8,6 +8,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
 
+        <!-- Lista de fichas de personaje -->
         <ScrollViewer VerticalScrollBarVisibility="Auto">
             <ItemsControl ItemsSource="{Binding FichaItems}">
                 <ItemsControl.ItemTemplate>

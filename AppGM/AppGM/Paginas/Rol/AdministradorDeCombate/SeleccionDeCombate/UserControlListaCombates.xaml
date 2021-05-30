@@ -9,6 +9,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
 
+        <!-- Lista de combates -->
         <ItemsControl ItemsSource="{Binding Combates}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>

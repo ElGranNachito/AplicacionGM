@@ -31,6 +31,7 @@
             <!-- Turnos -->
             <StackPanel Grid.Column="2" Orientation="Horizontal">
 
+                <!-- Flecha izquierda (Retroceder turno) -->
                 <Button 
                     FontFamily="{StaticResource 'Font Awesome Regular'}"
                     Content="{StaticResource Fa-FlechaIzquierda}"
@@ -38,6 +39,7 @@
                 
                 <TextBlock Text="5" Margin="5 0"/>
 
+                <!-- Flecha derecha (Avanzar turno) -->
                 <Button 
                     FontFamily="{StaticResource 'Font Awesome Regular'}"
                     Content="{StaticResource Fa-FlechaDerecha}"
@@ -73,10 +75,12 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
+                    <!--Boton agregar participante-->
                     <Button>
                         <TextBlock Text="Agregar Particpante" TextWrapping="Wrap"/>
                     </Button>
 
+                    <!-- Boton quitar participante -->
                     <Button Grid.Column="1">
                         <TextBlock Text="Quitar Participante" TextWrapping="Wrap"/>
                     </Button>

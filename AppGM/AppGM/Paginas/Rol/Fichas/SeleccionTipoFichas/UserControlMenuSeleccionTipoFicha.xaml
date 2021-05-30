@@ -16,6 +16,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
+        <!-- Tipo ficha servants -->
         <local:UserControlSeleccionTipoFicha>
             <Grid
                 Margin="{Binding AnchoMargenCartas, Converter={local:GrosorToThicknessConverter}}">
@@ -33,6 +34,7 @@
             </Grid>
         </local:UserControlSeleccionTipoFicha>
 
+        <!-- Tipo ficha masters -->
         <local:UserControlSeleccionTipoFicha
             Grid.Column="1">
             <Grid
@@ -51,6 +53,7 @@
             </Grid>
         </local:UserControlSeleccionTipoFicha>
 
+        <!-- Tipo ficha invocaciones -->
         <local:UserControlSeleccionTipoFicha
             Grid.Column="2">
             <Grid
@@ -69,6 +72,7 @@
             </Grid>
         </local:UserControlSeleccionTipoFicha>
 
+        <!-- Tipo ficha NPCs -->
         <local:UserControlSeleccionTipoFicha
             Grid.Column="3">
             <Grid

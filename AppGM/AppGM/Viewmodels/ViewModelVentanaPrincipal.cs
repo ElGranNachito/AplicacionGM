@@ -9,10 +9,20 @@ namespace AppGM.Viewmodels
     /// </summary>
     class ViewModelVentanaPrincipal : ViewModelVentanaBase, IVentana
     {
-        #region Miembros Publicos
+        #region Propiedades
+
         public ICommand ComandoMaximizarVentana { get; set; }
         public ICommand ComandoMinimizarVentana { get; set; }
+
+        /// <summary>
+        /// Ventana de popups
+        /// </summary>
         public IVentanaMensaje VentanaPopups => SistemaPrincipal.Aplicacion.VentanaPopups;
+
+        /// <summary>
+        /// Pagina actual de la ventana principal
+        /// </summary>
+        public EPagina EPagina => SistemaPrincipal.Aplicacion.EPagina;
 
         #endregion
 
@@ -33,10 +43,5 @@ namespace AppGM.Viewmodels
                 DispararPropertyChanged(e);
             };
         }
-        
-        #region Propiedades
-        public EPagina EPagina => SistemaPrincipal.Aplicacion.EPagina;
-
-        #endregion
     }
 }

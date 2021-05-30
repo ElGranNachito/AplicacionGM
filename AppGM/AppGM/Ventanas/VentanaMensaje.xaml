@@ -50,8 +50,6 @@
                                             FontFamily="{StaticResource 'Font Awesome Regular'}"
                                             Command="{Binding ComandoCerrarVentana}"
                                             Style="{StaticResource BotonCerrarVentanaPrincipal}">
-
-
                                     </Button>
 
                                 </StackPanel>
@@ -73,10 +71,12 @@
         </Style>
     </Window.Resources>
 
+    <!-- Chrome -->
     <WindowChrome.WindowChrome>
         <WindowChrome></WindowChrome>
     </WindowChrome.WindowChrome>
 
+    <!-- Contenido -->
     <Grid>
         <ContentControl Content="{Binding  Path=ViewModelContenidoVentana, Converter={local:ViewModelToContenidoMensajeConverter}}"/>
     </Grid>

@@ -9,6 +9,7 @@
 
     <Grid Background="White">
 
+        <!-- Lista de habilidades actuales -->
         <ScrollViewer
             VerticalScrollBarVisibility="Auto"
             HorizontalScrollBarVisibility="Disabled">

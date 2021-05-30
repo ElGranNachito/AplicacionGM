@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:AppGM">
     <Application.Resources>
 
+        <!-- Recursos globales de la aplicacion -->
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Recursos/Colores.xaml"/>

@@ -7,8 +7,12 @@ namespace AppGM.Viewmodels
 {
     class ViewModelVentanaMensaje : ViewModelVentanaBase, IVentanaMensaje
     {
-        #region Miembros
+        #region Propiedades
+
         public bool DebeEsperarCierre { get; set; } = false;
+
+        public bool EstaAbierta => mVentana.IsVisible;
+
         public ViewModelMensajeBase ViewModelContenidoVentana { get; set; }
 
         #endregion
@@ -38,12 +42,15 @@ namespace AppGM.Viewmodels
             mVentana.Height = alto != -1 ? alto : mVentana.Height;
             mVentana.Width = ancho != -1 ? ancho : mVentana.Width;
 
+            //Si debemos esperar al cierre de la ventana...
             if (esperarCierre)
             {
                 DebeEsperarCierre = true;
 
+                //Ejecutamos desde el hilo principal la siguiente funcion y esperamos su conclusion...
                 await mVentana.Dispatcher.BeginInvoke( new Action(() =>
                 {
+                    //Mostramos la ventana
                     mVentana.ShowDialog();
                 }));
 
@@ -52,12 +59,11 @@ namespace AppGM.Viewmodels
                 return;
             }
 
+            //Si no debemos esperar a que termine entonces sencillamente la mostramos
             mVentana.Show();
         }
 
         public void EstablecerViewModel(ViewModelMensajeBase nuevoVM) => ViewModelContenidoVentana = nuevoVM;
-
-        public bool EstaAbierta => mVentana.IsVisible;
 
         public override void CerrarVentana() => mVentana.Hide();
 

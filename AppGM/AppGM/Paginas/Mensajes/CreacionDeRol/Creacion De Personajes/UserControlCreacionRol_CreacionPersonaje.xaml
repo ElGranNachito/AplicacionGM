@@ -96,6 +96,7 @@
                     ItemsSource="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Grid}, Path=DataContext.ClasesDeServantDisponibles}"
                     DataContext="{Binding VMSeleccionClaseServant}"/>
 
+                    <!-- Checkbox usar rangos -->
                     <CheckBox
                     Margin="0 0 0 5"
                     Visibility="{Binding EsInvocacion, Converter={local:BooleanToVisibilityConverterColapsar}}"
@@ -185,42 +186,49 @@
                                 AcceptsReturn="True"
                                 Style="{StaticResource TextoDescriptivo}"/>
 
+                            <!-- HP -->
                             <TextBox
                                 Style="{StaticResource TextoDescriptivo}"
                                 Tag="HP"
                                 MaxLength="2"
                                 Text="{Binding HP}"/>
 
+                            <!-- STR -->
                             <TextBox
                                 Style="{StaticResource TextoDescriptivo}"
                                 Tag="STR"
                                 MaxLength="2"
                                 Text="{Binding STR}"/>
 
+                            <!-- END -->
                             <TextBox
                                 Style="{StaticResource TextoDescriptivo}"
                                 Tag="END"
                                 MaxLength="2"
                                 Text="{Binding END}"/>
 
+                            <!-- AGI -->
                             <TextBox
                                 Style="{StaticResource TextoDescriptivo}"
                                 Tag="AGI"
                                 MaxLength="2"
                                 Text="{Binding AGI}"/>
 
+                            <!-- INT -->
                             <TextBox
                                 Style="{StaticResource TextoDescriptivo}"
                                 Tag="INT"
                                 MaxLength="2"
                                 Text="{Binding INT}"/>
 
+                            <!-- LCK -->
                             <TextBox
                                 Style="{StaticResource TextoDescriptivo}"
                                 Tag="LCK"
                                 MaxLength="2"
                                 Text="{Binding LCK}"/>
 
+                            <!-- CHR -->
                             <TextBox
                                 Style="{StaticResource TextoDescriptivo}"
                                 Tag="CHR"
@@ -301,6 +309,7 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
+                    <!-- Boton confirmar -->
                     <Button
                         Content="Confirmar"
                         VerticalAlignment="Bottom"
@@ -310,6 +319,7 @@
                         Style="{StaticResource BotonFondoResaltable}"
                         Command="{Binding ComandoConfirmar}"/>
 
+                    <!-- Boton cancelar -->
                     <Button
                         Grid.Column="1"
                         Content="Cancelar"

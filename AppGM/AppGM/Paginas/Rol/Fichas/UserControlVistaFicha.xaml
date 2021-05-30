@@ -30,6 +30,7 @@
                     </Grid.ColumnDefinitions>
                 
 
+                    <!-- Datos generales -->
                     <StackPanel>
                         <TextBlock
                             TextWrapping="Wrap">
@@ -104,6 +105,7 @@
                         </TextBlock>
                     </StackPanel>
 
+                    <!-- Stats -->
                     <StackPanel Grid.Column="1">
                         <TextBlock>
                             <Run Text="STR: "

@@ -3,6 +3,8 @@
                     xmlns:local="clr-namespace:AppGM"
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
+    <!--........................FONTS, TAMAÑOS DE LETRA Y CODIGOS DE CARACTERES...................................-->
+
     <FontFamily x:Key="Font Awesome Regular">pack://application:,,,/Fonts/#Font Awesome 5 Free Regular</FontFamily>
     <FontFamily x:Key="Font Awesome Solid">pack://application:,,,/Fonts/#Font Awesome 5 Free Solid</FontFamily>
 

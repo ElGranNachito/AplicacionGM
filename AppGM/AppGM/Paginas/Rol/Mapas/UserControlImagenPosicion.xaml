@@ -13,6 +13,8 @@
         <Grid
             Visibility="{Binding ImagenPosicionEsVisible, Converter={local:BooleanToVisibilityConverterOcultar}}"
             >
+
+            <!-- Imagen de la unidad -->
             <Image
                 local:DragProperty.Value="True"
                     Source="{Binding PathImagen, Mode=OneWay}"
@@ -24,14 +26,15 @@
                     SnapsToDevicePixels="True"
                     >
 
-                    <Image.RenderTransform>
-                        <TranslateTransform 
-                            X="{Binding MitadTamañoImagenesPosicion.X}"
-                            Y="{Binding MitadTamañoImagenesPosicion.Y}"/>
-                    </Image.RenderTransform>
+                <Image.RenderTransform>
+                    <TranslateTransform 
+                        X="{Binding MitadTamañoImagenesPosicion.X}"
+                        Y="{Binding MitadTamañoImagenesPosicion.Y}"/>
+                </Image.RenderTransform>
 
             </Image>
 
+            <!-- Texto que muesta la cantidad de unidades -->
             <local:OutlinedText 
                 Visibility="{Binding EsInvocacionOTrampa, Converter={local:BooleanToVisibilityConverterOcultar}}"
                 Margin="{Binding PosicionCantidadUnidades,

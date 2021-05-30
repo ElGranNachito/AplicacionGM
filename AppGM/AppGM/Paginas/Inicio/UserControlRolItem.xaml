@@ -6,6 +6,8 @@
              xmlns:local="clr-namespace:AppGM"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="200">
+
+    <!-- Representacion de un rol -->
     <Grid>
 
         <local:UserControlCarta>

@@ -15,9 +15,13 @@
         Title="MainWindow" Height="700" Width="1200">
 
     <Window.Resources>
+        
+        <!-- Estilo de la ventana -->
         <Style TargetType="{x:Type local:MainWindow}">
             <Setter Property="Template">
                 <Setter.Value>
+
+                    <!-- Template de la ventana -->
                     <ControlTemplate TargetType="{x:Type Window}">
                         <!-- Estilo de la ventana -->
                         <Grid>
@@ -66,7 +70,6 @@
                             </Grid>
 
                             <!-- Contenido -->
-        
                             <Border Grid.Row="1">
                                 <ContentPresenter Content="{TemplateBinding Content}"/>
                             </Border>
@@ -78,6 +81,7 @@
         </Style>
     </Window.Resources>
 
+    <!-- Chrome -->
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="{Binding CaptionHeight}" 
                       ResizeBorderThickness="{Binding ResizeBorderThickness}"
@@ -86,6 +90,7 @@
 
     <Grid>
 
+        <!-- Fondo gris transparente que se muestra cuando se abre un popup -->
         <Border 
             local:AnimarOpacidadProperty.DebeRealizarAnimacion="{
             Binding VentanaPopups.DebeEsperarCierre}"
@@ -96,7 +101,8 @@
             Opacity="0"
             Panel.ZIndex="10"/>
 
-            <ContentControl Content="{Binding EPagina, Converter={local:EnumToUserControlConverter}, ConverterParameter=1}"/>
+        <!-- Contenido de la ventana -->
+        <ContentControl Content="{Binding EPagina, Converter={local:EnumToUserControlConverter}, ConverterParameter=1}"/>
     </Grid>
 
 </Window>

@@ -8,6 +8,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Border Padding="10">
 
+        <!--Fondo-->
         <Border.Background>
             <ImageBrush ImageSource="../../../../Media/Imagenes/UiFondoMenuPrincipal.png" Stretch="UniformToFill"/>
         </Border.Background>
@@ -20,25 +21,28 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
+            <!-- Columna izquierda -->
             <StackPanel>
 
+                <!-- Boton agregar combate -->
                 <Button Content="Agregar"
                         Margin="0 0 0 10"
                         HorizontalAlignment="Center"
                         Height="25" Width="120"/>
 
+                <!-- Lista de combates existentes -->
                 <local:UserControlListaCombates DataContext="{Binding Combates}"/>
 
             </StackPanel>
 
-            <local:UserControlGlobo Grid.Column="1" 
-                                    Margin="10 35 10 10"
-                                    HorizontalAlignment="Left"
-                                    DataContext="{Binding GloboInfoCombate}"/>
+            <!--  Globa que muestra la informacion del combate seleccionado acutlmente-->
+            <local:UserControlGlobo 
+                Grid.Column="1" 
+                Margin="10 35 10 10"
+                HorizontalAlignment="Left"
+                DataContext="{Binding GloboInfoCombate}"/>
 
         </Grid>
-
-
 
     </Border>
 </UserControl>
