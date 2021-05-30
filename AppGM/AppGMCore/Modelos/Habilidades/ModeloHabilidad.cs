@@ -4,13 +4,18 @@ using System.ComponentModel.DataAnnotations;
 namespace AppGM.Core
 {
     /// <summary>
-    /// Modelo de datos para la habilidad
+    /// Modelo de datos para habilidades de un <see cref="ModeloPersonaje"/>
     /// </summary>
     public class ModeloHabilidad : ModeloBase
     {
+        /// <summary>
+        /// Controlador
+        /// </summary>
         public ControladorHabilidad controladorHabilidad;
 
-        private ushort TurnosRestantes;
+        /// <summary>
+        /// Indica si la habilidad esta actualmente activa
+        /// </summary>
         private bool EstaActiva;
 
         /// <summary>
@@ -27,6 +32,11 @@ namespace AppGM.Core
         /// Turnos que dura la habilidad
         /// </summary>
         public ushort TurnosDeDuracion { get; set; }
+
+        /// <summary>
+        /// Turnos restantes de la habilidad
+        /// </summary>
+        private ushort TurnosRestantes;
 
         /// <summary>
         /// Nombre de la habilidad
@@ -90,12 +100,18 @@ namespace AppGM.Core
 
     }
 
+    /// <summary>
+    /// Modelo para las perks de un <see cref="ModeloPersonaje"/>
+    /// </summary>
     public class ModeloPerk : ModeloHabilidad
     {
        
         
     }
 
+    /// <summary>
+    /// Modelo para las habilidades magicas de un <see cref="ModeloPersonaje"/>
+    /// </summary>
     public class ModeloMagia : ModeloHabilidad
     {
         public ControladorMagia controladorMagia;
@@ -111,6 +127,9 @@ namespace AppGM.Core
         public bool EsParticular { get; set; }
     }
 
+    /// <summary>
+    /// Modelo para los NPs de un <see cref="ModeloServant"/>
+    /// </summary>
     public class ModeloNoblePhantasm : ModeloHabilidad
     {
         

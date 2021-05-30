@@ -1,20 +1,60 @@
-﻿
-
-using System.Text;
+﻿using System.Text;
 
 namespace AppGM.Core
 {
+    /// <summary>
+    /// Controlador de un <see cref="ModeloUnidadMapa"/>>
+    /// </summary>
     public class ControladorUnidadMapa : Controlador<ModeloUnidadMapa>
     {
-        #region Miembros
+        #region Campos & Propiedades
 
+        //---------------------------------CAMPOS------------------------------------
+
+
+        /// <summary>
+        /// Posicion de la unidad en el mapa
+        /// </summary>
         public Vector2              posicion;
+
+        /// <summary>
+        /// <see cref="ControladorPersonaje"/> que es representado por esta unidad
+        /// </summary>
         public ControladorPersonaje personaje;
+
+
+        //-------------------------------PROPIEDADES----------------------------------
+
+
+        /// <summary>
+        /// Devuelve la ruta completa a la imagen de esta unidad
+        /// </summary>
+        public string Path => ObtenerPathAImagen();
+
+        /// <summary>
+        /// Devuelve el nombre de la unidad
+        /// </summary>
+        public string Nombre => modelo.Nombre;
+
+        /// <summary>
+        /// Cantidad de unidades en el grupo
+        /// Asegurarse de que al llamar a esta propiedad el modelo sea de tipo <see cref="ModeloUnidadMapaInvocacionTrampa"/>
+        /// </summary>
+        public int Cantidad => ((ModeloUnidadMapaInvocacionTrampa)modelo).Cantidad;
+
+        /// <summary>
+        /// Tipo de esta unidad
+        /// </summary>
+        public ETipoUnidad TipoUnidad => modelo.ETipoUnidad;
 
         #endregion
 
         #region Constructores
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="_modelo">Modelo que representara este controlador</param>
         public ControladorUnidadMapa(ModeloUnidadMapa _modelo)
 			:base(_modelo)
         {
@@ -72,6 +112,9 @@ namespace AppGM.Core
             return sb.ToString();
         }
 
+        /// <summary>
+        /// Elimina el modelo de la base de datos
+        /// </summary>
         public override void Eliminar()
         {
             SistemaPrincipal.EliminarModelo(modelo.Posicion);
@@ -80,19 +123,6 @@ namespace AppGM.Core
 
             posicion.Eliminar();
         }
-
-        #endregion
-
-        #region Propiedades
-        public string      Path       => ObtenerPathAImagen();
-        public string      Nombre     => modelo.Nombre;
-
-        /// <summary>
-        /// Cantidad de unidades en el grupo
-        /// Asegurarse de que al llamar a esta propiedad el modelo sea de tipo <see cref="ModeloUnidadMapaInvocacionTrampa"/>
-        /// </summary>
-        public int Cantidad           => ((ModeloUnidadMapaInvocacionTrampa) modelo).Cantidad;
-        public ETipoUnidad TipoUnidad => modelo.ETipoUnidad; 
 
         #endregion
 

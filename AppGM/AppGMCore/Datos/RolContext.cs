@@ -6,20 +6,68 @@ namespace AppGM.Core
     {
 
         #region Propiedades
-        // Modelos ---
+
+        // ------------------------------------MODELOS------------------------------------
+
+        /// <summary>
+        /// Roles existentes
+        /// </summary>
         public DbSet<ModeloRol> Rols { get; set; }
+
+        /// <summary>
+        /// Personajes existentes
+        /// </summary>
         public DbSet<ModeloPersonaje> Personajes { get; set; }
+
+        /// <summary>
+        /// Servants existentes
+        /// </summary>
         public DbSet<ModeloServant> Servants { get; set; }
+
+        /// <summary>
+        /// Masters existentes
+        /// </summary>
         public DbSet<ModeloMaster> Masters { get; set; }
+
+        /// <summary>
+        /// Invocaciones existentes
+        /// </summary>
         public DbSet<ModeloInvocacion> Invocaciones { get; set; }
+
+        /// <summary>
+        /// Combates existentes
+        /// </summary>
         public DbSet<ModeloAdministradorDeCombate> Combates { get; set; }
+
+        /// <summary>
+        /// Participantes existentes
+        /// </summary>
         public DbSet<ModeloParticipante> Participantes { get; set; }
+
+        /// <summary>
+        /// Vectores existentes
+        /// </summary>
         public DbSet<ModeloVector2> Vectores2 { get; set; }
+
+        /// <summary>
+        /// Mapas existentes
+        /// </summary>
         public DbSet<ModeloMapa> Mapas { get; set; }
+
+        /// <summary>
+        /// Unidades en mapas
+        /// </summary>
         public DbSet<ModeloUnidadMapa> UnidadesMapa { get; set; }
+
+        /// <summary>
+        /// Acciones de tomadas por personajes
+        /// </summary>
         public DbSet<ModeloAccion> Acciones { get; set; }
 
-        // Relaciones ---
+
+        // -----------------------------------RELACIONES---------------------------------------
+
+
         public DbSet<TIPersonajeEfecto> PersonajeEfectos { get; set; }
         public DbSet<TIPersonajeUtilizable> PersonajeUtilizables { get; set; }
         public DbSet<TIPersonajeDefensivo> PersonajeDefensivos { get; set; }
@@ -43,12 +91,15 @@ namespace AppGM.Core
         public DbSet<TIRolPersonaje> PersonajesRol { get; set; }
         #endregion
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public RolContext(){}
 
         #region Configuracion de la base de datos
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlite($"Data Source = bb.db");
+        => optionsBuilder.UseSqlite($"Data Source = DbAppGm.db");
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -488,7 +539,7 @@ namespace AppGM.Core
             modelBuilder.Entity<TIHabilidadCargasHabilidad>().HasKey(e => new { e.IdHabilidad, e.IdCargasHabilidad });
 
             modelBuilder.Entity<TIHabilidadCargasHabilidad>()
-                .HasOne(i => i.ModeloCargasHabilidad);
+                .HasOne(i => i.ModeloCargas);
 
             modelBuilder.Entity<TIHabilidadCargasHabilidad>()
                 .HasOne(i => i.Habilidad)

@@ -2,10 +2,21 @@
 
 namespace AppGM.Core
 {
+    /// <summary>
+    /// Controlador de un <see cref="ModeloAdministradorDeCombate"/>
+    /// </summary>
     public class ControladorAdministradorDeCombate : Controlador<ModeloAdministradorDeCombate>
     {
-        #region Miembros
+        #region Propiedades
+
+        /// <summary>
+        /// Controladores de todos los participantes del combate
+        /// </summary>
         public List<ControladorParticipante> ControladoresParticipantes { get; set; } = new List<ControladorParticipante>();
+
+        /// <summary>
+        /// Controladores de todos los mapas
+        /// </summary>
         public List<ControladorMapa> ControladoresMapas { get; set; } = new List<ControladorMapa>();
 
         #endregion
@@ -51,6 +62,10 @@ namespace AppGM.Core
 
         #region Funciones
 
+        /// <summary>
+        /// Avanza el turno actual del combate si todos los personajes ya tuvieron su turnos,
+        /// si no es asi entonces avanza al turno del proximo personaje
+        /// </summary>
         public void AvanzarTurno()
         {
             if (modelo.IndicePersonajeTurnoActual >= modelo.Participantes.Count)
@@ -65,6 +80,10 @@ namespace AppGM.Core
             modelo.IndicePersonajeTurnoActual = turnoActualTmp;
         }
 
+        /// <summary>
+        /// Retrocede el turno actual si este es el primer personaje en la lista,
+        /// si no es asi entonces retrocedemos al personaje anterior
+        /// </summary>
         public void RetrocederTurno()
         {
             if (modelo.IndicePersonajeTurnoActual < 0)

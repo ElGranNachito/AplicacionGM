@@ -31,7 +31,7 @@ namespace AppGM.Core
 		public List<ModeloCondicion> condiciones                  = new List<ModeloCondicion>();
 		public List<ModeloAdministradorDeCombate> combatesActivos = new List<ModeloAdministradorDeCombate>();
 		public List<ModeloLimitador> limitadores                  = new List<ModeloLimitador>();
-		public List<ModeloCargasHabilidad> cargasHabilidades      = new List<ModeloCargasHabilidad>();
+		public List<ModeloCargas> cargasHabilidades      = new List<ModeloCargas>();
 		public List<ModeloParticipante> participantes             = new List<ModeloParticipante>();
 	}
 }

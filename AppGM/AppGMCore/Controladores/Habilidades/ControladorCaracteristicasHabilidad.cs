@@ -1,5 +1,8 @@
 ﻿namespace AppGM.Core
 {
+    /// <summary>
+    /// Controlador de un <see cref="ModeloLimitador"/>
+    /// </summary>
     public class ControladorLimitador : Controlador<ModeloLimitador>
     {
         #region Miembros
@@ -14,7 +17,10 @@
         #endregion
     }
 
-    public class ControladorCargasHabilidad : Controlador<ModeloCargasHabilidad>
+    /// <summary>
+    /// Controlador de <see cref="ModeloCargas"/>
+    /// </summary>
+    public class ControladorCargasHabilidad : Controlador<ModeloCargas>
     {
         #region Miembros
 
@@ -22,8 +28,8 @@
 
         #region Constructor
 
-        public ControladorCargasHabilidad(ModeloCargasHabilidad _modeloCargasHabilidad)
-			:base(_modeloCargasHabilidad) { }
+        public ControladorCargasHabilidad(ModeloCargas modeloCargas)
+			:base(modeloCargas) { }
 
         #endregion
     }

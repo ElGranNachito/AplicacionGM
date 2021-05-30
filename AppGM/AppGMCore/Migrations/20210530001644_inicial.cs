@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AppGM.Core.Migrations
 {
-    public partial class Inicial : Migration
+    public partial class inicial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -85,7 +85,7 @@ namespace AppGM.Core.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ModeloCargasHabilidad",
+                name: "ModeloCargas",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
@@ -95,7 +95,7 @@ namespace AppGM.Core.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ModeloCargasHabilidad", x => x.Id);
+                    table.PrimaryKey("PK_ModeloCargas", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -131,9 +131,9 @@ namespace AppGM.Core.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
+                    TurnosDeDuracion = table.Column<ushort>(type: "INTEGER", nullable: false),
                     TurnosRestantes = table.Column<ushort>(type: "INTEGER", nullable: false),
                     EstaSiendoAplicado = table.Column<bool>(type: "INTEGER", nullable: false),
-                    TurnosDeDuracion = table.Column<ushort>(type: "INTEGER", nullable: false),
                     Nombre = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
                     Descripcion = table.Column<string>(type: "TEXT", maxLength: 500, nullable: true)
                 },
@@ -379,9 +379,9 @@ namespace AppGM.Core.Migrations
                 {
                     table.PrimaryKey("PK_TIHabilidadCargasHabilidad", x => new { x.IdHabilidad, x.IdCargasHabilidad });
                     table.ForeignKey(
-                        name: "FK_TIHabilidadCargasHabilidad_ModeloCargasHabilidad_IdCargasHabilidad",
+                        name: "FK_TIHabilidadCargasHabilidad_ModeloCargas_IdCargasHabilidad",
                         column: x => x.IdCargasHabilidad,
-                        principalTable: "ModeloCargasHabilidad",
+                        principalTable: "ModeloCargas",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -988,16 +988,16 @@ namespace AppGM.Core.Migrations
                     TipoPersonaje = table.Column<int>(type: "INTEGER", nullable: false),
                     MaxHp = table.Column<int>(type: "INTEGER", nullable: false),
                     Hp = table.Column<int>(type: "INTEGER", nullable: false),
-                    Str = table.Column<ushort>(type: "INTEGER", nullable: false),
-                    End = table.Column<ushort>(type: "INTEGER", nullable: false),
-                    Agi = table.Column<ushort>(type: "INTEGER", nullable: false),
-                    Int = table.Column<ushort>(type: "INTEGER", nullable: false),
-                    Lck = table.Column<ushort>(type: "INTEGER", nullable: false),
-                    VentajaStr = table.Column<ushort>(type: "INTEGER", nullable: false),
-                    VentajaEnd = table.Column<ushort>(type: "INTEGER", nullable: false),
-                    VentajaAgi = table.Column<ushort>(type: "INTEGER", nullable: false),
-                    VentajaInt = table.Column<ushort>(type: "INTEGER", nullable: false),
-                    VentajaLck = table.Column<ushort>(type: "INTEGER", nullable: false),
+                    Str = table.Column<int>(type: "INTEGER", nullable: false),
+                    End = table.Column<int>(type: "INTEGER", nullable: false),
+                    Agi = table.Column<int>(type: "INTEGER", nullable: false),
+                    Int = table.Column<int>(type: "INTEGER", nullable: false),
+                    Lck = table.Column<int>(type: "INTEGER", nullable: false),
+                    VentajaStr = table.Column<int>(type: "INTEGER", nullable: false),
+                    VentajaEnd = table.Column<int>(type: "INTEGER", nullable: false),
+                    VentajaAgi = table.Column<int>(type: "INTEGER", nullable: false),
+                    VentajaInt = table.Column<int>(type: "INTEGER", nullable: false),
+                    VentajaLck = table.Column<int>(type: "INTEGER", nullable: false),
                     PesoMaximoCargable = table.Column<decimal>(type: "TEXT", nullable: false),
                     PesoCargado = table.Column<decimal>(type: "TEXT", nullable: false),
                     PathImagen = table.Column<string>(type: "TEXT", nullable: true),
@@ -2110,7 +2110,7 @@ namespace AppGM.Core.Migrations
                 name: "ModeloContrato");
 
             migrationBuilder.DropTable(
-                name: "ModeloCargasHabilidad");
+                name: "ModeloCargas");
 
             migrationBuilder.DropTable(
                 name: "ModeloLimitador");

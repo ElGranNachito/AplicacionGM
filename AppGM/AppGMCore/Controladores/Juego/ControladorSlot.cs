@@ -2,10 +2,16 @@
 
 namespace AppGM.Core
 {
+    /// <summary>
+    /// Controlador de un <see cref="ModeloSlot"/>
+    /// </summary>
     public class ControladorSlot : Controlador<ModeloSlot>
     {
         #region Controladores
 
+        /// <summary>
+        /// Lista con todos los <see cref="ControladorUtilizable"/> guardados
+        /// </summary>
         public List<ControladorUtilizable> ControladorItemsAlmacenados { get; set; }
 
         #endregion
@@ -19,6 +25,11 @@ namespace AppGM.Core
 
         #region Funciones
 
+        /// <summary>
+        /// Indica si puede cierto <see cref="ControladorUtilizable"/> puede ser almacenado por este slot
+        /// </summary>
+        /// <param name="item">Item que ver si puede ser almacenado</param>
+        /// <returns><see cref="bool"/> indicando si este <paramref name="item"/> puede ser almacenado</returns>
         public bool PuedeAlmacenarItem(ControladorUtilizable item)
         {
             //TODO:
@@ -27,10 +38,15 @@ namespace AppGM.Core
             return false;
         }
 
+        /// <summary>
+        /// Almacena un item
+        /// </summary>
+        /// <param name="item">Item a almacenar</param>
+        /// <returns><see cref="bool"/> indicando si el item fue almacenado exitosamente</returns>
         public bool AlmacenarItem(ControladorUtilizable item)
         {
-            //TODO: Chequear si queda espacio para almacenar dicho item y almacenarlo.
-            //Retornar booleano indicando si se pudo almacenar el item.
+	        if (!PuedeAlmacenarItem(item))
+		        return false;
 
             return false;
         }

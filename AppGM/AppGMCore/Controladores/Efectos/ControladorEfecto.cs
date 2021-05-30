@@ -1,8 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace AppGM.Core
 {
+    /// <summary>
+    /// Constrolador de un efecto
+    /// </summary>
     public class ControladorEfecto : Controlador<ModeloEfecto>
     {
         #region Propiedades & Campos
