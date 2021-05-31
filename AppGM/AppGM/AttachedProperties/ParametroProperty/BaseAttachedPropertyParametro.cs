@@ -1,12 +1,20 @@
 ﻿using System.Windows;
-using AppGM.Core;
 
 namespace AppGM.AttachedProperties
 {
+    //Para comentarios detallados de lo que ocurre aqui ir a BaseAttachedProperty
+
+	/// <summary>
+	/// AttachedPropertyParametro base, clase abstracta para que hereden otras attached properties parametro.
+	/// El proposito de estas propiedades es aportar datos extra para el uso de otras <see cref="BaseAttachedProperty{Type,OwnerType}"/>
+	/// </summary>
+	/// <typeparam name="Type">Tipo de valor que almacena la <see cref="DependencyProperty"/></typeparam>
+	/// <typeparam name="OwnerType">Clase dueña de la propiedad</typeparam>
+	//TODO: Considerar remover esta clase y combinarla con BaseAttachedProperty para simplificar el tramite
     public abstract class BaseAttachedPropertyParametro<Type, OwnerType>
         where OwnerType: BaseAttachedPropertyParametro<Type, OwnerType>, new()
     {
-        public static OwnerType instancia = null;
+	    public static OwnerType instancia = null;
 
         public static readonly DependencyProperty ParametroProperty = 
             DependencyProperty.RegisterAttached("Parametro", typeof(Type), typeof(BaseAttachedPropertyParametro<Type, OwnerType>), new PropertyMetadata(default(Type), OnValueChanged, OnValueChangedCoerce));
