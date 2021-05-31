@@ -1,17 +1,22 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace AppGM.Core
+﻿namespace AppGM.Core
 {
+    /// <summary>
+    /// Modelo de una tirada que no especifica su tipo
+    /// </summary>
     public class ModeloTiradaBase : ModeloBase
     {
-        public ControladorTirada<ModeloTiradaBase> controladorTiradaBase;
+        /// <summary>
+        /// Controlador
+        /// </summary>
+        public IControladorTiradaBase controladorTiradaBase;
     }
 
+    /// <summary>
+    /// Tirada con un numero de caras y dados personalizado
+    /// </summary>
     public class ModeloTiradaVariable : ModeloTiradaBase
     {
-        public ControladorTiradaVariable controladorTiradaVariable;
-
-        /// <summary>
+	    /// <summary>
         /// Cantidad de dados
         /// </summary>
         public ushort Dados { get; set; }
@@ -21,21 +26,23 @@ namespace AppGM.Core
         public ushort Caras { get; set; }
     }
 
+    /// <summary>
+    /// Tirada que depende de una stat
+    /// </summary>
     public class ModeloTiradaStat : ModeloTiradaBase
     {
-        public ControladorTiradaStat controladorTiradaStat;
-
-        /// <summary>
+	    /// <summary>
         /// Stat a tener en cuenta durante la tirada
         /// </summary>
         public EStat StatDeLaQueDepende { get; set; }
     }
 
+    /// <summary>
+    /// Tirada de daño
+    /// </summary>
     public class ModeloTiradaDeDaño : ModeloTiradaVariable
     {
-        public ControladorTiradaDaño controladorTiradaDaño;
-
-        /// <summary>
+	    /// <summary>
         /// Tipo de daño que aplica la tirada
         /// </summary>
         public ETipoDeDaño TipoDeDaño { get; set; }

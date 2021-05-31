@@ -1,42 +1,65 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace AppGM.Core
 {
     /// <summary>
-    /// Tipo de la unidad que esta posicionada sobre el mapa, se utiliza para determinar el tipo de imagen
+    /// Modelo utilizado para representar la posicion de un elemento en el mapa.
     /// </summary>
-    [Flags]
-    public enum ETipoUnidad
+	public class ModeloUnidadMapa : ModeloBase
     {
-        NINGUNO    = 0,
-        Master     = 1,
-        Servant    = 2,
-        Invocacion = 4,
-        Trampa     = 8,
-        Iglesia    = 16
-    }
-    public class ModeloUnidadMapa : ModeloBase
-    {
+        /// <summary>
+        /// Controlador
+        /// </summary>
         public ControladorUnidadMapa controladorUnidadMapa;
 
+        /// <summary>
+        /// Nombre de la unidad
+        /// </summary>
         public string Nombre { get; set; }
 
+        /// <summary>
+        /// Tipo de la unidad
+        /// </summary>
         public ETipoUnidad ETipoUnidad { get; set; }
 
+        /// <summary>
+        /// Posicion de la unidad sobre el mapa
+        /// </summary>
         public TIUnidadMapaVector2   Posicion { get; set; }
+
+        /// <summary>
+        /// Personaje que representa la unidad
+        /// </summary>
         public TIPersonajeUnidadMapa Personaje { get; set; }
     }
+
+    /// <summary>
+    /// Modelo utilizado para representar a un <see cref="ModeloMaster"/> o un <see cref="ModeloServant"/> en el mapa
+    /// </summary>
     public class ModeloUnidadMapaMasterServant : ModeloUnidadMapa
     {
+        /// <summary>
+        /// Clase del servant. En caso de ser un master esto se refiere a la clase del servant que controla
+        /// </summary>
         public EClaseServant EClaseServant { get; set; }
     }
 
+    /// <summary>
+    /// Modelo utilizado para repsentar a una <see cref="ModeloInvocacion"/> en el mapa
+    /// </summary>
     public class ModeloUnidadMapaInvocacionTrampa : ModeloUnidadMapaMasterServant
     {
         [StringLength(1)]
         public string Inicial { get; set; }
+
+        /// <summary>
+        /// Cantidad de trampas o invocaciones sobre esa unidad
+        /// </summary>
         public int Cantidad { get; set; }
+        
+        /// <summary>
+        /// Siendo que puede ser de un master o un servant, su imagen imagen cambiara independientemente de la clase del servant
+        /// </summary>
         public bool EsDeMaster { get; set; }
     }
 }

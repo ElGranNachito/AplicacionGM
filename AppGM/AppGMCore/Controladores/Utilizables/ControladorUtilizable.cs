@@ -39,7 +39,7 @@
             //TODO: Realizar la tirada de utilizacion.
         }
 
-        public virtual bool PuedeUtilizar()
+        public virtual bool PuedeUtilizar(ControladorPersonaje usuario, ControladorPersonaje[] objetivos)
         {
 	        return false;
         }

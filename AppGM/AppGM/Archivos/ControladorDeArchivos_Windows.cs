@@ -1,12 +1,13 @@
-﻿using System;
-using System.IO;
-using System.Text;
+﻿using System.IO;
 using System.Windows;
 using AppGM.Core;
 using Microsoft.Win32;
 
 namespace AppGM
 {
+    /// <summary>
+    /// Implementacion de la interfaz <see cref="IControladorDeArchivos"/>
+    /// </summary>
     class ControladorDeArchivos_Windows : IControladorDeArchivos
     {
         #region Propiedades

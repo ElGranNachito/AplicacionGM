@@ -7,6 +7,7 @@
              mc:Ignorable="d" 
              Height="80" Width="200">
 
+    <!-- Control para la previsualizacion de un personaje -->
     <Grid Background="White">
 
         <Grid.ColumnDefinitions>
@@ -16,6 +17,7 @@
 
         </Grid.ColumnDefinitions>
 
+        <!-- Context menu -->
         <Grid.ContextMenu>
             <ContextMenu>
                 <Button Content="Eliminar" Command="{Binding ComandoEliminar}"/>
@@ -38,6 +40,7 @@
 
         </Border>
 
+        <!-- Datos personaje -->
         <StackPanel
             Grid.Column="1"
             Margin="0 15 0 0">

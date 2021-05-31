@@ -33,7 +33,7 @@
         /// </summary>
         /// <param name="usuario"><see cref="ControladorPersonaje"/> que lo utilizara</param>
         /// <param name="objetivos"><see cref="ControladorPersonaje"/> que recibiran el efecto</param>
-        /// <returns></returns>
+        /// <returns><see cref="bool"/> indicando si esta habilidad puede ser utilizada por este <paramref name="usuario"/> en dados <paramref name="objetivos"/></returns>
         bool PuedeUtilizar(ControladorPersonaje usuario, ControladorPersonaje[] objetivos);
     }
 

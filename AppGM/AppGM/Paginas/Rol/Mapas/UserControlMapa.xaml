@@ -14,14 +14,17 @@
             <ColumnDefinition Width="6*"/>
         </Grid.ColumnDefinitions>
 
+        <!-- Columna izquierda -->
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="40"/>
             </Grid.RowDefinitions>
 
+            <!-- Lista de entidades -->
             <local:UserControlListaIngresoPosicion DataContext="{Binding Posiciones}"/>
 
+            <!-- Boton añadir participante -->
             <Button  Grid.Row="1"
                 Content="Añadir Participante"
                 Command="{Binding ComandoAñadirParticipante}"/>
@@ -37,6 +40,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
+                <!-- Textos posicion Y -->
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -56,6 +60,7 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
+                    <!-- Textos posicion X -->
                     <Grid>
 
                         <TextBlock Text="{Binding MitadTamañoCanvasX}" 
@@ -65,6 +70,7 @@
 
                     </Grid>
 
+                    <!-- Mapa -->
                     <Grid Grid.Row="1">
 
                         <ScrollViewer
@@ -75,8 +81,10 @@
                                 Width="{Binding ElementName=mapa, Path=ActualWidth}"
                                 Height="{Binding ElementName=mapa, Path=ActualHeight}">
 
+                                <!-- Fondo mapa -->
                                 <Image x:Name="mapa" Source="{Binding PathImagen}"/>
 
+                                <!-- Imagenes de las entidades -->
                                 <local:UserControlListaImagenPosicion DataContext="{Binding Posiciones}"/>
                             </Canvas>
                         </ScrollViewer>

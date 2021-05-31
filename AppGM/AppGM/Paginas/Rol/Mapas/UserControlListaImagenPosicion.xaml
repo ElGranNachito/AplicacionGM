@@ -6,10 +6,13 @@
              xmlns:local="clr-namespace:AppGM"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+
+    <!-- Lista de las imagenes de las entidades -->
     <Grid>
 
         <ItemsControl ItemsSource="{Binding}">
 
+            <!-- Hacemos que el panel sea un grid para que puedan solapar -->
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Grid/>

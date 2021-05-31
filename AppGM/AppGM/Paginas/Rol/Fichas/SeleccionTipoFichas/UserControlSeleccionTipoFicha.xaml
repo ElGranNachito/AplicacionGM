@@ -7,6 +7,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="300">
 
+    <!-- Control para la seleccion de un tipo de fichas, es decir
+    fichas pertenecientes a cierto tipo de personaje-->
     <UserControl.Template>
         <ControlTemplate TargetType="{x:Type UserControl}">
             <Grid Background="Beige">
@@ -16,8 +18,10 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
+                <!-- Contenido a mostrar en el bloque superior del control -->
                 <ContentPresenter Grid.Row="0"/>
 
+                <!-- Informacion de este tipo de fichas -->
                 <StackPanel Grid.Row="1">
                     <TextBlock Text="Un poco de info general"
                                TextWrapping="Wrap"/>

@@ -2,19 +2,39 @@
 
 namespace AppGM.Core
 {
+    /// <summary>
+    /// Modelo que representa un <see cref="ModeloPersonaje"/> que participa en un combate
+    /// </summary>
     public class ModeloParticipante : ModeloBase
     {
+        /// <summary>
+        /// Controlador
+        /// </summary>
         public ControladorParticipante controladorParticipante;
 
+        /// <summary>
+        /// Resultado de la tirada de iniciativa
+        /// </summary>
         public int TiradaIniciativa { get; set; }
+
+        /// <summary>
+        /// Indica si es su turno de actuar en el combate
+        /// </summary>
         public bool EsSuTurno { get; set; }
 
-        //Personaje participante
+        /// <summary>
+        /// Personaje participante del combate
+        /// </summary>
         public virtual TIParticipantePersonaje Personaje { get; set; }
 
-        //Acciones realizadas por el participante
+        /// <summary>
+        /// Acciones realizadas por el participante
+        /// </summary>
         public virtual List<TIParticipanteAccion> AccionesRealizadas { get; set; } = new List<TIParticipanteAccion>();
 
-        public virtual TIAdministradorDeCombateParticipante Combate { get; set; }
+        /// <summary>
+        /// Combate en el que participa
+        /// </summary>
+        public virtual TIAdministradorDeCombateParticipante CombateActual { get; set; }
     }
 }

@@ -1,13 +1,30 @@
 ﻿namespace AppGM.Core
 {
+    /// <summary>
+    /// Controlador de un <see cref="ModeloRol"/>
+    /// </summary>
     public class ControladorRol : Controlador<ModeloRol>
     {
-        public DatosRol datosRol;
+		#region Campos
 
-        #region Eventos
+		/// <summary>
+		/// Datos del rol
+		/// </summary>
+		public DatosRol datosRol; 
 
-        public delegate void dAvanzarDia(ref ushort nuevoDia);
+		#endregion
 
+		#region Eventos
+
+		/// <summary>
+		/// Representa un metodo que lidie con eventos de avance del dia en el rol
+		/// </summary>
+		/// <param name="nuevoDia"></param>
+		public delegate void dAvanzarDia(ref ushort nuevoDia);
+
+        /// <summary>
+        /// Evento que se dispara al avanzar de dia
+        /// </summary>
         public event dAvanzarDia OnAvanzarDia = delegate{};
 
         #endregion
@@ -23,6 +40,9 @@
 
         #region Funciones
 
+        /// <summary>
+        /// Avanza de dia en el rol
+        /// </summary>
         public void AvanzarDia()
         {
             ushort nuevoDia = ++modelo.Dia;

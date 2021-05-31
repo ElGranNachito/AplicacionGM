@@ -24,13 +24,13 @@ namespace AppGM.Core
     }
 
     /// <summary>
-    /// Representa una relacion de un <see cref="ModeloHabilidad"/> con el <see cref="ModeloCargasHabilidad"/> que tenga
+    /// Representa una relacion de un <see cref="ModeloHabilidad"/> con el <see cref="ModeloCargas"/> que tenga
     /// </summary>
     public class TIHabilidadCargasHabilidad : TIHabilidad
     {
-        [ForeignKey(nameof(ModeloCargasHabilidad))]
+        [ForeignKey(nameof(ModeloCargas))]
         public int IdCargasHabilidad { get; set; }
-        public ModeloCargasHabilidad ModeloCargasHabilidad { get; set; }
+        public ModeloCargas ModeloCargas { get; set; }
     }
 
     /// <summary>

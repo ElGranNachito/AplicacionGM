@@ -2,6 +2,10 @@
 
 namespace AppGM
 {
+    /// <summary>
+    /// VM destinado a un control que muestre ambos, la lista de fichas disposnibles (<see cref="ViewModelListaFichas"/>)
+    /// y una vista de la ficha actualmente seleccionada (<see cref="FichaSeleccionada"/>)
+    /// </summary>
     public class ViewModelListaFichasVistaFichas : BaseViewModel, IBotonSeleccionado<BaseViewModel>
     {
         #region Propiedades

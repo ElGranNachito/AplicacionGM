@@ -49,6 +49,7 @@
                 Height="65"
                 BorderBrush="Black"
                 BorderThickness="1">
+
             <Border.Background>
                 <ImageBrush
                     Stretch="Fill"

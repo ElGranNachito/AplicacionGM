@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AppGM.Core.Migrations
 {
     [DbContext(typeof(RolContext))]
-    [Migration("20210524202520_inicial")]
+    [Migration("20210530001644_inicial")]
     partial class inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -112,7 +112,7 @@ namespace AppGM.Core.Migrations
                     b.ToTable("ModeloCaracteristicas");
                 });
 
-            modelBuilder.Entity("AppGM.Core.ModeloCargasHabilidad", b =>
+            modelBuilder.Entity("AppGM.Core.ModeloCargas", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -126,7 +126,7 @@ namespace AppGM.Core.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ModeloCargasHabilidad");
+                    b.ToTable("ModeloCargas");
                 });
 
             modelBuilder.Entity("AppGM.Core.ModeloContrato", b =>
@@ -311,13 +311,13 @@ namespace AppGM.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<ushort>("Agi")
+                    b.Property<int>("Agi")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("Clase")
                         .HasColumnType("INTEGER");
 
-                    b.Property<ushort>("End")
+                    b.Property<int>("End")
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("EstaEnCombate")
@@ -329,10 +329,10 @@ namespace AppGM.Core.Migrations
                     b.Property<int>("Hp")
                         .HasColumnType("INTEGER");
 
-                    b.Property<ushort>("Int")
+                    b.Property<int>("Int")
                         .HasColumnType("INTEGER");
 
-                    b.Property<ushort>("Lck")
+                    b.Property<int>("Lck")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("MaxHp")
@@ -354,25 +354,25 @@ namespace AppGM.Core.Migrations
                     b.Property<int?>("PosicionId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<ushort>("Str")
+                    b.Property<int>("Str")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("TipoPersonaje")
                         .HasColumnType("INTEGER");
 
-                    b.Property<ushort>("VentajaAgi")
+                    b.Property<int>("VentajaAgi")
                         .HasColumnType("INTEGER");
 
-                    b.Property<ushort>("VentajaEnd")
+                    b.Property<int>("VentajaEnd")
                         .HasColumnType("INTEGER");
 
-                    b.Property<ushort>("VentajaInt")
+                    b.Property<int>("VentajaInt")
                         .HasColumnType("INTEGER");
 
-                    b.Property<ushort>("VentajaLck")
+                    b.Property<int>("VentajaLck")
                         .HasColumnType("INTEGER");
 
-                    b.Property<ushort>("VentajaStr")
+                    b.Property<int>("VentajaStr")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -399,6 +399,9 @@ namespace AppGM.Core.Migrations
 
                     b.Property<DateTime>("FechaUltimaSesion")
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("Hour")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Nombre")
                         .HasMaxLength(50)
@@ -1659,7 +1662,7 @@ namespace AppGM.Core.Migrations
                         .IsRequired();
 
                     b.HasOne("AppGM.Core.ModeloParticipante", "Participante")
-                        .WithOne("Combate")
+                        .WithOne("CombateActual")
                         .HasForeignKey("AppGM.Core.TIAdministradorDeCombateParticipante", "IdParticipante")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1766,7 +1769,7 @@ namespace AppGM.Core.Migrations
 
             modelBuilder.Entity("AppGM.Core.TIHabilidadCargasHabilidad", b =>
                 {
-                    b.HasOne("AppGM.Core.ModeloCargasHabilidad", "ModeloCargasHabilidad")
+                    b.HasOne("AppGM.Core.ModeloCargas", "ModeloCargas")
                         .WithMany()
                         .HasForeignKey("IdCargasHabilidad")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1780,7 +1783,7 @@ namespace AppGM.Core.Migrations
 
                     b.Navigation("Habilidad");
 
-                    b.Navigation("ModeloCargasHabilidad");
+                    b.Navigation("ModeloCargas");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIHabilidadEfecto", b =>
@@ -2058,7 +2061,7 @@ namespace AppGM.Core.Migrations
                         .IsRequired();
 
                     b.HasOne("AppGM.Core.ModeloPersonaje", "Personaje")
-                        .WithMany()
+                        .WithMany("ParticipacionEnCombates")
                         .HasForeignKey("IdPersonaje")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -2222,7 +2225,7 @@ namespace AppGM.Core.Migrations
 
             modelBuilder.Entity("AppGM.Core.TIPersonajeMagia", b =>
                 {
-                    b.HasOne("AppGM.Core.ModeloMagia", "Hechizo")
+                    b.HasOne("AppGM.Core.ModeloMagia", "Magia")
                         .WithMany()
                         .HasForeignKey("IdMagia")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -2234,7 +2237,7 @@ namespace AppGM.Core.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Hechizo");
+                    b.Navigation("Magia");
 
                     b.Navigation("Personaje");
                 });
@@ -2613,7 +2616,7 @@ namespace AppGM.Core.Migrations
                 {
                     b.Navigation("AccionesRealizadas");
 
-                    b.Navigation("Combate");
+                    b.Navigation("CombateActual");
 
                     b.Navigation("Personaje");
                 });
@@ -2635,6 +2638,8 @@ namespace AppGM.Core.Migrations
                     b.Navigation("Magias");
 
                     b.Navigation("ModificadoresDeDefensa");
+
+                    b.Navigation("ParticipacionEnCombates");
 
                     b.Navigation("Perks");
 

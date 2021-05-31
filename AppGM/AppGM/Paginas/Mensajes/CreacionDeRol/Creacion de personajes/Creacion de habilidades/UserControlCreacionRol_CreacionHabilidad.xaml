@@ -143,6 +143,7 @@
 
             </Grid>
 
+            <!-- Barra inferior -->
             <Grid Grid.Row="1">
 
                 <!-- Boton cancelar -->

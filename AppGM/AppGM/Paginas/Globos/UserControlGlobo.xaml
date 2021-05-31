@@ -6,6 +6,8 @@
              xmlns:local="clr-namespace:AppGM"
              mc:Ignorable="d" 
              d:DesignHeight="100" d:DesignWidth="100">
+
+    <!-- Control base de un globo -->
     <Grid Visibility="{Binding GloboVisible, Converter={local:BooleanToVisibilityConverterOcultar}}">
 
         <Grid.RowDefinitions>
@@ -13,15 +15,18 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Border Background="{Binding ColorFondo, Converter={local:StringToSolidColorBrushConverter}}" 
-                CornerRadius="25"
-                Padding="8"
-                MaxWidth="400"
-                MinWidth="200">
+        <!-- Contenido del globo -->
+        <Border 
+            Background="{Binding ColorFondo, Converter={local:StringToSolidColorBrushConverter}}" 
+            CornerRadius="25"
+            Padding="8"
+            MaxWidth="400"
+            MinWidth="200">
 
             <ContentControl Content="{Binding ViewModelContenido, Converter={local:ViewModelToContenidoConverter}}"/>
         </Border>
 
+        <!-- Cola del globo -->
         <Path Grid.Row="1" 
               Visibility="{Binding ColaGloboVisible, Converter={local:BooleanToVisibilityConverterOcultar}}"
               Margin="25 -1 0 0"

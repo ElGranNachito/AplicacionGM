@@ -1,28 +1,55 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace AppGM.Core
+﻿namespace AppGM.Core
 {
+    /// <summary>
+    /// Modelo que representa un limitador de usos de una <see cref="ModeloHabilidad"/> o <see cref="ModeloUtilizable"/>
+    /// </summary>
     public class ModeloLimitador : ModeloBase
     {
+        /// <summary>
+        /// Controlador
+        /// </summary>
         public ControladorLimitador controladorLimitador;
 
-        //Total de veces que la habilidad puede ser utiliza
+        /// <summary>
+        /// Limite de usos
+        /// </summary>
         public int LimiteDeUsos  { get; set; }
-        //Usos restantes de la habilidad
+        
+        /// <summary>
+        /// Usos restantes
+        /// </summary>
         public int UsosRestantes { get; set; }
         
-        //Dias de enfriamiento para restablecer los usos. De no poder restablecerse, el valor sera -1
+        /// <summary>
+        /// Dias de enfriamiento
+        /// De no poder reestablecerse los usos este valor sera -1
+        /// </summary>
         public int DiasDeEnfriamiento { get; set; }
-        //Dias restantes para restablecer los usos de la habilidad
+        
+        /// <summary>
+        /// Dias de enfriamiento restantes
+        /// </summary>
         public int DiasRestantes { get; set; }
     }
-    public class ModeloCargasHabilidad : ModeloBase
+
+    /// <summary>
+    /// Modelo que representa un modelo de cargas de usos de una <see cref="ModeloHabilidad"/> o <see cref="ModeloUtilizable"/>
+    /// </summary>
+    public class ModeloCargas : ModeloBase
     {
+        /// <summary>
+        /// Controlador de cargas
+        /// </summary>
         public ControladorCargasHabilidad controladorCargasHabilidad;
 
-        //Maximo de cargas para la habilidad
+        /// <summary>
+        /// Cargas maximas
+        /// </summary>
         public int CargasMaximas  { get; set; }
-        //Cargas actualmente utilizadas por la habilidad
+        
+        /// <summary>
+        /// Cargas actuales
+        /// </summary>
         public int CargasActuales { get; set; }
     }
 }

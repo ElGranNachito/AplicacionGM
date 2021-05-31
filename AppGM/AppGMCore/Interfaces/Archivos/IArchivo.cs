@@ -1,18 +1,36 @@
 ﻿namespace AppGM.Core
 {
+    /// <summary>
+    /// Interfaz que representa un archivo
+    /// </summary>
     public interface IArchivo
     {
         #region Propiedades
 
+        /// <summary>
+        /// Nombre del archivo
+        /// </summary>
         string Nombre { get; set; }
+
+        /// <summary>
+        /// Nombre del archivo sin incluir su extension
+        /// </summary>
         string NombreSinExtension { get; set; }
+
+        /// <summary>
+        /// Extension del archivo
+        /// </summary>
         string Extension { get; set; }
+
+        /// <summary>
+        /// Ruta completa del archivo
+        /// </summary>
         string Ruta { get; set; }
 
         /// <summary>
         /// Devuelve la carpeta contenedora
         /// </summary>
-        IDirectorio DirectorioPadre { get; set; }
+        IDirectorio DirectorioPadre { get; }
 
         #endregion
 

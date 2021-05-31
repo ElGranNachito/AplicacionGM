@@ -11,7 +11,10 @@ namespace AppGM
     /// </summary>
     public abstract class ViewModelVentanaBase : BaseViewModel, IVentana
     {
-        #region Miembros
+        #region Campos & Propiedades
+
+        //---------------------------CAMPOS------------------------------
+
 
         /// <summary>
         /// Instancia de la ventana

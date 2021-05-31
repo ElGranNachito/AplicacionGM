@@ -1,5 +1,9 @@
 ﻿namespace AppGM.Core
 {
+    /// <summary>
+    /// VM que representa el contenido de un globo
+    /// </summary>
+    /// <typeparam name="TipoViewModel">Tipo del <see cref="BaseViewModel"/> con informacion personalizada para este globo</typeparam>
     public class ViewModelGlobo<TipoViewModel> : BaseViewModel
         where TipoViewModel: BaseViewModel
     {

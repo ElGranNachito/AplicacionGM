@@ -8,22 +8,41 @@ namespace AppGM.Core
     /// </summary>
     public class ModeloEfecto : ModeloBase
     {
+        /// <summary>
+        /// Controlador del efecto
+        /// </summary>
         public ControladorEfecto controladorEfecto;
 
-        public ushort TurnosRestantes { get; set; }
-
-        public bool EstaSiendoAplicado { get; set; }
-
-        //Turnos que dura el efecto
+        /// <summary>
+        /// Turnos que dura el efecto
+        /// </summary>
         public ushort TurnosDeDuracion { get; set; }
 
-        //Nombre del efecto
+        /// <summary>
+        /// Turnos que le restan al efecto
+        /// </summary>
+        public ushort TurnosRestantes { get; set; }
+
+        /// <summary>
+        /// Indica si esta siendo aplicado actualmente
+        /// </summary>
+        public bool EstaSiendoAplicado { get; set; }
+
+        /// <summary>
+        /// Nombre del efecto
+        /// </summary>
         [StringLength(50)]
         public string Nombre { get; set; }
-        //Descripcion del efecto
+
+        /// <summary>
+        /// Descripcion
+        /// </summary>
         [StringLength(500)]
         public string Descripcion { get; set; }
 
+        /// <summary>
+        /// Modificaciones que aplica el efecto
+        /// </summary>
         public List<TIEfectoModificadorDeStatBase> Modificaciones { get; set; } = new List<TIEfectoModificadorDeStatBase>();
     }
 }

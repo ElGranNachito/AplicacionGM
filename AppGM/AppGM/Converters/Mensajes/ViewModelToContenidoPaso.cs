@@ -4,24 +4,31 @@ using AppGM.Core;
 
 namespace AppGM
 {
+    /// <summary>
+    /// Convierte de un <see cref="BaseViewModel"/> a un <see cref="UserControl"/> para mostrar
+    /// como contenido de un paso
+    /// </summary>
     public class ViewModelToContenidoPaso : BaseConverter<ViewModelToContenidoPaso>
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             switch (value)
             {
+                //Introduccion de datos basicos de un rol
                 case ViewModelMensajeCrearRol_DatosRol crdr:
                     return new UserControlCreacionRol_DatosRol
                     {
                         ViewModel = crdr
                     };
 
+                //Seleccion de mapa de un rol
                 case ViewModelMensajeCrearRol_DatosMapa crdt:
                     return new UserControlCreacionRol_DatosMapa
                     {
                         DataContext = crdt
                     };
 
+                //Creacion de personajes de un rol
                 case ViewModelMensajeCrearRol_DatosPersonajes crdp:
                     return new UserControlCreacionRol_Personajes
                     {

@@ -1,18 +1,40 @@
-﻿using System;
-
-namespace AppGM.Core
+﻿namespace AppGM.Core
 {
+    /// <summary>
+    /// Inerfaz que representa una clase destinada al control de los archivos de la aplicacion
+    /// </summary>
     public interface IControladorDeArchivos
     {
         #region Propiedades
 
+        /// <summary>
+        /// Caracter que separa carpetas en una ruta
+        /// </summary>
         char CaracterSeparadorDeCarpetas { get; }
 
+        /// <summary>
+        /// Directorio de trabajo de la aplicacion
+        /// </summary>
         string DirectorioDeTrabajo { get; set; }
+
+        /// <summary>
+        /// Directorio del ejecutable de la aplicacion
+        /// </summary>
         string DirectorioEjecutable { get; set; }
+
+        /// <summary>
+        /// Directorio donde se encuentran las imagenes utilizadas por la aplicacion
+        /// </summary>
         string DirectorioImagenes { get; set; }
+
+        /// <summary>
+        /// Directorio donde se encuentran las imagenes de los mapas
+        /// </summary>
         string DirectorioImagenesMapas { get; set; }
 
+        /// <summary>
+        /// Directorio donde se encuentran las carpetas que contienen los fotogramas de las diversas animaciones que utiliza la aplicacion
+        /// </summary>
         string DirectorioAnimaciones { get; set; }
 
         #endregion

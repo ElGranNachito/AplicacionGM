@@ -2,6 +2,9 @@
 
 namespace AppGM.Core
 {
+    /// <summary>
+    /// Modelo de una accion que realiza un personaje durante un combate
+    /// </summary>
     public class ModeloAccion : ModeloBase
     {
         [StringLength(2000)]

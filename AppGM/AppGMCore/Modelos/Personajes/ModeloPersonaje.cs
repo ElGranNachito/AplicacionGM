@@ -27,20 +27,20 @@ namespace AppGM.Core
         public ETipoPersonaje TipoPersonaje{ get; set; }
 
         //Stats del personaje
-        public int    MaxHp { get; set; }
-        public int    Hp    { get; set; }
-        public ushort Str   { get; set; }
-        public ushort End   { get; set; }
-        public ushort Agi   { get; set; }
-        public ushort Int   { get; set; }
-        public ushort Lck   { get; set; }
-
-        //Ventajas en stats del personaje
-        public ushort VentajaStr   { get; set; }
-        public ushort VentajaEnd   { get; set; }
-        public ushort VentajaAgi   { get; set; }
-        public ushort VentajaInt   { get; set; }
-        public ushort VentajaLck   { get; set; }
+        public int MaxHp { get; set; }
+        public int Hp    { get; set; }
+        public int Str   { get; set; }
+        public int End   { get; set; }
+        public int Agi   { get; set; }
+        public int Int   { get; set; }
+        public int Lck   { get; set; }
+               
+        //Ventajas stats del personaje
+        public int VentajaStr   { get; set; }
+        public int VentajaEnd   { get; set; }
+        public int VentajaAgi   { get; set; }
+        public int VentajaInt   { get; set; }
+        public int VentajaLck   { get; set; }
 
         //Pesos que maneja el personaje
         public decimal PesoMaximoCargable   { get; set; }
@@ -89,5 +89,8 @@ namespace AppGM.Core
         //Modificadores de defensa del personaje
         public List<TIPersonajeModificadorDeDefensa> ModificadoresDeDefensa { get; set; } = new List<TIPersonajeModificadorDeDefensa>();
         
+        //Es participante en algun combate:
+        public List<TIParticipantePersonaje> ParticipacionEnCombates { get; set; } = new List<TIParticipantePersonaje>();
+
     }
 }

@@ -1,18 +1,31 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace AppGM.Core
 {
+    /// <summary>
+    /// Modelo de un slot. Se trata de un espacio perteciente a algun <see cref="ModeloUtilizable"/> donde se pueden almacenar 
+    /// objetos
+    /// </summary>
     public class ModeloSlot : ModeloBase
     {
+        /// <summary>
+        /// Controlador
+        /// </summary>
         public ControladorSlot controladorSlot;
 
-        //Espacio total en la slot
+        /// <summary>
+        /// Espacio total que ofrece el slot
+        /// </summary>
         public decimal EspacioTotal      { get; set; }
-        //Espacio disponible en la slot
+
+        /// <summary>
+        /// Espacio disponible en el slot
+        /// </summary>
         public decimal EspacioDisponible { get; set; }
 
-        //Items almacenados en la slot
+        /// <summary>
+        /// Items actualmente almacenados en el slot
+        /// </summary>
         public List<TISlotItem> ItemsAlmacenados { get; set; } = new List<TISlotItem>();
     }
 }

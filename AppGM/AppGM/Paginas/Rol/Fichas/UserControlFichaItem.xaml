@@ -4,14 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AppGM"
-             xmlns:system="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              d:DesignHeight="70" d:DesignWidth="250">
 
-    <UserControl.Resources>
-        <system:Int32 x:Key="bordeIzquierdo">4</system:Int32>
-    </UserControl.Resources>
-
+    <!-- Representacion de una ficha en una lista de estas -->
     <UserControl.Template>
         <ControlTemplate TargetType="{x:Type UserControl}">
 
@@ -19,10 +15,11 @@
 
             <Grid>
 
-                    <Button 
-                        Style="{StaticResource BotonMenuRol}" 
-                        local:BotonMenuRolConViewModelProperty.Value="{Binding}"
-                        BorderBrush="Aqua"/>
+                <!--TODO: Ver si hace falta conservar este boton-->
+                <Button 
+                    Style="{StaticResource BotonMenuRol}" 
+                    local:BotonMenuRolConViewModelProperty.Value="{Binding}"
+                    BorderBrush="Aqua"/>
 
                 <StackPanel IsHitTestVisible="False">
 

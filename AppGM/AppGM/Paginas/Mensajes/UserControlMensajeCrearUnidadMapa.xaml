@@ -7,6 +7,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
+    <!-- Control para la creacion de la representacion de una unidad
+    en un mapa-->
     <Border Background="White"
             Padding="10">
         <Grid >
@@ -16,6 +18,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
+            <!-- Columna izquierda -->
             <StackPanel>
 
                 <StackPanel Orientation="Horizontal"
@@ -97,6 +100,7 @@
 
                 </StackPanel>
 
+                <!-- Boton confirmar -->
                 <Button VerticalAlignment="Bottom" 
                         Content="Confirmar"
                         IsEnabled="{Binding PuedeFinalizarCreacion}"

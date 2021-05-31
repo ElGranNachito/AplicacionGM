@@ -4,24 +4,26 @@ using System.IO;
 
 namespace AppGM
 {
+    /// <summary>
+    /// Implementacion de la interfaz <see cref="IDirectorio"/>
+    /// </summary>
     class Directorio_Windows : IDirectorio
     {
-        #region Miembros
+        #region Campos & Propiedades
 
-        private DirectoryInfo mDirectorio; 
+        //------------------------------CAMPOS--------------------------------
 
-        #endregion
 
-        #region Propiedades
+        private DirectoryInfo mDirectorio;
+
+
+        //----------------------------PROPIEDADES------------------------------
+
 
         public string Ruta { get; set; }
         public string Nombre { get; set; }
 
-        public IDirectorio DirectorioPadre
-        {
-            get => new Directorio_Windows(new DirectoryInfo(Ruta));
-            set { }
-        }
+        public IDirectorio DirectorioPadre => new Directorio_Windows(new DirectoryInfo(Ruta));
 
         #endregion
 
