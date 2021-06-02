@@ -16,6 +16,17 @@
 
 		#region Eventos
 
+        /// <summary>
+        /// Representa un metodo que lidie con eventos de avance de horas en el rol
+        /// </summary>
+        /// <param name="nuevaHora"></param>
+        public delegate void dAvanzarHora(ref int nuevaHora);
+
+        /// <summary>
+        /// Evento que se dispara al avanzar de hora
+        /// </summary>
+        public event dAvanzarHora OnAvanzarHora = delegate{};
+
 		/// <summary>
 		/// Representa un metodo que lidie con eventos de avance del dia en el rol
 		/// </summary>
@@ -39,6 +50,18 @@
         #endregion
 
         #region Funciones
+
+        /// <summary>
+        /// Avanza de hora en el rol
+        /// </summary>
+        public void AvanzarHora(int _minutos)
+        {
+            int nuevaHora = modelo.Hora + _minutos;
+
+            OnAvanzarHora(ref nuevaHora);
+
+            modelo.Hora = nuevaHora;
+        }
 
         /// <summary>
         /// Avanza de dia en el rol

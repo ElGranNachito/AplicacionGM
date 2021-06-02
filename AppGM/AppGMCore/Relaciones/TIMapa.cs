@@ -13,6 +13,16 @@ namespace AppGM.Core
     }
 
     /// <summary>
+    /// Representa una relacion de un <see cref="ModeloMapa"/> con un <see cref="ModeloAmbiente"/> en el que se encuentre
+    /// </summary>
+    public class TIMapaAmbiente : TIMapa
+    {
+        [ForeignKey(nameof(Ambiente))]
+        public int IdAmbiente { get; set; }
+        public ModeloAmbiente Ambiente { get; set; }
+    }
+
+    /// <summary>
     /// Representa una relacion de un <see cref="ModeloMapa"/> con la <see cref="ModeloUnidadMapa"/> que abarque
     /// </summary>
     public class TIMapaUnidadMapa : TIMapa

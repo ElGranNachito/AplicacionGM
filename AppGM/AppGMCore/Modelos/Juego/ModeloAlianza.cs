@@ -21,12 +21,13 @@ namespace AppGM.Core
         public string Descripcion { get; set; }
 
         /// <summary>
-        /// <see cref="bool"/> indicando si actualmente esta vigente
+        /// <see cref="bool"/> Indicando si esta actualmente vigente
         /// </summary>
         public bool EsVigente { get; set; }
 
         /// <summary>
-        /// <see cref="ModeloContrato"/> de la alianza. Puede ser no haber
+        /// <see cref="ModeloContrato"/> de la alianza.
+        /// Es opcional, puede no haberlo
         /// </summary>
         public TIAlianzaContrato ContratoDeAlianza { get; set; }
 

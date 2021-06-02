@@ -7,12 +7,12 @@ namespace AppGM.Core
     /// </summary>
     public class ModeloAdministradorDeCombate : ModeloBase
     {
+        public ControladorAdministradorDeCombate controladorAdministradorDeCombate;
+
         /// <summary>
         /// Relacion rol
         /// </summary>
         public TIRolCombate RolCombate { get; set; }
-
-        public ControladorAdministradorDeCombate controladorAdministradorDeCombate;
 
         /// <summary>
         /// Indice para el turno actual entre personajes

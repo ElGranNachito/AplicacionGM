@@ -15,7 +15,8 @@ namespace AppGM.Core
         public string Nombre { get; set; }
 
         /// <summary>
-        /// Descripcion del contrato. Deberia contener clausulas y demas datos de importancia
+        /// Descripcion del contrato.
+        /// Deberia contener clausulas y demas datos de importancia
         /// </summary>
         [StringLength(500)]
         public string Descripcion { get; set; }
