@@ -15,10 +15,18 @@ namespace AppGM.Core
         public ControladorRol controladorRol;
 
         /// <summary>
+        /// Temporada del año en la que se encuentra el rol
+        /// </summary>
+        public ETemporada Temporada { get; set; }
+        /// <summary>
+        /// Condiciones climaticas actuales dentro del rol
+        /// </summary>
+        public ECondicionClimatica CondicionClimatica { get; set; }
+
+        /// <summary>
         /// Hora dentro del rol
         /// </summary>
-        public int Hour { get; set; }
-
+        public int Hora { get; set; }
         /// <summary>
         /// Dia dentro del rol
         /// </summary>
@@ -47,6 +55,11 @@ namespace AppGM.Core
         public DateTime FechaUltimaSesion { get; set; }
 
         /// <summary>
+        /// Ambiente general dentro del area de este rol
+        /// </summary>
+        public TIRolAmbiente AmbienteGlobal { get; set; }
+
+        /// <summary>
         /// Personajes que forman parte de este rol
         /// </summary>
         public List<TIRolPersonaje> Personajes { get; set; } = new List<TIRolPersonaje>();
@@ -60,5 +73,6 @@ namespace AppGM.Core
         /// Mapas que se utilizan en este rol
         /// </summary>
         public List<TIRolMapa>      Mapas      { get; set; } = new List<TIRolMapa>();
+
     }
 }

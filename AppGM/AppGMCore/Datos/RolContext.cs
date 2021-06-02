@@ -117,12 +117,15 @@ namespace AppGM.Core
                 .HasValue<ModeloServant>(7);
 
             // - Personaje unidad mapa
-            modelBuilder.Entity<TIPersonajeUnidadMapa>()
-                .HasKey(ti => new { ti.IdPersonaje, ti.IdUnidadMapa });
+            modelBuilder.Entity<TIPersonajeUnidadMapa>().HasKey(e => new { e.IdPersonaje, e.IdUnidadMapa });
 
             modelBuilder.Entity<TIPersonajeUnidadMapa>()
-                .HasOne(ti => ti.Unidad)
-                .WithOne(u => u.Personaje);
+                .HasOne(i => i.Personaje);
+
+            modelBuilder.Entity<TIPersonajeUnidadMapa>()
+                .HasOne(i => i.Unidad)
+                .WithOne(p => p.Personaje)
+                .HasForeignKey<TIPersonajeUnidadMapa>(i => i.IdUnidadMapa);
 
             // - Personaje efectos
             modelBuilder.Entity<TIPersonajeEfecto>().HasKey(e => new { e.IdPersonaje, e.IdEfecto });
@@ -412,11 +415,15 @@ namespace AppGM.Core
             modelBuilder.Entity<TIUtilizableEfecto>().HasKey(e => new { e.IdUtilizable, e.IdEfecto });
 
             modelBuilder.Entity<TIUtilizableEfecto>()
+                .HasOne(i => i.Efecto);
+
+            modelBuilder.Entity<TIUtilizableEfecto>()
                 .HasOne(i => i.Utilizable)
                 .WithMany(p => p.EfectoSobreUsuarioYObjetivo)
                 .HasForeignKey(i => i.IdUtilizable);
 
             // Utilizable portable:
+
             // - Portable slots
             modelBuilder.Entity<TIPortableSlots>().HasKey(e => new { e.IdPortable, e.IdSlot });
 
@@ -602,6 +609,8 @@ namespace AppGM.Core
                 .HasForeignKey(ip => ip.IdHabilidad);
 
             //Combates:
+
+            // - Administrador de combate participante
             modelBuilder.Entity<TIAdministradorDeCombateParticipante>()
                 .HasKey(e => new {e.IdAdministradorDeCombate, e.IdParticipante});
 
@@ -614,59 +623,114 @@ namespace AppGM.Core
                 .HasOne(i => i.Participante)
                 .WithOne(p => p.CombateActual);
 
+            // - Administrador de combate mapa
             modelBuilder.Entity<TIAdministradorDeCombateMapa>()
                 .HasKey(e => new { e.IdAdministradorDeCombate, e.IdMapa });
+
+            modelBuilder.Entity<TIAdministradorDeCombateMapa>()
+                .HasOne(i => i.Mapa);
 
             modelBuilder.Entity<TIAdministradorDeCombateMapa>()
                 .HasOne(i => i.AdministradorDeCombate)
                 .WithMany(a => a.Mapas)
                 .HasForeignKey(i => i.IdAdministradorDeCombate);
 
-            modelBuilder.Entity<TIAdministradorDeCombateMapa>()
-                .HasOne(i => i.Mapa);
+            //Ambiente:
+
+            modelBuilder.Entity<ModeloAmbiente>().ToTable("ModeloAmbiente").HasNoDiscriminator();
+
+            // - Mapa ambiente
+            modelBuilder.Entity<TIMapaAmbiente>().HasKey(e => new { e.IdAmbiente, e.IdMapa});
+
+            modelBuilder.Entity<TIMapaAmbiente>()
+                .HasOne(ti => ti.Mapa);
+
+            modelBuilder.Entity<TIMapaAmbiente>()
+                .HasOne(ti => ti.Ambiente)
+                .WithOne(r => r.MapaDelAmbiente)
+                .HasForeignKey<TIMapaAmbiente>(ti => ti.IdAmbiente);
 
             //Mapa:
+
+            modelBuilder.Entity<ModeloMapa>().ToTable("ModeloMapa").HasNoDiscriminator();
+
+            // - Mapa unidad mapa
+            modelBuilder.Entity<TIMapaUnidadMapa>().HasKey(ti => new { ti.IdMapa, ti.IdUnidadMapa });
+
+            modelBuilder.Entity<TIMapaUnidadMapa>()
+                .HasOne(i => i.Mapa);
+
+            modelBuilder.Entity<TIMapaUnidadMapa>()
+                .HasOne(ti => ti.Mapa)
+                .WithMany(m => m.PosicionesUnidades)
+                .HasForeignKey(ti => ti.IdMapa);
+
+            // Unidad mapa:
+
             modelBuilder.Entity<ModeloUnidadMapa>()
                 .HasDiscriminator<int>("Tipo")
                 .HasValue<ModeloUnidadMapa>(1)
                 .HasValue<ModeloUnidadMapaMasterServant>(2)
                 .HasValue<ModeloUnidadMapaInvocacionTrampa>(3);
 
-            modelBuilder.Entity<TIMapaUnidadMapa>()
-                .HasKey(ti => new {ti.IdMapa, ti.IdUnidadMapa});
-
-            modelBuilder.Entity<TIMapaUnidadMapa>()
-                .HasOne(ti => ti.Mapa)
-                .WithMany(m => m.PosicionesUnidades);
+            // - Unidad mapa vector2
+            modelBuilder.Entity<TIUnidadMapaVector2>().HasKey(ti => new { ti.IdUnidadMapa, ti.IdVector });
 
             modelBuilder.Entity<TIUnidadMapaVector2>()
-                .HasKey(ti => new {ti.IdUnidadMapa, ti.IdVector});
+                .HasOne(i => i.Posicion);
 
             modelBuilder.Entity<TIUnidadMapaVector2>()
                 .HasOne(ti => ti.Unidad)
-                .WithOne(u => u.Posicion);
+                .WithOne(u => u.Posicion)
+                .HasForeignKey<TIUnidadMapaVector2>(ti => ti.IdUnidadMapa);
 
             //Rol:
-            modelBuilder.Entity<TIRolPersonaje>()
-                .HasOne<ModeloRol>()
-                .WithMany(m => m.Personajes);
+
+            modelBuilder.Entity<ModeloRol>().ToTable("ModeloRol").HasNoDiscriminator();
+
+            // - Rol personaje
+            modelBuilder.Entity<TIRolPersonaje>().HasKey(e => new { e.IdRol, e.IdPersonaje});
 
             modelBuilder.Entity<TIRolPersonaje>()
-                .HasOne<ModeloPersonaje>();
+                .HasOne(ti => ti.Personaje);
+
+            modelBuilder.Entity<TIRolPersonaje>()
+                .HasOne(ti => ti.Rol)
+                .WithMany(r => r.Personajes)
+                .HasForeignKey(ti => ti.IdRol);
+            
+            // - Rol combate
+            modelBuilder.Entity<TIRolCombate>().HasKey(e => new { e.IdRol, e.IdCombate});
 
             modelBuilder.Entity<TIRolCombate>()
-                .HasOne<ModeloRol>()
-                .WithMany(m => m.Combates);
+                .HasOne(ti => ti.Combate);
 
             modelBuilder.Entity<TIRolCombate>()
-                .HasOne<ModeloAdministradorDeCombate>();
+                .HasOne(ti => ti.Rol)
+                .WithMany(r => r.Combates)
+                .HasForeignKey(ti => ti.IdRol);
+
+            // - Rol mapa
+            modelBuilder.Entity<TIRolMapa>().HasKey(e => new { e.IdRol, e.IdMapa});
 
             modelBuilder.Entity<TIRolMapa>()
-                .HasOne<ModeloRol>()
-                .WithMany(m => m.Mapas);
+                .HasOne(ti => ti.Mapa);
 
             modelBuilder.Entity<TIRolMapa>()
-                .HasOne<ModeloMapa>();
+                .HasOne(ti => ti.Rol)
+                .WithMany(r => r.Mapas)
+                .HasForeignKey(ti => ti.IdRol);
+
+            // - Rol ambiente
+            modelBuilder.Entity<TIRolAmbiente>().HasKey(e => new { e.IdRol, e.IdAmbiente});
+
+            modelBuilder.Entity<TIRolAmbiente>()
+                .HasOne(ti => ti.Ambiente);
+
+            modelBuilder.Entity<TIRolAmbiente>()
+                .HasOne(ti => ti.Rol)
+                .WithOne(r => r.AmbienteGlobal)
+                .HasForeignKey<TIRolAmbiente>(ti => ti.IdRol);
         }
         #endregion
     }
