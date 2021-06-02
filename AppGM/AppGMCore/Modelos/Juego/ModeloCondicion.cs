@@ -1,12 +1,14 @@
 ﻿namespace AppGM.Core
 {
-    //TODO: Verificar si esta clase aun es necesaria teniendo en cuenta los cambios en el diseño.
+    /// <summary>
+    /// Clase que representa una condicion.
+    /// En si este modelo no contiene nada sobre la condicion en si, solo nos permite acceder a su
+    /// archivo XML a traves del <see cref="Nombre"/> y <see cref="ModeloBase.Id"/>
+    /// </summary>
     public class ModeloCondicion : ModeloBase
     {
         public ControladorCondicion controladorCondicion;
 
-        public string NombrePropiedad { get; set; }
-        public string OperacionARealizar { get; set; }
-        public string ValorContraElQueComparar { get; set; }
+        public string Nombre;
     }
 }

@@ -162,6 +162,96 @@ namespace AppGM.Core
     }
 
     /// <summary>
+    /// Posibles caracteristicas de un ambiente
+    /// </summary>
+    public enum ECaracteristicasAmbiente
+    {
+        /// <summary>
+        /// Temperatura intermedia entre calurosa y fria.
+        /// No ofrece ninguna ventaja o desventaja por si solo
+        /// </summary>
+        Templado = 1,
+
+        /// <summary>
+        /// Temperaturas sobre la media comun.
+        /// Puede significar un ventaja o desventaja dependiendo de cierta habilidad.
+        /// </summary>
+        Caluroso = 2,
+
+        /// <summary>
+        /// Temperaturas debajo de la media comun.
+        /// Puede significar un ventaja o desventaja dependiendo de cierta habilidad.
+        /// </summary>
+        Frio = 4,
+
+        /// <summary>
+        /// Escasa humedad en el ambiente, no tiene influencia sobre la temperatura. 
+        /// </summary>
+        Seco = 8,
+
+        /// <summary>
+        /// Bastante humedad en el ambiente, tiene influencia sobre la sensacion termica.
+        /// </summary>
+        Humedo = 16,
+
+        /// <summary>
+        /// Iliminacion completa, visibilidad completa. 
+        /// </summary>
+        Iluminado = 32,
+
+        /// <summary>
+        /// La visibilidad se ve empeorada por la baja iluminacion.
+        /// Puede implicar desventajas en la vision o ventajas dependiendo de las habilidades del personaje.  
+        /// </summary>
+        Oscuro = 64,
+
+        /// <summary>
+        /// Libertad de movimiento para los personajes, casillas y pocos obstaculos. 
+        /// </summary>
+        Amplio = 128,
+
+        /// <summary>
+        /// El movimiento de los personajes se ve dificultado, sea por escasez en casillas o multitud de obstaculos.
+        /// Desventaja en movimientos pronunciados e incapacidad de realizar algunos.
+        /// </summary>
+        Estrecho = 256,
+
+        /// <summary>
+        /// El personaje se siente a gusto con el lugar sea por el binestar que aporte o por la confianza en el mismo.
+        /// Puede incluir ventajas y desventajas dependiendo de la habilidad.
+        /// </summary>
+        Comodo = 512,
+
+        /// <summary>
+        /// La inquietud respecto al ambiente es evidente para los personajes.
+        /// Puede incluir ventajas y desventajas dependiendo de la habilidad.
+        /// </summary>
+        Ominoso = 1024,
+
+        /// <summary>
+        /// Se halla libre de cualquier objeto que dificulte el movimiento, asi como de sustancias afectando el agua y el aire.
+        /// </summary>
+        Limpio = 2048,
+
+        /// <summary>
+        /// La contaminacion en el aire y otros medios puede dificultar ciertas acciones.
+        /// Desventajas en stats, modificadores, debuffs, incapacidad de utilizar habilidades, etc.
+        /// </summary>
+        Contaminado = 4096,
+
+        /// <summary>
+        /// Totalmente peculiar, solo se manifiesta en situaciones del mismo indole.
+        /// Ventaja al momento de realizar una accion de ligacion sobre el mismo ambiente.
+        /// </summary>
+        Ligacion = 8192,
+
+        /// <summary>
+        /// Convengamos que se encuentra en el vacio, puede ser.
+        /// </summary>
+        NINGUNO = 0        
+    }
+
+    /// <summary>
     /// Rango de una <see cref="ModeloHabilidad"/> o <see cref="EStat"/>.
     /// Estos rangos se utilizan solo para servants o invocaciones.
     /// Los valores numericos que tienen asignados son lo que equivaldrian en stats de <see cref="ModeloMaster"/>

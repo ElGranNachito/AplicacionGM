@@ -14,9 +14,9 @@ namespace AppGM
         {
             Panel panel = (Panel) d;
 
-            RoutedEventHandler loadedEventListener = null;
+			RoutedEventHandler loadedEventListener = null;
 
-            loadedEventListener = (o, re) =>
+			loadedEventListener = (o, re) =>
             {
                 //Desuscribimos la lambda
                 panel.Loaded -= loadedEventListener;

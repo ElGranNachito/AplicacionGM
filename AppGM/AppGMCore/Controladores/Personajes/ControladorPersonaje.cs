@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
+using AppGM.Core.Controladores.Efectos;
 
 namespace AppGM.Core
 {
@@ -45,22 +46,22 @@ namespace AppGM.Core
     /// </summary>
     /// <param name="efectoRecibido"><see cref="ControladorEfecto"/> recibido</param>
     /// <param name="objetivo"><see cref="ControladorPersonaje"/> que recibio el efecto</param>
-    /// <param name="instigadores"></param>
-    public delegate void dRecibirEfecto(
-        ControladorEfecto efectoRecibido,
+    /// <param name="instigador"><see cref="ControladorPersonaje"/> que aplico el efecto</param>
+    public delegate void dModificacionEfectos(
+        ControladorEfectoSiendoAplicado efecto,
         ControladorPersonaje objetivo,
-        ControladorPersonaje[] instigadores);
+        ControladorPersonaje instigador);
 
     /// <summary>
     /// Representa un metodo que lidia con eventos de uso de habilidad
     /// </summary>
     /// <param name="habilidad"><see cref="ControladorHabilidad"/> utilizado</param>
     /// <param name="usuario"><see cref="ControladorPersonaje"/> que utilizo la habilidad</param>
-    /// <param name="objetivos"></param>
+    /// <param name="objetivos"><see cref="ControladorPersonaje"/> que reciben los efectos de la habilidad</param>
     public delegate void dUtilizarHabilidad(
         ControladorHabilidad habilidad,
         ControladorPersonaje usuario,
-        ControladorPersonaje[] objetivos);
+        List<ControladorPersonaje> objetivos);
 
     /// <summary>
     /// Representa un metodo que lidia con eventos de movimiento
@@ -127,7 +128,7 @@ namespace AppGM.Core
         /// <summary>
         /// Efectos que actualmente se estan aplicando a este personaje
         /// </summary>
-        public List<ControladorEfecto> Efectos { get; set; }
+        public List<ControladorEfectoSiendoAplicado> Efectos { get; set; }
 
         /// <summary>
         /// Items que el personaje tiene en su inventario
@@ -220,7 +221,12 @@ namespace AppGM.Core
         /// <summary>
         /// Evento que se dispara cuando el personaje recibe un efecto
         /// </summary>
-        public event dRecibirEfecto       OnRecibirEfecto     = delegate { };
+        public event dModificacionEfectos OnRecibirEfecto     = delegate { };
+
+        /// <summary>
+        /// Evento que se dispara cuando un evento se quita del personaje
+        /// </summary>
+        public event dModificacionEfectos OnQuitarEfecto = delegate { };
 
         /// <summary>
         /// Evento que se dispara cuando el personaje utiliza una habilidad
@@ -304,6 +310,33 @@ namespace AppGM.Core
             OnSufrirDaño(ref cantidad, eTipo, this, instigador);
 
             ModificarVida(-cantidad);
+        }
+
+        /// <summary>
+        /// Aplica un efecto al personaje
+        /// </summary>
+        /// <param name="efecto"><see cref="ControladorEfectoSiendoAplicado"/> que aplicar al personaje</param>
+        public void AñadirEfecto(ControladorEfectoSiendoAplicado efecto)
+        {
+            Efectos.Add(efecto);
+
+            //TODO:Añadir el efecto a lista de efectos aplicandose cuando el ModeloPersonaje este actualizado
+
+            OnRecibirEfecto(efecto, this, efecto.instigador);
+        }
+
+        /// <summary>
+        /// Quita un efecto del personaje
+        /// </summary>
+        /// <param name="efecto"><see cref="ControladorEfectoSiendoAplicado"/> que quitar</param>
+        public void QuitarEfecto(ControladorEfectoSiendoAplicado efecto)
+        {
+            //Si el efecto se quito de la lista...
+	        if (Efectos.Remove(efecto))
+	        {
+                //Disparamos el evento OnQuitarEfecto
+		        OnQuitarEfecto(efecto, this, efecto.instigador);
+	        }
         }
 
         /// <summary>

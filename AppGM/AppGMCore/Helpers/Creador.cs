@@ -1,7 +1,12 @@
-﻿namespace AppGM.Core
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using AppGM.Core.Controladores.Efectos;
+
+namespace AppGM.Core
 {
     /// <summary>
-    /// Clase encargada de crear <see cref="ModeloPersonaje"/>, <see cref="ModeloHabilidad"/>
+    /// Clase encargada de crear <see cref="ModeloBase"/>
     /// </summary>
     public static class Creador
     {
@@ -46,6 +51,66 @@
                     return null;
 
             }
+        }
+
+        public static TIEfectoSiendoAplicadoPersonaje CrearTIPersonaje(
+	        this ControladorEfectoSiendoAplicado efecto,
+	        ControladorPersonaje personaje)
+        {
+	        return new TIEfectoSiendoAplicadoPersonaje
+	        {
+		        EfectoAplicandose = efecto.modelo,
+		        Personaje         = personaje.modelo
+	        };
+        }
+
+        /// <summary>
+        /// Inicializa una instancia de <see cref="ModeloEfectoSiendoAplicado"/>
+        /// </summary>
+        /// <param name="efectoSiendoAplicado">Modelo a inicializar</param>
+        /// <param name="efecto">Efecto que representa</param>
+        /// <param name="instigador"><see cref="ControladorPersonaje"/> que causo el efecto</param>
+        /// <param name="objetivos"><see cref="ControladorPersonaje"/> a los que se les aplica el efecto</param>
+        /// <param name="añadirABaseDeDatos">Indica si añadir este modelo a la base de datos</param>
+        public static void Inicializar(this ModeloEfectoSiendoAplicado efectoSiendoAplicado, ControladorEfecto efecto,
+	        ControladorPersonaje instigador, List<ControladorPersonaje> objetivos, bool añadirABaseDeDatos = true)
+        {
+	        efectoSiendoAplicado.Efecto = new TIEfectoSiendoAplicadoEfecto
+	        {
+		        Efecto = efecto.modelo,
+		        EfectoAplicandose = efectoSiendoAplicado
+	        };
+
+	        efectoSiendoAplicado.Instigador =  new TIEfectoSiendoAplicadoPersonaje
+	        {
+		        EfectoAplicandose = efectoSiendoAplicado,
+		        Personaje = instigador.modelo
+	        };
+
+	        efectoSiendoAplicado.Objetivos = new List<TIEfectoSiendoAplicadoPersonaje>(
+		        from personaje in objetivos
+		        select new TIEfectoSiendoAplicadoPersonaje
+		        {
+			        EfectoAplicandose = efectoSiendoAplicado,
+			        Personaje = personaje.modelo
+		        });
+
+	        efectoSiendoAplicado.TurnosRestantes = efecto.modelo.TurnosDeDuracion;
+	        efectoSiendoAplicado.EstaSiendoAplicado = false;
+
+            //Si debemos guardar el modelo...
+	        if (añadirABaseDeDatos)
+	        {
+		        SistemaPrincipal.GuardarModelo(efectoSiendoAplicado);
+
+                SistemaPrincipal.GuardarModelo(efectoSiendoAplicado.Efecto);
+                SistemaPrincipal.GuardarModelo(efectoSiendoAplicado.Instigador);
+
+                foreach (var obj in efectoSiendoAplicado.Objetivos)
+	                SistemaPrincipal.GuardarModelo(obj);
+
+                SistemaPrincipal.GuardarDatosRol();
+	        }
         }
     }
 }

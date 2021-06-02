@@ -41,4 +41,15 @@ namespace AppGM.Core
         public int IdMapa { get; set; }
         public ModeloMapa Mapa { get; set; }
     }
+
+    /// <summary>
+    /// Representa una relacion de un <see cref="ModeloRol"/> con el <see cref="ModeloAmbiente"/> dentro de este.
+    /// </summary>
+    public class TIRolAmbiente : TIRol
+    {
+        [ForeignKey(nameof(Ambiente))]
+        public int IdAmbiente { get; set; }
+        public ModeloAmbiente Ambiente { get; set; }
+    }
+
 }
