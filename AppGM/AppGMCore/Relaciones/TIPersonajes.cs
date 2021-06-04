@@ -39,12 +39,23 @@ namespace AppGM.Core
 
     /// <summary>
     /// Representa una relacion de un <see cref="ModeloPersonaje"/> con el <see cref="ModeloEfecto"/> que tiene
+    /// TODO: Fuera de uso, eliminar si no es util en el futuro
     /// </summary>
     public class TIPersonajeEfecto : TIPersonaje
     {
         [ForeignKey(nameof(Efecto))]
         public int IdEfecto { get; set; }
         public ModeloEfecto Efecto { get; set; }
+    }
+
+    /// <summary>
+    /// Representa una relacion de un <see cref="ModeloPersonaje"/> con el <see cref="EfectoSiendoAplicado"/> que tenga
+    /// </summary>
+    public class TIPersonajeEfectoSiendoAplicado : TIPersonaje
+    {
+        [ForeignKey(nameof(EfectoSiendoAplicado))]
+        public int IdEfectoSiendoAplicado { get; set; }
+        public ModeloEfectoSiendoAplicado EfectoSiendoAplicado { get; set; }
     }
 
     /// <summary>

@@ -24,8 +24,7 @@ namespace AppGM.Core
     {
 	    [ForeignKey(nameof(EfectoAplicandose))] 
 	    public int IdEfectoSiendoAplicado { get; set; }
-
-	    public ModeloEfectoSiendoAplicado EfectoAplicandose { get; set; }
+        public ModeloEfectoSiendoAplicado EfectoAplicandose { get; set; }
     }
 
     /// <summary>
@@ -39,12 +38,22 @@ namespace AppGM.Core
     }
 
     /// <summary>
-    /// Relacion entre un <see cref="ModeloEfectoSiendoAplicado"/> y un <see cref="ModeloPersonaje"/>
+    /// Relacion entre un <see cref="ModeloEfectoSiendoAplicado"/> y un <see cref="ModeloPersonaje"/> como instigador
     /// </summary>
-    public class TIEfectoSiendoAplicadoPersonaje : TIEfectoSiendoAplicado
+    public class TIEfectoSiendoAplicadoPersonajeInstigador : TIEfectoSiendoAplicado
     {
-        [ForeignKey(nameof(Personaje))]
-        public int IdPersonaje { get; set; }
-        public ModeloPersonaje Personaje { get; set; }
+        [ForeignKey(nameof(PersonajeInstigador))]
+        public int IdPersonajeInstigador { get; set; }
+        public ModeloPersonaje PersonajeInstigador { get; set; }
+    }
+
+    /// <summary>
+    /// Relacion entre un <see cref="ModeloEfectoSiendoAplicado"/> y un <see cref="ModeloPersonaje"/> como objetivo
+    /// </summary>
+    public class TIEfectoSiendoAplicadoPersonajeObjetivo : TIEfectoSiendoAplicado
+    {
+        [ForeignKey(nameof(PersonajeObjetivo))]
+        public int IdPersonajeObjetivo { get; set; }
+        public ModeloPersonaje PersonajeObjetivo { get; set; }
     }
 }

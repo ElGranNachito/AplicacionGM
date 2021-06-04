@@ -68,7 +68,7 @@ namespace AppGM.Core
         // -----------------------------------RELACIONES---------------------------------------
 
 
-        public DbSet<TIPersonajeEfecto> PersonajeEfectos { get; set; }
+        public DbSet<TIPersonajeEfectoSiendoAplicado> PersonajeEfectosAplicandose { get; set; }
         public DbSet<TIPersonajeUtilizable> PersonajeUtilizables { get; set; }
         public DbSet<TIPersonajeDefensivo> PersonajeDefensivos { get; set; }
         public DbSet<TIPersonajeArmaDistancia> PersonajeArmasDistancias { get; set; }
@@ -128,14 +128,14 @@ namespace AppGM.Core
                 .HasForeignKey<TIPersonajeUnidadMapa>(i => i.IdUnidadMapa);
 
             // - Personaje efectos
-            modelBuilder.Entity<TIPersonajeEfecto>().HasKey(e => new { e.IdPersonaje, e.IdEfecto });
+            modelBuilder.Entity<TIPersonajeEfectoSiendoAplicado>().HasKey(e => new { e.IdPersonaje, e.IdEfectoSiendoAplicado });
 
-            modelBuilder.Entity<TIPersonajeEfecto>()
-                .HasOne(i => i.Efecto);
+            modelBuilder.Entity<TIPersonajeEfectoSiendoAplicado>()
+                .HasOne(i => i.EfectoSiendoAplicado);
 
-            modelBuilder.Entity<TIPersonajeEfecto>()
+            modelBuilder.Entity<TIPersonajeEfectoSiendoAplicado>()
                 .HasOne(i => i.Personaje)
-                .WithMany(p => p.Efectos)
+                .WithMany(p => p.EfectosAplicandose)
                 .HasForeignKey(ip => ip.IdPersonaje);
 
             // - Personaje utilizables
@@ -307,6 +307,9 @@ namespace AppGM.Core
                 .HasForeignKey<TIInvocacionEfecto>(i => i.IdInvocacion);
 
             // Participante:
+
+            modelBuilder.Entity<ModeloParticipante>().ToTable("ModeloParticipante").HasNoDiscriminator();
+
             // - Participante personaje
             modelBuilder.Entity<TIParticipantePersonaje>().HasKey(e => new { e.IdParticipante, e.IdPersonaje });
 
@@ -329,18 +332,8 @@ namespace AppGM.Core
                 .WithMany(p => p.AccionesRealizadas)
                 .HasForeignKey(ip => ip.IdParticipante);
 
-            // Administrador de combate participantes:
-            modelBuilder.Entity<TIAdministradorDeCombateParticipante>().HasKey(e => new { e.IdAdministradorDeCombate, e.IdParticipante });
-
-            modelBuilder.Entity<TIAdministradorDeCombateParticipante>()
-                .HasOne(i => i.Participante);
-
-            modelBuilder.Entity<TIAdministradorDeCombateParticipante>()
-                .HasOne(i => i.AdministradorDeCombate)
-                .WithMany(p => p.Participantes)
-                .HasForeignKey(ip => ip.IdAdministradorDeCombate);
-
             // Efectos:
+            
             modelBuilder.Entity<ModeloEfecto>().ToTable("ModeloEfecto").HasNoDiscriminator();
 
             modelBuilder.Entity<TIEfectoModificadorDeStatBase>().HasKey(e => new { e.IdEfecto, e.IdModificadorDeStat });
@@ -353,9 +346,47 @@ namespace AppGM.Core
                 .WithMany(p => p.Modificaciones)
                 .HasForeignKey(ip => ip.IdEfecto);
 
+            // Efectos siendo aplicados:
+
+            modelBuilder.Entity<ModeloEfectoSiendoAplicado>().ToTable("ModeloEfectoSiendoAplicado").HasNoDiscriminator();
+
+            // - Efecto siendo aplicado efecto
+            modelBuilder.Entity<TIEfectoSiendoAplicadoEfecto>().HasKey(e => new { e.IdEfectoSiendoAplicado, e.IdEfecto});
+
+            modelBuilder.Entity<TIEfectoSiendoAplicadoEfecto>()
+                .HasOne(i => i.Efecto);
+
+            modelBuilder.Entity<TIEfectoSiendoAplicadoEfecto>()
+                .HasOne(i => i.EfectoAplicandose)
+                .WithOne(p => p.Efecto)
+                .HasForeignKey<TIEfectoSiendoAplicadoEfecto>(ip => ip.IdEfectoSiendoAplicado);
+
+            // - Efecto siendo aplicado personaje instigador
+            modelBuilder.Entity<TIEfectoSiendoAplicadoPersonajeInstigador>().HasKey(e => new { e.IdEfectoSiendoAplicado, e.IdPersonajeInstigador});
+
+            modelBuilder.Entity<TIEfectoSiendoAplicadoPersonajeInstigador>()
+                .HasOne(i => i.PersonajeInstigador);
+
+            modelBuilder.Entity<TIEfectoSiendoAplicadoPersonajeInstigador>()
+                .HasOne(i => i.EfectoAplicandose)
+                .WithOne(p => p.Instigador)
+                .HasForeignKey<TIEfectoSiendoAplicadoPersonajeInstigador>(ip => ip.IdEfectoSiendoAplicado);
+
+            // - Efecto siendo aplicado personaje objetivos
+            modelBuilder.Entity<TIEfectoSiendoAplicadoPersonajeObjetivo>().HasKey(e => new { e.IdEfectoSiendoAplicado, e.IdPersonajeObjetivo});
+
+            modelBuilder.Entity<TIEfectoSiendoAplicadoPersonajeObjetivo>()
+                .HasOne(i => i.PersonajeObjetivo);
+
+            modelBuilder.Entity<TIEfectoSiendoAplicadoPersonajeObjetivo>()
+                .HasOne(i => i.EfectoAplicandose)
+                .WithMany(p => p.Objetivos)
+                .HasForeignKey(ip => ip.IdEfectoSiendoAplicado);
+
             // Alianzas:
             modelBuilder.Entity<ModeloAlianza>().ToTable("ModeloAlianza").HasNoDiscriminator();
 
+            // - Alianza contrato
             modelBuilder.Entity<TIAlianzaContrato>().HasKey(e => new { e.IdAlianza, e.IdContrato });
 
             modelBuilder.Entity<TIAlianzaContrato>()
@@ -367,6 +398,10 @@ namespace AppGM.Core
                 .HasForeignKey<TIAlianzaContrato>(ip => ip.IdAlianza);
 
             // Slot item: 
+
+            modelBuilder.Entity<ModeloSlot>().ToTable("ModeloSlot").HasNoDiscriminator();
+
+            // - Slot item
             modelBuilder.Entity<TISlotItem>().HasKey(e => new { e.IdSlot, e.IdItem });
 
             modelBuilder.Entity<TISlotItem>()
@@ -610,18 +645,16 @@ namespace AppGM.Core
 
             //Combates:
 
-            // - Administrador de combate participante
+            // Administrador de combate participantes:
+            modelBuilder.Entity<TIAdministradorDeCombateParticipante>().HasKey(e => new { e.IdAdministradorDeCombate, e.IdParticipante });
+
             modelBuilder.Entity<TIAdministradorDeCombateParticipante>()
-                .HasKey(e => new {e.IdAdministradorDeCombate, e.IdParticipante});
+                .HasOne(i => i.Participante);
 
             modelBuilder.Entity<TIAdministradorDeCombateParticipante>()
                 .HasOne(i => i.AdministradorDeCombate)
-                .WithMany(ac => ac.Participantes)
-                .HasForeignKey(i => i.IdAdministradorDeCombate);
-
-            modelBuilder.Entity<TIAdministradorDeCombateParticipante>()
-                .HasOne(i => i.Participante)
-                .WithOne(p => p.CombateActual);
+                .WithMany(p => p.Participantes)
+                .HasForeignKey(ip => ip.IdAdministradorDeCombate);
 
             // - Administrador de combate mapa
             modelBuilder.Entity<TIAdministradorDeCombateMapa>()

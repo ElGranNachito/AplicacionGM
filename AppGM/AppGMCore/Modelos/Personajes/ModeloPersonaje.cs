@@ -8,12 +8,12 @@ namespace AppGM.Core
     /// </summary>
     public class ModeloPersonaje : ModeloBase
     {
+        public ControladorPersonaje controlador;
+
         /// <summary>
         /// Relacion rol
         /// </summary>
         public TIRolPersonaje RolPersonaje { get; set; }
-
-        public ControladorPersonaje controlador;
 
         /// <summary>
         /// Nombre del personaje
@@ -24,7 +24,7 @@ namespace AppGM.Core
         /// <summary>
         /// Puede ser un personaje Master, Servant, Invocacion, o NPC
         /// </summary>
-        public ETipoPersonaje TipoPersonaje{ get; set; }
+        public ETipoPersonaje TipoPersonaje { get; set; }
 
         //Stats del personaje
         public int MaxHp { get; set; }
@@ -42,8 +42,13 @@ namespace AppGM.Core
         public int VentajaInt   { get; set; }
         public int VentajaLck   { get; set; }
 
-        //Pesos que maneja el personaje
+        /// <summary>
+        /// Maxima cantidad de pesos que puede cargar el personaje
+        /// </summary>
         public decimal PesoMaximoCargable   { get; set; }
+        /// <summary>
+        /// Cantidad de peso siendo cargado actualmente
+        /// </summary>
         public decimal PesoCargado { get; set; }
 
         /// <summary>
@@ -67,18 +72,22 @@ namespace AppGM.Core
         public ModeloVector2 Posicion { get; set; }
 
         /// <summary>
-        /// Efectos sobre el personaje
+        /// Efectos aplicados sobre el personaje
         /// </summary>
-        public List<TIPersonajeEfecto>        Efectos    { get; set; } = new List<TIPersonajeEfecto>();
+        public List<TIPersonajeEfectoSiendoAplicado> EfectosAplicandose { get; set; } = new List<TIPersonajeEfectoSiendoAplicado>();
         
         //Equipamiento del personaje
-        public List<TIPersonajeUtilizable>    Inventario { get; set; } = new List<TIPersonajeUtilizable>();
-        public List<TIPersonajeDefensivo>     Armadura   { get; set; } = new List<TIPersonajeDefensivo>();
-        public List<TIPersonajeArmaDistancia> ArmasDistancia         { get; set; } = new List<TIPersonajeArmaDistancia>();
+        public List<TIPersonajeUtilizable>           Inventario { get; set; } = new List<TIPersonajeUtilizable>();
+        public List<TIPersonajeDefensivo>            Armadura   { get; set; } = new List<TIPersonajeDefensivo>();
+        public List<TIPersonajeArmaDistancia>        ArmasDistancia         { get; set; } = new List<TIPersonajeArmaDistancia>();
 
-        //Contratos realizados con tros personajes
+        /// <summary>
+        /// Contratos realizados con tros personajes
+        /// </summary>
         public List<TIPersonajeContrato>      Contratos  { get; set; } = new List<TIPersonajeContrato>();
-        //Alianzas con otros personajes
+        /// <summary>
+        /// Alianzas con otros personajes
+        /// </summary>
         public List<TIPersonajeAlianza>       Alianzas   { get; set; } = new List<TIPersonajeAlianza>();
                                               
         //Habilidades del personaje
@@ -86,10 +95,14 @@ namespace AppGM.Core
         public List<TIPersonajeHabilidad>     Skills     { get; set; } = new List<TIPersonajeHabilidad>();
         public List<TIPersonajeMagia>         Magias     { get; set; } = new List<TIPersonajeMagia>();
         
-        //Modificadores de defensa del personaje
+        /// <summary>
+        /// Modificadores de defensa del personaje
+        /// </summary>
         public List<TIPersonajeModificadorDeDefensa> ModificadoresDeDefensa { get; set; } = new List<TIPersonajeModificadorDeDefensa>();
         
-        //Es participante en algun combate:
+        /// <summary>
+        /// Es participante en algun combate:
+        /// </summary>
         public List<TIParticipantePersonaje> ParticipacionEnCombates { get; set; } = new List<TIParticipantePersonaje>();
 
     }

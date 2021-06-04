@@ -28,12 +28,12 @@ namespace AppGM.Core
 		/// <summary>
 		/// <see cref="ModeloPersonaje"/> que causo o instigo el efecto
 		/// </summary>
-		public TIEfectoSiendoAplicadoPersonaje Instigador { get; set; }
+		public TIEfectoSiendoAplicadoPersonajeInstigador     Instigador { get; set; }
 
 		/// <summary>
 		/// <see cref="ModeloPersonaje"/> a los que se les esta aplicando el efecto
 		/// </summary>
-		public List<TIEfectoSiendoAplicadoPersonaje> Objetivos { get; set; }
+		public List<TIEfectoSiendoAplicadoPersonajeObjetivo> Objetivos { get; set; }
 
 		/// <summary>
 		/// Atajo para obtener el <see cref="ModeloEfecto"/>

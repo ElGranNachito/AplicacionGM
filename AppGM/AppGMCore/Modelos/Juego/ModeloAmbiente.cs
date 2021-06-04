@@ -7,7 +7,7 @@ namespace AppGM.Core
     /// Modelo de datos para el ambiente
     /// </summary>
     public class ModeloAmbiente : ModeloBase
-    {
+    {   
         public ControladorAmbiente controladorAmbiente;
 
         /// <summary>
@@ -23,11 +23,17 @@ namespace AppGM.Core
         /// <summary>
         /// Temperatura exacta en grados centigrados que hace dentro del ambiente.
         /// </summary>
-        public int TemperaturaC { get; set; }
+        public int TemperaturaActual { get; set; }
         /// <summary>
         /// Humedad relativa en el aire expresada en porcentaje.
         /// </summary>
-        public int Humedad      { get; set; }
+        public int HumedadActual      { get; set; }
+
+        /// <summary>
+        /// Verdadero si el ambiente toma datos del ambiente global del rol.
+        /// Buscar un mejor nombre.
+        /// </summary>
+        public bool EsInfluidoPorAmbienteGlobal { get; set; }
 
         /// <summary>
         /// Mapa en el que se encuentra el ambiente.

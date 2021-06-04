@@ -53,14 +53,14 @@ namespace AppGM.Core
             }
         }
 
-        public static TIEfectoSiendoAplicadoPersonaje CrearTIPersonaje(
+        public static TIPersonajeEfectoSiendoAplicado CrearTIPersonaje(
 	        this ControladorEfectoSiendoAplicado efecto,
 	        ControladorPersonaje personaje)
         {
-	        return new TIEfectoSiendoAplicadoPersonaje
+	        return new TIPersonajeEfectoSiendoAplicado
 	        {
-		        EfectoAplicandose = efecto.modelo,
-		        Personaje         = personaje.modelo
+		        EfectoSiendoAplicado = efecto.modelo,
+		        Personaje            = personaje.modelo
 	        };
         }
 
@@ -81,18 +81,18 @@ namespace AppGM.Core
 		        EfectoAplicandose = efectoSiendoAplicado
 	        };
 
-	        efectoSiendoAplicado.Instigador =  new TIEfectoSiendoAplicadoPersonaje
+	        efectoSiendoAplicado.Instigador =  new TIEfectoSiendoAplicadoPersonajeInstigador
 	        {
-		        EfectoAplicandose = efectoSiendoAplicado,
-		        Personaje = instigador.modelo
+		        EfectoAplicandose   = efectoSiendoAplicado,
+		        PersonajeInstigador = instigador.modelo
 	        };
 
-	        efectoSiendoAplicado.Objetivos = new List<TIEfectoSiendoAplicadoPersonaje>(
+	        efectoSiendoAplicado.Objetivos = new List<TIEfectoSiendoAplicadoPersonajeObjetivo>(
 		        from personaje in objetivos
-		        select new TIEfectoSiendoAplicadoPersonaje
+		        select new TIEfectoSiendoAplicadoPersonajeObjetivo
 		        {
 			        EfectoAplicandose = efectoSiendoAplicado,
-			        Personaje = personaje.modelo
+			        PersonajeObjetivo = personaje.modelo
 		        });
 
 	        efectoSiendoAplicado.TurnosRestantes = efecto.modelo.TurnosDeDuracion;

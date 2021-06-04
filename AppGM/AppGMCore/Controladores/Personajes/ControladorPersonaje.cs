@@ -272,7 +272,7 @@ namespace AppGM.Core
         /// </summary>
         /// <param name="_modeloPersonaje">Modelo del personaje que representa este controlador</param>
         public ControladorPersonaje(ModeloPersonaje _modeloPersonaje)
-            :base(_modeloPersonaje){}
+            :base(_modeloPersonaje) {}
 
         #endregion
 

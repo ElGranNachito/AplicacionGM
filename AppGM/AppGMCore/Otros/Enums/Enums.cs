@@ -107,53 +107,53 @@ namespace AppGM.Core
         /// <summary>
         /// El clima esta soleado, buena iluminacion 
         /// </summary>
-        Soleado = 1,
+        Soleado = 1<<0,
 
         /// <summary>
         /// El clima esta nublado, mala iluminacion y posible humedad
         /// </summary>
-        Nublado = 2,
+        Nublado = 1<<1,
 
         /// <summary>
         /// Mojado, mala visibilidad
         /// </summary>
-        Lluvia = 4,
+        Lluvia = 1<<2,
 
         /// <summary>
         /// Mala iluminacion, posibilidad de rayos
         /// </summary>
-        TormentaElectrica = 8,
+        TormentaElectrica = 1<<3,
 
         /// <summary>
         /// Mala iluminacion, poca visibilidad y granizo :u
         /// </summary>
-        Granizo = 16,
+        Granizo = 1<<4,
 
         /// <summary>
         /// Frio extremo, mala iluminacion y bajo rango de vision
         /// </summary>
-        Nieve = 32,
+        Nieve = 1<<5,
 
         /// <summary>
         /// El suelo es cubierto por una ligera capa de hielo
         /// Humedad, muy bajas temperaturas
         /// </summary>
-        Helada = 64,
+        Helada = 1<<6,
 
         /// <summary>
         /// Muy humedo, la visibilidad es infima 
         /// </summary>
-        Niebla = 128, 
+        Niebla = 1<<7, 
 
         /// <summary>
         /// Humedo y baja visibilidad a distancia
         /// </summary>
-        Neblina = 256,
+        Neblina = 1<<8,
 
         /// <summary>
         /// Airecito, puede influenciar vuelos y caidas desde sitios altos, asi como soplar objetos de poco peso
         /// </summary>
-        Viento = 512,
+        Viento = 1<<9,
 
         /// <summary>
         /// A lo mejor el mundo deja de existir, puede ser
@@ -170,80 +170,80 @@ namespace AppGM.Core
         /// Temperatura intermedia entre calurosa y fria.
         /// No ofrece ninguna ventaja o desventaja por si solo
         /// </summary>
-        Templado = 1,
+        Templado = 1<<0,
 
         /// <summary>
         /// Temperaturas sobre la media comun.
         /// Puede significar un ventaja o desventaja dependiendo de cierta habilidad.
         /// </summary>
-        Caluroso = 2,
+        Caluroso = 1<<1,
 
         /// <summary>
         /// Temperaturas debajo de la media comun.
         /// Puede significar un ventaja o desventaja dependiendo de cierta habilidad.
         /// </summary>
-        Frio = 4,
+        Frio = 1<<2,
 
         /// <summary>
         /// Escasa humedad en el ambiente, no tiene influencia sobre la temperatura. 
         /// </summary>
-        Seco = 8,
+        Seco = 1<<3,
 
         /// <summary>
         /// Bastante humedad en el ambiente, tiene influencia sobre la sensacion termica.
         /// </summary>
-        Humedo = 16,
+        Humedo = 1<<4,
 
         /// <summary>
         /// Iliminacion completa, visibilidad completa. 
         /// </summary>
-        Iluminado = 32,
+        Iluminado = 1<<5,
 
         /// <summary>
         /// La visibilidad se ve empeorada por la baja iluminacion.
         /// Puede implicar desventajas en la vision o ventajas dependiendo de las habilidades del personaje.  
         /// </summary>
-        Oscuro = 64,
+        Oscuro = 1<<6,
 
         /// <summary>
         /// Libertad de movimiento para los personajes, casillas y pocos obstaculos. 
         /// </summary>
-        Amplio = 128,
+        Amplio = 1<<7,
 
         /// <summary>
         /// El movimiento de los personajes se ve dificultado, sea por escasez en casillas o multitud de obstaculos.
         /// Desventaja en movimientos pronunciados e incapacidad de realizar algunos.
         /// </summary>
-        Estrecho = 256,
+        Estrecho = 1<<8,
 
         /// <summary>
         /// El personaje se siente a gusto con el lugar sea por el binestar que aporte o por la confianza en el mismo.
         /// Puede incluir ventajas y desventajas dependiendo de la habilidad.
         /// </summary>
-        Comodo = 512,
+        Comodo = 1<<9,
 
         /// <summary>
         /// La inquietud respecto al ambiente es evidente para los personajes.
         /// Puede incluir ventajas y desventajas dependiendo de la habilidad.
         /// </summary>
-        Ominoso = 1024,
+        Ominoso = 1<<10,
 
         /// <summary>
         /// Se halla libre de cualquier objeto que dificulte el movimiento, asi como de sustancias afectando el agua y el aire.
         /// </summary>
-        Limpio = 2048,
+        Limpio = 1<<11,
 
         /// <summary>
         /// La contaminacion en el aire y otros medios puede dificultar ciertas acciones.
         /// Desventajas en stats, modificadores, debuffs, incapacidad de utilizar habilidades, etc.
         /// </summary>
-        Contaminado = 4096,
+        Contaminado = 1<<12,
 
         /// <summary>
         /// Totalmente peculiar, solo se manifiesta en situaciones del mismo indole.
         /// Ventaja al momento de realizar una accion de ligacion sobre el mismo ambiente.
         /// </summary>
-        Ligacion = 8192,
+        Ligacion = 1<<13,
 
         /// <summary>
         /// Convengamos que se encuentra en el vacio, puede ser.
@@ -632,22 +632,22 @@ namespace AppGM.Core
         /// <summary>
         /// Efecto sobre uno mismo
         /// </summary>
-	    Personal = 1, 
+	    Personal = 1<<0, 
 
         /// <summary>
         /// Apoyo a otro
         /// </summary>
-        Soporte = 2, 
+        Soporte = 1<<1, 
 
         /// <summary>
         /// Defensa
         /// </summary>
-        Defensa = 4,
+        Defensa = 1<<2,
 
         /// <summary>
         /// Ataque
         /// </summary>
-        Ataque = 8,
+        Ataque = 1<<3,
 
         /// <summary>
         /// Un desperdicio de espacio
@@ -664,22 +664,22 @@ namespace AppGM.Core
         /// <summary>
         /// Habilidades de activacion automatica, son como pasivas
         /// </summary>
-	    Perk = 1, 
+	    Perk = 1<<0, 
 
         /// <summary>
         /// Aquellas cosas que se realizan de manera activa
         /// </summary>
-        Skill = 2, 
+        Skill = 1<<1, 
 
         /// <summary>
         /// Mucha magia
         /// </summary>
-        Hechizo = 4, 
+        Hechizo = 1<<2, 
 
         /// <summary>
         /// Son hechizos u objetos magicos de muy alto nivel
         /// </summary>
-        NoblePhantasm = 8,
+        NoblePhantasm = 1<<3,
 
         /// <summary>
         /// ???
@@ -700,7 +700,7 @@ namespace AppGM.Core
         ///     <item>Depende de <see cref="EStat.STR"/> salvo excepciones concretas</item>
         /// </list>
         /// </summary>
-	    Contundente = 1,
+	    Contundente = 1<<0,
 
         /// <summary>
         /// <list type="bullet">
@@ -709,7 +709,7 @@ namespace AppGM.Core
         ///     <item>Si se inflige bien produce sangrado</item>
         /// </list>
         /// </summary>
-        Cortante = 2,
+        Cortante = 1<<1,
 
         /// <summary>
         /// <list type="bullet">
@@ -717,7 +717,7 @@ namespace AppGM.Core
         ///     <item>Salvo excepciones concretas depende siempre de <see cref="EStat.AGI"/></item>
         /// </list>
         /// </summary>
-        Penetrante = 4,
+        Penetrante = 1<<2,
 
         /// <summary>
         /// <list type="bullet">
@@ -725,7 +725,7 @@ namespace AppGM.Core
         ///     <item>Puede llegar a tener tirada de daño fija</item>
         /// </list>
         /// </summary>
-        Explosivo = 8,
+        Explosivo = 1<<3,
 
 
         //-------------Los siguientes dos valores no estan relacionados con los anteriores-----------
@@ -735,12 +735,12 @@ namespace AppGM.Core
         /// <summary>
         /// Daño proveniente de un hechizo
         /// </summary>
-        Magico = 16,
+        Magico = 1<<4,
 
         /// <summary>
         /// Daño proveniente de un proyectil
         /// </summary>
-        Proyectil = 32,
+        Proyectil = 1<<5,
 
         /// <summary>
         /// Una miseria
@@ -757,62 +757,62 @@ namespace AppGM.Core
         /// <summary>
         /// Torso
         /// </summary>
-	    Torso = 1,
+	    Torso = 1<<0,
 
         /// <summary>
         /// Hombros
         /// </summary>
-        Hombros = 2,
+        Hombros = 1<<1,
 
         /// <summary>
         /// Muslos
         /// </summary>
-        Muslos = 4,
+        Muslos = 1<<2,
 
         /// <summary>
         /// Espalda
         /// </summary>
-        Espalda = 8,
+        Espalda = 1<<3,
 
         /// <summary>
         /// Corazon
         /// </summary>
-        Corazón = 16,
+        Corazón = 1<<4,
 
         /// <summary>
         /// Manos
         /// </summary>
-        Manos = 32,
+        Manos = 1<<5,
 
         /// <summary>
         /// Muñecas
         /// </summary>
-        Muñecas = 64,
+        Muñecas = 1<<6,
 
         /// <summary>
         /// Pies
         /// </summary>
-        Pies = 128,
+        Pies = 1<<7,
 
         /// <summary>
         /// Canillas
         /// </summary>
-        Canillas = 256,
+        Canillas = 1<<8,
 
         /// <summary>
         /// Cuello
         /// </summary>
-        Cuello = 512,
+        Cuello = 1<<9,
 
         /// <summary>
         /// Ingle
         /// </summary>
-        Ingle = 1024,
+        Ingle = 1<<10,
 
         /// <summary>
         /// Cabeza
         /// </summary>
-        Cabeza = 2048,
+        Cabeza = 1<<11,
 
         /// <summary>
         /// 0, null, rei, zero, 0k, cero
@@ -829,27 +829,27 @@ namespace AppGM.Core
         /// <summary>
         /// Master
         /// </summary>
-	    Master = 1,
+	    Master = 1<<0,
 
         /// <summary>
         /// Servant
         /// </summary>
-	    Servant = 2,
+	    Servant = 1<<1,
 
         /// <summary>
         /// Invocacion
         /// </summary>
-	    Invocacion = 4,
+	    Invocacion = 1<<2,
 
         /// <summary>
         /// Trampa
         /// </summary>
-	    Trampa = 8,
+	    Trampa = 1<<3,
 
         /// <summary>
         /// Iglesia
         /// </summary>
-	    Iglesia = 16,
+	    Iglesia = 1<<4,
 
         /// <summary>
         /// Un fantasma con toda probabilidad
