@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace AppGM.Core
 {
@@ -13,6 +14,22 @@ namespace AppGM.Core
 		/// Titulo de la ventana
 		/// </summary>
 		string TituloVentana { get; set; }
+
+		/// <summary>
+		/// Indica si actualmente hay una ventana de mensaje abierta y la ventana actual deberia
+		/// esperar a que este se cierre
+		/// </summary>
+		bool DebeEsperarCierreDeMensaje { get; set; }
+
+		/// <summary>
+		/// Indica si esta es actualmente la ventana siendo utilizada por el usuario
+		/// </summary>
+		bool EsVentanaActual { get; }
+
+		/// <summary>
+		/// Ventana de popup
+		/// </summary>
+		Lazy<IVentanaMensaje> VentanaMensaje { get; set; }
 
 		/// <summary>
 		/// 
@@ -105,7 +122,11 @@ namespace AppGM.Core
 		/// <param name="nuevoVM">Nuevo viewmodel</param>
 		void EstablecerViewModel(ViewModelMensajeBase nuevoVM);
 
+		/// <summary>
+		/// Ventana de la que depende este mensaje
+		/// </summary>
+		public IVentana VentanaPadre { get; set; }
+
 		bool EstaAbierta { get; }
-		bool DebeEsperarCierre { get; set; }
 	}
 }

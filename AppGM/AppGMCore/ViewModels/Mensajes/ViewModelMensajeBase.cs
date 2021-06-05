@@ -12,8 +12,8 @@
 
         /// <summary>
         /// Instancia de la <see cref="IVentana"/>.
-        /// Solamente es un atajo a <see cref="ViewModelAplicacion.VentanaPopups"/> en <see cref="SistemaPrincipal.Aplicacion"/>
+        /// Solamente es un atajo a <see cref="ViewModelAplicacion.VentanaMensajePrincipal"/> en <see cref="SistemaPrincipal.Aplicacion"/>
         /// </summary>
-        protected IVentana mVentana => SistemaPrincipal.Aplicacion.VentanaPopups;
+        protected IVentana mVentana => SistemaPrincipal.Aplicacion.VentanaMensajePrincipal;
     }
 }

@@ -7,4 +7,10 @@
     /// <param name="valorAnterior">Valor anterior de la variable</param>
     /// <param name="valorActual">Valor actual de la variable</param>
     public delegate void DVariableCambio<TipoVariable>(TipoVariable valorAnterior, TipoVariable valorActual);
+
+    /// <summary>
+    /// Delegado utilizado para eventos de Drag
+    /// </summary>
+    /// <param name="vmContenido"><see cref="BaseViewModel"/> del contenido del drag</param>
+    public delegate void DDrag(BaseViewModel vmContenido);
 }

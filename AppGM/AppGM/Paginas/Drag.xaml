@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="AppGM.Drag"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AppGM"
+             xmlns:core="clr-namespace:AppGM.Core;assembly=AppGM.Core"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <!-- Control que representa los drags & drops -->
+    <Grid
+        Margin="{Binding  
+            Source={x:Static core:SistemaPrincipal.Drag},
+            Path=OffsetControl,
+            Converter={local:GrosorToThicknessConverter}}">
+
+        <!-- Control del drag & drop -->
+        <ContentPresenter 
+            Content="{Binding  
+            Source={x:Static core:SistemaPrincipal.Drag},
+            Path=ViewModelContenido,
+            Converter={local:ViewModelToDragConverter}}"/>
+    </Grid>
+</UserControl>

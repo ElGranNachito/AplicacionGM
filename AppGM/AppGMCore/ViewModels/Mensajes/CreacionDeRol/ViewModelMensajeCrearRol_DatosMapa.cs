@@ -58,7 +58,7 @@ namespace AppGM.Core
 				mArchivoMapa = SistemaPrincipal.ControladorDeArchivos.MostrarDialogoAbrirArchivo(
 					"Seleccionar Imagen Mapa",
 					"Formatos imagen (*.jpg *.png)|*.jpg;*.png",
-					SistemaPrincipal.Aplicacion.VentanaPopups);
+					SistemaPrincipal.Aplicacion.VentanaMensajePrincipal);
 
 				PathImagenMapa = mArchivoMapa.Ruta;
 			});

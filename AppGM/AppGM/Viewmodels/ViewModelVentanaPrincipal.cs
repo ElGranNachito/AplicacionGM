@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Input;
 using AppGM.Core;
 
@@ -7,17 +8,12 @@ namespace AppGM.Viewmodels
     /// <summary>
     /// View model para la ventana principal de la aplicacion
     /// </summary>
-    class ViewModelVentanaPrincipal : ViewModelVentanaBase, IVentana
+    class ViewModelVentanaPrincipal : ViewModelVentanaBase
     {
         #region Propiedades
 
         public ICommand ComandoMaximizarVentana { get; set; }
         public ICommand ComandoMinimizarVentana { get; set; }
-
-        /// <summary>
-        /// Ventana de popups
-        /// </summary>
-        public IVentanaMensaje VentanaPopups => SistemaPrincipal.Aplicacion.VentanaPopups;
 
         /// <summary>
         /// Pagina actual de la ventana principal

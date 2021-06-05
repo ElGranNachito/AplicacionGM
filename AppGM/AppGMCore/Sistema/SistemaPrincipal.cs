@@ -64,6 +64,8 @@ namespace AppGM.Core
         /// </summary>
         public static Logger                        LoggerGlobal          => ObtenerInstancia<Logger>();
 
+        public static Drag                          Drag                  => ObtenerInstancia<Drag>();
+
         /// <summary>
         /// Contexto del thread principal
         /// </summary>
@@ -93,6 +95,7 @@ namespace AppGM.Core
             //Atamos los view models basicos, es decir que necesitamos independientemente del rol que se seleccione
             Kernel.Bind<ViewModelAplicacion>().ToConstant(new ViewModelAplicacion());
             Kernel.Bind<ViewModelPaginaPrincipal>().ToConstant(new ViewModelPaginaPrincipal());
+            Kernel.Bind<Drag>().ToConstant(new Drag());
 
             Aplicacion.OnPaginaActualCambio += PaginaActualCambioHandler;
         }

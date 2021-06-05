@@ -11,7 +11,8 @@
              local:LlamarComandoOnMouseEnterProperty.Value="{Binding ComandoMouseEnter}">
 
     <UserControl.Template>
-        <ControlTemplate TargetType="{x:Type UserControl}">
+        <ControlTemplate 
+            TargetType="{x:Type UserControl}">
 
             <Grid>
                 <!-- Imagen carta -->

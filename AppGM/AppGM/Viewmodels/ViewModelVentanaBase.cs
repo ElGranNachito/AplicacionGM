@@ -1,7 +1,11 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using AppGM.Core;
+using AppGM.Viewmodels;
 
 namespace AppGM
 {
@@ -86,6 +90,12 @@ namespace AppGM
         {
             mVentana = _ventana;
 
+            //Cuando esta ventana es seleccionada por el usuario queremos hacerla la ventana actual
+            mVentana.Activated += (sender, args) =>
+            { 
+	            SistemaPrincipal.Aplicacion.VentanaActual = (IVentana)((Window)sender).DataContext;
+            }; 
+
             //Conectamos varios eventos de la ventana para que llamen a los delegados correspondientes de la interfaz IVentana
             mVentana.Closed    += (obj, e)        => { OnVentanaCerrada(this); };
             mVentana.Loaded    += (obj, e)    => { OnVentanaAbierta(this); };
@@ -103,6 +113,21 @@ namespace AppGM
                 DispararPropertyChanged(new PropertyChangedEventArgs(nameof(ResizeBorderThickness)));
                 DispararPropertyChanged(new PropertyChangedEventArgs(nameof(CaptionHeight)));
             };
+
+            //Inicializamos la propiedad en el constructor para poder acceder a 'this'
+            VentanaMensaje = new Lazy<IVentanaMensaje>(
+	            () =>
+	            {
+		            var ventanaMensaje          = new VentanaMensaje();
+		            var viewModelVentanaMensaje = new ViewModelVentanaMensaje(ventanaMensaje);
+
+		            viewModelVentanaMensaje.VentanaPadre = this;
+
+		            ventanaMensaje.DataContext = viewModelVentanaMensaje;
+
+		            return viewModelVentanaMensaje;
+
+	            }, LazyThreadSafetyMode.PublicationOnly);
         }
 
         /// <summary>
@@ -153,6 +178,12 @@ namespace AppGM
 		        OnTituloModificado(this);
 	        }
         }
+
+        public bool DebeEsperarCierreDeMensaje { get; set; }
+
+        public bool EsVentanaActual => SistemaPrincipal.Aplicacion.VentanaActual == this;
+
+		public Lazy<IVentanaMensaje> VentanaMensaje { get; set; }
 
         public virtual object ObtenerInstanciaVentana() => mVentana;
 
