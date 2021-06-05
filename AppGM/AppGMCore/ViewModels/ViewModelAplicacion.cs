@@ -27,9 +27,14 @@ namespace AppGM.Core
         public IVentana VentanaPrincipal { get; set; }
 
         /// <summary>
+        /// Ventana actualmente activa siendo utilizada por el usuario
+        /// </summary>
+        public IVentana VentanaActual { get; set; }
+
+        /// <summary>
         /// Ventana de popups
         /// </summary>
-        public IVentanaMensaje VentanaPopups { get; set; }
+        public IVentanaMensaje VentanaMensajePrincipal => VentanaPrincipal.VentanaMensaje.Value;
 
         /// <summary>
         /// Pagina actual de la aplicacion

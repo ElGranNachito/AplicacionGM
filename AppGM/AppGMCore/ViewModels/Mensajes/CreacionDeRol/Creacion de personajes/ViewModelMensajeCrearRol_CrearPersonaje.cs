@@ -100,7 +100,7 @@ namespace AppGM.Core
 
             mAccionAñadirHabilidad = () =>
             {
-                SistemaPrincipal.Aplicacion.VentanaPopups.EstablecerViewModel(new ViewModelMensajeCrearRol_CrearHabilidad(this, mModeloPersonaje));
+                SistemaPrincipal.Aplicacion.VentanaMensajePrincipal.EstablecerViewModel(new ViewModelMensajeCrearRol_CrearHabilidad(this, mModeloPersonaje));
             };
 
             ContenedorListaHabilidades = new ViewModelListaItems(mAccionAñadirHabilidad, true, "Habilidades");
@@ -147,12 +147,12 @@ namespace AppGM.Core
                         break;
                 }
 
-                SistemaPrincipal.Aplicacion.VentanaPopups.EstablecerViewModel(_viewModelCrearRol);
+                SistemaPrincipal.Aplicacion.VentanaMensajePrincipal.EstablecerViewModel(_viewModelCrearRol);
             });
 
             ComandoCancelar = new Comando(() =>
             {
-                SistemaPrincipal.Aplicacion.VentanaPopups.EstablecerViewModel(_viewModelCrearRol);
+                SistemaPrincipal.Aplicacion.VentanaMensajePrincipal.EstablecerViewModel(_viewModelCrearRol);
             });
         }
 

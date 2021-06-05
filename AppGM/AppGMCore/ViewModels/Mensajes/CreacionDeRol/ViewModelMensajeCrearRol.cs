@@ -1,4 +1,6 @@
-﻿namespace AppGM.Core
+﻿using System.Collections.Generic;
+
+namespace AppGM.Core
 {
     /// <summary>
     /// Popup de creacion de rol
@@ -28,6 +30,8 @@
             });
 
             PasoActual.PropertyChanged += mHandlerPasoActualPropertyChanged;
+
+            Inicializar();
         }
     }
 }

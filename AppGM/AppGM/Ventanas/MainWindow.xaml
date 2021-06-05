@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AppGM"
+        xmlns:core="clr-namespace:AppGM.Core;assembly=AppGM.Core"
         mc:Ignorable="d"
 
         MinHeight="562"
@@ -32,7 +33,9 @@
 
                             <!-- Barra superior -->
 
-                            <Grid Background="White">
+                            <Grid Background="White"
+                                  Panel.ZIndex="12">
+
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
@@ -93,9 +96,9 @@
         <!-- Fondo gris transparente que se muestra cuando se abre un popup -->
         <Border 
             local:AnimarOpacidadProperty.DebeRealizarAnimacion="{
-            Binding VentanaPopups.DebeEsperarCierre}"
+            Binding DebeEsperarCierreDeMensaje}"
             Visibility="{
-            Binding  VentanaPopups.DebeEsperarCierre,
+            Binding  DebeEsperarCierreDeMensaje,
             Converter={local:BooleanToVisibilityConverterColapsar}}"
             Background="DimGray" 
             Opacity="0"
@@ -103,6 +106,13 @@
 
         <!-- Contenido de la ventana -->
         <ContentControl Content="{Binding EPagina, Converter={local:EnumToUserControlConverter}, ConverterParameter=1}"/>
+
+        <Canvas>
+            <!-- Drag de la ventana -->
+            <local:Drag 
+                Margin="0"
+                Panel.ZIndex="11"/>
+        </Canvas>
     </Grid>
 
 </Window>

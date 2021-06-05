@@ -75,6 +75,12 @@ namespace AppGM.Core
             }
         };
 
+        //TODO:Sacar
+        public ViewModelCarta CartaPiola { get; set; } = new ViewModelCarta
+        {
+
+        };
+
         /// <summary>
         /// VM Carta de creacion de rol
         /// </summary>
@@ -192,7 +198,7 @@ namespace AppGM.Core
             ViewModelMensajeCrearRol viewModelCreacionDeRol = new ViewModelMensajeCrearRol();
 
             //Creamos el popup de creacion de rol
-            await SistemaPrincipal.Aplicacion.VentanaPopups.Mostrar(viewModelCreacionDeRol, "Creacion de Rol", true, 575, -1);
+            await SistemaPrincipal.Aplicacion.VentanaMensajePrincipal.Mostrar(viewModelCreacionDeRol, "Creacion de Rol", true, 575, -1);
         }
         #endregion
     }

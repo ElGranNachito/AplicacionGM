@@ -56,7 +56,7 @@ namespace AppGM.Core
         /// <summary>
         /// Lista de los pasos
         /// </summary>
-        protected List<ViewModelPaso<TipoViewModel>> mViewModelsPasos;
+        protected List<ViewModelPaso<TipoViewModel>> mViewModelsPasos = new List<ViewModelPaso<TipoViewModel>>();
 
         /// <summary>
         /// Evento que se llama cuando el usuario avanza de paso
@@ -75,12 +75,7 @@ namespace AppGM.Core
         /// <summary>
         /// Constructor default
         /// </summary>
-        public ViewModelVentanaConPasos()
-        {
-	        mViewModelsPasos = new List<ViewModelPaso<TipoViewModel>>();
-
-	        Inicializar();
-        }
+        public ViewModelVentanaConPasos() {}
 
         /// <summary>
         /// Constructor
@@ -119,7 +114,7 @@ namespace AppGM.Core
             DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PuedeRetroceder)));
         }
 
-        private void Inicializar()
+        protected void Inicializar()
         {
 	        //Cuando se modifica una propiedad del viewmodel nos interesa volver a verificar si podemos avanzar
 	        mHandlerPasoActualPropertyChanged = (sender, args) =>

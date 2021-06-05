@@ -10,9 +10,7 @@ namespace AppGM
     {
         public VentanaMensaje()
         {
-            DataContext = SistemaPrincipal.Aplicacion.VentanaPopups;
-
-            InitializeComponent();
+	        InitializeComponent();
         }
     }
 }

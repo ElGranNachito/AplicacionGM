@@ -79,5 +79,12 @@
     <!-- Contenido -->
     <Grid>
         <ContentControl Content="{Binding  Path=ViewModelContenidoVentana, Converter={local:ViewModelToContenidoMensajeConverter}}"/>
+
+        <Canvas>
+            <!-- Drag de la ventana -->
+            <local:Drag 
+                Margin="0"
+                Panel.ZIndex="11"/>
+        </Canvas>
     </Grid>
 </Window>

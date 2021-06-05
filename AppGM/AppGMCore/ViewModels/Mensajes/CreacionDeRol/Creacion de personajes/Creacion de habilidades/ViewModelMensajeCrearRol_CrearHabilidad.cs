@@ -65,7 +65,7 @@ namespace AppGM.Core
 
             ComandoCancelar = new Comando(() =>
             {
-                SistemaPrincipal.Aplicacion.VentanaPopups.EstablecerViewModel(mVMCrearPersonaje);
+                SistemaPrincipal.Aplicacion.VentanaMensajePrincipal.EstablecerViewModel(mVMCrearPersonaje);
             });
 
             PropertyChanged += (sender, args) =>

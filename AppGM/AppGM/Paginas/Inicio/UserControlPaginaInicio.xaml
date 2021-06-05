@@ -52,13 +52,6 @@
                     Height="200" 
                     Margin="-20 0 0 10">
 
-                    <Button  
-                        Content="+Agregar" 
-                        Margin=" 0 15 0 10"
-                        HorizontalAlignment="Center"
-                        Width="100"
-                        Command="{Binding Comando}"/>
-
                 </local:UserControlCarta>
 
                 <!-- Carta rol actualmente seleccionado -->
