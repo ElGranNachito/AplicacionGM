@@ -26,9 +26,11 @@
 
                     <!-- Campo ingreso de nombre -->
                     <TextBlock Text="Nombre: "/>
-                    <TextBox HorizontalAlignment="Center"
-                         MinWidth="150"
-                         Text="{Binding Nombre, Mode=OneWayToSource}"/>
+                    <TextBox 
+                        FontFamily="{StaticResource 'Font Canon'}"
+                        HorizontalAlignment="Center"
+                        MinWidth="150"
+                        Text="{Binding Nombre, Mode=OneWayToSource}"/>
 
                 </StackPanel>
 
@@ -40,18 +42,28 @@
                     <!-- X -->
                     <TextBlock Text="X:"
                                Margin="0 0 10 0"
-                               HorizontalAlignment="Left"/>
+                               HorizontalAlignment="Left"
+                               FontFamily="{StaticResource 'Font Canon'}"
+                               />
                     <TextBox MinWidth="30"
-                             Text="{Binding PosInicialX}"/>
+                             Text="{Binding PosInicialX}"
+                             FontFamily="{StaticResource 'Font Canon'}"
+                             />
 
                     <!-- Y -->
                     <TextBlock Text="Y:"
-                               Margin="10 0"/>
+                               Margin="10 0"
+                               FontFamily="{StaticResource 'Font Canon'}"
+                               />
                     <TextBox MinWidth="30"
-                             Text="{Binding PosInicialY}"/>
+                             Text="{Binding PosInicialY}"
+                             FontFamily="{StaticResource 'Font Canon'}"
+                             />
 
                     <TextBlock Text="(Opcional)"
-                               Margin="10 0"/>
+                               Margin="10 0"
+                               FontFamily="{StaticResource 'Font Canon'}"
+                               />
 
                 </StackPanel>
 
@@ -82,7 +94,7 @@
                     <StackPanel 
                         Visibility="{Binding DebeSeleccionarPersonaje, Converter={local:BooleanToVisibilityConverterOcultar}}">
 
-                        <TextBlock Text="Personaje:"/>
+                        <TextBlock Text="Personaje:" FontFamily="{StaticResource 'Font Canon'}"/>
                         <ComboBox 
                             ItemsSource="{Binding PersonajesDisponibles}"
                             SelectedValue="{Binding PersonajeSeleccionado}"/>
@@ -93,7 +105,7 @@
                     <StackPanel 
                         Visibility="{Binding DebeSeleccionarCantidad, Converter={local:BooleanToVisibilityConverterOcultar}}">
 
-                        <TextBlock Text="Cantidad:"/>
+                        <TextBlock Text="Cantidad:" FontFamily="{StaticResource 'Font Canon'}"/>
                         <TextBox local:CampoDeTextoNumericoProperty.Value="True"/>
 
                     </StackPanel>

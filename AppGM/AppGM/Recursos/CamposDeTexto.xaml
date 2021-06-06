@@ -6,8 +6,20 @@
 
 <!--.................................ESTILOS PARA LOS CAMPOS DE TEXTO...................................-->
 
+    <Style TargetType="{x:Type TextBlock}" x:Key="TextBlockBase">
+
+        <Setter Property="FontFamily" Value="{StaticResource 'Font Canon'}"/>
+
+    </Style>
+
+    <Style TargetType="{x:Type TextBox}" x:Key="TextBoxBase">
+
+        <Setter Property="FontFamily" Value="{StaticResource 'Font Canon'}"/>
+
+    </Style>
+
     <!-- Estilo que permite añadir un texto de asistencia un campo de texto que desaparece ni bien el usuario ingrese un caracter -->
-    <Style TargetType="{x:Type TextBox}" x:Key="TextoDescriptivo">
+    <Style TargetType="{x:Type TextBox}" x:Key="TextoDescriptivo" BasedOn="{StaticResource TextBoxBase}">
 
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="BorderBrush" Value="Black"/>

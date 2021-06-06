@@ -37,8 +37,12 @@
                     Margin="5">
 
             <!-- Nombre y tipo de participante -->
-            <TextBlock Text="{Binding NombreParticipante, Mode=OneWay, FallbackValue=Mr Sin Nombre}"/>
-            <TextBlock Text="{Binding TipoPersonaje, Mode=OneWay, FallbackValue=Es un misterio}"/>
+            <TextBlock Text="{Binding NombreParticipante, Mode=OneWay, FallbackValue=Mr Sin Nombre}"
+                       Style="{StaticResource TextBlockBase}"
+                       />
+            <TextBlock Text="{Binding TipoPersonaje, Mode=OneWay, FallbackValue=Es un misterio}"
+                       Style="{StaticResource TextBlockBase}"
+                       />
 
         </StackPanel>
 

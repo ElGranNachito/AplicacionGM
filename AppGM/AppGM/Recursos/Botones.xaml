@@ -11,6 +11,7 @@
         <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="FontFamily" Value="My Font Regular"/>
 
         <Setter Property="Template">
             <Setter.Value>

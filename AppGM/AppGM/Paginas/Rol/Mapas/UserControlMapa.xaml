@@ -48,9 +48,9 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Text="0"/>
-                    <TextBlock Text="{Binding MitadTamañoCanvasY, Mode=OneWay}" Grid.Row="1" Grid.RowSpan="2" VerticalAlignment="Center"/>
-                    <TextBlock Text="{Binding TamañoCanvasY, Mode=OneWay}" Grid.Row="2"/>
+                    <TextBlock Text="0" FontFamily="{StaticResource 'Font Canon'}" FontSize="{StaticResource TamañoFontMediano}"/>
+                    <TextBlock Text="{Binding MitadTamañoCanvasY, Mode=OneWay}" Grid.Row="1" Grid.RowSpan="2" VerticalAlignment="Center" FontFamily="{StaticResource 'Font Canon'}" FontSize="{StaticResource TamañoFontMediano}"/>
+                    <TextBlock Text="{Binding TamañoCanvasY, Mode=OneWay}" Grid.Row="2" FontFamily="{StaticResource 'Font Canon'}" FontSize="{StaticResource TamañoFontMediano}"/>
                 </Grid>
 
                 <Grid Grid.Column="1">
@@ -63,9 +63,13 @@
                     <!-- Textos posicion X -->
                     <Grid>
 
-                        <TextBlock Text="{Binding MitadTamañoCanvasX}" 
+                        <TextBlock FontFamily="{StaticResource 'Font Canon'}"
+                                   FontSize="{StaticResource TamañoFontMediano}"
+                                   Text="{Binding MitadTamañoCanvasX}" 
                                    HorizontalAlignment="Center"/>
-                        <TextBlock Text="{Binding TamañoCanvasX}"
+                        <TextBlock FontFamily="{StaticResource 'Font Canon'}"
+                                   FontSize="{StaticResource TamañoFontMediano}"
+                                   Text="{Binding TamañoCanvasX}"
                                    HorizontalAlignment="Right"/>
 
                     </Grid>

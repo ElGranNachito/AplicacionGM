@@ -47,10 +47,12 @@
 
             <!-- Nombre -->
             <TextBlock 
+                FontFamily="{StaticResource 'Font Canon'}"
                 Text="{Binding Personaje.Nombre, FallbackValue=Err}"/>
 
             <!-- Tipo de personaje -->
             <TextBlock 
+                FontFamily="{StaticResource 'Font Canon'}"
                 Text="{Binding Personaje.Tipo, FallbackValue=Err}"
                 Visibility="{Binding EsServant, Converter={local:BooleanToVisibilityConverterColapsar}}"/>
 

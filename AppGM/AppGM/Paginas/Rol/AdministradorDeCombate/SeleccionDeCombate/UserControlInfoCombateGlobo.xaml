@@ -15,7 +15,8 @@
                      FontWeight="Bold" 
                      FontSize="{StaticResource TamañoFontMediano}"/>
                 <Run Text="{Binding Combate.Nombre}"
-                     FontSize="{StaticResource TamañoFontMediano}"/>
+                     FontSize="{StaticResource TamañoFontMediano}"
+                     FontFamily="{StaticResource 'Font Canon'}"/>
             </TextBlock>
 
             <!-- Turno acutal dentro del combate -->
@@ -24,7 +25,8 @@
                      FontWeight="Bold" 
                      FontSize="{StaticResource TamañoFontMediano}"/>
                 <Run Text="{Binding Combate.TurnoActual}"
-                     FontSize="{StaticResource TamañoFontMediano}"/>
+                     FontSize="{StaticResource TamañoFontMediano}"
+                     FontFamily="{StaticResource 'Font Canon'}"/>
             </TextBlock>
 
             <!-- Cantidad de participantes -->
@@ -33,7 +35,8 @@
                      FontWeight="Bold" 
                      FontSize="{StaticResource TamañoFontMediano}"/>
                 <Run Text="{Binding Combate.Participantes.Count, Mode=OneWay}"
-                     FontSize="{StaticResource TamañoFontMediano}"/>
+                     FontSize="{StaticResource TamañoFontMediano}"
+                     FontFamily="{StaticResource 'Font Canon'}"/>
             </TextBlock>
 
             <!-- Participantes -->
@@ -42,7 +45,8 @@
                      FontWeight="Bold" 
                      FontSize="{StaticResource TamañoFontMediano}"/>
                 <Run Text="{Binding Participantes, Mode=OneWay}"
-                     FontSize="{StaticResource TamañoFontMediano}"/>
+                     FontSize="{StaticResource TamañoFontMediano}"
+                     FontFamily="{StaticResource 'Font Canon'}"/>
             </TextBlock>
         </StackPanel>
             

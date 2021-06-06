@@ -44,6 +44,7 @@
                     Margin="0 0 10 10"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Bottom"
+                    FontFamily="{StaticResource 'Font Canon'}"
                     Text="{Binding TextoLetrasRestantes, FallbackValue=Err}"/>
 
             </Grid>

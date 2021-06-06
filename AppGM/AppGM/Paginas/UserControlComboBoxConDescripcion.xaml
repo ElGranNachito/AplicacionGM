@@ -19,7 +19,9 @@
         <!-- Descripcion -->
         <TextBlock
             x:Name="TextBox_Descripcion"
-            Text="Err"/>
+            Text="Err"
+            Style="{StaticResource TextBlockBase}"
+            />
     
         <!-- ComboBox -->
         <ComboBox

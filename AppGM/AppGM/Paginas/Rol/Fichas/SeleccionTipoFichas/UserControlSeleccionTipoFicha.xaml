@@ -24,9 +24,13 @@
                 <!-- Informacion de este tipo de fichas -->
                 <StackPanel Grid.Row="1">
                     <TextBlock Text="Un poco de info general"
-                               TextWrapping="Wrap"/>
+                               TextWrapping="Wrap"
+                               Style="{StaticResource TextBlockBase}"
+                               />
                     <TextBlock Text="Info info"
-                               TextWrapping="Wrap"/>
+                               TextWrapping="Wrap"
+                               Style="{StaticResource TextBlockBase}"
+                               />
                 </StackPanel>
             </Grid>
         </ControlTemplate>

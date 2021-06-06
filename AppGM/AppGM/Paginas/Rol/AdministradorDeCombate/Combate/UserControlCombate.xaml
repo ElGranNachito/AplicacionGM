@@ -37,7 +37,7 @@
                     Content="{StaticResource Fa-FlechaIzquierda}"
                     Command="{Binding ComandoRetrocederTurno}"/>
                 
-                <TextBlock Text="5" Margin="5 0"/>
+                <TextBlock Text="5" Margin="5 0" Style="{StaticResource TextBlockBase}"/>
 
                 <!-- Flecha derecha (Avanzar turno) -->
                 <Button 

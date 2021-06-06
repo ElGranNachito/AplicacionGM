@@ -84,6 +84,8 @@
                             HorizontalAlignment="Center"
                             MinWidth="20"
                             Width="50"
+                            FontSize="{StaticResource TamañoFontGrande}"
+                            FontFamily="{StaticResource 'Font Canon'}"
                             TextChanged="TextBoxPosX_TextChanged"
                             Text="{Binding TextoPosicionX, Mode=TwoWay}"/>
 
@@ -96,6 +98,8 @@
                             HorizontalAlignment="Center"
                             MinWidth="20"
                             Width="50"
+                            FontSize="{StaticResource TamañoFontGrande}"
+                            FontFamily="{StaticResource 'Font Canon'}"
                             TextChanged="TextBoxPosY_TextChanged"
                             Text="{Binding TextoPosicionY, Mode=TwoWay}"/>
 

@@ -5,9 +5,10 @@
 
     <!--........................FONTS, TAMAÑOS DE LETRA Y CODIGOS DE CARACTERES...................................-->
 
+    <FontFamily x:Key="Font Canon">pack://application:,,,/Fonts/#Myfont2</FontFamily>
     <FontFamily x:Key="Font Awesome Regular">pack://application:,,,/Fonts/#Font Awesome 5 Free Regular</FontFamily>
     <FontFamily x:Key="Font Awesome Solid">pack://application:,,,/Fonts/#Font Awesome 5 Free Solid</FontFamily>
-
+    
     <system:Double x:Key="TamañoFontMuyPequeño">10</system:Double>
     <system:Double x:Key="TamañoFontPequeño">10</system:Double>
     <system:Double x:Key="TamañoFontMediano">15</system:Double>

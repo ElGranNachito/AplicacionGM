@@ -25,7 +25,9 @@
                     <!-- Titulo -->
                     <TextBlock
                         HorizontalAlignment="Center"
-                        Text="{Binding Titulo, FallbackValue=Err}"/>
+                        Text="{Binding Titulo, FallbackValue=Err}"
+                        Style="{StaticResource TextBlockBase}"
+                        />
 
                     <!-- Boton agregar item -->
                     <Button
