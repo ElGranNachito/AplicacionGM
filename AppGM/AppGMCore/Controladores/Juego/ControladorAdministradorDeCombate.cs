@@ -10,6 +10,11 @@ namespace AppGM.Core
         #region Propiedades
 
         /// <summary>
+        /// Controlador del ambiente en el que se encuentra el combate
+        /// </summary>
+        public ControladorAmbiente ControladorAmbiente { get; set; }
+
+        /// <summary>
         /// Controladores de todos los participantes del combate
         /// </summary>
         public List<ControladorParticipante> ControladoresParticipantes { get; set; } = new List<ControladorParticipante>();
@@ -27,7 +32,7 @@ namespace AppGM.Core
         /// Representa un metodo que lidia con el cambio de turnos durante el combate
         /// </summary>
         /// <param name="TurnoActual"></param>
-        public delegate void dTurnoCambio(ref int TurnoActual);
+        public delegate void dTurnoCambio(ref int turnoActual);
 
         /// <summary>
         /// Evento que se dispara cuando se cambia de turno
@@ -44,6 +49,17 @@ namespace AppGM.Core
         /// Evento que se dispara cuando se avanza con el turno de un personaje
         /// </summary>
         public event dAvanzarTurnoPersonaje OnAvanzarTurnoPersonaje = delegate { };
+        
+        /// <summary>
+        /// Representa un metodo que lidia con la activacion y desactivacion del combate
+        /// </summary>
+        /// <param name="actividadCombate">Verdadero si el combate esta activo. Falso si se desactiva</param>
+        public delegate void dActividadModificada(ref bool actividadCombate);
+
+        /// <summary>
+        /// Evento que se dispara cuando se modifica la actividad del combate
+        /// </summary>
+        public event dActividadModificada OnActividadModificada = delegate { };
 
         #endregion
 
@@ -51,7 +67,7 @@ namespace AppGM.Core
         public ControladorAdministradorDeCombate(ModeloAdministradorDeCombate _modeloAdministradorCombate)
 			:base(_modeloAdministradorCombate)
         {
-	        for (int i = 0; i < modelo.Participantes.Count; ++i) 
+            for (int i = 0; i < modelo.Participantes.Count; ++i) 
                 ControladoresParticipantes.Add(modelo.Participantes[i].Participante.controladorParticipante);
 
             for (int i = 0; i < modelo.Mapas.Count; ++i)
@@ -96,6 +112,13 @@ namespace AppGM.Core
             OnTurnoCambio(ref turnoActualTmp);
 
             modelo.IndicePersonajeTurnoActual = turnoActualTmp;
+        }
+
+        public void ModificarActividadCombate(bool _actividadCombate)
+        {
+            OnActividadModificada(ref _actividadCombate);
+
+            modelo.EstaActivo = _actividadCombate;
         }
 
         #endregion

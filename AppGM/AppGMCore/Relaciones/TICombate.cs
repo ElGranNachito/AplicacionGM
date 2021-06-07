@@ -43,6 +43,16 @@ namespace AppGM.Core
     }
 
     /// <summary>
+    /// Representa una relacion entre un <see cref="ModeloAdministradorDeCombate"/> y un <see cref="ModeloAmbiente"/> donde se encuentra
+    /// </summary>
+    public class TIAdministradorDeCombateAmbiente : TIAdministradorDeCombate
+    { 
+        [ForeignKey(nameof(Ambiente))]
+        public int IdAmbiente { get; set; }
+        public ModeloAmbiente Ambiente { get; set; }
+    }
+
+    /// <summary>
     /// Representa una relacion entre un <see cref="ModeloPersonaje"/> con un <see cref="ModeloAdministradorDeCombate"/>
     /// </summary>
     public class TIAdministradorDeCombateParticipante : TIAdministradorDeCombate

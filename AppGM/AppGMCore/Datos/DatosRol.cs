@@ -34,13 +34,17 @@ namespace AppGM.Core
 		public List<ControladorEfecto> Efectos { get; set; }                         = null;
 		public List<ControladorCondicion> Condiciones { get; set; }                  = null;
 		public List<ControladorAdministradorDeCombate> CombatesActivos { get; set; } = null;
-		public List<ControladorLimitador> Limitadores { get; set; }                  = null;
+        public List<ControladorLimitador> Limitadores { get; set; }                  = null;
 		public List<ControladorCargasHabilidad> CargasHabilidades { get; set; }      = null;
 		public List<ControladorParticipante> Participantes { get; set; }             = null;
+		
+		//TODO: Ver
+        public List<ControladorAmbiente> Ambientes { get; set; } = null;
 
-		//El primer mapa siempre es el principal
-		public List<ControladorMapa> Mapas { get; set; } = null; 
-		#endregion
+        //El primer mapa siempre es el principal
+		public List<ControladorMapa> Mapas { get; set; } = null;
+
+        #endregion
 
 		/// <summary>
 		/// Crea la clase y abre conexion con la base de datos

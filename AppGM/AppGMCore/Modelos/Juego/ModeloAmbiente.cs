@@ -13,32 +13,27 @@ namespace AppGM.Core
         /// <summary>
         /// Define que tipo de ambiente es y que consecuencias puede tener sobre los personajes, habilidades, efectos, utilizables, etc.
         /// </summary>
-        public ECaracteristicasAmbiente CaracteristicasAmbiente { get; set; }
+        public ECaracteristicasAmbiente CaracteristicasAmbiente { get; set; } = Constantes.CaracteristicasAmbiente;
 
         /// <summary>
         /// Total de casillas disponibles en este ambiente.
         /// </summary>
-        public int CantidadCasillas { get; set; }
+        public int CantidadCasillas  { get; set; } = Constantes.CantidadCasillas;
 
         /// <summary>
         /// Temperatura exacta en grados centigrados que hace dentro del ambiente.
         /// </summary>
-        public int TemperaturaActual { get; set; }
+        public int TemperaturaActual { get; set; } = Constantes.TemperaturaActual;
+
         /// <summary>
         /// Humedad relativa en el aire expresada en porcentaje.
         /// </summary>
-        public int HumedadActual      { get; set; }
-
-        /// <summary>
-        /// Verdadero si el ambiente toma datos del ambiente global del rol.
-        /// Buscar un mejor nombre.
-        /// </summary>
-        public bool EsInfluidoPorAmbienteGlobal { get; set; }
+        public int HumedadActual     { get; set; } = Constantes.HumedadActual;
 
         /// <summary>
         /// Mapa en el que se encuentra el ambiente.
         /// </summary>
-        public TIMapaAmbiente MapaDelAmbiente { get; set; }
+        public TIMapaAmbiente MapaDelAmbiente { get; set; } = Constantes.MapaDelAmbiente;
     }
 }
     

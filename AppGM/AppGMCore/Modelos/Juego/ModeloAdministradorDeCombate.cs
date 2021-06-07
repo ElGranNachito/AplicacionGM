@@ -17,15 +17,27 @@ namespace AppGM.Core
         /// <summary>
         /// Indice para el turno actual entre personajes
         /// </summary>
-        public int    IndicePersonajeTurnoActual { get; set; }
+        public int IndicePersonajeTurnoActual { get; set; }
         /// <summary>
         /// Turno actual en el combate
         /// </summary>
-        public uint   TurnoActual { get; set; }
+        public uint TurnoActual { get; set; }
+
+        /// <summary>
+        /// Si es verdadero el combate sigue activo.
+        /// De ser falso se toma como concluido o en receso. 
+        /// </summary>
+        public bool EstaActivo { get; set; }
+
         /// <summary>
         /// Nombre del combate
         /// </summary>
         public string Nombre { get; set; }
+
+        /// <summary>
+        /// Ambiente en el que se lleva a cabo el combate.
+        /// </summary>
+        public TIAdministradorDeCombateAmbiente AmbienteDelCombate { get; set; }
 
         /// <summary>
         /// Participantes en el combate
@@ -34,6 +46,6 @@ namespace AppGM.Core
         /// <summary>
         /// Mapas en los que el combate se lleve a cabo
         /// </summary>
-        public List<TIAdministradorDeCombateMapa> Mapas { get; set; }                 = new List<TIAdministradorDeCombateMapa>();
+        public List<TIAdministradorDeCombateMapa> Mapas { get; set; } = new List<TIAdministradorDeCombateMapa>();
     }
 }

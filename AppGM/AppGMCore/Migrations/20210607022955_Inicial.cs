@@ -28,6 +28,7 @@ namespace AppGM.Core.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     IndicePersonajeTurnoActual = table.Column<int>(type: "INTEGER", nullable: false),
                     TurnoActual = table.Column<uint>(type: "INTEGER", nullable: false),
+                    EstaActivo = table.Column<bool>(type: "INTEGER", nullable: false),
                     Nombre = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
@@ -59,8 +60,7 @@ namespace AppGM.Core.Migrations
                     CaracteristicasAmbiente = table.Column<int>(type: "INTEGER", nullable: false),
                     CantidadCasillas = table.Column<int>(type: "INTEGER", nullable: false),
                     TemperaturaActual = table.Column<int>(type: "INTEGER", nullable: false),
-                    HumedadActual = table.Column<int>(type: "INTEGER", nullable: false),
-                    EsInfluidoPorAmbienteGlobal = table.Column<bool>(type: "INTEGER", nullable: false)
+                    HumedadActual = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -170,6 +170,7 @@ namespace AppGM.Core.Migrations
                     Descripcion = table.Column<string>(type: "TEXT", maxLength: 2000, nullable: true),
                     TipoDeHabilidad = table.Column<int>(type: "INTEGER", nullable: false),
                     Rango = table.Column<int>(type: "INTEGER", nullable: false),
+                    IgnoraAmbiente = table.Column<bool>(type: "INTEGER", nullable: false),
                     Tipo = table.Column<int>(type: "INTEGER", nullable: false),
                     Nivel = table.Column<byte>(type: "INTEGER", nullable: true),
                     EsParticular = table.Column<bool>(type: "INTEGER", nullable: true)
@@ -349,6 +350,30 @@ namespace AppGM.Core.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Vectores2", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TIAdministradorDeCombateAmbiente",
+                columns: table => new
+                {
+                    IdAdministradorDeCombate = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdAmbiente = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TIAdministradorDeCombateAmbiente", x => new { x.IdAdministradorDeCombate, x.IdAmbiente });
+                    table.ForeignKey(
+                        name: "FK_TIAdministradorDeCombateAmbiente_Combates_IdAdministradorDeCombate",
+                        column: x => x.IdAdministradorDeCombate,
+                        principalTable: "Combates",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TIAdministradorDeCombateAmbiente_ModeloAmbiente_IdAmbiente",
+                        column: x => x.IdAmbiente,
+                        principalTable: "ModeloAmbiente",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -1779,6 +1804,17 @@ namespace AppGM.Core.Migrations
                 column: "IdNoblePhantasm");
 
             migrationBuilder.CreateIndex(
+                name: "IX_TIAdministradorDeCombateAmbiente_IdAdministradorDeCombate",
+                table: "TIAdministradorDeCombateAmbiente",
+                column: "IdAdministradorDeCombate",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TIAdministradorDeCombateAmbiente_IdAmbiente",
+                table: "TIAdministradorDeCombateAmbiente",
+                column: "IdAmbiente");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TIAlianzaContrato_IdAlianza",
                 table: "TIAlianzaContrato",
                 column: "IdAlianza",
@@ -2116,6 +2152,9 @@ namespace AppGM.Core.Migrations
                 name: "ServantNoblePhantasms");
 
             migrationBuilder.DropTable(
+                name: "TIAdministradorDeCombateAmbiente");
+
+            migrationBuilder.DropTable(
                 name: "TIAlianzaContrato");
 
             migrationBuilder.DropTable(
@@ -2212,13 +2251,13 @@ namespace AppGM.Core.Migrations
                 name: "UnidadesMapaVectores2");
 
             migrationBuilder.DropTable(
-                name: "Combates");
-
-            migrationBuilder.DropTable(
                 name: "Acciones");
 
             migrationBuilder.DropTable(
                 name: "ModeloParticipante");
+
+            migrationBuilder.DropTable(
+                name: "Combates");
 
             migrationBuilder.DropTable(
                 name: "ModeloAlianza");

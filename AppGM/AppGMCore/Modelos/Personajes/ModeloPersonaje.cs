@@ -96,12 +96,13 @@ namespace AppGM.Core
         public List<TIPersonajeMagia>         Magias     { get; set; } = new List<TIPersonajeMagia>();
         
         /// <summary>
-        /// Modificadores de defensa del personaje
+        /// Modificadores de defensa del personaje.
         /// </summary>
         public List<TIPersonajeModificadorDeDefensa> ModificadoresDeDefensa { get; set; } = new List<TIPersonajeModificadorDeDefensa>();
         
         /// <summary>
-        /// Es participante en algun combate:
+        /// Es participante en algun combate.
+        /// TODO: Solo puede participar de un combate activo a la vez.
         /// </summary>
         public List<TIParticipantePersonaje> ParticipacionEnCombates { get; set; } = new List<TIParticipantePersonaje>();
 

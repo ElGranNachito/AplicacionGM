@@ -6,16 +6,60 @@ namespace AppGM.Core
     {
         #region Propiedades
 
-        /// <summary>
-        /// Rol en el que el ambiente se encuentra
-        /// </summary>
-        public ControladorRol Rol { get; set; }
+        public ECaracteristicasAmbiente Caracteristicas
+        {
+            get
+            {
+                if (modelo.CaracteristicasAmbiente == Constantes.CaracteristicasAmbiente)
+                    return SistemaPrincipal.ModeloRolActual.AmbienteGlobal.Ambiente.CaracteristicasAmbiente;
 
+                return modelo.CaracteristicasAmbiente;
+            }
+        }
 
-        /// <summary>
-        /// Devuelve verdadero si este ambiente toma sus valores del ambiente global del rol
-        /// </summary>
-        public bool EsInfluenciadoPorAmbienteGlobal => modelo.EsInfluidoPorAmbienteGlobal;
+        public int Casillas
+        {
+            get
+            {
+                if (modelo.CantidadCasillas == Constantes.CantidadCasillas)
+                    return SistemaPrincipal.ModeloRolActual.AmbienteGlobal.Ambiente.CantidadCasillas;
+
+                return modelo.CantidadCasillas;
+            }
+        }
+
+        public int Temperatura
+        {
+            get
+            {
+                if (modelo.TemperaturaActual == Constantes.TemperaturaActual)
+                    return SistemaPrincipal.ModeloRolActual.AmbienteGlobal.Ambiente.TemperaturaActual;
+
+                return modelo.TemperaturaActual;
+            }
+        }
+
+        public int Humedad
+        {
+            get
+            {
+                if (modelo.HumedadActual == Constantes.HumedadActual)
+                    return SistemaPrincipal.ModeloRolActual.AmbienteGlobal.Ambiente.HumedadActual;
+
+                return modelo.HumedadActual;
+            }
+        }
+
+        public TIMapaAmbiente Mapa
+        {
+            get
+            {
+                if (modelo.MapaDelAmbiente == Constantes.MapaDelAmbiente)
+                    return SistemaPrincipal.ModeloRolActual.AmbienteGlobal.Ambiente.MapaDelAmbiente;
+
+                return modelo.MapaDelAmbiente;
+            }
+        }
 
         #endregion
 
@@ -26,15 +70,7 @@ namespace AppGM.Core
         /// </summary>
         /// <param name="_modeloAmbiente">Modelo del ambiente que representa este controlador</param>
         public ControladorAmbiente(ModeloAmbiente _modeloAmbiente)
-            : base(_modeloAmbiente)
-        {
-            if (modelo.EsInfluidoPorAmbienteGlobal)
-            {
-                modelo.TemperaturaActual = Rol.modelo.AmbienteGlobal.Ambiente.TemperaturaActual;
-
-                modelo.HumedadActual = Rol.modelo.AmbienteGlobal.Ambiente.HumedadActual;
-            }
-        }
+            : base(_modeloAmbiente) {}
 
         #endregion
 
@@ -62,54 +98,30 @@ namespace AppGM.Core
         /// </summary>
         public event dModificarHumedad OnModificarHumedad = delegate { };
 
-        /// <summary>
-        /// Representa un metodo que lidie con eventos de modificacion de la influencia global en el ambiente
-        /// </summary>
-        /// <param name="nuevoDia"></param>
-        public delegate void dModificarInfluenciaGloabl(ref bool nuevaInfluencia);
-
-        /// <summary>
-        /// Evento que se dispara cuando la influencia global sobre el ambiente cambia
-        /// </summary>
-        public event dModificarInfluenciaGloabl OnModificarInfluenciaGloabl = delegate { };
-
         #endregion
 
         #region Funciones
 
-        public void ModificarTemperatura(int grados)
+        public void ModificarTemperatura(int _grados)
         {
             int temperatura;
 
-            if (!EsInfluenciadoPorAmbienteGlobal)
-                temperatura = modelo.TemperaturaActual + grados;
-            else
-                temperatura = Rol.modelo.AmbienteGlobal.Ambiente.TemperaturaActual;
-            
+            temperatura = modelo.TemperaturaActual + _grados;
+
             OnModificarTemperatura(ref temperatura);
 
             modelo.TemperaturaActual = temperatura;
         }
 
-        public void ModificarHumedad(int humedadRelativa)
+        public void ModificarHumedad(int _humedadRelativa)
         {
             int humedad;
-
-            if (!EsInfluenciadoPorAmbienteGlobal)
-                humedad = modelo.HumedadActual + humedadRelativa;
-            else
-                humedad = Rol.modelo.AmbienteGlobal.Ambiente.HumedadActual;
+            
+            humedad = modelo.HumedadActual + _humedadRelativa;
 
             OnModificarHumedad(ref humedad);
 
             modelo.HumedadActual = humedad;
-        }
-
-        public void ModificarInfluenciaSobreAmbiente(bool influencia)
-        {
-            OnModificarInfluenciaGloabl(ref influencia);
-
-            modelo.EsInfluidoPorAmbienteGlobal = influencia;
         }
 
         #endregion

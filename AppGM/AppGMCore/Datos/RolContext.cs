@@ -645,7 +645,7 @@ namespace AppGM.Core
 
             //Combates:
 
-            // Administrador de combate participantes:
+            //  - Administrador de combate participantes:
             modelBuilder.Entity<TIAdministradorDeCombateParticipante>().HasKey(e => new { e.IdAdministradorDeCombate, e.IdParticipante });
 
             modelBuilder.Entity<TIAdministradorDeCombateParticipante>()
@@ -655,6 +655,17 @@ namespace AppGM.Core
                 .HasOne(i => i.AdministradorDeCombate)
                 .WithMany(p => p.Participantes)
                 .HasForeignKey(ip => ip.IdAdministradorDeCombate);
+
+            // - Administrador de combate ambiente:
+            modelBuilder.Entity<TIAdministradorDeCombateAmbiente>().HasKey(e => new { e.IdAdministradorDeCombate, e.IdAmbiente });
+
+            modelBuilder.Entity<TIAdministradorDeCombateAmbiente>()
+                .HasOne(i => i.Ambiente);
+
+            modelBuilder.Entity<TIAdministradorDeCombateAmbiente>()
+                .HasOne(i => i.AdministradorDeCombate)
+                .WithOne(p => p.AmbienteDelCombate)
+                .HasForeignKey<TIAdministradorDeCombateAmbiente>(ip => ip.IdAdministradorDeCombate);
 
             // - Administrador de combate mapa
             modelBuilder.Entity<TIAdministradorDeCombateMapa>()

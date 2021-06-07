@@ -60,6 +60,11 @@ namespace AppGM.Core
         /// </summary>
         public ERango Rango { get; set; }
 
+        /// <summary>
+        /// Verdadero si el uso de esta habilidad no se ve afectado por las condiciones del ambiente.
+        /// </summary>
+        public bool IgnoraAmbiente { get; set; }
+
         //Caracteristicas de la habilidad:
         /// <summary>
         /// Total de usos que se le puede dar a la habilidad

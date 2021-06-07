@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using AppGM.Core.Controladores.Efectos;
@@ -401,6 +402,19 @@ namespace AppGM.Core
         public void QuitarItem(ControladorBase item)
         {
             OnQuitarItem(item, this);
+        }
+
+        public ControladorAmbiente ObtenerAmbienteGlobal()
+        {
+            return SistemaPrincipal.ModeloRolActual.AmbienteGlobal.Ambiente.controladorAmbiente;
+        }
+
+        public ControladorAmbiente ObtenerAmbienteCombateActual()
+        {
+            var participante = from participacion in modelo.ParticipacionEnCombates
+                where participacion.Participante.CombateActual.AdministradorDeCombate.EstaActivo select participacion;
+
+            return participante.GetEnumerator().Current.Participante.CombateActual.AdministradorDeCombate.AmbienteDelCombate.Ambiente.controladorAmbiente;
         }
 
         /// <summary>

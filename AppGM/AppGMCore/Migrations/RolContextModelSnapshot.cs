@@ -37,6 +37,9 @@ namespace AppGM.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("EstaActivo")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("IndicePersonajeTurnoActual")
                         .HasColumnType("INTEGER");
 
@@ -83,9 +86,6 @@ namespace AppGM.Core.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("CaracteristicasAmbiente")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("EsInfluidoPorAmbienteGlobal")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("HumedadActual")
@@ -240,6 +240,9 @@ namespace AppGM.Core.Migrations
                     b.Property<string>("Descripcion")
                         .HasMaxLength(2000)
                         .HasColumnType("TEXT");
+
+                    b.Property<bool>("IgnoraAmbiente")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Nombre")
                         .HasMaxLength(50)
@@ -552,6 +555,24 @@ namespace AppGM.Core.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Vectores2");
+                });
+
+            modelBuilder.Entity("AppGM.Core.TIAdministradorDeCombateAmbiente", b =>
+                {
+                    b.Property<int>("IdAdministradorDeCombate")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("IdAmbiente")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("IdAdministradorDeCombate", "IdAmbiente");
+
+                    b.HasIndex("IdAdministradorDeCombate")
+                        .IsUnique();
+
+                    b.HasIndex("IdAmbiente");
+
+                    b.ToTable("TIAdministradorDeCombateAmbiente");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIAdministradorDeCombateMapa", b =>
@@ -1717,6 +1738,25 @@ namespace AppGM.Core.Migrations
                     b.Navigation("Posicion");
                 });
 
+            modelBuilder.Entity("AppGM.Core.TIAdministradorDeCombateAmbiente", b =>
+                {
+                    b.HasOne("AppGM.Core.ModeloAdministradorDeCombate", "AdministradorDeCombate")
+                        .WithOne("AmbienteDelCombate")
+                        .HasForeignKey("AppGM.Core.TIAdministradorDeCombateAmbiente", "IdAdministradorDeCombate")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AppGM.Core.ModeloAmbiente", "Ambiente")
+                        .WithMany()
+                        .HasForeignKey("IdAmbiente")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AdministradorDeCombate");
+
+                    b.Navigation("Ambiente");
+                });
+
             modelBuilder.Entity("AppGM.Core.TIAdministradorDeCombateMapa", b =>
                 {
                     b.HasOne("AppGM.Core.ModeloAdministradorDeCombate", "AdministradorDeCombate")
@@ -2707,6 +2747,8 @@ namespace AppGM.Core.Migrations
 
             modelBuilder.Entity("AppGM.Core.ModeloAdministradorDeCombate", b =>
                 {
+                    b.Navigation("AmbienteDelCombate");
+
                     b.Navigation("Mapas");
 
                     b.Navigation("Participantes");

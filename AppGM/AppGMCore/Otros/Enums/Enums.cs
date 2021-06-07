@@ -102,6 +102,7 @@ namespace AppGM.Core
     /// <summary>
     /// Condiciones climaticas que pueden transcurrir en un dia del rol
     /// </summary>
+    [Flags]
     public enum ECondicionClimatica
     {
         /// <summary>
@@ -164,6 +165,7 @@ namespace AppGM.Core
     /// <summary>
     /// Posibles caracteristicas de un ambiente
     /// </summary>
+    [Flags]
     public enum ECaracteristicasAmbiente
     {
         /// <summary>
@@ -249,6 +251,23 @@ namespace AppGM.Core
         /// Convengamos que se encuentra en el vacio, puede ser.
         /// </summary>
         NINGUNO = 0        
+    }
+
+    /// <summary>
+    /// <see cref="ModeloAmbiente"/> que se desea seleccionar.
+    /// La seleccion puede ser entre el ambiente global del rol o un ambiente personalizado.
+    /// </summary>
+    public enum ESeleccionAmbiente
+    {
+        /// <summary>
+        /// Ambiente global dentro del rol.
+        /// </summary>
+        AmbienteGlobal = 1,
+
+        /// <summary>
+        /// Nuevo ambiente especifico.
+        /// </summary>
+        AmbientePersonalizado = 2,
     }
 
     /// <summary>
