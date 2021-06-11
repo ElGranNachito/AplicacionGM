@@ -6,6 +6,10 @@ namespace AppGM.Core
     {
         #region Propiedades
 
+        /// <summary>
+        /// Si el valor de Caracteristicas en el<see cref="ModeloAmbiente"/> es el default, devuelve el valor que tiene el ambiente global para Caracteristicas,
+        /// de no ser default, devuelve el valor del ambiente local.
+        /// </summary>
         public ECaracteristicasAmbiente Caracteristicas
         {
             get
@@ -17,6 +21,10 @@ namespace AppGM.Core
             }
         }
 
+        /// <summary>
+        /// Si el valor de Casillas en el <see cref="ModeloAmbiente"/> es el default, devuelve el valor que tiene el ambiente global para Casillas,
+        /// de no ser default, devuelve el valor del ambiente local.
+        /// </summary>
         public int Casillas
         {
             get
@@ -28,6 +36,10 @@ namespace AppGM.Core
             }
         }
 
+        /// <summary>
+        /// Si el valor de Temperatura en el <see cref="ModeloAmbiente"/> es el default, devuelve el valor que tiene el ambiente global para Temperatura,
+        /// de no ser default, devuelve el valor del ambiente local.
+        /// </summary>
         public int Temperatura
         {
             get
@@ -39,6 +51,10 @@ namespace AppGM.Core
             }
         }
 
+        /// <summary>
+        /// Si el valor de Humedad en el <see cref="ModeloAmbiente"/> es el default, devuelve el valor que tiene el ambiente global para Humedad,
+        /// de no ser default, devuelve el valor del ambiente local.
+        /// </summary>
         public int Humedad
         {
             get
@@ -50,6 +66,10 @@ namespace AppGM.Core
             }
         }
 
+        /// <summary>
+        /// Si el Mapa en el <see cref="ModeloAmbiente"/> es el default (null), devuelve el valor que tiene el ambiente global en Mapa,
+        /// de no ser default, devuelve el valor del ambiente local.
+        /// </summary>
         public TIMapaAmbiente Mapa
         {
             get
@@ -102,6 +122,10 @@ namespace AppGM.Core
 
         #region Funciones
 
+        /// <summary>
+        /// Modifica la temperatura del ambiente.
+        /// </summary>
+        /// <param name="_grados"></param>
         public void ModificarTemperatura(int _grados)
         {
             int temperatura;
@@ -113,6 +137,10 @@ namespace AppGM.Core
             modelo.TemperaturaActual = temperatura;
         }
 
+        /// <summary>
+        /// Modifica la humedad del ambiente.
+        /// </summary>
+        /// <param name="_humedadRelativa"></param>
         public void ModificarHumedad(int _humedadRelativa)
         {
             int humedad;
