@@ -2,7 +2,7 @@
 
 namespace AppGM.Core
 {
-    public class ViewModelHabilidadItem : BaseViewModel
+    public class ViewModelHabilidadItem : ViewModel
     {
         #region Propiedades
 

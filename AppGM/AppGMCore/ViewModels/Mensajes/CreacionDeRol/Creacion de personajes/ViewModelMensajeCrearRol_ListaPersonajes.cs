@@ -2,7 +2,7 @@
 
 namespace AppGM.Core
 {
-    public class ViewModelMensajeCrearRol_ListaPersonajes : BaseViewModel
+    public class ViewModelMensajeCrearRol_ListaPersonajes : ViewModel
     { 
         public ObservableCollection<ViewModelMensajeCrearRol_PersonajeItem> Personajes { get; set; } = new ObservableCollection<ViewModelMensajeCrearRol_PersonajeItem>();
 

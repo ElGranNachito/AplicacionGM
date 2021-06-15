@@ -7,6 +7,7 @@
 
     <FontFamily x:Key="Font Awesome Regular">pack://application:,,,/Fonts/#Font Awesome 5 Free Regular</FontFamily>
     <FontFamily x:Key="Font Awesome Solid">pack://application:,,,/Fonts/#Font Awesome 5 Free Solid</FontFamily>
+    <FontFamily x:Key="Font Piola">pack://application:,,,/Fonts/#Myfont2</FontFamily>
 
     <system:Double x:Key="TamañoFontMuyPequeño">10</system:Double>
     <system:Double x:Key="TamañoFontPequeño">10</system:Double>

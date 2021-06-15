@@ -8,13 +8,13 @@ namespace AppGM
     /// <summary>
     /// Propiedad utilizada para pasar datos del VM de un <see cref="Button"/> a un <see cref="IBotonSeleccionado{T}"/>
     /// </summary>
-    public class BotonMenuRolConViewModelProperty : BaseAttachedProperty<BaseViewModel, BotonMenuRolConViewModelProperty>
+    public class BotonMenuRolConViewModelProperty : BaseAttachedProperty<ViewModel, BotonMenuRolConViewModelProperty>
     {
         public override void OnValueChanged_Impl(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             //Obtenemos el VM que fue pasado como parametro y los convertimos al tipo que necesitamos
-            BaseViewModel vm = ((IViewModelConBotonSeleccionado)(BaseViewModel)e.NewValue).ViewModelConBotonSeleccionado;
-            IBotonSeleccionado<BaseViewModel> botonSeleccionado = (IBotonSeleccionado<BaseViewModel>) vm;
+            ViewModel vm = ((IViewModelConBotonSeleccionado)(ViewModel)e.NewValue).ViewModelConBotonSeleccionado;
+            IBotonSeleccionado<ViewModel> botonSeleccionado = (IBotonSeleccionado<ViewModel>) vm;
 
             if (d is Button b)
             {
@@ -29,7 +29,7 @@ namespace AppGM
                     b.BorderThickness = new Thickness(0, 0, 2, 0);
 
                     //Actualizamos el boton actualmente seleccionado
-                    botonSeleccionado.BotonSeleccionado = (BaseViewModel) b.DataContext;
+                    botonSeleccionado.BotonSeleccionado = (ViewModel) b.DataContext;
 
                     PropertyChangedEventHandler propertyChangedEventListener = null;
 

@@ -54,6 +54,7 @@ namespace AppGM.Core
 
         public int[] Resultados { get; set; } = null;
 
+        [AccesibleEnGuraScratch("RealizarTirada")]
         public virtual void RealizarTirada()
         {
             SistemaPrincipal.LoggerGlobal.Log($@"Llamada funcion {nameof(RealizarTirada)} sin parametros pero no esta implementada. 

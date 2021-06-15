@@ -5,7 +5,7 @@ namespace AppGM.Core
     /// <summary>
     /// VM que representa una lista de combates
     /// </summary>
-    public class ViewModelListaCombates : BaseViewModel
+    public class ViewModelListaCombates : ViewModel
     {
         #region Propiedades
 

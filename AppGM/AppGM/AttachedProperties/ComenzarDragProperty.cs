@@ -18,18 +18,16 @@ namespace AppGM
 				fe.MouseDown += (sender, args) =>
 				{
 					//Comenzamos el drag
-					SistemaPrincipal.Drag.ComenzarDrag((BaseViewModel)((FrameworkElement)sender).DataContext);
+					SistemaPrincipal.Drag.ComenzarDrag((ViewModel)((FrameworkElement)sender).DataContext);
 
 					EventoVentana eventoMouseMovido = null;
+
+					ActualizarPosMouse(fe);
 
 					//Handler para actualizar la posicion del elemento cuando se mueve el mouse
 					eventoMouseMovido = ventana =>
 					{
-						//Obtenemos la posicion del mouse con respecto al padre del elemento
-						Point posMouse = Mouse.GetPosition((FrameworkElement)fe.Parent);
-
-						//Actualizamos la posicion
-						SistemaPrincipal.Drag.OffsetControl = new Grosor(posMouse.X, posMouse.Y, 0, 0);
+						ActualizarPosMouse(fe);
 					};
 
 					SistemaPrincipal.Aplicacion.VentanaActual.OnMouseMovido += eventoMouseMovido;
@@ -46,6 +44,15 @@ namespace AppGM
 					SistemaPrincipal.Drag.OnFinDrag += finDragHandler;
 				};
 			}
+		}
+
+		private void ActualizarPosMouse(FrameworkElement fe)
+		{
+			//Obtenemos la posicion del mouse con respecto al padre del elemento
+			Point posMouse = Mouse.GetPosition((FrameworkElement)fe.Parent);
+
+			//Actualizamos la posicion
+			SistemaPrincipal.Drag.OffsetControl = new Grosor(posMouse.X, posMouse.Y, 0, 0);
 		}
 	}
 }

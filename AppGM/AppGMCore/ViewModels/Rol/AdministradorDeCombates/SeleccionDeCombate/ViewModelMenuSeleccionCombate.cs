@@ -5,7 +5,7 @@ namespace AppGM.Core
     /// <summary>
     /// VM delmenu de seleccion de combates
     /// </summary>
-    public class ViewModelMenuSeleccionCombate : BaseViewModel
+    public class ViewModelMenuSeleccionCombate : ViewModel
     {
         #region Propiedades
 

@@ -3,6 +3,7 @@ using System.Globalization;
 using System.Windows.Controls;
 using System.Windows.Data;
 using AppGM.Core;
+using AppGM.Core.ViewModels.CreacionDeHabilidades;
 
 namespace AppGM
 {
@@ -26,7 +27,12 @@ namespace AppGM
                     switch ((EPagina)value)
                     {
                         case EPagina.PaginaPrincipal:
-                            return new UserControlPaginaInicio();
+                            //return new UserControlPaginaInicio();
+
+                            return new UserControlCreacionFuncion
+                            {
+	                            DataContext = new ViewModelCreacionDeFuncionHabilidad()
+                            };
                         case EPagina.PaginaPrincipalRol:
                             return new UserControlPaginaPrincipalRol();
                     }

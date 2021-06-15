@@ -7,7 +7,7 @@ namespace AppGM.Core
     /// <summary>
     /// VM que representa un <see cref="ModeloAdministradorDeCombate"/>
     /// </summary>
-    public class ViewModelCombate : BaseViewModel
+    public class ViewModelCombate : ViewModel
     {
         #region Campos & Propiedades
 

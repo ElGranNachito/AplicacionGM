@@ -5,8 +5,13 @@ namespace AppGM.Core
 	/// <summary>
 	/// Clase que representa un evento 
 	/// </summary>
-	public class Drag : BaseViewModel
+	public class Drag : ViewModel
 	{
+		/// <summary>
+		/// Indica si el usuario esta actualmente arrastrando algun elemento
+		/// </summary>
+		public bool HayUnDragActivo => ViewModelContenido != null;
+
 		/// <summary>
 		/// Pos del control del drag con respecto a su contenedor en el eje X
 		/// </summary>
@@ -22,7 +27,7 @@ namespace AppGM.Core
 		/// <summary>
 		/// Viewmodel del contenido del control del drag
 		/// </summary>
-		public BaseViewModel ViewModelContenido { get; set; }
+		public ViewModel ViewModelContenido { get; set; }
 
 		/// <summary>
 		/// Evento que se dispara cuando comienza un drag
@@ -37,8 +42,8 @@ namespace AppGM.Core
 		/// <summary>
 		/// Comienza un drag
 		/// </summary>
-		/// <param name="vm"><see cref="BaseViewModel"/> del contenido del control</param>
-		public void ComenzarDrag(BaseViewModel vm)
+		/// <param name="vm"><see cref="ViewModel"/> del contenido del control</param>
+		public void ComenzarDrag(ViewModel vm)
 		{
 			ViewModelContenido = vm;
 

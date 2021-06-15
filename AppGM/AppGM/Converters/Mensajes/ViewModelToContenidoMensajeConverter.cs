@@ -7,15 +7,15 @@ using AppGM.Core;
 namespace AppGM
 {
     /// <summary>
-    /// Convierte de un <see cref="BaseViewModel"/> a un <see cref="UserControl"/> para mostrar
+    /// Convierte de un <see cref="ViewModel"/> a un <see cref="UserControl"/> para mostrar
     /// como contenido de un mensaje (popup)
     /// </summary>
-    [ValueConversion(sourceType: typeof(BaseViewModel), targetType: typeof(UserControl))]
+    [ValueConversion(sourceType: typeof(ViewModel), targetType: typeof(UserControl))]
     public class ViewModelToContenidoMensajeConverter : BaseConverter<ViewModelToContenidoMensajeConverter>
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is BaseViewModel vm)
+            if (value is ViewModel vm)
             {
                 switch (vm)
                 {

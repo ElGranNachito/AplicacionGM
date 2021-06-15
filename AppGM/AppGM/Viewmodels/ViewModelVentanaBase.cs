@@ -13,7 +13,7 @@ namespace AppGM
     /// Clase abstracta que provee campos, propiedades y una implementacion por defecto de la interfaz <see cref="IVentana"/>
     /// para que hereden viewmodels destinados a representar una ventana
     /// </summary>
-    public abstract class ViewModelVentanaBase : BaseViewModel, IVentana
+    public abstract class ViewModelVentanaBase : ViewModel, IVentana
     {
         #region Campos & Propiedades
 

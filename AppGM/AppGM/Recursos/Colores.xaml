@@ -1,5 +1,24 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:AppGM">
+                    xmlns:local="clr-namespace:AppGM"
+                    xmlns:system="clr-namespace:System.Windows.Media;assembly=PresentationCore">
+
+    <!--......................................COLORES..........................................-->
+
+    <system:SolidColorBrush x:Key="ColorVentanaAutocompletado" Color="White"/>
+    <system:SolidColorBrush x:Key="ColorBordeVentanaAutocompletado" Color="DimGray"/>
+
+    <!--......................................BLOQUES...........................................-->
+
+    <!-- Color error bloque -->
+    <system:SolidColorBrush x:Key="ColorBloqueIncorrecto" Color="Crimson"/>
+
+    <!-- Bloque declaracion variable -->
+    <system:SolidColorBrush x:Key="ColorBloqueDeclaracionVariable" Color="Green"/>
+    <system:SolidColorBrush x:Key="ColorRellenoBloqueDeclaracionVariables" Color="ForestGreen"/>
+
+    <!-- Bloque llamar funcion -->
+    <system:SolidColorBrush x:Key="ColorBloqueLlamarFuncion" Color="DarkViolet"/>
+    <system:SolidColorBrush x:Key="ColorRellenoBloqueLlamarFuncion" Color="BlueViolet"/>
     
 </ResourceDictionary>

@@ -97,6 +97,7 @@
                             MinWidth="20"
                             Width="50"
                             TextChanged="TextBoxPosY_TextChanged"
+                            FontFamily="{StaticResource 'Font Piola'}"
                             Text="{Binding TextoPosicionY, Mode=TwoWay}"/>
 
                         </StackPanel>

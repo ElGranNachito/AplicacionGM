@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="AppGM.UserControlArgumento"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AppGM"
+             mc:Ignorable="d" 
+             d:DesignHeight="50" d:DesignWidth="75">
+
+    <!-- ViewModel: ViewModelArgumento -->
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBox
+            x:Name="campo"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Stretch"
+            TextAlignment="Center"
+            Padding="5"
+            Style="{StaticResource TextoDescriptivo}"
+            Tag="{Binding Nombre}"
+            local:AutocompletadoProperty.Value="true"/>
+
+        <local:UserControlBloqueListaArgumentosFuncion
+            Grid.Row="1"
+            Grid.ColumnSpan="4"
+            DataContext="{Binding BloqueArgumentosFuncionActual}"/>
+    </Grid>
+
+</UserControl>

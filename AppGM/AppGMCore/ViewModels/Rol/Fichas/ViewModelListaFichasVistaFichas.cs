@@ -6,13 +6,13 @@ namespace AppGM
     /// VM destinado a un control que muestre ambos, la lista de fichas disposnibles (<see cref="ViewModelListaFichas"/>)
     /// y una vista de la ficha actualmente seleccionada (<see cref="FichaSeleccionada"/>)
     /// </summary>
-    public class ViewModelListaFichasVistaFichas : BaseViewModel, IBotonSeleccionado<BaseViewModel>
+    public class ViewModelListaFichasVistaFichas : ViewModel, IBotonSeleccionado<ViewModel>
     {
         #region Propiedades
         public ViewModelListaFichas ViewModelListaFichas { get; set; } = new ViewModelListaFichas();
         public ViewModelFichaItem FichaSeleccionada { get; set; }
 
-        public BaseViewModel BotonSeleccionado
+        public ViewModel BotonSeleccionado
         {
             get => FichaSeleccionada;
             set => FichaSeleccionada = (ViewModelFichaItem)value;

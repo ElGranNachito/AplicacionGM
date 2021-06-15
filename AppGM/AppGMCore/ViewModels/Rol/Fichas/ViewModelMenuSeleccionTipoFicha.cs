@@ -8,7 +8,7 @@ namespace AppGM
     /// <summary>
     /// VM que representa un control que permite seleccionar el tipo de fichas que explorar
     /// </summary>
-    public class ViewModelMenuSeleccionTipoFicha : BaseViewModel
+    public class ViewModelMenuSeleccionTipoFicha : ViewModel
     {
         #region Propiedades
 

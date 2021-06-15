@@ -5,7 +5,7 @@ namespace AppGM.Core
     /// <summary>
     /// Viewmodel para el contenido de un globo que muestra la informacion de un combate
     /// </summary>
-    public class ViewModelInfoCombateGlobo : BaseViewModel
+    public class ViewModelInfoCombateGlobo : ViewModel
     {
 		#region Propiedades
 

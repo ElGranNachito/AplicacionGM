@@ -17,6 +17,7 @@
     <Resource Include="Fonts\Font Awesome 5 Brands-Regular-400.otf" />
     <Resource Include="Fonts\Font Awesome 5 Free Regular.ttf" />
     <Resource Include="Fonts\Font Awesome 5 Free Solid.ttf" />
+    <Resource Include="Fonts\Myfont2-Regular.ttf" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AppGMCore\AppGM.Core.csproj" />

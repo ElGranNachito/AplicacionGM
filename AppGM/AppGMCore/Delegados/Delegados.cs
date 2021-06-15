@@ -11,6 +11,6 @@
     /// <summary>
     /// Delegado utilizado para eventos de Drag
     /// </summary>
-    /// <param name="vmContenido"><see cref="BaseViewModel"/> del contenido del drag</param>
-    public delegate void DDrag(BaseViewModel vmContenido);
+    /// <param name="vmContenido"><see cref="ViewModel"/> del contenido del drag</param>
+    public delegate void DDrag(ViewModel vmContenido);
 }

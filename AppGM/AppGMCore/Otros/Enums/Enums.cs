@@ -361,6 +361,7 @@ namespace AppGM.Core
     /// Arquetipo de la personalidad de un <see cref="ModeloPersonajeJugable"/>
     /// </summary>
     [Flags]
+    [AccesibleEnGuraScratch("Arquetipo")]
     public enum EArquetipo
     {
         /// <summary>

@@ -4,7 +4,7 @@ using AppGM.Core;
 namespace AppGM
 {
     public abstract class BaseUserControl<TipoViewModel> : UserControl
-        where TipoViewModel : BaseViewModel, new()
+        where TipoViewModel : ViewModel, new()
     {
         private TipoViewModel mViewModel;
 

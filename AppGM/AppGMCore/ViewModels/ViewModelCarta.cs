@@ -6,7 +6,7 @@ namespace AppGM
     /// <summary>
     /// Viewmodel de las cartas del menu principal
     /// </summary>
-    public class ViewModelCarta : BaseViewModel
+    public class ViewModelCarta : ViewModel
     {
 		#region Propiedades
 

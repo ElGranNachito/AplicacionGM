@@ -7,6 +7,9 @@ namespace AppGM.Core
 	/// </summary>
     public class DatosCreacionRol
     {
+		/// <summary>
+		/// Modelo del rol
+		/// </summary>
         public ModeloRol modeloRol = new ModeloRol();
 
 		public List<ModeloPersonaje> personajes                   = new List<ModeloPersonaje>();
@@ -31,7 +34,12 @@ namespace AppGM.Core
 		public List<ModeloCondicion> condiciones                  = new List<ModeloCondicion>();
 		public List<ModeloAdministradorDeCombate> combatesActivos = new List<ModeloAdministradorDeCombate>();
 		public List<ModeloLimitador> limitadores                  = new List<ModeloLimitador>();
-		public List<ModeloCargas> cargasHabilidades      = new List<ModeloCargas>();
+		public List<ModeloCargas> cargasHabilidades               = new List<ModeloCargas>();
 		public List<ModeloParticipante> participantes             = new List<ModeloParticipante>();
-	}
+
+		/// <summary>
+		/// Personaje siendo creado actualmente
+		/// </summary>
+		public ModeloPersonaje modeloPersonajaActual;
+    }
 }

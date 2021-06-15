@@ -107,11 +107,14 @@
         <!-- Contenido de la ventana -->
         <ContentControl Content="{Binding EPagina, Converter={local:EnumToUserControlConverter}, ConverterParameter=1}"/>
 
-        <Canvas>
+        <Canvas
+            IsHitTestVisible="False">
+
             <!-- Drag de la ventana -->
             <local:Drag 
                 Margin="0"
                 Panel.ZIndex="11"/>
+
         </Canvas>
     </Grid>
 

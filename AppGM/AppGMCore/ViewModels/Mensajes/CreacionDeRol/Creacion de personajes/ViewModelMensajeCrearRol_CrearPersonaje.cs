@@ -97,6 +97,7 @@ namespace AppGM.Core
         {
             mDatosCreacionRol  = _datosCreacionRol;
             mViewModelCrearRol = _viewModelCrearRol;
+            mModeloPersonaje   = _datosCreacionRol.modeloPersonajaActual;
 
             mAccionAñadirHabilidad = () =>
             {
