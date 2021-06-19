@@ -14,11 +14,6 @@
 			:base(_vmCreacionDeFuncion){}
 
 		/// <summary>
-		/// Indica si este bloque esta bien construido
-		/// </summary>
-		public bool EsValido { get; set; } = true;
-
-		/// <summary>
 		/// Genera el <see cref="TipoBloque"/> que equivale a los datos ingresados en este VM.
 		/// Esta version es la que implementaran los diferentes <see cref="ViewModelBloqueFuncion{TipoBloque}"/>.
 		/// </summary>

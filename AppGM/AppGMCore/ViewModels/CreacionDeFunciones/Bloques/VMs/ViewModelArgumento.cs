@@ -19,11 +19,6 @@ namespace AppGM.Core
 		#region Eventos
 
 		/// <summary>
-		/// Evento que dispara cuando el estado de validez cambio
-		/// </summary>
-		public event Action<bool> OnEsValidoCambio = delegate { };
-
-		/// <summary>
 		/// Evento que dispara cuando <see cref="TextoActual"/> es modificado por el programa
 		/// </summary>
 		public event DVariableCambio<string> OnTextoActualModificado = delegate { };
@@ -36,10 +31,14 @@ namespace AppGM.Core
 		//-----------------------------CAMPOS--------------------------------
 
 		/// <summary>
+		/// <see cref="ViewModelBloqueFuncionBase"/> que contiene este campo
+		/// </summary>
+		private ViewModelBloqueFuncionBase mBloqueContendor;
+
+		/// <summary>
 		/// Variable de la que partimos
 		/// </summary>
 		private object mBase;
-
 		/// <summary>
 		/// Tipo que representa <see cref="mBase"/>
 		/// </summary>
@@ -66,11 +65,6 @@ namespace AppGM.Core
 		/// Valor anterior del campo de texto
 		/// </summary>
 		private string mTextoAnterior = "";
-
-		/// <summary>
-		/// Indica si este argumento es valido
-		/// </summary>
-		private bool mEsValido = false;
 
 		/// <summary>
 		/// Indica el numero de secciones actuales
@@ -117,23 +111,6 @@ namespace AppGM.Core
 				mPosSignoIntercalacion = value;
 
 				DispararPropertyChanged(new PropertyChangedEventArgs(nameof(BloqueArgumentosFuncionActual)));
-			}
-		}
-
-		/// <summary>
-		/// Indica si este bloque es valido
-		/// </summary>
-		public bool EsValido
-		{
-			get => mEsValido;
-			set
-			{
-				if (value != mEsValido)
-				{
-					mEsValido = value;
-
-					OnEsValidoCambio(mEsValido);
-				}
 			}
 		}
 
@@ -189,14 +166,28 @@ namespace AppGM.Core
 		/// Constructor
 		/// </summary>
 		/// <param name="_vmCreacionDeFuncion">VM del control de creacion de funcion</param>
+		/// <param name="bloqueContenedor"></param>
 		/// <param name="_tipoArgumento">Tipo de este argumento</param>
 		/// <param name="_nombre">Nombre de este argumento</param>
-		public ViewModelArgumento(ViewModelCreacionDeFuncionBase _vmCreacionDeFuncion, Type _tipoArgumento, string _nombre = "")
+		public ViewModelArgumento(ViewModelCreacionDeFuncionBase _vmCreacionDeFuncion, ViewModelBloqueFuncionBase _bloqueContenedor, Type _tipoArgumento, string _nombre = "")
 			:base(_vmCreacionDeFuncion)
 		{
 			mVMCreacionDeFuncion = _vmCreacionDeFuncion;
+			mBloqueContendor     = _bloqueContenedor;
 			TipoArgumento        = _tipoArgumento;
-			Nombre      = _nombre;
+			Nombre               = _nombre;
+
+			IndiceBloque = mBloqueContendor.IndiceBloque;
+
+			mBloqueContendor.OnIndiceBloqueModificado += (anterior, actual) =>
+			{
+				IndiceBloque = mBloqueContendor.IndiceBloque;
+			};
+
+			mBloqueContendor.OnSoltado += (contenido, receptor) =>
+			{
+				ModificarTextoActual(TextoActual, true);
+			};
 		}
 
 		#endregion
@@ -234,6 +225,11 @@ namespace AppGM.Core
 			}
 
 			return new BloqueArgumento(seccionesArgumento);
+		}
+
+		public override List<BloqueVariable> ObtenerVariables()
+		{
+			return mBloqueContendor.ObtenerVariables();
 		}
 
 		public void ActualizarPosibilidadesAutocompletado(string nuevoTexto, int nuevaPosSignoIntercalacion)
@@ -386,7 +382,7 @@ namespace AppGM.Core
 			List<ViewModelItemAutocompletadoBase> nombresVariables = new List<ViewModelItemAutocompletadoBase>();
 
 			//Obtenemos todas las variables
-			var variablesDisponibles = mVMCreacionDeFuncion.ListarVariables();
+			var variablesDisponibles = ObtenerVariables();
 
 			//Quitamos las variables que no se puedan usar para asignar al tipo de este argumento
 			variablesDisponibles.RemoveAll(bloque =>
@@ -537,7 +533,7 @@ namespace AppGM.Core
 				//Devolvemos 0
 				return 0;
 
-			//Indice de la seccion que actualmente estamos evaluando
+			//IndiceZ de la seccion que actualmente estamos evaluando
 			int indiceActual = 0;
 
 			//Mientras el signo de intercalacion sea menor al indice del punto actual y el punto

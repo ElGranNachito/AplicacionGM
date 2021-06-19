@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Input;
 using CoolLogs;
 
 namespace AppGM.Core
@@ -15,12 +14,12 @@ namespace AppGM.Core
 		/// <summary>
 		/// Bloques disponibles para el uso del usuario
 		/// </summary>
-		public ViewModelListaBloques BloquesDisponibles { get; set; }
+		public ViewModelListaDeElementos<ViewModelBloqueFuncionBase> BloquesDisponibles { get; set; }
 
 		/// <summary>
 		/// Bloques colocados por el usuario
 		/// </summary>
-		public ViewModelListaBloques BloquesColocados { get; set; } = new ViewModelListaBloques();
+		public ViewModelListaDeElementos<ViewModelBloqueFuncionBase> BloquesColocados { get; set; } = new ViewModelListaDeElementos<ViewModelBloqueFuncionBase>();
 
 		/// <summary>
 		/// Variables base, es decir variables por defecto
@@ -42,6 +41,8 @@ namespace AppGM.Core
 		/// </summary>
 		public Grosor GrosorBordesGridBloquesColocados { get; set; }
 
+		public int IndiceZ { get; set; }
+
 		#endregion
 
 		#region Constructor
@@ -51,7 +52,7 @@ namespace AppGM.Core
 		/// </summary>
 		public ViewModelCreacionDeFuncionBase()
 		{
-			BloquesDisponibles = new ViewModelListaBloques(AsignarListaDeBloques());
+			BloquesDisponibles = new ViewModelListaDeElementos<ViewModelBloqueFuncionBase>(AsignarListaDeBloques());
 			VariablesBase = AsignarVariablesBase();
 		}
 
@@ -62,15 +63,17 @@ namespace AppGM.Core
 		/// <summary>
 		/// Lista <see cref="VariablesBase"/> y <see cref="VariablesCreadas"/>
 		/// </summary>
+		/// <param name="bloqueQueIntentaObtenerLasVariables"><see cref="ViewModelBloqueFuncionBase"/> desde el cual se llamo la funcion</param>
 		/// <returns><see cref="List{T}"/> de <see cref="BloqueVariable"/> que abarca todas las variables</returns>
-		public List<BloqueVariable> ListarVariables()
+		public List<BloqueVariable> ObtenerVariables(ViewModelBloqueFuncionBase bloqueQueIntentaObtenerLasVariables)
 		{
 			var variables = VariablesBase;
 
-			variables = variables.Concat(VariablesCreadas.Select(elemento =>
-			{
-				return elemento.GenerarBloque_Impl();
-			})).ToList();
+			var variablesCreadasValidas = VariablesCreadas;
+
+			variablesCreadasValidas.RemoveAll(variable => !variable.EsValido || bloqueQueIntentaObtenerLasVariables.IndiceBloque > variable.IndiceBloque);
+
+			variables = variables.Concat(variablesCreadasValidas.Select(elemento => elemento.GenerarBloque_Impl())).ToList();
 
 			return variables;
 		}
@@ -93,17 +96,17 @@ namespace AppGM.Core
 
 		#region Implementacion IReceptorDeDrag
 
-		public void OnDragEnter(ViewModel vm)
+		public void OnDragEnter(IDrageable vm)
 		{
 			GrosorBordesGridBloquesColocados = new Grosor(5);
 		}
 
-		public void OnDragLeave(ViewModel vm)
+		public void OnDragLeave(IDrageable vm)
 		{
 			GrosorBordesGridBloquesColocados = new Grosor(1);
 		}
 
-		public void OnDrop(ViewModel vm)
+		public bool OnDrop(IDrageable vm)
 		{
 			//Nos aseguramos de que vm dropeado sea del tipo adecuado
 			if (vm is ViewModelBloqueFuncionBase vmBloque)
@@ -112,40 +115,60 @@ namespace AppGM.Core
 
 				ViewModelBloqueFuncionBase nuevoVMBloque = null;
 
-				switch (vm)
+				bool esBloqueDeMuestra = (bool)(SistemaPrincipal.Drag[KeysParametrosDrag.IndicePrametroExtra] ?? false);
+
+				if (esBloqueDeMuestra)
 				{
-					case ViewModelBloqueDeclaracionVariable:
-						nuevoVMBloque = new ViewModelBloqueDeclaracionVariable(this);
-						break;
-					case ViewModelBloqueLlamarFuncion:
-						nuevoVMBloque = new ViewModelBloqueLlamarFuncion(this);
-						break;
-					default:
-						SistemaPrincipal.LoggerGlobal.Log($"Se intento dropear un {vmBloque.GetType()} pero no esta soportado", ESeveridad.Advertencia);
-						return;
+					switch (vm)
+					{
+						case ViewModelBloqueDeclaracionVariable:
+							nuevoVMBloque = new ViewModelBloqueDeclaracionVariable(this);
+							break;
+						case ViewModelBloqueLlamarFuncion:
+							nuevoVMBloque = new ViewModelBloqueLlamarFuncion(this);
+							break;
+						default:
+							SistemaPrincipal.LoggerGlobal.Log(
+								$"Se intento dropear un {vmBloque.GetType()} pero no esta soportado",
+								ESeveridad.Advertencia);
+							return false;
+					}
+				}
+				else
+				{
+					BloquesColocados.Remove(vmBloque);
+
+					nuevoVMBloque = vmBloque;
 				}
 
+				int indiceBloque = -1;
+
+				if (SistemaPrincipal.Drag.ParametroAsignado(KeysParametrosDrag.IndiceParametroPosicionBloque))
+					indiceBloque = (int)SistemaPrincipal.Drag[KeysParametrosDrag.IndiceParametroPosicionBloque];
+
 				//Si el indice del bloque es -1 entonces no estamos colocando sobre otro bloque...
-				if (vmBloque.indiceBloque == -1)
+				if (indiceBloque == -1)
 				{
 					//Colocamos el indice al ultimo
-					nuevoVMBloque.indiceBloque = BloquesColocados.Bloques.Count;
+					nuevoVMBloque.IndiceBloque = BloquesColocados.Count;
 
-					BloquesColocados.Bloques.Add(nuevoVMBloque);
+					BloquesColocados.Add(nuevoVMBloque);
 				}
 				//Sino entonces el drag fue soltado sobre un bloque existente
 				else
 				{
 					//Hacemos que el indice del nuevo bloque sea igual al del bloque sobre el que fue sotado
-					nuevoVMBloque.indiceBloque = vmBloque.indiceBloque;
+					nuevoVMBloque.IndiceBloque = indiceBloque;
 
-					BloquesColocados.Bloques.Insert(nuevoVMBloque.indiceBloque, nuevoVMBloque);
+					BloquesColocados.Insert(nuevoVMBloque.IndiceBloque, nuevoVMBloque);
 
-					ActualizarindicesBloques(nuevoVMBloque.indiceBloque + 1);
+					ActualizarIndicesBloques(0);
 				}
 			}
 
 			SistemaPrincipal.LoggerGlobal.Log($"Se intento dropear un {vm.GetType()} pero no esta soportado", ESeveridad.Advertencia);
+
+			return false;
 		}
 
 		#endregion
@@ -154,11 +177,11 @@ namespace AppGM.Core
 		/// Actualiza los <see cref="ViewModelBloqueFuncionBase.indiceBloque"/> de todos los <see cref="ViewModelBloqueFuncionBase"/>
 		/// en <see cref="BloquesColocados"/> a partir de <paramref name="indicePorElQueComenzar"/>
 		/// </summary>
-		/// <param name="indicePorElQueComenzar">Indice a partir del cual comenzar a actualizar</param>
-		public void ActualizarindicesBloques(int indicePorElQueComenzar)
+		/// <param name="indicePorElQueComenzar">IndiceZ a partir del cual comenzar a actualizar</param>
+		public void ActualizarIndicesBloques(int indicePorElQueComenzar)
 		{
-			for (int i = indicePorElQueComenzar; i < BloquesColocados.Bloques.Count; ++i)
-				BloquesColocados.Bloques[i].indiceBloque = i;
+			for (int i = indicePorElQueComenzar; i < BloquesColocados.Count; ++i)
+				BloquesColocados[i].IndiceBloque = i;
 		}
 
 		#endregion

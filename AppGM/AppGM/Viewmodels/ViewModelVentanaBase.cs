@@ -112,6 +112,14 @@ namespace AppGM
                 DispararPropertyChanged(new PropertyChangedEventArgs(nameof(AlturaTitulo)));
                 DispararPropertyChanged(new PropertyChangedEventArgs(nameof(ResizeBorderThickness)));
                 DispararPropertyChanged(new PropertyChangedEventArgs(nameof(CaptionHeight)));
+
+                if (mVentana.WindowState == WindowState.Maximized)
+                {
+	                mVentana.Left = 0;
+	                mVentana.Top = 0;
+
+	                
+                }
             };
 
             //Inicializamos la propiedad en el constructor para poder acceder a 'this'

@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Input;
 using AppGM.Core;
 
@@ -9,6 +10,13 @@ namespace AppGM
 	/// </summary>
 	public class ComenzarDragProperty : BaseAttachedProperty<bool, ComenzarDragProperty>
 	{
+		public static readonly DependencyProperty ParametroDragProperty = 
+			DependencyProperty.RegisterAttached("ParametroDrag", typeof(object), typeof(ComenzarDragProperty));
+
+		public static object GetParametroDrag(DependencyObject d) => d.GetValue(ParametroDragProperty);
+
+		public static void SetParametroDrag(DependencyObject d, object valor) => d.SetValue(ParametroDragProperty, valor);
+
 		public override void OnValueChanged_Impl(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
 			//Verificamos que el objeto sea un framework element
@@ -18,7 +26,9 @@ namespace AppGM
 				fe.MouseDown += (sender, args) =>
 				{
 					//Comenzamos el drag
-					SistemaPrincipal.Drag.ComenzarDrag((ViewModel)((FrameworkElement)sender).DataContext);
+					SistemaPrincipal.Drag.ComenzarDrag(
+						(IDrageable)((FrameworkElement)sender).DataContext,
+						new KeyValuePair<int, object>[]{new (KeysParametrosDrag.IndicePrametroExtra, GetParametroDrag(fe))});
 
 					EventoVentana eventoMouseMovido = null;
 
@@ -49,7 +59,7 @@ namespace AppGM
 		private void ActualizarPosMouse(FrameworkElement fe)
 		{
 			//Obtenemos la posicion del mouse con respecto al padre del elemento
-			Point posMouse = Mouse.GetPosition((FrameworkElement)fe.Parent);
+			Point posMouse = Mouse.GetPosition((IInputElement)SistemaPrincipal.Aplicacion.VentanaActual.ObtenerInstanciaVentana());
 
 			//Actualizamos la posicion
 			SistemaPrincipal.Drag.OffsetControl = new Grosor(posMouse.X, posMouse.Y, 0, 0);

@@ -16,6 +16,15 @@ namespace AppGM
 	{
 		public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
+			ViewModelBloqueFuncionBase vmBloque = (ViewModelBloqueFuncionBase) value;
+
+			if (vmBloque == null)
+			{
+				SistemaPrincipal.LoggerGlobal.Log($"{nameof(value)} no es de un {nameof(Type)} soportado!", ESeveridad.Error);
+
+				return null;
+			}
+
 			switch (value)
 			{
 				case ViewModelBloqueDeclaracionVariable vm:
@@ -23,7 +32,6 @@ namespace AppGM
 				case ViewModelBloqueFuncionBase vm:
 					return new UserControlBloqueLlamarFuncion {DataContext = vm};
 				default:
-					SistemaPrincipal.LoggerGlobal.Log($"{nameof(value)} no es de un {nameof(Type)} soportado!", ESeveridad.Error);
 					return null;
 			}
 		}

@@ -1,5 +1,7 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Input;
+
 using AppGM.Core;
 using AppGM.Core.Delegados;
 
@@ -17,38 +19,60 @@ namespace AppGM
 			{
 				MouseEventHandler mouseEnterHandler = null;
 				MouseEventHandler mouseLeaveHandler = null;
-				DDrag finDragHandler = null;
 
-				mouseEnterHandler = (sender, args) =>
+				DDrag dragComenzadoHandler = null;
+				DDrag dragFinalizadoHandler = null;
+
+				Action<object> comenzarDrag = control =>
 				{
-					if (SistemaPrincipal.Drag.HayUnDragActivo 
-					    && sender is FrameworkElement fe
+					if (SistemaPrincipal.Drag.HayUnDragActivo
+					    && control is FrameworkElement fe
 					    && fe.DataContext is IReceptorDeDrag vm)
 					{
 						fe.MouseLeave += mouseLeaveHandler;
-						SistemaPrincipal.Drag.OnFinDrag += finDragHandler;
+
+						SistemaPrincipal.Drag.OnFinDrag += dragFinalizadoHandler;
+
+						SistemaPrincipal.Drag.AñadirReceptorDrag(vm);
 
 						vm.OnDragEnter(SistemaPrincipal.Drag.ViewModelContenido);
 					}
 				};
 
+				dragComenzadoHandler = contenido =>
+				{
+					if (fe.IsMouseOver)
+						comenzarDrag(fe);
+				};
+
+				mouseEnterHandler = (sender, args) =>
+				{
+					comenzarDrag(sender);
+				};
+
 				mouseLeaveHandler = (sender, args) =>
 				{
-					if (sender is FrameworkElement fe 
-					    && fe.DataContext is IReceptorDeDrag vm)
+					if (SistemaPrincipal.Drag.HayUnDragActivo &&
+						sender is FrameworkElement fe &&
+					    fe.DataContext is IReceptorDeDrag vm)
 					{
 						fe.MouseLeave -= mouseLeaveHandler;
-						SistemaPrincipal.Drag.OnFinDrag -= finDragHandler;
+
+						SistemaPrincipal.Drag.OnFinDrag -= dragFinalizadoHandler;
+
+						SistemaPrincipal.Drag.QuitarReceptorDrag(vm);
 
 						vm.OnDragLeave(SistemaPrincipal.Drag.ViewModelContenido);
 					}
 				};
 
-				finDragHandler = contenido =>
+				dragFinalizadoHandler = contenido =>
 				{
-					if (fe.DataContext is IReceptorDeDrag vm)
-						vm.OnDrop(contenido);
+					fe.MouseLeave -= mouseLeaveHandler;
+					SistemaPrincipal.Drag.OnFinDrag -= dragFinalizadoHandler;
 				};
+
+				SistemaPrincipal.Drag.OnComienzoDrag += dragComenzadoHandler;
 
 				fe.MouseEnter += mouseEnterHandler;
 			}

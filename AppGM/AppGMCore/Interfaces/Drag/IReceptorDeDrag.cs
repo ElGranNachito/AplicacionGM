@@ -7,18 +7,25 @@
 	public interface IReceptorDeDrag
 	{
 		/// <summary>
+		/// Indice en el eje Z.
+		/// Se utiliza para determinar el orden en el que se reciben los eventos de
+		/// <see cref="OnDragEnter"/>, <see cref="OnDragLeave"/>, <see cref="OnDrop"/>
+		/// </summary>
+		public int IndiceZ { get; set; }
+
+		/// <summary>
 		/// Funcion que se llamara cuando el cursor entre con un <see cref="Drag"/>
 		/// </summary>
-		public void OnDragEnter(ViewModel vm);
+		public void OnDragEnter(IDrageable vm);
 
 		/// <summary>
 		/// Funcion que se llamara cuando el cursor salga con un <see cref="Drag"/>
 		/// </summary>
-		public void OnDragLeave(ViewModel vm);
+		public void OnDragLeave(IDrageable vm);
 
 		/// <summary>
 		/// Funcion que se llamara cuando el usuario suelte el <see cref="Drag"/> sobre este <see cref="IReceptorDeDrag"/>
 		/// </summary>
-		public void OnDrop(ViewModel vm);
+		public bool OnDrop(IDrageable vm);
 	}
 }

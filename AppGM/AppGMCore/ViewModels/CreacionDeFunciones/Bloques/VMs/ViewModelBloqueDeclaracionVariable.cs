@@ -86,7 +86,7 @@ namespace AppGM.Core
 		public ViewModelBloqueDeclaracionVariable(ViewModelCreacionDeFuncionBase _vmCreacionFuncionBase)
 			: base(_vmCreacionFuncionBase)
 		{
-			ValorPorDefecto = new ViewModelArgumento(mVMCreacionDeFuncion, typeof(object));
+			ValorPorDefecto = new ViewModelArgumento(mVMCreacionDeFuncion, this, typeof(object));
 			Tipo = typeof(object);
 
 			ValorPorDefecto.OnEsValidoCambio += esValido =>

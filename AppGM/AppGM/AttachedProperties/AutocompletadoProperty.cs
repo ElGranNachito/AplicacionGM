@@ -76,8 +76,6 @@ namespace AppGM
 					textBox.TextChanged      += textChangedHandler;
 					textBox.KeyUp            += teclaPresionadaHandler;
 					textBox.SelectionChanged += selectionChangedHandler;
-
-					vm.OnTextoActualModificado += textoModificadoEnVMHandler;
 				}
 			};
 			
@@ -99,8 +97,6 @@ namespace AppGM
 					textBox.TextChanged      -= textChangedHandler;
 					textBox.KeyUp            -= teclaPresionadaHandler;
 					textBox.SelectionChanged -= selectionChangedHandler;
-
-					vm.OnTextoActualModificado -= textoModificadoEnVMHandler;
 				}
 			};
 
@@ -187,7 +183,8 @@ namespace AppGM
 				}
 			};
 
-			textBox.GotFocus += gotFocusHandler;
+			textBox.GotFocus           += gotFocusHandler;
+			vm.OnTextoActualModificado += textoModificadoEnVMHandler;
 		}
 	}
 }

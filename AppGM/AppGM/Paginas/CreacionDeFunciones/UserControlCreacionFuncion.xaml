@@ -61,7 +61,7 @@
                     VerticalScrollBarVisibility="Auto">
 
                     <ItemsControl
-                        ItemsSource="{Binding BloquesDisponibles.Bloques}">
+                        ItemsSource="{Binding BloquesDisponibles.Elementos}">
 
                         <ItemsControl.ItemTemplateSelector>
                             <local:BloqueDataTemplateSelector
@@ -91,7 +91,7 @@
                     VerticalScrollBarVisibility="Auto">
 
                     <ItemsControl
-                        ItemsSource="{Binding BloquesColocados.Bloques}">
+                        ItemsSource="{Binding BloquesColocados.Elementos}">
 
                         <ItemsControl.ItemTemplateSelector>
                             <local:BloqueDataTemplateSelector/>

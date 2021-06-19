@@ -25,6 +25,12 @@ namespace AppGM.Core
 		/// </summary>
 		public BloqueArgumento argumento;
 
+		public BloqueVariable(string _nombre, Type _tipo)
+		{
+			nombre = _nombre;
+			tipo   = _tipo;
+		}
+
 		/// <summary>
 		/// Constructor
 		/// </summary>

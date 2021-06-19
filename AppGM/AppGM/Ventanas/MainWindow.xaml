@@ -10,10 +10,11 @@
         MinHeight="562"
         MinWidth="1000"
 
-        WindowStyle="None"
+        WindowStyle="SingleBorderWindow"
+        ResizeMode="CanResize"
         WindowStartupLocation="CenterScreen"
 
-        Title="MainWindow" Height="700" Width="1200">
+        Title="MainWindow" Height="700" Width="1100">
 
     <Window.Resources>
         
@@ -73,10 +74,9 @@
                             </Grid>
 
                             <!-- Contenido -->
-                            <Border Grid.Row="1">
+                            <Border Grid.Row="1" Name="BordePiola">
                                 <ContentPresenter Content="{TemplateBinding Content}"/>
                             </Border>
-
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>

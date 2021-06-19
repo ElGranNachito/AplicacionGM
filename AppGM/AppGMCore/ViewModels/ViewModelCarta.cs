@@ -11,7 +11,7 @@ namespace AppGM
 		#region Propiedades
 
 		/// <summary>
-		/// Indice Z
+		/// IndiceZ Z
 		/// </summary>
 		public int ZIndex { get; set; } = 0;
 

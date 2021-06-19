@@ -7,9 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="250" d:DesignWidth="600"
 
-             Margin="0 0 0 10"
-             
-             local:ReceptorDeDragProperty.Value="True">
+             Margin="0 0 0 10">
 
     <!-- ViewModel: ViewModelBloqueDeclaracionVariable -->
 

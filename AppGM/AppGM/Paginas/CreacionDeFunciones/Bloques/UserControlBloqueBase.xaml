@@ -7,7 +7,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              
-             local:ReceptorDeDragProperty.Value="True">
+             local:ReceptorDeDragProperty.Value="True"
+             local:ComenzarDragProperty.Value="True">
 
     <!-- ViewModel: ViewModelCreacionDeFuncionBase -->
 

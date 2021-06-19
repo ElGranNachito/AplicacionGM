@@ -12,5 +12,11 @@
     /// Delegado utilizado para eventos de Drag
     /// </summary>
     /// <param name="vmContenido"><see cref="ViewModel"/> del contenido del drag</param>
-    public delegate void DDrag(ViewModel vmContenido);
+    public delegate void DDrag(IDrageable vmContenido);
+
+    /// <summary>
+    /// Delegado utilizado para eventos de soltar un <see cref="IDrageable"/> sobre un <see cref="IReceptorDeDrag"/>
+    /// </summary>
+    /// <param name="vmContenido"><see cref="ViewModel"/> del contenido del drag</param>
+    public delegate void DDragElementoSoltado(IDrageable vmContenido, IReceptorDeDrag vmReceptor);
 }

@@ -1,21 +1,94 @@
-﻿namespace AppGM.Core
+﻿using System;
+using System.Collections.Generic;
+
+using AppGM.Core.Delegados;
+
+namespace AppGM.Core
 {
-	public abstract class ViewModelBloqueFuncionBase : ViewModel, IReceptorDeDrag
+	public abstract class ViewModelBloqueFuncionBase : ViewModel, IReceptorDeDrag, IDrageable
 	{
+		/// <summary>
+		/// Evento que dispara cuando el estado de validez cambio
+		/// </summary>
+		public event Action<bool> OnEsValidoCambio = delegate { };
+
+		/// <summary>
+		/// Evento que se dispara cuando <see cref="indiceBloque"/> cambia
+		/// </summary>
+		public event DVariableCambio<int> OnIndiceBloqueModificado = delegate {};
+
+		public event DDragElementoSoltado OnSoltado;
+
+		#region Campos & Propiedades
+
+		//--------------------------------------CAMPOS-------------------------------------------
+
+		/// <summary>
+		/// IndiceZ en la lista de <see cref="ViewModelBloqueFuncionBase"/> de <see cref="ViewModelCreacionDeFuncionBase"/>
+		/// </summary>
+		private int mIndiceBloque = -1;
+
+		/// <summary>
+		/// Indica si este argumento es valido
+		/// </summary>
+		private bool mEsValido = true;
+
 		/// <summary>
 		/// VM del control de creacion de funciones
 		/// </summary>
 		protected ViewModelCreacionDeFuncionBase mVMCreacionDeFuncion;
 
 		/// <summary>
-		/// Indice en la lista de <see cref="ViewModelBloqueFuncionBase"/> de <see cref="ViewModelCreacionDeFuncionBase"/>
+		/// <see cref="ViewModelBloqueContenedor"/> que contiene este <see cref="ViewModelBloqueFuncionBase"/>
 		/// </summary>
-		public int indiceBloque = -1;
+		protected ViewModelBloqueContenedor mPadre;
+
+
+		//-----------------------------------PROPIEDADES-----------------------------------------
+
+		/// <summary>
+		/// IndiceZ en la lista de <see cref="ViewModelBloqueFuncionBase"/> de <see cref="ViewModelCreacionDeFuncionBase"/>
+		/// </summary>
+		public int IndiceBloque
+		{
+			get => mIndiceBloque;
+			set
+			{
+				int valorAnterior = mIndiceBloque;
+
+				mIndiceBloque = value;
+
+				OnIndiceBloqueModificado(valorAnterior, mIndiceBloque);
+			}
+		}
+
+		/// <summary>
+		/// Indica si este bloque esta bien construido
+		/// </summary>
+		public bool EsValido
+		{
+			get => mEsValido;
+			set
+			{
+				if (value != mEsValido)
+				{
+					mEsValido = value;
+
+					OnEsValidoCambio(mEsValido);
+				}
+			}
+		}
 
 		/// <summary>
 		/// Indica si mostrar el espacio donde se posicionaria un bloque en caso de ser dropeado sobre este elemento
 		/// </summary>
-		public bool MostrarEspacioDrop { get; set; }
+		public bool MostrarEspacioDrop { get; set; } = false;
+
+		public int IndiceZ { get; set; } = 1;
+		
+		#endregion
+
+		#region Constructor
 
 		/// <summary>
 		/// Constructor
@@ -26,14 +99,11 @@
 			mVMCreacionDeFuncion = _vmCreacionDeFuncion;
 		}
 
-		/// <summary>
-		/// Crea una copiar superficial de este bloque
-		/// </summary>
-		/// <returns>Copia superficial de est <see cref="ViewModelBloqueFuncionBase"/></returns>
-		public ViewModelBloqueFuncionBase Copiar()
-		{
-			return (ViewModelBloqueFuncionBase)MemberwiseClone();
-		}
+		public ViewModelBloqueFuncionBase(){}
+
+		#endregion
+
+		#region Metodos
 
 		public virtual BloqueBase GenerarBloque() => null;
 
@@ -43,29 +113,56 @@
 		/// <returns><see cref="bool"/> indicando si este bloque es valido</returns>
 		public virtual bool VerificarValidez() => true;
 
-		public void OnDragEnter(ViewModel vm)
+		/// <summary>
+		/// Obtiene los <see cref="BloqueVariable"/> disponibles.
+		/// </summary>
+		/// <returns><see cref="List{T}"/> que contiene los <see cref="BloqueVariable"/> disponibles</returns>
+		public virtual List<BloqueVariable> ObtenerVariables()
 		{
-			if (vm is ViewModelBloqueFuncionBase vmBloque)
+			if (mPadre != null)
+				return mPadre.ObtenerVariables();
+
+			return mVMCreacionDeFuncion.ObtenerVariables(this);
+		}
+
+		public void OnDragEnter(IDrageable vm)
+		{
+			if (vm is ViewModelBloqueFuncionBase vmBloque && 
+			    vm != this)
 			{
 				MostrarEspacioDrop = true;
 
-				vmBloque.indiceBloque = indiceBloque;
+				SistemaPrincipal.Drag[KeysParametrosDrag.IndiceParametroPosicionBloque] = IndiceBloque;
 			}
 		}
 
-		public void OnDragLeave(ViewModel vm)
+		public void OnDragLeave(IDrageable vm)
 		{
 			if (vm is ViewModelBloqueFuncionBase vmBloque)
 			{
 				MostrarEspacioDrop = false;
 
-				vmBloque.indiceBloque = -1;
+				SistemaPrincipal.Drag[KeysParametrosDrag.IndiceParametroPosicionBloque] = -1;
 			}
 		}
 
-		public void OnDrop(ViewModel vm)
+		public bool OnDrop(IDrageable vm)
 		{
 			MostrarEspacioDrop = false;
+
+			return false;
 		}
+
+		public void OnComienzoDrag()
+		{
+
+		}
+
+		public virtual void Soltado(IReceptorDeDrag elemento)
+		{
+			OnSoltado(this, elemento);
+		}
+
+		#endregion
 	}
 }

@@ -19,7 +19,7 @@ namespace AppGM.Core
 		//Intervalo entre cada fotograma
 		private float mIntervaloEntreFotogramas;
 
-		//Indice del fotograma actual
+		//IndiceZ del fotograma actual
 		private int mFotogramaActual = 0;
 
 		//Cantidad total de fotogramas

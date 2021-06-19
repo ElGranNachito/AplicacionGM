@@ -42,7 +42,7 @@ namespace AppGM.Core
 		public string TextoActual { get; set; }
 
 		/// <summary>
-		/// Indice del elemento actualmente seleccionado
+		/// IndiceZ del elemento actualmente seleccionado
 		/// </summary>
 		public int IndiceActual { get; set; } = -1;
 

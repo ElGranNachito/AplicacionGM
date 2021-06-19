@@ -14,7 +14,7 @@ namespace AppGM.Core.ViewModels.CreacionDeHabilidades
 		{
 			//TODO: Implementar de verdad
 			Compilador.IniciarCompilacion(
-				(from bloque in BloquesColocados.Bloques
+				(from bloque in BloquesColocados.Elementos
 					select bloque.GenerarBloque()).ToList());
 		}
 
@@ -31,10 +31,9 @@ namespace AppGM.Core.ViewModels.CreacionDeHabilidades
 		{
 			return new List<BloqueVariable>
 			{
-				new BloqueVariable {nombre = "Combate", tipo = typeof(ControladorAdministradorDeCombate)},
-				new BloqueVariable {nombre = "Usuario", tipo = typeof(ControladorPersonaje)},
-				new BloqueVariable {nombre = "Objetivos", tipo = typeof(List<ControladorPersonaje>)},
-				new BloqueVariable {nombre = "Habilidad", tipo = typeof(ControladorHabilidad)}
+				new BloqueVariable(  "Combate",  typeof(ControladorAdministradorDeCombate)),
+				new BloqueVariable ("Usuario", typeof(ControladorPersonaje)),
+				new BloqueVariable( "Objetivos", typeof(List<ControladorPersonaje>))
 			};
 		}
 	}

@@ -21,7 +21,7 @@ namespace AppGM.Core
         protected PropertyChangedEventHandler mHandlerPasoActualPropertyChanged;
 
         /// <summary>
-        /// Indice del paso en el que usuario se encuentra
+        /// IndiceZ del paso en el que usuario se encuentra
         /// </summary>
         protected int mIndicePasoActual = 0;
 

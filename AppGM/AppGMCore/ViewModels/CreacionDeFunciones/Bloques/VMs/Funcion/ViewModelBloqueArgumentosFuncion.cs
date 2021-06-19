@@ -53,7 +53,7 @@ namespace AppGM.Core
 			ArgumentosFuncion.Clear();
 
 			foreach (var parametro in mFuncion.GetParameters())
-				ArgumentosFuncion.Add(new ViewModelArgumento(mVMCreacionDeFuncion, parametro.ParameterType, parametro.Name));
+				ArgumentosFuncion.Add(new ViewModelArgumento(mVMCreacionDeFuncion, this, parametro.ParameterType, parametro.Name));
 		}
 
 		public override bool VerificarValidez()
