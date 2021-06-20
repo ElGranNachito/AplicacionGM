@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Collections.Generic;
 using AppGM.Core.Delegados;
 
 namespace AppGM.Core
@@ -24,9 +24,9 @@ namespace AppGM.Core
 		public virtual void OnSalirDeElemento(IReceptorDeDrag elemento){}
 
 		/// <summary>
-		/// Funcion que se llama cuando este elemento deja de estar sobre <paramref name="elemento"/>
+		/// Funcion que se llama cuando este elemento deja de estar sobre <paramref name="receptores"/>
 		/// </summary>
-		/// <param name="elemento"><see cref="IReceptorDeDrag"/> sobre el que se solto</param>
-		public virtual void Soltado(IReceptorDeDrag elemento){}
+		/// <param name="receptores"><see cref="IReceptorDeDrag"/> sobre el que se solto</param>
+		public virtual void Soltado(List<IReceptorDeDrag> receptores){}
 	}
 }

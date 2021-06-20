@@ -17,7 +17,7 @@ namespace AppGM.Core
 		/// </summary>
 		public event DVariableCambio<int> OnIndiceBloqueModificado = delegate {};
 
-		public event DDragElementoSoltado OnSoltado;
+		public event DDragElementoSoltado OnSoltado = delegate{};
 
 		#region Campos & Propiedades
 
@@ -158,9 +158,9 @@ namespace AppGM.Core
 
 		}
 
-		public virtual void Soltado(IReceptorDeDrag elemento)
+		public virtual void Soltado(List<IReceptorDeDrag> receptores)
 		{
-			OnSoltado(this, elemento);
+			OnSoltado(this, receptores);
 		}
 
 		#endregion

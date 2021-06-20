@@ -184,7 +184,7 @@ namespace AppGM
 			};
 
 			textBox.GotFocus           += gotFocusHandler;
-			vm.OnTextoActualModificado += textoModificadoEnVMHandler;
+			//vm.OnTextoActualModificado += textoModificadoEnVMHandler;
 		}
 	}
 }

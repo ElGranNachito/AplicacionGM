@@ -1,4 +1,6 @@
-﻿namespace AppGM.Core.Delegados
+﻿using System.Collections.Generic;
+
+namespace AppGM.Core.Delegados
 {
     /// <summary>
     /// Delegado utilizado para eventos que propelen el cambio de valor de una variable
@@ -18,5 +20,5 @@
     /// Delegado utilizado para eventos de soltar un <see cref="IDrageable"/> sobre un <see cref="IReceptorDeDrag"/>
     /// </summary>
     /// <param name="vmContenido"><see cref="ViewModel"/> del contenido del drag</param>
-    public delegate void DDragElementoSoltado(IDrageable vmContenido, IReceptorDeDrag vmReceptor);
+    public delegate void DDragElementoSoltado(IDrageable vmContenido, List<IReceptorDeDrag> vmReceptor);
 }

@@ -24,6 +24,7 @@
             Padding="5"
             Style="{StaticResource TextoDescriptivo}"
             Tag="{Binding Nombre}"
+            Text="{Binding TextoTextBox, Mode=TwoWay}"
             local:AutocompletadoProperty.Value="true"/>
 
         <local:UserControlBloqueListaArgumentosFuncion

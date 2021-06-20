@@ -93,6 +93,11 @@ namespace AppGM.Core
 		public string TextoActual { get; set; } = string.Empty;
 
 		/// <summary>
+		/// Texto que se esta mostrando actualmente
+		/// </summary>
+		public string TextoTextBox { get; set; } = string.Empty;
+
+		/// <summary>
 		/// Nombre que se muestra en el campo de texto
 		/// </summary>
 		public string Nombre { get; set; } = string.Empty;
@@ -183,11 +188,6 @@ namespace AppGM.Core
 			{
 				IndiceBloque = mBloqueContendor.IndiceBloque;
 			};
-
-			mBloqueContendor.OnSoltado += (contenido, receptor) =>
-			{
-				ModificarTextoActual(TextoActual, true);
-			};
 		}
 
 		#endregion
@@ -234,12 +234,15 @@ namespace AppGM.Core
 
 		public void ActualizarPosibilidadesAutocompletado(string nuevoTexto, int nuevaPosSignoIntercalacion)
 		{
+			if(nuevoTexto.Length > 0 && nuevoTexto.Last() == '.')
+				EncontrarMiembrosFaltantes();
+
 			TextoActual           = nuevoTexto;
 			PosSignoIntercalacion = nuevaPosSignoIntercalacion;
 
 			ActualizarCantidadDeSecciones();
 
-			//Si el usuario borro texto y ese texto no era un '.'...
+			//Si el usuario borro texto
 			if (TextoActual.Length < mTextoAnterior.Length)
 			{
 				//Obtenemos en indice de la seccion donde se encuentra el cursor
@@ -248,10 +251,8 @@ namespace AppGM.Core
 				//Si la seccion es 0, es decir la de la variable...
 				if (indiceSeccionAcutal == 0)
 				{
-					//Hacemos la variable null
 					mBase = null;
 
-					//Quitamos todos los miembros
 					mMiembrosConsecuentes.Clear();
 				}
 				//Si la seccion actual no es mayor a la cantidad de miembros...
@@ -289,7 +290,7 @@ namespace AppGM.Core
 			}
 
 			//Le pasamos al autocompletado el nuevo texto
-			Autocompletado.ActualizarTextoActual(ObtenerSeccionActualDelTexto());
+			Autocompletado.ActualizarTextoActual(ObtenerSeccionDelTexto());
 
 			mTextoAnterior = TextoActual;
 		}
@@ -310,7 +311,7 @@ namespace AppGM.Core
 				mMiembrosConsecuentes.Add(itemMiembro.valorItem);
 
 				//Obtenemos los indices de la seccion actual
-				var indices = ObtenerIndicesActuales();
+				var indices = ObtenerIndices();
 
 				//Si los indices no son -1...
 				if(indices.indiceMenor != -1 && indices.indiceMayor != -1)
@@ -354,23 +355,12 @@ namespace AppGM.Core
 		public void FocusPerdido()
 		{
 			Autocompletado.OnValorSeleccionado -= HandlerValorSeleccionado;
-			
-			//Si hay mas secciones de las que deberia...
-			while (mNumeroDeSecciones - 1 > mMiembrosConsecuentes.Count)
-			{
-				--mNumeroDeSecciones;
 
-				TextoActual = TextoActual.Remove(TextoActual.LastIndexOf('.'));
-			}
-
-			//Actualizamos el texto quitando las secciones superfluas
-			ModificarTextoActual(TextoActual, true);
+			ActualizarValidez();
 
 			//Colocamos la posicion del signo de intercalacion en 0 para que desaparezca al lista
 			//de parametros de la funcion en caso de estar desplegada
 			PosSignoIntercalacion = 0;
-
-			ActualizarValidez();
 		}
 
 		/// <summary>
@@ -447,12 +437,15 @@ namespace AppGM.Core
 
 		/// <summary>
 		/// Obtiene el par de indices que delimitan la seccion en la que actualmente
-		/// se encuentra el <see cref="PosSignoIntercalacion"/>
+		/// se encuentra el <see paramref="posicionDelTexto"/>
 		/// </summary>
 		/// <returns>Par de indices, en caso de que la seccion consista solo de un punto
 		/// o el <see cref="TextoActual"/> este vacio los indices devueltos seran -1</returns>
-		private (int indiceMenor, int indiceMayor) ObtenerIndicesActuales()
+		private (int indiceMenor, int indiceMayor) ObtenerIndices(int posicionDelTexto = -1)
 		{
+			if (posicionDelTexto == -1)
+				posicionDelTexto = PosSignoIntercalacion;
+
 			//Si el texto actual esta vacio devolvemos -1 para ambos indices
 			if (TextoActual.Length == 0)
 				return (-1, -1);
@@ -466,7 +459,7 @@ namespace AppGM.Core
 			int indicePrimerPunto = TextoActual.IndexOf('.');
 
 			//Si no es -1 pero el signo de intercalacion esta antes del primer punto...
-			if (PosSignoIntercalacion < indicePrimerPunto)
+			if (posicionDelTexto < indicePrimerPunto)
 				//Devolvemos indices a la primera seccion
 				return (0, indicePrimerPunto - 1);
 
@@ -481,8 +474,8 @@ namespace AppGM.Core
 				return (indicePrimerPunto + 1, TextoActual.Length - 1);
 
 			//Igualamos primer y ultimo indice a la posicion del signo de intercalacion
-			int primerIndice = PosSignoIntercalacion - 1;
-			int ultimoIndice = PosSignoIntercalacion;
+			int primerIndice = posicionDelTexto - 1;
+			int ultimoIndice = posicionDelTexto;
 
 			//Si el primer indice es igual a la longitud del texto...
 			if (ultimoIndice == TextoActual.Length)
@@ -506,10 +499,10 @@ namespace AppGM.Core
 		/// Obtiene la seccion actual del texto que esta modificando el usuario
 		/// </summary>
 		/// <returns><see cref="string"/> que contiene la cadena</returns>
-		private string ObtenerSeccionActualDelTexto()
+		private string ObtenerSeccionDelTexto(int posicionDelTexto = -1)
 		{
 			//Obtenemos los indices actuales
-			var indices = ObtenerIndicesActuales();
+			var indices = ObtenerIndices(posicionDelTexto);
 
 			//Si alguno de los dos indices es -1 entonces simplemente devolvemos una cadena vacia
 			if (indices.indiceMenor == -1 || indices.indiceMayor == -1)
@@ -548,6 +541,40 @@ namespace AppGM.Core
 			}
 
 			return indiceActual;
+		}
+
+		/// <summary>
+		/// Obtiene el texto de una determinada seccion
+		/// </summary>
+		/// <param name="indiceSeccion"></param>
+		/// <returns></returns>
+		private string ObtenerTextoDeSeccion(int indiceSeccion)
+		{
+			if (indiceSeccion >= mNumeroDeSecciones)
+				return string.Empty;
+
+			//Indice del punto actual
+			int indiceActual = 0;
+
+			//Iteramos mientras que el indice de seccion no sea cero
+			while (indiceSeccion != 0)
+			{
+				--indiceSeccion;
+
+				//Si la posicion siguiente al indice actual cae fuera de limites...
+				if (indiceActual + 1 >= TextoActual.Length)
+					return string.Empty;
+
+				//Obtenemos el indice del proximo punto
+				indiceActual = TextoActual.IndexOf('.', indiceActual + 1);
+			}
+
+			//Si el indice actual es valido...
+			if (indiceActual != -1)
+				return ObtenerSeccionDelTexto(indiceActual + 1);
+			//Si no...
+			else
+				return string.Empty;
 		}
 
 		/// <summary>
@@ -641,6 +668,63 @@ namespace AppGM.Core
 		}
 
 		/// <summary>
+		/// Intenta encontrar los <see cref="MemberInfo"/> a los que corresponden los nombres
+		/// ingresados por el usuario y los añade a <see cref="mMiembrosConsecuentes"/>
+		/// </summary>
+		private void EncontrarMiembrosFaltantes()
+		{
+			//Si no falta ningun miembro entonces simplemente retornamos
+			if (mMiembrosConsecuentes.Count == mNumeroDeSecciones - 1)
+				return;
+
+			//Ultimo tipo valido en el argumento
+			Type ultimoTipoValido = mMiembrosConsecuentes.Count > 0 
+				? mMiembrosConsecuentes.Last().ObtenerTipoRetorno() 
+				: mTipoBase;
+
+			//Condicion del bucle de miembros. Se encarga de terminar si un miembro es adecuado
+			Func<MemberInfo, bool> condicionBucle;
+
+			//Iteramos una vez por cada miembro faltante
+			for (int i = mMiembrosConsecuentes.Count + 1; i < mNumeroDeSecciones; i++)
+			{
+				//Obtenemos el texto correspondiente a ese miembro
+				string seccionDeTextoConsecuente = ObtenerTextoDeSeccion(i);
+
+				//Si el tipo actual es un enum...
+				if (typeof(Enum).IsAssignableFrom(ultimoTipoValido))
+				{
+					condicionBucle = miembro => 
+						miembro.Name.Equals(seccionDeTextoConsecuente) && 
+						miembro.ObtenerTipoRetorno().HasAttribute(typeof(AccesibleEnGuraScratch));
+				}
+				//Si es cualquier otra cosa...
+				else
+				{
+					condicionBucle = miembro =>
+						miembro.HasAttribute(typeof(AccesibleEnGuraScratch)) &&
+						miembro.Name.Equals(seccionDeTextoConsecuente);
+				}
+
+				foreach (var miembro in ultimoTipoValido.GetMembers())
+				{
+					//Si este miembro cumple con las condiciones...
+					if (condicionBucle(miembro))
+					{
+						//Lo añadimos a la lista
+						mMiembrosConsecuentes.Add(miembro);
+
+						//Actualizamos el ultimo tipo para las iteraciones consecuentes
+						ultimoTipoValido = miembro.ObtenerTipoRetorno();
+
+						break;
+					}
+				}
+
+			}
+		}
+
+		/// <summary>
 		/// Indica si el valor ingresado por el usuario es valido
 		/// </summary>
 		/// <returns><see cref="bool"/> indicando si el valor es valido</returns>
@@ -654,6 +738,20 @@ namespace AppGM.Core
 			if (!ConfirmarExistenciaBase())
 				//Revisamos que se pueda convertir del string ingresado al tipo del argumento
 				return TypeDescriptor.GetConverter(TipoArgumento).IsValid(TextoActual);
+
+			EncontrarMiembrosFaltantes();
+
+			//Si hay mas secciones de las que deberia...
+			while (mNumeroDeSecciones - 1 > mMiembrosConsecuentes.Count)
+			{
+				--mNumeroDeSecciones;
+
+				TextoActual = TextoActual.Remove(TextoActual.LastIndexOf('.'));
+			}
+
+			//Cambiamos el texto anterior aqui para evitar que tome como que el usuario borro caracteres
+			mTextoAnterior = TextoActual;
+			ModificarTextoActual(TextoActual, true);
 
 			if (mNumeroDeSecciones == 1)
 			{
@@ -726,7 +824,8 @@ namespace AppGM.Core
 			if (nuevoTexto.Equals(TextoActual) && !forzar)
 				return;
 
-			TextoActual = nuevoTexto;
+			TextoActual  = nuevoTexto;
+			TextoTextBox = nuevoTexto;
 
 			ActualizarCantidadDeSecciones();
 

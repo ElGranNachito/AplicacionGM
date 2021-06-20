@@ -70,13 +70,18 @@ namespace AppGM.Core
 			{
 				OnFinDrag(ViewModelContenido);
 
-				foreach (var receptorDrag in ReceptoresActualmenteActivos)
+				for (int i = 0; i < ReceptoresActualmenteActivos.Count; ++i)
 				{
-					ViewModelContenido.Soltado(receptorDrag);
+					if (ReceptoresActualmenteActivos[i].OnDrop(ViewModelContenido) && 
+					    i != ReceptoresActualmenteActivos.Count - 1)
+					{
+						ReceptoresActualmenteActivos.RemoveRange(i + 1, ReceptoresActualmenteActivos.Count - i);
 
-					if (receptorDrag.OnDrop(ViewModelContenido))
 						break;
+					}
 				}
+
+				ViewModelContenido.Soltado(ReceptoresActualmenteActivos);
 
 				ReceptoresActualmenteActivos.Clear();
 

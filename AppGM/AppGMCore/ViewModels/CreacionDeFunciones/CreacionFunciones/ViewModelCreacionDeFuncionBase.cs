@@ -79,6 +79,17 @@ namespace AppGM.Core
 		}
 
 		/// <summary>
+		/// Actualiza los <see cref="ViewModelBloqueFuncionBase.indiceBloque"/> de todos los <see cref="ViewModelBloqueFuncionBase"/>
+		/// en <see cref="BloquesColocados"/> a partir de <paramref name="indicePorElQueComenzar"/>
+		/// </summary>
+		/// <param name="indicePorElQueComenzar">IndiceZ a partir del cual comenzar a actualizar</param>
+		public void ActualizarIndicesBloques(int indicePorElQueComenzar)
+		{
+			for (int i = indicePorElQueComenzar; i < BloquesColocados.Count; ++i)
+				BloquesColocados[i].IndiceBloque = i;
+		}
+
+		/// <summary>
 		/// Metodo que debe asignar una lista de los <see cref="ViewModelBloqueFuncionBase"/> disponibles a
 		/// <see cref="BloquesDisponibles"/>.
 		/// No hacer nada extravagante en esta funcion puesto que se la llama desde el constructor base,
@@ -172,17 +183,6 @@ namespace AppGM.Core
 		}
 
 		#endregion
-
-		/// <summary>
-		/// Actualiza los <see cref="ViewModelBloqueFuncionBase.indiceBloque"/> de todos los <see cref="ViewModelBloqueFuncionBase"/>
-		/// en <see cref="BloquesColocados"/> a partir de <paramref name="indicePorElQueComenzar"/>
-		/// </summary>
-		/// <param name="indicePorElQueComenzar">IndiceZ a partir del cual comenzar a actualizar</param>
-		public void ActualizarIndicesBloques(int indicePorElQueComenzar)
-		{
-			for (int i = indicePorElQueComenzar; i < BloquesColocados.Count; ++i)
-				BloquesColocados[i].IndiceBloque = i;
-		}
 
 		#endregion
 	}
