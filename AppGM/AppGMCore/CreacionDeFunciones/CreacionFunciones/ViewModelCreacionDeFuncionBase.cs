@@ -7,9 +7,14 @@ namespace AppGM.Core
 	/// <summary>
 	/// <see cref="ViewModel"/> que representa un control para la creacion de una funcion
 	/// </summary>
-	public abstract class ViewModelCreacionDeFuncionBase: ViewModel, IReceptorDeDrag
+	public abstract class ViewModelCreacionDeFuncionBase: ViewModel, IReceptorDeDrag, IContenedorDeBloques
 	{
 		#region Propiedades & Campos
+
+		/// <summary>
+		/// El padre de una instancia de este <see cref="ViewModel"/> siempre es null
+		/// </summary>
+		public IContenedorDeBloques Padre => null;
 
 		/// <summary>
 		/// Bloques disponibles para el uso del usuario
@@ -19,7 +24,7 @@ namespace AppGM.Core
 		/// <summary>
 		/// Bloques colocados por el usuario
 		/// </summary>
-		public ViewModelListaDeElementos<ViewModelBloqueFuncionBase> BloquesColocados { get; set; } = new ViewModelListaDeElementos<ViewModelBloqueFuncionBase>();
+		public ViewModelListaDeElementos<ViewModelBloqueFuncionBase> Bloques { get; set; } = new ViewModelListaDeElementos<ViewModelBloqueFuncionBase>();
 
 		/// <summary>
 		/// Variables base, es decir variables por defecto
@@ -78,15 +83,29 @@ namespace AppGM.Core
 			return variables;
 		}
 
-		/// <summary>
-		/// Actualiza los <see cref="ViewModelBloqueFuncionBase.indiceBloque"/> de todos los <see cref="ViewModelBloqueFuncionBase"/>
-		/// en <see cref="BloquesColocados"/> a partir de <paramref name="indicePorElQueComenzar"/>
-		/// </summary>
-		/// <param name="indicePorElQueComenzar">IndiceZ a partir del cual comenzar a actualizar</param>
-		public void ActualizarIndicesBloques(int indicePorElQueComenzar)
+		public void AñadirBloque(ViewModelBloqueFuncionBase bloque, int indice)
 		{
-			for (int i = indicePorElQueComenzar; i < BloquesColocados.Count; ++i)
-				BloquesColocados[i].IndiceBloque = i;
+			bloque.Padre = this;
+
+			if(SistemaPrincipal.Drag.HayUnDragActivo)
+				GrosorBordesGridBloquesColocados = new Grosor(1);
+
+			if (indice != -1)
+			{
+				((IContenedorDeBloques)this).InsertarBloque(bloque, indice);
+
+				return;
+			}
+
+			bloque.IndiceBloque = Bloques.Count;
+			Bloques.Add(bloque);
+		}
+
+		public void QuitarBloque(ViewModelBloqueFuncionBase bloque)
+		{
+			Bloques.Remove(bloque);
+
+			((IContenedorDeBloques)this).ActualizarIndicesBloques(bloque.IndiceBloque);
 		}
 
 		/// <summary>
@@ -107,74 +126,25 @@ namespace AppGM.Core
 
 		#region Implementacion IReceptorDeDrag
 
-		public void OnDragEnter(IDrageable vm)
+		public void OnDragEntro_Impl(IDrageable vm)
 		{
-			GrosorBordesGridBloquesColocados = new Grosor(5);
+			if (vm is ViewModelBloqueFuncionBase)
+				GrosorBordesGridBloquesColocados = new Grosor(5);
 		}
 
-		public void OnDragLeave(IDrageable vm)
+		public void OnDragSalio_Impl(IDrageable vm)
 		{
-			GrosorBordesGridBloquesColocados = new Grosor(1);
-		}
-
-		public bool OnDrop(IDrageable vm)
-		{
-			//Nos aseguramos de que vm dropeado sea del tipo adecuado
-			if (vm is ViewModelBloqueFuncionBase vmBloque)
-			{
+			if (vm is ViewModelBloqueFuncionBase)
 				GrosorBordesGridBloquesColocados = new Grosor(1);
+		}
 
-				ViewModelBloqueFuncionBase nuevoVMBloque = null;
+		public bool OnDrop_Impl(IDrageable vm)
+		{
+			if (vm is ViewModelBloqueFuncionBase bloque)
+			{
+				AñadirBloque(bloque.Copiar(), -1);
 
-				bool esBloqueDeMuestra = (bool)(SistemaPrincipal.Drag[KeysParametrosDrag.IndicePrametroExtra] ?? false);
-
-				if (esBloqueDeMuestra)
-				{
-					switch (vm)
-					{
-						case ViewModelBloqueDeclaracionVariable:
-							nuevoVMBloque = new ViewModelBloqueDeclaracionVariable(this);
-							break;
-						case ViewModelBloqueLlamarFuncion:
-							nuevoVMBloque = new ViewModelBloqueLlamarFuncion(this);
-							break;
-						default:
-							SistemaPrincipal.LoggerGlobal.Log(
-								$"Se intento dropear un {vmBloque.GetType()} pero no esta soportado",
-								ESeveridad.Advertencia);
-							return false;
-					}
-				}
-				else
-				{
-					BloquesColocados.Remove(vmBloque);
-
-					nuevoVMBloque = vmBloque;
-				}
-
-				int indiceBloque = -1;
-
-				if (SistemaPrincipal.Drag.ParametroAsignado(KeysParametrosDrag.IndiceParametroPosicionBloque))
-					indiceBloque = (int)SistemaPrincipal.Drag[KeysParametrosDrag.IndiceParametroPosicionBloque];
-
-				//Si el indice del bloque es -1 entonces no estamos colocando sobre otro bloque...
-				if (indiceBloque == -1)
-				{
-					//Colocamos el indice al ultimo
-					nuevoVMBloque.IndiceBloque = BloquesColocados.Count;
-
-					BloquesColocados.Add(nuevoVMBloque);
-				}
-				//Sino entonces el drag fue soltado sobre un bloque existente
-				else
-				{
-					//Hacemos que el indice del nuevo bloque sea igual al del bloque sobre el que fue sotado
-					nuevoVMBloque.IndiceBloque = indiceBloque;
-
-					BloquesColocados.Insert(nuevoVMBloque.IndiceBloque, nuevoVMBloque);
-
-					ActualizarIndicesBloques(0);
-				}
+				return true;
 			}
 
 			SistemaPrincipal.LoggerGlobal.Log($"Se intento dropear un {vm.GetType()} pero no esta soportado", ESeveridad.Advertencia);

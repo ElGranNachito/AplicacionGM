@@ -13,19 +13,25 @@
 		/// </summary>
 		public int IndiceZ { get; set; }
 
+		public virtual void OnDragEntro(IDrageable vm) => OnDragEntro_Impl(vm);
+
+		public virtual void OnDragSalio(IDrageable vm) => OnDragSalio_Impl(vm);
+
+		public virtual bool OnDrop(IDrageable vm) => OnDrop_Impl(vm);
+
 		/// <summary>
 		/// Funcion que se llamara cuando el cursor entre con un <see cref="Drag"/>
 		/// </summary>
-		public void OnDragEnter(IDrageable vm);
+		public void OnDragEntro_Impl(IDrageable vm);
 
 		/// <summary>
 		/// Funcion que se llamara cuando el cursor salga con un <see cref="Drag"/>
 		/// </summary>
-		public void OnDragLeave(IDrageable vm);
+		public void OnDragSalio_Impl(IDrageable vm);
 
 		/// <summary>
 		/// Funcion que se llamara cuando el usuario suelte el <see cref="Drag"/> sobre este <see cref="IReceptorDeDrag"/>
 		/// </summary>
-		public bool OnDrop(IDrageable vm);
+		public bool OnDrop_Impl(IDrageable vm);
 	}
 }

@@ -10,6 +10,9 @@ namespace AppGM
 	/// </summary>
 	public class ComenzarDragProperty : BaseAttachedProperty<bool, ComenzarDragProperty>
 	{
+		/// <summary>
+		/// Parametro extra que se pasara al drag
+		/// </summary>
 		public static readonly DependencyProperty ParametroDragProperty = 
 			DependencyProperty.RegisterAttached("ParametroDrag", typeof(object), typeof(ComenzarDragProperty));
 
@@ -19,10 +22,8 @@ namespace AppGM
 
 		public override void OnValueChanged_Impl(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
-			//Verificamos que el objeto sea un framework element
 			if (d is FrameworkElement fe)
 			{
-				//Cuando el usuario hace click sobre este elemento...
 				fe.MouseDown += (sender, args) =>
 				{
 					//Comenzamos el drag

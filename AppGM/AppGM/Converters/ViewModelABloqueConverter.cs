@@ -29,8 +29,10 @@ namespace AppGM
 			{
 				case ViewModelBloqueDeclaracionVariable vm:
 					return new UserControlBloqueDeclaracionVariable {DataContext = vm};
-				case ViewModelBloqueFuncionBase vm:
+				case ViewModelBloqueLlamarFuncion vm:
 					return new UserControlBloqueLlamarFuncion {DataContext = vm};
+				case ViewModelBloqueCondicionalCompleto vm:
+					return new UserControlBloqueCondicional {DataContext = vm};
 				default:
 					return null;
 			}

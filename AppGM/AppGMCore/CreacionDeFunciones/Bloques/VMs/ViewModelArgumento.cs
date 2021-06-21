@@ -11,6 +11,8 @@ using AppGM.Core.Delegados;
 
 namespace AppGM.Core
 {
+	//TODO: Deteccion automatica del tipo
+
 	/// <summary>
 	/// Representa un argumento para una funcion u operacion
 	/// </summary>
@@ -22,6 +24,8 @@ namespace AppGM.Core
 		/// Evento que dispara cuando <see cref="TextoActual"/> es modificado por el programa
 		/// </summary>
 		public event DVariableCambio<string> OnTextoActualModificado = delegate { };
+
+		public event DVariableCambio<Type> OnTipoArgumentoModificado = delegate { };
 
 		#endregion
 
@@ -127,9 +131,16 @@ namespace AppGM.Core
 			get => mTipoArgumento;
 			set
 			{
+				if (value == mTipoArgumento)
+					return;
+
+				Type valorAnterior = mTipoArgumento;
+
 				mTipoArgumento = value;
 
 				ActualizarValidez();
+
+				OnTipoArgumentoModificado(valorAnterior, mTipoArgumento);
 			}
 		}
 
@@ -194,6 +205,8 @@ namespace AppGM.Core
 
 		#region Metodos
 
+		public override List<BloqueVariable> ObtenerVariables() => mBloqueContendor.ObtenerVariables();
+
 		public override BloqueArgumento GenerarBloque_Impl()
 		{
 			if (!EsValido)
@@ -224,12 +237,7 @@ namespace AppGM.Core
 				seccionesArgumento.Add(new SeccionArgumentoMiembro(mMiembrosConsecuentes[i]));
 			}
 
-			return new BloqueArgumento(seccionesArgumento);
-		}
-
-		public override List<BloqueVariable> ObtenerVariables()
-		{
-			return mBloqueContendor.ObtenerVariables();
+			return new BloqueArgumento(seccionesArgumento, TipoArgumento);
 		}
 
 		public void ActualizarPosibilidadesAutocompletado(string nuevoTexto, int nuevaPosSignoIntercalacion)

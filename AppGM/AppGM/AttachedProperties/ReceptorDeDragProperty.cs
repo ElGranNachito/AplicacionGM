@@ -35,7 +35,7 @@ namespace AppGM
 
 						SistemaPrincipal.Drag.AñadirReceptorDrag(vm);
 
-						vm.OnDragEnter(SistemaPrincipal.Drag.ViewModelContenido);
+						vm.OnDragEntro(SistemaPrincipal.Drag.ViewModelContenido);
 					}
 				};
 
@@ -62,7 +62,7 @@ namespace AppGM
 
 						SistemaPrincipal.Drag.QuitarReceptorDrag(vm);
 
-						vm.OnDragLeave(SistemaPrincipal.Drag.ViewModelContenido);
+						vm.OnDragSalio(SistemaPrincipal.Drag.ViewModelContenido);
 					}
 				};
 

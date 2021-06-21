@@ -45,5 +45,15 @@ namespace AppGM.Core
 
 		public static bool EsAccesibleEnGuraScript(this MemberInfo miembro) =>
 			miembro.HasAttribute(typeof(AccesibleEnGuraScratch));
+
+		public static Type ObtenerTipoCompatible(this Type t)
+		{
+			if (t.IsValueType)
+				return t;
+			else
+				return typeof(object);
+		}
+
+		public static bool EsAsignableDesdeOA(this Type primero, Type segundo) => primero.IsAssignableFrom(segundo) || primero.IsAssignableTo(segundo);
 	}
 }

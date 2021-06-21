@@ -7,6 +7,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="125" d:DesignWidth="400">
 
+    <!-- ViewModel: ViewModelBloquellamarFuncion -->
+
     <local:UserControlBloqueBase
     ColorBordeBloque="{StaticResource ColorBloqueLlamarFuncion}"
     ColorRellenoBloque="{StaticResource ColorRellenoBloqueLlamarFuncion}">
@@ -26,7 +28,6 @@
 
             <!-- Combo box con tipos y variables disponibles -->
             <ComboBox
-                Grid.RowSpan="2"
                 VerticalAlignment="Center"
                 ItemsSource="{Binding TiposDisponibles}"
                 SelectedValue="{Binding TipoSeleccionado}">

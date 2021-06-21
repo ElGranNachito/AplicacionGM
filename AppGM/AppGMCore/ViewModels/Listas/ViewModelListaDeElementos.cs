@@ -54,7 +54,15 @@ namespace AppGM.Core
 		/// Quita un <paramref name="elemento"/> de <see cref="Elementos"/>
 		/// </summary>
 		/// <param name="elemento"><see cref="TipoElementos"/> que quitar</param>
+		/// <returns><see cref="bool"/> indicando si el elemento fue removido</returns>
 		public bool Remove(TipoElementos elemento) => Elementos.Remove(elemento);
+
+		/// <summary>
+		/// Devuelve un <see cref="bool"/> indicando si el <paramref name="elemento"/> existe en <see cref="Elementos"/>
+		/// </summary>
+		/// <param name="elemento"><see cref="TipoElementos"/> que quitar</param>
+		/// <returns><see cref="bool"/> indicando si el elemento existe</returns>
+		public bool Contiene(TipoElementos elemento) => Elementos.Contains(elemento);
 
 		public IEnumerator GetEnumerator() => Elementos.GetEnumerator();
 

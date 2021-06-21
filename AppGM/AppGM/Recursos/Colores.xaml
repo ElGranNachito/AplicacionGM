@@ -20,5 +20,9 @@
     <!-- Bloque llamar funcion -->
     <system:SolidColorBrush x:Key="ColorBloqueLlamarFuncion" Color="DarkViolet"/>
     <system:SolidColorBrush x:Key="ColorRellenoBloqueLlamarFuncion" Color="BlueViolet"/>
+
+    <!-- Bloque condicional -->
+    <system:SolidColorBrush x:Key="ColorBloqueCondicional" Color="DarkOrange"/>
+    <system:SolidColorBrush x:Key="ColorRellenoBloqueCondicional" Color="Orange"/>
     
 </ResourceDictionary>

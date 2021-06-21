@@ -70,12 +70,12 @@ namespace AppGM.Core
 			{
 				OnFinDrag(ViewModelContenido);
 
-				for (int i = 0; i < ReceptoresActualmenteActivos.Count; ++i)
+				for (int i = 1; i <= ReceptoresActualmenteActivos.Count; ++i)
 				{
-					if (ReceptoresActualmenteActivos[i].OnDrop(ViewModelContenido) && 
-					    i != ReceptoresActualmenteActivos.Count - 1)
+					if (ReceptoresActualmenteActivos[i - 1].OnDrop(ViewModelContenido) && 
+					    i != ReceptoresActualmenteActivos.Count)
 					{
-						ReceptoresActualmenteActivos.RemoveRange(i + 1, ReceptoresActualmenteActivos.Count - i);
+						ReceptoresActualmenteActivos.RemoveRange(i, ReceptoresActualmenteActivos.Count - i);
 
 						break;
 					}
@@ -100,7 +100,7 @@ namespace AppGM.Core
 
 			ViewModelContenido.OnEntrarAElemento(receptor);
 
-			receptor.OnDragEnter(ViewModelContenido);
+			receptor.OnDragEntro(ViewModelContenido);
 
 			//Si solo hay un elemento no hace falta ordenar
 			if (ReceptoresActualmenteActivos.Count == 1)
@@ -123,7 +123,7 @@ namespace AppGM.Core
 		{
 			ViewModelContenido.OnSalirDeElemento(receptor);
 
-			receptor.OnDragLeave(ViewModelContenido);
+			receptor.OnDragSalio(ViewModelContenido);
 
 			ReceptoresActualmenteActivos.Remove(receptor);
 		}

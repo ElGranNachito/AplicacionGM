@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Xml;
 
@@ -15,11 +16,16 @@ namespace AppGM.Core
 		private List<SeccionArgumentoBase> mSeccionesArgumento;
 
 		/// <summary>
+		/// <see cref="Type"/> de este argumento
+		/// </summary>
+		public Type TipoArgumento { get; private set; }
+
+		/// <summary>
 		/// Constructor
 		/// </summary>
 		/// <param name="_seccionesArgumento"><see cref="List{T}"/> de <see cref="SeccionArgumentoBase"/> con la que
 		/// inicializar <see cref="mSeccionesArgumento"/></param>
-		public BloqueArgumento(List<SeccionArgumentoBase> _seccionesArgumento)
+		public BloqueArgumento(List<SeccionArgumentoBase> _seccionesArgumento, Type _tipoArgumento)
 		{
 			mSeccionesArgumento = _seccionesArgumento;
 		}

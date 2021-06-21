@@ -23,5 +23,10 @@ namespace AppGM.Core
 		/// Cadena opcional que aparece en la parte derecha del item
 		/// </summary>
 		public string TextoExtra { get; set; }
+
+		/// <summary>
+		/// Tooltip que aparece cuando el mouse esta sobre este item
+		/// </summary>
+		public string ToolTip { get; set; }
 	}
 }

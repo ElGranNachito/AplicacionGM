@@ -1,0 +1,55 @@
+﻿<UserControl x:Class="AppGM.UserControlBloqueCondicional"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AppGM"
+             mc:Ignorable="d" 
+             d:DesignHeight="250" d:DesignWidth="600">
+
+    <!-- ViewModel: ViewModelBloqueCondicionalCompleto -->
+
+    <local:UserControlBloqueBase
+        ColorBordeBloque="{StaticResource ColorBloqueCondicional}"
+        ColorRellenoBloque="{StaticResource ColorRellenoBloqueCondicional}">
+
+        <Grid>
+        
+            <!-- If inicial -->
+            <local:UserControlBloqueContenedorBase>
+
+                <Grid>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Texto tipo condicional -->
+                    <TextBlock 
+                        VerticalAlignment="Center"
+                        FontSize="30"
+                        Text="{Binding NombreCondicional, FallbackValue=If}"/>
+
+                    <!-- Argumentos y operaciones logicas -->
+                    <local:UserControlCondicion
+                        Margin="5 0"
+                        Grid.Column="1"
+                        DataContext="{Binding ArgumentosCondicion}"/>
+
+                </Grid>
+            
+            </local:UserControlBloqueContenedorBase>
+
+            <!-- TODO: Añadir una lista para albergar elses -->
+
+        </Grid>
+
+    </local:UserControlBloqueBase>
+
+</UserControl>

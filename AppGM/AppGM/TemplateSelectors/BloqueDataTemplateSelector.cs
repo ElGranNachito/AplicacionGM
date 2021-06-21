@@ -47,6 +47,10 @@ namespace AppGM
 					resultado.DataType = typeof(UserControlBloqueLlamarFuncion);
 					resultado.VisualTree = new FrameworkElementFactory(typeof(UserControlBloqueLlamarFuncion));
 					break;
+				case ViewModelBloqueCondicionalCompleto:
+					resultado.DataType = typeof(UserControlBloqueCondicional);
+					resultado.VisualTree = new FrameworkElementFactory(typeof(UserControlBloqueCondicional));
+					break;
 				default:
 					//Si el tipo del vm no esta abarcado
 					SistemaPrincipal.LoggerGlobal.Log($"{nameof(Type)} de {nameof(item)} no fue {nameof(ViewModelBloqueFuncionBase)}", ESeveridad.Error);

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AppGM.Core.ViewModels.CreacionDeHabilidades
+namespace AppGM.Core
 {
 	/// <summary>
 	/// <see cref="ViewModelCreacionDeFuncionBase"/> para la creacion de una habilidad
@@ -14,7 +14,7 @@ namespace AppGM.Core.ViewModels.CreacionDeHabilidades
 		{
 			//TODO: Implementar de verdad
 			Compilador.IniciarCompilacion(
-				(from bloque in BloquesColocados.Elementos
+				(from bloque in Bloques.Elementos
 					select bloque.GenerarBloque()).ToList());
 		}
 
@@ -23,7 +23,8 @@ namespace AppGM.Core.ViewModels.CreacionDeHabilidades
 			return new List<ViewModelBloqueFuncionBase>
 			{
 				new ViewModelBloqueDeclaracionVariable(this),
-				new ViewModelBloqueLlamarFuncion(this)
+				new ViewModelBloqueLlamarFuncion(this),
+				new ViewModelBloqueCondicionalCompleto(this)
 			};
 		}
 
