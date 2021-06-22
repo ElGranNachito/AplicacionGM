@@ -21,7 +21,7 @@ namespace AppGM.Core
         protected PropertyChangedEventHandler mHandlerPasoActualPropertyChanged;
 
         /// <summary>
-        /// Indice del paso en el que usuario se encuentra
+        /// IndiceZ del paso en el que usuario se encuentra
         /// </summary>
         protected int mIndicePasoActual = 0;
 
@@ -61,12 +61,12 @@ namespace AppGM.Core
         /// <summary>
         /// Evento que se llama cuando el usuario avanza de paso
         /// </summary>
-        public event DVariableCambio<BaseViewModel> OnAvanzarPaso    = delegate { };
+        public event DVariableCambio<ViewModel> OnAvanzarPaso    = delegate { };
 
         /// <summary>
         /// Evento que se llama cuando el usuario retrocede de paso
         /// </summary>
-        public event DVariableCambio<BaseViewModel> OnRetrocederPaso = delegate { };
+        public event DVariableCambio<ViewModel> OnRetrocederPaso = delegate { };
 
         #endregion
 

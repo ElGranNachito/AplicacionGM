@@ -54,5 +54,19 @@ namespace AppGM.Core
         /// La verdad es que esta funcion no hace mucho pero me parece que queda mas prolijo que hacer un casteo
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int AValorNumerico(this ERango rango) => (int) rango;
+
+        public static List<EOperacionLogica> ObtenerOperacionesLogicasDisponibles(this Type t)
+        {
+	        if (t == typeof(bool))
+		        return new List<EOperacionLogica>(new[] {EOperacionLogica.Igual, EOperacionLogica.NoIgual});
+
+	        if (t.IsValueType)
+		        return Enum.GetValues(typeof(EOperacionLogica)).Cast<EOperacionLogica>().ToList();
+
+	        var operaciones = new List<EOperacionLogica>(
+		        new[] {EOperacionLogica.Y, EOperacionLogica.O, EOperacionLogica.Igual, EOperacionLogica.NoIgual});
+
+	        return operaciones;
+        }
     }
 }

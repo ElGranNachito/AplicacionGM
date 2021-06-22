@@ -17,17 +17,41 @@ namespace AppGM
         /// <summary>
         /// Instancia del <see cref="TipoConverter"/>
         /// </summary>
-        private static Lazy<TipoConverter> mInstanciaConverter = new Lazy<TipoConverter>(() => new TipoConverter());
+        public static Lazy<TipoConverter> instanciaConverter = new Lazy<TipoConverter>(() => new TipoConverter());
 
         #endregion
 
         #region Funciones
 
-        public override object ProvideValue(IServiceProvider serviceProvider) => mInstanciaConverter.Value;
+        public override object ProvideValue(IServiceProvider serviceProvider) => instanciaConverter.Value;
 
         public virtual object Convert(object value, Type targetType, object parameter, CultureInfo culture) => null;
         public virtual object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => null; 
 
         #endregion
     }
+
+    /// <summary>
+    /// Clase base para convertidores que tomen varios valores
+    /// </summary>
+    public abstract class ConvertidorDeValoresMultiples<TipoConverter> : MarkupExtension, IMultiValueConverter
+	    where TipoConverter : ConvertidorDeValoresMultiples<TipoConverter>, new()
+    {
+	    /// <summary>
+	    /// Instancia del <see cref="TipoConverter"/>
+	    /// </summary>
+	    public static Lazy<TipoConverter> instanciaConverter = new Lazy<TipoConverter>(() => new TipoConverter());
+
+		#region Funciones
+
+		public override object ProvideValue(IServiceProvider serviceProvider) => instanciaConverter.Value;
+
+		public abstract object Convert(object[] values, Type targetType, object parameter, CultureInfo culture);
+		public virtual object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+		{
+			throw new NotImplementedException();
+		} 
+
+		#endregion
+	}
 }

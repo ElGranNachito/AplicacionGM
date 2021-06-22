@@ -6,7 +6,7 @@ namespace AppGM.Core
     /// Viewmodel para el control ComboBoxConDescripcion
     /// </summary>
     /// <typeparam name="T">Tipo del <see cref="Enum"/></typeparam>
-    public class ViewModelComboBoxConDescripcion<T> : BaseViewModel
+    public class ViewModelComboBoxConDescripcion<T> : ViewModel
 		where T: Enum
     {
 		#region Propiedades

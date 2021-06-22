@@ -5,7 +5,7 @@ using AppGM.Core;
 namespace AppGM
 {
     /// <summary>
-    /// Convierte de un <see cref="BaseViewModel"/> a un <see cref="UserControl"/> para mostrar
+    /// Convierte de un <see cref="ViewModel"/> a un <see cref="UserControl"/> para mostrar
     /// como contenido de un paso
     /// </summary>
     public class ViewModelToContenidoPaso : BaseConverter<ViewModelToContenidoPaso>

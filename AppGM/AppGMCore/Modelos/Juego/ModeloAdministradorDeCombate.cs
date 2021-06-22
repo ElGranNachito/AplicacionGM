@@ -15,7 +15,7 @@ namespace AppGM.Core
         public TIRolCombate RolCombate { get; set; }
 
         /// <summary>
-        /// Indice para el turno actual entre personajes
+        /// IndiceZ para el turno actual entre personajes
         /// </summary>
         public int IndicePersonajeTurnoActual { get; set; }
         /// <summary>

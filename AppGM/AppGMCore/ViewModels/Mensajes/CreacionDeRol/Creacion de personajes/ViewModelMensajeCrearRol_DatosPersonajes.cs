@@ -35,6 +35,8 @@ namespace AppGM.Core
 
             ComandoAñadirPersonaje = new Comando(() =>
             {
+	            mDatosCreacionRol.modeloPersonajaActual = new ModeloPersonaje();
+
                 SistemaPrincipal.Aplicacion.VentanaMensajePrincipal.EstablecerViewModel(new ViewModelMensajeCrearRol_CrearPersonaje(mDatosCreacionRol, vmCrearRol));
             });
         }

@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Input;
 using AppGM.Core;
 
@@ -9,27 +10,35 @@ namespace AppGM
 	/// </summary>
 	public class ComenzarDragProperty : BaseAttachedProperty<bool, ComenzarDragProperty>
 	{
+		/// <summary>
+		/// Parametro extra que se pasara al drag
+		/// </summary>
+		public static readonly DependencyProperty ParametroDragProperty = 
+			DependencyProperty.RegisterAttached("ParametroDrag", typeof(object), typeof(ComenzarDragProperty));
+
+		public static object GetParametroDrag(DependencyObject d) => d.GetValue(ParametroDragProperty);
+
+		public static void SetParametroDrag(DependencyObject d, object valor) => d.SetValue(ParametroDragProperty, valor);
+
 		public override void OnValueChanged_Impl(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
-			//Verificamos que el objeto sea un framework element
 			if (d is FrameworkElement fe)
 			{
-				//Cuando el usuario hace click sobre este elemento...
 				fe.MouseDown += (sender, args) =>
 				{
 					//Comenzamos el drag
-					SistemaPrincipal.Drag.ComenzarDrag((BaseViewModel)((FrameworkElement)sender).DataContext);
+					SistemaPrincipal.Drag.ComenzarDrag(
+						(IDrageable)((FrameworkElement)sender).DataContext,
+						new KeyValuePair<int, object>[]{new (KeysParametrosDrag.IndicePrametroExtra, GetParametroDrag(fe))});
 
 					EventoVentana eventoMouseMovido = null;
+
+					ActualizarPosMouse(fe);
 
 					//Handler para actualizar la posicion del elemento cuando se mueve el mouse
 					eventoMouseMovido = ventana =>
 					{
-						//Obtenemos la posicion del mouse con respecto al padre del elemento
-						Point posMouse = Mouse.GetPosition((FrameworkElement)fe.Parent);
-
-						//Actualizamos la posicion
-						SistemaPrincipal.Drag.OffsetControl = new Grosor(posMouse.X, posMouse.Y, 0, 0);
+						ActualizarPosMouse(fe);
 					};
 
 					SistemaPrincipal.Aplicacion.VentanaActual.OnMouseMovido += eventoMouseMovido;
@@ -46,6 +55,15 @@ namespace AppGM
 					SistemaPrincipal.Drag.OnFinDrag += finDragHandler;
 				};
 			}
+		}
+
+		private void ActualizarPosMouse(FrameworkElement fe)
+		{
+			//Obtenemos la posicion del mouse con respecto al padre del elemento
+			Point posMouse = Mouse.GetPosition((IInputElement)SistemaPrincipal.Aplicacion.VentanaActual.ObtenerInstanciaVentana());
+
+			//Actualizamos la posicion
+			SistemaPrincipal.Drag.OffsetControl = new Grosor(posMouse.X, posMouse.Y, 0, 0);
 		}
 	}
 }

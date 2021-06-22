@@ -5,7 +5,7 @@ namespace AppGM.Core
     /// <summary>
     /// View model que almacena los participantes de un <see cref="ViewModelCombate"/>
     /// </summary>
-    public class ViewModelListaParticipantes : BaseViewModel
+    public class ViewModelListaParticipantes : ViewModel
     {
         /// <summary>
         /// Participantes

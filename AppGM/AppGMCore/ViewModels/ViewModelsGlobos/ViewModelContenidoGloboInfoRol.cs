@@ -3,7 +3,7 @@
     /// <summary>
     /// VM que representa el contenido del globo que muestra informacion de un rol
     /// </summary>
-    public class ViewModelContenidoGloboInfoRol : BaseViewModel
+    public class ViewModelContenidoGloboInfoRol : ViewModel
     {
         #region Propiedades
 

@@ -3,7 +3,7 @@
     /// <summary>
     /// Viewmodel que representa un vector de dos valores
     /// </summary>
-    public class ViewModelVector2 : BaseViewModel
+    public class ViewModelVector2 : ViewModel
     {
 		#region Propiedades
 

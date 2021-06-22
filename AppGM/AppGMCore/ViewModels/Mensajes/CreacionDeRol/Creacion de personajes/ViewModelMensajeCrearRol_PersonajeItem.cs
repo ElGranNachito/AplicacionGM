@@ -2,7 +2,7 @@
 
 namespace AppGM.Core
 {
-    public class ViewModelMensajeCrearRol_PersonajeItem : BaseViewModel
+    public class ViewModelMensajeCrearRol_PersonajeItem : ViewModel
     {
         #region Propiedades
         public bool EsServant => Personaje.TipoPersonaje == ETipoPersonaje.Servant;

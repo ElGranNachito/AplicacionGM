@@ -101,6 +101,7 @@
                             FontSize="{StaticResource TamañoFontGrande}"
                             FontFamily="{StaticResource 'Font Canon'}"
                             TextChanged="TextBoxPosY_TextChanged"
+                            FontFamily="{StaticResource 'Font Piola'}"
                             Text="{Binding TextoPosicionY, Mode=TwoWay}"/>
 
                         </StackPanel>

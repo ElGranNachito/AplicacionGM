@@ -5,7 +5,7 @@ namespace AppGM.Core
     /// <summary>
     /// Viewmodel que representa el contenido de la ventana de la aplicacion y cualquiera de sus popups
     /// </summary>
-	public class ViewModelAplicacion : BaseViewModel
+	public class ViewModelAplicacion : ViewModel
     {
         #region Campos & Propiedades
 

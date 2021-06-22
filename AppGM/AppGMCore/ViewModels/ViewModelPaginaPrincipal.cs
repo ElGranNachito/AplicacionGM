@@ -9,14 +9,14 @@ namespace AppGM.Core
     /// <summary>
     /// VM utilizado por el control de la pagina principal
     /// </summary>
-    public class ViewModelPaginaPrincipal : BaseViewModel
+    public class ViewModelPaginaPrincipal : ViewModel
     {
         #region Campos & Propiedades
 
         //------------------------CAMPOS-----------------------------
 
         /// <summary>
-        /// Indice del rol actualmente seleccionado.
+        /// IndiceZ del rol actualmente seleccionado.
         /// </summary>
         private int mIndiceRolActual = 0;
 

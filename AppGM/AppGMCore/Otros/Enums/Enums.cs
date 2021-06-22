@@ -470,6 +470,7 @@ namespace AppGM.Core
     /// Arquetipo de la personalidad de un <see cref="ModeloPersonajeJugable"/>
     /// </summary>
     [Flags]
+    [AccesibleEnGuraScratch("Arquetipo")]
     public enum EArquetipo
     {
         /// <summary>
@@ -890,5 +891,53 @@ namespace AppGM.Core
 	    /// JPG
 	    /// </summary>
 	    Jpg = 2
+    }
+
+    public enum EOperacionLogica
+    {
+        /// <summary>
+        /// ==
+        /// </summary>
+        Igual = 1,
+
+        /// <summary>
+        /// !=
+        /// </summary>
+        NoIgual = 2,
+
+        /// <summary>
+        /// >
+        /// </summary>
+        Mayor = 3,
+
+        /// <summary>
+        /// >=
+        /// </summary>
+        MayorIgual = 4,
+
+        /// <summary>
+        /// <
+        /// </summary>
+        Menor = 5,
+
+        /// <summary>
+        /// <=
+        /// </summary>
+        MenorIgual = 6,
+
+        /// <summary>
+        /// !
+        /// </summary>
+        No = 7,
+
+        /// <summary>
+        /// ||
+        /// </summary>
+        O = 8,
+
+        /// <summary>
+        /// &&
+        /// </summary>
+        Y = 9
     }
 }

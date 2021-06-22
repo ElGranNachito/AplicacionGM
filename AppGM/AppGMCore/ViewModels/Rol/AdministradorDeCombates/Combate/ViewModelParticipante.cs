@@ -6,7 +6,7 @@ namespace AppGM.Core
     /// <summary>
     /// VM que representa un <see cref="ModeloParticipante"/>
     /// </summary>
-    public class ViewModelParticipante : BaseViewModel
+    public class ViewModelParticipante : ViewModel
     {
         #region Campos & Propiedades
 

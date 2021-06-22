@@ -39,33 +39,35 @@
                             Background="{TemplateBinding Background}" 
                             SnapsToDevicePixels="True">
 
-                            <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                            <Grid>
+                                <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+
+                                <!-- Texto de ayuda -->
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    IsHitTestVisible="False"
+                                    FontSize="{TemplateBinding FontSize}"
+                                    FontFamily="{TemplateBinding FontFamily}"
+                                    Foreground="{TemplateBinding Foreground}"
+                                    Text="{TemplateBinding Tag}">
+
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+
+                                            <Setter Property="Visibility" Value="Hidden"/>
+
+                                            <!-- Cuando la propiedad Text de la TextBox no este vacia hacemos invisible el texto de ayuda -->
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Text}" Value="{x:Static System:String.Empty}">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
                         </Border>
-
-                        <!-- Texto de ayuda -->
-                        <TextBlock
-                            HorizontalAlignment="Center"
-                            IsHitTestVisible="False"
-                            FontSize="{TemplateBinding FontSize}"
-                            FontFamily="{TemplateBinding FontFamily}"
-                            Foreground="{TemplateBinding Foreground}"
-                            Text="{TemplateBinding Tag}">
-
-                            <TextBlock.Style>
-                                <Style TargetType="{x:Type TextBlock}">
-
-                                    <Setter Property="Visibility" Value="Hidden"/>
-
-                                    <!-- Cuando la propiedad Text de la TextBox no este vacia hacemos invisible el texto de ayuda -->
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Text}" Value="{x:Static System:String.Empty}">
-                                            <Setter Property="Visibility" Value="Visible"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-
-                                </Style>
-                            </TextBlock.Style>
-                        </TextBlock>
                     </Grid>
 
                 </ControlTemplate>

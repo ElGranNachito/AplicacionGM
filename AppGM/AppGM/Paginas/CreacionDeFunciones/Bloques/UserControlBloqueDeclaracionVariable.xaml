@@ -1,0 +1,94 @@
+﻿<UserControl x:Class="AppGM.UserControlBloqueDeclaracionVariable"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AppGM"
+             mc:Ignorable="d" 
+             d:DesignHeight="250" d:DesignWidth="600">
+
+    <!-- ViewModel: ViewModelBloqueDeclaracionVariable -->
+
+    <local:UserControlBloqueBase
+        ColorBordeBloque="{StaticResource ColorBloqueDeclaracionVariable}"
+        ColorRellenoBloque="{StaticResource ColorRellenoBloqueDeclaracionVariables}">
+
+        <!-- Contenido -->
+        <Grid>
+        
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+        
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" MaxWidth="250"/>
+                <ColumnDefinition Width="2*" MaxWidth="250"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+        
+            <!-- Nombre variable -->
+            <TextBox
+            VerticalAlignment="Center"
+            MinWidth="110"
+            Tag="Nombre"
+            TextAlignment="Center"
+            Style="{StaticResource TextoDescriptivo}"
+            Text="{Binding Nombre}"/>
+        
+            <!-- Valor por defecto de la variable -->
+            <local:UserControlArgumento
+            MinWidth="110"
+            Grid.Column = "1"
+            Margin="5"
+            Tag="Valor por defecto"
+            DataContext="{Binding ValorPorDefecto}"/>
+        
+            <!-- Flecha dropdown -->
+            <CheckBox
+            Grid.Column="3"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Right"
+            Margin="5 0"
+            Style="{StaticResource CheckBoxDropDown}"
+            IsChecked="{Binding MostrarMenuInferior}"/>
+        
+            <StackPanel
+            Grid.Row="2"
+            Visibility="{Binding MostrarMenuInferior, Converter={local:BooleanToVisibilityConverterColapsar}}">
+        
+                <!-- Checkbox variable persistente -->
+                <CheckBox
+                Margin="0 0 0 5"
+                VerticalAlignment="Center"
+                IsChecked="{Binding EsPersistente}">
+                    Variable Persistente
+                </CheckBox>
+        
+                <!-- Checkbox parametro -->
+                <CheckBox
+                VerticalAlignment="Center"
+                IsChecked="{Binding EsParametro}">
+                    Parametro
+                </CheckBox>
+        
+            </StackPanel>
+        
+            <ComboBox
+            Grid.Row="2"
+            Grid.Column="1"
+            Margin="5 0"
+            VerticalAlignment="Center"
+            Visibility="{Binding MostrarMenuInferior, Converter={local:BooleanToVisibilityConverterColapsar}}"
+            ItemsSource="{Binding TiposDisponibles}"
+            SelectedValue="{Binding Tipo, Mode=TwoWay}">
+        
+            </ComboBox>
+        
+        </Grid>
+
+    </local:UserControlBloqueBase>
+
+</UserControl>

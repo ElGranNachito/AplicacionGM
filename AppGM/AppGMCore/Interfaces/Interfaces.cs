@@ -47,6 +47,6 @@
 
     public interface IViewModelConBotonSeleccionado
     {
-        BaseViewModel ViewModelConBotonSeleccionado { get; set; }
+        ViewModel ViewModelConBotonSeleccionado { get; set; }
     }
 }

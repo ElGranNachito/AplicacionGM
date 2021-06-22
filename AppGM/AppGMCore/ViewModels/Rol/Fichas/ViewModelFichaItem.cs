@@ -6,7 +6,7 @@ namespace AppGM
     /// <summary>
     /// View model para un item en un ItemControl que contiene datos basicos de una ficha de un personaje
     /// </summary>
-    public class ViewModelFichaItem : BaseViewModel, IViewModelConBotonSeleccionado
+    public class ViewModelFichaItem : ViewModel, IViewModelConBotonSeleccionado
     {
         #region Propiedades
 
@@ -41,7 +41,7 @@ namespace AppGM
         /// </summary>
         public bool EsServantOMaster => EsServant || EsMaster;
 
-        public BaseViewModel ViewModelConBotonSeleccionado { get; set; }
+        public ViewModel ViewModelConBotonSeleccionado { get; set; }
 
         #endregion
 

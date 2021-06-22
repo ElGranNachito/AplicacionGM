@@ -51,6 +51,7 @@ namespace AppGM.Core
         /// <summary>
         /// Tirada de daño de la habilidad
         /// </summary>
+        [AccesibleEnGuraScratch("TiradaDeDaño")]
         public ControladorTiradaDaño ControladorTiradaDeDaño { get; set; }
 
         /// <summary>
@@ -97,6 +98,7 @@ namespace AppGM.Core
 
         #region Funciones
 
+        [AccesibleEnGuraScratch(nombreQueMostrar = "Utilizar")]
         public void Utilizar(
 	        ControladorPersonaje usuario, ControladorPersonaje[] objetivos,
 	        object parametroExtra, object segundoParametroExtra)

@@ -5,7 +5,7 @@ namespace AppGM.Core
     /// <summary>
     /// VM que facilita propiedades comunes de un <see cref="ModeloAdministradorDeCombate"/> para mostrar en forma de resumen
     /// </summary>
-    public class ViewModelCombateItem : BaseViewModel
+    public class ViewModelCombateItem : ViewModel
     {
         #region Propiedades
 

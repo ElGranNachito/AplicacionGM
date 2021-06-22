@@ -7,7 +7,7 @@ namespace AppGM.Core
     /// <summary>
     /// VM que representa un mapa
     /// </summary>
-    public class ViewModelMapa : BaseViewModel
+    public class ViewModelMapa : ViewModel
     {
         #region Campos & Propiedades
 

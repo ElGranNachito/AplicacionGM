@@ -3,7 +3,7 @@
     /// <summary>
     /// VM base para crear un mensaje (popup)
     /// </summary>
-    public class ViewModelMensajeBase : BaseViewModel
+    public class ViewModelMensajeBase : ViewModel
     {
         /// <summary>
         /// Color del fondo de la ventana

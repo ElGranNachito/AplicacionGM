@@ -6,7 +6,7 @@ namespace AppGM.Core
     /// <summary>
     /// View model que representa el control para la modificacion de la posicion de un personaje en un mapa
     /// </summary>
-    public class ViewModelIngresoPosicion : BaseViewModel
+    public class ViewModelIngresoPosicion : ViewModel
     {
         #region Campos & Propiedades
 

@@ -6,7 +6,7 @@ namespace AppGM.Core
     /// <summary>
     /// VM que representa el contenido de la pagina principal del rol
     /// </summary>
-    public class ViewModelPaginaPrincipalRol : BaseViewModel, IBotonSeleccionado<object>
+    public class ViewModelPaginaPrincipalRol : ViewModel, IBotonSeleccionado<object>
     {
         #region Miembros
 

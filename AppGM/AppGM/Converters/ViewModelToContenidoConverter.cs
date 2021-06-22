@@ -7,9 +7,9 @@ using AppGM.Core;
 namespace AppGM
 {
     /// <summary>
-    /// Convierte un <see cref="BaseViewModel"/> a un <see cref="UserControl"/>
+    /// Convierte un <see cref="ViewModel"/> a un <see cref="UserControl"/>
     /// </summary>
-    [ValueConversion(sourceType: typeof(BaseViewModel), targetType: typeof(UserControl))]
+    [ValueConversion(sourceType: typeof(ViewModel), targetType: typeof(UserControl))]
     public class ViewModelToContenidoConverter : BaseConverter<ViewModelToContenidoConverter>
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)

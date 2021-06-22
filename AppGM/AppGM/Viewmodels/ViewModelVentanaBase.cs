@@ -13,7 +13,7 @@ namespace AppGM
     /// Clase abstracta que provee campos, propiedades y una implementacion por defecto de la interfaz <see cref="IVentana"/>
     /// para que hereden viewmodels destinados a representar una ventana
     /// </summary>
-    public abstract class ViewModelVentanaBase : BaseViewModel, IVentana
+    public abstract class ViewModelVentanaBase : ViewModel, IVentana
     {
         #region Campos & Propiedades
 
@@ -112,6 +112,14 @@ namespace AppGM
                 DispararPropertyChanged(new PropertyChangedEventArgs(nameof(AlturaTitulo)));
                 DispararPropertyChanged(new PropertyChangedEventArgs(nameof(ResizeBorderThickness)));
                 DispararPropertyChanged(new PropertyChangedEventArgs(nameof(CaptionHeight)));
+
+                if (mVentana.WindowState == WindowState.Maximized)
+                {
+	                mVentana.Left = 0;
+	                mVentana.Top = 0;
+
+	                
+                }
             };
 
             //Inicializamos la propiedad en el constructor para poder acceder a 'this'
