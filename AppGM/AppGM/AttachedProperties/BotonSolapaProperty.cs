@@ -8,7 +8,7 @@ namespace AppGM
     /// <summary>
     /// Property para los <see cref="Button"/> de la columna derecha en el menu del rol
     /// </summary>
-    public class BotonMenuRolProperty : BaseAttachedProperty<BaseViewModel, BotonMenuRolProperty>
+    public class BotonSolapaProperty : BaseAttachedProperty<BaseViewModel, BotonSolapaProperty>
     {
         public override void OnValueChanged_Impl(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {

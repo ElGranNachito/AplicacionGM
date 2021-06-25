@@ -15,6 +15,7 @@ namespace AppGM.Core
 		public List<ModeloPersonaje> invocaciones                 = new List<ModeloPersonaje>();
         public List<ModeloPersonaje> npcs                         = new List<ModeloPersonaje>();
 		public List<ModeloMapa> mapas                             = new List<ModeloMapa>();
+        public List<ModeloAmbiente> ambientes                     = new List<ModeloAmbiente>();
 		public List<ModeloUtilizable> items                       = new List<ModeloUtilizable>();
 		public List<ModeloPortable> portables                     = new List<ModeloPortable>();
 		public List<ModeloPortable> portableOfensivo              = new List<ModeloPortable>();
@@ -31,7 +32,7 @@ namespace AppGM.Core
 		public List<ModeloCondicion> condiciones                  = new List<ModeloCondicion>();
 		public List<ModeloAdministradorDeCombate> combatesActivos = new List<ModeloAdministradorDeCombate>();
 		public List<ModeloLimitador> limitadores                  = new List<ModeloLimitador>();
-		public List<ModeloCargas> cargasHabilidades      = new List<ModeloCargas>();
+		public List<ModeloCargas> cargasHabilidades               = new List<ModeloCargas>();
 		public List<ModeloParticipante> participantes             = new List<ModeloParticipante>();
 	}
 }

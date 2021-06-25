@@ -10,10 +10,15 @@
         MinHeight="562"
         MinWidth="1000"
 
-        WindowStyle="None"
+        ResizeMode="CanResize" 
+
+        WindowStyle="SingleBorderWindow"
+        WindowState="Normal"
         WindowStartupLocation="CenterScreen"
 
-        Title="MainWindow" Height="700" Width="1200">
+        BorderThickness="{Binding ResizeBorderThickness}"
+
+        Title="MainWindow">
 
     <Window.Resources>
         
@@ -30,10 +35,10 @@
                                 <RowDefinition Height="{Binding AlturaTitulo}"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-
+                            
                             <!-- Barra superior -->
 
-                            <Grid Background="White"
+                            <Grid Background="#121212"
                                   Panel.ZIndex="12">
 
                                 <Grid.ColumnDefinitions>
@@ -48,7 +53,10 @@
                                 <!-- Titulo ventana -->
                                 <TextBlock Grid.Column="1"
                                            Grid.ColumnSpan="2"
-                                           HorizontalAlignment="Center"
+                                           Margin="8 0 0 0"
+                                           HorizontalAlignment="Left"
+                                           VerticalAlignment="Center"
+                                           Foreground="#96EDD2"
                                            Text="{Binding TituloVentana}"/>
 
                                 <!-- Botones visibilidad ventana -->
@@ -58,22 +66,25 @@
                                     <Button Content="{StaticResource Fa-Minimizar}"  
                                             FontFamily="{StaticResource 'Font Awesome Regular'}"
                                             Command="{Binding ComandoMinimizarVentana}" 
-                                            Style="{StaticResource BotonVentanaPrincipal}"/>
+                                            Style="{StaticResource BotonVentanaPrincipal}"
+                                            Margin="5 0 5 0"/>
                                     <Button Content="{StaticResource Fa-Maximizar}" 
                                             FontFamily="{StaticResource 'Font Awesome Regular'}"
                                             Command="{Binding ComandoMaximizarVentana}" 
-                                            Style="{StaticResource BotonVentanaPrincipal}"/>
+                                            Style="{StaticResource BotonVentanaPrincipal}"
+                                            Margin="5 0 5 0"/>
                                     <Button Content="{StaticResource Fa-Cruz}"  
                                             FontFamily="{StaticResource 'Font Awesome Regular'}"
                                             Command="{Binding ComandoCerrarVentana}" 
-                                            Style="{StaticResource BotonCerrarVentanaPrincipal}"/>
+                                            Style="{StaticResource BotonCerrarVentanaPrincipal}"
+                                            Margin="5 0 10 0"/>
 
                                 </StackPanel>
 
                             </Grid>
 
                             <!-- Contenido -->
-                            <Border Grid.Row="1">
+                            <Border Grid.Row="1" Margin="0 0 0 8">
                                 <ContentPresenter Content="{TemplateBinding Content}"/>
                             </Border>
 
@@ -81,6 +92,7 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+
         </Style>
     </Window.Resources>
 

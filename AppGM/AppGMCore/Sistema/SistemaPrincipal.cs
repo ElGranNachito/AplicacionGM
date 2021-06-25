@@ -22,49 +22,49 @@ namespace AppGM.Core
         /// <summary>
         /// Instancia global de <see cref="IControladorDeArchivos"/>
         /// </summary>
-        public static IControladorDeArchivos ControladorDeArchivos        => ObtenerInstancia<IControladorDeArchivos>();
+        public static IControladorDeArchivos ControladorDeArchivos          => ObtenerInstancia<IControladorDeArchivos>();
 
         /// <summary>
         /// View model de la aplicacion
         /// </summary>
-        public static ViewModelAplicacion           Aplicacion            => ObtenerInstancia<ViewModelAplicacion>();
+        public static ViewModelAplicacion           Aplicacion              => ObtenerInstancia<ViewModelAplicacion>();
 
         /// <summary>
         /// Viewm model de la pagina principal del rol
         /// </summary>
-        public static ViewModelPaginaPrincipalRol   RolSeleccionado       => ObtenerInstancia<ViewModelPaginaPrincipalRol>();
+        public static ViewModelSolapaMenuRol        RolSeleccionado         => ObtenerInstancia<ViewModelSolapaMenuRol>();
 
         /// <summary>
         /// View model del menu de seleccion de combate
         /// </summary>
-        public static ViewModelMenuSeleccionCombate MenuSeleccionCombate  => ObtenerInstancia<ViewModelMenuSeleccionCombate>();
-
-        /// <summary>
-        /// Viewm model del controlador de combate
-        /// </summary>
-        public static ViewModelCombate              CombateActual         => ObtenerInstancia<ViewModelCombate>();
-
-        /// <summary>
-        /// Modelo del rol actualmente abierto
-        /// </summary>
-        public static ModeloRol                     ModeloRolActual       => ObtenerInstancia<ModeloRol>();
+        public static ViewModelMenuSeleccionCombate MenuSeleccionCombate    => ObtenerInstancia<ViewModelMenuSeleccionCombate>();
+                                                                            
+        /// <summary>                                                       
+        /// Viewm model del controlador de combate                          
+        /// </summary>                                                      
+        public static ViewModelCombate              CombateActual           => ObtenerInstancia<ViewModelCombate>();
+                                                                            
+        /// <summary>                                                       
+        /// Modelo del rol actualmente abierto                              
+        /// </summary>                                                      
+        public static ModeloRol                     ModeloRolActual         => ObtenerInstancia<ModeloRol>();
 
         /// <summary>
         /// Controladores de personajes, habilidades, etc. Del rol actualmente seleccionado
         /// </summary>
-        public static DatosRol                      DatosRolSeleccionado  => RolSeleccionado.ControladorRol.datosRol;
-
-        /// <summary>
-        /// Logger global
-        /// </summary>
-        public static LoggerFactory                 LoggerFactoryGlobal   => ObtenerInstancia<LoggerFactory>();
-
-        /// <summary>
-        /// Logger global
-        /// </summary>
-        public static Logger                        LoggerGlobal          => ObtenerInstancia<Logger>();
-
-        public static Drag                          Drag                  => ObtenerInstancia<Drag>();
+        public static DatosRol                      DatosRolSeleccionado    => RolSeleccionado.ControladorRol.datosRol;
+                                                                            
+        /// <summary>                                                       
+        /// Logger global                                                   
+        /// </summary>                                                      
+        public static LoggerFactory                 LoggerFactoryGlobal     => ObtenerInstancia<LoggerFactory>();
+                                                                            
+        /// <summary>                                                       
+        /// Logger global                                                   
+        /// </summary>                                                      
+        public static Logger                        LoggerGlobal            => ObtenerInstancia<Logger>();
+                                                                            
+        public static Drag                          Drag                    => ObtenerInstancia<Drag>();
 
         /// <summary>
         /// Contexto del thread principal
@@ -109,7 +109,7 @@ namespace AppGM.Core
         {
             //Atamos primero estos das clases al IoC porque son necesarias para la carga
 	        Kernel.Bind<ModeloRol>().ToConstant(modelo);
-            Kernel.Bind<ViewModelPaginaPrincipalRol>().ToConstant(new ViewModelPaginaPrincipalRol());
+            Kernel.Bind<ViewModelSolapaMenuRol>().ToConstant(new ViewModelSolapaMenuRol());
 
             //Cargamos los datos
             await DatosRolSeleccionado.CargarDatos();
@@ -194,6 +194,7 @@ namespace AppGM.Core
         {
 	        Kernel.Bind<ViewModelMenuSeleccionTipoFicha>().ToConstant(new ViewModelMenuSeleccionTipoFicha());
             Kernel.Bind<ViewModelListaFichasVistaFichas>().ToConstant(new ViewModelListaFichasVistaFichas());
+            Kernel.Bind<ViewModelSolapaSeccionMapas>()    .ToConstant(new ViewModelSolapaSeccionMapas());
             Kernel.Bind<ViewModelMapaPrincipal>()         .ToConstant(new ViewModelMapaPrincipal(DatosRolSeleccionado.Mapas[0]));
             Kernel.Bind<ViewModelMenuSeleccionCombate>()  .ToConstant(new ViewModelMenuSeleccionCombate(DatosRolSeleccionado.CombatesActivos));
             Kernel.Bind<ViewModelCombate>()               .ToConstant(new ViewModelCombate());
@@ -209,7 +210,7 @@ namespace AppGM.Core
             Kernel.Unbind<ViewModelMapaPrincipal>();
             Kernel.Unbind<ViewModelMenuSeleccionCombate>();
             Kernel.Unbind<ViewModelCombate>();
-            Kernel.Unbind<ViewModelPaginaPrincipalRol>();
+            Kernel.Unbind<ViewModelSolapaMenuRol>();
             Kernel.Unbind<ModeloRol>();
         }
 

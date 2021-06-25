@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:AppGM"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <!-- UserControl que hace uso del ViewModelSolapaMenuRol -->
     <Border Padding="20 20 0 20" Background="Black">
 
         <Grid>
@@ -42,7 +43,7 @@
                             BorderThickness="0"
                             Command="{Binding ComandoBotonFichas}"
                             Style="{StaticResource BotonMenuRol}"
-                            local:BotonMenuRolProperty.Value="{Binding}"
+                            local:BotonSolapaProperty.Value="{Binding}"
                             FontSize="15"/>
 
                     <!-- Mapas -->
@@ -51,7 +52,7 @@
                             BorderThickness="0"
                             Command="{Binding ComandoBotonMapas}"
                             Style="{StaticResource BotonMenuRol}"
-                            local:BotonMenuRolProperty.Value="{Binding}"
+                            local:BotonSolapaProperty.Value="{Binding}"
                             FontSize="15"/>
 
                     <!-- Registro -->
@@ -60,7 +61,7 @@
                             BorderThickness="0"
                             Command="{Binding ComandoBotonRegistro}"
                             Style="{StaticResource BotonMenuRol}"
-                            local:BotonMenuRolProperty.Value="{Binding}"
+                            local:BotonSolapaProperty.Value="{Binding}"
                             FontSize="15"/>
 
                     <!-- Tirada -->
@@ -69,7 +70,7 @@
                             BorderThickness="0"
                             Command="{Binding ComandoBotonTirada}"
                             Style="{StaticResource BotonMenuRol}"
-                            local:BotonMenuRolProperty.Value="{Binding}"
+                            local:BotonSolapaProperty.Value="{Binding}"
                             FontSize="15"/>
 
                     <!-- Combates -->
@@ -78,7 +79,7 @@
                             BorderThickness="0"
                             Command="{Binding ComandoBotonCombates}"
                             Style="{StaticResource BotonMenuRol}"
-                            local:BotonMenuRolProperty.Value="{Binding}"
+                            local:BotonSolapaProperty.Value="{Binding}"
                             FontSize="15"/>
                 </StackPanel>
 

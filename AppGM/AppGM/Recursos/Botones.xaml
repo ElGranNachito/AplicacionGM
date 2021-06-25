@@ -62,6 +62,7 @@
 
                         <TextBlock 
                             Text="{TemplateBinding Content}"
+                            Foreground="#96EDD2"
                             VerticalAlignment="Center">
                         </TextBlock>
                     </Border>
@@ -75,7 +76,7 @@
 
             <!-- Cuando el mouse pasa sobre el boton cambiar el color del fondo -->
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="DarkGray"/>
+                <Setter Property="Background" Value="#1F1F1F"/>
             </Trigger>
 
         </Style.Triggers>
@@ -178,6 +179,13 @@
 
             </Setter.Value>
         </Setter>
+
+    </Style>
+
+    <!-- Botones de las solapas superiores en la seccion de mapas-->
+    <Style TargetType="{x:Type Button}" x:Key="BotonSolapaMapa" BasedOn="{StaticResource BotonMenuRol}">
+
+        <Setter Property="Padding" Value="5 1"/>
 
     </Style>
 
