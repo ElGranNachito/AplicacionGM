@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace AppGM.Core
 {
@@ -48,6 +49,11 @@ namespace AppGM.Core
 		public bool EsParametro { get; set; }
 
 		/// <summary>
+		/// Indica si se debe mostrar le combo box para seleccionar el tipo de la variable
+		/// </summary>
+		public bool DebeSeleccionarTipoVariable => MostrarMenuInferior && !ValorPorDefecto.DeteccionAutomaticaDeTipo;
+
+		/// <summary>
 		/// Tipo de la variable
 		/// </summary>
 		public Type Tipo
@@ -86,13 +92,25 @@ namespace AppGM.Core
 		public ViewModelBloqueDeclaracionVariable(ViewModelCreacionDeFuncionBase _vmCreacionFuncionBase)
 			: base(_vmCreacionFuncionBase)
 		{
-			ValorPorDefecto = new ViewModelArgumento(mVMCreacionDeFuncion, this, typeof(object));
+			ValorPorDefecto = new ViewModelArgumento(mVMCreacionDeFuncion, this, typeof(object), "Valor por defecto");
 			Tipo = typeof(object);
 
 			ValorPorDefecto.OnEsValidoCambio += esValido =>
 			{
 				if (!esValido)
 					EsValido = false;
+			};
+
+			PropertyChanged += (sender, args) =>
+			{
+				if (args.PropertyName.Equals(nameof(MostrarMenuInferior)))
+					DispararPropertyChanged(new PropertyChangedEventArgs(nameof(DebeSeleccionarTipoVariable)));
+			};
+
+			ValorPorDefecto.PropertyChanged += (sender, args) =>
+			{
+				if (args.PropertyName.Equals(nameof(ValorPorDefecto.DeteccionAutomaticaDeTipo)))
+					DispararPropertyChanged(new PropertyChangedEventArgs(nameof(DebeSeleccionarTipoVariable)));
 			};
 		}
 

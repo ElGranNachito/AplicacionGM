@@ -37,15 +37,21 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             Background="{TemplateBinding Background}" 
+                            Padding="{TemplateBinding Padding}"
                             SnapsToDevicePixels="True">
 
                             <Grid>
-                                <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                                <ScrollViewer 
+                                    x:Name="PART_ContentHost" 
+                                    Focusable="false" 
+                                    HorizontalScrollBarVisibility="Hidden"
+                                    VerticalScrollBarVisibility="Hidden"/>
 
                                 <!-- Texto de ayuda -->
                                 <TextBlock
-                                    HorizontalAlignment="Center"
                                     IsHitTestVisible="False"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
                                     FontSize="{TemplateBinding FontSize}"
                                     FontFamily="{TemplateBinding FontFamily}"
                                     Foreground="{TemplateBinding Foreground}"

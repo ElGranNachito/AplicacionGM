@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AppGM"
              mc:Ignorable="d" 
-             d:DesignHeight="250" d:DesignWidth="600">
+             d:DesignHeight="300" d:DesignWidth="600">
 
     <!-- ViewModel: ViewModelBloqueDeclaracionVariable -->
 
@@ -31,61 +31,65 @@
         
             <!-- Nombre variable -->
             <TextBox
-            VerticalAlignment="Center"
-            MinWidth="110"
-            Tag="Nombre"
-            TextAlignment="Center"
-            Style="{StaticResource TextoDescriptivo}"
-            Text="{Binding Nombre}"/>
+                TextAlignment="Center"
+                Margin="15"
+                Background="White"
+                Tag="Nombre"
+                Style="{StaticResource TextoDescriptivo}"
+                Text="{Binding Nombre}"/>
         
             <!-- Valor por defecto de la variable -->
             <local:UserControlArgumento
-            MinWidth="110"
-            Grid.Column = "1"
-            Margin="5"
-            Tag="Valor por defecto"
-            DataContext="{Binding ValorPorDefecto}"/>
+                Grid.Column = "1"
+                Margin="15"
+                DataContext="{Binding ValorPorDefecto}"/>
         
             <!-- Flecha dropdown -->
             <CheckBox
-            Grid.Column="3"
-            VerticalAlignment="Center"
-            HorizontalAlignment="Right"
-            Margin="5 0"
-            Style="{StaticResource CheckBoxDropDown}"
-            IsChecked="{Binding MostrarMenuInferior}"/>
+                Grid.Column="3"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Right"
+                Margin="5 0"
+                Style="{StaticResource CheckBoxDropDown}"
+                IsChecked="{Binding MostrarMenuInferior}"/>
         
             <StackPanel
-            Grid.Row="2"
-            Visibility="{Binding MostrarMenuInferior, Converter={local:BooleanToVisibilityConverterColapsar}}">
+                Grid.Row="2"
+                Visibility="{Binding MostrarMenuInferior, Converter={local:BooleanToVisibilityConverterColapsar}}">
         
                 <!-- Checkbox variable persistente -->
                 <CheckBox
-                Margin="0 0 0 5"
-                VerticalAlignment="Center"
-                IsChecked="{Binding EsPersistente}">
-                    Variable Persistente
+                    Margin="0 0 0 5"
+                    VerticalAlignment="Center"
+                    IsChecked="{Binding EsPersistente}">
+                        Variable Persistente
                 </CheckBox>
         
                 <!-- Checkbox parametro -->
                 <CheckBox
-                VerticalAlignment="Center"
-                IsChecked="{Binding EsParametro}">
-                    Parametro
+                    Margin="0 0 0 5"
+                    VerticalAlignment="Center"
+                    IsChecked="{Binding EsParametro}">
+                        Parametro
                 </CheckBox>
-        
+
+                <!-- Checkbox deteccion automatica de tipo -->
+                <CheckBox
+                    VerticalAlignment="Center"
+                    IsChecked="{Binding ValorPorDefecto.DeteccionAutomaticaDeTipo}">
+                        Detectar tipo automaticamente
+                </CheckBox>
+
             </StackPanel>
         
             <ComboBox
-            Grid.Row="2"
-            Grid.Column="1"
-            Margin="5 0"
-            VerticalAlignment="Center"
-            Visibility="{Binding MostrarMenuInferior, Converter={local:BooleanToVisibilityConverterColapsar}}"
-            ItemsSource="{Binding TiposDisponibles}"
-            SelectedValue="{Binding Tipo, Mode=TwoWay}">
-        
-            </ComboBox>
+                Grid.Row="2"
+                Grid.Column="1"
+                Margin="15 0"
+                VerticalAlignment="Center"
+                Visibility="{Binding DebeSeleccionarTipoVariable, Converter={local:BooleanToVisibilityConverterColapsar}}"
+                ItemsSource="{Binding TiposDisponibles}"
+                SelectedValue="{Binding Tipo, Mode=TwoWay}"/>
         
         </Grid>
 

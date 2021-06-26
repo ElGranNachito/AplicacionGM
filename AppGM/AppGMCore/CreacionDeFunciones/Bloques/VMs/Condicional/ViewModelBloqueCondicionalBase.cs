@@ -10,6 +10,11 @@ namespace AppGM.Core
 	public class ViewModelBloqueCondicionalBase : ViewModelBloqueContenedor<BloqueCondicional>
 	{
 		/// <summary>
+		/// Nombre de este bloque
+		/// </summary>
+		public string NombreCondicional { get; set; }
+
+		/// <summary>
 		/// Contiene todos los <see cref="ViewModelArgumento"/> y <see cref="EOperacionLogica"/>
 		/// que realizar con esos argumentos
 		/// </summary>

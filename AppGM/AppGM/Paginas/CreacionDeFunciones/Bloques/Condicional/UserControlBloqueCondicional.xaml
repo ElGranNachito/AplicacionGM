@@ -14,39 +14,56 @@
         ColorRellenoBloque="{StaticResource ColorRellenoBloqueCondicional}">
 
         <Grid>
-        
-            <!-- If inicial -->
-            <local:UserControlBloqueContenedorBase>
 
-                <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
+            <!-- Lista de bloques de la condicion -->
+            <ItemsControl>
 
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <local:UserControlBloqueContenedorBase>
 
-                    <!-- Texto tipo condicional -->
-                    <TextBlock 
-                        VerticalAlignment="Center"
-                        FontSize="30"
-                        Text="{Binding NombreCondicional, FallbackValue=If}"/>
+                            <Grid>
 
-                    <!-- Argumentos y operaciones logicas -->
-                    <local:UserControlCondicion
-                        Margin="5 0"
-                        Grid.Column="1"
-                        DataContext="{Binding ArgumentosCondicion}"/>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
 
-                </Grid>
-            
-            </local:UserControlBloqueContenedorBase>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
 
-            <!-- TODO: Añadir una lista para albergar elses -->
+                                <!-- Texto tipo condicional -->
+                                <TextBlock 
+                                    VerticalAlignment="Center"
+                                    FontSize="30"
+                                    Text="{Binding NombreCondicional, FallbackValue=If}"/>
+
+                                <!-- Argumentos y operaciones logicas -->
+                                <local:UserControlCondicion
+                                    Margin="5 0"
+                                    Grid.Column="1"
+                                    DataContext="{Binding ArgumentosCondicion}"/>
+
+                            </Grid>
+
+                        </local:UserControlBloqueContenedorBase>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+
+            </ItemsControl>
+
+            <!-- Boton para añadir mas bloques a la condicion -->
+            <Button
+                Grid.Row="1"
+                HorizontalAlignment="Left"
+                Content="+"></Button>
 
         </Grid>
 

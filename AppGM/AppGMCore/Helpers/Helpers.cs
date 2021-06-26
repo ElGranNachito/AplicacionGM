@@ -43,7 +43,7 @@ namespace AppGM.Core
 			return false;
 		}
 
-		public static bool EsAccesibleEnGuraScript(this MemberInfo miembro) =>
+		public static bool EsAccesibleEnGuraScratch(this MemberInfo miembro) =>
 			miembro.HasAttribute(typeof(AccesibleEnGuraScratch));
 
 		public static Type ObtenerTipoCompatible(this Type t)

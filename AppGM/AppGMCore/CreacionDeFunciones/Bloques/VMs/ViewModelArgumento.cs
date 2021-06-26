@@ -92,6 +92,12 @@ namespace AppGM.Core
 		public object Valor { get; set; }
 
 		/// <summary>
+		/// <see cref="bool"/> que indica si debemos detectar el <see cref="TipoArgumento"/> automaticamente
+		/// en base a lo que ingrese el usuario.
+		/// </summary>
+		public bool DeteccionAutomaticaDeTipo { get; set; }
+			
+		/// <summary>
 		/// Valor que el usuario ingreso
 		/// </summary>
 		public string TextoActual { get; set; } = string.Empty;
@@ -382,11 +388,14 @@ namespace AppGM.Core
 			//Obtenemos todas las variables
 			var variablesDisponibles = ObtenerVariables();
 
-			//Quitamos las variables que no se puedan usar para asignar al tipo de este argumento
-			variablesDisponibles.RemoveAll(bloque =>
+			if (!DeteccionAutomaticaDeTipo)
 			{
-				return !TipoArgumento.IsAssignableFrom(bloque.tipo);
-			});
+				//Quitamos las variables que no se puedan usar para asignar al tipo de este argumento
+				variablesDisponibles.RemoveAll(bloque =>
+				{
+					return !TipoArgumento.IsAssignableFrom(bloque.tipo);
+				});
+			}
 
 			nombresVariables.AddRange(
 				from bloque in variablesDisponibles
@@ -413,7 +422,7 @@ namespace AppGM.Core
 			if (mBase is Type t)
 			{
 				return (from miembro in t.GetMembers(BindingFlags.Static | BindingFlags.Public)
-					where TipoArgumento.IsAssignableFrom(t)
+					where DeteccionAutomaticaDeTipo || TipoArgumento.IsAssignableFrom(t)
 					select new ViewModelItemAutocompletadoMiembro(miembro)).Cast<ViewModelItemAutocompletadoBase>().ToList();
 			}
 
@@ -436,7 +445,7 @@ namespace AppGM.Core
 			//el atributo 'AccesibleEnGuraScratch' y que puedan ser utilizados para 
 			//asignar a 'TipoArgumento'
 			miembrosDisponibles = from miembro in tipo.GetMembers()
-				where miembro.HasAttribute(typeof(AccesibleEnGuraScratch))
+				where miembro.EsAccesibleEnGuraScratch()
 				select new ViewModelItemAutocompletadoMiembro(miembro);
 
 			//Devolvemos los miembros encontrados
@@ -702,16 +711,18 @@ namespace AppGM.Core
 				//Si el tipo actual es un enum...
 				if (typeof(Enum).IsAssignableFrom(ultimoTipoValido))
 				{
-					condicionBucle = miembro => 
-						miembro.Name.Equals(seccionDeTextoConsecuente) && 
-						miembro.ObtenerTipoRetorno().HasAttribute(typeof(AccesibleEnGuraScratch));
+					condicionBucle = miembro =>
+						miembro.ObtenerTipoRetorno().EsAccesibleEnGuraScratch() &&
+						miembro.Name.Equals(seccionDeTextoConsecuente) &&
+						(DeteccionAutomaticaDeTipo || TipoArgumento.IsAssignableFrom(miembro.ObtenerTipoRetorno()));
 				}
 				//Si es cualquier otra cosa...
 				else
 				{
 					condicionBucle = miembro =>
-						miembro.HasAttribute(typeof(AccesibleEnGuraScratch)) &&
-						miembro.Name.Equals(seccionDeTextoConsecuente);
+						miembro.EsAccesibleEnGuraScratch() &&
+						miembro.Name.Equals(seccionDeTextoConsecuente) &&
+						(DeteccionAutomaticaDeTipo || TipoArgumento.IsAssignableFrom(miembro.ObtenerTipoRetorno()));
 				}
 
 				foreach (var miembro in ultimoTipoValido.GetMembers())
@@ -761,34 +772,28 @@ namespace AppGM.Core
 			mTextoAnterior = TextoActual;
 			ModificarTextoActual(TextoActual, true);
 
-			if (mNumeroDeSecciones == 1)
-			{
-				if (!TipoArgumento.IsAssignableFrom(mTipoBase))
-					return false;
-			}
-			else
-			{
-				Type tipoRetornoMiembro = mMiembrosConsecuentes.Last().ObtenerTipoRetorno();
+			Type tipoDeRetorno = mNumeroDeSecciones == 1 ? mTipoBase : mMiembrosConsecuentes.Last().ObtenerTipoRetorno();
 
-				if (!TipoArgumento.IsAssignableFrom(tipoRetornoMiembro))
+			if (DeteccionAutomaticaDeTipo && tipoDeRetorno != TipoArgumento)
+				TipoArgumento = tipoDeRetorno;
+			else if (!TipoArgumento.IsAssignableFrom(tipoDeRetorno))
+				return false;
+
+			//Revisamos los miembros consecuentes
+			for (int i = 0; i < mMiembrosConsecuentes.Count; ++i)
+			{
+				Type tipoRetorno = mMiembrosConsecuentes[i].ObtenerTipoRetorno();
+
+				//Nos aseguramos de que sean accesibles
+				if (!tipoRetorno.EsAccesibleEnGuraScratch())
 					return false;
 
-				//Revisamos los miembros consecuentes
-				for (int i = 0; i < mMiembrosConsecuentes.Count; ++i)
+				//Si el miembro es un metodo y tiene una lista de parametros...
+				if (mMiembrosConsecuentes[i] is MethodInfo && mFuncionesConParametros.ContainsKey(i))
 				{
-					Type tipoRetorno = mMiembrosConsecuentes[i].ObtenerTipoRetorno();
-
-					//Nos aseguramos de que sean accesibles
-					if (!tipoRetorno.HasAttribute(typeof(AccesibleEnGuraScratch)))
+					//Revisamos que los argumentos sean validos
+					if (!mFuncionesConParametros[i].VerificarValidez())
 						return false;
-
-					//Si el miembro es un metodo y tiene una lista de parametros...
-					if (mMiembrosConsecuentes[i] is MethodInfo && mFuncionesConParametros.ContainsKey(i))
-					{
-						//Revisamos que los argumentos sean validos
-						if (!mFuncionesConParametros[i].VerificarValidez())
-							return false;
-					}
 				}
 			}
 

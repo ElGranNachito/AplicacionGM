@@ -18,12 +18,12 @@
         <Style x:Key="EstiloBorde" TargetType="{x:Type Border}">
             <Setter Property="Background">
                 <Setter.Value>
-                    <MultiBinding Converter="{local:BoolAColor}">
+                    <MultiBinding Converter="{local:BoolAColor}" ConverterParameter="">
 
                         <Binding Path="EsValido" FallbackValue="True"/>
                         <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=UserControl}" Path="ColorBordeBloque"/>
                         <Binding Source="{StaticResource ColorBloqueIncorrecto}"/>
-
+                        
                     </MultiBinding>
                 </Setter.Value>
             </Setter>
