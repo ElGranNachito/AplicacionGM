@@ -5,21 +5,20 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AppGM"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             
+             local:ReceptorDeDragProperty.Value="True">
 
     <!-- ViewModel: ViewModelBloqueContenedor -->
 
     <UserControl.Template>
-        <ControlTemplate TargetType="{x:Type UserControl}">
+        <ControlTemplate 
+            TargetType="{x:Type UserControl}">
 
-            <StackPanel>
+            <StackPanel Background="Transparent">
             
                 <!-- Contenido -->
-                <ContentPresenter/>
-
-                <!-- Receptor de drag para añadir bloques -->
-                <local:UserControlReceptorDeDrag 
-                    DataContext="{Binding ReceptorAñadirBloque}"/>
+                <ContentPresenter Name="Contenido"/>
 
                 <!-- Lista de bloques actualmente colocados -->
                 <ItemsControl 
@@ -31,6 +30,12 @@
                     </ItemsControl.ItemTemplateSelector>
 
                 </ItemsControl>
+
+                <TextBlock Text="{Binding IndiceBloque}"/>
+
+                <!-- Receptor de drag para añadir bloques -->
+                <local:UserControlReceptorDeDrag 
+                    DataContext="{Binding ReceptorAñadirBloque}"/>
 
             </StackPanel>
 

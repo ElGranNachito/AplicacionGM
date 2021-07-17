@@ -20,6 +20,8 @@ namespace AppGM
         public string DirectorioImagenesMapas { get; set; }
         public string DirectorioControles { get; set; }
 
+        public string DirectorioFunciones { get; set; }
+
         public string DirectorioAnimaciones { get; set; }
 
         #endregion
@@ -36,6 +38,8 @@ namespace AppGM
             DirectorioImagenesMapas = Path.Combine(DirectorioImagenes, @"Imagenes\Mapas\");
 
             DirectorioAnimaciones = Path.Combine(DirectorioImagenes, @"Imagenes\Animaciones\");
+
+            DirectorioFunciones = Path.Combine(DirectorioDeTrabajo, @"Funciones\");
 
             while (!Directory.Exists(DirectorioImagenes))
                 DirectorioImagenes = Path.GetFullPath(Path.Combine(DirectorioImagenes, @"../"));

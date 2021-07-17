@@ -9,33 +9,41 @@
 
     <!-- ViewModel: ViewModelSeccionCondicion -->
 
-    <Grid>
+    <Border 
+        BorderBrush="{StaticResource ColorBloqueIncorrecto}"
+        BorderThickness="{Binding GrosorBorde, Converter={local:GrosorToThicknessConverter}}"
+        Padding="0 0 0 5">
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+        <Grid>
 
-        <!-- Operacion logica a realizar -->
-        <ComboBox
-            Grid.Column="0"
-            VerticalAlignment="Center"
-            ItemsSource="{Binding Operacion.ValoresPosibles}"
-            SelectedValue="{Binding Operacion.ValorSeleccionado}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <local:UserControlItemComboBox/>
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
+            <!-- Operacion logica a realizar -->
+            <ComboBox
+                Grid.Column="0"
+                VerticalAlignment="Center"
+                ItemsSource="{Binding Operacion.ValoresPosibles}"
+                SelectedValue="{Binding Operacion.ValorSeleccionado}"
+                Visibility="{Binding MostrarOperacionLogica, Converter={local:BooleanToVisibilityConverterColapsar}}">
 
-        </ComboBox>
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <local:UserControlItemComboBox/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
 
-        <!-- Argumento -->
-        <local:UserControlArgumento
-            Grid.Column="1"
-            DataContext="{Binding Argumento}"/>
+            </ComboBox>
 
-    </Grid>
+            <!-- Argumento de la seccion -->
+            <local:UserControlArgumento
+                Grid.Column="1"
+                DataContext="{Binding Argumento}"/>
+
+        </Grid>
+
+    </Border>
 
 </UserControl>

@@ -28,16 +28,16 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-        
+
             <!-- Nombre variable -->
             <TextBox
                 TextAlignment="Center"
+                VerticalContentAlignment="Center"
                 Margin="15"
-                Background="White"
                 Tag="Nombre"
                 Style="{StaticResource TextoDescriptivo}"
                 Text="{Binding Nombre}"/>
-        
+
             <!-- Valor por defecto de la variable -->
             <local:UserControlArgumento
                 Grid.Column = "1"

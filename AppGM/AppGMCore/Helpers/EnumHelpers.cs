@@ -55,18 +55,54 @@ namespace AppGM.Core
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int AValorNumerico(this ERango rango) => (int) rango;
 
-        public static List<EOperacionLogica> ObtenerOperacionesLogicasDisponibles(this Type t)
+        /// <summary>
+        /// Obtiene una lista con las <see cref="EOperacionLogica"/> que se pueden realizar con el <paramref name="tipo"/>
+        /// </summary>
+        /// <param name="tipo"><see cref="Type"/> Con el que se quiere realizar la <see cref="EOperacionLogica"/></param>
+        /// <returns><see cref="List{T}"/> con las <see cref="EOperacionLogica"/> posibles</returns>
+        public static List<EOperacionLogica> ObtenerOperacionesLogicasDisponibles(this Type tipo)
         {
-	        if (t == typeof(bool))
-		        return new List<EOperacionLogica>(new[] {EOperacionLogica.Igual, EOperacionLogica.NoIgual});
+	        var operacionesLogicasDisponibles = Enum.GetValues(typeof(EOperacionLogica)).Cast<EOperacionLogica>().ToList();
 
-	        if (t.IsValueType)
-		        return Enum.GetValues(typeof(EOperacionLogica)).Cast<EOperacionLogica>().ToList();
+	        switch (tipo)
+	        {
+                case Type t when t == typeof(bool):
 
-	        var operaciones = new List<EOperacionLogica>(
-		        new[] {EOperacionLogica.Y, EOperacionLogica.O, EOperacionLogica.Igual, EOperacionLogica.NoIgual});
+	                operacionesLogicasDisponibles.RemoverRango(new[]
+	                {
+		                EOperacionLogica.Igual, EOperacionLogica.NoIgual,
+		                EOperacionLogica.Mayor, EOperacionLogica.Menor,
+		                EOperacionLogica.MayorIgual, EOperacionLogica.MenorIgual
+	                });
 
-	        return operaciones;
+	                break;
+
+                case Type t when !t.IsByRef && (
+                    t == typeof(int)   || t == typeof(uint)   ||
+                    t == typeof(short) || t == typeof(ushort) ||
+                    t == typeof(byte)  || t == typeof(sbyte)  ||
+                    t == typeof(long)  || t == typeof(ulong)  ||
+                    t == typeof(float) || t == typeof(double)):
+
+	                operacionesLogicasDisponibles.RemoverRango(new[] {EOperacionLogica.O, EOperacionLogica.Y, EOperacionLogica.No});
+
+	                break;
+
+                case Type t when t.IsByRef:
+
+	                operacionesLogicasDisponibles.RemoverRango(new[]
+	                {
+		                EOperacionLogica.O, EOperacionLogica.Y,
+		                EOperacionLogica.No, EOperacionLogica.Mayor,
+		                EOperacionLogica.Menor, EOperacionLogica.MayorIgual,
+		                EOperacionLogica.MenorIgual
+	                });
+
+	                break;
+
+	        }
+
+	        return operacionesLogicasDisponibles;
         }
     }
 }

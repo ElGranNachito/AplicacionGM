@@ -42,6 +42,11 @@
         /// </summary>
         string DirectorioAnimaciones { get; set; }
 
+        /// <summary>
+        /// Directorio donde se encuentran los archivos .XML de las funciones credas por GuraScratch
+        /// </summary>
+        string DirectorioFunciones { get; set; }
+
         #endregion
 
         #region Funciones

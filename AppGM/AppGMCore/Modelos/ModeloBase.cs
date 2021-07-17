@@ -2,10 +2,21 @@
 
 namespace AppGM.Core
 {
-    /// <summary>
-    /// Clase base de todos los modelos, el sufijo SK indica que no tiene Key
-    /// </summary>
-    public abstract class ModeloBaseSK{}
+	/// <summary>
+	/// Clase base de todos los modelos, el sufijo SK indica que no tiene Key
+	/// </summary>
+	public abstract class ModeloBaseSK
+	{
+        /// <summary>
+        /// Guarda el modelo a la base de datos
+        /// </summary>
+		public virtual void Guardar() => SistemaPrincipal.GuardarModelo(this);
+
+        /// <summary>
+        /// Elimina el modelo de la base de datos
+        /// </summary>
+		public virtual void Eliminar() => SistemaPrincipal.EliminarModelo(this);
+	}
 
     /// <summary>
     /// Clase base de todos los modelos con una key

@@ -10,8 +10,8 @@
     <!-- ViewModel: ViewModelBloquellamarFuncion -->
 
     <local:UserControlBloqueBase
-    ColorBordeBloque="{StaticResource ColorBloqueLlamarFuncion}"
-    ColorRellenoBloque="{StaticResource ColorRellenoBloqueLlamarFuncion}">
+        ColorBordeBloque="{StaticResource ColorBloqueLlamarFuncion}"
+        ColorRellenoBloque="{StaticResource ColorRellenoBloqueLlamarFuncion}">
 
         <!-- Contenido -->
         <Grid>
@@ -29,6 +29,7 @@
             <!-- Combo box con tipos y variables disponibles -->
             <ComboBox
                 VerticalAlignment="Center"
+                Style="{StaticResource ComboBoxBloques}"
                 ItemsSource="{Binding TiposDisponibles}"
                 SelectedValue="{Binding TipoSeleccionado}">
 
@@ -37,9 +38,8 @@
                         <local:UserControlItemComboBox/>
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
-
             </ComboBox>
-
+            
             <Grid
                 Grid.Column="1">
 
@@ -50,6 +50,7 @@
 
                 <ComboBox
                     Margin="5"
+                    Style="{StaticResource ComboBoxBloques}"
                     Visibility="{Binding MostrarListaMetodosDisponibles, Converter={local:BooleanToVisibilityConverterColapsar}}"
                     ItemsSource="{Binding MetodosDisponibles}"
                     SelectedValue="{Binding MetodoSeleccionado}">
@@ -72,6 +73,8 @@
 
             <!-- Lista de parametros -->
             <local:UserControlBloqueListaArgumentosFuncion
+                Grid.Row="1"
+                Grid.Column="2"
                 DataContext="{Binding ArgumentosFuncion}"/>
 
         </Grid>

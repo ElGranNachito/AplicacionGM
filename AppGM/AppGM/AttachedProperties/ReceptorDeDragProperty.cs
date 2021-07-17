@@ -17,64 +17,72 @@ namespace AppGM
 		{
 			if (d is FrameworkElement fe)
 			{
-				MouseEventHandler mouseEnterHandler = null;
-				MouseEventHandler mouseLeaveHandler = null;
+				RoutedEventHandler elementoCargadoHandler = null;
 
-				DDrag dragComenzadoHandler = null;
-				DDrag dragFinalizadoHandler = null;
-
-				Action<object> comenzarDrag = control =>
+				elementoCargadoHandler = (sender, args) =>
 				{
-					if (SistemaPrincipal.Drag.HayUnDragActivo
-					    && control is FrameworkElement fe
-					    && fe.DataContext is IReceptorDeDrag vm)
+					MouseEventHandler mouseEnterHandler = null;
+					MouseEventHandler mouseLeaveHandler = null;
+
+					DDrag dragComenzadoHandler = null;
+					DDrag dragFinalizadoHandler = null;
+
+					Action<object> comenzarDrag = control =>
 					{
-						fe.MouseLeave += mouseLeaveHandler;
+						if (SistemaPrincipal.Drag.HayUnDragActivo
+						    && control is FrameworkElement fe
+						    && fe.DataContext is IReceptorDeDrag vm)
+						{
+							fe.MouseLeave += mouseLeaveHandler;
 
-						SistemaPrincipal.Drag.OnFinDrag += dragFinalizadoHandler;
+							SistemaPrincipal.Drag.OnFinDrag += dragFinalizadoHandler;
 
-						SistemaPrincipal.Drag.AñadirReceptorDrag(vm);
+							//if (vm is ViewModelSeccionReceptoraDeDrag)
+							//	Debugger.Break();
 
-						vm.OnDragEntro(SistemaPrincipal.Drag.ViewModelContenido);
-					}
-				};
+							SistemaPrincipal.Drag.AñadirReceptorDrag(vm);
+						}
+					};
 
-				dragComenzadoHandler = contenido =>
-				{
-					if (fe.IsMouseOver)
-						comenzarDrag(fe);
-				};
+					dragComenzadoHandler = contenido =>
+					{
+						if (fe.IsMouseOver)
+							comenzarDrag(fe);
+					};
 
-				mouseEnterHandler = (sender, args) =>
-				{
-					comenzarDrag(sender);
-				};
+					mouseEnterHandler = (sender, args) =>
+					{
+						comenzarDrag(sender);
+					};
 
-				mouseLeaveHandler = (sender, args) =>
-				{
-					if (SistemaPrincipal.Drag.HayUnDragActivo &&
-						sender is FrameworkElement fe &&
-					    fe.DataContext is IReceptorDeDrag vm)
+					mouseLeaveHandler = (sender, args) =>
+					{
+						if (SistemaPrincipal.Drag.HayUnDragActivo &&
+						    sender is FrameworkElement fe &&
+						    fe.DataContext is IReceptorDeDrag vm)
+						{
+							fe.MouseLeave -= mouseLeaveHandler;
+
+							SistemaPrincipal.Drag.OnFinDrag -= dragFinalizadoHandler;
+
+							SistemaPrincipal.Drag.QuitarReceptorDrag(vm);
+						}
+					};
+
+					dragFinalizadoHandler = contenido =>
 					{
 						fe.MouseLeave -= mouseLeaveHandler;
-
 						SistemaPrincipal.Drag.OnFinDrag -= dragFinalizadoHandler;
+					};
 
-						SistemaPrincipal.Drag.QuitarReceptorDrag(vm);
+					SistemaPrincipal.Drag.OnComienzoDrag += dragComenzadoHandler;
 
-						vm.OnDragSalio(SistemaPrincipal.Drag.ViewModelContenido);
-					}
+					fe.MouseEnter += mouseEnterHandler;
+
+					fe.Loaded -= elementoCargadoHandler;
 				};
 
-				dragFinalizadoHandler = contenido =>
-				{
-					fe.MouseLeave -= mouseLeaveHandler;
-					SistemaPrincipal.Drag.OnFinDrag -= dragFinalizadoHandler;
-				};
-
-				SistemaPrincipal.Drag.OnComienzoDrag += dragComenzadoHandler;
-
-				fe.MouseEnter += mouseEnterHandler;
+				fe.Loaded += elementoCargadoHandler;
 			}
 		}
 	}

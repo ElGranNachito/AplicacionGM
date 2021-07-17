@@ -17,11 +17,6 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
-        <!-- Argumento inicial -->
-        <local:UserControlArgumento
-            MinWidth="100"
-            DataContext="{Binding ArgumentoInicial}"/>
-
         <!-- Resto de secciones -->
         <ScrollViewer
             Grid.Column="1"

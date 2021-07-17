@@ -16,6 +16,7 @@ namespace AppGM.Core
 
 		public int IndiceZ { get; set; }
 
+
 		public ViewModelSeccionReceptoraDeDrag(DDragHandlerElementoSoltado _callbackElementoSoltado, DDrag _callbackElementoIngreso, DDrag _callbackElementoSalio)
 		{
 			mCallbackElementoSoltado = _callbackElementoSoltado;

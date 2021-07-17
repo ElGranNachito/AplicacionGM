@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Xml;
 
@@ -27,7 +28,7 @@ namespace AppGM.Core
 		/// </summary>
 		/// <param name="reader"><see cref="XmlReader"/> del que convertir</param>
 		/// <returns><see cref="BloqueBase"/> equivalente a <paramref name="reader"/></returns>
-		public static BloqueBase DesdeXml(XmlReader reader)
+		public static List<BloqueBase> DesdeXml(XmlReader reader)
 		{
 			throw new NotImplementedException();
 		}

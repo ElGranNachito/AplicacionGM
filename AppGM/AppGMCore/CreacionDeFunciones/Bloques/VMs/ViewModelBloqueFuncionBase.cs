@@ -47,15 +47,20 @@ namespace AppGM.Core
 		protected ViewModelCreacionDeFuncionBase mVMCreacionDeFuncion;
 
 		/// <summary>
-		/// <see cref="ViewModelBloqueContenedor"/> que contiene este <see cref="ViewModelBloqueFuncionBase"/>
+		/// <see cref="ViewModelBloqueContenedorConDrop{TipoBloque}"/> que contiene este <see cref="ViewModelBloqueFuncionBase"/>
 		/// </summary>
 		protected IContenedorDeBloques mPadre;
+
+		/// <summary>
+		/// Variable utilizada para almacenar el valor de la propiedad <see cref="IndiceZ"/>
+		/// </summary>
+		protected int mIndiceZ;
 
 
 		//-----------------------------------PROPIEDADES-----------------------------------------
 
 		/// <summary>
-		/// <see cref="ViewModelBloqueContenedor"/> que contiene este <see cref="ViewModelBloqueFuncionBase"/>
+		/// <see cref="ViewModelBloqueContenedorConDropConDrop{TipoBloque}"/> que contiene este <see cref="ViewModelBloqueFuncionBase"/>
 		/// </summary>
 		public virtual IContenedorDeBloques Padre
 		{
@@ -68,7 +73,7 @@ namespace AppGM.Core
 				mPadre?.QuitarBloque(this);
 
 				var valorAnterior = mPadre;
-
+				
 				mPadre = value;
 
 				OnPadreModificado(valorAnterior, mPadre);
@@ -89,6 +94,12 @@ namespace AppGM.Core
 
 				OnIndiceBloqueModificado(valorAnterior, mIndiceBloque);
 			}
+		}
+
+		public virtual int IndiceZ
+		{
+			get => mIndiceZ;
+			set => EstablecerIndiceZ(value);
 		}
 
 		/// <summary>
@@ -113,8 +124,6 @@ namespace AppGM.Core
 		/// </summary>
 		public bool MostrarEspacioDrop { get; set; } = false;
 
-		public int IndiceZ { get; set; } = 1;
-		
 		#endregion
 
 		#region Constructor
@@ -210,6 +219,8 @@ namespace AppGM.Core
 		}
 
 		public virtual void Soltado(List<IReceptorDeDrag> receptores) => OnSoltado(this, receptores);
+
+		protected virtual void EstablecerIndiceZ(int nuevoIndice) => mIndiceZ = nuevoIndice;
 
 		#endregion
 	}

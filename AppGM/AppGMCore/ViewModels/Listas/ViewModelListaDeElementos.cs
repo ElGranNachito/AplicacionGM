@@ -9,7 +9,7 @@ namespace AppGM.Core
 	/// Lista generica de <see cref="TipoElementos"/>
 	/// </summary>
 	/// <typeparam name="TipoElementos"><see cref="ViewModel"/></typeparam>
-	public class ViewModelListaDeElementos<TipoElementos> : IEnumerable
+	public class ViewModelListaDeElementos<TipoElementos> : IEnumerable<TipoElementos>
 		where TipoElementos : ViewModel
 	{
 		/// <summary>
@@ -64,7 +64,9 @@ namespace AppGM.Core
 		/// <returns><see cref="bool"/> indicando si el elemento existe</returns>
 		public bool Contiene(TipoElementos elemento) => Elementos.Contains(elemento);
 
-		public IEnumerator GetEnumerator() => Elementos.GetEnumerator();
+		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+		public IEnumerator<TipoElementos> GetEnumerator() => Elementos.GetEnumerator();
 
 		/// <summary>
 		/// Devuelve el <see cref="TipoElementos"/> contenido en <see cref="Elementos"/>

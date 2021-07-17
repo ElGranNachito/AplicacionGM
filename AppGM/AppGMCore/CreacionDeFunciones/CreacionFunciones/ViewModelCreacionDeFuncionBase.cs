@@ -92,12 +92,14 @@ namespace AppGM.Core
 
 			if (indice != -1)
 			{
-				((IContenedorDeBloques)this).InsertarBloque(bloque, indice);
+				Base<IContenedorDeBloques>()?.InsertarBloque(bloque, indice);
 
 				return;
 			}
 
 			bloque.IndiceBloque = Bloques.Count;
+			bloque.IndiceZ      = 1;
+
 			Bloques.Add(bloque);
 		}
 

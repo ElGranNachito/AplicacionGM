@@ -93,9 +93,11 @@
                     <ItemsControl
                         ItemsSource="{Binding Bloques.Elementos}">
 
-                        <ItemsControl.ItemTemplateSelector>
-                            <local:BloqueDataTemplateSelector/>
-                        </ItemsControl.ItemTemplateSelector>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <ContentPresenter Content="{Binding Converter={local:ViewModelABloqueConverter}}"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
 
                     </ItemsControl>
 

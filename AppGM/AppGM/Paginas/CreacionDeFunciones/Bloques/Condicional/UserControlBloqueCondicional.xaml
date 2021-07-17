@@ -19,51 +19,74 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-
+           
             <!-- Lista de bloques de la condicion -->
-            <ItemsControl>
+            <ItemsControl
+                ItemsSource="{Binding Bloques.Elementos}">
 
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <local:UserControlBloqueContenedorBase>
 
-                            <Grid>
+                        <Grid>
 
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
+                            <!-- Para el bloque base necesitamos el data context de este bloque asi que volvemos hacia atras para obtenerlo -->
+                            <local:UserControlBloqueContenedorBase>
 
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
+                                <!-- Los elementos dentro de este grid necesitan el data context del condicional asi que vamos hasta el border que
+                                tiene el vm para obtenerlo -->
+                                <Grid>
 
-                                <!-- Texto tipo condicional -->
-                                <TextBlock 
-                                    VerticalAlignment="Center"
-                                    FontSize="30"
-                                    Text="{Binding NombreCondicional, FallbackValue=If}"/>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
 
-                                <!-- Argumentos y operaciones logicas -->
-                                <local:UserControlCondicion
-                                    Margin="5 0"
-                                    Grid.Column="1"
-                                    DataContext="{Binding ArgumentosCondicion}"/>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
 
-                            </Grid>
+                                    <ComboBox 
+                                        Visibility="{Binding SePuedeSeleccionTipoDelBloque, Converter={local:BooleanToVisibilityConverterColapsar}}"
+                                        Style="{StaticResource ComboBoxBloques}"
+                                        ItemsSource="{Binding TiposBloqueSeleccionables}"
+                                        SelectedValue="{Binding TipoCondicional}"/>
 
-                        </local:UserControlBloqueContenedorBase>
+                                    <!-- Texto tipo condicional -->
+                                    <TextBlock 
+                                        VerticalAlignment="Center"
+                                        FontSize="20"
+                                        Visibility="{Binding SePuedeSeleccionTipoDelBloque, Converter={local:BooleanToVisibilityConverterColapsar}, ConverterParameter=1}"
+                                        Text="{Binding TipoCondicional}"/>
+
+                                    <!-- Argumentos y operaciones logicas -->
+                                    <local:UserControlCondicion
+                                        Margin="5 0"
+                                        Grid.Column="1"
+                                        DataContext="{Binding ArgumentosCondicion}"
+                                        Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Control}, Path=DataContext.MostrarCondicion, Converter={local:BooleanToVisibilityConverterColapsar}}"/>
+
+                                </Grid>
+
+                            </local:UserControlBloqueContenedorBase>
+                        </Grid>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
 
             </ItemsControl>
 
-            <!-- Boton para añadir mas bloques a la condicion -->
-            <Button
+            <StackPanel
                 Grid.Row="1"
-                HorizontalAlignment="Left"
-                Content="+"></Button>
+                Orientation="Horizontal">
+
+                <!-- Boton para añadir mas bloques a la condicion -->
+                <Button
+                    
+                    HorizontalAlignment="Left"
+                    Content="+"
+                    Command="{Binding ComandoAñadirBloque}"/>
+            </StackPanel>
+            
 
         </Grid>
 

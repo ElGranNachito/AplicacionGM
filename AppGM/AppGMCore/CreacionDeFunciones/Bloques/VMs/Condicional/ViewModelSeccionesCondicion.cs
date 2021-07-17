@@ -14,9 +14,9 @@ namespace AppGM.Core
 		//--------------------------------------CAMPOS----------------------------------------------
 
 		/// <summary>
-		/// <see cref="ViewModelBloqueCondicionalBase"/> que contiene las secciones
+		/// <see cref="ViewModelBloqueCondicional"/> que contiene las secciones
 		/// </summary>
-		private ViewModelBloqueCondicionalBase mDueño;
+		private ViewModelBloqueCondicional mDueño;
 
 		/// <summary>
 		/// <see cref="ViewModelCreacionDeFuncionBase"/> que contiene todos los bloques
@@ -59,18 +59,17 @@ namespace AppGM.Core
 		/// Constructor
 		/// </summary>
 		/// <param name="_vmCreacionDeFuncion"><see cref="ViewModelCreacionDeFuncionBase"/> que contiene todos los bloques</param>
-		/// <param name="_dueño"><see cref="ViewModelBloqueCondicionalBase"/> que contiene las secciones</param>
+		/// <param name="_dueño"><see cref="ViewModelBloqueCondicional"/> que contiene las secciones</param>
 		public ViewModelSeccionesCondicion(
 			ViewModelCreacionDeFuncionBase _vmCreacionDeFuncion,
-			ViewModelBloqueCondicionalBase _dueño)
+			ViewModelBloqueCondicional _dueño)
 		{
 			mVMCreacionDeFuncion = _vmCreacionDeFuncion;
 			mDueño = _dueño;
 
-			ArgumentoInicial =
-				new ViewModelArgumento(mVMCreacionDeFuncion, mDueño, typeof(object), "Argumento0");
+			AñadirSeccion();
 
-			argumentos.Add(ArgumentoInicial);
+			ArgumentoInicial = Secciones.Last().Argumento;
 
 			ComandoAñadirSeccion = new Comando(AñadirSeccion);
 		} 
@@ -94,10 +93,9 @@ namespace AppGM.Core
 				mVMCreacionDeFuncion,
 				mDueño,
 				this,
-				Secciones.Count + 1,
-				argumentoAnterior != null 
-					? argumentoAnterior.Argumento.TipoArgumento.ObtenerTipoCompatible() 
-					: ArgumentoInicial.TipoArgumento.ObtenerTipoCompatible());
+				Secciones.Count);
+
+			nuevaSeccion.Argumento.OnFocusPerdido += ActualizarValidezDeLasSecciones;
 
 			Secciones.Add(nuevaSeccion);
 			argumentos.Add(nuevaSeccion.Argumento);
@@ -117,9 +115,57 @@ namespace AppGM.Core
 				//Actualizamos el bloque anterior del bloque siguiente al que sera quitado
 				Secciones[indiceSeccionAQuitar + 1].ActualizarArgumentoAnterior(seccionARemover.SeccionAnterior);
 
+			for (int i = indiceSeccionAQuitar + 1; i < Secciones.Count; ++i)
+				Secciones[i].Argumento.Nombre = $"Argumento{i}";
+
+			seccionARemover.Argumento.OnFocusPerdido -= ActualizarValidezDeLasSecciones;
+
 			//Finalmente quitamos la seccion
 			Secciones.Remove(seccionARemover);
-		} 
+		}
+
+		/// <summary>
+		/// Actualiza la propiedad <see cref="ViewModelSeccionCondicion.EsValida"/> de todas las <see cref="Secciones"/>
+		/// </summary>
+		public void ActualizarValidezDeLasSecciones()
+		{
+			for (int i = 0; i < Secciones.Count;)
+			{
+				var seccionActual = Secciones[i];
+
+				//Si el tipo del argumento de la seccion actual es booleano entonces no 'acompaña' a ninguna otra seccion
+				if (seccionActual.Argumento.TipoArgumento == typeof(bool))
+				{
+					++i;
+
+					//La seccion actual es valida si el argumento es valido
+					seccionActual.EsValida = seccionActual.Argumento.EsValido;
+				}
+				//Si es cualquier otra cosa entonces va a necesitar un 'compañero' de un tipo compatible para realizar la operacion logica
+				else
+				{
+					//Si esta es la ultima seccion entonces simplemente no es valida
+					if (i == Secciones.Count - 1)
+					{
+						Secciones[i].EsValida = false;
+
+						break;
+					}
+
+					var seccionProxima = Secciones[i + 1];
+
+					//Revisamos que las secciones sean compatibles entre si, para esto una debe ser asignable a la otra
+					bool sonCompatiblesEntreSi = seccionActual.Argumento.TipoArgumento.EsAsignableDesdeOA(seccionProxima.Argumento.TipoArgumento);
+
+					//Las secciones seran validas si son compatibles entre si y sus respectivos argumentos validos
+					seccionActual.EsValida  = sonCompatiblesEntreSi && seccionActual.Argumento.EsValido;
+					seccionProxima.EsValida = sonCompatiblesEntreSi && seccionProxima.Argumento.EsValido;
+
+					//Avanzamos dos posiciones porque cubrimos dos secciones
+					i += 2;
+				}
+			}
+		}
 
 		#endregion
 	}

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-
+using System.Diagnostics;
 using AppGM.Core.Delegados;
 
 namespace AppGM.Core

@@ -893,6 +893,9 @@ namespace AppGM.Core
 	    Jpg = 2
     }
 
+    /// <summary>
+    /// Representa una operacion logica
+    /// </summary>
     public enum EOperacionLogica
     {
         /// <summary>
@@ -939,5 +942,32 @@ namespace AppGM.Core
         /// &&
         /// </summary>
         Y = 9
+    }
+
+    /// <summary>
+    /// Representa un tipo de bloque condicional en Gura Scratch
+    /// </summary>
+    public enum ETipoBloqueCondicional
+    {
+	    If     = 1,
+        ElseIf = 2,
+        Else   = 3,
+
+        NINGUNO = 0
+    }
+
+    /// <summary>
+    /// Dice que tipo de variable representa un <see cref="BloqueVariable"/>
+    /// </summary>
+    public enum ETipoVariable
+    {
+        Normal      = 1,
+        Persistente = 2,
+        Parametro   = 3,
+
+        /// <summary>
+        /// Vaya uno a saber que vueltas da la vida para terminar aqui
+        /// </summary>
+        NINGUNO = 0
     }
 }

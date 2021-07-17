@@ -1,4 +1,6 @@
-﻿namespace AppGM.Core
+﻿using System;
+
+namespace AppGM.Core
 {
 	/// <summary>
 	/// Interfaz que deben implementar los <see cref="ViewModel"/> que necesiten ser capaces de responder a un
@@ -9,7 +11,7 @@
 		/// <summary>
 		/// Indice en el eje Z.
 		/// Se utiliza para determinar el orden en el que se reciben los eventos de
-		/// <see cref="OnDragEnter"/>, <see cref="OnDragLeave"/>, <see cref="OnDrop"/>
+		/// <see cref="OnDragEntro"/>, <see cref="OnDragSalio"/>, <see cref="OnDrop"/>
 		/// </summary>
 		public int IndiceZ { get; set; }
 

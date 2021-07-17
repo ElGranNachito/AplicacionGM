@@ -32,9 +32,10 @@ namespace AppGM.Core
 		{
 			return new List<BloqueVariable>
 			{
-				new BloqueVariable(  "Combate",  typeof(ControladorAdministradorDeCombate)),
-				new BloqueVariable ("Usuario", typeof(ControladorPersonaje)),
-				new BloqueVariable( "Objetivos", typeof(List<ControladorPersonaje>))
+				new BloqueVariable(  "Combate",  typeof(ControladorAdministradorDeCombate), ETipoVariable.Normal),
+				new BloqueVariable( "Usuario", typeof(ControladorPersonaje), ETipoVariable.Parametro),
+				new BloqueVariable( "Objetivos", typeof(List<ControladorPersonaje>), ETipoVariable.Parametro),
+				new BloqueVariable(Compilador.NombreVariableDueña, typeof(ControladorHabilidad), ETipoVariable.Parametro)
 			};
 		}
 	}

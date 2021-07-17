@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 
 namespace AppGM
 {
@@ -10,6 +11,11 @@ namespace AppGM
 		public UserControlBloqueCondicional()
 		{
 			InitializeComponent();
+		}
+
+		private void FrameworkElement_OnLoaded(object sender, RoutedEventArgs e)
+		{
+			((FrameworkElement) sender).DataContext = DataContext;
 		}
 	}
 }

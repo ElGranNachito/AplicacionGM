@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Input;
 
 namespace AppGM.Core
@@ -6,32 +7,62 @@ namespace AppGM.Core
 	/// <summary>
 	/// <see cref="ViewModel"/> que representa una cadena de If y Elses
 	/// </summary>
-	public class ViewModelBloqueCondicionalCompleto : ViewModelBloqueCondicionalBase
+	public class ViewModelBloqueCondicionalCompleto : ViewModelBloqueContenedor<BloqueCondicionalCompleto>
 	{
 		/// <summary>
-		/// <see cref="ViewModelBloqueCondicionalCompleto"/> que proceden a este, es decir Else Ifs y Elses
+		/// Comando que se ejecuta al presionar el boton para añadir un nuevo <see cref="ViewModelBloqueCondicional"/> a
+		/// <see cref="CondicionesConsecuentes"/>
 		/// </summary>
-		public ViewModelListaDeElementos<ViewModelBloqueCondicionalBase> CondicionesConsecuentes { get; set; } =
-			new ViewModelListaDeElementos<ViewModelBloqueCondicionalBase>();
-
 		public ICommand ComandoAñadirBloque { get; set; }
 
 		public ViewModelBloqueCondicionalCompleto(ViewModelCreacionDeFuncionBase _vmCreacionDeFuncion)
 			:base(_vmCreacionDeFuncion)
 		{
-			ComandoAñadirBloque = new Comando(AñadirBloque);
+			ComandoAñadirBloque = new Comando(()=> AñadirBloque(new ViewModelBloqueCondicional(mVMCreacionDeFuncion, ETipoBloqueCondicional.Else)));
 
-			CondicionesConsecuentes.Add(new ViewModelBloqueCondicionalBase());
+			AñadirBloque(new ViewModelBloqueCondicional(mVMCreacionDeFuncion, ETipoBloqueCondicional.If));
 		}
 
-		public override BloqueCondicional GenerarBloque_Impl()
+		public override BloqueCondicionalCompleto GenerarBloque_Impl()
 		{
-			return null;
+			IEnumerable<ViewModelBloqueCondicional> vmsCondiciones = Bloques.Elementos.Cast<ViewModelBloqueCondicional>();
+
+			List<BloqueCondicional> condiciones = new List<BloqueCondicional>(vmsCondiciones.Select(condicion => condicion.GenerarBloque_Impl()));
+
+			List<List<BloqueBase>> acciones = new List<List<BloqueBase>>();
+
+			foreach (var condicion in vmsCondiciones)
+			{
+				acciones.Add(condicion.Bloques.Elementos.Select(bloque => bloque.GenerarBloque()).ToList());
+			}
+
+			var resultado = new BloqueCondicionalCompleto(condiciones, acciones);
+
+			return resultado;
 		}
 
-		private void AñadirBloque()
+		public override void OnDragSalio_Impl(IDrageable vm)
 		{
+			IEnumerable<ViewModelBloqueCondicional> vmsCondiciones = Bloques.Elementos.Cast<ViewModelBloqueCondicional>();
 
+			foreach (var condicion in vmsCondiciones)
+			{
+				if (condicion.ReceptorAñadirBloque.EsVisible)
+					return;
+			}
+
+			MostrarEspacioDrop = false;
+		}
+
+		public override bool OnDrop_Impl(IDrageable vm)
+		{
+			foreach (var bloque in Bloques)
+			{
+				if (bloque is ViewModelBloqueCondicional condicion)
+					condicion.ReceptorAñadirBloque.EsVisible = false;
+			}
+
+			return base.OnDrop_Impl(vm);
 		}
 	}
 }

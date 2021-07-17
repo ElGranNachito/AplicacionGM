@@ -6,8 +6,9 @@
              xmlns:local="clr-namespace:AppGM"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+
     <Border
-        Background ="White"
+        Background ="Transparent"
 
         Padding="0 2"
         BorderThickness="0  0 0 1">

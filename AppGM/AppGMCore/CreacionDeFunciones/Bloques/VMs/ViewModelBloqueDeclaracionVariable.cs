@@ -120,13 +120,24 @@ namespace AppGM.Core
 
 		public override BloqueVariable GenerarBloque_Impl()
 		{
-			mResultado ??= new BloqueVariable(Nombre, Tipo, ValorPorDefecto.GenerarBloque_Impl());
+			mResultado ??= new BloqueVariable(Nombre, Tipo, ObtenerTipoVariable(), ValorPorDefecto.GenerarBloque_Impl());
 
 			mResultado.nombre = Nombre;
 			mResultado.tipo   = Tipo;
 
 			return mResultado;
-		} 
+		}
+
+		private ETipoVariable ObtenerTipoVariable()
+		{
+			if (EsParametro)
+				return ETipoVariable.Parametro;
+
+			if (EsPersistente)
+				return ETipoVariable.Persistente;
+
+			return ETipoVariable.Normal;
+		}
 
 		#endregion
 	}

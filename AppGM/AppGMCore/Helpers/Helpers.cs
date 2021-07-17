@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Ninject.Infrastructure.Language;
 
@@ -43,9 +46,6 @@ namespace AppGM.Core
 			return false;
 		}
 
-		public static bool EsAccesibleEnGuraScratch(this MemberInfo miembro) =>
-			miembro.HasAttribute(typeof(AccesibleEnGuraScratch));
-
 		public static Type ObtenerTipoCompatible(this Type t)
 		{
 			if (t.IsValueType)
@@ -53,6 +53,19 @@ namespace AppGM.Core
 			else
 				return typeof(object);
 		}
+
+		public static IEnumerable<T> RemoverRango<T>(this IEnumerable<T> coleccion, IEnumerable<T> elementosARemover)
+		{
+			var listaElementos = coleccion.ToList();
+			
+			foreach (var elemento in elementosARemover)
+				listaElementos.Remove(elemento);
+
+			return listaElementos;
+		}
+
+		public static bool EsAccesibleEnGuraScratch(this MemberInfo miembro) =>
+			miembro.HasAttribute(typeof(AccesibleEnGuraScratch));
 
 		public static bool EsAsignableDesdeOA(this Type primero, Type segundo) => primero.IsAssignableFrom(segundo) || primero.IsAssignableTo(segundo);
 	}

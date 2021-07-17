@@ -5,14 +5,10 @@ using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 
-using Ninject.Infrastructure.Language;
-
 using AppGM.Core.Delegados;
 
 namespace AppGM.Core
 {
-	//TODO: Deteccion automatica del tipo
-
 	/// <summary>
 	/// Representa un argumento para una funcion u operacion
 	/// </summary>
@@ -25,7 +21,15 @@ namespace AppGM.Core
 		/// </summary>
 		public event DVariableCambio<string> OnTextoActualModificado = delegate { };
 
+		/// <summary>
+		/// Evento que se dispara cuando <see cref="TipoArgumento"/> es modificado
+		/// </summary>
 		public event DVariableCambio<Type> OnTipoArgumentoModificado = delegate { };
+
+		/// <summary>
+		/// Evento que se dispara cuando el bloque de texto representado por este <see cref="ViewModel"/> pierder el focus
+		/// </summary>
+		public event Action OnFocusPerdido = delegate { }; 
 
 		#endregion
 
@@ -96,6 +100,11 @@ namespace AppGM.Core
 		/// en base a lo que ingrese el usuario.
 		/// </summary>
 		public bool DeteccionAutomaticaDeTipo { get; set; }
+
+		/// <summary>
+		/// <see cref="bool"/> que indica si este argumento puede estar vacio
+		/// </summary>
+		public bool PuedeQuedarVacio { get; set; }
 			
 		/// <summary>
 		/// Valor que el usuario ingreso
@@ -191,13 +200,21 @@ namespace AppGM.Core
 		/// <param name="bloqueContenedor"></param>
 		/// <param name="_tipoArgumento">Tipo de este argumento</param>
 		/// <param name="_nombre">Nombre de este argumento</param>
-		public ViewModelArgumento(ViewModelCreacionDeFuncionBase _vmCreacionDeFuncion, ViewModelBloqueFuncionBase _bloqueContenedor, Type _tipoArgumento, string _nombre = "")
+		public ViewModelArgumento(
+			ViewModelCreacionDeFuncionBase _vmCreacionDeFuncion, 
+			ViewModelBloqueFuncionBase _bloqueContenedor, 
+			Type _tipoArgumento, 
+			string _nombre = "", 
+			bool _detectarTipoAutomaticamente = false,
+			bool _puedeQuedarVacio = true)
 			:base(_vmCreacionDeFuncion)
 		{
-			mVMCreacionDeFuncion = _vmCreacionDeFuncion;
-			mBloqueContendor     = _bloqueContenedor;
-			TipoArgumento        = _tipoArgumento;
-			Nombre               = _nombre;
+			DeteccionAutomaticaDeTipo = _detectarTipoAutomaticamente;
+			PuedeQuedarVacio          = _puedeQuedarVacio;
+			mVMCreacionDeFuncion	  = _vmCreacionDeFuncion;
+			mBloqueContendor		  = _bloqueContenedor;
+			TipoArgumento			  = _tipoArgumento;
+			Nombre					  = _nombre;
 
 			IndiceBloque = mBloqueContendor.IndiceBloque;
 
@@ -375,6 +392,8 @@ namespace AppGM.Core
 			//Colocamos la posicion del signo de intercalacion en 0 para que desaparezca al lista
 			//de parametros de la funcion en caso de estar desplegada
 			PosSignoIntercalacion = 0;
+
+			OnFocusPerdido();
 		}
 
 		/// <summary>
@@ -749,9 +768,9 @@ namespace AppGM.Core
 		/// <returns><see cref="bool"/> indicando si el valor es valido</returns>
 		public bool VerificarValidez()
 		{
-			//Si el texto esta vacio entonces la variable no se inicializa a ningun valor
+			//Si el texto esta devolvemos verdadero si es que el argumento puede quedar vacio, falso de lo contrario
 			if (TextoActual.Length == 0)
-				return true;
+				return PuedeQuedarVacio;
 
 			//Si la variable base no existe
 			if (!ConfirmarExistenciaBase())
