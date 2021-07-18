@@ -6,7 +6,7 @@ namespace AppGM.Core
     /// <summary>
     /// VM que representa el contenido de la pagina principal del rol
     /// </summary>
-    public class ViewModelPaginaPrincipalRol : ViewModel, IBotonSeleccionado<object>
+    public class ViewModelSolapaMenuRol : BaseViewModel, IBotonSeleccionado<object>
     {
         #region Miembros
 
@@ -74,6 +74,11 @@ namespace AppGM.Core
 
         public object BotonSeleccionado { get; set; }
 
+        /// <summary>
+        /// Viewm model de la pagina del menu mapa
+        /// </summary>
+        public ViewModelSolapaSeccionMapas SeccionMapaSeleccionada { get; set; } = SistemaPrincipal.ObtenerInstancia<ViewModelSolapaSeccionMapas>();
+
         #endregion
 
         #region Constructores
@@ -81,13 +86,13 @@ namespace AppGM.Core
         /// <summary>
         /// Constructor default
         /// </summary>
-        public ViewModelPaginaPrincipalRol()
+        public ViewModelSolapaMenuRol()
         {
             ControladorRol = new ControladorRol(SistemaPrincipal.ModeloRolActual);
 
-            ComandoBotonFichas   = new Comando(() => SistemaPrincipal.RolSeleccionado.EMenu = EMenuRol.SeleccionTipoFichas);
-            ComandoBotonMapas    = new Comando(() => SistemaPrincipal.RolSeleccionado.EMenu = EMenuRol.Mapas);
-            ComandoBotonCombates = new Comando(() => SistemaPrincipal.RolSeleccionado.EMenu = EMenuRol.AdministrarCombates);
+            ComandoBotonFichas        = new Comando(() => SistemaPrincipal.RolSeleccionado.EMenu = EMenuRol.SeleccionTipoFichas);
+            ComandoBotonMapas         = new Comando(() => SistemaPrincipal.RolSeleccionado.EMenu = EMenuRol.Mapas);
+            ComandoBotonCombates      = new Comando(() => SistemaPrincipal.RolSeleccionado.EMenu = EMenuRol.AdministrarCombates);
 
             ComandoBotonSalir = new Comando(()=>
             {

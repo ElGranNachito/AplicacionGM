@@ -69,6 +69,27 @@ namespace AppGM.Core
     }
 
     /// <summary>
+    /// Indica la seccion de mapas actual del rol en el que esta la aplicacion
+    /// </summary>
+    public enum ESeccionMapa
+    {
+        /// <summary>
+        /// Vista de la seccion principal del mapa
+        /// </summary>
+        MapaPrincipal = 1,
+
+        /// <summary>
+        /// Vista de la seccion de opciones del mapa
+        /// </summary>
+        OpcionesMapa = 2,
+
+        /// <summary>
+        /// Dudo que este valor sirva para algo, igual aca esta
+        /// </summary>
+        NINGUNO = 0
+    }
+
+    /// <summary>
     /// Indica en que estacion del año transcurre el rol 
     /// </summary>
     public enum ETemporada

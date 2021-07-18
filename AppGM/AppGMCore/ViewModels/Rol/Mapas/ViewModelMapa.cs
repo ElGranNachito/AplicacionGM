@@ -14,13 +14,53 @@ namespace AppGM.Core
         //------------------------------------CAMPOS-------------------------------------
 
         /// <summary>
+        /// Indica si el indicador de iglesia en el mapa debe ser visible o no.
+        /// </summary>
+        private bool mostrarIglesia           = true;
+
+        /// <summary>
+        /// Indica si los indicadores de masters en el mapa deben ser visibles o no.
+        /// </summary>
+        private bool mostrarMasters           = true;
+        /// <summary>
+        /// Indica si los indicadores de masters en el mapa deben ser visibles o no.
+        /// </summary>
+        private bool mostrarServants          = true;
+
+        /// <summary>
+        /// Indica si los indicadores de invocaciones en el mapa deben ser visibles o no.
+        /// </summary>
+        private bool mostrarInvocaciones      = true;
+        /// <summary>
+        /// Indica si los indicadores de trampas en el mapa deben ser visibles o no.
+        /// </summary>
+        private bool mostrarTrampas           = true;
+
+        /// <summary>
+        /// Indica si los indicadores de cadaveres de masters en el mapa deben ser visibles o no.
+        /// </summary>
+        private bool mostrarCadaveresMasters  = true;
+        /// <summary>
+        /// Indica si los indicadores de cadaveres de servants en el mapa deben ser visibles o no.
+        /// </summary>
+        private bool mostrarCadaveresServants = true;
+
+        /// <summary>
+        /// Indica si solo los indicadores de servants y masters (parties) deben ser visibles o no.
+        /// </summary>
+        private bool mostrarParties           = true;
+        /// <summary>
+        /// Indica si las insignia de alianzas de personajes deben ser visibles sobre los indicadores de los mismos.
+        /// </summary>
+        private bool mostrarAlianzas          = true;
+
+        /// <summary>
         /// Controlador del mapa
         /// </summary>
         public ControladorMapa controladorMapa;
 
         
         //---------------------------------PROPIEDADES-----------------------------------
-
 
         /// <summary>
         /// Comando que se jecutara al presionar el boton 'AñadirParticipante'
@@ -92,6 +132,150 @@ namespace AppGM.Core
             -(TamañoImagenesPosicion.X / 2.0f).Round(1),
             -(TamañoImagenesPosicion.Y / 2.0f).Round(1));
 
+        // Propiedades de visibilidad de unidades en el mapa:
+
+        public bool MuestraUnidadeIglesia
+        {
+            get => mostrarIglesia;
+            set
+            {
+                mostrarIglesia = value;
+
+                for (int i = 0; i < Posiciones.Count; ++i)
+                {
+                    if (Posiciones[i].unidad.TipoUnidad == ETipoUnidad.Iglesia)
+                    {
+                        Posiciones[i].ImagenPosicionEsVisible = value;
+                    }
+                }
+            }
+        }
+
+        public bool MuestraUnidadesMasters
+        {
+            get => mostrarMasters;
+            set
+            {
+                mostrarMasters = value;
+
+                for (int i = 0; i < Posiciones.Count; ++i)
+                {
+                    if (Posiciones[i].unidad.TipoUnidad == ETipoUnidad.Master)
+                    {
+                        Posiciones[i].ImagenPosicionEsVisible = value;
+                    }
+                }
+            }
+        }
+
+        public bool MuestraUnidadesServants
+        {
+            get => mostrarServants;
+            set
+            {
+                mostrarServants = value;
+
+                for (int i = 0; i < Posiciones.Count; ++i)
+                {
+                    if (Posiciones[i].unidad.TipoUnidad == ETipoUnidad.Servant)
+                    {
+                        Posiciones[i].ImagenPosicionEsVisible = value;
+                    }
+                }
+            }
+        }
+
+        public bool MuestraUnidadesInvocaciones
+        {
+            get => mostrarInvocaciones;
+            set
+            {
+                mostrarInvocaciones = value;
+
+                for (int i = 0; i < Posiciones.Count; ++i)
+                {
+                    if (Posiciones[i].unidad.TipoUnidad == ETipoUnidad.Invocacion)
+                    {
+                        Posiciones[i].ImagenPosicionEsVisible = value;
+                    }
+                }
+            }
+        }
+
+        public bool MuestraUnidadesTrampas
+        {
+            get => mostrarTrampas;
+            set
+            {
+                mostrarTrampas = value;
+
+                for (int i = 0; i < Posiciones.Count; ++i)
+                {
+                    if (Posiciones[i].unidad.TipoUnidad == ETipoUnidad.Trampa)
+                    {
+                        Posiciones[i].ImagenPosicionEsVisible = value;
+                    }
+                }
+            }
+        }
+
+        public bool MuestraUnidadesCadaveresMasters
+        {
+            get => mostrarCadaveresMasters;
+            set
+            {
+                mostrarCadaveresMasters = value;
+
+                //for (int i = 0; i < Posiciones.Count; ++i)
+                //{
+                //    if (Posiciones[i].unidad.TipoUnidad == ETipoUnidad.CadaverMaster)
+                //    {
+                //        Posiciones[i].ImagenPosicionEsVisible = value;
+                //    }
+                //}
+            }
+        }
+
+        public bool MuestraUnidadesCadaveresServants
+        {
+            get => mostrarCadaveresServants;
+            set
+            {
+                mostrarCadaveresServants = value;
+
+                //for (int i = 0; i < Posiciones.Count; ++i)
+                //{
+                //    if (Posiciones[i].unidad.TipoUnidad == ETipoUnidad.CadaverMaster)
+                //    {
+                //        Posiciones[i].ImagenPosicionEsVisible = value;
+                //    }
+                //}
+            }
+        }
+
+        public bool MuestraUnidadesParties
+        {
+            get => mostrarParties;
+            set
+            {
+                mostrarParties = value;
+
+                //TODO: Implementar sistemas de indicadores party por una unica unidad.
+                //TODO: Al cambiar la posicion de dicha unidad se estaria cambiando l
+            }
+        }
+
+        public bool MuestraUnidadesAlianzas
+        {
+            get => mostrarAlianzas;
+            set
+            {
+                mostrarAlianzas = value;
+
+                //TODO: Implementar sistemas de insigneas por alianza y pines sobre unidades de masters y servants.
+            }
+        }
+
         #endregion
 
         #region Constructores
@@ -135,9 +319,33 @@ namespace AppGM.Core
 			await SistemaPrincipal.Aplicacion.VentanaMensajePrincipal.Mostrar(vm, "Añadir Unidad", true, -1, -1);
 
             //Si el resultado es valido entonces añadimos la nueva unidad
-			if (vm.vmResultado is ViewModelIngresoPosicion vmNuevaUndiad) 
-				Posiciones.Add(vmNuevaUndiad);
-		} 
+            if (vm.vmResultado is ViewModelIngresoPosicion vmNuevaUndiad)
+            {
+                switch (vmNuevaUndiad.unidad.TipoUnidad)
+                {
+                    case ETipoUnidad.Iglesia: vmNuevaUndiad.ImagenPosicionEsVisible = mostrarIglesia; 
+                        break;
+                    case ETipoUnidad.Master: vmNuevaUndiad.ImagenPosicionEsVisible = mostrarMasters; 
+                        break;
+                    case ETipoUnidad.Servant: vmNuevaUndiad.ImagenPosicionEsVisible = mostrarServants; 
+                        break;
+                    case ETipoUnidad.Invocacion: vmNuevaUndiad.ImagenPosicionEsVisible = mostrarInvocaciones; 
+                        break;
+                    case ETipoUnidad.Trampa: vmNuevaUndiad.ImagenPosicionEsVisible = mostrarTrampas; 
+                        break;
+                    //case ETipoUnidad.CadaverMaster: vmNuevaUndiad.ImagenPosicionEsVisible = mostrarCadaveresMasters; 
+                    //    break;
+                    //case ETipoUnidad.CadaverServant: vmNuevaUndiad.ImagenPosicionEsVisible = mostrarCadaveresServants; 
+                    //    break;
+                    //case ETipoUnidad.Party: vmNuevaUndiad.ImagenPosicionEsVisible = mostrarParties; 
+                    //    break;
+                    //case ETipoUnidad.Alianza: vmNuevaUndiad.ImagenPosicionEsVisible = mostrarAlianzas; 
+                    //    break;
+                }
+
+                Posiciones.Add(vmNuevaUndiad);
+            }
+        } 
 
 		#endregion
 	}

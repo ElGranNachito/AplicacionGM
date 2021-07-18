@@ -1,0 +1,193 @@
+﻿<UserControl x:Class="AppGM.UserControlOpcionesMapa"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AppGM"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <!-- ViewModel: ViewModelMenuOpcionesMapa y ViewModelMapaPrincipal -->
+    <UserControl.Template>
+
+        <ControlTemplate TargetType="{x:Type UserControl}">
+
+            <Border Padding="0 20 0 0" Background="#1F1F1F">
+
+                <StackPanel>
+
+                    <!-- Nombre opcion -->
+                    <TextBlock
+                        Padding="20 0 0 10"
+                        Text="Mostrar:" 
+                        FontSize="{StaticResource TamañoFontGrande}"
+                        Foreground="Aqua"/>
+
+                    <Grid>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="25" MaxHeight="40"/>
+                            <RowDefinition Height="25" MaxHeight="40"/>
+                            <RowDefinition Height="25" MaxHeight="40"/>
+                            <RowDefinition Height="25" MaxHeight="40"/>
+                            <RowDefinition Height="25" MaxHeight="40"/>
+                            <RowDefinition Height="25" MaxHeight="40"/>
+                            <RowDefinition Height="25" MaxHeight="40"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" MaxWidth="10"/>
+                            <ColumnDefinition Width="*" MaxWidth="10"/>
+                            <ColumnDefinition Width="10*" MaxWidth="50"/>
+                            <ColumnDefinition Width="2*" MaxWidth="160"/>
+                            <ColumnDefinition Width="10*" MaxWidth="50"/>
+                            <ColumnDefinition Width="2*" MaxWidth="160"/>
+                            <ColumnDefinition Width="10*" MaxWidth="50"/>
+                            <ColumnDefinition Width="2*" MaxWidth="160"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Checkbox mostrar unidad iglesia -->
+                        <CheckBox
+                            Grid.Column="2" Grid.Row="0"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            IsChecked="{Binding MuestraUnidadeIglesia}"
+                            ToolTip="Indica si se deben mostrar la unidad de la Iglesia en el mapa."/>
+
+                        <!-- Nombre opcion iglesia -->
+                        <TextBlock
+                            Grid.Column="3" Grid.Row="0"
+                            Text="Iglesia" 
+                            FontSize="{StaticResource TamañoFontMediano}"
+                            Foreground="White"/>
+
+                        <!-- Checkbox mostrar unidad master -->
+                        <CheckBox
+                            Grid.Column="2" Grid.Row="2"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            IsChecked="{Binding MuestraUnidadesMasters}"
+                            ToolTip="Indica si se deben mostrar las unidades de masters en el mapa."/>
+
+                        <!-- Nombre opcion master -->
+                        <TextBlock
+                            Grid.Column="3" Grid.Row="2"
+                            Text="Masters" 
+                            FontSize="{StaticResource TamañoFontMediano}"
+                            Foreground="White"/>
+
+                        <!-- Checkbox mostrar unidad servant -->
+                        <CheckBox
+                            Grid.Column="2" Grid.Row="3"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            IsChecked="{Binding MuestraUnidadesServants}"
+                            ToolTip="Indica si se deben mostrar las unidades de servants en el mapa."/>
+
+                        <!-- Nombre opcion servant -->
+                        <TextBlock
+                            Grid.Column="3" Grid.Row="3"
+                            Text="Servants" 
+                            FontSize="{StaticResource TamañoFontMediano}"
+                            Foreground="White"/>
+
+                        <!-- Checkbox mostrar unidad cadaver master -->
+                        <CheckBox
+                            Grid.Column="2" Grid.Row="5"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            IsChecked="{Binding MuestraUnidadesCadaveresMasters}"
+                            ToolTip="Indica si se deben mostrar las unidades de cadaveres de masters en el mapa."/>
+
+                        <!-- Nombre opcion master -->
+                        <TextBlock
+                            Grid.Column="3" Grid.Row="5"
+                            Text="Cadaveres de masters" 
+                            FontSize="{StaticResource TamañoFontMediano}"
+                            Foreground="White"/>
+
+                        <!-- Checkbox mostrar unidad cadaver servant -->
+                        <CheckBox
+                            Grid.Column="2" Grid.Row="6"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            IsChecked="{Binding MuestraUnidadesCadaveresServants}"
+                            ToolTip="Indica si se deben mostrar las unidades de cadaveres de servants en el mapa."/>
+
+                        <!-- Nombre opcion servant -->
+                        <TextBlock
+                            Grid.Column="3" Grid.Row="6"
+                            Text="Cadaveres de servants" 
+                            FontSize="{StaticResource TamañoFontMediano}"
+                            Foreground="White"/>
+
+                        <!-- Checkbox mostrar parties -->
+                        <CheckBox
+                            Grid.Column="4" Grid.Row="0"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            IsChecked="{Binding MuestraUnidadesParties}"
+                            ToolTip="Indica si se deben mostrar las parties en las unidades de personajes sobre el mapa."/>
+
+                        <!-- Nombre opcion parties -->
+                        <TextBlock
+                            Grid.Column="5" Grid.Row="0"
+                            Text="Parties" 
+                            FontSize="{StaticResource TamañoFontMediano}"
+                            Foreground="White"/>
+
+                        <!-- Checkbox mostrar alianzas -->
+                        <CheckBox
+                            Grid.Column="4" Grid.Row="1"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            IsChecked="{Binding MuestraUnidadesAlianzas}"
+                            ToolTip="Indica si se deben mostrar las alianzas en las unidades de personajes sobre el mapa."/>
+
+                        <!-- Nombre opcion alianzas -->
+                        <TextBlock
+                            Grid.Column="5" Grid.Row="1"
+                            Text="Alianzas" 
+                            FontSize="{StaticResource TamañoFontMediano}"
+                            Foreground="White"/>
+
+                        <!-- Checkbox mostrar unidad invocacion -->
+                        <CheckBox
+                            Grid.Column="6" Grid.Row="0"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            IsChecked="{Binding MuestraUnidadesInvocaciones}"
+                            ToolTip="Indica si se deben mostrar las unidades de invocaciones en el mapa."/>
+
+                        <!-- Nombre opcion invocacion -->
+                        <TextBlock
+                            Grid.Column="7" Grid.Row="0"
+                            Text="Invocaciones" 
+                            FontSize="{StaticResource TamañoFontMediano}"
+                            Foreground="White"/>
+
+                        <!-- Checkbox mostrar unidad trampa -->
+                        <CheckBox
+                            Grid.Column="6" Grid.Row="1"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            IsChecked="{Binding MuestraUnidadesTrampas}"
+                            ToolTip="Indica si se deben mostrar las unidades de trampas en el mapa."/>
+
+                        <!-- Nombre opcion trampa -->
+                        <TextBlock
+                            Grid.Column="7" Grid.Row="1"
+                            Text="Trampas" 
+                            FontSize="{StaticResource TamañoFontMediano}"
+                            Foreground="White"/>
+
+                    </Grid>
+
+                </StackPanel>
+
+            </Border>
+
+        </ControlTemplate>
+
+    </UserControl.Template>
+
+</UserControl>

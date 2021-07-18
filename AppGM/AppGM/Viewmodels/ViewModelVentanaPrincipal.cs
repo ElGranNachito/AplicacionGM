@@ -36,7 +36,7 @@ namespace AppGM.Viewmodels
             ComandoMaximizarVentana = new Comando(() => mVentana.WindowState = EstaMaximizada()
                 ? WindowState.Normal
                 : WindowState.Maximized);
-
+            
             SistemaPrincipal.Aplicacion.PropertyChanged += (o, e) =>
             {
                 DispararPropertyChanged(e);

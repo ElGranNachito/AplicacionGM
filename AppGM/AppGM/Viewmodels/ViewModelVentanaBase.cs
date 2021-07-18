@@ -58,7 +58,7 @@ namespace AppGM
         /// Propiedad que permite obtener la altura del titulo de la ventana. Esta propiedad esta destinada para ser usada en xaml solamente.
         /// Para modificar su valor hacerlo a traves de <see cref="CaptionHeight"/>
         /// </summary>
-        public GridLength AlturaTitulo => EstaMaximizada() ? new GridLength(0) : new GridLength(mCaptionHeight);
+        public GridLength AlturaTitulo => new GridLength(mCaptionHeight);
 
         /// <summary>
         /// Propiedad que permite obtener y establecer el grosor de los bordes para cambiar de tamaño de la ventana
@@ -94,7 +94,13 @@ namespace AppGM
             mVentana.Activated += (sender, args) =>
             { 
 	            SistemaPrincipal.Aplicacion.VentanaActual = (IVentana)((Window)sender).DataContext;
-            }; 
+            };
+
+            mVentana.MaxWidth = SystemParameters.MaximizedPrimaryScreenWidth;
+            mVentana.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
+
+            mVentana.Width = SystemParameters.PrimaryScreenWidth;
+            mVentana.Height = SystemParameters.PrimaryScreenWidth;
 
             //Conectamos varios eventos de la ventana para que llamen a los delegados correspondientes de la interfaz IVentana
             mVentana.Closed    += (obj, e)        => { OnVentanaCerrada(this); };

@@ -66,9 +66,9 @@ namespace AppGM.Core
 				//Si no hay datos creamos algunos para probar
 				if (!mDBRol.Mapas.Any())
 				{
-					ModeloMaster master = new ModeloMaster
+					ModeloMaster master1 = new ModeloMaster
 					{
-						Nombre = "Un pibe",
+						Nombre = "Master Bahsakah",
 
 						PesoMaximoCargable = 100,
 						PesoCargado = 10,
@@ -86,6 +86,64 @@ namespace AppGM.Core
 						TipoPersonaje = ETipoPersonaje.Master
 					};
 
+                    ModeloServant servant1 = new ModeloServant
+                    {
+                        Nombre = "Servant Bahsakah",
+						
+                        PesoMaximoCargable = 100,
+                        PesoCargado = 10,
+
+                        MaxHp = 20,
+                        Hp = 20,
+                        Str = 12,
+                        Agi = 13,
+                        End = 12,
+                        Int = 13,
+                        Lck = 13,
+
+                        EClaseServant = EClaseServant.Berserker,
+                        TipoPersonaje = ETipoPersonaje.Servant
+                    };
+
+                    ModeloMaster master2 = new ModeloMaster
+                    {
+                        Nombre = "Master Raidah",
+
+                        PesoMaximoCargable = 100,
+                        PesoCargado = 10,
+
+                        MaxHp = 20,
+                        Hp = 20,
+                        Str = 12,
+                        Agi = 13,
+                        End = 12,
+                        Int = 13,
+                        Lck = 13,
+                        Chr = 12,
+
+                        EClaseDeSuServant = EClaseServant.Rider,
+                        TipoPersonaje = ETipoPersonaje.Master
+                    };
+
+                    ModeloServant servant2 = new ModeloServant
+                    {
+                        Nombre = "Servant Raidah",
+						
+                        PesoMaximoCargable = 100,
+                        PesoCargado = 10,
+
+                        MaxHp = 20,
+                        Hp = 20,
+                        Str = 12,
+                        Agi = 13,
+                        End = 12,
+                        Int = 13,
+                        Lck = 13,
+
+                        EClaseServant = EClaseServant.Rider,
+                        TipoPersonaje = ETipoPersonaje.Servant
+                    };
+
 					ModeloMagia magia1 = new ModeloMagia
 					{
 						Nombre = "Chiquiti Pum pum",
@@ -95,13 +153,60 @@ namespace AppGM.Core
 						CostoDeMana = 50
 					};
 
+                    ModeloMagia magia2 = new ModeloMagia
+                    {
+                        Nombre = "Bibidi badibi bu",
+                        Descripcion = "Magia absoluta que le mermite recrear cualquir cosa que se le venga a la mente",
+                        Nivel = 4,
+
+                        CostoDeMana = 70
+                    };
+
+                    ModeloNoblePhantasm noblePhantasm1 = new ModeloNoblePhantasm()
+                    {
+                        Nombre = "Bomb-Voyage",
+                        Descripcion = "Tremenda NP que le permite explotar todo en su rango de hechiceria",
+
+                        CostoDeMana = 10
+                    };
+
+                    ModeloNoblePhantasm noblePhantasm2 = new ModeloNoblePhantasm()
+                    {
+                        Nombre = "Excalibur-Breaker",
+                        Descripcion = "Tremendo NP que le permite romper cualquier otro NP a todo momento",
+
+                        CostoDeMana = 5
+                    };
+
 					TIPersonajeMagia masterMagia1 = new TIPersonajeMagia
 					{
-						Personaje = master,
+						Personaje = master1,
 						Magia = magia1
 					};
 
-					master.Magias.Add(masterMagia1);
+                    TIPersonajeMagia masterMagia2 = new TIPersonajeMagia
+                    {
+                        Personaje = master2,
+                        Magia = magia2
+                    };
+
+                    TIServantNoblePhantasm servantNoblePhantasm1 = new TIServantNoblePhantasm
+                    {
+                        Servant = servant1,
+                        NoblePhantasm = noblePhantasm1
+                    };
+
+                    TIServantNoblePhantasm servantNoblePhantasm2 = new TIServantNoblePhantasm
+                    {
+                        Servant = servant2,
+                        NoblePhantasm = noblePhantasm2
+                    };
+
+					master1.Magias.Add(masterMagia1);
+                    master2.Magias.Add(masterMagia2);
+
+					servant1.NoblePhantasms.Add(servantNoblePhantasm1);
+                    servant2.NoblePhantasms.Add(servantNoblePhantasm2);
 
 					ModeloMapa mapa = new ModeloMapa
 					{
@@ -109,68 +214,139 @@ namespace AppGM.Core
 						NombreMapa = "Seoul"
 					};
 
-					ModeloUnidadMapa elemento1 = new ModeloUnidadMapaMasterServant
+					ModeloUnidadMapa unidadServant1 = new ModeloUnidadMapaMasterServant
 					{
 						ETipoUnidad = ETipoUnidad.Servant,
-						Nombre = "Saber",
-						EClaseServant = EClaseServant.Saber
+						Nombre = "Bahsaka",
+						EClaseServant = EClaseServant.Berserker
 					};
 
-					ModeloUnidadMapa elemento2 = new ModeloUnidadMapaMasterServant
+                    ModeloUnidadMapa unidadServant2 = new ModeloUnidadMapaMasterServant
+                    {
+                        ETipoUnidad = ETipoUnidad.Servant,
+                        Nombre = "Raidah",
+                        EClaseServant = EClaseServant.Rider
+                    };
+
+					ModeloUnidadMapa unidadMaster1 = new ModeloUnidadMapaMasterServant
 					{
 						ETipoUnidad = ETipoUnidad.Master,
-						Nombre = "Master Saber",
-						EClaseServant = EClaseServant.Saber
+						Nombre = "Master Bahsaka",
+						EClaseServant = EClaseServant.Berserker
+                    };
 
-					};
+                    ModeloUnidadMapa unidadMaster2 = new ModeloUnidadMapaMasterServant
+                    {
+                        ETipoUnidad = ETipoUnidad.Master,
+                        Nombre = "Master Raidah",
+                        EClaseServant = EClaseServant.Rider
+                    };
 
-					ModeloVector2 posSaber = new ModeloVector2
+					ModeloVector2 posBerserker = new ModeloVector2
 					{
 						X = 150,
 						Y = 100
 					};
 
-					ModeloVector2 posMaster = new ModeloVector2
+					ModeloVector2 posMasterBerserker = new ModeloVector2
 					{
 						X = 170,
 						Y = 120
 					};
 
-					TIUnidadMapaVector2 tiPosSaber = new TIUnidadMapaVector2
+                    ModeloVector2 posRider = new ModeloVector2
+                    {
+                        X = 330,
+                        Y = 170
+                    };
+
+                    ModeloVector2 posMasterRider = new ModeloVector2
+                    {
+                        X = 410,
+                        Y = 40
+                    };
+
+					TIUnidadMapaVector2 tiPosBerserker = new TIUnidadMapaVector2
 					{
-						Unidad = elemento1,
-						Posicion = posSaber
+						Unidad = unidadServant1,
+						Posicion = posBerserker
 					};
 
-					TIUnidadMapaVector2 tiPosMaster = new TIUnidadMapaVector2
+					TIUnidadMapaVector2 tiPosMasterBerserker = new TIUnidadMapaVector2
 					{
-						Unidad = elemento2,
-						Posicion = posMaster
+						Unidad = unidadMaster1,
+						Posicion = posMasterBerserker
 					};
 
-					TIPersonajeUnidadMapa tiMasterUnidadMapa = new TIPersonajeUnidadMapa
+                    TIUnidadMapaVector2 tiPosRider = new TIUnidadMapaVector2
+                    {
+                        Unidad = unidadServant2,
+                        Posicion = posRider
+                    };
+
+                    TIUnidadMapaVector2 tiPosMasterRider = new TIUnidadMapaVector2
+                    {
+                        Unidad = unidadMaster2,
+                        Posicion = posMasterRider
+                    };
+
+					TIPersonajeUnidadMapa tiServantUnidadMapa1 = new TIPersonajeUnidadMapa
 					{
-						Unidad = elemento2,
-						Personaje = master
+						Unidad = unidadServant1,
+						Personaje = servant1
 					};
 
-					elemento1.Posicion = tiPosSaber;
-					elemento2.Posicion = tiPosMaster;
+                    TIPersonajeUnidadMapa tiMasterUnidadMapa1 = new TIPersonajeUnidadMapa
+                    {
+                        Unidad = unidadMaster1,
+                        Personaje = master1
+                    };
 
-					TIMapaUnidadMapa tiMapaSaber = new TIMapaUnidadMapa
+                    TIPersonajeUnidadMapa tiServantUnidadMapa2 = new TIPersonajeUnidadMapa
+                    {
+                        Unidad = unidadServant2,
+                        Personaje = servant2
+                    };
+
+                    TIPersonajeUnidadMapa tiMasterUnidadMapa2 = new TIPersonajeUnidadMapa
+                    {
+                        Unidad = unidadMaster2,
+                        Personaje = master2
+                    };
+
+					unidadServant1.Posicion = tiPosBerserker;
+					unidadServant2.Posicion = tiPosRider;
+                    unidadMaster1.Posicion = tiPosMasterBerserker;
+                    unidadMaster2.Posicion = tiPosMasterRider;
+
+                    TIMapaUnidadMapa tiMapaBerserker = new TIMapaUnidadMapa
 					{
 						Mapa = mapa,
-						Unidad = elemento1
+						Unidad = unidadServant1
 					};
 
-					TIMapaUnidadMapa tiMapaMaster = new TIMapaUnidadMapa
+					TIMapaUnidadMapa tiMapaMasterBerserker = new TIMapaUnidadMapa
 					{
 						Mapa = mapa,
-						Unidad = elemento2
+						Unidad = unidadMaster1
 					};
 
-					mapa.PosicionesUnidades.Add(tiMapaSaber);
-					mapa.PosicionesUnidades.Add(tiMapaMaster);
+                    TIMapaUnidadMapa tiMapaRider = new TIMapaUnidadMapa
+                    {
+                        Mapa = mapa,
+                        Unidad = unidadServant2
+                    };
+
+                    TIMapaUnidadMapa tiMapaMasterRider = new TIMapaUnidadMapa
+                    {
+                        Mapa = mapa,
+                        Unidad = unidadMaster2
+                    };
+
+					mapa.PosicionesUnidades.Add(tiMapaBerserker);
+					mapa.PosicionesUnidades.Add(tiMapaMasterBerserker);
+                    mapa.PosicionesUnidades.Add(tiMapaRider);
+                    mapa.PosicionesUnidades.Add(tiMapaMasterRider);
 
 					mDBRol.Add(new ModeloAdministradorDeCombate
 					{
@@ -181,21 +357,41 @@ namespace AppGM.Core
 					});
 
 					mDBRol.Add(mapa);
-					mDBRol.Add(elemento1);
-					mDBRol.Add(elemento2);
-					mDBRol.Add(posSaber);
-					mDBRol.Add(posMaster);
-					mDBRol.Add(tiMapaSaber);
-					mDBRol.Add(tiMapaMaster);
-					mDBRol.Add(tiPosSaber);
-					mDBRol.Add(tiPosMaster);
-					mDBRol.Add(tiMasterUnidadMapa);
+					mDBRol.Add(unidadServant1);
+					mDBRol.Add(unidadMaster1);
+                    mDBRol.Add(unidadServant2);
+                    mDBRol.Add(unidadMaster2);
+					mDBRol.Add(posBerserker);
+					mDBRol.Add(posMasterBerserker);
+                    mDBRol.Add(posRider);
+                    mDBRol.Add(posMasterRider);
+					mDBRol.Add(tiMapaBerserker);
+					mDBRol.Add(tiMapaMasterBerserker);
+                    mDBRol.Add(tiMapaRider);
+                    mDBRol.Add(tiMapaMasterRider);
+					mDBRol.Add(tiPosBerserker);
+					mDBRol.Add(tiPosMasterBerserker);
+                    mDBRol.Add(tiPosRider);
+                    mDBRol.Add(tiPosMasterRider);
+					mDBRol.Add(tiServantUnidadMapa1);
+                    mDBRol.Add(tiMasterUnidadMapa2);
+                    mDBRol.Add(tiServantUnidadMapa2);
+                    mDBRol.Add(tiMasterUnidadMapa1);
 
-					mDBRol.Add(master);
+                    mDBRol.Add(servant1);
+                    mDBRol.Add(master1);
+                    mDBRol.Add(servant2);
+                    mDBRol.Add(master2);
 					mDBRol.Add(magia1);
+                    mDBRol.Add(magia2);
 					mDBRol.Add(masterMagia1);
+                    mDBRol.Add(masterMagia2);
+                    mDBRol.Add(masterMagia1);
+                    mDBRol.Add(masterMagia2);
+                    mDBRol.Add(servantNoblePhantasm1);
+                    mDBRol.Add(servantNoblePhantasm2);
 
-					ModeloAdministradorDeCombate combate = new ModeloAdministradorDeCombate
+                    ModeloAdministradorDeCombate combate = new ModeloAdministradorDeCombate
 					{
 						IndicePersonajeTurnoActual = 0,
 						TurnoActual = 0,
@@ -208,48 +404,84 @@ namespace AppGM.Core
 						Mapa = mapa
 					};
 
-					ModeloParticipante participante = new ModeloParticipante
+					ModeloParticipante participante1 = new ModeloParticipante
 					{
 						EsSuTurno = false
 					};
 
-					TIParticipantePersonaje personajeParticipante = new TIParticipantePersonaje
+                    ModeloParticipante participante2 = new ModeloParticipante
+                    {
+                        EsSuTurno = false
+                    };
+
+					TIParticipantePersonaje personajeParticipante1 = new TIParticipantePersonaje
 					{
-						Participante = participante,
-						Personaje = master
+						Participante = participante1,
+						Personaje = master1
 					};
 
-					participante.Personaje = personajeParticipante;
+                    TIParticipantePersonaje personajeParticipante2 = new TIParticipantePersonaje
+                    {
+                        Participante = participante2,
+                        Personaje = master2
+                    };
 
-					ModeloAccion accion = new ModeloAccion
+					participante1.Personaje = personajeParticipante1;
+                    participante2.Personaje = personajeParticipante2;
+
+					ModeloAccion accion1 = new ModeloAccion
 					{
 						Descripcion = "Se tiro un backflip y se ligo a una piba"
 					};
 
-					TIParticipanteAccion accionParticipante = new TIParticipanteAccion
+                    ModeloAccion accion2 = new ModeloAccion
+                    {
+                        Descripcion = "Visito un maid cafe y se ligo a una de las maids"
+                    };
+
+					TIParticipanteAccion accionParticipante1 = new TIParticipanteAccion
 					{
-						Accion = accion,
-						Participante = participante
+						Accion = accion1,
+						Participante = participante1
 					};
 
-					participante.AccionesRealizadas.Add(accionParticipante);
+                    TIParticipanteAccion accionParticipante2 = new TIParticipanteAccion
+                    {
+                        Accion = accion2,
+                        Participante = participante2
+                    };
 
-					TIAdministradorDeCombateParticipante participantesCombate = new TIAdministradorDeCombateParticipante
+					participante1.AccionesRealizadas.Add(accionParticipante1);
+                    participante2.AccionesRealizadas.Add(accionParticipante2);
+
+					TIAdministradorDeCombateParticipante participante1Combate = new TIAdministradorDeCombateParticipante
 					{
 						AdministradorDeCombate = combate,
-						Participante = participante
+						Participante = participante1
 					};
 
+                    TIAdministradorDeCombateParticipante participante2Combate = new TIAdministradorDeCombateParticipante
+                    {
+                        AdministradorDeCombate = combate,
+                        Participante = participante2
+                    };
+
 					combate.Mapas.Add(mapaCombate);
-					combate.Participantes.Add(participantesCombate);
+					combate.Participantes.Add(participante1Combate);
+                    combate.Participantes.Add(participante2Combate);
 
 					mDBRol.Add(combate);
 					mDBRol.Add(mapaCombate);
-					mDBRol.Add(participante);
-					mDBRol.Add(personajeParticipante);
-					mDBRol.Add(accion);
-					mDBRol.Add(accionParticipante);
-					mDBRol.Add(participantesCombate);
+					mDBRol.Add(participante1);
+                    mDBRol.Add(participante2);
+					mDBRol.Add(personajeParticipante1);
+                    mDBRol.Add(personajeParticipante2);
+					mDBRol.Add(accion1);
+                    mDBRol.Add(accion2);
+					mDBRol.Add(accionParticipante1);
+                    mDBRol.Add(accionParticipante2);
+					mDBRol.Add(participante1Combate);
+                    mDBRol.Add(participante2Combate);
 					
 					mDBRol.SaveChanges();
 				}
@@ -261,6 +493,12 @@ namespace AppGM.Core
 					select m).ToList();
 				
 				masters.TrimExcess();
+
+                var servants = 
+                    (from m in mDBRol.Servants
+                        select m).ToList();
+				
+                servants.TrimExcess();
 
 				var mapas =
 					(from m in mDBRol.Mapas
@@ -343,6 +581,16 @@ namespace AppGM.Core
                     Masters.Add(controladorActual);
 					masters[i].controlador = controladorActual;
 				}
+
+                Servants = new List<ControladorPersonaje>(servants.Count);
+
+                for (int i = 0; i < servants.Count; ++i)
+                {
+                    ControladorPersonaje controladorActual = new ControladorPersonaje(servants[i]);
+
+                    Servants.Add(controladorActual);
+                    servants[i].controlador = controladorActual;
+                }
 
                 Mapas = new List<ControladorMapa>(mapas.Count);
 

@@ -48,14 +48,32 @@ namespace AppGM
                         case EMenuRol.VistaFichas:
                             return new UserControlListaFichasViewFichas();
                         case EMenuRol.Mapas:
-                            return new UserControlMapa
+                            return new UserControlSolapasMapa()
                             {
-                                ViewModel = SistemaPrincipal.ObtenerInstancia<ViewModelMapaPrincipal>()
+                                DataContext = SistemaPrincipal.ObtenerInstancia<ViewModelSolapaMenuRol>()
+                                    .SeccionMapaSeleccionada
                             };
                         case EMenuRol.AdministrarCombates:
                             return new UserControlMenuSeleccionCombate();
                         case EMenuRol.Combate:
                             return new UserControlCombate();
+                    }
+                    break;
+
+                //Si el valor del parametro es 3 entonces el tipo de value tiene que ser de tipo ESeccionMapa
+                case 3:
+                    switch ((ESeccionMapa)value)
+                    {
+                        case ESeccionMapa.MapaPrincipal:
+                            return new UserControlMapa
+                            {
+                                ViewModel = SistemaPrincipal.ObtenerInstancia<ViewModelMapaPrincipal>()
+                            };
+                        case ESeccionMapa.OpcionesMapa:
+                            return new UserControlOpcionesMapa()
+                            {
+                                DataContext = SistemaPrincipal.ObtenerInstancia<ViewModelMapaPrincipal>()
+                            };
                     }
                     break;
             }

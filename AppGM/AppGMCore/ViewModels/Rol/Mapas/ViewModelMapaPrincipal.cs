@@ -5,14 +5,16 @@
     /// </summary>
     public class ViewModelMapaPrincipal : ViewModelMapa
     {
-		#region Propiedades
+		#region Propiedades y Campos
+
+        // Propiedades ---
 
 		/// <summary>
 		/// Posicion de la iglesia
 		/// </summary>
 		public ViewModelIngresoPosicion PosicionIglesia { get; set; }
 
-		#endregion
+        #endregion
 
 		#region Constructor
 
