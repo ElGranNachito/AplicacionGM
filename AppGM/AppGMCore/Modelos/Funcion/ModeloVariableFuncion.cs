@@ -1,8 +1,8 @@
 ﻿namespace AppGM.Core
 {
-	public abstract class ModeloVariableFuncionBase
+	public class ModeloVariableFuncionBase : ModeloBase
 	{
-
+		public string NombreVariable { get; set; }
 	}
 
 	public abstract class ModeloVariableFuncion<TipoVariable> : ModeloVariableFuncionBase

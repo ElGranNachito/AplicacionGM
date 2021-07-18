@@ -26,13 +26,13 @@ namespace AppGM.Core
 			resultado.Funcion(null, null, controladorHabilidad);
 		}
 
-		protected override List<ViewModelBloqueFuncionBase> AsignarListaDeBloques()
+		protected override List<Type> AsignarListaDeBloques()
 		{
-			return new List<ViewModelBloqueFuncionBase>
+			return new List<Type>
 			{
-				new ViewModelBloqueDeclaracionVariable(this),
-				new ViewModelBloqueLlamarFuncion(this),
-				new ViewModelBloqueCondicionalCompleto(this)
+				typeof(ViewModelBloqueDeclaracionVariable),
+				typeof(ViewModelBloqueLlamarFuncion),
+				typeof(ViewModelBloqueCondicionalCompleto)
 			};
 		}
 

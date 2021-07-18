@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using CoolLogs;
 
@@ -36,7 +37,7 @@ namespace AppGM.Core
 		/// <summary>
 		/// Bloques disponibles para el uso del usuario
 		/// </summary>
-		public ViewModelListaDeElementos<ViewModelBloqueFuncionBase> BloquesDisponibles { get; set; }
+		public ViewModelListaDeElementos<Type> BloquesDisponibles { get; set; }
 
 		/// <summary>
 		/// Bloques colocados por el usuario
@@ -74,7 +75,7 @@ namespace AppGM.Core
 		/// </summary>
 		public ViewModelCreacionDeFuncionBase()
 		{
-			BloquesDisponibles = new ViewModelListaDeElementos<ViewModelBloqueFuncionBase>(AsignarListaDeBloques());
+			BloquesDisponibles = new ViewModelListaDeElementos<Type>(AsignarListaDeBloques());
 			VariablesBase = AsignarVariablesBase();
 		}
 
@@ -153,7 +154,7 @@ namespace AppGM.Core
 		/// es decir no llamar propiedades de la clase cuya inicializacion dependa del constructor
 		/// </summary>
 		/// <returns><see cref="List{T}"/> que se asignara a <see cref="BloquesDisponibles"/></returns>
-		protected abstract List<ViewModelBloqueFuncionBase> AsignarListaDeBloques();
+		protected abstract List<Type> AsignarListaDeBloques();
 
 		/// <summary>
 		/// Metodo que devuelve una <see cref="List{T}"/> de <see cref="BloqueVariable"/>

@@ -11,7 +11,7 @@ namespace AppGM.Core
 	/// </summary>
 	/// <typeparam name="TipoElementos"><see cref="ViewModel"/></typeparam>
 	public class ViewModelListaDeElementos<TipoElementos> : IEnumerable<TipoElementos>
-		where TipoElementos : ViewModel
+		where TipoElementos: class
 	{
 		/// <summary>
 		/// <see cref="ObservableCollection{T}"/> de <see cref="TipoElementos"/> contenidos

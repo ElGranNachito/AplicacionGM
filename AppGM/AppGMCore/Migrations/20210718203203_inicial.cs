@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AppGM.Core.Migrations
 {
-    public partial class Inicial : Migration
+    public partial class inicial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -155,6 +155,19 @@ namespace AppGM.Core.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ModeloEfectoSiendoAplicado", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ModeloFuncion",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    NombreFuncion = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ModeloFuncion", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -317,6 +330,19 @@ namespace AppGM.Core.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ModeloUtilizable", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ModeloVariableFuncionBase",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    NombreVariable = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ModeloVariableFuncionBase", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -1047,6 +1073,30 @@ namespace AppGM.Core.Migrations
                         name: "FK_TIUtilizableTiradaBase_ModeloUtilizable_IdUtilizable",
                         column: x => x.IdUtilizable,
                         principalTable: "ModeloUtilizable",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TIFuncionVariable",
+                columns: table => new
+                {
+                    IDFuncion = table.Column<int>(type: "INTEGER", nullable: false),
+                    IDVariable = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TIFuncionVariable", x => new { x.IDFuncion, x.IDVariable });
+                    table.ForeignKey(
+                        name: "FK_TIFuncionVariable_ModeloFuncion_IDFuncion",
+                        column: x => x.IDFuncion,
+                        principalTable: "ModeloFuncion",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TIFuncionVariable_ModeloVariableFuncionBase_IDVariable",
+                        column: x => x.IDVariable,
+                        principalTable: "ModeloVariableFuncionBase",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -1885,6 +1935,11 @@ namespace AppGM.Core.Migrations
                 column: "IdPersonajeObjetivo");
 
             migrationBuilder.CreateIndex(
+                name: "IX_TIFuncionVariable_IDVariable",
+                table: "TIFuncionVariable",
+                column: "IDVariable");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TIHabilidadCargasHabilidad_IdCargasHabilidad",
                 table: "TIHabilidadCargasHabilidad",
                 column: "IdCargasHabilidad");
@@ -2179,6 +2234,9 @@ namespace AppGM.Core.Migrations
                 name: "TIEfectoSiendoAplicadoPersonajeObjetivo");
 
             migrationBuilder.DropTable(
+                name: "TIFuncionVariable");
+
+            migrationBuilder.DropTable(
                 name: "TIHabilidadCargasHabilidad");
 
             migrationBuilder.DropTable(
@@ -2267,6 +2325,12 @@ namespace AppGM.Core.Migrations
 
             migrationBuilder.DropTable(
                 name: "ModeloEfectoSiendoAplicado");
+
+            migrationBuilder.DropTable(
+                name: "ModeloFuncion");
+
+            migrationBuilder.DropTable(
+                name: "ModeloVariableFuncionBase");
 
             migrationBuilder.DropTable(
                 name: "ModeloCargas");

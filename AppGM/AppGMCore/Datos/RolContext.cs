@@ -775,6 +775,20 @@ namespace AppGM.Core
                 .HasOne(ti => ti.Rol)
                 .WithOne(r => r.AmbienteGlobal)
                 .HasForeignKey<TIRolAmbiente>(ti => ti.IdRol);
+
+            // Funcion:
+            modelBuilder.Entity<ModeloFuncion>().ToTable("ModeloFuncion").HasNoDiscriminator();
+
+            // - Funcion varibale
+            modelBuilder.Entity<TIFuncionVariable>().HasKey(e => new { e.IDFuncion, e.IDVariable });
+
+            modelBuilder.Entity<TIFuncionVariable>()
+	            .HasOne(ti => ti.Variable);
+
+            modelBuilder.Entity<TIFuncionVariable>()
+	            .HasOne(ti => ti.Funcion)
+	            .WithMany(r => r.VariablesPersistentes)
+	            .HasForeignKey(ti => ti.IDFuncion);
         }
         #endregion
     }
