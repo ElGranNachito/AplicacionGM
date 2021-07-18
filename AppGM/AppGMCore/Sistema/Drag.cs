@@ -59,6 +59,8 @@ namespace AppGM.Core
 		{
 			ViewModelContenido = vm;
 
+			ParametrosDrag.Clear();
+
 			foreach (var parametro in parametros)
 				ParametrosDrag.Add(parametro.Key, parametro.Value);
 			
@@ -86,7 +88,6 @@ namespace AppGM.Core
 				ReceptoresActualmenteActivos.Clear();
 
 				ViewModelContenido = null;
-				ParametrosDrag.Clear();
 
 				SistemaPrincipal.Aplicacion.VentanaActual.OnMouseUp -= eventoMouseSoltado;
 			};

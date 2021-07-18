@@ -30,8 +30,8 @@
             <ComboBox
                 VerticalAlignment="Center"
                 Style="{StaticResource ComboBoxBloques}"
-                ItemsSource="{Binding TiposDisponibles}"
-                SelectedValue="{Binding TipoSeleccionado}">
+                ItemsSource="{Binding ValoresDisponibles.Elementos}"
+                SelectedValue="{Binding ValorSeleccionado}">
 
                 <ComboBox.ItemTemplate>
                     <DataTemplate>

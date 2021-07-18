@@ -11,6 +11,6 @@
 	}
 
 	public class ModeloVariableFuncion_Int : ModeloVariableFuncion<int>{}
-	public class ModeloVariableFuncion_Float : ModeloVariableFuncion<int> { }
-	public class ModeloVariableFuncion_String : ModeloVariableFuncion<int> { }
+	public class ModeloVariableFuncion_Float : ModeloVariableFuncion<float> { }
+	public class ModeloVariableFuncion_String : ModeloVariableFuncion<string> { }
 }

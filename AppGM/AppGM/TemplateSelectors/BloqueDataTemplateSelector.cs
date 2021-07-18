@@ -30,6 +30,8 @@ namespace AppGM
 
 			if (EsBloqueDeMuestra)
 			{
+				//TODO: Para los bloques de muestra reemplazar los vms con enums
+
 				resultado.DataType = typeof(UserControlBloqueMuestra);
 				resultado.VisualTree = new FrameworkElementFactory(typeof(UserControlBloqueMuestra));
 

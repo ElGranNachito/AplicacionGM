@@ -24,6 +24,11 @@ namespace AppGM.Core
 		/// </summary>
 		private Type mTipo;
 
+		/// <summary>
+		/// Almacena el valor de <see cref="Nombre"/>
+		/// </summary>
+		private string mNombre;
+
 
 		//-------------------------------------PROPIEDADES------------------------------------
 
@@ -31,7 +36,19 @@ namespace AppGM.Core
 		/// <summary>
 		/// Nombre de la variable
 		/// </summary>
-		public string Nombre { get; set; }
+		public string Nombre
+		{
+			get => mNombre;
+			set
+			{
+				if (value == mNombre)
+					return;
+
+				mNombre = value;
+
+				ActualizarValidez();
+			}
+		}
 
 		/// <summary>
 		/// Indica si mostrar el menu inferior del bloque
@@ -95,11 +112,7 @@ namespace AppGM.Core
 			ValorPorDefecto = new ViewModelArgumento(mVMCreacionDeFuncion, this, typeof(object), "Valor por defecto");
 			Tipo = typeof(object);
 
-			ValorPorDefecto.OnEsValidoCambio += esValido =>
-			{
-				if (!esValido)
-					EsValido = false;
-			};
+			ValorPorDefecto.OnEsValidoCambio += esValido => ActualizarValidez();
 
 			PropertyChanged += (sender, args) =>
 			{
@@ -138,6 +151,8 @@ namespace AppGM.Core
 
 			return ETipoVariable.Normal;
 		}
+
+		private void ActualizarValidez() => EsValido = ValorPorDefecto.EsValido && Nombre.Length != 0;
 
 		#endregion
 	}

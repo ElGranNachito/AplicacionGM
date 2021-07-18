@@ -5,6 +5,7 @@ using AppGM.Core.Delegados;
 
 namespace AppGM.Core
 {
+	
 	public abstract class ViewModelBloqueFuncionBase : ViewModel, IReceptorDeDrag, IDrageable
 	{
 		/// <summary>
@@ -167,6 +168,12 @@ namespace AppGM.Core
 		{
 			return mPadre?.ObtenerVariables(this);
 		}
+
+		/// <summary>
+		/// Funcion llamada cuando el bloque es eliminado de su <see cref="IContenedorDeBloques"/>.
+		/// (Transladar el elemento a otro <see cref="IContenedorDeBloques"/> no dispara causa que se llame la funcion)
+		/// </summary>
+		public virtual void OnBloqueRemovido(){}
 
 		public void OnDragEntro(IDrageable vm)
 		{

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace AppGM.Core
@@ -38,9 +39,14 @@ namespace AppGM.Core
 		{
 			bloque.Padre = this;
 
+			if (bloque is ViewModelBloqueDeclaracionVariable var)
+				VariablesCreadas.Add(var);
+
 			if (indice != -1)
 			{
 				Base<IContenedorDeBloques>()?.InsertarBloque(bloque, indice);
+
+				mVMCreacionDeFuncion.DispararBloqueAñadido(bloque, this);
 
 				return;
 			}
@@ -49,11 +55,15 @@ namespace AppGM.Core
 			bloque.IndiceZ = IndiceZ + 1;
 
 			Bloques.Add(bloque);
+
+			mVMCreacionDeFuncion.DispararBloqueAñadido(bloque, this);
 		}
 
 		public void QuitarBloque(ViewModelBloqueFuncionBase bloque)
 		{
 			Bloques.Remove(bloque);
+
+			mVMCreacionDeFuncion.DispararBloqueRemovido(bloque, this);
 
 			Base<IContenedorDeBloques>()?.ActualizarIndicesBloques(bloque.IndiceBloque);
 		}

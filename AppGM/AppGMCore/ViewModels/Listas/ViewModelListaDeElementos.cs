@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
@@ -63,6 +64,33 @@ namespace AppGM.Core
 		/// <param name="elemento"><see cref="TipoElementos"/> que quitar</param>
 		/// <returns><see cref="bool"/> indicando si el elemento existe</returns>
 		public bool Contiene(TipoElementos elemento) => Elementos.Contains(elemento);
+
+		/// <summary>
+		/// Añade una coleccion de elementos a <see cref="Elementos"/>
+		/// </summary>
+		/// <param name="elementos"><see cref="IEnumerable{T}"/> que contiene los elementos a añadir</param>
+		public void AddRange(IEnumerable<TipoElementos> elementosAAñadir)
+		{
+			foreach (var elemento in elementosAAñadir)
+				Elementos.Add(elemento);
+		}
+
+		/// <summary>
+		/// Elimina la primera instancia del elemento que cumpla los criterios especificados por el <paramref name="predicado"/>
+		/// </summary>
+		/// <param name="predicado">Contiene la funcion que se utilizara para evaluar a los diferentes elementos</param>
+		public void RemoveFirst(Predicate<TipoElementos> predicado)
+		{
+			foreach (var elemento in Elementos)
+			{
+				if (predicado(elemento))
+				{
+					Elementos.Remove(elemento);
+
+					break;
+				}
+			}
+		}
 
 		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 

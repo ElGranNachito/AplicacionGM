@@ -12,10 +12,18 @@ namespace AppGM.Core
 	{
 		public override void CrearFuncion()
 		{
-			//TODO: Implementar de verdad
-			Compilador.IniciarCompilacion(
-				(from bloque in Bloques.Elementos
-					select bloque.GenerarBloque()).ToList());
+			Compilador compilador = new Compilador(
+				((from bloque in Bloques
+				select bloque.GenerarBloque())
+				.Concat(ObtenerVariables(null)))
+				.ToList()
+				);
+
+			var resultado = compilador.Compilar<Action<ControladorPersonaje, ControladorPersonaje[], ControladorHabilidad>>();
+
+			var controladorHabilidad = new ControladorHabilidad(new ModeloHabilidad {Nombre = "Ultra destructor de nada"});
+
+			resultado.Funcion(null, null, controladorHabilidad);
 		}
 
 		protected override List<ViewModelBloqueFuncionBase> AsignarListaDeBloques()
@@ -34,7 +42,7 @@ namespace AppGM.Core
 			{
 				new BloqueVariable(  "Combate",  typeof(ControladorAdministradorDeCombate), ETipoVariable.Normal),
 				new BloqueVariable( "Usuario", typeof(ControladorPersonaje), ETipoVariable.Parametro),
-				new BloqueVariable( "Objetivos", typeof(List<ControladorPersonaje>), ETipoVariable.Parametro),
+				new BloqueVariable( "Objetivos", typeof(ControladorPersonaje[]), ETipoVariable.Parametro),
 				new BloqueVariable(Compilador.NombreVariableDueña, typeof(ControladorHabilidad), ETipoVariable.Parametro)
 			};
 		}

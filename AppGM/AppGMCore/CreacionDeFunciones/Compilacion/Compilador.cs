@@ -25,9 +25,14 @@ namespace AppGM.Core
 		private List<ParameterExpression> mParametros = new List<ParameterExpression>();
 
 		/// <summary>
+		/// Variables del afuncion siendo compilada
+		/// </summary>
+		private List<ParameterExpression> mVars = new List<ParameterExpression>();
+
+		/// <summary>
 		/// Bloques que componen la funcion, sin contar la variables
 		/// </summary>
-		private List<BloqueBase> mBloques;
+		private List<BloqueBase> mBloques = new List<BloqueBase>();
 
 		/// <summary>
 		/// Indica si el compilador es valido, de no serlo, no se puede iniciar la compilacion
@@ -95,16 +100,12 @@ namespace AppGM.Core
 
 			try
 			{
-				//Añadimos las variables primero que nada
-				foreach (var var in mVariables)
-					expresiones.Add(var.Value);
-
 				//Luego añadimos el resto de bloques en orden
 				foreach (var bloque in mBloques)
 					expresiones.Add(bloque.ObtenerExpresion(this));
 
 				//Expresion final representando toda la funcion
-				var expresionFinal = Expression.Block(expresiones);
+				var expresionFinal = Expression.Block(mVars, expresiones);
 
 				//Generamos la lambda y la compilamos
 				resultado.Funcion = Expression.Lambda<TipoFuncion>(expresionFinal, mParametros).Compile();
@@ -147,8 +148,14 @@ namespace AppGM.Core
 					mVariables.Add(var.nombre, var.ObtenerExpresion(this));
 
 					if (var.tipoVariable == ETipoVariable.Parametro)
+					{
 						mParametros.Add((ParameterExpression)mVariables.Last().Value);
-
+					}
+					else
+					{
+						mVars.Add((ParameterExpression)mVariables.Last().Value);
+					}
+					
 					continue;
 				}
 
