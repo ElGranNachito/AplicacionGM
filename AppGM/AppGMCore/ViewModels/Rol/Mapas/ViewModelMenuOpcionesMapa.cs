@@ -5,7 +5,7 @@ namespace AppGM.Core
     /// View model que representa al menu de opciones del mapa.
     /// TODO: Deshechar si resulta no ser de uso.
     /// </summary>
-    public class ViewModelMenuOpcionesMapa : ViewModel
+    public class ViewModelMenuOpcionesMapa : BaseViewModel
     {
         #region Campos & Propiedades
 

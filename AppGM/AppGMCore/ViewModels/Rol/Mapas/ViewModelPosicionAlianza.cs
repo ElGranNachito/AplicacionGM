@@ -4,7 +4,7 @@ namespace AppGM.Core.ViewModels.Rol.Mapas
     /// <summary>
     /// View model que representa el control para la modificacion de la posicion de un personaje en un mapa segun sus alianzas.
     /// </summary>
-    public class ViewModelPosicionAlianza : ViewModel
+    public class ViewModelPosicionAlianza : BaseViewModel
     {
         #region Campos & Propiedades
 

@@ -8,7 +8,7 @@ namespace AppGM
     /// <summary>
     /// Property para los <see cref="Button"/> de la columna derecha en el menu del rol
     /// </summary>
-    public class BotonSolapaProperty : BaseAttachedProperty<ViewModel, BotonSolapaProperty>
+    public class BotonSolapaProperty : BaseAttachedProperty<BaseViewModel, BotonSolapaProperty>
     {
         public override void OnValueChanged_Impl(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -16,7 +16,7 @@ namespace AppGM
             if (d is Button b)
             {
                 //Obtenemos el VM
-	            ViewModel vm = (ViewModel)e.NewValue;
+	            BaseViewModel vm = (BaseViewModel)e.NewValue;
                 IBotonSeleccionado<object> botonSeleccionado = (IBotonSeleccionado<object>) vm;
 
                 //Cuando el ususario haga click sobre el boton...
