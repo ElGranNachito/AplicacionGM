@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AppGM.Core.Migrations
 {
     [DbContext(typeof(RolContext))]
-    [Migration("20210625194842_Inicial")]
+    [Migration("20210718203937_Inicial")]
     partial class Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -225,6 +225,20 @@ namespace AppGM.Core.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ModeloEfectoSiendoAplicado");
+                });
+
+            modelBuilder.Entity("AppGM.Core.ModeloFuncion", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("NombreFuncion")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ModeloFuncion");
                 });
 
             modelBuilder.Entity("AppGM.Core.ModeloHabilidad", b =>
@@ -542,6 +556,17 @@ namespace AppGM.Core.Migrations
                     b.HasDiscriminator<int>("Tipo").HasValue(1);
                 });
 
+            modelBuilder.Entity("AppGM.Core.ModeloVariableFuncionBase", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ModeloVariableFuncionBase");
+                });
+
             modelBuilder.Entity("AppGM.Core.ModeloVector2", b =>
                 {
                     b.Property<int>("Id")
@@ -741,6 +766,21 @@ namespace AppGM.Core.Migrations
                     b.HasIndex("IdPersonajeObjetivo");
 
                     b.ToTable("TIEfectoSiendoAplicadoPersonajeObjetivo");
+                });
+
+            modelBuilder.Entity("AppGM.Core.TIFuncionVariable", b =>
+                {
+                    b.Property<int>("IDFuncion")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("IDVariable")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("IDFuncion", "IDVariable");
+
+                    b.HasIndex("IDVariable");
+
+                    b.ToTable("TIFuncionVariable");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIHabilidadCargasHabilidad", b =>
@@ -1949,6 +1989,25 @@ namespace AppGM.Core.Migrations
                     b.Navigation("PersonajeObjetivo");
                 });
 
+            modelBuilder.Entity("AppGM.Core.TIFuncionVariable", b =>
+                {
+                    b.HasOne("AppGM.Core.ModeloFuncion", "Funcion")
+                        .WithMany("VariablesPersistentes")
+                        .HasForeignKey("IDFuncion")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AppGM.Core.ModeloVariableFuncionBase", "Variable")
+                        .WithMany()
+                        .HasForeignKey("IDVariable")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Funcion");
+
+                    b.Navigation("Variable");
+                });
+
             modelBuilder.Entity("AppGM.Core.TIHabilidadCargasHabilidad", b =>
                 {
                     b.HasOne("AppGM.Core.ModeloCargas", "ModeloCargas")
@@ -2789,6 +2848,11 @@ namespace AppGM.Core.Migrations
                     b.Navigation("Instigador");
 
                     b.Navigation("Objetivos");
+                });
+
+            modelBuilder.Entity("AppGM.Core.ModeloFuncion", b =>
+                {
+                    b.Navigation("VariablesPersistentes");
                 });
 
             modelBuilder.Entity("AppGM.Core.ModeloHabilidad", b =>

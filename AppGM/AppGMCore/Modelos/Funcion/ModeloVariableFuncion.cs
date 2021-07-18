@@ -1,6 +1,6 @@
 ﻿namespace AppGM.Core
 {
-	public abstract class ModeloVariableFuncionBase
+	public class ModeloVariableFuncionBase : ModeloBase
 	{
 
 	}

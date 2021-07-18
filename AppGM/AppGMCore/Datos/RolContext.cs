@@ -777,7 +777,6 @@ namespace AppGM.Core
                 .HasForeignKey<TIRolAmbiente>(ti => ti.IdRol);
 
             // Funcion:
-
             modelBuilder.Entity<ModeloFuncion>().ToTable("ModeloFuncion").HasNoDiscriminator();
 
             // - Funcion varibale

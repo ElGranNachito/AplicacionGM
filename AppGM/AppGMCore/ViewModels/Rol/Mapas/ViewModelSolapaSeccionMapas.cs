@@ -7,7 +7,7 @@ namespace AppGM.Core
     /// <summary>
     /// VM que representa el contenido del menu de mapas.
     /// </summary>
-    public class ViewModelSolapaSeccionMapas : BaseViewModel, IBotonSeleccionado<object>
+    public class ViewModelSolapaSeccionMapas : ViewModel, IBotonSeleccionado<object>
     {
         #region Miembros
 
