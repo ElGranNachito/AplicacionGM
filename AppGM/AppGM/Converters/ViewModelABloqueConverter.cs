@@ -16,9 +16,7 @@ namespace AppGM
 	{
 		public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			ViewModelBloqueFuncionBase vmBloque = (ViewModelBloqueFuncionBase) value;
-
-			if (vmBloque == null)
+			if (value is not ViewModelBloqueFuncionBase && value is not Type)
 			{
 				SistemaPrincipal.LoggerGlobal.Log($"{nameof(value)} no es de un {nameof(Type)} soportado!", ESeveridad.Error);
 
@@ -27,12 +25,12 @@ namespace AppGM
 
 			switch (value)
 			{
-				case ViewModelBloqueDeclaracionVariable vm:
-					return new UserControlBloqueDeclaracionVariable {DataContext = vm};
-				case ViewModelBloqueLlamarFuncion vm:
-					return new UserControlBloqueLlamarFuncion {DataContext = vm};
-				case ViewModelBloqueCondicionalCompleto vm:
-					return new UserControlBloqueCondicional {DataContext = vm};
+				case ViewModelBloqueDeclaracionVariable:
+					return new UserControlBloqueDeclaracionVariable {DataContext =value};
+				case ViewModelBloqueLlamarFuncion:
+					return new UserControlBloqueLlamarFuncion {DataContext = value};
+				case ViewModelBloqueCondicionalCompleto:
+					return new UserControlBloqueCondicional {DataContext = value};
 				default:
 					return null;
 			}

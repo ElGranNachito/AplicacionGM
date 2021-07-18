@@ -777,22 +777,18 @@ namespace AppGM.Core
                 .HasForeignKey<TIRolAmbiente>(ti => ti.IdRol);
 
             // Funcion:
-
             modelBuilder.Entity<ModeloFuncion>().ToTable("ModeloFuncion").HasNoDiscriminator();
 
             // - Funcion varibale
-            modelBuilder.Entity<TIFuncionVariable>().HasKey(e => new { e.IDFuncion, e.IDVariable});
+            modelBuilder.Entity<TIFuncionVariable>().HasKey(e => new { e.IDFuncion, e.IDVariable });
 
             modelBuilder.Entity<TIFuncionVariable>()
-                .HasOne(ti => ti.Variable);
+	            .HasOne(ti => ti.Variable);
 
             modelBuilder.Entity<TIFuncionVariable>()
-                .HasOne(ti => ti.Funcion)
-                .WithMany(r => r.VariablesPersistentes)
-                .HasForeignKey(ti => ti.IDFuncion);
-
-            //TODO: Agregar relaciones de ModeloFuncion con ModeloEfecto y ModeloHabilidad en un futuro si se las necesita. 
-
+	            .HasOne(ti => ti.Funcion)
+	            .WithMany(r => r.VariablesPersistentes)
+	            .HasForeignKey(ti => ti.IDFuncion);
         }
         #endregion
     }

@@ -1,14 +1,32 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using CoolLogs;
 
 namespace AppGM.Core
 {
 	/// <summary>
+	/// Representa un metodo que lidia con eventos de modificacion de la lista de bloques contenidos
+	/// </summary>
+	/// <param name="bloque"><see cref="ViewModelBloqueFuncionBase"/> que fue modificado</param>
+	/// <param name="padre"><see cref="IContenedorDeBloques"/> del <paramref name="bloque"/></param>
+	public delegate void BloquesContenidosModificados(ViewModelBloqueFuncionBase bloque, IContenedorDeBloques padre);
+
+	/// <summary>
 	/// <see cref="ViewModel"/> que representa un control para la creacion de una funcion
 	/// </summary>
 	public abstract class ViewModelCreacionDeFuncionBase: ViewModel, IReceptorDeDrag, IContenedorDeBloques
 	{
+		/// <summary>
+		/// Evento que se dispara cuando un bloque es removido
+		/// </summary>
+		public event BloquesContenidosModificados OnBloqueRemovido = delegate {};
+
+		/// <summary>
+		/// Evento que se dispara cuando un bloque es añadido
+		/// </summary>
+		public event BloquesContenidosModificados OnBloqueAñadido = delegate {};
+
 		#region Propiedades & Campos
 
 		/// <summary>
@@ -19,7 +37,7 @@ namespace AppGM.Core
 		/// <summary>
 		/// Bloques disponibles para el uso del usuario
 		/// </summary>
-		public ViewModelListaDeElementos<ViewModelBloqueFuncionBase> BloquesDisponibles { get; set; }
+		public ViewModelListaDeElementos<Type> BloquesDisponibles { get; set; }
 
 		/// <summary>
 		/// Bloques colocados por el usuario
@@ -57,7 +75,7 @@ namespace AppGM.Core
 		/// </summary>
 		public ViewModelCreacionDeFuncionBase()
 		{
-			BloquesDisponibles = new ViewModelListaDeElementos<ViewModelBloqueFuncionBase>(AsignarListaDeBloques());
+			BloquesDisponibles = new ViewModelListaDeElementos<Type>(AsignarListaDeBloques());
 			VariablesBase = AsignarVariablesBase();
 		}
 
@@ -65,18 +83,14 @@ namespace AppGM.Core
 
 		#region Metodos
 
-		/// <summary>
-		/// Lista <see cref="VariablesBase"/> y <see cref="VariablesCreadas"/>
-		/// </summary>
-		/// <param name="bloqueQueIntentaObtenerLasVariables"><see cref="ViewModelBloqueFuncionBase"/> desde el cual se llamo la funcion</param>
-		/// <returns><see cref="List{T}"/> de <see cref="BloqueVariable"/> que abarca todas las variables</returns>
 		public List<BloqueVariable> ObtenerVariables(ViewModelBloqueFuncionBase bloqueQueIntentaObtenerLasVariables)
 		{
 			var variables = VariablesBase;
 
 			var variablesCreadasValidas = VariablesCreadas;
 
-			variablesCreadasValidas.RemoveAll(variable => !variable.EsValido || bloqueQueIntentaObtenerLasVariables.IndiceBloque > variable.IndiceBloque);
+			if(bloqueQueIntentaObtenerLasVariables != null)
+				variablesCreadasValidas.RemoveAll(variable => !variable.EsValido || bloqueQueIntentaObtenerLasVariables.IndiceBloque < variable.IndiceBloque);
 
 			variables = variables.Concat(variablesCreadasValidas.Select(elemento => elemento.GenerarBloque_Impl())).ToList();
 
@@ -90,9 +104,14 @@ namespace AppGM.Core
 			if(SistemaPrincipal.Drag.HayUnDragActivo)
 				GrosorBordesGridBloquesColocados = new Grosor(1);
 
+			if (bloque is ViewModelBloqueDeclaracionVariable var)
+				VariablesCreadas.Add(var);
+
 			if (indice != -1)
 			{
 				Base<IContenedorDeBloques>()?.InsertarBloque(bloque, indice);
+
+				DispararBloqueAñadido(bloque, this);
 
 				return;
 			}
@@ -101,14 +120,32 @@ namespace AppGM.Core
 			bloque.IndiceZ      = 1;
 
 			Bloques.Add(bloque);
+
+			DispararBloqueAñadido(bloque, this);
 		}
 
 		public void QuitarBloque(ViewModelBloqueFuncionBase bloque)
 		{
 			Bloques.Remove(bloque);
 
-			((IContenedorDeBloques)this).ActualizarIndicesBloques(bloque.IndiceBloque);
+			DispararBloqueRemovido(bloque, this);
+
+			Base<IContenedorDeBloques>().ActualizarIndicesBloques(bloque.IndiceBloque);
 		}
+
+		/// <summary>
+		/// Dispara <see cref="OnBloqueAñadido"/>
+		/// </summary>
+		/// <param name="bloqueAñadido"><see cref="ViewModelBloqueFuncionBase"/> que fue añadido</param>
+		/// <param name="padre"><see cref="IContenedorDeBloques"/> del <paramref name="bloqueAñadido"/></param>
+		public void DispararBloqueAñadido(ViewModelBloqueFuncionBase bloqueAñadido, IContenedorDeBloques padre) => OnBloqueAñadido(bloqueAñadido, padre);
+
+		/// <summary>
+		/// Dispara <see cref="OnBloqueRemovido"/>
+		/// </summary>
+		/// <param name="bloqueRemovido"><see cref="ViewModelBloqueFuncionBase"/> que fue removido</param>
+		/// <param name="padre"><see cref="IContenedorDeBloques"/> del <paramref name="bloqueRemovido"/></param>
+		public void DispararBloqueRemovido(ViewModelBloqueFuncionBase bloqueRemovido, IContenedorDeBloques padre) => OnBloqueRemovido(bloqueRemovido, padre);
 
 		/// <summary>
 		/// Metodo que debe asignar una lista de los <see cref="ViewModelBloqueFuncionBase"/> disponibles a
@@ -117,7 +154,7 @@ namespace AppGM.Core
 		/// es decir no llamar propiedades de la clase cuya inicializacion dependa del constructor
 		/// </summary>
 		/// <returns><see cref="List{T}"/> que se asignara a <see cref="BloquesDisponibles"/></returns>
-		protected abstract List<ViewModelBloqueFuncionBase> AsignarListaDeBloques();
+		protected abstract List<Type> AsignarListaDeBloques();
 
 		/// <summary>
 		/// Metodo que devuelve una <see cref="List{T}"/> de <see cref="BloqueVariable"/>

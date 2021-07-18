@@ -1,4 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Reflection;
 
 namespace AppGM.Core
@@ -16,6 +18,11 @@ namespace AppGM.Core
 		private MethodInfo mFuncion;
 
 		/// <summary>
+		/// Bloque que contiene a estos argumentos
+		/// </summary>
+		private ViewModelBloqueFuncionBase mBloqueContenedor;
+
+		/// <summary>
 		/// Lista de <see cref="ViewModelArgumento"/> que corresponden a cada parametro
 		/// </summary>
 		public ObservableCollection<ViewModelArgumento> ArgumentosFuncion { get; set; } = new ObservableCollection<ViewModelArgumento>();
@@ -29,15 +36,21 @@ namespace AppGM.Core
 		/// </summary>
 		/// <param name="_vmCrecionDeFuncion"></param>
 		/// <param name="_funcion"><see cref="MethodInfo"/> para el que se ingresaran los parametros</param>
-		public ViewModelBloqueArgumentosFuncion(ViewModelCreacionDeFuncionBase _vmCrecionDeFuncion, MethodInfo _funcion)
+		public ViewModelBloqueArgumentosFuncion(ViewModelCreacionDeFuncionBase _vmCrecionDeFuncion, ViewModelBloqueFuncionBase _bloqueContenedor, MethodInfo _funcion)
 			: base(_vmCrecionDeFuncion)
 		{
 			ActualizarFuncion(_funcion);
+
+			mBloqueContenedor = _bloqueContenedor;
 		}
 
 		#endregion
 
 		#region Metodos
+
+		public override List<BloqueVariable> ObtenerVariables() => mBloqueContenedor?.ObtenerVariables();
+
+		public List<BloqueArgumento> ObtenerArgumentosFuncion() => ArgumentosFuncion.Select(arg => arg.GenerarBloque_Impl()).ToList();
 
 		/// <summary>
 		/// Actualiza la <see cref="mFuncion"/> para la que estamos ingresando argumentos
@@ -53,7 +66,9 @@ namespace AppGM.Core
 			ArgumentosFuncion.Clear();
 
 			foreach (var parametro in mFuncion.GetParameters())
-				ArgumentosFuncion.Add(new ViewModelArgumento(mVMCreacionDeFuncion, this, parametro.ParameterType, parametro.Name));
+			{
+				ArgumentosFuncion.Add(new ViewModelArgumento(mVMCreacionDeFuncion, this, parametro.ParameterType, parametro.Name, false, parametro.IsOptional));
+			}
 		}
 
 		public override bool VerificarValidez()

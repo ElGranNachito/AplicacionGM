@@ -8,6 +8,7 @@
     /// <summary>
     /// Interfaz que implementan controladores de modelos de entidades que se pueden utilizar
     /// </summary>
+    //TODO: Cambiar los tipos del parametros objetivos en Utilizar y PuedeUtilizar a una Lista
     public interface IUtilizable
     {
         /// <summary>

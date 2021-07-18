@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Net.Mime;
 using System.Reflection;
 using System.Text.RegularExpressions;
 
@@ -153,7 +154,8 @@ namespace AppGM.Core
 
 				mTipoArgumento = value;
 
-				ActualizarValidez();
+				if(!DeteccionAutomaticaDeTipo)
+					ActualizarValidez();
 
 				OnTipoArgumentoModificado(valorAnterior, mTipoArgumento);
 			}
@@ -352,7 +354,7 @@ namespace AppGM.Core
 				if (itemMiembro.valorItem.EsFuncionConParametros())
 				{
 					mFuncionesConParametros.Add(ObtenerIndiceSeccionActual() - 1,
-						new ViewModelBloqueArgumentosFuncion(mVMCreacionDeFuncion, (MethodInfo) itemMiembro.valorItem));
+						new ViewModelBloqueArgumentosFuncion(mVMCreacionDeFuncion, this, (MethodInfo) itemMiembro.valorItem));
 
 					DispararPropertyChanged(new PropertyChangedEventArgs(nameof(BloqueArgumentosFuncionActual)));
 				}
@@ -386,6 +388,8 @@ namespace AppGM.Core
 		public void FocusPerdido()
 		{
 			Autocompletado.OnValorSeleccionado -= HandlerValorSeleccionado;
+
+			Autocompletado.ActualizarValoresExistentes(null);
 
 			ActualizarValidez();
 
@@ -774,8 +778,41 @@ namespace AppGM.Core
 
 			//Si la variable base no existe
 			if (!ConfirmarExistenciaBase())
+			{
+				if (DeteccionAutomaticaDeTipo)
+				{
+					if (typeof(int).SePuedeConvertirDesde(TextoActual))
+					{
+						TipoArgumento = typeof(int);
+					}
+					else if (typeof(bool).SePuedeConvertirDesde(TextoActual))
+					{
+						TipoArgumento = typeof(bool);
+					}
+					else if (typeof(long).SePuedeConvertirDesde(TextoActual))
+					{
+						TipoArgumento = typeof(long);
+					}
+					else if (typeof(float).SePuedeConvertirDesde(TextoActual))
+					{
+						TipoArgumento = typeof(float);
+					}
+					else if (typeof(double).SePuedeConvertirDesde(TextoActual))
+					{
+						TipoArgumento = typeof(double);
+					}
+					else
+					{
+						TipoArgumento = typeof(string);
+					}
+				}
+
+				if (TipoArgumento == typeof(object))
+					return true;
+
 				//Revisamos que se pueda convertir del string ingresado al tipo del argumento
 				return TypeDescriptor.GetConverter(TipoArgumento).IsValid(TextoActual);
+			}
 
 			EncontrarMiembrosFaltantes();
 

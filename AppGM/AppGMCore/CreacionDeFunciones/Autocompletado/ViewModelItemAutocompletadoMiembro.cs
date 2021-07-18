@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Reflection;
 
 namespace AppGM.Core
@@ -48,6 +49,9 @@ namespace AppGM.Core
 
 		public override bool Comparar(string cadena, bool comparacionExacta = false)
 		{
+			if(valorItem == null)
+				Debugger.Break();
+
 			if (!comparacionExacta)
 				return cadena.Length <= valorItem.Length && valorItem.StartsWith(cadena);
 			

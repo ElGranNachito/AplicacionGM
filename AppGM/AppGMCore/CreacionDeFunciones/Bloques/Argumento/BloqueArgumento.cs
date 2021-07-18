@@ -28,6 +28,7 @@ namespace AppGM.Core
 		public BloqueArgumento(List<SeccionArgumentoBase> _seccionesArgumento, Type _tipoArgumento)
 		{
 			mSeccionesArgumento = _seccionesArgumento;
+			TipoArgumento       = _tipoArgumento;
 		}
 
 		public override Expression ObtenerExpresion(Compilador compilador)

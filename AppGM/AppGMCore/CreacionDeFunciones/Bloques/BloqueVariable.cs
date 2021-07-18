@@ -53,7 +53,7 @@ namespace AppGM.Core
 			switch (tipoVariable)
 			{
 				case ETipoVariable.Normal:
-					return Expression.Variable(tipo, nombre);
+					return Expression.Parameter(tipo, nombre);
 
 				case ETipoVariable.Parametro:
 					return Expression.Parameter(tipo, nombre);

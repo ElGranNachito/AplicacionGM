@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Xml;
@@ -14,7 +15,7 @@ namespace AppGM.Core
 		/// <summary>
 		/// Parametros que se le pasaran a la funcion en caso de que necesite
 		/// </summary>
-		public List<BloqueVariable> parametrosFuncion;
+		public List<BloqueArgumento> parametrosFuncion;
 
 		/// <summary>
 		/// Metodo que llama
@@ -35,6 +36,12 @@ namespace AppGM.Core
 		/// Nombre del metodo
 		/// </summary>
 		public string Nombre => metodo.Name;
+
+		public BloqueFuncion(MethodInfo _metodo, List<BloqueArgumento> _parametrosFuncion)
+		{
+			metodo            = _metodo;
+			parametrosFuncion = _parametrosFuncion;
+		}
 	}
 
 	/// <summary>
@@ -47,9 +54,15 @@ namespace AppGM.Core
 		/// </summary>
 		public Type tipo;
 
+		public BloqueFuncionTipo(MethodInfo _metodo, List<BloqueArgumento> _parametrosFuncion, Type _tipo)
+			:base(_metodo, _parametrosFuncion)
+		{
+			tipo = _tipo;
+		}
+
 		public override Expression ObtenerExpresion(Compilador compilador)
 		{
-			throw new System.NotImplementedException();
+			return Expression.Call(metodo, parametrosFuncion.Select(parametro => parametro.ObtenerExpresion(compilador)));
 		}
 
 		protected override void ConvertirHaciaXML(XmlWriter writer)
@@ -68,9 +81,21 @@ namespace AppGM.Core
 		/// </summary>
 		public BloqueVariable variable;
 
+		public BloqueFuncionVariable(MethodInfo _metodo, List<BloqueArgumento> _parametrosFuncion, BloqueVariable _variable)
+			:base(_metodo, _parametrosFuncion)
+		{
+			variable = _variable;
+		}
+
 		public override Expression ObtenerExpresion(Compilador compilador)
 		{
-			throw new System.NotImplementedException();
+			return Expression.Call(compilador[variable.nombre], metodo,
+				parametrosFuncion.Select(parametro =>
+				{
+					return parametro != null
+						? parametro.ObtenerExpresion(compilador)
+						: Expression.Constant(null);
+				}));
 		}
 
 		protected override void ConvertirHaciaXML(XmlWriter writer)

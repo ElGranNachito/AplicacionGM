@@ -991,4 +991,9 @@ namespace AppGM.Core
         /// </summary>
         NINGUNO = 0
     }
+
+    public enum ETipoBloque
+    {
+        E
+    }
 }
