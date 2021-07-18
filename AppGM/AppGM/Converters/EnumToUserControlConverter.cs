@@ -3,7 +3,6 @@ using System.Globalization;
 using System.Windows.Controls;
 using System.Windows.Data;
 using AppGM.Core;
-using AppGM.Paginas.Rol.Mapas;
 
 namespace AppGM
 {
@@ -66,7 +65,10 @@ namespace AppGM
                                 ViewModel = SistemaPrincipal.ObtenerInstancia<ViewModelMapaPrincipal>()
                             };
                         case ESeccionMapa.OpcionesMapa:
-                            return new UserControlOpcionesMapa();
+                            return new UserControlOpcionesMapa()
+                            {
+                                DataContext = SistemaPrincipal.ObtenerInstancia<ViewModelMapaPrincipal>()
+                            };
                     }
                     break;
             }
