@@ -1,152 +1,175 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 
 namespace AppGM.Core
 {
+	/// <summary>
+	/// Viewmodel que representa un <see cref="BloqueFuncion"/>
+	/// </summary>
 	public class ViewModelBloqueLlamarFuncion : ViewModelBloqueFuncion<BloqueFuncion>
 	{
-		private static List<ViewModelItemComboBoxBase<object>> TiposDisponibles = new List<ViewModelItemComboBoxBase<object>>
-		{
-			new ViewModelItemComboBoxBase<object>{Texto = "Int", valor = typeof(int)},
-			new ViewModelItemComboBoxBase<object>{Texto = "Double", valor = typeof(double)}
-		};
+		#region Campos & Propiedades
 
-		private object mValorSeleccionado { get; set; }
+		//-----------------------------------------CAMPOS------------------------------------------
 
-		private MethodInfo mMetodoSeleccionado { get; set; }
+		/// <summary>
+		/// Indica si se deberia actualizar <see cref="MetodoSeleccionado"/>
+		/// </summary>
+		private bool mDeberiaActualizarMetodos;
 
+		/// <summary>
+		/// Almacena el valor de <see cref="MetodoSeleccionado"/>
+		/// </summary>
+		private MetodoAccesibleEnGuraScratch mMetodoSeleccionado;
+
+
+		//--------------------------------------PROPIEDADES-----------------------------------------
+
+		/// <summary>
+		/// Indica si mostrar la lista de funciones disponibles y los argumentos
+		/// </summary>
 		public bool MostrarListaMetodosDisponibles { get; set; } = true;
 
-		public ViewModelBloqueArgumentosFuncion ArgumentosFuncion { get; set; }
+		/// <summary>
+		/// Argumento desde el que se llama a la funcion
+		/// </summary>
+		public ViewModelArgumento Caller { get; set; }
 
-		public ViewModelListaDeElementos<ViewModelItemComboBoxBase<object>> ValoresDisponibles { get; set; } = new ViewModelListaDeElementos<ViewModelItemComboBoxBase<object>>();
+		/// <summary>
+		/// Argumentos de la funcion
+		/// </summary>
+		public ViewModelBloqueArgumentosFuncion ArgumentosFuncion => mMetodoSeleccionado?.ArgumentosFuncion;
 
-		public List<ViewModelItemComboBoxBase<MethodInfo>> MetodosDisponibles { get; set; } = 
-			new List<ViewModelItemComboBoxBase<MethodInfo>>();
+		/// <summary>
+		/// Metodos disponibles para seleccionar
+		/// </summary>
+		public ViewModelListaDeElementos<ViewModelItemComboBoxBase<MethodInfo>> MetodosDisponibles { get; set; } = new ViewModelListaDeElementos<ViewModelItemComboBoxBase<MethodInfo>>();
 
-		public ViewModelItemComboBoxBase<object> ValorSeleccionado
-		{
-			get => new ViewModelItemComboBoxBase<object>{Texto = mValorSeleccionado?.ToString(), valor = mValorSeleccionado};
-			set
-			{
-				if (value?.valor != mValorSeleccionado)
-				{
-					mValorSeleccionado = value?.valor;
-
-					if(mValorSeleccionado != null)
-						ActualizarListaFunciones();
-				}
-			}
-		}
-
+		/// <summary>
+		/// Elemento de <see cref="MetodosDisponibles"/> actualmente seleccionado
+		/// </summary>
 		public ViewModelItemComboBoxBase<MethodInfo> MetodoSeleccionado
 		{
-			get => new ViewModelItemComboBoxBase<MethodInfo> { Texto = mMetodoSeleccionado?.Name, valor = mMetodoSeleccionado };
+			get
+			{
+				if (mMetodoSeleccionado == null)
+					return null;
+
+				return new ViewModelItemComboBoxBase<MethodInfo>(mMetodoSeleccionado.Metodo, mMetodoSeleccionado.ObtenerNombre());
+			}
 			set
 			{
-				if (value?.valor != mMetodoSeleccionado)
+				if (value != null)
 				{
-					mMetodoSeleccionado = value?.valor;
+					if (mMetodoSeleccionado == null)
+						mMetodoSeleccionado = new MetodoAccesibleEnGuraScratch(this, value.valor);
+					else
+						mMetodoSeleccionado.Actualizar(value.valor);
 
-					if(mMetodoSeleccionado != null)
-						ArgumentosFuncion.ActualizarFuncion(value.valor);
+					DispararPropertyChanged(new PropertyChangedEventArgs(nameof(ArgumentosFuncion)));
 				}
+				else
+					mMetodoSeleccionado = null;
 			}
 		}
 
+		#endregion
+
+		#region Constructor
+
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="_vmCreacionFuncion"><see cref="ViewModelCreacionDeFuncionBase"/> al que pertenece este bloque</param>
 		public ViewModelBloqueLlamarFuncion(ViewModelCreacionDeFuncionBase _vmCreacionFuncion)
-			:base(_vmCreacionFuncion)
+			: base(_vmCreacionFuncion)
 		{
-			ArgumentosFuncion = new ViewModelBloqueArgumentosFuncion(mVMCreacionDeFuncion, this, null);
+			Caller = new ViewModelArgumento(this, typeof(object), "", true, false);
 
-			mVMCreacionDeFuncion.OnBloqueAñadido  += AñadirVariableAPosibilidades;
-			mVMCreacionDeFuncion.OnBloqueRemovido += QuitarVariableDePosibilidades;
+			Caller.OnFocusPerdido += ActualizarListaFunciones;
+			Caller.OnTipoArgumentoModificado += (anterior, actual) => mDeberiaActualizarMetodos = true;
+		} 
 
-			OnPadreModificado += delegate(IContenedorDeBloques anterior, IContenedorDeBloques actual)
-			{
-				ActualizarValoresDisponibles();
-			};
-		}
+		#endregion
 
 		public override BloqueFuncion GenerarBloque_Impl()
 		{
-			if (mValorSeleccionado is BloqueVariable var)
-				return new BloqueFuncionVariable(MetodoSeleccionado.valor, ArgumentosFuncion.ObtenerArgumentosFuncion(), var);
-
-			return new BloqueFuncionTipo(MetodoSeleccionado.valor, ArgumentosFuncion.ObtenerArgumentosFuncion(),(Type)mValorSeleccionado);
+			return mMetodoSeleccionado.GenerarBloque(Caller.GenerarBloque_Impl());
 		}
 
+		/// <summary>
+		/// Actualiza <see cref="MetodosDisponibles"/> en base al <see cref="ValorSeleccionado"/>
+		/// </summary>
 		private void ActualizarListaFunciones()
 		{
-			MetodosDisponibles.Clear();
+			if (!mDeberiaActualizarMetodos)
+				return;
 
-			Type tipoSeleccionado;
+			mDeberiaActualizarMetodos = false;
 
-			if (mValorSeleccionado is BloqueVariable var)
-				tipoSeleccionado = var.tipo;
-			else
-				tipoSeleccionado = (Type) mValorSeleccionado;
+			MetodosDisponibles.Elementos.Clear();
 
-			MetodosDisponibles = MetodosDisponibles.Concat(
-				from metodo in tipoSeleccionado.GetMethods()
-				where metodo.EsAccesibleEnGuraScratch()
-				select new ViewModelItemComboBoxBase<MethodInfo>{Texto = metodo.Name, valor = metodo}).ToList();
-
-			DispararPropertyChanged(new PropertyChangedEventArgs(nameof(MetodosDisponibles)));
+			MetodosDisponibles.AddRange(Caller.TipoArgumento.ObtenerMetodosAccesiblesEnGuraScratch().Select(
+				metodo => new ViewModelItemComboBoxBase<MethodInfo>(metodo.metodo, metodo.nombre)));
 		}
 
-		private void ActualizarValoresDisponibles()
+		public override bool VerificarValidez()
 		{
-			ValoresDisponibles.Elementos.Clear();
-
-			IEnumerable<ViewModelItemComboBoxBase<object>> variablesDisponibles = new List<ViewModelItemComboBoxBase<object>>();
-
-			//TODO: Quitar este chequeo una vez cambiemos la forma en la que se diferencian los bloques de muestra de los colocados
-			if (mPadre != null)
-			{
-				variablesDisponibles = mPadre.ObtenerVariables(this)
-					.Select(var =>
-					{
-						return new ViewModelItemComboBoxBase<object>
-						{
-							Texto = var.nombre,
-							valor = var
-						};
-					});
-			}
-
-			ValoresDisponibles.AddRange(variablesDisponibles.Concat(TiposDisponibles));
+			return mMetodoSeleccionado != null &&
+			       Caller.EsValido &&
+			       mMetodoSeleccionado.VerificarValidez();
 		}
 
-		private void AñadirVariableAPosibilidades(ViewModelBloqueFuncionBase bloque, IContenedorDeBloques padre)
-		{
-			if (bloque is ViewModelBloqueDeclaracionVariable vmVar)
-			{
-				var var = vmVar.GenerarBloque_Impl();
+		//private void ActualizarValoresDisponibles()
+		//{
+		//	ValoresDisponibles.Elementos.Clear();
 
-				ValoresDisponibles.Add(new ViewModelItemComboBoxBase<object> {Texto = var.nombre, valor = var});
-			}
-		}
+		//	IEnumerable<ViewModelItemComboBoxBase<object>> variablesDisponibles = new List<ViewModelItemComboBoxBase<object>>();
 
-		private void QuitarVariableDePosibilidades(ViewModelBloqueFuncionBase bloque, IContenedorDeBloques padre)
-		{
-			if (bloque is ViewModelBloqueDeclaracionVariable vmVar)
-			{
-				var var = vmVar.GenerarBloque_Impl();
+		//	variablesDisponibles = VMCreacionDeFuncion.VariablesBase.Select(var => new ViewModelItemComboBoxBase<object>(var, var.nombre));
 
-				ValoresDisponibles.RemoveFirst(elemento => elemento.valor == var);
-			}
-		}
+		//	variablesDisponibles = variablesDisponibles.Concat(mPadre.ObtenerVariablesCreadas(this)
+		//		.Select(var =>
+		//		{
+		//			var nuevoItem = new ViewModelItemComboBoxBase<object>();
 
-		public override bool VerificarValidez() => ArgumentosFuncion.VerificarValidez();
+		//			nuevoItem.Actualizar(var, var.Nombre, "", "", (sender, args) =>
+		//			{
+		//				if (sender == var && args.PropertyName == nameof(ViewModelBloqueDeclaracionVariable.Nombre))
+		//					nuevoItem.Texto = var.Nombre;
+		//			});
 
-		public override void OnBloqueRemovido()
-		{
-			mVMCreacionDeFuncion.OnBloqueAñadido  -= AñadirVariableAPosibilidades;
-			mVMCreacionDeFuncion.OnBloqueRemovido -= QuitarVariableDePosibilidades;
-		}
+		//			return nuevoItem;
+		//		}));
+
+		//	ValoresDisponibles.AddRange(variablesDisponibles.Concat(TiposDisponibles));
+		//}
+
+		//private void AñadirVariableAPosibilidades(ViewModelBloqueFuncionBase bloque, IContenedorDeBloques padre)
+		//{
+		//	if (bloque is ViewModelBloqueDeclaracionVariable vmVar)
+		//	{
+		//		var var = vmVar.GenerarBloque_Impl();
+
+		//		ValoresDisponibles.Add(new ViewModelItemComboBoxBase<object> {Texto = var.nombre, valor = var});
+		//	}
+		//}
+
+		//private void QuitarVariableDePosibilidades(ViewModelBloqueFuncionBase bloque, IContenedorDeBloques padre)
+		//{
+		//	if (bloque is ViewModelBloqueDeclaracionVariable vmVar)
+		//	{
+		//		var var = vmVar.GenerarBloque_Impl();
+
+		//		ValoresDisponibles.RemoveFirst(elemento => elemento.valor == var);
+		//	}
+		//}
+
+		//public override void OnBloqueRemovido()
+		//{
+		//	VMCreacionDeFuncion.OnBloqueAñadido  -= AñadirVariableAPosibilidades;
+		//	VMCreacionDeFuncion.OnBloqueRemovido -= QuitarVariableDePosibilidades;
+		//}
 	}
 }

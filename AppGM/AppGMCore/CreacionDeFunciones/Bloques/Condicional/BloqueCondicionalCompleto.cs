@@ -28,7 +28,8 @@ namespace AppGM.Core
 		/// </summary>
 		/// <param name="_condiciones"><see cref="List{T}"/> de <see cref="BloqueCondicional"/> que contiene este condicional</param>
 		/// <param name="_acciones">Lista de litas de <see cref="BloqueBase"/> que representan las acciones a realizar</param>
-		public BloqueCondicionalCompleto(List<BloqueCondicional> _condiciones, List<List<BloqueBase>> _acciones)
+		public BloqueCondicionalCompleto(int _idBloque, List<BloqueCondicional> _condiciones, List<List<BloqueBase>> _acciones)
+			:base(_idBloque)
 		{
 			mCondiciones = _condiciones;
 			mAcciones    = _acciones;
@@ -62,7 +63,7 @@ namespace AppGM.Core
 			BlockExpression accionActual;
 
 			//Mientras queden condiciones y acciones en sus respectivos stacks...
-			while (condiciones.TryPeek(out condicionActual) && acciones.TryPeek(out accionActual))
+			while (condiciones.TryPop(out condicionActual) && acciones.TryPop(out accionActual))
 			{
 				//Creamos la expresion y la guardamos en expresion anterior para que sea usada posteriormente por la proxima condicion
 				expresionAnterior = Expression.IfThenElse(condicionActual, accionActual, expresionAnterior);
@@ -71,7 +72,29 @@ namespace AppGM.Core
 			return expresionAnterior;
 		}
 
-		protected override void ConvertirHaciaXML(XmlWriter writer)
+		public override void ConvertirHaciaXML(XmlWriter writer)
+		{
+			writer.WriteStartElement(nameof(BloqueCondicionalCompleto));
+
+			writer.WriteAttributeString("NumeroDeCondiciones", mCondiciones.Count.ToString());
+
+			for (int i = 0; i < mAcciones.Count; ++i)
+			{
+				writer.WriteComment($"Condicion-{i}");
+				writer.WriteStartElement("CondicionYAccion");
+
+				mCondiciones[i].ConvertirHaciaXML(writer);
+
+				foreach (var bloque in mAcciones[i])
+					bloque.ConvertirHaciaXML(writer);
+
+				writer.WriteEndElement();
+			}
+
+			writer.WriteEndElement();
+		}
+
+		public override BloqueBase ConvertirDesdeXML(XmlReader reader)
 		{
 			throw new System.NotImplementedException();
 		}

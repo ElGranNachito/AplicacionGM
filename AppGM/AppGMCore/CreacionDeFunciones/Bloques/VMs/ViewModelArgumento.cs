@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Mime;
 using System.Reflection;
@@ -64,11 +65,10 @@ namespace AppGM.Core
 		private List<MemberInfo> mMiembrosConsecuentes = new List<MemberInfo>();
 
 		/// <summary>
-		/// Contiene los <see cref="ViewModelBloqueArgumentosFuncion"/> que se necesitan para guardar los
-		/// datos de llamada a las funciones que necesiten parametros.
-		/// La llave de este diccionario es el indice de la funcion en la lista de miembros.
+		/// Contiene los <see cref="MetodoAccesibleEnGuraScratch"/> que representan a todos los metodos
+		/// a los que se acceden
 		/// </summary>
-		private Dictionary<int, ViewModelBloqueArgumentosFuncion> mFuncionesConParametros = new Dictionary<int, ViewModelBloqueArgumentosFuncion>();
+		private Dictionary<MemberInfo, MetodoAccesibleEnGuraScratch> mMetodosConsecuentes = new Dictionary<MemberInfo, MetodoAccesibleEnGuraScratch>();
 
 		/// <summary>
 		/// Valor anterior del campo de texto
@@ -89,7 +89,7 @@ namespace AppGM.Core
 		//--------------------------PROPIEDADES------------------------------
 
 
-		public ViewModelVentanaAutocompletado Autocompletado => mVMCreacionDeFuncion.Autocompletado;
+		public ViewModelVentanaAutocompletado Autocompletado => VMCreacionDeFuncion.Autocompletado;
 
 		/// <summary>
 		/// Valor del argumento
@@ -157,6 +157,9 @@ namespace AppGM.Core
 				if(!DeteccionAutomaticaDeTipo)
 					ActualizarValidez();
 
+				if (Nombre == "Valor por defecto" && value == typeof(object))
+					Debugger.Break();
+
 				OnTipoArgumentoModificado(valorAnterior, mTipoArgumento);
 			}
 		}
@@ -171,10 +174,12 @@ namespace AppGM.Core
 			{
 				int indiceSeccionActual = ObtenerIndiceSeccionActual() - 1;
 
-				if (mFuncionesConParametros.ContainsKey(indiceSeccionActual))
-					return mFuncionesConParametros[indiceSeccionActual];
+				if (indiceSeccionActual < 0 || 
+				    indiceSeccionActual >= mMiembrosConsecuentes.Count ||
+				    !mMetodosConsecuentes.ContainsKey(mMiembrosConsecuentes[indiceSeccionActual]))
+					return null;
 
-				return null;
+				return mMetodosConsecuentes[mMiembrosConsecuentes[indiceSeccionActual]].ArgumentosFuncion;
 			}
 		}
 
@@ -203,17 +208,16 @@ namespace AppGM.Core
 		/// <param name="_tipoArgumento">Tipo de este argumento</param>
 		/// <param name="_nombre">Nombre de este argumento</param>
 		public ViewModelArgumento(
-			ViewModelCreacionDeFuncionBase _vmCreacionDeFuncion, 
 			ViewModelBloqueFuncionBase _bloqueContenedor, 
 			Type _tipoArgumento, 
 			string _nombre = "", 
 			bool _detectarTipoAutomaticamente = false,
 			bool _puedeQuedarVacio = true)
-			:base(_vmCreacionDeFuncion)
+
+			:base(_bloqueContenedor.VMCreacionDeFuncion)
 		{
 			DeteccionAutomaticaDeTipo = _detectarTipoAutomaticamente;
 			PuedeQuedarVacio          = _puedeQuedarVacio;
-			mVMCreacionDeFuncion	  = _vmCreacionDeFuncion;
 			mBloqueContendor		  = _bloqueContenedor;
 			TipoArgumento			  = _tipoArgumento;
 			Nombre					  = _nombre;
@@ -241,28 +245,17 @@ namespace AppGM.Core
 
 			//Solo añadimos una seccion si la base es una variable
 			if(mBase is BloqueVariable var)
-				seccionesArgumento.Add(new SeccionArgumentoVariable(var.nombre));
+				seccionesArgumento.Add(new SeccionArgumentoVariable(var.IDBloque, var.tipo));
 
 			for (int i = 0; i < mMiembrosConsecuentes.Count; ++i)
 			{
-				//Si este miembro es una funcion con parametros...
-				if (mMiembrosConsecuentes[i].EsFuncionConParametros())
-				{
-					//Generamos los argumentos de la funcion
-					IEnumerable<BloqueArgumento> argumentosFuncion =
-						from param in mFuncionesConParametros[i].ArgumentosFuncion 
-						select param.GenerarBloque_Impl();
-
-					seccionesArgumento.Add(new SeccionArgumentoMetodoConParametros((MethodInfo)mMiembrosConsecuentes[i], argumentosFuncion.ToList()));
-
-					//Nos saltamos el resto del bucle
-					continue;
-				}
-
-				seccionesArgumento.Add(new SeccionArgumentoMiembro(mMiembrosConsecuentes[i]));
+				if (mMetodosConsecuentes.ContainsKey(mMiembrosConsecuentes[i]))
+					seccionesArgumento.Add(mMetodosConsecuentes[mMiembrosConsecuentes[i]].GenerarSeccion());
+				else
+					seccionesArgumento.Add(new SeccionArgumentoMiembro(mMiembrosConsecuentes[i]));
 			}
 
-			return new BloqueArgumento(seccionesArgumento, TipoArgumento);
+			return new BloqueArgumento(IDBloque, seccionesArgumento, TipoArgumento, DeteccionAutomaticaDeTipo, Nombre, TextoActual);
 		}
 
 		public void ActualizarPosibilidadesAutocompletado(string nuevoTexto, int nuevaPosSignoIntercalacion)
@@ -298,8 +291,8 @@ namespace AppGM.Core
 					//Quitamos los miembros desde el indice seleccionado en adelante
 					for (int i = mMiembrosConsecuentes.Count - 1; i >= indiceSeccionAcutal; --i)
 					{
-						if (mMiembrosConsecuentes[i].EsFuncionConParametros())
-							mFuncionesConParametros.Remove(i);
+						if (mMiembrosConsecuentes is MethodInfo)
+							mMetodosConsecuentes.Remove(mMiembrosConsecuentes[i]);
 
 						mMiembrosConsecuentes.RemoveAt(i);
 
@@ -351,12 +344,14 @@ namespace AppGM.Core
 					//Quitamos la parte del nombre del miembro que ya estaba escrita
 					TextoActual = TextoActual.Remove(indices.indiceMenor);
 
-				if (itemMiembro.valorItem.EsFuncionConParametros())
+				if (itemMiembro.valorItem is MethodInfo metodo)
 				{
-					mFuncionesConParametros.Add(ObtenerIndiceSeccionActual() - 1,
-						new ViewModelBloqueArgumentosFuncion(mVMCreacionDeFuncion, this, (MethodInfo) itemMiembro.valorItem));
+					var metodoGuraScratch = new MetodoAccesibleEnGuraScratch(this, metodo);
 
-					DispararPropertyChanged(new PropertyChangedEventArgs(nameof(BloqueArgumentosFuncionActual)));
+					mMetodosConsecuentes.Add(metodo, metodoGuraScratch);
+
+					if(metodoGuraScratch.Parametros.Length > 0)
+						DispararPropertyChanged(new PropertyChangedEventArgs(nameof(BloqueArgumentosFuncionActual)));
 				}
 
 				//Anexamos al texto actual el nombre del miembro
@@ -756,6 +751,9 @@ namespace AppGM.Core
 						//Lo añadimos a la lista
 						mMiembrosConsecuentes.Add(miembro);
 
+						if (miembro is MethodInfo metodo)
+							mMetodosConsecuentes.Add(metodo, new MetodoAccesibleEnGuraScratch(this, metodo));
+
 						//Actualizamos el ultimo tipo para las iteraciones consecuentes
 						ultimoTipoValido = miembro.ObtenerTipoRetorno();
 
@@ -770,7 +768,7 @@ namespace AppGM.Core
 		/// Indica si el valor ingresado por el usuario es valido
 		/// </summary>
 		/// <returns><see cref="bool"/> indicando si el valor es valido</returns>
-		public bool VerificarValidez()
+		public override bool VerificarValidez()
 		{
 			//Si el texto esta devolvemos verdadero si es que el argumento puede quedar vacio, falso de lo contrario
 			if (TextoActual.Length == 0)
@@ -845,10 +843,10 @@ namespace AppGM.Core
 					return false;
 
 				//Si el miembro es un metodo y tiene una lista de parametros...
-				if (mMiembrosConsecuentes[i] is MethodInfo && mFuncionesConParametros.ContainsKey(i))
+				if (mMetodosConsecuentes.ContainsKey(mMiembrosConsecuentes[i]))
 				{
 					//Revisamos que los argumentos sean validos
-					if (!mFuncionesConParametros[i].VerificarValidez())
+					if (!mMetodosConsecuentes[mMiembrosConsecuentes[i]].VerificarValidez())
 						return false;
 				}
 			}

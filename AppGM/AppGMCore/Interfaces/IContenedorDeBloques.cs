@@ -90,7 +90,14 @@ namespace AppGM.Core
 		/// </summary>
 		/// <param name="bloqueQueIntentaObtenerLasVariables"><see cref="ViewModelBloqueFuncionBase"/> que quiere obtener las variables</param>
 		/// <returns> <see cref="List{T}"/> de todos los <see cref="BloqueVariable"/> disponibles</returns>
-		List<BloqueVariable> ObtenerVariables(ViewModelBloqueFuncionBase bloqueQueIntentaObtenerLasVariables); 
+		List<BloqueVariable> ObtenerVariables(ViewModelBloqueFuncionBase bloqueQueIntentaObtenerLasVariables);
+
+		/// <summary>
+		/// Obtiene una <see cref="List{T}"/> de todos los <see cref="ViewModelBloqueDeclaracionVariable"/> disponibles para <paramref name="bloqueQueIntentaObtenerLasVariables"/>
+		/// </summary>
+		/// <param name="bloqueQueIntentaObtenerLasVariables"><see cref="ViewModelBloqueFuncionBase"/> que quiere obtener las variables</param>
+		/// <returns> <see cref="List{T}"/> de todos los <see cref="ViewModelBloqueDeclaracionVariable"/> disponibles</returns>
+		List<ViewModelBloqueDeclaracionVariable> ObtenerVariablesCreadas(ViewModelBloqueFuncionBase bloqueQueIntentaObtenerLasVariables);
 
 		#endregion
 	}

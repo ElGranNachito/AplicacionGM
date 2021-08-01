@@ -10,17 +10,28 @@ namespace AppGM.Core
 	/// <summary>
 	/// Bloque que representa llamar a una funcion
 	/// </summary>
-	public abstract class BloqueFuncion : BloqueBase
+	public class BloqueFuncion : BloqueBase
 	{
 		/// <summary>
 		/// Parametros que se le pasaran a la funcion en caso de que necesite
 		/// </summary>
-		public List<BloqueArgumento> parametrosFuncion;
+		public List<BloqueArgumento> argumentosFuncion;
 
 		/// <summary>
 		/// Metodo que llama
 		/// </summary>
 		public MethodInfo metodo;
+
+		/// <summary>
+		/// Bloque que genera la expresion desde la cual se puede llamar a esta funcion
+		/// </summary>
+		public BloqueBase caller;
+
+		/// <summary>
+		/// Expresion desde la cual se llama a la funcion.
+		/// Se utiliza en caso de que <see cref="caller"/> sea null
+		/// </summary>
+		public Expression expresionCaller;
 
 		/// <summary>
 		/// Tipo del valor que retorna el metodo
@@ -30,77 +41,88 @@ namespace AppGM.Core
 		/// <summary>
 		/// Parametros que necesita el metodo
 		/// </summary>
-		public ParameterInfo[] Parametros => metodo.GetParameters();
+		public ParameterInfo[] Parametros;
 
 		/// <summary>
 		/// Nombre del metodo
 		/// </summary>
 		public string Nombre => metodo.Name;
 
-		public BloqueFuncion(MethodInfo _metodo, List<BloqueArgumento> _parametrosFuncion)
+		public BloqueFuncion(int _idBloque, MethodInfo _metodo, List<BloqueArgumento> _argumentosFuncion, BloqueBase _caller)
+			:base(_idBloque)
 		{
 			metodo            = _metodo;
-			parametrosFuncion = _parametrosFuncion;
-		}
-	}
+			argumentosFuncion = _argumentosFuncion;
+			caller            = _caller;
 
-	/// <summary>
-	/// Bloque que representa llamar a una funcion estatica
-	/// </summary>
-	public class BloqueFuncionTipo : BloqueFuncion
-	{
-		/// <summary>
-		/// Tipo que contiene la funcion
-		/// </summary>
-		public Type tipo;
-
-		public BloqueFuncionTipo(MethodInfo _metodo, List<BloqueArgumento> _parametrosFuncion, Type _tipo)
-			:base(_metodo, _parametrosFuncion)
-		{
-			tipo = _tipo;
+			Parametros = _metodo.GetParameters();
 		}
 
 		public override Expression ObtenerExpresion(Compilador compilador)
 		{
-			return Expression.Call(metodo, parametrosFuncion.Select(parametro => parametro.ObtenerExpresion(compilador)));
+			if (caller == null && expresionCaller != null && !metodo.IsStatic)
+			{
+				SistemaPrincipal.LoggerGlobal.Log($"{nameof(caller)} es null! (Metodo: {Nombre})");
+
+				return Expression.Empty();
+			}
+
+			List<Expression> expresionesParametrosFuncion = new List<Expression>(argumentosFuncion.Count);
+
+			for (int i = 0; i < argumentosFuncion.Count; ++i)
+			{
+				var parametroActual = argumentosFuncion[i];
+
+				if(parametroActual == null)
+					expresionesParametrosFuncion.Add(Expression.Constant(null));
+				else if (parametroActual.TipoArgumento.EsAsignableA(Parametros[i].ParameterType, true))
+					expresionesParametrosFuncion.Add(parametroActual.ObtenerExpresion(compilador));
+				else
+					expresionesParametrosFuncion.Add(Expression.Convert(parametroActual.ObtenerExpresion(compilador), Parametros[i].ParameterType));
+			}
+
+			expresionCaller ??= caller.ObtenerExpresion(compilador);
+
+			return Expression.Call(expresionCaller, metodo, expresionesParametrosFuncion);
 		}
 
-		protected override void ConvertirHaciaXML(XmlWriter writer)
+		public override void ConvertirHaciaXML(XmlWriter writer)
 		{
-			throw new System.NotImplementedException();
+			writer.WriteStartElement(nameof(BloqueFuncion));
+
+			writer.WriteElementString("DueñoMetodo", metodo.DeclaringType.AssemblyQualifiedName);
+			writer.WriteElementString("Metodo", Nombre);
+
+			writer.WriteComment("--Tipos de los parametros que requiere la funcion--");
+
+			writer.WriteStartElement("TiposParametros");
+			writer.WriteAttributeString("NumeroDeParametros", Parametros.Length.ToString());
+
+			for (int i = 0; i < Parametros.Length; ++i)
+				writer.WriteElementString($"TipoParametro-{i}", Parametros[i].ParameterType.AssemblyQualifiedName);
+
+			writer.WriteEndElement();
+
+			writer.WriteComment("--Argumentos con los que se llama a la funcion--");
+
+			writer.WriteStartElement("Argumentos");
+			writer.WriteAttributeString("NumeroDeArgumentos", argumentosFuncion.Count.ToString());
+
+			for (int i = 0; i < argumentosFuncion.Count; ++i)
+				argumentosFuncion[i].ConvertirHaciaXML(writer);
+
+			writer.WriteEndElement();
+
+			writer.WriteComment("--Caller--");
+
+			caller.ConvertirHaciaXML(writer);
+
+			writer.WriteEndElement();
 		}
-	}
 
-	/// <summary>
-	/// Bloque que representa llamar a una funcion sobre una variable
-	/// </summary>
-	public class BloqueFuncionVariable : BloqueFuncion
-	{
-		/// <summary>
-		/// Variable sobre la cual se llamara la funcion
-		/// </summary>
-		public BloqueVariable variable;
-
-		public BloqueFuncionVariable(MethodInfo _metodo, List<BloqueArgumento> _parametrosFuncion, BloqueVariable _variable)
-			:base(_metodo, _parametrosFuncion)
+		public override BloqueBase ConvertirDesdeXML(XmlReader reader)
 		{
-			variable = _variable;
-		}
-
-		public override Expression ObtenerExpresion(Compilador compilador)
-		{
-			return Expression.Call(compilador[variable.nombre], metodo,
-				parametrosFuncion.Select(parametro =>
-				{
-					return parametro != null
-						? parametro.ObtenerExpresion(compilador)
-						: Expression.Constant(null);
-				}));
-		}
-
-		protected override void ConvertirHaciaXML(XmlWriter writer)
-		{
-			throw new System.NotImplementedException();
+			throw new NotImplementedException();
 		}
 	}
 }

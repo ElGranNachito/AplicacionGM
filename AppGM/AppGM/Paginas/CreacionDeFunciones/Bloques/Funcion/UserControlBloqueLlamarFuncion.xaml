@@ -27,7 +27,9 @@
             </Grid.RowDefinitions>
 
             <!-- Combo box con tipos y variables disponibles -->
-            <ComboBox
+            <local:UserControlArgumento
+                DataContext="{Binding Caller}"/>
+            <!--<ComboBox
                 VerticalAlignment="Center"
                 Style="{StaticResource ComboBoxBloques}"
                 ItemsSource="{Binding ValoresDisponibles.Elementos}"
@@ -38,7 +40,7 @@
                         <local:UserControlItemComboBox/>
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
-            </ComboBox>
+            </ComboBox>-->
             
             <Grid
                 Grid.Column="1">
@@ -51,9 +53,10 @@
                 <ComboBox
                     Margin="5"
                     Style="{StaticResource ComboBoxBloques}"
-                    Visibility="{Binding MostrarListaMetodosDisponibles, Converter={local:BooleanToVisibilityConverterColapsar}}"
-                    ItemsSource="{Binding MetodosDisponibles}"
-                    SelectedValue="{Binding MetodoSeleccionado}">
+                    ItemsSource="{Binding MetodosDisponibles.Elementos}"
+                    SelectedValue="{Binding MetodoSeleccionado}"
+                    Visibility="{Binding MostrarListaMetodosDisponibles,
+                                Converter={local:BooleanToVisibilityConverterColapsar}}">
 
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
@@ -75,7 +78,10 @@
             <local:UserControlBloqueListaArgumentosFuncion
                 Grid.Row="1"
                 Grid.Column="2"
-                DataContext="{Binding ArgumentosFuncion}"/>
+                DataContext="{Binding ArgumentosFuncion}"
+                Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}, 
+                                     Path=DataContext.MostrarListaMetodosDisponibles, 
+                                     Converter={local:BooleanToVisibilityConverterColapsar}}"/>
 
         </Grid>
 

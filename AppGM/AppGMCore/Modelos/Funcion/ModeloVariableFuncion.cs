@@ -3,6 +3,10 @@
 	public class ModeloVariableFuncionBase : ModeloBase
 	{
 		public string NombreVariable { get; set; }
+
+		public string TipoVariable { get; set; }
+
+		public int IDVariable { get; set; }
 	}
 
 	public abstract class ModeloVariableFuncion<TipoVariable> : ModeloVariableFuncionBase

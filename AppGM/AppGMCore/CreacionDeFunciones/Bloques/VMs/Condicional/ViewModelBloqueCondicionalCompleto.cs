@@ -18,9 +18,9 @@ namespace AppGM.Core
 		public ViewModelBloqueCondicionalCompleto(ViewModelCreacionDeFuncionBase _vmCreacionDeFuncion)
 			:base(_vmCreacionDeFuncion)
 		{
-			ComandoAñadirBloque = new Comando(()=> AñadirBloque(new ViewModelBloqueCondicional(mVMCreacionDeFuncion, ETipoBloqueCondicional.Else)));
+			ComandoAñadirBloque = new Comando(()=> AñadirBloque(new ViewModelBloqueCondicional(VMCreacionDeFuncion, ETipoBloqueCondicional.Else)));
 
-			AñadirBloque(new ViewModelBloqueCondicional(mVMCreacionDeFuncion, ETipoBloqueCondicional.If));
+			AñadirBloque(new ViewModelBloqueCondicional(VMCreacionDeFuncion, ETipoBloqueCondicional.If));
 		}
 
 		public override BloqueCondicionalCompleto GenerarBloque_Impl()
@@ -36,7 +36,7 @@ namespace AppGM.Core
 				acciones.Add(condicion.Bloques.Elementos.Select(bloque => bloque.GenerarBloque()).ToList());
 			}
 
-			var resultado = new BloqueCondicionalCompleto(condiciones, acciones);
+			var resultado = new BloqueCondicionalCompleto(IDBloque, condiciones, acciones);
 
 			return resultado;
 		}

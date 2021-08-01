@@ -70,6 +70,40 @@ namespace AppGM.Core
 
 		public static bool EsAsignableDesdeOA(this Type primero, Type segundo) => primero.IsAssignableFrom(segundo) || primero.IsAssignableTo(segundo);
 
+		public static bool EsAsignableA(this Type primero, Type segundo, bool esParaExpresion = false)
+		{
+			if (!esParaExpresion)
+				return primero.IsAssignableTo(segundo);
+			else
+			{
+				if (primero.IsValueType)
+					return primero == segundo;
+				else
+					return primero.IsAssignableTo(segundo);
+			}
+		}
+
+		public static bool EsComparableA(this Type primero, Type segundo)
+		{
+			if (primero.IsClass && segundo.IsClass && primero.EsAsignableDesdeOA(segundo))
+				return true;
+
+			return primero.IsValueType && segundo.IsValueType && segundo == primero;
+		}
+
 		public static bool SePuedeConvertirDesde(this Type tipo, object valorDesdeElQueConvertir) => TypeDescriptor.GetConverter(tipo).IsValid(valorDesdeElQueConvertir);
+
+		public static List<(MethodInfo metodo, string nombre)> ObtenerMetodosAccesiblesEnGuraScratch(this Type tipo)
+		{
+			List<(MethodInfo metodo, string nombre)> resultado = new List<(MethodInfo metodo, string nombre)>();
+
+			foreach (var metodo in tipo.GetMethods())
+			{
+				if (metodo.GetCustomAttribute<AccesibleEnGuraScratch>() is {} att)
+					resultado.Add(new ValueTuple<MethodInfo, string>(metodo, att.nombreQueMostrar));
+			}
+
+			return resultado;
+		}
 	}
 }

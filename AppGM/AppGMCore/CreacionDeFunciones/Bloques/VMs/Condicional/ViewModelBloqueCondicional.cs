@@ -63,7 +63,7 @@ namespace AppGM.Core
 		{
 			IEnumerable<BloqueArgumento> argumentos = ArgumentosCondicion.argumentos.Select(arg => arg.GenerarBloque_Impl());
 
-			return new BloqueCondicional(argumentos.ToList(), ArgumentosCondicion.operaciones);
+			return new BloqueCondicional(IDBloque, argumentos.ToList(), ArgumentosCondicion.operaciones, TipoCondicional);
 		}
 	}
 }

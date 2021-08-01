@@ -964,6 +964,7 @@ namespace AppGM.Core
         Normal      = 1,
         Persistente = 2,
         Parametro   = 3,
+        ParametroCreadoPorElUsuario = 4,
 
         /// <summary>
         /// Vaya uno a saber que vueltas da la vida para terminar aqui
@@ -971,8 +972,23 @@ namespace AppGM.Core
         NINGUNO = 0
     }
 
-    public enum ETipoBloque
+    public enum ETipoFuncion
     {
-        E
+        /// <summary>
+        /// Funcion que representa alguna <see cref="ControladorHabilidad"/> de un <see cref="ControladorPersonaje"/>
+        /// </summary>
+        Habilidad = 1,
+
+        /// <summary>
+        /// Funcion que representa la aplicacion de un <see cref="ControladorEfecto"/>
+        /// </summary>
+        Efecto    = 2,
+
+        /// <summary>
+        /// Funcion que retorna un <see cref="bool"/>
+        /// </summary>
+        Predicado = 3,
+
+        NINGUNO = 0
     }
 }
