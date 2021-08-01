@@ -44,8 +44,8 @@
 		/// <summary>
 		/// Funcion encargada de eliminar el modelo de la base de datos
 		/// </summary>
-		public virtual void Eliminar() { } 
+		public virtual void Eliminar() { }
 
-        #endregion
+		#endregion
     }
 }

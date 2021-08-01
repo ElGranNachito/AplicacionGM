@@ -26,7 +26,7 @@ namespace AppGM.Core
 		/// <summary>
 		/// Operaciones realizadas entre los argumentos
 		/// </summary>
-		public List<EOperacionLogica> operaciones = new List<EOperacionLogica>();
+		public List<EOperacionLogica> operaciones => Secciones.Skip(1).Select(s => s.Operacion.Valor).ToList();
 
 		/// <summary>
 		/// Todos los argumentos que vienen despues del <see cref="ArgumentoInicial"/>
@@ -89,8 +89,6 @@ namespace AppGM.Core
 
 			//Creamos la nueva seccion y le pasamos el monton de cosas que pide
 			ViewModelSeccionCondicion nuevaSeccion = new ViewModelSeccionCondicion(
-				argumentoAnterior,
-				mVMCreacionDeFuncion,
 				mDueño,
 				this,
 				Secciones.Count);
@@ -99,6 +97,8 @@ namespace AppGM.Core
 
 			Secciones.Add(nuevaSeccion);
 			argumentos.Add(nuevaSeccion.Argumento);
+
+			nuevaSeccion.Inicializar(argumentoAnterior);
 		}
 
 		/// <summary>
@@ -155,7 +155,7 @@ namespace AppGM.Core
 					var seccionProxima = Secciones[i + 1];
 
 					//Revisamos que las secciones sean compatibles entre si, para esto una debe ser asignable a la otra
-					bool sonCompatiblesEntreSi = seccionActual.Argumento.TipoArgumento.EsAsignableDesdeOA(seccionProxima.Argumento.TipoArgumento);
+					bool sonCompatiblesEntreSi = seccionActual.Argumento.TipoArgumento.EsComparableA(seccionProxima.Argumento.TipoArgumento);
 
 					//Las secciones seran validas si son compatibles entre si y sus respectivos argumentos validos
 					seccionActual.EsValida  = sonCompatiblesEntreSi && seccionActual.Argumento.EsValido;

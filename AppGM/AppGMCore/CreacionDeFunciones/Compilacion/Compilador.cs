@@ -17,12 +17,17 @@ namespace AppGM.Core
 		/// <summary>
 		/// Variables existentes dentro de la funcion siendo compilada.
 		/// </summary>
-		private Dictionary<string, Expression> mVariables = new Dictionary<string, Expression>();
+		private Dictionary<int, Expression> mVariables = new Dictionary<int, Expression>();
 
 		/// <summary>
 		/// Parametros de la funcion siendo compilada
 		/// </summary>
 		private List<ParameterExpression> mParametros = new List<ParameterExpression>();
+
+		/// <summary>
+		/// Parametros de la funcion siendo compilada que fueron añadidos por el usuario
+		/// </summary>
+		private List<(ParameterExpression expresion, Type tipo)> mParametrosCreadosPorElUsuario = new List<(ParameterExpression expresion, Type tipo)>();
 
 		/// <summary>
 		/// Variables del afuncion siendo compilada
@@ -100,6 +105,14 @@ namespace AppGM.Core
 
 			try
 			{
+				//Asignamos los valores correspondientes a los parametros creados por el usuario
+				for (int i = 0; i < mParametrosCreadosPorElUsuario.Count; ++i)
+				{
+					expresiones.Add(Expression.Assign(mParametrosCreadosPorElUsuario[i].expresion, Expression.Convert(Expression.ArrayIndex(mVariables[Variables.ParametrosCreados], Expression.Constant(i)), mParametrosCreadosPorElUsuario[i].tipo)));
+				}
+				
+				mParametrosCreadosPorElUsuario = null;
+
 				//Luego añadimos el resto de bloques en orden
 				foreach (var bloque in mBloques)
 					expresiones.Add(bloque.ObtenerExpresion(this));
@@ -124,12 +137,12 @@ namespace AppGM.Core
 			return resultado;
 		}
 
-		public Expression this[string nombreVariable]
+		public Expression this[int idVariable]
 		{
 			get
 			{
-				if (mVariables.ContainsKey(nombreVariable))
-					return mVariables[nombreVariable];
+				if (mVariables.ContainsKey(idVariable))
+					return mVariables[idVariable];
 
 				return null;
 			}
@@ -141,19 +154,31 @@ namespace AppGM.Core
 		/// <param name="bloques"><see cref="List{T}"/> de <see cref="BloqueBase"/> con la que se inicializara</param>
 		private void AñadirBloques(List<BloqueBase> bloques)
 		{
+			mBloques.Clear();
+			mParametros.Clear();
+			mVariables.Clear();
+			mVars.Clear();
+
 			foreach (var bloque in bloques)
 			{
 				if (bloque is BloqueVariable var)
 				{
-					mVariables.Add(var.nombre, var.ObtenerExpresion(this));
+					ParameterExpression expresionVariableActual = (ParameterExpression)var.ObtenerExpresion(this);
+
+					mVariables.Add(var.IDBloque, expresionVariableActual);
 
 					if (var.tipoVariable == ETipoVariable.Parametro)
 					{
-						mParametros.Add((ParameterExpression)mVariables.Last().Value);
+						mParametros.Add(expresionVariableActual);
 					}
-					else
+					else 
 					{
-						mVars.Add((ParameterExpression)mVariables.Last().Value);
+						if (var.tipoVariable == ETipoVariable.ParametroCreadoPorElUsuario)
+						{
+							mParametrosCreadosPorElUsuario.Add(new ValueTuple<ParameterExpression, Type>(expresionVariableActual, var.tipo));
+						}
+
+						mVars.Add(expresionVariableActual);
 					}
 					
 					continue;
@@ -162,9 +187,14 @@ namespace AppGM.Core
 				mBloques.Add(bloque);
 			}
 
+			mVariables.Add(Variables.ParametrosCreados, Expression.Parameter(typeof(object[]), "ParametrosCreados"));
+			mParametros.Add((ParameterExpression) mVariables.Last().Value);
+
 			mBloques.TrimExcess();
 			mParametros.TrimExcess();
+			mParametrosCreadosPorElUsuario.TrimExcess();
 			mVariables.TrimExcess();
+			mVars.TrimExcess();
 		}
 	}
 }

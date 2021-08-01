@@ -30,6 +30,13 @@ namespace AppGM.Core
 		#region Propiedades & Campos
 
 		/// <summary>
+		/// Indica el proximo ID a otorgar
+		/// </summary>
+		private int mIDActual = 0;
+
+		public ETipoFuncion TipoFuncion { get; set; }
+
+		/// <summary>
 		/// El padre de una instancia de este <see cref="ViewModel"/> siempre es null
 		/// </summary>
 		public IContenedorDeBloques Padre => null;
@@ -37,7 +44,7 @@ namespace AppGM.Core
 		/// <summary>
 		/// Bloques disponibles para el uso del usuario
 		/// </summary>
-		public ViewModelListaDeElementos<Type> BloquesDisponibles { get; set; }
+		public ViewModelListaDeElementos<ViewModelBloqueMuestra> BloquesDisponibles { get; set; }
 
 		/// <summary>
 		/// Bloques colocados por el usuario
@@ -64,6 +71,11 @@ namespace AppGM.Core
 		/// </summary>
 		public Grosor GrosorBordesGridBloquesColocados { get; set; }
 
+		/// <summary>
+		/// Nombre de la funcion
+		/// </summary>
+		public string NombreFuncion { get; set; }
+
 		public int IndiceZ { get; set; }
 
 		#endregion
@@ -75,8 +87,10 @@ namespace AppGM.Core
 		/// </summary>
 		public ViewModelCreacionDeFuncionBase()
 		{
-			BloquesDisponibles = new ViewModelListaDeElementos<Type>(AsignarListaDeBloques());
+			BloquesDisponibles = new ViewModelListaDeElementos<ViewModelBloqueMuestra>(AsignarListaDeBloques());
 			VariablesBase = AsignarVariablesBase();
+
+			GrosorBordesGridBloquesColocados = new Grosor(0, 1);
 		}
 
 		#endregion
@@ -87,14 +101,21 @@ namespace AppGM.Core
 		{
 			var variables = VariablesBase;
 
-			var variablesCreadasValidas = VariablesCreadas;
-
-			if(bloqueQueIntentaObtenerLasVariables != null)
-				variablesCreadasValidas.RemoveAll(variable => !variable.EsValido || bloqueQueIntentaObtenerLasVariables.IndiceBloque < variable.IndiceBloque);
+			var variablesCreadasValidas = ObtenerVariablesCreadas(bloqueQueIntentaObtenerLasVariables);
 
 			variables = variables.Concat(variablesCreadasValidas.Select(elemento => elemento.GenerarBloque_Impl())).ToList();
 
 			return variables;
+		}
+
+		public List<ViewModelBloqueDeclaracionVariable> ObtenerVariablesCreadas(ViewModelBloqueFuncionBase bloqueQueIntentaObtenerLasVariables)
+		{
+			var variablesCreadasValidas = VariablesCreadas;
+
+			if (bloqueQueIntentaObtenerLasVariables != null)
+				variablesCreadasValidas.RemoveAll(variable => !variable.EsValido || bloqueQueIntentaObtenerLasVariables.IndiceBloque < variable.IndiceBloque);
+
+			return variablesCreadasValidas.ToList();
 		}
 
 		public void AñadirBloque(ViewModelBloqueFuncionBase bloque, int indice)
@@ -102,7 +123,7 @@ namespace AppGM.Core
 			bloque.Padre = this;
 
 			if(SistemaPrincipal.Drag.HayUnDragActivo)
-				GrosorBordesGridBloquesColocados = new Grosor(1);
+				GrosorBordesGridBloquesColocados = new Grosor(0, 1);
 
 			if (bloque is ViewModelBloqueDeclaracionVariable var)
 				VariablesCreadas.Add(var);
@@ -121,6 +142,8 @@ namespace AppGM.Core
 
 			Bloques.Add(bloque);
 
+			bloque.Inicializar();
+
 			DispararBloqueAñadido(bloque, this);
 		}
 
@@ -128,9 +151,22 @@ namespace AppGM.Core
 		{
 			Bloques.Remove(bloque);
 
+			if (bloque is ViewModelBloqueDeclaracionVariable var)
+				VariablesCreadas.Remove(var);
+
 			DispararBloqueRemovido(bloque, this);
 
 			Base<IContenedorDeBloques>().ActualizarIndicesBloques(bloque.IndiceBloque);
+		}
+
+		/// <summary>
+		/// Obtiene el ID para asignar a un bloque.
+		/// </summary>
+		/// <returns>ID</returns>
+		public int ObtenerID()
+		{
+			//Devolvemos el valor actual de la variable y luego incrementamos su valor
+			return mIDActual++;
 		}
 
 		/// <summary>
@@ -154,7 +190,7 @@ namespace AppGM.Core
 		/// es decir no llamar propiedades de la clase cuya inicializacion dependa del constructor
 		/// </summary>
 		/// <returns><see cref="List{T}"/> que se asignara a <see cref="BloquesDisponibles"/></returns>
-		protected abstract List<Type> AsignarListaDeBloques();
+		protected abstract List<ViewModelBloqueMuestra> AsignarListaDeBloques();
 
 		/// <summary>
 		/// Metodo que devuelve una <see cref="List{T}"/> de <see cref="BloqueVariable"/>
@@ -174,7 +210,7 @@ namespace AppGM.Core
 		public void OnDragSalio_Impl(IDrageable vm)
 		{
 			if (vm is ViewModelBloqueFuncionBase)
-				GrosorBordesGridBloquesColocados = new Grosor(1);
+				GrosorBordesGridBloquesColocados = new Grosor(0, 1);
 		}
 
 		public bool OnDrop_Impl(IDrageable vm)

@@ -43,11 +43,6 @@ namespace AppGM.Core
 		private bool mEsValido = true;
 
 		/// <summary>
-		/// VM del control de creacion de funciones
-		/// </summary>
-		protected ViewModelCreacionDeFuncionBase mVMCreacionDeFuncion;
-
-		/// <summary>
 		/// <see cref="ViewModelBloqueContenedorConDrop{TipoBloque}"/> que contiene este <see cref="ViewModelBloqueFuncionBase"/>
 		/// </summary>
 		protected IContenedorDeBloques mPadre;
@@ -57,8 +52,17 @@ namespace AppGM.Core
 		/// </summary>
 		protected int mIndiceZ;
 
-
 		//-----------------------------------PROPIEDADES-----------------------------------------
+
+		/// <summary>
+		/// VM del control de creacion de funciones
+		/// </summary>
+		public ViewModelCreacionDeFuncionBase VMCreacionDeFuncion { get; protected set; }
+
+		/// <summary>
+		/// ID de este bloque
+		/// </summary>
+		public int IDBloque { get; protected set; }
 
 		/// <summary>
 		/// <see cref="ViewModelBloqueContenedorConDropConDrop{TipoBloque}"/> que contiene este <see cref="ViewModelBloqueFuncionBase"/>
@@ -135,7 +139,9 @@ namespace AppGM.Core
 		/// <param name="_vmCreacionDeFuncion"><see cref="ViewModelCreacionDeFuncionBase"/> al que pertenece este bloque</param>
 		public ViewModelBloqueFuncionBase(ViewModelCreacionDeFuncionBase _vmCreacionDeFuncion)
 		{
-			mVMCreacionDeFuncion = _vmCreacionDeFuncion;
+			VMCreacionDeFuncion = _vmCreacionDeFuncion;
+
+			IDBloque = VMCreacionDeFuncion.ObtenerID();
 		}
 
 		public ViewModelBloqueFuncionBase(){}
@@ -147,12 +153,18 @@ namespace AppGM.Core
 		public virtual ViewModelBloqueFuncionBase Copiar()
 		{
 			if(Padre == null)
-				return Activator.CreateInstance(GetType(), mVMCreacionDeFuncion) as ViewModelBloqueFuncionBase;
+				return Activator.CreateInstance(GetType(), VMCreacionDeFuncion) as ViewModelBloqueFuncionBase;
 
 			return this;
 		}
 
 		public virtual BloqueBase GenerarBloque() => null;
+
+		/// <summary>
+		/// Funcion llamada una vez el bloque fue inicializado por su padre.
+		/// Esta funcion solo es llamada cuando el bloque es añadido por primera vez a un contenedor
+		/// </summary>
+		public virtual void Inicializar(){}
 
 		/// <summary>
 		/// Verifica que este bloque sea valido

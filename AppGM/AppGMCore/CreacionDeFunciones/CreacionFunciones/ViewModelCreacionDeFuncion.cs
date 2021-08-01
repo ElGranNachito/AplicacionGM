@@ -5,33 +5,61 @@ namespace AppGM.Core
 	/// <summary>
 	/// View model base para la creacion de una funcion, ya sea para una habilidad, efecto, condicion.
 	/// </summary>
-	/// <typeparam name="TipoFuncion">Tipo de la funcion que sera creada</typeparam>
-	public abstract class ViewModelCreacionDeFuncion<TipoFuncion> : ViewModelCreacionDeFuncionBase
+	/// <typeparam name="TFuncion">Tipo de la funcion que sera creada</typeparam>
+	public abstract class ViewModelCreacionDeFuncion<TFuncion> : ViewModelCreacionDeFuncionBase
 	{
+
+		private ControladorFuncion<TFuncion> mControladorFuncion;
+
 		/// <summary>
 		/// Resultado de <see cref="CrearFuncion"/>
 		/// </summary>
-		public TipoFuncion resultado;
+		private ResultadoCompilacion<TFuncion> mResultadoCompilacion;
+
 
 		/// <summary>
-		/// Comando que se ejecuta cuando el usuario presiona el boton 'Compilar'
+		/// Controlador de la funcion actualmente siendo creada
 		/// </summary>
+		public ControladorFuncion<TFuncion> ControladorFuncion
+		{
+			get
+			{
+				if (mControladorFuncion == null)
+				{
+					ModeloFuncion modeloFuncion = new ModeloFuncion {NombreFuncion = NombreFuncion};
+
+					mControladorFuncion =
+						(ControladorFuncion<TFuncion>) ControladorFuncionBase.CrearControladorCorrespondiente(modeloFuncion, TipoFuncion);
+				}
+
+				return mControladorFuncion;
+			}
+
+			set => mControladorFuncion = value;
+		}
+
 		public ICommand ComandoCompilar { get; set; }
 
-		/// <summary>
-		/// Comando que se ejecuta cuando el usuario presiona el boton 'Cancelar'
-		/// </summary>
 		public ICommand ComandoCancelar { get; set; }
 
-		public ViewModelCreacionDeFuncion()
+		public ICommand ComandoGuardar { get; set; }
+
+		public ViewModelCreacionDeFuncion(ControladorFuncion<TFuncion> _controladorFuncion)
 		{
 			ComandoCompilar = new Comando(CrearFuncion);
+			ComandoGuardar = new Comando(Guardar);
+
+			ControladorFuncion = _controladorFuncion;
 		}
 
 		/// <summary>
-		/// Llama al compilar y devuelve la funcion que este genere
+		/// Funcion llamada por <see cref="ComandoCompilar"/>
 		/// </summary>
-		/// <returns>Funcion generada</returns>
-		public abstract void CrearFuncion();
+		protected abstract void CrearFuncion();
+
+		/// <summary>
+		/// Funcion llamada por <see cref="ComandoGuardar"/>
+		/// </summary>
+		protected abstract void Guardar();
 	}
 }

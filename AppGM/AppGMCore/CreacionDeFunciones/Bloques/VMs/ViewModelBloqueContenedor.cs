@@ -46,7 +46,7 @@ namespace AppGM.Core
 			{
 				Base<IContenedorDeBloques>()?.InsertarBloque(bloque, indice);
 
-				mVMCreacionDeFuncion.DispararBloqueAñadido(bloque, this);
+				VMCreacionDeFuncion.DispararBloqueAñadido(bloque, this);
 
 				return;
 			}
@@ -56,14 +56,16 @@ namespace AppGM.Core
 
 			Bloques.Add(bloque);
 
-			mVMCreacionDeFuncion.DispararBloqueAñadido(bloque, this);
+			bloque.Inicializar();
+
+			VMCreacionDeFuncion.DispararBloqueAñadido(bloque, this);
 		}
 
 		public void QuitarBloque(ViewModelBloqueFuncionBase bloque)
 		{
 			Bloques.Remove(bloque);
 
-			mVMCreacionDeFuncion.DispararBloqueRemovido(bloque, this);
+			VMCreacionDeFuncion.DispararBloqueRemovido(bloque, this);
 
 			Base<IContenedorDeBloques>()?.ActualizarIndicesBloques(bloque.IndiceBloque);
 		}
@@ -79,8 +81,18 @@ namespace AppGM.Core
 					.Select(elemento => elemento.GenerarBloque_Impl()));
 
 			return variablesPadre;
-		} 
+		}
 
+		public List<ViewModelBloqueDeclaracionVariable> ObtenerVariablesCreadas(ViewModelBloqueFuncionBase bloqueQueIntentaObtenerLasVariables)
+		{
+			//Obtenemos las variables del padre a las que podemos acceder
+			var variablesPadre = mPadre.ObtenerVariablesCreadas(this);
+
+			//Añadimos a esas variables las declaradas en este mismo bloque
+			variablesPadre.AddRange(VariablesCreadas.FindAll(elemento => elemento.EsValido));
+
+			return variablesPadre;
+		}
 		#endregion
 	}
 }

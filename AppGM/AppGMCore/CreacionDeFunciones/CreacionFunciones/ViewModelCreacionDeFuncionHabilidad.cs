@@ -10,29 +10,39 @@ namespace AppGM.Core
 	public class ViewModelCreacionDeFuncionHabilidad : 
 		ViewModelCreacionDeFuncion<Action<ControladorPersonaje, List<ControladorPersonaje>, List<object>>>
 	{
-		public override void CrearFuncion()
+		public ViewModelCreacionDeFuncionHabilidad(ControladorFuncion_Habilidad _controladorFuncion)
+			: base(_controladorFuncion)
 		{
-			Compilador compilador = new Compilador(
-				((from bloque in Bloques
-				select bloque.GenerarBloque())
-				.Concat(ObtenerVariables(null)))
-				.ToList()
-				);
+			TipoFuncion = ETipoFuncion.Habilidad;
+		}
 
-			var resultado = compilador.Compilar<Action<ControladorPersonaje, ControladorPersonaje[], ControladorHabilidad>>();
+		protected override void CrearFuncion()
+		{
+			Compilador compilador = new Compilador(VariablesBase.Concat(
+				from bloque in Bloques
+				select bloque.GenerarBloque()).ToList());
+
+			var resultado = compilador.Compilar<Action<ControladorPersonaje, ControladorPersonaje[], ControladorHabilidad, object[]>>();
 
 			var controladorHabilidad = new ControladorHabilidad(new ModeloHabilidad {Nombre = "Ultra destructor de nada"});
 
-			resultado.Funcion(null, null, controladorHabilidad);
+			resultado.Funcion(null, null, controladorHabilidad, new object[]{1, 1});
 		}
 
-		protected override List<Type> AsignarListaDeBloques()
+		protected override void Guardar()
 		{
-			return new List<Type>
+			ControladorFuncion.ActualizarBloques(VariablesBase.Concat(
+				from bloque in Bloques
+				select bloque.GenerarBloque()).ToList());
+		}
+
+		protected override List<ViewModelBloqueMuestra> AsignarListaDeBloques()
+		{
+			return new List<ViewModelBloqueMuestra>
 			{
-				typeof(ViewModelBloqueDeclaracionVariable),
-				typeof(ViewModelBloqueLlamarFuncion),
-				typeof(ViewModelBloqueCondicionalCompleto)
+				new ViewModelBloqueMuestra(this, typeof(ViewModelBloqueDeclaracionVariable)),
+				new ViewModelBloqueMuestra(this, typeof(ViewModelBloqueLlamarFuncion)),
+				new ViewModelBloqueMuestra(this, typeof(ViewModelBloqueCondicionalCompleto))
 			};
 		}
 
@@ -40,10 +50,10 @@ namespace AppGM.Core
 		{
 			return new List<BloqueVariable>
 			{
-				new BloqueVariable(  "Combate",  typeof(ControladorAdministradorDeCombate), ETipoVariable.Normal),
-				new BloqueVariable( "Usuario", typeof(ControladorPersonaje), ETipoVariable.Parametro),
-				new BloqueVariable( "Objetivos", typeof(ControladorPersonaje[]), ETipoVariable.Parametro),
-				new BloqueVariable(Compilador.NombreVariableDueña, typeof(ControladorHabilidad), ETipoVariable.Parametro)
+				new BloqueVariable(ObtenerID(),"Combate",  typeof(ControladorAdministradorDeCombate), ETipoVariable.Normal),
+				new BloqueVariable(ObtenerID(),"Usuario", typeof(ControladorPersonaje), ETipoVariable.Parametro),
+				new BloqueVariable(ObtenerID(), "Objetivos", typeof(ControladorPersonaje[]), ETipoVariable.Parametro),
+				new BloqueVariable(Compilador.Variables.VariableDueña, "ControladorHabilidad", typeof(ControladorHabilidad), ETipoVariable.Parametro)
 			};
 		}
 	}

@@ -62,47 +62,41 @@ namespace AppGM.Core
         /// <returns><see cref="List{T}"/> con las <see cref="EOperacionLogica"/> posibles</returns>
         public static List<EOperacionLogica> ObtenerOperacionesLogicasDisponibles(this Type tipo)
         {
-	        var operacionesLogicasDisponibles = Enum.GetValues(typeof(EOperacionLogica)).Cast<EOperacionLogica>().ToList();
+	        var operacionesLogicasDisponibles = Enum.GetValues(typeof(EOperacionLogica)).Cast<EOperacionLogica>();
 
 	        switch (tipo)
 	        {
                 case Type t when t == typeof(bool):
 
-	                operacionesLogicasDisponibles.RemoverRango(new[]
+	                return operacionesLogicasDisponibles.RemoverRango(new[]
 	                {
 		                EOperacionLogica.Igual, EOperacionLogica.NoIgual,
 		                EOperacionLogica.Mayor, EOperacionLogica.Menor,
 		                EOperacionLogica.MayorIgual, EOperacionLogica.MenorIgual
-	                });
+	                }).ToList();
 
-	                break;
-
-                case Type t when !t.IsByRef && (
+                case Type t when t.IsValueType && (
                     t == typeof(int)   || t == typeof(uint)   ||
                     t == typeof(short) || t == typeof(ushort) ||
                     t == typeof(byte)  || t == typeof(sbyte)  ||
                     t == typeof(long)  || t == typeof(ulong)  ||
                     t == typeof(float) || t == typeof(double)):
 
-	                operacionesLogicasDisponibles.RemoverRango(new[] {EOperacionLogica.O, EOperacionLogica.Y, EOperacionLogica.No});
-
-	                break;
+	                return operacionesLogicasDisponibles.RemoverRango(new[] {EOperacionLogica.O, EOperacionLogica.Y, EOperacionLogica.No}).ToList();
 
                 case Type t when t.IsByRef:
 
-	                operacionesLogicasDisponibles.RemoverRango(new[]
+	                return operacionesLogicasDisponibles.RemoverRango(new[]
 	                {
 		                EOperacionLogica.O, EOperacionLogica.Y,
 		                EOperacionLogica.No, EOperacionLogica.Mayor,
 		                EOperacionLogica.Menor, EOperacionLogica.MayorIgual,
 		                EOperacionLogica.MenorIgual
-	                });
-
-	                break;
+	                }).ToList();
 
 	        }
 
-	        return operacionesLogicasDisponibles;
+	        return operacionesLogicasDisponibles.ToList();
         }
     }
 }

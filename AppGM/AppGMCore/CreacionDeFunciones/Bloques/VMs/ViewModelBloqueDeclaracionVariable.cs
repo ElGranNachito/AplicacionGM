@@ -109,7 +109,7 @@ namespace AppGM.Core
 		public ViewModelBloqueDeclaracionVariable(ViewModelCreacionDeFuncionBase _vmCreacionFuncionBase)
 			: base(_vmCreacionFuncionBase)
 		{
-			ValorPorDefecto = new ViewModelArgumento(mVMCreacionDeFuncion, this, typeof(object), "Valor por defecto");
+			ValorPorDefecto = new ViewModelArgumento( this, typeof(object), "Valor por defecto");
 			Tipo = typeof(object);
 
 			ValorPorDefecto.OnEsValidoCambio += esValido => ActualizarValidez();
@@ -133,10 +133,7 @@ namespace AppGM.Core
 
 		public override BloqueVariable GenerarBloque_Impl()
 		{
-			mResultado ??= new BloqueVariable(Nombre, Tipo, ObtenerTipoVariable(), ValorPorDefecto.GenerarBloque_Impl());
-
-			mResultado.nombre = Nombre;
-			mResultado.tipo   = Tipo;
+			mResultado ??= new BloqueVariable(IDBloque, Nombre, Tipo, ObtenerTipoVariable(), ValorPorDefecto.GenerarBloque_Impl(), EsPersistente);
 
 			return mResultado;
 		}
@@ -144,7 +141,7 @@ namespace AppGM.Core
 		private ETipoVariable ObtenerTipoVariable()
 		{
 			if (EsParametro)
-				return ETipoVariable.Parametro;
+				return ETipoVariable.ParametroCreadoPorElUsuario;
 
 			if (EsPersistente)
 				return ETipoVariable.Persistente;

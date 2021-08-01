@@ -11,6 +11,11 @@ namespace AppGM.Core
 			return new Compilador(bloques);
 		}
 
-		public static readonly string NombreVariableDueña = "DueñoFuncion";
+		public static class Variables
+		{
+			public static readonly int VariableDueña     = int.MinValue;
+			public static readonly int ParametrosCreados = int.MinValue + 1;
+			public static readonly int Controlador       = int.MinValue + 2;
+		}
 	}
 }

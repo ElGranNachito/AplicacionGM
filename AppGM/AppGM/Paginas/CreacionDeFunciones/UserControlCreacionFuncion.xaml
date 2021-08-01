@@ -25,7 +25,8 @@
             </Grid.ColumnDefinitions>
 
             <!-- Bloques de texto 'Bloques' y 'Codigo' -->
-            <Grid Grid.ColumnSpan="2">
+            <Grid 
+                Grid.ColumnSpan="2">
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*"/>
@@ -46,8 +47,7 @@
                     Text="Codigo"/>
 
                 <Border Grid.ColumnSpan="2"
-                        BorderBrush="Black"
-                        BorderThickness="0 0 0 2"/>
+                        BorderBrush="Black"/>
 
             </Grid>
 
@@ -56,7 +56,7 @@
                 Grid.Row="1"
                 Grid.Column="0"
                 BorderBrush="Black"
-                BorderThickness="0 0 1 1"
+                BorderThickness="0 1 1 1"
                 Padding="5">
 
                 <ScrollViewer
@@ -111,9 +111,11 @@
             <!-- Botones inferiores -->
             <Grid 
                 Grid.Row="2"
-                Grid.Column="1">
+                Grid.Column="1"
+                Margin="0 5">
 
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
@@ -133,9 +135,66 @@
                     Content="Compilar"
                     Command="{Binding ComandoCompilar}"/>
 
+                <!-- Boton guardar -->
+                <Button
+                    Grid.Column="2"
+                    Padding="10 0"
+                    HorizontalAlignment="Center"
+                    Content="Guardar"
+                    Command="{Binding ComandoGuardar}"/>
+
             </Grid>
 
         </Grid>
+
+        <!--TODO: Cambiar el estilo a traves de una animacion para que no interfiera tanto con la interfaz grafica cuando no esta expandido -->
+        <!-- Contenedor del panel de detalles de la funcion -->
+        <Border
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            BorderThickness="1"
+            BorderBrush="Black"
+            Background="White"
+            Padding="5">
+
+            <Grid>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Checkbox -->
+                <CheckBox 
+                    VerticalAlignment="Top"
+                    x:Name="CheckBoxMostrarDetalles"
+                    Margin="5 5 10 0"
+                    Style="{StaticResource CheckBoxDropDown}"
+                    ToolTip="Mostrar u ocultar detalles de la funcion"/>
+
+                <Grid
+                    Grid.Column="1"
+                    Margin="5 0 0 0"
+                    Visibility="{Binding ElementName=CheckBoxMostrarDetalles, Path=IsChecked,
+                    Converter={local:BooleanToVisibilityConverterColapsar}}">
+
+                    <StackPanel>
+                        <TextBox 
+                            Width="200"
+                            Height="30"
+                            TextAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            Tag="Nombre de la funcion"
+                            Style="{StaticResource TextoDescriptivo}"
+                            Text="{Binding NombreFuncion}"/>
+                    </StackPanel>
+
+                    <!--TODO: Lista de las variables disponibles-->
+                </Grid>
+
+            </Grid>
+
+        </Border>
 
         <!-- Ventana de autocompletado -->
         <Canvas

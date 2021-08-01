@@ -10,12 +10,17 @@ namespace AppGM.Core
 	/// </summary>
 	public class BloqueVariable : BloqueBase
 	{
-		public ETipoVariable tipoVariable;
+		public ETipoVariable tipoVariable { get; private set; }
 
 		/// <summary>
 		/// Nombre de la variable
 		/// </summary>
 		public string nombre;
+
+		/// <summary>
+		/// Indica si el valor de esta variable se mantiene entre las distintas llamadas a la funcion
+		/// </summary>
+		public bool EsPersistente { get; private set; }
 
 		/// <summary>
 		/// Tipo de la variable
@@ -25,12 +30,13 @@ namespace AppGM.Core
 		/// <summary>
 		/// Valor por defecto de la variable de la variable
 		/// </summary>
-		public BloqueArgumento argumento;
+		public BloqueArgumento Argumento { get; private set; }
 
-		public BloqueVariable(string _nombre, Type _tipo, ETipoVariable _tipoVariable)
+		public BloqueVariable(int _idBloque, string _nombre, Type _tipo, ETipoVariable _tipoVariable)
+			:base(_idBloque)
 		{
-			nombre = _nombre;
-			tipo   = _tipo;
+			nombre       = _nombre;
+			tipo         = _tipo;
 			tipoVariable = _tipoVariable;
 		}
 
@@ -40,29 +46,37 @@ namespace AppGM.Core
 		/// <param name="_nombre">Nombre que se le asignara a la variable</param>
 		/// <param name="_tipo"><see cref="Type"/> de la variable</param>
 		/// <param name="argumento"><see cref="BloqueArgumento"/> para asignarle un valor por defecto a la variable</param>
-		public BloqueVariable(string _nombre, Type _tipo, ETipoVariable _tipoVariable, BloqueArgumento _argumento)
+		public BloqueVariable(int _idBloque, string _nombre, Type _tipo, ETipoVariable _tipoVariable, BloqueArgumento _argumento, bool _esPersistente)
+			:base(_idBloque)
 		{
-			nombre       = _nombre;
-			tipo         = _tipo;
-			tipoVariable = _tipoVariable;
-			argumento    = _argumento;
+			nombre        = _nombre;
+			tipo          = _tipo;
+			tipoVariable  = _tipoVariable;
+			EsPersistente = _esPersistente;
+			Argumento     = _argumento;
 		}
 
 		public override Expression ObtenerExpresion(Compilador compilador)
 		{
+			if (compilador[IDBloque] is {} exp)
+				return exp;
+
+			var metodoObtenerValorVariable = typeof(ControladorVariableFuncionBase).GetMethod(nameof(ControladorVariableFuncionBase.ObtenerValorVariable));
+
 			switch (tipoVariable)
 			{
 				case ETipoVariable.Normal:
-					return Expression.Parameter(tipo, nombre);
+					return Expression.Variable(tipo, nombre);
 
 				case ETipoVariable.Parametro:
+				case ETipoVariable.ParametroCreadoPorElUsuario:
 					return Expression.Parameter(tipo, nombre);
 
 				case ETipoVariable.Persistente:
 				{
-					var controlador = compilador[Compilador.NombreVariableDueña];
+					var controlador = compilador[Compilador.Variables.Controlador];
 
-					return Expression.Property(Expression.Property(controlador, "Variables", Expression.Constant(nombre)), "ValorVariable");
+					return Expression.Call(Expression.Property(controlador, "VariablesPersistentes", Expression.Constant(IDBloque)), metodoObtenerValorVariable);
 				}
 
 				default:
@@ -74,9 +88,26 @@ namespace AppGM.Core
 			}
 		}
 
-		protected override void ConvertirHaciaXML(XmlWriter writer)
+		public override void ConvertirHaciaXML(XmlWriter writer)
 		{
-			throw new NotImplementedException();
+			writer.WriteStartElement(nameof(BloqueVariable));
+
+			writer.WriteElementString("Nombre", nombre);
+			writer.WriteElementString("ID", IDBloque.ToString());
+			writer.WriteElementString("Tipo", tipo.AssemblyQualifiedName);
+			writer.WriteElementString("TipoVariable", tipoVariable.ToString());
+			writer.WriteElementString("EsPersistente", EsPersistente.ToString());
+
+			writer.WriteComment("Valor por defecto");
+
+			Argumento?.ConvertirHaciaXML(writer);
+
+			writer.WriteEndElement();
+		}
+
+		public override BloqueBase ConvertirDesdeXML(XmlReader reader)
+		{
+			return null;
 		}
 	}
 }

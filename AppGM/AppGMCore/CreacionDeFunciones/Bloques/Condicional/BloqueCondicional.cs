@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Xml;
 
@@ -24,6 +25,11 @@ namespace AppGM.Core
 		/// </summary>
 		private Queue<EOperacionLogica> mOperaciones;
 
+		/// <summary>
+		/// Tipo de este bloque condicional
+		/// </summary>
+		public ETipoBloqueCondicional TipoCondicional { get; private set; }
+
 		#endregion
 
 		#region Constructores
@@ -33,10 +39,13 @@ namespace AppGM.Core
 		/// </summary>
 		/// <param name="_argumentos"><see cref="List{T}"/> con los <see cref="BloqueArgumento"/></param>
 		/// <param name="_operaciones"><see cref="List{T}"/> con las <see cref="EOperacionLogica"/></param>
-		public BloqueCondicional(List<BloqueArgumento> _argumentos, List<EOperacionLogica> _operaciones)
+		public BloqueCondicional(int _idBloque, List<BloqueArgumento> _argumentos, List<EOperacionLogica> _operaciones, ETipoBloqueCondicional _tipoCondicional)
+			:base(_idBloque)
 		{
-			mArgumentos = new Queue<BloqueArgumento>(_argumentos);
+			mArgumentos  = new Queue<BloqueArgumento>(_argumentos);
 			mOperaciones = new Queue<EOperacionLogica>(_operaciones);
+
+			TipoCondicional = _tipoCondicional;
 		}
 
 		#endregion
@@ -45,11 +54,16 @@ namespace AppGM.Core
 
 		public override Expression ObtenerExpresion(Compilador compilador)
 		{
+			if (TipoCondicional == ETipoBloqueCondicional.Else)
+				return Expression.IsTrue(Expression.Constant(true));
+			if(TipoCondicional == ETipoBloqueCondicional.ElseIf && mOperaciones.Count == 0)
+				return Expression.IsTrue(mArgumentos.First().ObtenerExpresion(compilador));
+
 			BloqueArgumento argumentoAnterior = null;
 			Expression expresionAnterior = null;
 
 			//Iteramos mientras queden argumentos en la cola...
-			while (mArgumentos.Peek() != null)
+			while (mArgumentos.Count != 0)
 			{
 				BloqueArgumento argumentoActual = mArgumentos.Dequeue();
 
@@ -151,10 +165,42 @@ namespace AppGM.Core
 			}
 		}
 
-		protected override void ConvertirHaciaXML(XmlWriter writer)
+		public override void ConvertirHaciaXML(XmlWriter writer)
 		{
-			throw new System.NotImplementedException();
-		} 
+			writer.WriteStartElement(nameof(BloqueCondicional));
+
+			var listaArgs = mArgumentos.ToList();
+			var listaOperacionesLogicas = mOperaciones.ToList();
+
+			writer.WriteAttributeString(nameof(TipoCondicional), TipoCondicional.ToString());
+
+			writer.WriteComment("Argumentos de la condicion");
+
+			writer.WriteStartElement("Argumentos");
+			writer.WriteAttributeString("NumeroDeArgumentos", mArgumentos.Count.ToString());
+
+			foreach (var arg in listaArgs)
+				arg.ConvertirHaciaXML(writer);
+
+			writer.WriteEndElement();
+
+			writer.WriteComment("Operaciones logicas que se realizan entre los argumentos");
+
+			writer.WriteStartElement("OperacionesLogicas");
+			writer.WriteAttributeString("NumeroDeOperaciones", listaOperacionesLogicas.Count.ToString());
+
+			for(int i = 0; i < listaOperacionesLogicas.Count; ++i)
+				writer.WriteElementString($"OperacionLogica-{i}", listaOperacionesLogicas[i].ToString());
+				
+			writer.WriteEndElement();
+
+			writer.WriteEndElement();
+		}
+
+		public override BloqueBase ConvertirDesdeXML(XmlReader reader)
+		{
+			return null;
+		}
 
 		#endregion
 	}

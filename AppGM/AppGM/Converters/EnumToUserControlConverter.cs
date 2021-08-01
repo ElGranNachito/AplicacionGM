@@ -26,11 +26,11 @@ namespace AppGM
                     switch ((EPagina)value)
                     {
                         case EPagina.PaginaPrincipal:
-                            //return new UserControlPaginaInicio();
+                            return new UserControlPaginaInicio();
 
                             return new UserControlCreacionFuncion
                             {
-	                            DataContext = new ViewModelCreacionDeFuncionHabilidad()
+	                            DataContext = new ViewModelCreacionDeFuncionHabilidad(null)
                             };
                         case EPagina.PaginaPrincipalRol:
                             return new UserControlPaginaPrincipalRol();

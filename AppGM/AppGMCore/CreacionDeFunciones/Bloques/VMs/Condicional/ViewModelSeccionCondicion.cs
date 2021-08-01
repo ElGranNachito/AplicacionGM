@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Linq;
 using System.Windows.Input;
 
 using AppGM.Core.Delegados;
@@ -103,14 +102,11 @@ namespace AppGM.Core
 		/// Constructor
 		/// </summary>
 		/// <param name="_seccionAnterior"><see cref="ViewModelSeccionCondicion"/> que precede a esta seccion</param>
-		/// <param name="_VMCreacionDeFuncionBase"></param>
 		/// <param name="_VMContenedor"></param>
 		/// <param name="_contenedorSeccion"><see cref="ViewModelSeccionesCondicion"/> que contiene a esta seccion</param>
 		/// <param name="_indiceSeccion">Indice de esta seccion</param>
 		/// <param name="_tipoDelArgumento"><see cref="Type"/> que tendra el <see cref="Argumento"/>. Puede dejarse en null</param>
 		public ViewModelSeccionCondicion(
-			ViewModelSeccionCondicion _seccionAnterior,
-			ViewModelCreacionDeFuncionBase _VMCreacionDeFuncionBase,
 			ViewModelBloqueCondicional _VMContenedor,
 			ViewModelSeccionesCondicion _contenedorSeccion,
 			int _indiceSeccion,
@@ -118,7 +114,7 @@ namespace AppGM.Core
 		{
 			mContenedor   = _contenedorSeccion;
 
-			Argumento = new ViewModelArgumento(_VMCreacionDeFuncionBase, _VMContenedor,
+			Argumento = new ViewModelArgumento(_VMContenedor,
 				_tipoDelArgumento ?? typeof(object), $"Argumento{_indiceSeccion}", true, false);
 
 			IndiceSeccion = _indiceSeccion;
@@ -136,13 +132,16 @@ namespace AppGM.Core
 
 				ActualizarTipoArgumento();
 			};
-
-			ActualizarArgumentoAnterior(_seccionAnterior);
 		}
 
 		#endregion
 
 		#region Metodos
+
+		public void Inicializar(ViewModelSeccionCondicion _seccionAnterior)
+		{
+			ActualizarArgumentoAnterior(_seccionAnterior);
+		}
 
 		/// <summary>
 		/// Actualiza la <see cref="SeccionAnterior"/> de esta seccion
@@ -170,7 +169,7 @@ namespace AppGM.Core
 		private void ActualizarTipoArgumento()
 		{
 			int indiceActual = 0;
-			int indiceSeccionActual = mContenedor.Secciones.Elementos.IndexOf(this);
+			int indiceSeccionActual = IndiceSeccion;
 
 			bool necesitaUnTipoCompatibleConLaSeccionAnterior = false;
 
@@ -186,7 +185,7 @@ namespace AppGM.Core
 					++indiceActual;
 				}
 				//Si es cualquier otra cosa entonces va a necesitar un 'compañero' de un tipo compatible para realizar la operacion logica
-				else if (mContenedor.Secciones.Elementos[indiceActual].Argumento.TipoArgumento.EsAsignableDesdeOA(mContenedor.Secciones.Elementos[indiceActual + 1].Argumento.TipoArgumento))
+				else if (mContenedor.Secciones.Elementos[indiceActual].Argumento.TipoArgumento.EsComparableA(mContenedor.Secciones.Elementos[indiceActual + 1].Argumento.TipoArgumento))
 				{
 					//Aumentamos el indice en dos porque lidiamos con dos secciones en este caso
 					indiceActual += 2;

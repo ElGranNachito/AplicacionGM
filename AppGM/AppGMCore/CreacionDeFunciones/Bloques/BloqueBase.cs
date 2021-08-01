@@ -11,17 +11,36 @@ namespace AppGM.Core
 	public abstract class BloqueBase
 	{
 		/// <summary>
+		/// ID del bloque
+		/// </summary>
+		public int IDBloque { get; protected set; }
+
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="_idBLoque">ID que tendra el bloque</param>
+		public BloqueBase(int _idBLoque)
+		{
+			IDBloque = _idBLoque;
+		}
+
+		/// <summary>
 		/// Obtiene la <see cref="Expression"/> que equivale a este bloque
 		/// </summary>
 		/// <returns><see cref="Expression"/> equivalente al bloque</returns>
-		//TODO:Actualizar esta funcion para que tome un parametro
 		public abstract Expression ObtenerExpresion(Compilador compilador);
 
 		/// <summary>
 		/// Obtiene el XML que equivale a esta expresion
 		/// </summary>
 		/// <param name="writer">Elemento al que escribir</param>
-		protected abstract void ConvertirHaciaXML(XmlWriter writer);
+		public abstract void ConvertirHaciaXML(XmlWriter writer);
+
+		/// <summary>
+		/// Crea una instancia de este bloque desde un elemento XML
+		/// </summary>
+		/// <param name="reader"></param>
+		public abstract BloqueBase ConvertirDesdeXML(XmlReader reader);
 
 		/// <summary>
 		/// Obtiene un bloque a partir de un elemento XML
