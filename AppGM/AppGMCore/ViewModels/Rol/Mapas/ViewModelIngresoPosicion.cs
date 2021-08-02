@@ -1,4 +1,6 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows.Input;
 
 namespace AppGM.Core
@@ -27,7 +29,11 @@ namespace AppGM.Core
 
         // -----------------------PROPIEDADES----------------------------------
 
-
+        /// <summary>
+        /// Alianzas de persoanje a las que pertenece esta unidad
+        /// </summary>
+        public ViewModelListaDeElementos<ControladorAlianza> AlianzasPersonaje = new ViewModelListaDeElementos<ControladorAlianza>();
+        
         /// <summary>
         /// Comando que se ejecuta al presionar el boton de eliminar unidad
         /// </summary>
@@ -47,6 +53,11 @@ namespace AppGM.Core
         /// Indica si el indicador en el mapa debe ser visible o no
         /// </summary>
         public bool ImagenPosicionEsVisible { get; set; } = true;
+
+        /// <summary>
+        /// Indica si las alianzas a las que pertenece el indicador del mapa deber ser visibles.
+        /// </summary>
+        public bool InsigneasAlianzasSonVisibles { get; set; } = true;
 
         /// <summary>
         /// Ruta de la imagen de la unidad
@@ -100,7 +111,7 @@ namespace AppGM.Core
 			        return;
 
 		        double tmp;
-
+                
 		        //Intentamos parsear el nuevo valor
                 if (double.TryParse(value, out tmp))
 		        {
@@ -183,6 +194,8 @@ namespace AppGM.Core
             Posicion = new ViewModelVector2(unidad.posicion);
 
             ComandoEliminarUnidad = new Comando(EliminarUnidad);
+
+            AlianzasPersonaje.Elementos = new ObservableCollection<ControladorAlianza>(unidad.personaje.Alianzas);
         }
 
         #endregion

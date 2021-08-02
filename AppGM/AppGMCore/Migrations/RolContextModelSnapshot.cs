@@ -64,11 +64,20 @@ namespace AppGM.Core.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("EIconoAlianza")
+                        .HasColumnType("INTEGER");
+
                     b.Property<bool>("EsVigente")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("FormatoImagen")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Nombre")
                         .HasMaxLength(50)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PathImagenIcono")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");

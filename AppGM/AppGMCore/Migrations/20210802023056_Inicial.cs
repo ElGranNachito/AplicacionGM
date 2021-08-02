@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AppGM.Core.Migrations
 {
-    public partial class inicial : Migration
+    public partial class Inicial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -42,6 +42,9 @@ namespace AppGM.Core.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
+                    EIconoAlianza = table.Column<int>(type: "INTEGER", nullable: false),
+                    FormatoImagen = table.Column<int>(type: "INTEGER", nullable: false),
+                    PathImagenIcono = table.Column<string>(type: "TEXT", nullable: true),
                     Nombre = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
                     Descripcion = table.Column<string>(type: "TEXT", maxLength: 500, nullable: true),
                     EsVigente = table.Column<bool>(type: "INTEGER", nullable: false)
