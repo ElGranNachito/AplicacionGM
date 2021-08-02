@@ -253,6 +253,20 @@ namespace AppGM.Core
             }
         }
 
+        public bool MuestraUnidadesAlianzas
+        {
+            get => mostrarAlianzas;
+            set
+            {
+                mostrarAlianzas = value;
+
+                for (int i = 0; i < Posiciones.Count; ++i)
+                {
+                    Posiciones[i].InsigneasAlianzasSonVisibles = value;
+                }
+            }
+        }
+
         public bool MuestraUnidadesParties
         {
             get => mostrarParties;
@@ -262,17 +276,6 @@ namespace AppGM.Core
 
                 //TODO: Implementar sistemas de indicadores party por una unica unidad.
                 //TODO: Al cambiar la posicion de dicha unidad se estaria cambiando l
-            }
-        }
-
-        public bool MuestraUnidadesAlianzas
-        {
-            get => mostrarAlianzas;
-            set
-            {
-                mostrarAlianzas = value;
-
-                //TODO: Implementar sistemas de insigneas por alianza y pines sobre unidades de masters y servants.
             }
         }
 

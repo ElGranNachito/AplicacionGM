@@ -49,6 +49,32 @@
                 FontSize="{StaticResource TamañoFontPequeño}">
 
             </local:OutlinedText>
+
+            <ItemsControl ItemsSource="{Binding AlianzasPersonaje.Elementos}" 
+                          Visibility="{Binding InsigneasAlianzasSonVisibles, Converter={local:BooleanToVisibilityConverterOcultar}}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <!-- Imagen de la alianza -->
+                        <Image
+                            local:DragProperty.Value="False"
+                            Source="{Binding PathImagenIcono, Mode=OneWay}"
+                            Width="30.00"
+                            Height="30.00"
+                            Margin="5"
+                            SnapsToDevicePixels="True">
+
+                            <Image.RenderTransform>
+                                <TranslateTransform 
+                                    X="15.00"
+                                    Y="15.00"/>
+                            </Image.RenderTransform>
+
+                        </Image>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+
+            </ItemsControl>
+
         </Grid>
     </Border>
 </UserControl>

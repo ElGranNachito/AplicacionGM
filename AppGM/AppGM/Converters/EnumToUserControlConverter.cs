@@ -28,10 +28,10 @@ namespace AppGM
                         case EPagina.PaginaPrincipal:
                             return new UserControlPaginaInicio();
 
-                            return new UserControlCreacionFuncion
-                            {
-	                            DataContext = new ViewModelCreacionDeFuncionHabilidad(null)
-                            };
+                            //return new UserControlCreacionFuncion
+                            //{
+	                           // DataContext = new ViewModelCreacionDeFuncionHabilidad()
+                            //};
                         case EPagina.PaginaPrincipalRol:
                             return new UserControlPaginaPrincipalRol();
                     }
