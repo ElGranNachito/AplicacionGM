@@ -292,6 +292,28 @@ namespace AppGM.Core
     }
 
     /// <summary>
+    /// Tipo de icono personalizado para una <see cref="ModeloAlianza"/> en la que este involucrado un personaje.
+    /// TODO: Eliminar si se descarta la idea de iconos predeterminados.
+    /// </summary>
+    public enum EIconoAlianza
+    {
+        /// <summary>
+        /// TeamUwU, un tipo de alianza con su propio icono.
+        /// </summary>
+        TeamUwU = 1,
+
+        /// <summary>
+        /// TeamHetero, otro tipo de alianza con su propio icono.
+        /// </summary>
+        TeamHetero = 2,
+
+        /// <summary>
+        /// Alianza sin icono personalizado.
+        /// </summary>
+        NINGUNO = 0
+    }
+
+    /// <summary>
     /// Rango de una <see cref="ModeloHabilidad"/> o <see cref="EStat"/>.
     /// Estos rangos se utilizan solo para servants o invocaciones.
     /// Los valores numericos que tienen asignados son lo que equivaldrian en stats de <see cref="ModeloMaster"/>

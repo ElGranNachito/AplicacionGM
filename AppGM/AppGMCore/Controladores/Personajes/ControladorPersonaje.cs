@@ -142,9 +142,9 @@ namespace AppGM.Core
         public List<ControladorDefensivo> Armadura { get; set; }
 
         /// <summary>
-        /// Aliados del personaje
+        /// Alianzas a las que pertenece el personaje
         /// </summary>
-        public List<ControladorPersonaje> Aliados { get; set; }
+        public List<ControladorAlianza> Alianzas { get; set; }
 
         /// <summary>
         /// Perks del personaje
@@ -273,7 +273,13 @@ namespace AppGM.Core
         /// </summary>
         /// <param name="_modeloPersonaje">Modelo del personaje que representa este controlador</param>
         public ControladorPersonaje(ModeloPersonaje _modeloPersonaje)
-            :base(_modeloPersonaje) {}
+            : base(_modeloPersonaje)
+        {
+            for (int i = 0; i < modelo.Alianzas.Count; ++i)
+            {
+                Alianzas[i] = new ControladorAlianza(modelo.Alianzas[i].Alianza);
+            }
+        }
 
         #endregion
 

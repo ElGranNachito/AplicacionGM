@@ -144,7 +144,65 @@ namespace AppGM.Core
                         TipoPersonaje = ETipoPersonaje.Servant
                     };
 
-					ModeloMagia magia1 = new ModeloMagia
+                    ModeloContrato contratoPiola = new ModeloContrato
+                    {
+						Nombre = "PiolaContrato",
+						Descripcion = "Contrato entre gente de contratos",
+
+						EsVigente = true
+                    };
+
+                    contratoPiola.PersonajesAfectados = new List<TIPersonajeContrato>
+                    {
+						new TIPersonajeContrato
+                        {
+							Contrato = contratoPiola,
+							Personaje = master1
+                        },
+                        new TIPersonajeContrato
+                        {
+                            Contrato = contratoPiola,
+                            Personaje = master2
+                        }
+                    };
+
+                    ModeloAlianza alianzaPiola = new ModeloAlianza
+                    {
+						EIconoAlianza = EIconoAlianza.TeamUwU,
+						FormatoImagen = EFormatoImagen.Png,
+
+						PathImagenIcono = "Team_UwU",
+						Nombre = "TeamUwU",
+						Descripcion = "Alianza entre magos para ganar el grial mas facil.",
+
+						EsVigente = true,
+                    };
+
+                    alianzaPiola.ContratoDeAlianza = new TIAlianzaContrato
+                    {
+						Contrato = contratoPiola,
+						Alianza = alianzaPiola
+                    };
+
+                    TIPersonajeAlianza master1Alianza = new TIPersonajeAlianza
+                    {
+						Personaje = master1,
+						Alianza = alianzaPiola
+                    };
+
+                    TIPersonajeAlianza master2Alianza = new TIPersonajeAlianza
+                    {
+                        Personaje = master2,
+                        Alianza = alianzaPiola
+                    };
+
+					alianzaPiola.PersonajesAfectados.Add(master1Alianza);
+                    alianzaPiola.PersonajesAfectados.Add(master2Alianza);
+
+					master1.Alianzas.Add(master1Alianza);
+                    master2.Alianzas.Add(master2Alianza);
+
+                    ModeloMagia magia1 = new ModeloMagia
 					{
 						Nombre = "Chiquiti Pum pum",
 						Descripcion = "Habilidad ultra potente que destruye todo a su paso",

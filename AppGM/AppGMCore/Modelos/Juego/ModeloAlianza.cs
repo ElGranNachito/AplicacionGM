@@ -9,6 +9,26 @@ namespace AppGM.Core
     public class ModeloAlianza : ModeloBase
     {
         /// <summary>
+        /// Controlador
+        /// </summary>
+        public ControladorAlianza controladorAlianza;
+
+        /// <summary>
+        /// Tipo de icono que tendra la alianza como identificador de la misma.
+        /// </summary>
+        public EIconoAlianza EIconoAlianza { get; set; }
+
+        /// <summary>
+        /// Formato de la imagen asignada al icono de la alianza.
+        /// </summary>
+        public EFormatoImagen FormatoImagen { get; set; }
+
+        /// <summary>
+        /// Imagen para el icono de la alianza.
+        /// </summary>
+        public string PathImagenIcono { get; set; }
+
+        /// <summary>
         /// Nombre de la alianza
         /// </summary>
         [StringLength(50)]

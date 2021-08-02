@@ -9,13 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AppGM.Core.Migrations
 {
     [DbContext(typeof(RolContext))]
-<<<<<<< HEAD:AppGM/AppGMCore/Migrations/20210625194842_Inicial.Designer.cs
-    [Migration("20210625194842_Inicial")]
+    [Migration("20210802023056_Inicial")]
     partial class Inicial
-=======
-    [Migration("20210718203203_inicial")]
-    partial class inicial
->>>>>>> Nachito:AppGM/AppGMCore/Migrations/20210718203203_inicial.Designer.cs
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -71,11 +66,20 @@ namespace AppGM.Core.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("EIconoAlianza")
+                        .HasColumnType("INTEGER");
+
                     b.Property<bool>("EsVigente")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("FormatoImagen")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Nombre")
                         .HasMaxLength(50)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PathImagenIcono")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
