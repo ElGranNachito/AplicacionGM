@@ -81,12 +81,17 @@ namespace AppGM.Core
 			for (int i = 0; i < mAcciones.Count; ++i)
 			{
 				writer.WriteComment($"Condicion-{i}");
-				writer.WriteStartElement("CondicionYAccion");
+				writer.WriteStartElement("CondicionYAcciones");
 
 				mCondiciones[i].ConvertirHaciaXML(writer);
 
+				writer.WriteStartElement("Acciones");
+				writer.WriteAttributeString("NumeroDeAcciones", mAcciones[i].Count.ToString());
+
 				foreach (var bloque in mAcciones[i])
 					bloque.ConvertirHaciaXML(writer);
+
+				writer.WriteEndElement();
 
 				writer.WriteEndElement();
 			}
@@ -94,9 +99,36 @@ namespace AppGM.Core
 			writer.WriteEndElement();
 		}
 
-		public override BloqueBase ConvertirDesdeXML(XmlReader reader)
+		protected override void ConvertirDesdeXML(XmlReader reader)
 		{
-			throw new System.NotImplementedException();
+			if (reader.Name != nameof(BloqueCondicionalCompleto))
+				return;
+
+			mCondiciones = new List<BloqueCondicional>(int.Parse(reader.GetAttribute("NumeroDeCondiciones")));
+			mAcciones = new List<List<BloqueBase>>(mCondiciones.Capacity);
+
+			//Por cada condicion...
+			for (int i = 0; i < mCondiciones.Capacity; ++i)
+			{
+				reader.ReadToFollowing(nameof(BloqueCondicional));
+
+				mCondiciones.Add(new BloqueCondicional(reader));
+
+				reader.ReadToFollowing("Acciones");
+
+				//Obtenemos el numero de acciones que se realizan en este bloque y reservamos espacio en la lista
+				mAcciones.Add(new List<BloqueBase>(int.Parse(reader.GetAttribute("NumeroDeAcciones"))));
+
+				//Por cada accion...
+				for (int j = 0; j < mAcciones[i].Capacity; ++j)
+				{
+					//Salteamos los elementos hasta encontrar uno cuyo nombre comience con Bloque y sea el comienzo de un Elemento
+					while (reader.Name.StartsWith("Bloque") && reader.NodeType != XmlNodeType.Element)
+						reader.Read();
+
+					mAcciones[i].Add(BloqueBase.DesdeXml(reader));
+				}
+			}
 		}
 	}
 }

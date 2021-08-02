@@ -110,17 +110,33 @@ namespace AppGM.Core
 			ViewModelBloqueCondicional _VMContenedor,
 			ViewModelSeccionesCondicion _contenedorSeccion,
 			int _indiceSeccion,
-			Type _tipoDelArgumento = null)
+			Type _tipoDelArgumento = null,
+			ParametrosInicializarArgumentoDesdeBloque _paramsArgumento = null,
+			EOperacionLogica _operacionLogica = EOperacionLogica.NINGUNA)
 		{
 			mContenedor   = _contenedorSeccion;
-
-			Argumento = new ViewModelArgumento(_VMContenedor,
-				_tipoDelArgumento ?? typeof(object), $"Argumento{_indiceSeccion}", true, false);
-
 			IndiceSeccion = _indiceSeccion;
 
-			Operacion = new ViewModelComboBox<EOperacionLogica>();
-			Operacion.ActualizarValoresPosibles(Argumento.TipoArgumento.ObtenerOperacionesLogicasDisponibles());
+			if (_paramsArgumento == null)
+			{
+				Argumento = new ViewModelArgumento(
+					_VMContenedor,
+					_tipoDelArgumento ?? typeof(object),
+					$"Argumento{_indiceSeccion}", 
+					true, 
+					false);
+
+				var operacionesLogicasDisponibles = Argumento.TipoArgumento.ObtenerOperacionesLogicasDisponibles();
+
+				Operacion = new ViewModelComboBox<EOperacionLogica>(operacionesLogicasDisponibles);
+				Operacion.ValorSeleccionado = Operacion.ValoresPosibles.Find(op => op.valor == _operacionLogica);
+			}
+			else
+			{
+				Argumento = new ViewModelArgumento(_paramsArgumento);
+
+				Operacion = new ViewModelComboBox<EOperacionLogica>(Argumento.TipoArgumento.ObtenerOperacionesLogicasDisponibles());
+			}
 
 			ComandoEliminar = new Comando(() => { mContenedor.QuitarSeccion(this); });
 			

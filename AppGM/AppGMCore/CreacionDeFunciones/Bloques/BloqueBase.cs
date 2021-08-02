@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Xml;
+using CoolLogs;
 
 namespace AppGM.Core
 {
@@ -19,9 +19,18 @@ namespace AppGM.Core
 		/// Constructor
 		/// </summary>
 		/// <param name="_idBLoque">ID que tendra el bloque</param>
-		public BloqueBase(int _idBLoque)
+		protected BloqueBase(int _idBLoque)
 		{
 			IDBloque = _idBLoque;
+		}
+
+		/// <summary>
+		/// Constructor que construye el bloque a partir de un elemento XML
+		/// </summary>
+		/// <param name="reader">Documento en el que se encuentra el elemento</param>
+		protected BloqueBase(XmlReader reader)
+		{
+			ConvertirDesdeXML(reader);
 		}
 
 		/// <summary>
@@ -29,6 +38,13 @@ namespace AppGM.Core
 		/// </summary>
 		/// <returns><see cref="Expression"/> equivalente al bloque</returns>
 		public abstract Expression ObtenerExpresion(Compilador compilador);
+
+		/// <summary>
+		/// Obtiene un <see cref="ViewModelBloqueFuncionBase"/> a partir de este bloque
+		/// </summary>
+		/// <param name="vmCreacionDeFuncion">Contenedor del bloque</param>
+		/// <returns><see cref="ViewModelBloqueFuncionBase"/> que representa este bloque</returns>
+		public virtual ViewModelBloqueFuncionBase ObtenerViewModel(ViewModelCreacionDeFuncionBase vmCreacionDeFuncion) => null;
 
 		/// <summary>
 		/// Obtiene el XML que equivale a esta expresion
@@ -40,16 +56,28 @@ namespace AppGM.Core
 		/// Crea una instancia de este bloque desde un elemento XML
 		/// </summary>
 		/// <param name="reader"></param>
-		public abstract BloqueBase ConvertirDesdeXML(XmlReader reader);
+		protected abstract void ConvertirDesdeXML(XmlReader reader);
 
 		/// <summary>
 		/// Obtiene un bloque a partir de un elemento XML
 		/// </summary>
 		/// <param name="reader"><see cref="XmlReader"/> del que convertir</param>
 		/// <returns><see cref="BloqueBase"/> equivalente a <paramref name="reader"/></returns>
-		public static List<BloqueBase> DesdeXml(XmlReader reader)
+		public static BloqueBase DesdeXml(XmlReader reader)
 		{
-			throw new NotImplementedException();
+			switch (reader.Name)
+			{
+				case nameof(BloqueArgumento):
+					return new BloqueArgumento(reader);
+				case nameof(BloqueVariable):
+					return new BloqueVariable(reader);
+				case nameof(BloqueFuncion):
+					return new BloqueFuncion(reader);
+				//TODO: Terminar
+				default:
+					SistemaPrincipal.LoggerGlobal.Log($"Elemento actual ({reader.Name}) no representa un bloque!", ESeveridad.Error);
+					return null;
+			}
 		}
 	}
 }

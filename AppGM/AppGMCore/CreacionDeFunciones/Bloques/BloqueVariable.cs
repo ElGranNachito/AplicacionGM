@@ -13,14 +13,14 @@ namespace AppGM.Core
 		public ETipoVariable tipoVariable { get; private set; }
 
 		/// <summary>
+		/// Indica si el valor de esta variable se mantiene entre las distintas llamadas a la funcion
+		/// </summary>
+		public bool EsPersistente => tipoVariable == ETipoVariable.Persistente;
+
+		/// <summary>
 		/// Nombre de la variable
 		/// </summary>
 		public string nombre;
-
-		/// <summary>
-		/// Indica si el valor de esta variable se mantiene entre las distintas llamadas a la funcion
-		/// </summary>
-		public bool EsPersistente { get; private set; }
 
 		/// <summary>
 		/// Tipo de la variable
@@ -32,6 +32,13 @@ namespace AppGM.Core
 		/// </summary>
 		public BloqueArgumento Argumento { get; private set; }
 
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="_idBloque">ID de este bloque</param>
+		/// <param name="_nombre">Nombre de la variable</param>
+		/// <param name="_tipo"><see cref="Type"/> de la variable</param>
+		/// <param name="_tipoVariable"><see cref="ETipoVariable"/> de la variable</param>
 		public BloqueVariable(int _idBloque, string _nombre, Type _tipo, ETipoVariable _tipoVariable)
 			:base(_idBloque)
 		{
@@ -45,16 +52,23 @@ namespace AppGM.Core
 		/// </summary>
 		/// <param name="_nombre">Nombre que se le asignara a la variable</param>
 		/// <param name="_tipo"><see cref="Type"/> de la variable</param>
-		/// <param name="argumento"><see cref="BloqueArgumento"/> para asignarle un valor por defecto a la variable</param>
-		public BloqueVariable(int _idBloque, string _nombre, Type _tipo, ETipoVariable _tipoVariable, BloqueArgumento _argumento, bool _esPersistente)
+		/// <param name="_tipoVariable"><see cref="ETipoVariable"/> de la variable</param>
+		/// <param name="_argumento"><see cref="BloqueArgumento"/> para asignarle un valor por defecto a la variable</param>
+		public BloqueVariable(int _idBloque, string _nombre, Type _tipo, ETipoVariable _tipoVariable, BloqueArgumento _argumento)
 			:base(_idBloque)
 		{
 			nombre        = _nombre;
 			tipo          = _tipo;
 			tipoVariable  = _tipoVariable;
-			EsPersistente = _esPersistente;
 			Argumento     = _argumento;
 		}
+
+		/// <summary>
+		/// Inicializa este bloque a partir de un elemento XML
+		/// </summary>
+		/// <param name="_reader">Documento que contiene el elemento</param>
+		public BloqueVariable(XmlReader _reader)
+			: base(_reader) { }
 
 		public override Expression ObtenerExpresion(Compilador compilador)
 		{
@@ -88,6 +102,17 @@ namespace AppGM.Core
 			}
 		}
 
+		public override ViewModelBloqueFuncionBase ObtenerViewModel(ViewModelCreacionDeFuncionBase vmCreacionDeFuncion)
+		{
+			return new ViewModelBloqueDeclaracionVariable(
+				IDBloque, 
+				vmCreacionDeFuncion,
+				tipo,
+				tipoVariable,
+				nombre, 
+				Argumento.ObtenerParametrosInicializarVM());
+		}
+
 		public override void ConvertirHaciaXML(XmlWriter writer)
 		{
 			writer.WriteStartElement(nameof(BloqueVariable));
@@ -96,7 +121,6 @@ namespace AppGM.Core
 			writer.WriteElementString("ID", IDBloque.ToString());
 			writer.WriteElementString("Tipo", tipo.AssemblyQualifiedName);
 			writer.WriteElementString("TipoVariable", tipoVariable.ToString());
-			writer.WriteElementString("EsPersistente", EsPersistente.ToString());
 
 			writer.WriteComment("Valor por defecto");
 
@@ -105,9 +129,31 @@ namespace AppGM.Core
 			writer.WriteEndElement();
 		}
 
-		public override BloqueBase ConvertirDesdeXML(XmlReader reader)
+		protected override void ConvertirDesdeXML(XmlReader reader)
 		{
-			return null;
+			if (reader.Name != nameof(BloqueVariable))
+				return;
+
+			reader.ReadToFollowing("Nombre");
+
+			nombre = reader.ReadElementContentAsString();
+
+			reader.ReadToFollowing("ID");
+
+			IDBloque = reader.ReadElementContentAsInt();
+
+			reader.ReadToFollowing("Tipo");
+
+			tipo = Type.GetType(reader.ReadElementContentAsString());
+
+			reader.ReadToFollowing("TipoVariable");
+
+			tipoVariable = Enum.Parse<ETipoVariable>(reader.ReadElementContentAsString());
+
+			reader.Read();
+
+			if (reader.NodeType != XmlNodeType.EndElement && reader.Name == nameof(BloqueArgumento))
+				Argumento = new BloqueArgumento(reader);
 		}
 	}
 }

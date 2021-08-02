@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Net.Mime;
 using System.Reflection;
 using System.Text.RegularExpressions;
 
@@ -198,7 +197,7 @@ namespace AppGM.Core
 
 		#endregion
 
-		#region Constructor
+		#region Constructores
 
 		/// <summary>
 		/// Constructor
@@ -214,7 +213,7 @@ namespace AppGM.Core
 			bool _detectarTipoAutomaticamente = false,
 			bool _puedeQuedarVacio = true)
 
-			:base(_bloqueContenedor.VMCreacionDeFuncion)
+			:base(_bloqueContenedor.VMCreacionDeFuncion, _bloqueContenedor.IDBloque)
 		{
 			DeteccionAutomaticaDeTipo = _detectarTipoAutomaticamente;
 			PuedeQuedarVacio          = _puedeQuedarVacio;
@@ -228,6 +227,39 @@ namespace AppGM.Core
 			{
 				IndiceBloque = mBloqueContendor.IndiceBloque;
 			};
+		}
+
+		/// <summary>
+		/// Constructor utilizado para crear una instancia de esta clase desde un <see cref="BloqueArgumento"/>
+		/// </summary>
+		/// <param name="_parametros">Parametros necesitados para incializar esta instancia</param>
+		public ViewModelArgumento(ParametrosInicializarArgumentoDesdeBloque _parametros)
+
+			:base(_parametros.contenedor.VMCreacionDeFuncion, _parametros.idBloque)
+		{
+			DeteccionAutomaticaDeTipo = _parametros.detectarTipoAutomaticamente;
+			PuedeQuedarVacio		  = _parametros.puedeQuedarVacio;
+			TipoArgumento             = _parametros.tipoArgumento;
+			Nombre                    = _parametros.nombre;
+			TextoActual               = _parametros.textoActual;
+			TextoTextBox              = _parametros.textoActual; 
+			mBloqueContendor          = _parametros.contenedor;
+
+			//Añadimos los metodos
+			foreach (var metodo in _parametros.metodos)
+				mMetodosConsecuentes.Add(metodo.metodo, metodo.ObtenerMetodoAccesibleEnGuraScratch(this));
+
+			ActualizarCantidadDeSecciones();
+
+			IndiceBloque = mBloqueContendor.IndiceBloque;
+
+			mBloqueContendor.OnIndiceBloqueModificado += (anterior, actual) =>
+			{
+				IndiceBloque = mBloqueContendor.IndiceBloque;
+			};
+
+			//Actualizamos la validez para que inicialice el resto de las variables con los datos que ya le pasamos
+			ActualizarValidez();
 		}
 
 		#endregion
@@ -748,10 +780,9 @@ namespace AppGM.Core
 					//Si este miembro cumple con las condiciones...
 					if (condicionBucle(miembro))
 					{
-						//Lo añadimos a la lista
 						mMiembrosConsecuentes.Add(miembro);
 
-						if (miembro is MethodInfo metodo)
+						if (miembro is MethodInfo metodo && !mMetodosConsecuentes.ContainsKey(metodo))
 							mMetodosConsecuentes.Add(metodo, new MetodoAccesibleEnGuraScratch(this, metodo));
 
 						//Actualizamos el ultimo tipo para las iteraciones consecuentes
@@ -875,7 +906,7 @@ namespace AppGM.Core
 			//Si no es una variable entonces tiene que ser un tipo
 			else if (nuevoValor is Type t)
 			{
-				mBase     = nuevoValor;
+				mBase     = t;
 				mTipoBase = t;
 			}
 		}

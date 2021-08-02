@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Xml;
@@ -19,7 +19,23 @@ namespace AppGM.Core
 
 		public virtual Expression GenerarExpresion(Compilador compilador, Expression expresionAnterior) => null;
 
+		public SeccionArgumentoBase(){}
+
+		public SeccionArgumentoBase(XmlReader _reader)
+		{
+			ConvertirDesdeXML(_reader);
+		}
+
+		/// <summary>
+		/// Convierte esta seccion a un elemento XML
+		/// </summary>
+		/// <param name="writer">Documento XML en el que se escribira</param>
 		public abstract void ConvertirHaciaXML(XmlWriter writer);
+
+		/// <summary>
+		/// Inicializa esta seccion a partir de un elemento XML
+		/// </summary>
+		/// <param name="reader">Documento XML en el que se encuentra el elemento</param>
 		public abstract void ConvertirDesdeXML(XmlReader reader);
 	}
 
@@ -44,8 +60,9 @@ namespace AppGM.Core
 		}
 
 		public SeccionArgumentoMiembro(XmlReader _reader)
+			:base(_reader)
 		{
-			ConvertirDesdeXML(_reader);
+			tipoRetorno = miembro.ObtenerTipoRetorno();
 		}
 
 		public override Expression GenerarExpresion(Compilador compilador, Expression expresionAnterior)
@@ -105,7 +122,7 @@ namespace AppGM.Core
 					miembro = dueñoMiembro.GetProperty(nombreMiembro);
 					break;
 				default:
-
+					
 					SistemaPrincipal.LoggerGlobal.Log($"{tipoMiembro.ToString()}, este tipo de miembro no esta soportado!", ESeveridad.Error);
 
 					break;
@@ -118,23 +135,31 @@ namespace AppGM.Core
 	/// </summary>
 	public class SeccionArgumentoMetodo : SeccionArgumentoBase
 	{
-		private BloqueFuncion mBloqueFuncion;
+		public BloqueFuncion BloqueFuncion { get; private set; }
 
 		public SeccionArgumentoMetodo(int _idBloque, MethodInfo _metodo, List<BloqueArgumento> _argumentos)
 		{
-			mBloqueFuncion = new BloqueFuncion(_idBloque, _metodo, _argumentos, null);
+			BloqueFuncion = new BloqueFuncion(_idBloque, _metodo, _argumentos, null);
+
+			tipoRetorno = BloqueFuncion.TipoDeRetorno;
+		}
+
+		public SeccionArgumentoMetodo(XmlReader _reader)
+			:base(_reader)
+		{
+			tipoRetorno = BloqueFuncion.TipoDeRetorno;
 		}
 
 		public override Expression GenerarExpresion(Compilador compilador, Expression expresionAnterior)
 		{
-			mBloqueFuncion.expresionCaller = expresionAnterior;
+			BloqueFuncion.expresionCaller = expresionAnterior;
 
-			return mBloqueFuncion.ObtenerExpresion(compilador);
+			return BloqueFuncion.ObtenerExpresion(compilador);
 		}
 
-		public override void ConvertirHaciaXML(XmlWriter writer) => mBloqueFuncion.ConvertirHaciaXML(writer);
+		public override void ConvertirHaciaXML(XmlWriter writer) => BloqueFuncion.ConvertirHaciaXML(writer);
 
-		public override void ConvertirDesdeXML(XmlReader reader) => mBloqueFuncion.ConvertirDesdeXML(reader);
+		public override void ConvertirDesdeXML(XmlReader reader) => BloqueFuncion = new BloqueFuncion(reader);
 	}
 
 	/// <summary>
@@ -158,12 +183,16 @@ namespace AppGM.Core
 			tipoRetorno = _tipoVariable;
 		}
 
+		public SeccionArgumentoVariable(XmlReader _reader)
+			:base(_reader) {}
+
 		public override Expression GenerarExpresion(Compilador compilador, Expression expresionAnterior) => compilador[idVariable];
 
 		public override void ConvertirHaciaXML(XmlWriter writer)
 		{
 			writer.WriteStartElement(nameof(SeccionArgumentoVariable));
 
+			writer.WriteElementString("TipoRetorno", tipoRetorno.AssemblyQualifiedName);
 			writer.WriteElementString("IDVariable", idVariable.ToString());
 
 			writer.WriteEndElement();
@@ -171,7 +200,13 @@ namespace AppGM.Core
 
 		public override void ConvertirDesdeXML(XmlReader reader)
 		{
-			reader.ReadToFollowing(nameof(SeccionArgumentoVariable));
+			if (reader.Name != nameof(SeccionArgumentoVariable))
+				return;
+
+			reader.ReadToFollowing("TipoRetorno");
+
+			tipoRetorno = Type.GetType(reader.ReadElementContentAsString());
+
 			reader.ReadToFollowing("IDVariable");
 
 			idVariable = reader.ReadElementContentAsInt();

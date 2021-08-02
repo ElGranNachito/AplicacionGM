@@ -962,7 +962,9 @@ namespace AppGM.Core
         /// <summary>
         /// &&
         /// </summary>
-        Y = 9
+        Y = 9,
+
+        NINGUNA = 0
     }
 
     /// <summary>
@@ -982,9 +984,24 @@ namespace AppGM.Core
     /// </summary>
     public enum ETipoVariable
     {
+        /// <summary>
+        /// Una simple variable, nada bonito que ver
+        /// </summary>
         Normal      = 1,
+
+        /// <summary>
+        /// Variable cuyo valor persiste entre distintas llamadas a la funcion que la contiene
+        /// </summary>
         Persistente = 2,
+
+        /// <summary>
+        /// Variable que se pasa como parametro a la funcion
+        /// </summary>
         Parametro   = 3,
+
+        /// <summary>
+        /// Igual a <see cref="Parametro"/> salvo por el hecho de que esta variable fue creada por el usuario
+        /// </summary>
         ParametroCreadoPorElUsuario = 4,
 
         /// <summary>

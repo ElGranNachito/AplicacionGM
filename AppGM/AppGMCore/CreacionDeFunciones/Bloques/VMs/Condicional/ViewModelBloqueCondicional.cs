@@ -42,11 +42,14 @@ namespace AppGM.Core
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		/// <param name="_vmCreacionDeFuncion"><see cref="ViewModelCreacionDeFuncionBase"/> que contiene este bloque</param>
-		public ViewModelBloqueCondicional(ViewModelCreacionDeFuncionBase _vmCreacionDeFuncion, ETipoBloqueCondicional _tipoCondicional = ETipoBloqueCondicional.NINGUNO)
-			: base(_vmCreacionDeFuncion)
+		/// <param name="_bloqueContenedor"><see cref="ViewModelCreacionDeFuncionBase"/> que contiene este bloque</param>
+		public ViewModelBloqueCondicional(
+			ViewModelBloqueFuncionBase _bloqueContenedor,
+			ETipoBloqueCondicional _tipoCondicional = ETipoBloqueCondicional.NINGUNO)
+			
+			: base(_bloqueContenedor.VMCreacionDeFuncion, _bloqueContenedor.IDBloque)
 		{
-			ArgumentosCondicion = new ViewModelSeccionesCondicion(_vmCreacionDeFuncion, this);
+			ArgumentosCondicion = new ViewModelSeccionesCondicion( this);
 
 			TipoCondicional = _tipoCondicional;
 

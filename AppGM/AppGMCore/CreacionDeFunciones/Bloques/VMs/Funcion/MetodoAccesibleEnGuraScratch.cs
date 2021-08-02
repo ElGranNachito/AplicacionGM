@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
 using System.Reflection;
 using CoolLogs;
 
@@ -40,9 +38,10 @@ namespace AppGM.Core
 		/// Constructor
 		/// </summary>
 		/// <param name="_metodo"><see cref="MethodInfo"/> que sera representado por esta instancia</param>
-		public MetodoAccesibleEnGuraScratch(ViewModelBloqueFuncionBase _contenedor, MethodInfo _metodo)
+		/// <param name="_argsFuncion">Parametros para incilizar <see cref="ArgumentosFuncion"/> de la funcion. Solo se utilizar al cargar datos de una funcion guardada</param>
+		public MetodoAccesibleEnGuraScratch(ViewModelBloqueFuncionBase _contenedor, MethodInfo _metodo, List<ParametrosInicializarArgumentoDesdeBloque> _argsFuncion = null)
 		{
-			if(!Actualizar(_metodo, _contenedor))
+			if(!Actualizar(_metodo, _contenedor, _argsFuncion))
 				SistemaPrincipal.LoggerGlobal.Log($"{nameof(_metodo)}(Valor: {_metodo}) no contiene atributo {nameof(AccesibleEnGuraScratch)}!", ESeveridad.Error);
 		}
 
@@ -51,8 +50,9 @@ namespace AppGM.Core
 		/// </summary>
 		/// <param name="nuevoMetodo">nuevo <see cref="MethodInfo"/></param>
 		/// <param name="nuevoContenedor">nuevo <see cref="ViewModelBloqueContenedor{TipoBloque}"/>. Si se deja en null no se actualizara</param>
+		/// <param name="argsFuncion">Parametros para incilizar <see cref="ArgumentosFuncion"/> de la funcion. Solo se utilizar al cargar datos de una funcion guardada</param>
 		/// <returns><see cref="bool"/> indicando si se actualizo el <see cref="Metodo"/></returns>
-		public bool Actualizar(MethodInfo nuevoMetodo, ViewModelBloqueFuncionBase nuevoContenedor = null)
+		public bool Actualizar(MethodInfo nuevoMetodo, ViewModelBloqueFuncionBase nuevoContenedor = null, List<ParametrosInicializarArgumentoDesdeBloque> argsFuncion = null)
 		{
 			//Revisamos que el metodo contenga el atributo 'AccesibleEnGuraScratch' y que no sea el mismo que el metodo actual
 			if (nuevoMetodo != Metodo && nuevoMetodo.GetCustomAttribute<AccesibleEnGuraScratch>() is { } att)
@@ -64,7 +64,7 @@ namespace AppGM.Core
 				Parametros = Metodo.GetParameters();
 
 				ArgumentosFuncion = RequiereParametros()
-					? new ViewModelBloqueArgumentosFuncion(BloqueContenedor, this)
+					? new ViewModelBloqueArgumentosFuncion(BloqueContenedor, this, argsFuncion)
 					: null;
 
 				return true;

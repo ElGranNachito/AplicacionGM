@@ -92,6 +92,22 @@ namespace AppGM.Core
 			}
 		}
 
+		/// <summary>
+		/// Devuelve el primer elemento que cumpla con el <paramref name="predicado"/>
+		/// </summary>
+		/// <param name="predicado">Delegado que define las condiciones que debe cumplir el elemento</param>
+		/// <returns>primer <see cref="TipoElementos"/> que cumple las condiciones o null</returns>
+		public TipoElementos Find(Predicate<TipoElementos> predicado)
+		{
+			foreach (var elemento in Elementos)
+			{
+				if (predicado(elemento))
+					return elemento;
+			}
+
+			return null;
+		}
+
 		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
 		public IEnumerator<TipoElementos> GetEnumerator() => Elementos.GetEnumerator();

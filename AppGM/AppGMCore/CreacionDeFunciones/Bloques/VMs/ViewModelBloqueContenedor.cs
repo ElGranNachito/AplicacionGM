@@ -28,8 +28,8 @@ namespace AppGM.Core
 
 		#region Constructor
 
-		public ViewModelBloqueContenedor(ViewModelCreacionDeFuncionBase _vmCreacionDeFuncion)
-			: base(_vmCreacionDeFuncion) { } 
+		public ViewModelBloqueContenedor(ViewModelCreacionDeFuncionBase _vmCreacionDeFuncion, int _idBloque = -1)
+			: base(_vmCreacionDeFuncion, _idBloque) { } 
 
 		#endregion
 

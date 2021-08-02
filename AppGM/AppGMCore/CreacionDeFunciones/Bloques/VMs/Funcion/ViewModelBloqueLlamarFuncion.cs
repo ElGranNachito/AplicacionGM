@@ -76,7 +76,7 @@ namespace AppGM.Core
 
 		#endregion
 
-		#region Constructor
+		#region Constructores
 
 		/// <summary>
 		/// Constructor
@@ -87,9 +87,43 @@ namespace AppGM.Core
 		{
 			Caller = new ViewModelArgumento(this, typeof(object), "", true, false);
 
-			Caller.OnFocusPerdido += ActualizarListaFunciones;
+			Caller.OnFocusPerdido += ActualizarListaMetodos;
 			Caller.OnTipoArgumentoModificado += (anterior, actual) => mDeberiaActualizarMetodos = true;
-		} 
+		}
+
+		/// <summary>
+		/// Inicializa este ViewModel a partir de datos preexistentes
+		/// </summary>
+		/// <param name="_idBloque"></param>
+		/// <param name="_vmCreacionFuncion"><see cref="ViewModelCreacionDeFuncionBase"/> al que pertenece este bloque</param>
+		/// <param name="_bloque">Bloque que esta creando este ViewModel</param>
+		/// <param name="_paramsCaller">Parametros con los que se inicializara al <see cref="Caller"/></param>
+		public ViewModelBloqueLlamarFuncion(
+			int _idBloque,
+			ViewModelCreacionDeFuncionBase _vmCreacionFuncion,
+			BloqueFuncion _bloque,
+			ParametrosInicializarArgumentoDesdeBloque _paramsCaller)
+
+			:base(_vmCreacionFuncion, _idBloque)
+		{
+			_paramsCaller.contenedor = this;
+
+			Caller = new ViewModelArgumento(_paramsCaller);
+
+			Caller.OnFocusPerdido += ActualizarListaMetodos;
+			Caller.OnTipoArgumentoModificado += (anterior, actual) => mDeberiaActualizarMetodos = true;
+
+			//Actualizamos la lista de metodos disponibles
+			mDeberiaActualizarMetodos = true;
+			
+			ActualizarListaMetodos();
+
+			//Hacemos que el metodo seleccionado sea el que nos pasaron
+			mMetodoSeleccionado = _bloque.ObtenerMetodoAccesibleEnGuraScratch(this);
+
+			//Le avisamos a la UI que el metodo actualmente seleccionado cambio
+			DispararPropertyChanged(new PropertyChangedEventArgs(nameof(MetodoSeleccionado)));
+		}
 
 		#endregion
 
@@ -101,7 +135,7 @@ namespace AppGM.Core
 		/// <summary>
 		/// Actualiza <see cref="MetodosDisponibles"/> en base al <see cref="ValorSeleccionado"/>
 		/// </summary>
-		private void ActualizarListaFunciones()
+		private void ActualizarListaMetodos()
 		{
 			if (!mDeberiaActualizarMetodos)
 				return;
@@ -120,56 +154,5 @@ namespace AppGM.Core
 			       Caller.EsValido &&
 			       mMetodoSeleccionado.VerificarValidez();
 		}
-
-		//private void ActualizarValoresDisponibles()
-		//{
-		//	ValoresDisponibles.Elementos.Clear();
-
-		//	IEnumerable<ViewModelItemComboBoxBase<object>> variablesDisponibles = new List<ViewModelItemComboBoxBase<object>>();
-
-		//	variablesDisponibles = VMCreacionDeFuncion.VariablesBase.Select(var => new ViewModelItemComboBoxBase<object>(var, var.nombre));
-
-		//	variablesDisponibles = variablesDisponibles.Concat(mPadre.ObtenerVariablesCreadas(this)
-		//		.Select(var =>
-		//		{
-		//			var nuevoItem = new ViewModelItemComboBoxBase<object>();
-
-		//			nuevoItem.Actualizar(var, var.Nombre, "", "", (sender, args) =>
-		//			{
-		//				if (sender == var && args.PropertyName == nameof(ViewModelBloqueDeclaracionVariable.Nombre))
-		//					nuevoItem.Texto = var.Nombre;
-		//			});
-
-		//			return nuevoItem;
-		//		}));
-
-		//	ValoresDisponibles.AddRange(variablesDisponibles.Concat(TiposDisponibles));
-		//}
-
-		//private void AñadirVariableAPosibilidades(ViewModelBloqueFuncionBase bloque, IContenedorDeBloques padre)
-		//{
-		//	if (bloque is ViewModelBloqueDeclaracionVariable vmVar)
-		//	{
-		//		var var = vmVar.GenerarBloque_Impl();
-
-		//		ValoresDisponibles.Add(new ViewModelItemComboBoxBase<object> {Texto = var.nombre, valor = var});
-		//	}
-		//}
-
-		//private void QuitarVariableDePosibilidades(ViewModelBloqueFuncionBase bloque, IContenedorDeBloques padre)
-		//{
-		//	if (bloque is ViewModelBloqueDeclaracionVariable vmVar)
-		//	{
-		//		var var = vmVar.GenerarBloque_Impl();
-
-		//		ValoresDisponibles.RemoveFirst(elemento => elemento.valor == var);
-		//	}
-		//}
-
-		//public override void OnBloqueRemovido()
-		//{
-		//	VMCreacionDeFuncion.OnBloqueAñadido  -= AñadirVariableAPosibilidades;
-		//	VMCreacionDeFuncion.OnBloqueRemovido -= QuitarVariableDePosibilidades;
-		//}
 	}
 }

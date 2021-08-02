@@ -62,7 +62,7 @@ namespace AppGM.Core
 		/// <summary>
 		/// ID de este bloque
 		/// </summary>
-		public int IDBloque { get; protected set; }
+		public int IDBloque { get; protected set; } = -1;
 
 		/// <summary>
 		/// <see cref="ViewModelBloqueContenedorConDropConDrop{TipoBloque}"/> que contiene este <see cref="ViewModelBloqueFuncionBase"/>
@@ -137,11 +137,11 @@ namespace AppGM.Core
 		/// Constructor
 		/// </summary>
 		/// <param name="_vmCreacionDeFuncion"><see cref="ViewModelCreacionDeFuncionBase"/> al que pertenece este bloque</param>
-		public ViewModelBloqueFuncionBase(ViewModelCreacionDeFuncionBase _vmCreacionDeFuncion)
+		public ViewModelBloqueFuncionBase(ViewModelCreacionDeFuncionBase _vmCreacionDeFuncion, int _idBloque = -1)
 		{
 			VMCreacionDeFuncion = _vmCreacionDeFuncion;
 
-			IDBloque = VMCreacionDeFuncion.ObtenerID();
+			IDBloque = _idBloque == -1 ? VMCreacionDeFuncion.ObtenerID() : _idBloque;
 		}
 
 		public ViewModelBloqueFuncionBase(){}

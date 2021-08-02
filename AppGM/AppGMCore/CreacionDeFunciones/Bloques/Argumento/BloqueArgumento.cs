@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Net.Mime;
 using System.Xml;
 
 namespace AppGM.Core
@@ -63,6 +61,13 @@ namespace AppGM.Core
 			TextoActual                 = _textoActual;
 		}
 
+		/// <summary>
+		/// Crea el bloque a partir de un elemento XML
+		/// </summary>
+		/// <param name="_reader">Archivo XML del cual obtener el elemento</param>
+		public BloqueArgumento(XmlReader _reader)
+			: base(_reader){}
+
 		public override Expression ObtenerExpresion(Compilador compilador)
 		{
 			//Ultima expresion obtenida.
@@ -78,6 +83,27 @@ namespace AppGM.Core
 			return expresion;
 		}
 
+		public ParametrosInicializarArgumentoDesdeBloque ObtenerParametrosInicializarVM()
+		{
+			var parametros = new ParametrosInicializarArgumentoDesdeBloque
+			{
+				idBloque = IDBloque,
+				puedeQuedarVacio = PuedeQuedarVacio,
+				detectarTipoAutomaticamente = DetectarTipoAutomaticamente,
+				nombre = Nombre,
+				textoActual = TextoActual,
+				tipoArgumento = TipoArgumento
+			};
+
+			foreach (var seccion in mSeccionesArgumento)
+			{
+				if(seccion is SeccionArgumentoMetodo metodo)
+					parametros.metodos.Add(metodo.BloqueFuncion);
+			}
+
+			return parametros;
+		}
+
 		public override void ConvertirHaciaXML(XmlWriter writer)
 		{
 			writer.WriteStartElement(nameof(BloqueArgumento));
@@ -87,13 +113,71 @@ namespace AppGM.Core
 			writer.WriteElementString(nameof(PuedeQuedarVacio), PuedeQuedarVacio.ToString());
 			writer.WriteElementString(nameof(Nombre), Nombre);
 			writer.WriteElementString(nameof(TextoActual), TextoActual);
+
+			writer.WriteStartElement("Secciones");
+			writer.WriteAttributeString("NumeroDeSecciones", mSeccionesArgumento.Count.ToString());
+
+			foreach (var seccion in mSeccionesArgumento)
+				seccion.ConvertirHaciaXML(writer);
+
+			writer.WriteEndElement();
 			
 			writer.WriteEndElement();
 		}
 
-		public override BloqueBase ConvertirDesdeXML(XmlReader reader)
+		protected override void ConvertirDesdeXML(XmlReader reader)
 		{
-			return null;
+			if (reader.Name != nameof(BloqueArgumento))
+				return;
+
+			reader.ReadToFollowing(nameof(TipoArgumento));
+
+			TipoArgumento = Type.GetType(reader.ReadElementContentAsString());
+
+			reader.ReadToFollowing(nameof(DetectarTipoAutomaticamente));
+
+			DetectarTipoAutomaticamente = reader.ReadElementContentAsBoolean();
+
+			reader.ReadToFollowing(nameof(PuedeQuedarVacio));
+
+			PuedeQuedarVacio = reader.ReadElementContentAsBoolean();
+
+			reader.ReadToFollowing(nameof(Nombre));
+
+			Nombre = reader.ReadElementContentAsString();
+
+			reader.ReadToFollowing(nameof(TextoActual));
+
+			TextoActual = reader.ReadElementContentAsString();
+
+			reader.ReadToFollowing("Secciones");
+
+			//Inicializamos la lista de secciones y reservamos espacio para todas las secciones necesarias
+			mSeccionesArgumento = new List<SeccionArgumentoBase>(int.Parse(reader.GetAttribute("NumeroDeSecciones")));
+
+			for (int i = 0; i < mSeccionesArgumento.Capacity; ++i)
+			{
+				//Ignoramos todo hasta encontrar el proximo elemento
+				while (!reader.Name.StartsWith("SeccionArgumento") && reader.NodeType != XmlNodeType.Element)
+					reader.Read();
+
+				//Nos fijamos que tipo de seccion es la actual e instanciamos el tipo correspondiente
+				switch (reader.Name)
+				{
+					case nameof(SeccionArgumentoMiembro):
+						mSeccionesArgumento.Add(new SeccionArgumentoMiembro(reader));
+						break;
+					case nameof(SeccionArgumentoMetodo):
+						mSeccionesArgumento.Add(new SeccionArgumentoMetodo(reader));
+						break;
+					case nameof(SeccionArgumentoVariable):
+						mSeccionesArgumento.Add(new SeccionArgumentoVariable(reader));
+						break;
+					default:
+						SistemaPrincipal.LoggerGlobal.Log($"Tipo de seccion ({reader.Name}) desconocido en BloqueArgumento: {Nombre}");
+						break;
+				}
+			}
 		}
 	}
 }

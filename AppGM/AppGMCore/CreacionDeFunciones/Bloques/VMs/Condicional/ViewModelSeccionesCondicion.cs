@@ -5,7 +5,8 @@ using System.Windows.Input;
 namespace AppGM.Core
 {
 	/// <summary>
-	/// 
+	/// Contiene todos los <see cref="ViewModelSeccionCondicion"/> y <see cref="EOperacionLogica"/> que se realizan
+	/// en un <see cref="ViewModelBloqueCondicional"/>
 	/// </summary>
 	public class ViewModelSeccionesCondicion : ViewModel
 	{
@@ -53,26 +54,47 @@ namespace AppGM.Core
 
 		#endregion
 
-		#region Constructor
+		#region Constructores
 
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		/// <param name="_vmCreacionDeFuncion"><see cref="ViewModelCreacionDeFuncionBase"/> que contiene todos los bloques</param>
 		/// <param name="_dueño"><see cref="ViewModelBloqueCondicional"/> que contiene las secciones</param>
 		public ViewModelSeccionesCondicion(
-			ViewModelCreacionDeFuncionBase _vmCreacionDeFuncion,
 			ViewModelBloqueCondicional _dueño)
 		{
-			mVMCreacionDeFuncion = _vmCreacionDeFuncion;
+			mVMCreacionDeFuncion = _dueño.VMCreacionDeFuncion;
 			mDueño = _dueño;
 
 			AñadirSeccion();
 
 			ArgumentoInicial = Secciones.Last().Argumento;
 
-			ComandoAñadirSeccion = new Comando(AñadirSeccion);
-		} 
+			ComandoAñadirSeccion = new Comando(()=>{AñadirSeccion();});
+		}
+
+		/// <summary>
+		/// Constructor que se utiliza al cargar secciones ya existentes
+		/// </summary>
+		/// <param name="_dueño"><see cref="ViewModelBloqueCondicional"/> que contiene las secciones</param>
+		/// <param name="_argumentos"><see cref="List{T}"/> con los <see cref="ParametrosInicializarArgumentoDesdeBloque"/> que se utilizaran para inicializar los <see cref="argumentos"/></param>
+		/// <param name="_operacionesLogicas"><see cref="List{T}"/> con las <see cref="EOperacionLogica"/> que se realizaran entre los <see cref="argumentos"/></param>
+		public ViewModelSeccionesCondicion(
+			ViewModelBloqueCondicional _dueño,
+			List<ParametrosInicializarArgumentoDesdeBloque> _argumentos,
+			List<EOperacionLogica> _operacionesLogicas)
+		{
+			AñadirSeccion(new ViewModelSeccionCondicion(mDueño, this, 0, _argumentos[0].tipoArgumento, _argumentos[0]));
+
+			for (int i = 1; i < _argumentos.Count; ++i)
+			{
+				AñadirSeccion(new ViewModelSeccionCondicion(mDueño, this, 0, _argumentos[i].tipoArgumento, _argumentos[i]));
+			}
+
+			ArgumentoInicial = Secciones.Last().Argumento;
+
+			ComandoAñadirSeccion = new Comando(() => { AñadirSeccion(); });
+		}
 
 		#endregion
 
@@ -81,14 +103,14 @@ namespace AppGM.Core
 		/// <summary>
 		/// Crea una nueva <see cref="ViewModelSeccionCondicion"/> y la añade a <see cref="Secciones"/>
 		/// </summary>
-		public void AñadirSeccion()
+		public void AñadirSeccion(ViewModelSeccionCondicion nuevaSeccion = null)
 		{
 			//Argumento de la seccion anterior a esta
 			ViewModelSeccionCondicion argumentoAnterior =
 				Secciones.Count != 0 ? Secciones.Elementos.Last() : null;
 
 			//Creamos la nueva seccion y le pasamos el monton de cosas que pide
-			ViewModelSeccionCondicion nuevaSeccion = new ViewModelSeccionCondicion(
+			nuevaSeccion ??= new ViewModelSeccionCondicion(
 				mDueño,
 				this,
 				Secciones.Count);

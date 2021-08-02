@@ -25,7 +25,7 @@ namespace AppGM.Core
 		/// <summary>
 		/// Lista de <see cref="ViewModelArgumento"/> que corresponden a cada parametro
 		/// </summary>
-		public ObservableCollection<ViewModelArgumento> ArgumentosFuncion { get; set; } = new ObservableCollection<ViewModelArgumento>();
+		public ObservableCollection<ViewModelArgumento> ArgumentosFuncion { get; set; }
 
 		#endregion
 
@@ -36,10 +36,33 @@ namespace AppGM.Core
 		/// </summary>
 		/// <param name="_vmCrecionDeFuncion"></param>
 		/// <param name="_funcion"><see cref="MethodInfo"/> para el que se ingresaran los parametros</param>
-		public ViewModelBloqueArgumentosFuncion(ViewModelBloqueFuncionBase _bloqueContenedor, MetodoAccesibleEnGuraScratch _funcion)
-			: base(_bloqueContenedor.VMCreacionDeFuncion)
+		public ViewModelBloqueArgumentosFuncion(
+			ViewModelBloqueFuncionBase _bloqueContenedor,
+			MetodoAccesibleEnGuraScratch _funcion,
+			List<ParametrosInicializarArgumentoDesdeBloque> argumentosFuncion = null)
+
+			: base(_bloqueContenedor.VMCreacionDeFuncion, _bloqueContenedor.IDBloque)
 		{
-			ActualizarFuncion(_funcion);
+			if (argumentosFuncion == null)
+			{
+				ArgumentosFuncion = new ObservableCollection<ViewModelArgumento>();
+
+				ActualizarFuncion(_funcion);
+			}
+			else
+			{
+				mMetodo = _funcion;
+
+				var argsFunc = argumentosFuncion.Select(args =>
+				{
+					args.contenedor = this;
+					args.idBloque   = IDBloque;
+
+					return new ViewModelArgumento(args);
+				});
+
+				ArgumentosFuncion = new ObservableCollection<ViewModelArgumento>(argsFunc);
+			}
 
 			mBloqueContenedor = _bloqueContenedor;
 		}

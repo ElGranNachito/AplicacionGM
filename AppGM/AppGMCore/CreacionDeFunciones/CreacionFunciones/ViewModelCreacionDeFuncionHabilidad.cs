@@ -10,7 +10,7 @@ namespace AppGM.Core
 	public class ViewModelCreacionDeFuncionHabilidad : 
 		ViewModelCreacionDeFuncion<Action<ControladorPersonaje, List<ControladorPersonaje>, List<object>>>
 	{
-		public ViewModelCreacionDeFuncionHabilidad(ControladorFuncion_Habilidad _controladorFuncion)
+		public ViewModelCreacionDeFuncionHabilidad(ControladorFuncion_Habilidad _controladorFuncion = null)
 			: base(_controladorFuncion)
 		{
 			TipoFuncion = ETipoFuncion.Habilidad;

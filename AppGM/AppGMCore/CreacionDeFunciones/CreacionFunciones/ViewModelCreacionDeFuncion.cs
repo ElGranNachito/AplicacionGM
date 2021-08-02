@@ -49,7 +49,9 @@ namespace AppGM.Core
 			ComandoCompilar = new Comando(CrearFuncion);
 			ComandoGuardar = new Comando(Guardar);
 
-			ControladorFuncion = _controladorFuncion;
+			//No queremos disparar la propiedad si el controlador es null asi que hacemos este if
+			if(_controladorFuncion != null)
+				ControladorFuncion = _controladorFuncion;
 		}
 
 		/// <summary>

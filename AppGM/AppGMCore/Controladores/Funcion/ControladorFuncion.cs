@@ -9,14 +9,29 @@ using CoolLogs;
 
 namespace AppGM.Core
 {
+	/// <summary>
+	/// Controlador de <see cref="ModeloFuncion"/>
+	/// </summary>
 	public abstract class ControladorFuncionBase : Controlador<ModeloFuncion>
 	{
+		/// <summary>
+		/// Contiene todas los <see cref="ControladorVariableFuncionBase"/> de las variables persistentes de esta funcion
+		/// </summary>
 		private Dictionary<int, ControladorVariableFuncionBase> mVariablesPersistenes;
 
+		/// <summary>
+		/// <see cref="List{T}"/> que contiene todos los <see cref="BloqueBase"/> que componen esta funcion
+		/// </summary>
 		public List<BloqueBase> Bloques { get; private set; } = new List<BloqueBase>();
 
+		/// <summary>
+		/// Nombre de la funcion incluyendo su extension
+		/// </summary>
 		public string NombreCompletoFuncion => string.Intern($"{modelo.NombreFuncion}_{modelo.Id}.xml");
 
+		/// <summary>
+		/// Nombre de la funcion
+		/// </summary>
 		public string NombreFuncion
 		{
 			get => modelo.NombreFuncion;
@@ -34,24 +49,10 @@ namespace AppGM.Core
 			}
 		}
 
-		public static ControladorFuncionBase CrearControladorCorrespondiente(ModeloFuncion modelo, ETipoFuncion tipoFuncion)
-		{
-			switch (tipoFuncion)
-			{
-				case ETipoFuncion.Habilidad:
-					return new ControladorFuncion_Habilidad(modelo);
-				case ETipoFuncion.Efecto:
-					return new ControladorFuncion_Efecto(modelo);
-				case ETipoFuncion.Predicado:
-					return new ControladorFuncion_Predicado(modelo);
-				default:
-					return null;
-			}
-		}
-
 		public ControladorFuncionBase(ModeloFuncion _modelo)
 			: base(_modelo)
 		{
+			//Si no hay variables persistentes creamos una lista nueva
 			modelo.VariablesPersistentes ??= new List<TIFuncionVariable>();
 
 			mVariablesPersistenes = new Dictionary<int, ControladorVariableFuncionBase>(modelo.VariablesPersistentes.Select(var =>
@@ -174,6 +175,27 @@ namespace AppGM.Core
 			set
 			{
 				//TODO: Implementar
+			}
+		}
+
+		/// <summary>
+		/// Crea el <see cref="ControladorFuncionBase"/> para un <paramref name="tipoFuncion"/>
+		/// </summary>
+		/// <param name="modelo"><see cref="ModeloFuncion"/> para el que se creara el <see cref="ControladorFuncionBase"/></param>
+		/// <param name="tipoFuncion"><see cref="ETipoFuncion"/></param>
+		/// <returns><see cref="ControladorFuncionBase"/> para el <paramref name="modelo"/></returns>
+		public static ControladorFuncionBase CrearControladorCorrespondiente(ModeloFuncion modelo, ETipoFuncion tipoFuncion)
+		{
+			switch (tipoFuncion)
+			{
+				case ETipoFuncion.Habilidad:
+					return new ControladorFuncion_Habilidad(modelo);
+				case ETipoFuncion.Efecto:
+					return new ControladorFuncion_Efecto(modelo);
+				case ETipoFuncion.Predicado:
+					return new ControladorFuncion_Predicado(modelo);
+				default:
+					return null;
 			}
 		}
 	}

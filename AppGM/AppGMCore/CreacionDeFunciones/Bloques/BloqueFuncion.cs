@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Xml;
+using CoolLogs;
 
 namespace AppGM.Core
 {
@@ -25,7 +26,7 @@ namespace AppGM.Core
 		/// <summary>
 		/// Bloque que genera la expresion desde la cual se puede llamar a esta funcion
 		/// </summary>
-		public BloqueBase caller;
+		public BloqueArgumento caller;
 
 		/// <summary>
 		/// Expresion desde la cual se llama a la funcion.
@@ -48,7 +49,14 @@ namespace AppGM.Core
 		/// </summary>
 		public string Nombre => metodo.Name;
 
-		public BloqueFuncion(int _idBloque, MethodInfo _metodo, List<BloqueArgumento> _argumentosFuncion, BloqueBase _caller)
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="_idBloque"></param>
+		/// <param name="_metodo"></param>
+		/// <param name="_argumentosFuncion"></param>
+		/// <param name="_caller"></param>
+		public BloqueFuncion(int _idBloque, MethodInfo _metodo, List<BloqueArgumento> _argumentosFuncion, BloqueArgumento _caller)
 			:base(_idBloque)
 		{
 			metodo            = _metodo;
@@ -57,6 +65,13 @@ namespace AppGM.Core
 
 			Parametros = _metodo.GetParameters();
 		}
+
+		/// <summary>
+		/// Inicializa este bloque a partir de un elemento XML
+		/// </summary>
+		/// <param name="_reader">Documento que contiene el elemento</param>
+		public BloqueFuncion(XmlReader _reader)
+			:base(_reader){}
 
 		public override Expression ObtenerExpresion(Compilador compilador)
 		{
@@ -86,6 +101,36 @@ namespace AppGM.Core
 			return Expression.Call(expresionCaller, metodo, expresionesParametrosFuncion);
 		}
 
+		public override ViewModelBloqueFuncionBase ObtenerViewModel(ViewModelCreacionDeFuncionBase vmCreacionDeFuncion)
+		{
+			if (caller == null)
+			{
+				SistemaPrincipal.LoggerGlobal.Log($"No se puede crear un {nameof(ViewModelBloqueLlamarFuncion)} a partir de {this} porque {nameof(caller)} es null!", ESeveridad.Error);
+
+				return null;
+			}
+
+			return new ViewModelBloqueLlamarFuncion(
+				IDBloque,
+				vmCreacionDeFuncion,
+				this,
+				caller.ObtenerParametrosInicializarVM()
+			);
+		}
+
+		/// <summary>
+		/// Obtiene el <see cref="MetodoAccesibleEnGuraScratch"/> que representa a este bloque
+		/// </summary>
+		/// <param name="contenedor"><see cref="ViewModelBloqueFuncionBase"/> que contiene al metodo</param>
+		/// <returns><see cref="MetodoAccesibleEnGuraScratch"/></returns>
+		public MetodoAccesibleEnGuraScratch ObtenerMetodoAccesibleEnGuraScratch(ViewModelBloqueFuncionBase contenedor)
+		{
+			return new MetodoAccesibleEnGuraScratch(
+				contenedor, 
+				metodo,
+				argumentosFuncion.Select(arg => arg.ObtenerParametrosInicializarVM()).ToList());
+		}
+
 		public override void ConvertirHaciaXML(XmlWriter writer)
 		{
 			writer.WriteStartElement(nameof(BloqueFuncion));
@@ -113,16 +158,64 @@ namespace AppGM.Core
 
 			writer.WriteEndElement();
 
-			writer.WriteComment("--Caller--");
+			if (caller != null)
+			{
+				writer.WriteComment("--Caller--");
 
-			caller.ConvertirHaciaXML(writer);
+				writer.WriteStartElement("Caller");
+				caller.ConvertirHaciaXML(writer);
+				writer.WriteEndElement();
 
-			writer.WriteEndElement();
+				writer.WriteEndElement();
+			}
 		}
 
-		public override BloqueBase ConvertirDesdeXML(XmlReader reader)
+		protected override void ConvertirDesdeXML(XmlReader reader)
 		{
-			throw new NotImplementedException();
+			if (reader.Name != nameof(BloqueFuncion))
+				return;
+
+			reader.ReadToFollowing("DueñoMetodo");
+
+			Type dueñoFuncion = Type.GetType(reader.ReadElementContentAsString());
+
+			reader.ReadToFollowing("Metodo");
+
+			string nombreFuncion = reader.ReadElementContentAsString();
+
+			reader.ReadToFollowing("TiposParametros");
+
+			List<Type> tiposDeLosParametros = new List<Type>(int.Parse(reader.GetAttribute("NumeroDeParametros")));
+
+			for (int i = 0; i < tiposDeLosParametros.Capacity; ++i)
+			{
+				reader.ReadToFollowing($"TipoParametro-{i}");
+
+				tiposDeLosParametros.Add(Type.GetType(reader.ReadElementContentAsString()));
+			}
+
+			reader.ReadToFollowing("Argumentos");
+
+			argumentosFuncion = new List<BloqueArgumento>(int.Parse(reader.GetAttribute("NumeroDeArgumentos")));
+
+			for (int i = 0; i < argumentosFuncion.Capacity; ++i)
+			{
+				reader.ReadToFollowing(nameof(BloqueArgumento));
+
+				argumentosFuncion.Add(new BloqueArgumento(reader));
+			}
+
+			while (reader.Name != nameof(BloqueFuncion) && reader.NodeType != XmlNodeType.EndElement)
+			{
+				if(reader.Name != "Caller")
+					continue;
+				
+				reader.Read();
+
+				caller = new BloqueArgumento(reader);
+
+				break;
+			}
 		}
 	}
 }

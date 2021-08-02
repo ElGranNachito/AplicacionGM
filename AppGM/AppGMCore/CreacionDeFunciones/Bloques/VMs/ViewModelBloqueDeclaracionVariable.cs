@@ -29,6 +29,11 @@ namespace AppGM.Core
 		/// </summary>
 		private string mNombre;
 
+		/// <summary>
+		/// Tipo de esta variable
+		/// </summary>
+		private ETipoVariable mTipoDeVariable;
+
 
 		//-------------------------------------PROPIEDADES------------------------------------
 
@@ -51,24 +56,54 @@ namespace AppGM.Core
 		}
 
 		/// <summary>
+		/// Indica si esta variable sera un parametro en la funcion final
+		/// </summary>
+		public bool EsParametro
+		{
+			get => mTipoDeVariable == ETipoVariable.ParametroCreadoPorElUsuario;
+			set
+			{
+				if (value && mTipoDeVariable != ETipoVariable.ParametroCreadoPorElUsuario)
+					mTipoDeVariable = ETipoVariable.ParametroCreadoPorElUsuario;
+				else if (!value && mTipoDeVariable == ETipoVariable.ParametroCreadoPorElUsuario)
+					mTipoDeVariable = ETipoVariable.Normal;
+				else
+					return;
+				
+				//Le avisamos a la interfaz que se actualizo el valor de PuedeSerPersistente
+				DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PuedeSerPersistente)));
+			}
+		}
+
+		/// <summary>
+		/// Indica si el valor de la variable debe guardarse
+		/// </summary>
+		public bool EsPersistente
+		{
+			get => mTipoDeVariable == ETipoVariable.Persistente;
+			set
+			{
+				if (value && mTipoDeVariable != ETipoVariable.Persistente)
+					mTipoDeVariable = ETipoVariable.Persistente;
+				else if (!value && mTipoDeVariable == ETipoVariable.Persistente)
+					mTipoDeVariable = ETipoVariable.Normal;
+			}
+		}
+
+		/// <summary>
 		/// Indica si mostrar el menu inferior del bloque
 		/// </summary>
 		public bool MostrarMenuInferior { get; set; }
 
 		/// <summary>
-		/// Indica si el valor de la variable debe guardarse
-		/// </summary>
-		public bool EsPersistente { get; set; }
-
-		/// <summary>
-		/// Indica si esta variable sera un parametro en la funcion final
-		/// </summary>
-		public bool EsParametro { get; set; }
-
-		/// <summary>
 		/// Indica si se debe mostrar le combo box para seleccionar el tipo de la variable
 		/// </summary>
 		public bool DebeSeleccionarTipoVariable => MostrarMenuInferior && !ValorPorDefecto.DeteccionAutomaticaDeTipo;
+
+		/// <summary>
+		/// Indica si esta variable puede ser persistente
+		/// </summary>
+		public bool PuedeSerPersistente => mTipoDeVariable != ETipoVariable.ParametroCreadoPorElUsuario;
 
 		/// <summary>
 		/// Tipo de la variable
@@ -113,7 +148,43 @@ namespace AppGM.Core
 			Tipo = typeof(object);
 
 			ValorPorDefecto.OnEsValidoCambio += esValido => ActualizarValidez();
+		}
 
+		public ViewModelBloqueDeclaracionVariable(
+			int _idBloque,
+			ViewModelCreacionDeFuncionBase _vmCreacionFuncionBase,
+			Type _tipo,
+			ETipoVariable _tipoVariable,
+			string _nombre, 
+			ParametrosInicializarArgumentoDesdeBloque _parametrosVMArgumento)
+
+			:base(_vmCreacionFuncionBase, _idBloque)
+		{
+			Tipo = _tipo;
+
+			EsPersistente = _tipoVariable == ETipoVariable.Persistente;
+			EsParametro   = _tipoVariable == ETipoVariable.ParametroCreadoPorElUsuario;
+
+			Nombre = _nombre;
+
+			_parametrosVMArgumento.contenedor = this;
+
+			ValorPorDefecto = new ViewModelArgumento(_parametrosVMArgumento);
+		}
+
+		#endregion
+
+		#region Metodos
+
+		public override BloqueVariable GenerarBloque_Impl()
+		{
+			mResultado ??= new BloqueVariable(IDBloque, Nombre, Tipo, mTipoDeVariable, ValorPorDefecto.GenerarBloque_Impl());
+
+			return mResultado;
+		}
+
+		public override void Inicializar()
+		{
 			PropertyChanged += (sender, args) =>
 			{
 				if (args.PropertyName.Equals(nameof(MostrarMenuInferior)))
@@ -127,26 +198,11 @@ namespace AppGM.Core
 			};
 		}
 
-		#endregion
-
-		#region Metodos
-
-		public override BloqueVariable GenerarBloque_Impl()
+		public override bool VerificarValidez()
 		{
-			mResultado ??= new BloqueVariable(IDBloque, Nombre, Tipo, ObtenerTipoVariable(), ValorPorDefecto.GenerarBloque_Impl(), EsPersistente);
+			ActualizarValidez();
 
-			return mResultado;
-		}
-
-		private ETipoVariable ObtenerTipoVariable()
-		{
-			if (EsParametro)
-				return ETipoVariable.ParametroCreadoPorElUsuario;
-
-			if (EsPersistente)
-				return ETipoVariable.Persistente;
-
-			return ETipoVariable.Normal;
+			return EsValido;
 		}
 
 		private void ActualizarValidez() => EsValido = ValorPorDefecto.EsValido && Nombre.Length != 0;

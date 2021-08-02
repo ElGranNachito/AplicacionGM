@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Xml;
@@ -47,6 +48,9 @@ namespace AppGM.Core
 
 			TipoCondicional = _tipoCondicional;
 		}
+
+		public BloqueCondicional(XmlReader _reader)
+			:base(_reader){}
 
 		#endregion
 
@@ -197,9 +201,40 @@ namespace AppGM.Core
 			writer.WriteEndElement();
 		}
 
-		public override BloqueBase ConvertirDesdeXML(XmlReader reader)
+		protected override void ConvertirDesdeXML(XmlReader reader)
 		{
-			return null;
+			if (reader.Name != nameof(BloqueCondicional))
+				return;
+
+			TipoCondicional = Enum.Parse<ETipoBloqueCondicional>(reader.GetAttribute(nameof(TipoCondicional)));
+
+			reader.ReadToFollowing("Argumentos");
+
+			mArgumentos = new Queue<BloqueArgumento>(int.Parse(reader.GetAttribute("NumeroDeArgumentos")));
+
+			reader.Read();
+
+			while (reader.Name != "Argumentos" && reader.NodeType != XmlNodeType.EndElement)
+			{
+				//Avanzamos a el proximo argumento
+				while (reader.Name != nameof(BloqueArgumento) && reader.NodeType != XmlNodeType.Element)
+					reader.Read();
+
+				mArgumentos.Enqueue(new BloqueArgumento(reader));
+			}
+
+			reader.ReadToFollowing("OperacionesLogicas");
+
+			List<EOperacionLogica> operacionesLogicas = new List<EOperacionLogica>(int.Parse(reader.GetAttribute("NumeroDeOperaciones")));
+
+			for(int i = 0; i < operacionesLogicas.Capacity; ++i)
+			{
+				reader.ReadToFollowing($"OperacionLogica-{i}");
+
+				operacionesLogicas.Add(Enum.Parse<EOperacionLogica>(reader.ReadElementContentAsString()));
+			}
+
+			mOperaciones = new Queue<EOperacionLogica>(operacionesLogicas);
 		}
 
 		#endregion
