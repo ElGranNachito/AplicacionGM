@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq.Expressions;
 using System.Xml;
 using CoolLogs;
@@ -78,6 +80,42 @@ namespace AppGM.Core
 					SistemaPrincipal.LoggerGlobal.Log($"Elemento actual ({reader.Name}) no representa un bloque!", ESeveridad.Error);
 					return null;
 			}
+		}
+
+		/// <summary>
+		/// Obtiene todos los bloques guardados en un archivo de funcion xml
+		/// </summary>
+		/// <param name="nombreCompletoArchivoFuncion">Path completo del archivo que contiene la funcion</param>
+		/// <returns><see cref="List{T}"/> con los <see cref="BloqueBase"/></returns>
+		public static List<BloqueBase> DesdeXmlMultiple(string nombreCompletoArchivoFuncion)
+		{
+			if (!File.Exists(nombreCompletoArchivoFuncion))
+			{
+				SistemaPrincipal.LoggerGlobal.Log($"{nombreCompletoArchivoFuncion}, ruta al archivo de funcion no valida!", ESeveridad.Error);
+
+				return null;
+			}
+
+			XmlReaderSettings config = new XmlReaderSettings {IgnoreComments = true};
+
+			using XmlReader reader = XmlReader.Create(File.OpenRead(nombreCompletoArchivoFuncion), config);
+
+			reader.ReadToFollowing("Cuerpo");
+
+			var bloques = new List<BloqueBase>(int.Parse(reader.GetAttribute("NumeroDeBloques")));
+
+			while (reader.ReadToFollowing("Bloque"))
+			{
+				//Entramos al elemento y leemos hasta hallar el inicio del bloque
+				reader.Read();
+
+				while (!reader.IsStartElement())
+					reader.Read();
+
+				bloques.Add(BloqueBase.DesdeXml(reader));
+			}
+
+			return bloques;
 		}
 	}
 }

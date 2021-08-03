@@ -94,12 +94,18 @@ namespace AppGM.Core
         /// <summary>
         /// Constructor
         /// </summary>
-        public RolContext(){}
+        public RolContext()
+        {
+            
+        }
 
         #region Configuracion de la base de datos
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlite($"Data Source = DbAppGm.db");
+        {
+	        optionsBuilder.UseSqlite($"Data Source = DbAppGm.db");
+	        optionsBuilder.UseLazyLoadingProxies();
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

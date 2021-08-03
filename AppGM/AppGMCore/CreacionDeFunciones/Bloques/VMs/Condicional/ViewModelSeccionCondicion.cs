@@ -115,7 +115,6 @@ namespace AppGM.Core
 			EOperacionLogica _operacionLogica = EOperacionLogica.NINGUNA)
 		{
 			mContenedor   = _contenedorSeccion;
-			IndiceSeccion = _indiceSeccion;
 
 			if (_paramsArgumento == null)
 			{
@@ -137,6 +136,8 @@ namespace AppGM.Core
 
 				Operacion = new ViewModelComboBox<EOperacionLogica>(Argumento.TipoArgumento.ObtenerOperacionesLogicasDisponibles());
 			}
+
+			IndiceSeccion = _indiceSeccion;
 
 			ComandoEliminar = new Comando(() => { mContenedor.QuitarSeccion(this); });
 			

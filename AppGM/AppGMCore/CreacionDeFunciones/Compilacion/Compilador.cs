@@ -73,7 +73,8 @@ namespace AppGM.Core
 
 			//Abrimos el archivo XML para lectura
 			using XmlReader reader = new XmlTextReader(new StreamReader(pathArchivoFuncion, Encoding.UTF8));
-			
+
+
 			//Obtenemos la lista de bloques que componen la funcion a traves de la funcion estatica de BloqueBase
 			//var resultado = BloqueBase.DesdeXml(reader);
 

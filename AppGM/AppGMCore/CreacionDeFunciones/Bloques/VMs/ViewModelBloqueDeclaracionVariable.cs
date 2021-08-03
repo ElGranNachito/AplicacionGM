@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using AppGM.Core.Delegados;
 
 namespace AppGM.Core
 {
@@ -146,8 +147,6 @@ namespace AppGM.Core
 		{
 			ValorPorDefecto = new ViewModelArgumento( this, typeof(object), "Valor por defecto");
 			Tipo = typeof(object);
-
-			ValorPorDefecto.OnEsValidoCambio += esValido => ActualizarValidez();
 		}
 
 		public ViewModelBloqueDeclaracionVariable(
@@ -160,16 +159,27 @@ namespace AppGM.Core
 
 			:base(_vmCreacionFuncionBase, _idBloque)
 		{
-			Tipo = _tipo;
+			DVariableCambio<IContenedorDeBloques> padreModificadoHandler = null;
 
-			EsPersistente = _tipoVariable == ETipoVariable.Persistente;
-			EsParametro   = _tipoVariable == ETipoVariable.ParametroCreadoPorElUsuario;
+			padreModificadoHandler = (anterior, actual) =>
+			{
+				_parametrosVMArgumento.contenedor = this;
 
-			Nombre = _nombre;
+				ValorPorDefecto = new ViewModelArgumento(_parametrosVMArgumento);
+
+				Tipo = _tipo;
+
+				EsPersistente = _tipoVariable == ETipoVariable.Persistente;
+				EsParametro = _tipoVariable == ETipoVariable.ParametroCreadoPorElUsuario;
+
+				Nombre = _nombre;
+
+				OnPadreModificado -= padreModificadoHandler;
+			};
+
+			OnPadreModificado += padreModificadoHandler;
 
 			_parametrosVMArgumento.contenedor = this;
-
-			ValorPorDefecto = new ViewModelArgumento(_parametrosVMArgumento);
 		}
 
 		#endregion
@@ -178,7 +188,24 @@ namespace AppGM.Core
 
 		public override BloqueVariable GenerarBloque_Impl()
 		{
-			mResultado ??= new BloqueVariable(IDBloque, Nombre, Tipo, mTipoDeVariable, ValorPorDefecto.GenerarBloque_Impl());
+			if (mResultado == null)
+			{
+				mResultado ??= new BloqueVariable(
+					IDBloque,
+					Nombre, 
+					Tipo,
+					mTipoDeVariable,
+					ValorPorDefecto.GenerarBloque_Impl());
+			}
+			else
+			{
+				mResultado.Actualizar(
+					IDBloque,
+					Nombre, 
+					Tipo,
+					mTipoDeVariable,
+					ValorPorDefecto.GenerarBloque_Impl());
+			}
 
 			return mResultado;
 		}
@@ -196,6 +223,8 @@ namespace AppGM.Core
 				if (args.PropertyName.Equals(nameof(ValorPorDefecto.DeteccionAutomaticaDeTipo)))
 					DispararPropertyChanged(new PropertyChangedEventArgs(nameof(DebeSeleccionarTipoVariable)));
 			};
+
+			ValorPorDefecto.OnEsValidoCambio += esValido => ActualizarValidez();
 		}
 
 		public override bool VerificarValidez()
@@ -205,7 +234,12 @@ namespace AppGM.Core
 			return EsValido;
 		}
 
-		private void ActualizarValidez() => EsValido = ValorPorDefecto.EsValido && Nombre.Length != 0;
+		public void ActualizarValidez()
+		{
+			ValorPorDefecto.ActualizarValidez();
+
+			EsValido = ValorPorDefecto.EsValido && Nombre.Length != 0;
+		}
 
 		#endregion
 	}

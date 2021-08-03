@@ -55,7 +55,7 @@ namespace AppGM.Core
             mRolSeleccionado = _rolSeleccionado;
 
 			mDBRol = new RolContext();
-		}
+        }
 		public async Task CargarDatos()
         {
             GCLatencyMode modoOriginal = GCSettings.LatencyMode;
@@ -545,6 +545,10 @@ namespace AppGM.Core
 				}
 
 				//Cargamos los datos de una manera bastante primitiva :u
+
+				var unidadesMapaPersonajes =
+					(from m in mDBRol.PersonajesUnidadesMapa
+					select m).ToList();
 
 				var masters = 
 					(from m in mDBRol.Masters

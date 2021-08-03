@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Cuerpo
+  NumeroDeBloques="6">
+  <Bloque>
+    <BloqueVariable>
+      <Nombre>Combate</Nombre>
+      <ID>3</ID>
+      <Tipo>AppGM.Core.ControladorAdministradorDeCombate, AppGM.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</Tipo>
+      <TipoVariable>Normal</TipoVariable>
+      <!--Valor por defecto-->
+    </BloqueVariable>
+  </Bloque>
+  <Bloque>
+    <BloqueVariable>
+      <Nombre>Usuario</Nombre>
+      <ID>4</ID>
+      <Tipo>AppGM.Core.ControladorPersonaje, AppGM.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</Tipo>
+      <TipoVariable>Parametro</TipoVariable>
+      <!--Valor por defecto-->
+    </BloqueVariable>
+  </Bloque>
+  <Bloque>
+    <BloqueVariable>
+      <Nombre>Objetivos</Nombre>
+      <ID>5</ID>
+      <Tipo>AppGM.Core.ControladorPersonaje[], AppGM.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</Tipo>
+      <TipoVariable>Parametro</TipoVariable>
+      <!--Valor por defecto-->
+    </BloqueVariable>
+  </Bloque>
+  <Bloque>
+    <BloqueVariable>
+      <Nombre>ControladorHabilidad</Nombre>
+      <ID>-2147483648</ID>
+      <Tipo>AppGM.Core.ControladorHabilidad, AppGM.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</Tipo>
+      <TipoVariable>Parametro</TipoVariable>
+      <!--Valor por defecto-->
+    </BloqueVariable>
+  </Bloque>
+  <Bloque>
+    <BloqueVariable>
+      <Nombre>Nada</Nombre>
+      <ID>6</ID>
+      <Tipo>System.Int32, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</Tipo>
+      <TipoVariable>NINGUNO</TipoVariable>
+      <!--Valor por defecto-->
+      <BloqueArgumento>
+        <TipoArgumento>System.Int32, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</TipoArgumento>
+        <DetectarTipoAutomaticamente>false</DetectarTipoAutomaticamente>
+        <PuedeQuedarVacio>false</PuedeQuedarVacio>
+        <Nombre>Valor por defecto</Nombre>
+        <TextoActual>25</TextoActual>
+        <Secciones
+          NumeroDeSecciones="0" />
+      </BloqueArgumento>
+    </BloqueVariable>
+  </Bloque>
+  <Bloque>
+    <BloqueFuncion>
+      <DueñoMetodo>AppGM.Core.ControladorHabilidad, AppGM.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</DueñoMetodo>
+      <Metodo>Utilizar</Metodo>
+      <!--- -Tipos de los parametros que requiere la funcion- - -->
+      <TiposParametros
+        NumeroDeParametros="4">
+        <TipoParametro-0>AppGM.Core.ControladorPersonaje, AppGM.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</TipoParametro-0>
+        <TipoParametro-1>AppGM.Core.ControladorPersonaje[], AppGM.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</TipoParametro-1>
+        <TipoParametro-2>System.Object, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</TipoParametro-2>
+        <TipoParametro-3>System.Object, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</TipoParametro-3>
+      </TiposParametros>
+      <!--- -Argumentos con los que se llama a la funcion- - -->
+      <Argumentos
+        NumeroDeArgumentos="4">
+        <BloqueArgumento>
+          <TipoArgumento>AppGM.Core.ControladorPersonaje, AppGM.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</TipoArgumento>
+          <DetectarTipoAutomaticamente>false</DetectarTipoAutomaticamente>
+          <PuedeQuedarVacio>false</PuedeQuedarVacio>
+          <Nombre>usuario</Nombre>
+          <TextoActual>Usuario</TextoActual>
+          <Secciones
+            NumeroDeSecciones="1">
+            <SeccionArgumentoVariable>
+              <TipoRetorno>AppGM.Core.ControladorPersonaje, AppGM.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</TipoRetorno>
+              <IDVariable>4</IDVariable>
+            </SeccionArgumentoVariable>
+          </Secciones>
+        </BloqueArgumento>
+        <BloqueArgumento>
+          <TipoArgumento>AppGM.Core.ControladorPersonaje[], AppGM.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</TipoArgumento>
+          <DetectarTipoAutomaticamente>false</DetectarTipoAutomaticamente>
+          <PuedeQuedarVacio>false</PuedeQuedarVacio>
+          <Nombre>objetivos</Nombre>
+          <TextoActual>Objetivos</TextoActual>
+          <Secciones
+            NumeroDeSecciones="1">
+            <SeccionArgumentoVariable>
+              <TipoRetorno>AppGM.Core.ControladorPersonaje[], AppGM.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</TipoRetorno>
+              <IDVariable>5</IDVariable>
+            </SeccionArgumentoVariable>
+          </Secciones>
+        </BloqueArgumento>
+        <BloqueArgumento>
+          <TipoArgumento>System.Object, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</TipoArgumento>
+          <DetectarTipoAutomaticamente>false</DetectarTipoAutomaticamente>
+          <PuedeQuedarVacio>false</PuedeQuedarVacio>
+          <Nombre>parametroExtra</Nombre>
+          <TextoActual>Nada</TextoActual>
+          <Secciones
+            NumeroDeSecciones="1">
+            <SeccionArgumentoVariable>
+              <TipoRetorno>System.Int32, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</TipoRetorno>
+              <IDVariable>6</IDVariable>
+            </SeccionArgumentoVariable>
+          </Secciones>
+        </BloqueArgumento>
+        <BloqueArgumento>
+          <TipoArgumento>System.Object, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</TipoArgumento>
+          <DetectarTipoAutomaticamente>false</DetectarTipoAutomaticamente>
+          <PuedeQuedarVacio>false</PuedeQuedarVacio>
+          <Nombre>segundoParametroExtra</Nombre>
+          <TextoActual />
+          <Secciones
+            NumeroDeSecciones="0" />
+        </BloqueArgumento>
+      </Argumentos>
+      <!--- -Caller- - -->
+      <Caller>
+        <BloqueArgumento>
+          <TipoArgumento>AppGM.Core.ControladorHabilidad, AppGM.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</TipoArgumento>
+          <DetectarTipoAutomaticamente>true</DetectarTipoAutomaticamente>
+          <PuedeQuedarVacio>false</PuedeQuedarVacio>
+          <Nombre />
+          <TextoActual>ControladorHabilidad</TextoActual>
+          <Secciones
+            NumeroDeSecciones="1">
+            <SeccionArgumentoVariable>
+              <TipoRetorno>AppGM.Core.ControladorHabilidad, AppGM.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</TipoRetorno>
+              <IDVariable>-2147483648</IDVariable>
+            </SeccionArgumentoVariable>
+          </Secciones>
+        </BloqueArgumento>
+      </Caller>
+    </BloqueFuncion>
+  </Bloque>
+</Cuerpo>

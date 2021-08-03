@@ -210,17 +210,15 @@ namespace AppGM.Core
 
 			reader.ReadToFollowing("Argumentos");
 
-			mArgumentos = new Queue<BloqueArgumento>(int.Parse(reader.GetAttribute("NumeroDeArgumentos")));
+			var argumetos = new List<BloqueArgumento>(int.Parse(reader.GetAttribute("NumeroDeArgumentos")));
 
 			reader.Read();
 
-			while (reader.Name != "Argumentos" && reader.NodeType != XmlNodeType.EndElement)
+			for (int i = 0; i < argumetos.Capacity; ++i)
 			{
-				//Avanzamos a el proximo argumento
-				while (reader.Name != nameof(BloqueArgumento) && reader.NodeType != XmlNodeType.Element)
-					reader.Read();
+				reader.ReadToFollowing(nameof(BloqueArgumento));
 
-				mArgumentos.Enqueue(new BloqueArgumento(reader));
+				argumetos.Add(new BloqueArgumento(reader));
 			}
 
 			reader.ReadToFollowing("OperacionesLogicas");
@@ -234,6 +232,7 @@ namespace AppGM.Core
 				operacionesLogicas.Add(Enum.Parse<EOperacionLogica>(reader.ReadElementContentAsString()));
 			}
 
+			mArgumentos  = new Queue<BloqueArgumento>(argumetos);
 			mOperaciones = new Queue<EOperacionLogica>(operacionesLogicas);
 		}
 

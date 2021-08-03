@@ -160,8 +160,6 @@ namespace AppGM.Core
 
 			if (caller != null)
 			{
-				writer.WriteComment("--Caller--");
-
 				writer.WriteStartElement("Caller");
 				caller.ConvertirHaciaXML(writer);
 				writer.WriteEndElement();
@@ -185,14 +183,16 @@ namespace AppGM.Core
 
 			reader.ReadToFollowing("TiposParametros");
 
-			List<Type> tiposDeLosParametros = new List<Type>(int.Parse(reader.GetAttribute("NumeroDeParametros")));
+			Type[] tiposDeLosParametros = new Type[int.Parse(reader.GetAttribute("NumeroDeParametros"))];
 
-			for (int i = 0; i < tiposDeLosParametros.Capacity; ++i)
+			for (int i = 0; i < tiposDeLosParametros.Length; ++i)
 			{
 				reader.ReadToFollowing($"TipoParametro-{i}");
 
-				tiposDeLosParametros.Add(Type.GetType(reader.ReadElementContentAsString()));
+				tiposDeLosParametros[i] = Type.GetType(reader.ReadElementContentAsString());
 			}
+
+			metodo = dueñoFuncion.GetMethod(nombreFuncion, tiposDeLosParametros);
 
 			reader.ReadToFollowing("Argumentos");
 
@@ -205,12 +205,16 @@ namespace AppGM.Core
 				argumentosFuncion.Add(new BloqueArgumento(reader));
 			}
 
-			while (reader.Name != nameof(BloqueFuncion) && reader.NodeType != XmlNodeType.EndElement)
+			while (reader.Name != nameof(BloqueFuncion))
 			{
-				if(reader.Name != "Caller")
+				if (reader.Name != "Caller")
+				{
+					reader.Read();
+
 					continue;
-				
-				reader.Read();
+				}
+
+				reader.ReadToFollowing(nameof(BloqueArgumento));
 
 				caller = new BloqueArgumento(reader);
 

@@ -28,11 +28,13 @@ namespace AppGM
                         case EPagina.PaginaPrincipal:
                             return new UserControlPaginaInicio();
 
-                            //return new UserControlCreacionFuncion
-                            //{
-	                           // DataContext = new ViewModelCreacionDeFuncionHabilidad()
-                            //};
-                        case EPagina.PaginaPrincipalRol:
+                            ModeloFuncion mf = new ModeloFuncion {Id = 0, NombreFuncion = "FuncionDeMierda"};
+
+							return new UserControlCreacionFuncion
+							{
+								DataContext = new ViewModelCreacionDeFuncionHabilidad(new ControladorFuncion_Habilidad(mf))
+							};
+						case EPagina.PaginaPrincipalRol:
                             return new UserControlPaginaPrincipalRol();
                     }
                     break;

@@ -57,10 +57,7 @@ namespace AppGM.Core
 		public BloqueVariable(int _idBloque, string _nombre, Type _tipo, ETipoVariable _tipoVariable, BloqueArgumento _argumento)
 			:base(_idBloque)
 		{
-			nombre        = _nombre;
-			tipo          = _tipo;
-			tipoVariable  = _tipoVariable;
-			Argumento     = _argumento;
+			Actualizar(_idBloque, _nombre, _tipo, _tipoVariable, _argumento);
 		}
 
 		/// <summary>
@@ -102,6 +99,14 @@ namespace AppGM.Core
 			}
 		}
 
+		public void Actualizar(int _idBloque, string _nombre, Type _tipo, ETipoVariable _tipoVariable, BloqueArgumento _argumento)
+		{
+			nombre       = _nombre;
+			tipo         = _tipo;
+			tipoVariable = _tipoVariable;
+			Argumento    = _argumento;
+		}
+
 		public override ViewModelBloqueFuncionBase ObtenerViewModel(ViewModelCreacionDeFuncionBase vmCreacionDeFuncion)
 		{
 			return new ViewModelBloqueDeclaracionVariable(
@@ -134,26 +139,35 @@ namespace AppGM.Core
 			if (reader.Name != nameof(BloqueVariable))
 				return;
 
-			reader.ReadToFollowing("Nombre");
+			//Iteramos mientras podamos continuar leyendo y no estemos en el final de este elemento
+			while (reader.Read() && (reader.Name != nameof(BloqueVariable) && reader.NodeType != XmlNodeType.EndElement))
+			{
+				//Si el nodo actual no es un elemento saltamos a la siguiente iteracion
+				if(reader.NodeType != XmlNodeType.Element)
+					continue;
 
-			nombre = reader.ReadElementContentAsString();
-
-			reader.ReadToFollowing("ID");
-
-			IDBloque = reader.ReadElementContentAsInt();
-
-			reader.ReadToFollowing("Tipo");
-
-			tipo = Type.GetType(reader.ReadElementContentAsString());
-
-			reader.ReadToFollowing("TipoVariable");
-
-			tipoVariable = Enum.Parse<ETipoVariable>(reader.ReadElementContentAsString());
-
-			reader.Read();
-
-			if (reader.NodeType != XmlNodeType.EndElement && reader.Name == nameof(BloqueArgumento))
-				Argumento = new BloqueArgumento(reader);
+				switch (reader.Name)
+				{
+					case "Nombre":
+						nombre = reader.ReadElementContentAsString();
+						break;
+					case "ID":
+						IDBloque = reader.ReadElementContentAsInt();
+						break;
+					case "Tipo":
+						tipo = Type.GetType(reader.ReadElementContentAsString());
+						break;
+					case "TipoVariable":
+						tipoVariable = Enum.Parse<ETipoVariable>(reader.ReadElementContentAsString());
+						break;
+					case nameof(BloqueArgumento):
+						Argumento = new BloqueArgumento(reader);
+						break;
+					default:
+						SistemaPrincipal.LoggerGlobal.Log($"Elemento {reader.Name} desconocido hallado al cargar {nameof(BloqueVariable)}({this})", ESeveridad.Advertencia);
+						break;
+				}
+			}
 		}
 	}
 }

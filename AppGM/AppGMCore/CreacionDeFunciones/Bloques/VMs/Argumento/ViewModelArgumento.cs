@@ -241,9 +241,9 @@ namespace AppGM.Core
 			PuedeQuedarVacio		  = _parametros.puedeQuedarVacio;
 			TipoArgumento             = _parametros.tipoArgumento;
 			Nombre                    = _parametros.nombre;
-			TextoActual               = _parametros.textoActual;
-			TextoTextBox              = _parametros.textoActual; 
 			mBloqueContendor          = _parametros.contenedor;
+
+			ModificarTextoActual(_parametros.textoActual);
 
 			//Añadimos los metodos
 			foreach (var metodo in _parametros.metodos)
@@ -257,9 +257,6 @@ namespace AppGM.Core
 			{
 				IndiceBloque = mBloqueContendor.IndiceBloque;
 			};
-
-			//Actualizamos la validez para que inicialice el resto de las variables con los datos que ya le pasamos
-			ActualizarValidez();
 		}
 
 		#endregion
@@ -270,9 +267,6 @@ namespace AppGM.Core
 
 		public override BloqueArgumento GenerarBloque_Impl()
 		{
-			if (!EsValido)
-				return null;
-
 			List<SeccionArgumentoBase> seccionesArgumento = new List<SeccionArgumentoBase>();
 
 			//Solo añadimos una seccion si la base es una variable

@@ -16,6 +16,6 @@ namespace AppGM.Core
 		public string                       textoActual;
 		public Type                         tipoArgumento;
 		public ViewModelBloqueFuncionBase   contenedor;
-		public List<BloqueFuncion>          metodos;
+		public List<BloqueFuncion>          metodos = new List<BloqueFuncion>();
 	}
 }

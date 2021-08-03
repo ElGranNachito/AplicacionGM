@@ -37,7 +37,7 @@ namespace AppGM.Core
         /// <summary>
         /// Ambiente en el que se lleva a cabo el combate.
         /// </summary>
-        public TIAdministradorDeCombateAmbiente AmbienteDelCombate { get; set; }
+        public virtual TIAdministradorDeCombateAmbiente AmbienteDelCombate { get; set; }
 
         /// <summary>
         /// Participantes en el combate

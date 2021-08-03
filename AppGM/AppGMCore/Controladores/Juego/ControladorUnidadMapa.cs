@@ -59,6 +59,7 @@ namespace AppGM.Core
 			:base(_modelo)
         {
 	        posicion  = new Vector2(modelo.Posicion.Posicion);
+	        personaje = modelo.Personaje.Personaje.controlador;
         }
 
         #endregion

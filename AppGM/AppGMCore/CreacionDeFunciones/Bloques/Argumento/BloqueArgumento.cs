@@ -109,8 +109,8 @@ namespace AppGM.Core
 			writer.WriteStartElement(nameof(BloqueArgumento));
 
 			writer.WriteElementString(nameof(TipoArgumento), TipoArgumento.AssemblyQualifiedName);
-			writer.WriteElementString(nameof(DetectarTipoAutomaticamente), DetectarTipoAutomaticamente.ToString());
-			writer.WriteElementString(nameof(PuedeQuedarVacio), PuedeQuedarVacio.ToString());
+			writer.WriteElementString(nameof(DetectarTipoAutomaticamente), DetectarTipoAutomaticamente.ToString().ToLower());
+			writer.WriteElementString(nameof(PuedeQuedarVacio), PuedeQuedarVacio.ToString().ToLower());
 			writer.WriteElementString(nameof(Nombre), Nombre);
 			writer.WriteElementString(nameof(TextoActual), TextoActual);
 

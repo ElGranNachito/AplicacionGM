@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading.Tasks;
 using System.Xml;
 using CoolLogs;
 
@@ -27,7 +28,9 @@ namespace AppGM.Core
 		/// <summary>
 		/// Nombre de la funcion incluyendo su extension
 		/// </summary>
-		public string NombreCompletoFuncion => string.Intern($"{modelo.NombreFuncion}_{modelo.Id}.xml");
+		public string NombreArchivoFuncion => string.Intern($"{modelo.NombreFuncion}_{modelo.Id}.xml");
+
+		public string NombreCompletoArchivoFuncion => string.Intern(ObtenerPathArchivoFuncion(NombreArchivoFuncion));
 
 		/// <summary>
 		/// Nombre de la funcion
@@ -40,10 +43,13 @@ namespace AppGM.Core
 				if (value == NombreFuncion || value.IsNullOrWhiteSpace())
 					return;
 
-				//Cambiamos el nombre del archivo
-				File.Move(
-					Path.Combine(SistemaPrincipal.ControladorDeArchivos.DirectorioFunciones, NombreCompletoFuncion),
-					Path.Combine(SistemaPrincipal.ControladorDeArchivos.DirectorioFunciones, string.Intern($"{value}_{modelo.Id}.xml")));
+				if (File.Exists(NombreCompletoArchivoFuncion))
+				{
+					//Cambiamos el nombre del archivo
+					File.Move(
+						Path.Combine(SistemaPrincipal.ControladorDeArchivos.DirectorioFunciones, NombreArchivoFuncion),
+						Path.Combine(SistemaPrincipal.ControladorDeArchivos.DirectorioFunciones, string.Intern(ObtenerNombreArchivo(value, modelo.Id))));
+				}
 
 				modelo.NombreFuncion = value;
 			}
@@ -83,6 +89,28 @@ namespace AppGM.Core
 
 				return new KeyValuePair<int, ControladorVariableFuncionBase>();
 			}));
+		}
+
+		/// <summary>
+		/// Carga los <see cref="Bloques"/>
+		/// </summary>
+		/// <returns><see cref="bool"/> indicando si se pudieron cargar los bloques</returns>
+		public bool CargarBloques()
+		{
+			SistemaPrincipal.LoggerGlobal.Log($"Cargando bloques para funcion {NombreFuncion}", ESeveridad.Info);
+
+			Bloques = BloqueBase.DesdeXmlMultiple(NombreCompletoArchivoFuncion);
+
+			return Bloques != null;
+		}
+
+		/// <summary>
+		/// Ejecuta <see cref="CargarBloques"/> en otro hilo
+		/// </summary>
+		/// <returns>Resultado de <see cref="CargarBloques"/></returns>
+		public async Task<bool> CargarBloquesAsync()
+		{
+			return await Task.Run(CargarBloques);
 		}
 
 		public void ActualizarBloques(List<BloqueBase> nuevosBloques)
@@ -147,16 +175,29 @@ namespace AppGM.Core
 		{
 			XmlWriterSettings config = new XmlWriterSettings {Encoding = Encoding.UTF8, Indent = true, NewLineOnAttributes = true};
 
-			using XmlWriter writer = XmlWriter.Create(File.Open(Path.Combine(SistemaPrincipal.ControladorDeArchivos.DirectorioFunciones, NombreCompletoFuncion), FileMode.Create), config);
+			using XmlWriter writer = XmlWriter.Create(File.Open(Path.Combine(SistemaPrincipal.ControladorDeArchivos.DirectorioFunciones, NombreArchivoFuncion), FileMode.Create), config);
 			
 			writer.WriteStartDocument();
 			writer.WriteStartElement("Cuerpo");
 
+			writer.WriteAttributeString("NumeroDeBloques", Bloques.Count.ToString());
+
 			foreach (var bloque in Bloques)
+			{
+				writer.WriteStartElement("Bloque");
+				
 				bloque.ConvertirHaciaXML(writer);
+
+				writer.WriteEndElement();
+			}
 
 			writer.WriteEndElement();
 			writer.WriteEndDocument();
+		}
+
+		public async Task GuardarXMLAsync()
+		{
+			await Task.Run(GuardarXML);
 		}
 
 		[IndexerName("VariablesPersistentes")]
@@ -195,8 +236,18 @@ namespace AppGM.Core
 				case ETipoFuncion.Predicado:
 					return new ControladorFuncion_Predicado(modelo);
 				default:
+
+					SistemaPrincipal.LoggerGlobal.Log($"{nameof(tipoFuncion)}({tipoFuncion}), valor no soportado!", ESeveridad.Error);
+
 					return null;
 			}
+		}
+
+		public static string ObtenerNombreArchivo(string nombreFuncion, int id) => $"{nombreFuncion}_{id}.xml";
+
+		public static string ObtenerPathArchivoFuncion(string nombreArchivoFuncion)
+		{
+			return Path.Combine(SistemaPrincipal.ControladorDeArchivos.DirectorioFunciones, nombreArchivoFuncion);
 		}
 	}
 
@@ -207,9 +258,7 @@ namespace AppGM.Core
 		public ControladorFuncion(ModeloFuncion _modelo)
 			: base(_modelo)
 		{
-			Compilador compilador = new Compilador(modelo.NombreFuncion, modelo.Id);
 
-			funcion = compilador.Compilar<TipoFuncion>().Funcion;
 		}
 	}
 
