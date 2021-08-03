@@ -9,7 +9,7 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(Rol))]
         public int IdRol { get; set; }
-        public ModeloRol Rol { get; set; }
+        public virtual ModeloRol Rol { get; set; }
     }
 
     /// <summary>
@@ -19,7 +19,7 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(Personaje))]
         public int IdPersonaje { get; set; }
-        public ModeloPersonaje Personaje { get; set; }
+        public virtual ModeloPersonaje Personaje { get; set; }
     }
 
     /// <summary>
@@ -29,7 +29,7 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(Combate))]
         public int IdCombate { get; set; }
-        public ModeloAdministradorDeCombate Combate { get; set; }
+        public virtual ModeloAdministradorDeCombate Combate { get; set; }
     }
 
     /// <summary>
@@ -39,7 +39,7 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(Mapa))]
         public int IdMapa { get; set; }
-        public ModeloMapa Mapa { get; set; }
+        public virtual ModeloMapa Mapa { get; set; }
     }
 
     /// <summary>
@@ -49,7 +49,7 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(Ambiente))]
         public int IdAmbiente { get; set; }
-        public ModeloAmbiente Ambiente { get; set; }
+        public virtual ModeloAmbiente Ambiente { get; set; }
     }
 
 }

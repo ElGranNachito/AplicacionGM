@@ -69,39 +69,39 @@ namespace AppGM.Core
         /// <summary>
         /// Total de usos que se le puede dar a la habilidad
         /// </summary>
-        public TIHabilidadLimitador       LimiteDeUsos    { get; set; }
+        public virtual TIHabilidadLimitador       LimiteDeUsos    { get; set; }
         /// <summary>
         /// Cantidad de cargas aplicaples a la habilidad
         /// </summary>
-        public TIHabilidadCargasHabilidad CargasHabilidad { get; set; }
+        public virtual TIHabilidadCargasHabilidad CargasHabilidad { get; set; }
         
         /// <summary>
         /// Tirada del daño que produce la habilidad
         /// Solo si es una habilidad ofensiva
         /// </summary>
-        public TIHabilidadTiradaDeDaño    TiradaDeDaño    { get; set; }
+        public virtual TIHabilidadTiradaDeDaño    TiradaDeDaño    { get; set; }
         
         /// <summary>
         /// Items utilizados para invocar otro item
         /// Primer indice es el item que invoca, el resto de indices son los items que cuesta
         /// </summary>
-        public List<TIHabilidadItem>       ItemsQueCuestaItemInvocacion { get; set; } = new List<TIHabilidadItem>();
+        public virtual List<TIHabilidadItem>       ItemsQueCuestaItemInvocacion { get; set; } = new List<TIHabilidadItem>();
 
         /// <summary>
         /// Personaje de clase <see cref="ModeloInvocacion"/> que es invocado por la habilidad
         /// </summary>
-        public List<TIHabilidadInvocacion> Invocacion                   { get; set; } = new List<TIHabilidadInvocacion>();
+        public virtual List<TIHabilidadInvocacion> Invocacion                   { get; set; } = new List<TIHabilidadInvocacion>();
         
         /// <summary>
         /// Tiradas para utilizar la habilidad
         /// </summary>
-        public List<TIHabilidadTiradaBase> TiradasDeUso                 { get; set; } = new List<TIHabilidadTiradaBase>();
+        public virtual List<TIHabilidadTiradaBase> TiradasDeUso                 { get; set; } = new List<TIHabilidadTiradaBase>();
         
         /// <summary>
         /// Efectos que aplica la habilidad
         /// Primer indice son los efectos sobre el usuario, segundo indice son los efectos sobre el objetivo
         /// </summary>
-        public List<TIHabilidadEfecto> EfectosSobreUsuarioEfectoSobreObjetivo { get; set; } = new List<TIHabilidadEfecto>();
+        public virtual List<TIHabilidadEfecto> EfectosSobreUsuarioEfectoSobreObjetivo { get; set; } = new List<TIHabilidadEfecto>();
 
     }
 

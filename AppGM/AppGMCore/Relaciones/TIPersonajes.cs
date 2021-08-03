@@ -10,7 +10,7 @@ namespace AppGM.Core
         [ForeignKey(nameof(Personaje))]
         public int IdPersonaje { get; set; }
         
-        public ModeloPersonaje Personaje { get; set; }
+        public virtual ModeloPersonaje Personaje { get; set; }
     }
 
     /// <summary>
@@ -20,21 +20,21 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(Unidad))]
         public int IdUnidadMapa { get; set; }
-        public ModeloUnidadMapa Unidad { get; set; }
+        public virtual ModeloUnidadMapa Unidad { get; set; }
     }
 
     public class TIPersonajeContrato : TIPersonaje
     {
         [ForeignKey(nameof(Contrato))]
         public int IdContrato { get; set; }
-        public ModeloContrato Contrato { get; set; }
+        public virtual ModeloContrato Contrato { get; set; }
     }
 
     public class TIPersonajeAlianza : TIPersonaje
     {
         [ForeignKey(nameof(Alianza))]
         public int IdAlianza { get; set; }
-        public ModeloAlianza Alianza { get; set; }
+        public virtual ModeloAlianza Alianza { get; set; }
     }
 
     /// <summary>
@@ -45,7 +45,7 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(Efecto))]
         public int IdEfecto { get; set; }
-        public ModeloEfecto Efecto { get; set; }
+        public virtual ModeloEfecto Efecto { get; set; }
     }
 
     /// <summary>
@@ -55,7 +55,7 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(EfectoSiendoAplicado))]
         public int IdEfectoSiendoAplicado { get; set; }
-        public ModeloEfectoSiendoAplicado EfectoSiendoAplicado { get; set; }
+        public virtual ModeloEfectoSiendoAplicado EfectoSiendoAplicado { get; set; }
     }
 
     /// <summary>
@@ -65,7 +65,7 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(Utilizable))]
         public int IdUtilizable { get; set; }
-        public ModeloUtilizable Utilizable { get; set; }
+        public virtual ModeloUtilizable Utilizable { get; set; }
 
     }
 
@@ -76,7 +76,7 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(Defensivo))]
         public int IdDefensivo { get; set; }
-        public ModeloDefensivo Defensivo { get; set; }
+        public virtual ModeloDefensivo Defensivo { get; set; }
 
     }
 
@@ -87,7 +87,7 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(PortableOfensivo))]
         public int IdOfensivo { get; set; }
-        public ModeloOfensivo PortableOfensivo { get; set; }
+        public virtual ModeloOfensivo PortableOfensivo { get; set; }
     }
 
     /// <summary>
@@ -97,7 +97,7 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(ArmaDistancia))]
         public int IdArmaDistancia { get; set; }
-        public ModeloArmasDistancia ArmaDistancia { get; set; }
+        public virtual ModeloArmasDistancia ArmaDistancia { get; set; }
     }
 
     /// <summary>
@@ -108,7 +108,7 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(Aliado))]
         public int IdAliado { get; set; }
-        public ModeloPersonaje Aliado { get; set; }
+        public virtual ModeloPersonaje Aliado { get; set; }
     }
 
     /// <summary>
@@ -118,7 +118,7 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(Habilidad))]
         public int IdHabilidad { get; set; }
-        public ModeloHabilidad Habilidad { get; set; }
+        public virtual ModeloHabilidad Habilidad { get; set; }
 
     }
 
@@ -129,7 +129,7 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(Perk))]
         public int IdPerk { get; set; }
-        public ModeloPerk Perk { get; set; }
+        public virtual ModeloPerk Perk { get; set; }
     }
 
     /// <summary>
@@ -139,7 +139,7 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(Magia))]
         public int IdMagia { get; set; }
-        public ModeloMagia Magia { get; set; }
+        public virtual ModeloMagia Magia { get; set; }
     }
 
     /// <summary>
@@ -149,7 +149,7 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(ModificadorDeDefensa))]
         public int IdModificadorDefensa { get; set; }
-        public ModeloModificadorDeDefensa ModificadorDeDefensa { get; set; }
+        public virtual ModeloModificadorDeDefensa ModificadorDeDefensa { get; set; }
     }
 
     // Personaje servant:
@@ -161,11 +161,11 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(Servant))]
         public int IdServant { get; set; }
-        public ModeloServant Servant { get; set; }
+        public virtual ModeloServant Servant { get; set; }
 
         [ForeignKey(nameof(NoblePhantasm))]
         public int IdNoblePhantasm { get; set; }
-        public ModeloNoblePhantasm NoblePhantasm { get; set; }
+        public virtual ModeloNoblePhantasm NoblePhantasm { get; set; }
     }
 
     // Personaje invocacion:
@@ -177,7 +177,7 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(Invocacion))]
         public int IdInvocacion { get; set; }
-        public ModeloInvocacion Invocacion { get; set; }
+        public virtual ModeloInvocacion Invocacion { get; set; }
     }
 
     /// <summary>
@@ -187,7 +187,7 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(PersonajeInvocador))]
         public int IdPersonaje { get; set; }
-        public ModeloPersonaje PersonajeInvocador { get; set; }
+        public virtual ModeloPersonaje PersonajeInvocador { get; set; }
     }
 
     /// <summary>
@@ -197,7 +197,7 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(DatosInvocacion))]
         public int IdDatos { get; set; }
-        public ModeloDatosInvocacionBase DatosInvocacion { get; set; }
+        public virtual ModeloDatosInvocacionBase DatosInvocacion { get; set; }
     }
 
     /// <summary>
@@ -207,7 +207,7 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(Efecto))]
         public int IdEfecto { get; set; }
-        public ModeloEfecto Efecto { get; set; }
+        public virtual ModeloEfecto Efecto { get; set; }
     }
 
     // Personaje jugable:
@@ -219,7 +219,7 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(PersonajeJugable))]
         public int IdPersonajeJugable { get; set; }
-        public ModeloPersonajeJugable PersonajeJugable { get; set; }
+        public virtual ModeloPersonajeJugable PersonajeJugable { get; set; }
     }
 
     /// <summary>
@@ -229,7 +229,7 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(Caracteristicas))]
         public int IdCaracteristica { get; set; }
-        public ModeloCaracteristicas Caracteristicas { get; set; }
+        public virtual ModeloCaracteristicas Caracteristicas { get; set; }
     }
 
     /// <summary>
@@ -239,6 +239,6 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(Invocacion))]
         public int IdInvocacion { get; set; }
-        public ModeloInvocacion Invocacion { get; set; }
+        public virtual ModeloInvocacion Invocacion { get; set; }
     }
 }

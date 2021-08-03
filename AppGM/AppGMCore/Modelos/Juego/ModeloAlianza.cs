@@ -49,11 +49,11 @@ namespace AppGM.Core
         /// <see cref="ModeloContrato"/> de la alianza.
         /// Es opcional, puede no haberlo
         /// </summary>
-        public TIAlianzaContrato ContratoDeAlianza { get; set; }
+        public virtual TIAlianzaContrato ContratoDeAlianza { get; set; }
 
         /// <summary>
         /// <see cref="ModeloPersonajeJugable"/> que forman parte de esta alianza
         /// </summary>
-        public List<TIPersonajeAlianza> PersonajesAfectados { get; set; } = new List<TIPersonajeAlianza>();
+        public virtual List<TIPersonajeAlianza> PersonajesAfectados { get; set; } = new List<TIPersonajeAlianza>();
     }
 }

@@ -10,11 +10,11 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(Efecto))]
         public int IdEfecto { get; set; }
-        public ModeloEfecto Efecto { get; set; }
+        public virtual ModeloEfecto Efecto { get; set; }
 
         [ForeignKey(nameof(Modificador))]
         public int IdModificadorDeStat { get; set; }
-        public ModeloModificadorDeStatBase Modificador { get; set; }
+        public virtual ModeloModificadorDeStatBase Modificador { get; set; }
     }
 
     /// <summary>
@@ -24,7 +24,7 @@ namespace AppGM.Core
     {
 	    [ForeignKey(nameof(EfectoAplicandose))] 
 	    public int IdEfectoSiendoAplicado { get; set; }
-        public ModeloEfectoSiendoAplicado EfectoAplicandose { get; set; }
+        public virtual ModeloEfectoSiendoAplicado EfectoAplicandose { get; set; }
     }
 
     /// <summary>
@@ -34,7 +34,7 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(Efecto))]
         public int IdEfecto { get; set; }
-        public ModeloEfecto Efecto { get; set; }
+        public virtual ModeloEfecto Efecto { get; set; }
     }
 
     /// <summary>
@@ -44,7 +44,7 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(PersonajeInstigador))]
         public int IdPersonajeInstigador { get; set; }
-        public ModeloPersonaje PersonajeInstigador { get; set; }
+        public virtual ModeloPersonaje PersonajeInstigador { get; set; }
     }
 
     /// <summary>
@@ -54,6 +54,6 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(PersonajeObjetivo))]
         public int IdPersonajeObjetivo { get; set; }
-        public ModeloPersonaje PersonajeObjetivo { get; set; }
+        public virtual ModeloPersonaje PersonajeObjetivo { get; set; }
     }
 }

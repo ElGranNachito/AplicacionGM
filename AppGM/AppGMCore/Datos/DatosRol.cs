@@ -152,19 +152,20 @@ namespace AppGM.Core
 						EsVigente = true
                     };
 
-                    contratoPiola.PersonajesAfectados = new List<TIPersonajeContrato>
+                    TIPersonajeContrato master1Contrato = new TIPersonajeContrato
                     {
-						new TIPersonajeContrato
-                        {
-							Contrato = contratoPiola,
-							Personaje = master1
-                        },
-                        new TIPersonajeContrato
-                        {
-                            Contrato = contratoPiola,
-                            Personaje = master2
-                        }
+                        Contrato = contratoPiola,
+                        Personaje = master1
                     };
+
+                    TIPersonajeContrato master2Contrato = new TIPersonajeContrato
+                    {
+                        Contrato = contratoPiola,
+                        Personaje = master2
+                    };
+
+                    contratoPiola.PersonajesAfectados.Add(master1Contrato);
+                    contratoPiola.PersonajesAfectados.Add(master2Contrato);
 
                     ModeloAlianza alianzaPiola = new ModeloAlianza
                     {
@@ -178,11 +179,13 @@ namespace AppGM.Core
 						EsVigente = true,
                     };
 
-                    alianzaPiola.ContratoDeAlianza = new TIAlianzaContrato
+                    TIAlianzaContrato alianzaPiolaContrato = new TIAlianzaContrato
                     {
-						Contrato = contratoPiola,
-						Alianza = alianzaPiola
+                        Contrato = contratoPiola,
+                        Alianza = alianzaPiola
                     };
+
+                    alianzaPiola.ContratoDeAlianza = alianzaPiolaContrato;
 
                     TIPersonajeAlianza master1Alianza = new TIPersonajeAlianza
                     {
@@ -415,6 +418,13 @@ namespace AppGM.Core
 					});
 
 					mDBRol.Add(mapa);
+                    mDBRol.Add(contratoPiola);
+                    mDBRol.Add(master1Contrato);
+                    mDBRol.Add(master2Contrato);
+                    mDBRol.Add(alianzaPiola);
+                    mDBRol.Add(alianzaPiolaContrato);
+                    mDBRol.Add(master1Alianza);
+                    mDBRol.Add(master2Alianza);
 					mDBRol.Add(unidadServant1);
 					mDBRol.Add(unidadMaster1);
                     mDBRol.Add(unidadServant2);
@@ -546,11 +556,15 @@ namespace AppGM.Core
 
 				//Cargamos los datos de una manera bastante primitiva :u
 
-				var unidadesMapaPersonajes =
-					(from m in mDBRol.PersonajesUnidadesMapa
-					select m).ToList();
+                var personajeUnidadMapa = 
+                    (from m in mDBRol.PersonajesUnidadesMapa
+                        select m).ToList();
 
-				var masters = 
+                var personajeAlianzas = 
+                    (from m in mDBRol.PersonajesAlianzas
+                        select m).ToList();
+
+                var masters = 
 					(from m in mDBRol.Masters
 					select m).ToList();
 				

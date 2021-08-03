@@ -60,11 +60,7 @@ namespace AppGM.Core
         /// <returns>Ruta absoluta del icono de la alianza</returns>
         public string ObtenerPathAImagen()
         {
-            StringBuilder sb = new StringBuilder("../../../Media/Imagenes/Iconos/Alianzas/");
-
-            sb.Append(modelo.PathImagenIcono + Enum.GetName(typeof(EFormatoImagen), modelo.FormatoImagen));
-
-            return sb.ToString();
+            return $"../../../Media/Imagenes/Iconos/Alianzas/{modelo.PathImagenIcono}.png";
         }
 
         /// <summary>

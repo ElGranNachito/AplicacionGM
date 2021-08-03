@@ -85,6 +85,7 @@ namespace AppGM.Core
         public DbSet<TIMapaUnidadMapa> MapasUnidadesMapa { get; set; }
         public DbSet<TIUnidadMapaVector2> UnidadesMapaVectores2 { get; set; }
         public DbSet<TIPersonajeUnidadMapa> PersonajesUnidadesMapa { get; set; }
+        public DbSet<TIPersonajeAlianza> PersonajesAlianzas { get; set; }
         public DbSet<TIParticipanteAccion> ParticipanteAccion { get; set; }
         public DbSet<TIRolCombate> CombatesRol { get; set; }
         public DbSet<TIRolMapa> MapasRol { get; set; } 
@@ -94,17 +95,14 @@ namespace AppGM.Core
         /// <summary>
         /// Constructor
         /// </summary>
-        public RolContext()
-        {
-            
-        }
+        public RolContext(){}
 
         #region Configuracion de la base de datos
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-	        optionsBuilder.UseSqlite($"Data Source = DbAppGm.db");
-	        optionsBuilder.UseLazyLoadingProxies();
+            optionsBuilder.UseSqlite($"Data Source = DbAppGm.db");
+            optionsBuilder.UseLazyLoadingProxies();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

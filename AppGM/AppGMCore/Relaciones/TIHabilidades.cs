@@ -9,8 +9,7 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(Habilidad))]
         public int IdHabilidad { get; set; }
-
-        public ModeloHabilidad Habilidad { get; set; }
+        public virtual ModeloHabilidad Habilidad { get; set; }
     }
 
     /// <summary>
@@ -20,7 +19,7 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(ModeloLimitador))]
         public int IdLimitador { get; set; }
-        public ModeloLimitador ModeloLimitador { get; set; }
+        public virtual ModeloLimitador ModeloLimitador { get; set; }
     }
 
     /// <summary>
@@ -30,7 +29,7 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(ModeloCargas))]
         public int IdCargasHabilidad { get; set; }
-        public ModeloCargas ModeloCargas { get; set; }
+        public virtual ModeloCargas ModeloCargas { get; set; }
     }
 
     /// <summary>
@@ -40,7 +39,7 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(TiradaBase))]
         public int IdTirada { get; set; }
-        public ModeloTiradaBase TiradaBase { get; set; }
+        public virtual ModeloTiradaBase TiradaBase { get; set; }
     }
 
     /// <summary>
@@ -50,7 +49,7 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(TiradaDeDaño))]
         public int IdTirada { get; set; }
-        public ModeloTiradaDeDaño TiradaDeDaño { get; set; }
+        public virtual ModeloTiradaDeDaño TiradaDeDaño { get; set; }
     }
 
     /// <summary>
@@ -60,7 +59,7 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(Item))]
         public int IdItem { get; set; }
-        public ModeloItem Item { get; set; }
+        public virtual ModeloItem Item { get; set; }
     }
 
     /// <summary>
@@ -70,8 +69,7 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(Invocacion))]
         public int IdInvocacion { get; set; }
-
-        public ModeloInvocacion Invocacion { get; set; }
+        public virtual ModeloInvocacion Invocacion { get; set; }
     }
 
     /// <summary>
@@ -81,6 +79,6 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(Efecto))]
         public int IdEfecto { get; set; }
-        public ModeloEfecto Efecto { get; set; }
+        public virtual ModeloEfecto Efecto { get; set; }
     }
 }

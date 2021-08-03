@@ -9,7 +9,7 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(Mapa))]
         public int IdMapa { get; set; }
-        public ModeloMapa Mapa { get; set; }
+        public virtual ModeloMapa Mapa { get; set; }
     }
 
     /// <summary>
@@ -19,7 +19,7 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(Ambiente))]
         public int IdAmbiente { get; set; }
-        public ModeloAmbiente Ambiente { get; set; }
+        public virtual ModeloAmbiente Ambiente { get; set; }
     }
 
     /// <summary>
@@ -29,7 +29,7 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(Unidad))]
         public int IdUnidadMapa { get; set; }
-        public ModeloUnidadMapa Unidad { get; set; }
+        public virtual ModeloUnidadMapa Unidad { get; set; }
     }
 
     /// <summary>
@@ -39,11 +39,11 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(Unidad))]
         public int IdUnidadMapa { get; set; }
-        public ModeloUnidadMapa Unidad { get; set; }
+        public virtual ModeloUnidadMapa Unidad { get; set; }
 
         [ForeignKey(nameof(Posicion))]
         public int IdVector { get; set; }
-        public ModeloVector2 Posicion { get; set; }
+        public virtual ModeloVector2 Posicion { get; set; }
     }
 
 

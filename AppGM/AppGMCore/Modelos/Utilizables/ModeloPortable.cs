@@ -14,13 +14,13 @@ namespace AppGM.Core
         /// <summary>
         /// Slots que aporta el portable
         /// </summary>
-        public List<TIPortableSlots> Slots { get; set; }
+        public virtual List<TIPortableSlots> Slots { get; set; }
 
         /// <summary>
         /// Ventajas y desventajas de tener equipado el portable
         /// Primer indice son las ventajas, Segundo indice son las desventajas
         /// </summary>
-        public List<TIPortableModificadorDeStatBase> VentajasYDesventajasDeEquiparlo { get; set; } = new List<TIPortableModificadorDeStatBase>();
+        public virtual List<TIPortableModificadorDeStatBase> VentajasYDesventajasDeEquiparlo { get; set; } = new List<TIPortableModificadorDeStatBase>();
     }
 
     public class ModeloDefensivo : ModeloPortable
@@ -52,11 +52,11 @@ namespace AppGM.Core
         /// <summary>
         /// Efectos que inflinge al ser utilizado
         /// </summary>
-        public TIOfensivoEfecto EfectoQueInflige { get; set; }
+        public virtual TIOfensivoEfecto EfectoQueInflige { get; set; }
 
         /// <summary>
         /// Tiradas de daño que puede realizar el portable ofensivo
         /// </summary>
-        public List<TIOfensivoTiradaDeDaño> TiradasDeDaño { get; set; } = new List<TIOfensivoTiradaDeDaño>();
+        public virtual List<TIOfensivoTiradaDeDaño> TiradasDeDaño { get; set; } = new List<TIOfensivoTiradaDeDaño>();
     }
 }

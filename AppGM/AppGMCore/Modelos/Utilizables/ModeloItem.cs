@@ -29,12 +29,12 @@ namespace AppGM.Core
         /// <summary>
         /// Tirada para el daño que aplique el arma
         /// </summary>
-        public TIArmasDistanciaTiradaDeDaño TiradaDeDaño { get; set; }
+        public virtual TIArmasDistanciaTiradaDeDaño TiradaDeDaño { get; set; }
 
         /// <summary>
         /// Tirada variable para su uso en rafaga
         /// </summary>
-        public TIArmasDistanciaTiradaVariable TiradaRafaga { get; set; }
+        public virtual TIArmasDistanciaTiradaVariable TiradaRafaga { get; set; }
 
         /// <summary>
         /// Tipo de daño que puede inflingir en su uso
@@ -44,6 +44,6 @@ namespace AppGM.Core
         /// <summary>
         /// Efecto infligido por el arma
         /// </summary>
-        public List<TIArmasDistanciaEfecto> EfectoQueInflige { get; set; } = new List<TIArmasDistanciaEfecto>();
+        public virtual List<TIArmasDistanciaEfecto> EfectoQueInflige { get; set; } = new List<TIArmasDistanciaEfecto>();
     }
 }

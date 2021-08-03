@@ -34,11 +34,11 @@ namespace AppGM.Core
 		/// Modificaciones que aplica el efecto
 		/// TODO: Quitar esto, te lo dejo a vos Contykpo para no cagarte el RolContext UwU. Att: Creisi como vos dirias
 		/// </summary>
-		public List<TIEfectoModificadorDeStatBase> Modificaciones { get; set; } = new List<TIEfectoModificadorDeStatBase>();
+		public virtual List<TIEfectoModificadorDeStatBase> Modificaciones { get; set; } = new List<TIEfectoModificadorDeStatBase>();
 
 		/// <summary>
 		/// Todas las aplicaciones de este efecto
 		/// </summary>
-		public List<TIEfectoSiendoAplicadoEfecto> Aplicaciones { get; set; } = new List<TIEfectoSiendoAplicadoEfecto>();
+		public virtual List<TIEfectoSiendoAplicadoEfecto> Aplicaciones { get; set; } = new List<TIEfectoSiendoAplicadoEfecto>();
 	}
 }

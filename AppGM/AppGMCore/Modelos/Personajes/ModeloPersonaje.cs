@@ -13,7 +13,7 @@ namespace AppGM.Core
         /// <summary>
         /// Relacion rol
         /// </summary>
-        public TIRolPersonaje RolPersonaje { get; set; }
+        public virtual TIRolPersonaje RolPersonaje { get; set; }
 
         /// <summary>
         /// Nombre del personaje
@@ -69,42 +69,42 @@ namespace AppGM.Core
         /// <summary>
         /// Posicion del personaje en el mapa
         /// </summary>
-        public ModeloVector2 Posicion { get; set; }
+        public virtual ModeloVector2 Posicion { get; set; }
 
         /// <summary>
         /// Efectos aplicados sobre el personaje
         /// </summary>
-        public List<TIPersonajeEfectoSiendoAplicado> EfectosAplicandose { get; set; } = new List<TIPersonajeEfectoSiendoAplicado>();
+        public virtual List<TIPersonajeEfectoSiendoAplicado> EfectosAplicandose { get; set; } = new List<TIPersonajeEfectoSiendoAplicado>();
         
         //Equipamiento del personaje
-        public List<TIPersonajeUtilizable>           Inventario { get; set; } = new List<TIPersonajeUtilizable>();
-        public List<TIPersonajeDefensivo>            Armadura   { get; set; } = new List<TIPersonajeDefensivo>();
-        public List<TIPersonajeArmaDistancia>        ArmasDistancia         { get; set; } = new List<TIPersonajeArmaDistancia>();
+        public virtual List<TIPersonajeUtilizable>           Inventario { get; set; } = new List<TIPersonajeUtilizable>();
+        public virtual List<TIPersonajeDefensivo>            Armadura   { get; set; } = new List<TIPersonajeDefensivo>();
+        public virtual List<TIPersonajeArmaDistancia>        ArmasDistancia         { get; set; } = new List<TIPersonajeArmaDistancia>();
 
         /// <summary>
         /// Contratos realizados con tros personajes
         /// </summary>
-        public List<TIPersonajeContrato>      Contratos  { get; set; } = new List<TIPersonajeContrato>();
+        public virtual List<TIPersonajeContrato>      Contratos  { get; set; } = new List<TIPersonajeContrato>();
         /// <summary>
         /// Alianzas con otros personajes
         /// </summary>
-        public List<TIPersonajeAlianza>       Alianzas   { get; set; } = new List<TIPersonajeAlianza>();
+        public virtual List<TIPersonajeAlianza>       Alianzas   { get; set; } = new List<TIPersonajeAlianza>();
                                               
         //Habilidades del personaje
-        public List<TIPersonajePerk>          Perks      { get; set; } = new List<TIPersonajePerk>();
-        public List<TIPersonajeHabilidad>     Skills     { get; set; } = new List<TIPersonajeHabilidad>();
-        public List<TIPersonajeMagia>         Magias     { get; set; } = new List<TIPersonajeMagia>();
+        public virtual List<TIPersonajePerk>          Perks      { get; set; } = new List<TIPersonajePerk>();
+        public virtual List<TIPersonajeHabilidad>     Skills     { get; set; } = new List<TIPersonajeHabilidad>();
+        public virtual List<TIPersonajeMagia>         Magias     { get; set; } = new List<TIPersonajeMagia>();
         
         /// <summary>
         /// Modificadores de defensa del personaje.
         /// </summary>
-        public List<TIPersonajeModificadorDeDefensa> ModificadoresDeDefensa { get; set; } = new List<TIPersonajeModificadorDeDefensa>();
+        public virtual List<TIPersonajeModificadorDeDefensa> ModificadoresDeDefensa { get; set; } = new List<TIPersonajeModificadorDeDefensa>();
         
         /// <summary>
         /// Es participante en algun combate.
         /// TODO: Solo puede participar de un combate activo a la vez.
         /// </summary>
-        public List<TIParticipantePersonaje> ParticipacionEnCombates { get; set; } = new List<TIParticipantePersonaje>();
+        public virtual List<TIParticipantePersonaje> ParticipacionEnCombates { get; set; } = new List<TIParticipantePersonaje>();
 
     }
 }

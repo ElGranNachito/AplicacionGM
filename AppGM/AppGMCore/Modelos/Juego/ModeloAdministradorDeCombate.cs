@@ -12,7 +12,7 @@ namespace AppGM.Core
         /// <summary>
         /// Relacion rol
         /// </summary>
-        public TIRolCombate RolCombate { get; set; }
+        public virtual TIRolCombate RolCombate { get; set; }
 
         /// <summary>
         /// IndiceZ para el turno actual entre personajes
@@ -42,10 +42,10 @@ namespace AppGM.Core
         /// <summary>
         /// Participantes en el combate
         /// </summary>
-        public List<TIAdministradorDeCombateParticipante> Participantes { get; set; } = new List<TIAdministradorDeCombateParticipante>();
+        public virtual List<TIAdministradorDeCombateParticipante> Participantes { get; set; } = new List<TIAdministradorDeCombateParticipante>();
         /// <summary>
         /// Mapas en los que el combate se lleve a cabo
         /// </summary>
-        public List<TIAdministradorDeCombateMapa> Mapas { get; set; } = new List<TIAdministradorDeCombateMapa>();
+        public virtual List<TIAdministradorDeCombateMapa> Mapas { get; set; } = new List<TIAdministradorDeCombateMapa>();
     }
 }

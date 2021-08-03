@@ -13,7 +13,6 @@
         <Grid
             Visibility="{Binding ImagenPosicionEsVisible, Converter={local:BooleanToVisibilityConverterOcultar}}"
             >
-
             <!-- Imagen de la unidad -->
             <Image
                 local:DragProperty.Value="True"
@@ -51,22 +50,22 @@
             </local:OutlinedText>
 
             <ItemsControl ItemsSource="{Binding AlianzasPersonaje.Elementos}" 
-                          Visibility="{Binding InsigneasAlianzasSonVisibles, Converter={local:BooleanToVisibilityConverterOcultar}}">
+                          Visibility="{Binding InsigneasAlianzasSonVisibles, Converter={local:BooleanToVisibilityConverterOcultar}}"
+                          Margin="{Binding PosicionImg, Converter={local:GrosorToThicknessConverter}, Mode=OneWay}"
+                          IsHitTestVisible="False">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <!-- Imagen de la alianza -->
                         <Image
-                            local:DragProperty.Value="False"
                             Source="{Binding PathImagenIcono, Mode=OneWay}"
-                            Width="30.00"
-                            Height="30.00"
-                            Margin="5"
+                            Width="45.00"
+                            Height="45.00"
                             SnapsToDevicePixels="True">
 
                             <Image.RenderTransform>
                                 <TranslateTransform 
-                                    X="15.00"
-                                    Y="15.00"/>
+                                    X="3.00"
+                                    Y="3.00"/>
                             </Image.RenderTransform>
 
                         </Image>
