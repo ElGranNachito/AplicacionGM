@@ -57,22 +57,22 @@ namespace AppGM.Core
         /// <summary>
         /// Ambiente general dentro del area de este rol
         /// </summary>
-        public TIRolAmbiente AmbienteGlobal { get; set; }
+        public virtual TIRolAmbiente AmbienteGlobal { get; set; }
 
         /// <summary>
         /// Personajes que forman parte de este rol
         /// </summary>
-        public List<TIRolPersonaje> Personajes { get; set; } = new List<TIRolPersonaje>();
+        public virtual List<TIRolPersonaje> Personajes { get; set; } = new List<TIRolPersonaje>();
 
         /// <summary>
         /// Combates que se han realizado o estan realizando en este rol
         /// </summary>
-        public List<TIRolCombate>   Combates   { get; set; } = new List<TIRolCombate>();
+        public virtual List<TIRolCombate>   Combates   { get; set; } = new List<TIRolCombate>();
 
         /// <summary>
         /// Mapas que se utilizan en este rol
         /// </summary>
-        public List<TIRolMapa>      Mapas      { get; set; } = new List<TIRolMapa>();
+        public virtual List<TIRolMapa>      Mapas      { get; set; } = new List<TIRolMapa>();
 
     }
 }

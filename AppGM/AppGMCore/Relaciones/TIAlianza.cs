@@ -9,10 +9,10 @@ namespace AppGM.Core
     {
 	    [ForeignKey(nameof(Alianza))]
         public int IdAlianza { get; set; }
-        public ModeloAlianza Alianza { get; set; }
+        public virtual ModeloAlianza Alianza { get; set; }
 
         [ForeignKey(nameof(Contrato))]
         public int IdContrato { get; set; }
-        public ModeloContrato Contrato { get; set; }
+        public virtual ModeloContrato Contrato { get; set; }
     }
 }

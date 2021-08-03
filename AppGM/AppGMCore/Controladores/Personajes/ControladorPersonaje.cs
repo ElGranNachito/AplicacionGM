@@ -144,7 +144,7 @@ namespace AppGM.Core
         /// <summary>
         /// Alianzas a las que pertenece el personaje
         /// </summary>
-        public List<ControladorAlianza> Alianzas { get; set; }
+        public List<ControladorAlianza> Alianzas { get; set; } = new List<ControladorAlianza>();
 
         /// <summary>
         /// Perks del personaje
@@ -277,7 +277,7 @@ namespace AppGM.Core
         {
             for (int i = 0; i < modelo.Alianzas.Count; ++i)
             {
-                Alianzas[i] = new ControladorAlianza(modelo.Alianzas[i].Alianza);
+                Alianzas.Add(new ControladorAlianza(modelo.Alianzas[i].Alianza));
             }
         }
 

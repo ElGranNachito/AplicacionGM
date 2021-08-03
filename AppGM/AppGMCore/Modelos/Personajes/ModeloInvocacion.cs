@@ -12,17 +12,17 @@
         /// <summary>
         /// Personaje que la invoca
         /// </summary>
-        public TIInvocacionPersonaje Invocador { get; set; }
+        public virtual TIInvocacionPersonaje Invocador { get; set; }
 
         /// <summary>
         /// Datos de la invocacion
         /// </summary>
-        public TIInvocacionDatosInvocacion DatosInvocacion { get; set; }
+        public virtual TIInvocacionDatosInvocacion DatosInvocacion { get; set; }
 
         /// <summary>
         /// Efecto que la invocacion produce
         /// </summary>
-        public TIInvocacionEfecto Efecto { get; set; }
+        public virtual TIInvocacionEfecto Efecto { get; set; }
     }
 
     public class ModeloInvocacionTemporal : ModeloInvocacion

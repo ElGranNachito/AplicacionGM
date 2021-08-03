@@ -27,16 +27,16 @@ namespace AppGM.Core
         /// <summary>
         /// Tirada requerida para poder se utilizado
         /// </summary>
-        public TIUtilizableTiradaBase TiradaDeUso { get; set; }
+        public virtual TIUtilizableTiradaBase TiradaDeUso { get; set; }
 
         /// <summary>
         /// Modificador para la stat afectada por el utilizable
         /// </summary>
-        public TIUtilizableModificadorDeStatBase VentajaAlUtilizarlo { get; set; }
+        public virtual TIUtilizableModificadorDeStatBase VentajaAlUtilizarlo { get; set; }
 
         /// <summary>
         /// Efectos al utilizarlo - Primer indice efecto sobre el usuario, Segundo indice efecto sobre el objetivo
         /// </summary>
-        public List<TIUtilizableEfecto> EfectoSobreUsuarioYObjetivo { get; set; } = new List<TIUtilizableEfecto>();
+        public virtual List<TIUtilizableEfecto> EfectoSobreUsuarioYObjetivo { get; set; } = new List<TIUtilizableEfecto>();
     }
 }

@@ -33,7 +33,7 @@ namespace AppGM.Core
         /// <summary>
         /// Mapa en el que se encuentra el ambiente.
         /// </summary>
-        public TIMapaAmbiente MapaDelAmbiente { get; set; } = Constantes.MapaDelAmbiente;
+        public virtual TIMapaAmbiente MapaDelAmbiente { get; set; } = Constantes.MapaDelAmbiente;
     }
 }
     

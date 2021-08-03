@@ -10,7 +10,7 @@ namespace AppGM.Core
 		[ForeignKey(nameof(Funcion))]
 		public int IDFuncion { get; set; }
 
-		public ModeloFuncion Funcion { get; set; }
+		public virtual ModeloFuncion Funcion { get; set; }
 	}
 
 	/// <summary>
@@ -21,7 +21,7 @@ namespace AppGM.Core
 		[ForeignKey(nameof(Variable))]
 		public int IDVariable { get; set; }
 
-		public ModeloVariableFuncionBase Variable { get; set; }
+		public virtual ModeloVariableFuncionBase Variable { get; set; }
 	}
 
 	/// <summary>
@@ -32,7 +32,7 @@ namespace AppGM.Core
 		[ForeignKey(nameof(Efecto))]
 		public int IDEfecto { get; set; }
 
-		public ModeloEfecto Efecto { get; set; }
+		public virtual ModeloEfecto Efecto { get; set; }
 	}
 
 	/// <summary>
@@ -43,6 +43,6 @@ namespace AppGM.Core
 		[ForeignKey(nameof(Habilidad))]
 		public int IDHabilidad { get; set; }
 
-		public ModeloHabilidad Habilidad { get; set; }
+		public virtual ModeloHabilidad Habilidad { get; set; }
 	}
 }

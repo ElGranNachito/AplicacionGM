@@ -341,7 +341,9 @@ namespace AppGM.Core.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    NombreVariable = table.Column<string>(type: "TEXT", nullable: true)
+                    NombreVariable = table.Column<string>(type: "TEXT", nullable: true),
+                    TipoVariable = table.Column<string>(type: "TEXT", nullable: true),
+                    IDVariable = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -1236,30 +1238,6 @@ namespace AppGM.Core.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PersonajeAlianzas",
-                columns: table => new
-                {
-                    IdPersonaje = table.Column<int>(type: "INTEGER", nullable: false),
-                    IdAlianza = table.Column<int>(type: "INTEGER", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PersonajeAlianzas", x => new { x.IdPersonaje, x.IdAlianza });
-                    table.ForeignKey(
-                        name: "FK_PersonajeAlianzas_ModeloAlianza_IdAlianza",
-                        column: x => x.IdAlianza,
-                        principalTable: "ModeloAlianza",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_PersonajeAlianzas_ModeloPersonaje_IdPersonaje",
-                        column: x => x.IdPersonaje,
-                        principalTable: "ModeloPersonaje",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "PersonajeArmasDistancias",
                 columns: table => new
                 {
@@ -1693,6 +1671,30 @@ namespace AppGM.Core.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TIPersonajeAlianza",
+                columns: table => new
+                {
+                    IdPersonaje = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdAlianza = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TIPersonajeAlianza", x => new { x.IdPersonaje, x.IdAlianza });
+                    table.ForeignKey(
+                        name: "FK_TIPersonajeAlianza_ModeloAlianza_IdAlianza",
+                        column: x => x.IdAlianza,
+                        principalTable: "ModeloAlianza",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TIPersonajeAlianza_ModeloPersonaje_IdPersonaje",
+                        column: x => x.IdPersonaje,
+                        principalTable: "ModeloPersonaje",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TIPersonajeJugableCaracteristicas",
                 columns: table => new
                 {
@@ -1788,11 +1790,6 @@ namespace AppGM.Core.Migrations
                 name: "IX_ParticipantePersonaje_IdPersonaje",
                 table: "ParticipantePersonaje",
                 column: "IdPersonaje");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PersonajeAlianzas_IdAlianza",
-                table: "PersonajeAlianzas",
-                column: "IdAlianza");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PersonajeArmasDistancias_IdPersonaje",
@@ -2067,6 +2064,11 @@ namespace AppGM.Core.Migrations
                 column: "IdTiradaDeDaño");
 
             migrationBuilder.CreateIndex(
+                name: "IX_TIPersonajeAlianza_IdAlianza",
+                table: "TIPersonajeAlianza",
+                column: "IdAlianza");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TIPersonajeJugableCaracteristicas_IdCaracteristica",
                 table: "TIPersonajeJugableCaracteristicas",
                 column: "IdCaracteristica");
@@ -2169,9 +2171,6 @@ namespace AppGM.Core.Migrations
 
             migrationBuilder.DropTable(
                 name: "ParticipantePersonaje");
-
-            migrationBuilder.DropTable(
-                name: "PersonajeAlianzas");
 
             migrationBuilder.DropTable(
                 name: "PersonajeArmasDistancias");
@@ -2282,6 +2281,9 @@ namespace AppGM.Core.Migrations
                 name: "TIOfensivoTiradaDeDaño");
 
             migrationBuilder.DropTable(
+                name: "TIPersonajeAlianza");
+
+            migrationBuilder.DropTable(
                 name: "TIPersonajeJugableCaracteristicas");
 
             migrationBuilder.DropTable(
@@ -2321,9 +2323,6 @@ namespace AppGM.Core.Migrations
                 name: "Combates");
 
             migrationBuilder.DropTable(
-                name: "ModeloAlianza");
-
-            migrationBuilder.DropTable(
                 name: "ModeloContrato");
 
             migrationBuilder.DropTable(
@@ -2349,6 +2348,9 @@ namespace AppGM.Core.Migrations
 
             migrationBuilder.DropTable(
                 name: "ModeloMapa");
+
+            migrationBuilder.DropTable(
+                name: "ModeloAlianza");
 
             migrationBuilder.DropTable(
                 name: "ModeloCaracteristicas");

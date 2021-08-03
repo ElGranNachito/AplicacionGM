@@ -26,6 +26,6 @@ namespace AppGM.Core
         /// <summary>
         /// Items actualmente almacenados en el slot
         /// </summary>
-        public List<TISlotItem> ItemsAlmacenados { get; set; } = new List<TISlotItem>();
+        public virtual List<TISlotItem> ItemsAlmacenados { get; set; } = new List<TISlotItem>();
     }
 }

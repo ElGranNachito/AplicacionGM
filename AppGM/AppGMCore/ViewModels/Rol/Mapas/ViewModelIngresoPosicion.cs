@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Input;
 
 namespace AppGM.Core
@@ -32,7 +32,7 @@ namespace AppGM.Core
         /// <summary>
         /// Alianzas de persoanje a las que pertenece esta unidad
         /// </summary>
-        public ViewModelListaDeElementos<ControladorAlianza> AlianzasPersonaje = new ViewModelListaDeElementos<ControladorAlianza>();
+        public ViewModelListaDeElementos<ViewModelPosicionAlianza> AlianzasPersonaje { get; set; } = new ViewModelListaDeElementos<ViewModelPosicionAlianza>();
         
         /// <summary>
         /// Comando que se ejecuta al presionar el boton de eliminar unidad
@@ -195,7 +195,7 @@ namespace AppGM.Core
 
             ComandoEliminarUnidad = new Comando(EliminarUnidad);
 
-            AlianzasPersonaje.Elementos = new ObservableCollection<ControladorAlianza>(unidad.personaje.Alianzas);
+            AlianzasPersonaje.Elementos = new ObservableCollection<ViewModelPosicionAlianza>(unidad.personaje.Alianzas.Select(a => new ViewModelPosicionAlianza(a)));
         }
 
         #endregion

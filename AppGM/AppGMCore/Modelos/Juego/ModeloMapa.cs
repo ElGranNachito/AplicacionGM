@@ -10,7 +10,7 @@ namespace AppGM.Core
         /// <summary>
         /// Rol al que pertenece este mapa
         /// </summary>
-        public TIRolMapa RolMapa { get; set; }
+        public virtual TIRolMapa RolMapa { get; set; }
 
         /// <summary>
         /// Controlador del mapa
@@ -30,6 +30,6 @@ namespace AppGM.Core
         /// <summary>
         /// Posiciones de las unidades dentro de este mapa
         /// </summary>
-        public List<TIMapaUnidadMapa> PosicionesUnidades { get; set; }  = new List<TIMapaUnidadMapa>();
+        public virtual List<TIMapaUnidadMapa> PosicionesUnidades { get; set; }  = new List<TIMapaUnidadMapa>();
     }
 }

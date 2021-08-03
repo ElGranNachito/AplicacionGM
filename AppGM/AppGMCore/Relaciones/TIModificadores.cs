@@ -9,7 +9,7 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(ModificadorDeStatBase))]
         public int IdModificadorDeStatBase { get; set; }
-        public ModeloModificadorDeStatBase ModificadorDeStatBase { get; set; }
+        public virtual ModeloModificadorDeStatBase ModificadorDeStatBase { get; set; }
     }
 
     /// <summary>
@@ -19,6 +19,7 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(TiradaBase))]
         public int IdTirada { get; set; }
-        public ModeloTiradaBase TiradaBase { get; set; }
+        public virtual ModeloTiradaBase TiradaBase { get; set; }
     }
 }
+ 

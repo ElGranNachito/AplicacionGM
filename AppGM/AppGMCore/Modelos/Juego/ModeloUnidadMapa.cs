@@ -25,12 +25,12 @@ namespace AppGM.Core
         /// <summary>
         /// Posicion de la unidad sobre el mapa
         /// </summary>
-        public TIUnidadMapaVector2   Posicion { get; set; }
+        public virtual TIUnidadMapaVector2   Posicion { get; set; }
 
         /// <summary>
         /// Personaje que representa la unidad
         /// </summary>
-        public TIPersonajeUnidadMapa Personaje { get; set; }
+        public virtual TIPersonajeUnidadMapa Personaje { get; set; }
     }
 
     /// <summary>

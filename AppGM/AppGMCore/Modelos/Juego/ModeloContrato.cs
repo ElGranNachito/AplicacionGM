@@ -29,6 +29,6 @@ namespace AppGM.Core
         /// <summary>
         /// Personajes atados por este contrato
         /// </summary>
-        public List<TIPersonajeContrato> PersonajesAfectados { get; set; } = new List<TIPersonajeContrato>();
+        public virtual List<TIPersonajeContrato> PersonajesAfectados { get; set; } = new List<TIPersonajeContrato>();
     }
 }

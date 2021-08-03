@@ -569,7 +569,13 @@ namespace AppGM.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("IDVariable")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("NombreVariable")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("TipoVariable")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -1090,7 +1096,7 @@ namespace AppGM.Core.Migrations
 
                     b.HasIndex("IdAlianza");
 
-                    b.ToTable("PersonajeAlianzas");
+                    b.ToTable("TIPersonajeAlianza");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIPersonajeArmaDistancia", b =>

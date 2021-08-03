@@ -29,7 +29,7 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(Accion))]
         public int IdAccion { get; set; }
-        public ModeloAccion Accion { get; set; }
+        public virtual ModeloAccion Accion { get; set; }
     }
 
     /// <summary>
@@ -39,7 +39,7 @@ namespace AppGM.Core
     { 
         [ForeignKey(nameof(AdministradorDeCombate))]
         public int IdAdministradorDeCombate { get; set; }
-        public ModeloAdministradorDeCombate AdministradorDeCombate { get; set; }
+        public virtual ModeloAdministradorDeCombate AdministradorDeCombate { get; set; }
     }
 
     /// <summary>
@@ -49,7 +49,7 @@ namespace AppGM.Core
     { 
         [ForeignKey(nameof(Ambiente))]
         public int IdAmbiente { get; set; }
-        public ModeloAmbiente Ambiente { get; set; }
+        public virtual ModeloAmbiente Ambiente { get; set; }
     }
 
     /// <summary>
@@ -59,7 +59,7 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(Participante))]
         public int IdParticipante { get; set; }
-        public ModeloParticipante Participante { get; set; }
+        public virtual ModeloParticipante Participante { get; set; }
     }
 
     /// <summary>
@@ -69,6 +69,6 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(Mapa))]
         public int IdMapa { get; set; }
-        public ModeloMapa Mapa { get; set; }
+        public virtual ModeloMapa Mapa { get; set; }
     }
 }

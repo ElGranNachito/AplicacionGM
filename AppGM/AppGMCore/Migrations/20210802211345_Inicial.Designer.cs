@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AppGM.Core.Migrations
 {
     [DbContext(typeof(RolContext))]
-    [Migration("20210802023056_Inicial")]
+    [Migration("20210802211345_Inicial")]
     partial class Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -571,7 +571,13 @@ namespace AppGM.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("IDVariable")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("NombreVariable")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("TipoVariable")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -1092,7 +1098,7 @@ namespace AppGM.Core.Migrations
 
                     b.HasIndex("IdAlianza");
 
-                    b.ToTable("PersonajeAlianzas");
+                    b.ToTable("TIPersonajeAlianza");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIPersonajeArmaDistancia", b =>

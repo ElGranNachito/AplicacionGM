@@ -11,11 +11,11 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(Slot))]
         public int IdSlot { get; set; }
-        public ModeloSlot Slot { get; set; }
+        public virtual ModeloSlot Slot { get; set; }
 
         [ForeignKey(nameof(Item))]
         public int IdItem { get; set; }
-        public ModeloItem Item { get; set; }
+        public virtual ModeloItem Item { get; set; }
     }
 
     // Utilizables:
@@ -27,7 +27,7 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(Utilizable))]
         public int IdUtilizable { get; set; }
-        public ModeloUtilizable Utilizable { get; set; }
+        public virtual ModeloUtilizable Utilizable { get; set; }
     }
 
     /// <summary>
@@ -37,7 +37,7 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(TiradaBase))]
         public int IdTirada { get; set; }
-        public ModeloTiradaBase TiradaBase { get; set; }
+        public virtual ModeloTiradaBase TiradaBase { get; set; }
     }
 
     /// <summary>
@@ -47,7 +47,7 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(ModificadorDeStatBase))]
         public int IdModificadorStatBase { get; set; }
-        public ModeloModificadorDeStatBase ModificadorDeStatBase { get; set; }
+        public virtual ModeloModificadorDeStatBase ModificadorDeStatBase { get; set; }
     }
 
     /// <summary>
@@ -57,7 +57,7 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(Efecto))]
         public int IdEfecto { get; set; }
-        public ModeloEfecto Efecto { get; set; }
+        public virtual ModeloEfecto Efecto { get; set; }
     }
 
     // Utilizables portables:
@@ -69,7 +69,7 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(Portable))]
         public int IdPortable { get; set; }
-        public ModeloPortable Portable { get; set; }
+        public virtual ModeloPortable Portable { get; set; }
     }
 
     /// <summary>
@@ -79,7 +79,7 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(Slot))]
         public int IdSlot { get; set; }
-        public ModeloSlot Slot { get; set; }
+        public virtual ModeloSlot Slot { get; set; }
     }
 
     /// <summary>
@@ -89,7 +89,7 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(Modificador))]
         public int IdModificadorDeStat { get; set; }
-        public ModeloModificadorDeStatBase Modificador { get; set; }
+        public virtual ModeloModificadorDeStatBase Modificador { get; set; }
     }
 
     // Utilizable portable ofensivo:
@@ -101,7 +101,7 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(Ofensivo))]
         public int IdOfensivo { get; set; }
-        public ModeloOfensivo Ofensivo { get; set; }
+        public virtual ModeloOfensivo Ofensivo { get; set; }
     }
 
     /// <summary>
@@ -111,7 +111,7 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(TiradaDeDaño))]
         public int IdTiradaDeDaño { get; set; }
-        public ModeloTiradaDeDaño TiradaDeDaño { get; set; }
+        public virtual ModeloTiradaDeDaño TiradaDeDaño { get; set; }
     }
 
     /// <summary>
@@ -121,7 +121,7 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(Efecto))]
         public int IdEfecto { get; set; }
-        public ModeloEfecto Efecto { get; set; }
+        public virtual ModeloEfecto Efecto { get; set; }
     }
 
     // Consumible armas:
@@ -133,7 +133,7 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(ArmasDistancia))]
         public int IdArmasDistancia { get; set; }
-        public ModeloArmasDistancia ArmasDistancia { get; set; }
+        public virtual ModeloArmasDistancia ArmasDistancia { get; set; }
     }
 
     /// <summary>
@@ -143,7 +143,7 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(TiradaVariable))]
         public int IdTirada { get; set; }
-        public ModeloTiradaVariable TiradaVariable { get; set; }
+        public virtual ModeloTiradaVariable TiradaVariable { get; set; }
     }
 
     /// <summary>
@@ -153,7 +153,7 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(TiradaDaño))]
         public int IdTirada { get; set; }
-        public ModeloTiradaDeDaño TiradaDaño { get; set; }
+        public virtual ModeloTiradaDeDaño TiradaDaño { get; set; }
     }
 
     /// <summary>
@@ -163,7 +163,7 @@ namespace AppGM.Core
     {
         [ForeignKey(nameof(Efecto))]
         public int IdEfecto { get; set; }
-        public ModeloEfecto Efecto { get; set; }
+        public virtual ModeloEfecto Efecto { get; set; }
     }
 
 }

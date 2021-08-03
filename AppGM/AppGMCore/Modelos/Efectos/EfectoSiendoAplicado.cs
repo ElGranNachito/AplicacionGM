@@ -23,17 +23,17 @@ namespace AppGM.Core
 		/// <summary>
 		/// Modelo del efecto
 		/// </summary>
-		public TIEfectoSiendoAplicadoEfecto Efecto { get; set; }
+		public virtual TIEfectoSiendoAplicadoEfecto Efecto { get; set; }
 
 		/// <summary>
 		/// <see cref="ModeloPersonaje"/> que causo o instigo el efecto
 		/// </summary>
-		public TIEfectoSiendoAplicadoPersonajeInstigador     Instigador { get; set; }
+		public virtual TIEfectoSiendoAplicadoPersonajeInstigador     Instigador { get; set; }
 
 		/// <summary>
 		/// <see cref="ModeloPersonaje"/> a los que se les esta aplicando el efecto
 		/// </summary>
-		public List<TIEfectoSiendoAplicadoPersonajeObjetivo> Objetivos { get; set; }
+		public virtual List<TIEfectoSiendoAplicadoPersonajeObjetivo> Objetivos { get; set; }
 
 		/// <summary>
 		/// Atajo para obtener el <see cref="ModeloEfecto"/>
