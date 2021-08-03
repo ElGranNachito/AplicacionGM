@@ -10,6 +10,10 @@ namespace AppGM.Core
 	public abstract class ViewModelCreacionDeFuncion<TFuncion> : ViewModelCreacionDeFuncionBase
 	{
 
+		#region Propiedad & Campos
+
+		//-----------------------------CAMPOS--------------------------------
+
 		private ControladorFuncion<TFuncion> mControladorFuncion;
 
 		/// <summary>
@@ -17,6 +21,7 @@ namespace AppGM.Core
 		/// </summary>
 		private ResultadoCompilacion<TFuncion> mResultadoCompilacion;
 
+		//--------------------------PROPIEDADES------------------------------
 
 		/// <summary>
 		/// Controlador de la funcion actualmente siendo creada
@@ -30,7 +35,7 @@ namespace AppGM.Core
 					ModeloFuncion modeloFuncion = new ModeloFuncion();
 
 					mControladorFuncion =
-						(ControladorFuncion<TFuncion>) ControladorFuncionBase.CrearControladorCorrespondiente(modeloFuncion, TipoFuncion);
+						(ControladorFuncion<TFuncion>)ControladorFuncionBase.CrearControladorCorrespondiente(modeloFuncion, TipoFuncion);
 				}
 
 				//Actualizamos el nombre de la funcion en el modelo
@@ -46,7 +51,11 @@ namespace AppGM.Core
 
 		public ICommand ComandoCancelar { get; set; }
 
-		public ICommand ComandoGuardar { get; set; }
+		public ICommand ComandoGuardar { get; set; } 
+
+		#endregion
+
+		#region Constructor
 
 		public ViewModelCreacionDeFuncion(ControladorFuncion<TFuncion> _controladorFuncion, ETipoFuncion _tipoDeFuncion)
 		{
@@ -55,33 +64,45 @@ namespace AppGM.Core
 			ComandoCompilar = new Comando(CrearFuncion);
 			ComandoGuardar = new Comando(Guardar);
 
+			ComandoCancelar = new Comando(() =>
+			{
+				//TODO: Expandir para que tambien cambie el contenido actual de la ventana o dispare algun evento para que se haga en otro lado
+				SistemaPrincipal.Desatar<ViewModelCreacionDeFuncionBase>();
+			});
+
 			//No queremos disparar la propiedad si el controlador es null asi que hacemos este if
 			if (_controladorFuncion != null)
 			{
 				ControladorFuncion = _controladorFuncion;
-				ControladorFuncion.CargarBloques();
 
 				NombreFuncion = ControladorFuncion.NombreFuncion;
 
-				var bloques = ControladorFuncion.Bloques.FindAll(bloque =>
+				if (ControladorFuncion.CargarBloques())
 				{
-					if (bloque is BloqueVariable var)
+					var bloques = ControladorFuncion.Bloques.FindAll(bloque =>
 					{
-						if (var.Argumento == null)
-							return false;
+						if (bloque is BloqueVariable var)
+						{
+							if (var.Argumento == null)
+								return false;
+
+							return true;
+						}
 
 						return true;
+					}).Select(bloque => bloque.ObtenerViewModel(this));
+
+					foreach (var bloque in bloques)
+					{
+						AñadirBloque(bloque, -1);
 					}
-
-					return true;
-				}).Select(bloque => bloque.ObtenerViewModel(this));
-
-				foreach (var bloque in bloques)
-				{
-					AñadirBloque(bloque, -1);
 				}
 			}
-		}
+		} 
+
+		#endregion
+
+		#region Metodos
 
 		/// <summary>
 		/// Funcion llamada por <see cref="ComandoCompilar"/>
@@ -91,6 +112,8 @@ namespace AppGM.Core
 		/// <summary>
 		/// Funcion llamada por <see cref="ComandoGuardar"/>
 		/// </summary>
-		protected abstract void Guardar();
+		protected abstract void Guardar(); 
+
+		#endregion
 	}
 }

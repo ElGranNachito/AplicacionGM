@@ -35,6 +35,9 @@ namespace AppGM.Core
 			mAcciones    = _acciones;
 		}
 
+		public BloqueCondicionalCompleto(XmlReader _reader)
+			:base(_reader){}
+
 		public override Expression ObtenerExpresion(Compilador compilador)
 		{
 			//Si el numero de condicion y acciones no es igual devolvemos una exprsion vacia
@@ -72,6 +75,11 @@ namespace AppGM.Core
 			return expresionAnterior;
 		}
 
+		public override ViewModelBloqueFuncionBase ObtenerViewModel(IContenedorDeBloques padre = null)
+		{
+			return new ViewModelBloqueCondicionalCompleto(IDBloque, mCondiciones, mAcciones, padre);
+		}
+
 		public override void ConvertirHaciaXML(XmlWriter writer)
 		{
 			writer.WriteStartElement(nameof(BloqueCondicionalCompleto));
@@ -89,7 +97,13 @@ namespace AppGM.Core
 				writer.WriteAttributeString("NumeroDeAcciones", mAcciones[i].Count.ToString());
 
 				foreach (var bloque in mAcciones[i])
+				{
+					writer.WriteStartElement("Accion");
+
 					bloque.ConvertirHaciaXML(writer);
+
+					writer.WriteEndElement();
+				}
 
 				writer.WriteEndElement();
 
@@ -119,12 +133,16 @@ namespace AppGM.Core
 				//Obtenemos el numero de acciones que se realizan en este bloque y reservamos espacio en la lista
 				mAcciones.Add(new List<BloqueBase>(int.Parse(reader.GetAttribute("NumeroDeAcciones"))));
 
+				reader.Read();
+
 				//Por cada accion...
 				for (int j = 0; j < mAcciones[i].Capacity; ++j)
 				{
 					//Salteamos los elementos hasta encontrar uno cuyo nombre comience con Bloque y sea el comienzo de un Elemento
-					while (reader.Name.StartsWith("Bloque") && reader.NodeType != XmlNodeType.Element)
-						reader.Read();
+					reader.ReadToFollowing("Accion");
+
+					reader.Read();
+					reader.MoveToContent();
 
 					mAcciones[i].Add(BloqueBase.DesdeXml(reader));
 				}

@@ -56,7 +56,7 @@ namespace AppGM.Core
 				if (mMetodoSeleccionado == null)
 					return null;
 
-				return new ViewModelItemComboBoxBase<MethodInfo>(mMetodoSeleccionado.Metodo, mMetodoSeleccionado.ObtenerNombre());
+				return MetodosDisponibles.Find(m => m.valor == mMetodoSeleccionado.Metodo);
 			}
 			set
 			{
@@ -81,9 +81,11 @@ namespace AppGM.Core
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		/// <param name="_vmCreacionFuncion"><see cref="ViewModelCreacionDeFuncionBase"/> al que pertenece este bloque</param>
-		public ViewModelBloqueLlamarFuncion(ViewModelCreacionDeFuncionBase _vmCreacionFuncion)
-			: base(_vmCreacionFuncion)
+		/// <param name="_padre"><see cref="IContenedorDeBloques"/> que contiene a este bloque. Si se deja en null se asignara por defecto
+		/// el <see cref="ViewModelCreacionDeFuncionBase"/> actualmente activo</param>
+		/// <param name="_idBloque">id que sera asignada a este bloque. Si se deja en -1, la id se asignara automaticamente</param>
+		public ViewModelBloqueLlamarFuncion(IContenedorDeBloques _padre = null, int _idBloque = -1)
+			: base(_padre, _idBloque)
 		{
 			Caller = new ViewModelArgumento(this, typeof(object), "", true, false);
 
@@ -95,16 +97,17 @@ namespace AppGM.Core
 		/// Inicializa este ViewModel a partir de datos preexistentes
 		/// </summary>
 		/// <param name="_idBloque"></param>
-		/// <param name="_vmCreacionFuncion"><see cref="ViewModelCreacionDeFuncionBase"/> al que pertenece este bloque</param>
 		/// <param name="_bloque">Bloque que esta creando este ViewModel</param>
 		/// <param name="_paramsCaller">Parametros con los que se inicializara al <see cref="Caller"/></param>
+		/// /// <param name="_padre"><see cref="IContenedorDeBloques"/> que contiene a este bloque. Si se deja en null se asignara por defecto
+		/// el <see cref="ViewModelCreacionDeFuncionBase"/> actualmente activo</param>
 		public ViewModelBloqueLlamarFuncion(
 			int _idBloque,
-			ViewModelCreacionDeFuncionBase _vmCreacionFuncion,
 			BloqueFuncion _bloque,
-			ParametrosInicializarArgumentoDesdeBloque _paramsCaller)
+			ParametrosInicializarArgumentoDesdeBloque _paramsCaller,
+			IContenedorDeBloques _padre = null)
 
-			:base(_vmCreacionFuncion, _idBloque)
+			:base(_padre, _idBloque)
 		{
 			_paramsCaller.contenedor = this;
 

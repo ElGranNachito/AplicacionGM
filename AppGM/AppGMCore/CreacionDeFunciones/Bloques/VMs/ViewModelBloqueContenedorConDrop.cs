@@ -23,17 +23,17 @@ namespace AppGM.Core
 		/// Constructor
 		/// </summary>
 		/// <param name="_vmCreacionDeFuncion"><see cref="ViewModelCreacionDeFuncionBase"/> que contiene este bloque</param>
-		public ViewModelBloqueContenedorConDrop(ViewModelCreacionDeFuncionBase _vmCreacionDeFuncion, int _idBloque = -1)
-			:base(_vmCreacionDeFuncion, _idBloque)
+		public ViewModelBloqueContenedorConDrop(IContenedorDeBloques _padre, int _idBloque = -1)
+			:base(_padre, _idBloque)
 		{
 			//Handler para cuando el usuario suelta un elemento sobre el ReceptorAñadirBloque
 			DDragHandlerElementoSoltado handlerElementoSoltado = contenido =>
 			{
 				if (contenido is ViewModelBloqueFuncionBase bloque)
 				{
-					AñadirBloque(bloque.Copiar(), -1);
+					AñadirBloque(bloque.Copiar(this), -1);
 
-					MostrarEspacioDrop = false;
+					MostrarEspacioDrop             = false;
 					ReceptorAñadirBloque.EsVisible = false;
 
 					return true;

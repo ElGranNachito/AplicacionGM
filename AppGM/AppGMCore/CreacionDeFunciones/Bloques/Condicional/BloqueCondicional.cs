@@ -169,6 +169,16 @@ namespace AppGM.Core
 			}
 		}
 
+		public override ViewModelBloqueFuncionBase ObtenerViewModel(IContenedorDeBloques _padre = null)
+		{
+			return new ViewModelBloqueCondicional(
+				IDBloque,
+				mArgumentos.Select(arg => arg.ObtenerParametrosInicializarVM()).ToList(),
+				mOperaciones.ToList(),
+				TipoCondicional,
+				_padre ?? SistemaPrincipal.VMCreacionDeFuncionActual);
+		}
+
 		public override void ConvertirHaciaXML(XmlWriter writer)
 		{
 			writer.WriteStartElement(nameof(BloqueCondicional));

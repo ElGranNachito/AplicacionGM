@@ -40,9 +40,14 @@ namespace AppGM.Core
         public static ViewModelMenuSeleccionCombate MenuSeleccionCombate    => ObtenerInstancia<ViewModelMenuSeleccionCombate>();
                                                                             
         /// <summary>                                                       
-        /// Viewm model del controlador de combate                          
+        /// View model del controlador de combate                          
         /// </summary>                                                      
         public static ViewModelCombate              CombateActual           => ObtenerInstancia<ViewModelCombate>();
+
+        /// <summary>
+        /// View model del menu de creacion de funciones actualmente abierto
+        /// </summary>
+        public static ViewModelCreacionDeFuncionBase VMCreacionDeFuncionActual => ObtenerInstancia<ViewModelCreacionDeFuncionBase>();
                                                                             
         /// <summary>                                                       
         /// Modelo del rol actualmente abierto                              
@@ -198,6 +203,25 @@ namespace AppGM.Core
             Kernel.Bind<ViewModelMapaPrincipal>()         .ToConstant(new ViewModelMapaPrincipal(DatosRolSeleccionado.Mapas[0]));
             Kernel.Bind<ViewModelMenuSeleccionCombate>()  .ToConstant(new ViewModelMenuSeleccionCombate(DatosRolSeleccionado.CombatesActivos));
             Kernel.Bind<ViewModelCombate>()               .ToConstant(new ViewModelCombate());
+        }
+
+        /// <summary>
+        /// Añade un <paramref name="obj"/> al <see cref="Kernel"/>
+        /// </summary>
+        /// <typeparam name="T">Tipo del <paramref name="obj"/> que sera atado</typeparam>
+        /// <param name="obj">Objeto que sera atado</param>
+        public static void Atar<T>(T obj)
+        {
+	        Kernel.Bind<T>().ToConstant(obj);
+        }
+
+        /// <summary>
+        /// Quita el objeto de tipo <typeparamref name="T"/> actualmente atado
+        /// </summary>
+        /// <typeparam name="T">Tipo del objeto que sera quitado</typeparam>
+        public static void Desatar<T>()
+        {
+            Kernel.Unbind<T>();
         }
 
         /// <summary>

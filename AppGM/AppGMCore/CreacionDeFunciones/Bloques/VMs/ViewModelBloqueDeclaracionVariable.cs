@@ -141,45 +141,46 @@ namespace AppGM.Core
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		/// <param name="_vmCreacionFuncionBase"><see cref="ViewModelCreacionDeFuncionBase"/> del que es parte esta variable</param>
-		public ViewModelBloqueDeclaracionVariable(ViewModelCreacionDeFuncionBase _vmCreacionFuncionBase)
-			: base(_vmCreacionFuncionBase)
+		/// <param name="_padre"><see cref="IContenedorDeBloques"/> que contiene a este bloque. Si se deja en null se asignara por defecto
+		/// el <see cref="ViewModelCreacionDeFuncionBase"/> actualmente activo</param>
+		/// <param name="_idBloque">id que sera asignada a este bloque. Si se deja en -1, la id se asignara automaticamente</param>
+		public ViewModelBloqueDeclaracionVariable(IContenedorDeBloques _padre = null, int _idBloque = -1)
+			: base(_padre, _idBloque)
 		{
 			ValorPorDefecto = new ViewModelArgumento( this, typeof(object), "Valor por defecto");
 			Tipo = typeof(object);
 		}
 
+		/// <summary>
+		/// Constructor utilizado para inicializar esta instancia a partir de datos existentes en un <see cref="BloqueVariable"/>
+		/// </summary>
+		/// <param name="_idBloque">id que se le asignara al bloque</param>
+		/// <param name="_tipo"><see cref="Type"/> de la variable</param>
+		/// <param name="_tipoVariable"><see cref="ETipoVariable"/> de la variable</param>
+		/// <param name="_nombre">Nombre de la variable</param>
+		/// <param name="_parametrosVMValorPorDefecto">Parametros que se utilizaran para incializar el <see cref="ValorPorDefecto"/></param>
+		/// <param name="_padre"><see cref="IContenedorDeBloques"/> que contiene a este bloque. Si se deja en null se asignara por defecto
+		/// el <see cref="ViewModelCreacionDeFuncionBase"/> actualmente activo</param>
 		public ViewModelBloqueDeclaracionVariable(
 			int _idBloque,
-			ViewModelCreacionDeFuncionBase _vmCreacionFuncionBase,
 			Type _tipo,
 			ETipoVariable _tipoVariable,
 			string _nombre, 
-			ParametrosInicializarArgumentoDesdeBloque _parametrosVMArgumento)
+			ParametrosInicializarArgumentoDesdeBloque _parametrosVMValorPorDefecto,
+			IContenedorDeBloques _padre = null)
 
-			:base(_vmCreacionFuncionBase, _idBloque)
+			:base(_padre, _idBloque)
 		{
-			DVariableCambio<IContenedorDeBloques> padreModificadoHandler = null;
+			_parametrosVMValorPorDefecto.contenedor = this;
 
-			padreModificadoHandler = (anterior, actual) =>
-			{
-				_parametrosVMArgumento.contenedor = this;
+			ValorPorDefecto = new ViewModelArgumento(_parametrosVMValorPorDefecto);
 
-				ValorPorDefecto = new ViewModelArgumento(_parametrosVMArgumento);
+			Tipo = _tipo;
 
-				Tipo = _tipo;
+			EsPersistente = _tipoVariable == ETipoVariable.Persistente;
+			EsParametro = _tipoVariable == ETipoVariable.ParametroCreadoPorElUsuario;
 
-				EsPersistente = _tipoVariable == ETipoVariable.Persistente;
-				EsParametro = _tipoVariable == ETipoVariable.ParametroCreadoPorElUsuario;
-
-				Nombre = _nombre;
-
-				OnPadreModificado -= padreModificadoHandler;
-			};
-
-			OnPadreModificado += padreModificadoHandler;
-
-			_parametrosVMArgumento.contenedor = this;
+			Nombre = _nombre;
 		}
 
 		#endregion

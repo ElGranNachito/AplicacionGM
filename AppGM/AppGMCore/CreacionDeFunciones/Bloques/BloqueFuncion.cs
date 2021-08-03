@@ -101,7 +101,7 @@ namespace AppGM.Core
 			return Expression.Call(expresionCaller, metodo, expresionesParametrosFuncion);
 		}
 
-		public override ViewModelBloqueFuncionBase ObtenerViewModel(ViewModelCreacionDeFuncionBase vmCreacionDeFuncion)
+		public override ViewModelBloqueFuncionBase ObtenerViewModel(IContenedorDeBloques _padre = null)
 		{
 			if (caller == null)
 			{
@@ -112,9 +112,9 @@ namespace AppGM.Core
 
 			return new ViewModelBloqueLlamarFuncion(
 				IDBloque,
-				vmCreacionDeFuncion,
 				this,
-				caller.ObtenerParametrosInicializarVM()
+				caller.ObtenerParametrosInicializarVM(),
+				_padre ?? SistemaPrincipal.VMCreacionDeFuncionActual
 			);
 		}
 

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace AppGM.Core
@@ -28,8 +27,8 @@ namespace AppGM.Core
 
 		#region Constructor
 
-		public ViewModelBloqueContenedor(ViewModelCreacionDeFuncionBase _vmCreacionDeFuncion, int _idBloque = -1)
-			: base(_vmCreacionDeFuncion, _idBloque) { } 
+		public ViewModelBloqueContenedor(IContenedorDeBloques _padre, int _idBloque = -1)
+			: base(_padre, _idBloque) { } 
 
 		#endregion
 
@@ -37,8 +36,6 @@ namespace AppGM.Core
 
 		public void AñadirBloque(ViewModelBloqueFuncionBase bloque, int indice = -1)
 		{
-			bloque.Padre = this;
-
 			if (bloque is ViewModelBloqueDeclaracionVariable var)
 				VariablesCreadas.Add(var);
 

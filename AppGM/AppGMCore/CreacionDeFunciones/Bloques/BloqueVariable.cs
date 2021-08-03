@@ -107,15 +107,15 @@ namespace AppGM.Core
 			Argumento    = _argumento;
 		}
 
-		public override ViewModelBloqueFuncionBase ObtenerViewModel(ViewModelCreacionDeFuncionBase vmCreacionDeFuncion)
+		public override ViewModelBloqueFuncionBase ObtenerViewModel(IContenedorDeBloques _padre = null)
 		{
 			return new ViewModelBloqueDeclaracionVariable(
-				IDBloque, 
-				vmCreacionDeFuncion,
+				IDBloque,
 				tipo,
 				tipoVariable,
 				nombre, 
-				Argumento.ObtenerParametrosInicializarVM());
+				Argumento.ObtenerParametrosInicializarVM(),
+				_padre ?? SistemaPrincipal.VMCreacionDeFuncionActual);
 		}
 
 		public override void ConvertirHaciaXML(XmlWriter writer)

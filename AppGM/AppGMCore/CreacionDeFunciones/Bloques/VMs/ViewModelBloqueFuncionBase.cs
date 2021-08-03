@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using AppGM.Core.Delegados;
+using CoolLogs;
 
 namespace AppGM.Core
 {
@@ -137,9 +138,18 @@ namespace AppGM.Core
 		/// Constructor
 		/// </summary>
 		/// <param name="_vmCreacionDeFuncion"><see cref="ViewModelCreacionDeFuncionBase"/> al que pertenece este bloque</param>
-		public ViewModelBloqueFuncionBase(ViewModelCreacionDeFuncionBase _vmCreacionDeFuncion, int _idBloque = -1)
+		public ViewModelBloqueFuncionBase(IContenedorDeBloques _padre = null, int _idBloque = -1)
 		{
-			VMCreacionDeFuncion = _vmCreacionDeFuncion;
+			VMCreacionDeFuncion = SistemaPrincipal.VMCreacionDeFuncionActual;
+
+			if (VMCreacionDeFuncion == null)
+			{
+				SistemaPrincipal.LoggerGlobal.Log($"Se intento crear un {this.GetType()} pero {nameof(SistemaPrincipal.VMCreacionDeFuncionActual)} es null!", ESeveridad.Error);
+
+				return;
+			}
+
+			Padre = _padre ?? VMCreacionDeFuncion;
 
 			IDBloque = _idBloque == -1 ? VMCreacionDeFuncion.ObtenerID() : _idBloque;
 		}
@@ -150,10 +160,10 @@ namespace AppGM.Core
 
 		#region Metodos
 
-		public virtual ViewModelBloqueFuncionBase Copiar()
+		public virtual ViewModelBloqueFuncionBase Copiar(IContenedorDeBloques destino)
 		{
 			if(Padre == null)
-				return Activator.CreateInstance(GetType(), VMCreacionDeFuncion) as ViewModelBloqueFuncionBase;
+				return Activator.CreateInstance(GetType(), destino ?? VMCreacionDeFuncion, IDBloque) as ViewModelBloqueFuncionBase;
 
 			return this;
 		}
@@ -227,7 +237,7 @@ namespace AppGM.Core
 		{
 			MostrarEspacioDrop = false;
 
-			Padre.AñadirBloque(((ViewModelBloqueFuncionBase)vm).Copiar(), IndiceBloque);
+			Padre.AñadirBloque(((ViewModelBloqueFuncionBase)vm).Copiar(Padre), IndiceBloque);
 
 			return true;
 		}

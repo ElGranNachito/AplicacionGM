@@ -27,6 +27,17 @@ namespace AppGM.Core
         public void DispararPropertyChanged(PropertyChangedEventArgs args) =>
             PropertyChanged(this, args);
 
+        /*Aca debajo hay creado otro metodo igual con la unica diferencia de que directamente toma el nombre de la propiedad,
+         la verdad es mas rapido que tener que inicializar los argumentos, pero no da cambiar todas las referencias a la funcion
+        anterior. Si en algun momento alguien se siente al pedo fijese de cambiarlo, esto tambien va para mi yo del futuro UwU*/
+
+        /// <summary>
+        /// Dispara el evento PropertyChanged
+        /// </summary>
+        /// <param name="args">Argumentos del evento</param>
+        public void DispararPropertyChanged(string nombrePropiedad) =>
+	        PropertyChanged(this, new PropertyChangedEventArgs(nombrePropiedad));
+
         /// <summary>
         /// Permite acceder a la implementacion base de una funcion de una interfaz de manera mas limpia
         /// </summary>

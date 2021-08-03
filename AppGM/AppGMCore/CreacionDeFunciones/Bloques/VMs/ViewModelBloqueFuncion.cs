@@ -10,8 +10,8 @@
 		/// Constructor
 		/// </summary>
 		/// <param name="_vmCreacionDeFuncion"><see cref="ViewModelCreacionDeFuncionBase"/> del que es parte este bloque</param>
-		public ViewModelBloqueFuncion(ViewModelCreacionDeFuncionBase _vmCreacionDeFuncion, int _idBloque = -1)
-			:base(_vmCreacionDeFuncion, _idBloque){}
+		public ViewModelBloqueFuncion(IContenedorDeBloques _padre, int _idBloque = -1)
+			:base(_padre, _idBloque){}
 
 		/// <summary>
 		/// Genera el <see cref="TipoBloque"/> que equivale a los datos ingresados en este VM.

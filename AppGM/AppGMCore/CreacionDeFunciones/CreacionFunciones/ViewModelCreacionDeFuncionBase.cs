@@ -87,6 +87,8 @@ namespace AppGM.Core
 		/// </summary>
 		public ViewModelCreacionDeFuncionBase()
 		{
+			SistemaPrincipal.Atar<ViewModelCreacionDeFuncionBase>(this);
+
 			BloquesDisponibles = new ViewModelListaDeElementos<ViewModelBloqueMuestra>(AsignarListaDeBloques());
 			VariablesBase = AsignarVariablesBase();
 
@@ -110,18 +112,12 @@ namespace AppGM.Core
 
 		public List<ViewModelBloqueDeclaracionVariable> ObtenerVariablesCreadas(ViewModelBloqueFuncionBase bloqueQueIntentaObtenerLasVariables)
 		{
-			var variablesCreadasValidas = VariablesCreadas;
-
-			if (bloqueQueIntentaObtenerLasVariables != null)
-				variablesCreadasValidas.RemoveAll(variable => !variable.EsValido || bloqueQueIntentaObtenerLasVariables.IndiceBloque < variable.IndiceBloque);
-
-			return variablesCreadasValidas.ToList();
+			return VariablesCreadas.FindAll(
+				var => var.EsValido && bloqueQueIntentaObtenerLasVariables.IndiceBloque > var.IndiceBloque);
 		}
 
 		public void AñadirBloque(ViewModelBloqueFuncionBase bloque, int indice)
 		{
-			bloque.Padre = this;
-
 			if(SistemaPrincipal.Drag.HayUnDragActivo)
 				GrosorBordesGridBloquesColocados = new Grosor(0, 1);
 
@@ -217,7 +213,7 @@ namespace AppGM.Core
 		{
 			if (vm is ViewModelBloqueFuncionBase bloque)
 			{
-				AñadirBloque(bloque.Copiar(), -1);
+				AñadirBloque(bloque.Copiar(Padre), -1);
 
 				return true;
 			}

@@ -23,13 +23,13 @@ namespace AppGM.Core
 			tipoBloque = _tipoBLoque;
 		}
 
-		public override ViewModelBloqueFuncionBase Copiar()
+		public override ViewModelBloqueFuncionBase Copiar(IContenedorDeBloques destino)
 		{
 			//Nos aseguramos de que el tipoBloque sea un ViemModelBloqueFuncionBase
 			if (!typeof(ViewModelBloqueFuncionBase).IsAssignableFrom(tipoBloque))
 				return null;
 
-			return (ViewModelBloqueFuncionBase) Activator.CreateInstance(tipoBloque, VMCreacionDeFuncion);
+			return (ViewModelBloqueFuncionBase) Activator.CreateInstance(tipoBloque, destino ?? VMCreacionDeFuncion, -1);
 		}
 	}
 }

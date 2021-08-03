@@ -84,16 +84,20 @@ namespace AppGM.Core
 			List<ParametrosInicializarArgumentoDesdeBloque> _argumentos,
 			List<EOperacionLogica> _operacionesLogicas)
 		{
+			//Añadimos la primera seccion a mano ya que esta no lleva una operacion logica
 			AñadirSeccion(new ViewModelSeccionCondicion(mDueño, this, 0, _argumentos[0].tipoArgumento, _argumentos[0]));
 
+			//Añadimos el resto de las secciones
 			for (int i = 1; i < _argumentos.Count; ++i)
 			{
-				AñadirSeccion(new ViewModelSeccionCondicion(mDueño, this, 0, _argumentos[i].tipoArgumento, _argumentos[i]));
+				AñadirSeccion(new ViewModelSeccionCondicion(mDueño, this, i, _argumentos[i].tipoArgumento, _argumentos[i], _operacionesLogicas[i - 1]));
 			}
 
 			ArgumentoInicial = Secciones.Last().Argumento;
 
 			ComandoAñadirSeccion = new Comando(() => { AñadirSeccion(); });
+
+			ActualizarValidezDeLasSecciones();
 		}
 
 		#endregion

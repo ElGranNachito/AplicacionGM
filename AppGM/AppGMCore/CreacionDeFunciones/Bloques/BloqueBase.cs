@@ -44,9 +44,9 @@ namespace AppGM.Core
 		/// <summary>
 		/// Obtiene un <see cref="ViewModelBloqueFuncionBase"/> a partir de este bloque
 		/// </summary>
-		/// <param name="vmCreacionDeFuncion">Contenedor del bloque</param>
+		/// <param name="_padre">Contenedor del bloque</param>
 		/// <returns><see cref="ViewModelBloqueFuncionBase"/> que representa este bloque</returns>
-		public virtual ViewModelBloqueFuncionBase ObtenerViewModel(ViewModelCreacionDeFuncionBase vmCreacionDeFuncion) => null;
+		public virtual ViewModelBloqueFuncionBase ObtenerViewModel(IContenedorDeBloques _padre = null) => null;
 
 		/// <summary>
 		/// Obtiene el XML que equivale a esta expresion
@@ -75,6 +75,8 @@ namespace AppGM.Core
 					return new BloqueVariable(reader);
 				case nameof(BloqueFuncion):
 					return new BloqueFuncion(reader);
+				case nameof(BloqueCondicionalCompleto):
+					return new BloqueCondicionalCompleto(reader);
 				//TODO: Terminar
 				default:
 					SistemaPrincipal.LoggerGlobal.Log($"Elemento actual ({reader.Name}) no representa un bloque!", ESeveridad.Error);
@@ -98,24 +100,34 @@ namespace AppGM.Core
 
 			XmlReaderSettings config = new XmlReaderSettings {IgnoreComments = true};
 
-			using XmlReader reader = XmlReader.Create(File.OpenRead(nombreCompletoArchivoFuncion), config);
-
-			reader.ReadToFollowing("Cuerpo");
-
-			var bloques = new List<BloqueBase>(int.Parse(reader.GetAttribute("NumeroDeBloques")));
-
-			while (reader.ReadToFollowing("Bloque"))
+			//Intentamos abrir el archivo y crear los bloques para la funcion
+			try
 			{
-				//Entramos al elemento y leemos hasta hallar el inicio del bloque
-				reader.Read();
+				using XmlReader reader = XmlReader.Create(File.OpenRead(nombreCompletoArchivoFuncion), config);
 
-				while (!reader.IsStartElement())
+				reader.ReadToFollowing("Cuerpo");
+
+				var bloques = new List<BloqueBase>(int.Parse(reader.GetAttribute("NumeroDeBloques")));
+
+				while (reader.ReadToFollowing("Bloque"))
+				{
+					//Entramos al elemento y leemos hasta hallar el inicio del bloque
 					reader.Read();
 
-				bloques.Add(BloqueBase.DesdeXml(reader));
+					while (!reader.IsStartElement())
+						reader.Read();
+
+					bloques.Add(BloqueBase.DesdeXml(reader));
+				}
+
+				return bloques;
+			}
+			catch (Exception ex)
+			{
+				SistemaPrincipal.LoggerGlobal.LogCrash($"Error al cargar archivo de funcion {nombreCompletoArchivoFuncion}{Environment.NewLine}Excepcion:{ex.Message}");
 			}
 
-			return bloques;
+			return null;
 		}
 	}
 }

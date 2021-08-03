@@ -124,17 +124,17 @@ namespace AppGM.Core
 					$"Argumento{_indiceSeccion}", 
 					true, 
 					false);
-
-				var operacionesLogicasDisponibles = Argumento.TipoArgumento.ObtenerOperacionesLogicasDisponibles();
-
-				Operacion = new ViewModelComboBox<EOperacionLogica>(operacionesLogicasDisponibles);
-				Operacion.ValorSeleccionado = Operacion.ValoresPosibles.Find(op => op.valor == _operacionLogica);
 			}
 			else
 			{
 				Argumento = new ViewModelArgumento(_paramsArgumento);
+			}
 
-				Operacion = new ViewModelComboBox<EOperacionLogica>(Argumento.TipoArgumento.ObtenerOperacionesLogicasDisponibles());
+			Operacion = new ViewModelComboBox<EOperacionLogica>(Argumento.TipoArgumento.ObtenerOperacionesLogicasDisponibles());
+
+			if (_operacionLogica != EOperacionLogica.NINGUNA)
+			{
+				Operacion.ValorSeleccionado = Operacion.ValoresPosibles.Find(op => op.valor == _operacionLogica);
 			}
 
 			IndiceSeccion = _indiceSeccion;

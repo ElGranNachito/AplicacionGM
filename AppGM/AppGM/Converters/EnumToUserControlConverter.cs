@@ -17,7 +17,7 @@ namespace AppGM
         {
             //El parametro no puede ser null
             if (parameter == null)
-                throw new ArgumentNullException(" 'parameter' No puede ser null");
+                throw new ArgumentNullException($"{nameof(parameter)} No puede ser null");
 
             switch (int.Parse(parameter.ToString()))
             {

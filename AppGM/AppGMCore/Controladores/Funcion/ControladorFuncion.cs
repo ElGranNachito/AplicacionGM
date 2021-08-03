@@ -45,10 +45,19 @@ namespace AppGM.Core
 
 				if (File.Exists(NombreCompletoArchivoFuncion))
 				{
-					//Cambiamos el nombre del archivo
-					File.Move(
-						Path.Combine(SistemaPrincipal.ControladorDeArchivos.DirectorioFunciones, NombreArchivoFuncion),
-						Path.Combine(SistemaPrincipal.ControladorDeArchivos.DirectorioFunciones, string.Intern(ObtenerNombreArchivo(value, modelo.Id))));
+					//Intentamos cambiar el nombre del archivo
+					try
+					{
+						File.Move(
+							Path.Combine(SistemaPrincipal.ControladorDeArchivos.DirectorioFunciones,
+								NombreArchivoFuncion),
+							Path.Combine(SistemaPrincipal.ControladorDeArchivos.DirectorioFunciones,
+								string.Intern(ObtenerNombreArchivo(value, modelo.Id))));
+					}
+					catch (Exception ex)
+					{
+						SistemaPrincipal.LoggerGlobal.LogCrash($"Error al intentar renombrar archivo {NombreCompletoArchivoFuncion}{Environment.NewLine}Excepcion:{ex.Message}");
+					}
 				}
 
 				modelo.NombreFuncion = value;
@@ -173,26 +182,42 @@ namespace AppGM.Core
 
 		public void GuardarXML()
 		{
-			XmlWriterSettings config = new XmlWriterSettings {Encoding = Encoding.UTF8, Indent = true, NewLineOnAttributes = true};
-
-			using XmlWriter writer = XmlWriter.Create(File.Open(Path.Combine(SistemaPrincipal.ControladorDeArchivos.DirectorioFunciones, NombreArchivoFuncion), FileMode.Create), config);
-			
-			writer.WriteStartDocument();
-			writer.WriteStartElement("Cuerpo");
-
-			writer.WriteAttributeString("NumeroDeBloques", Bloques.Count.ToString());
-
-			foreach (var bloque in Bloques)
+			try
 			{
-				writer.WriteStartElement("Bloque");
-				
-				bloque.ConvertirHaciaXML(writer);
+
+				XmlWriterSettings config = new XmlWriterSettings
+					{Encoding = Encoding.UTF8, Indent = true, NewLineOnAttributes = true};
+
+				using XmlWriter writer =
+					XmlWriter.Create(
+						File.Open(
+							Path.Combine(SistemaPrincipal.ControladorDeArchivos.DirectorioFunciones,
+								NombreArchivoFuncion), FileMode.Create), config);
+
+				writer.WriteStartDocument();
+				writer.WriteStartElement("Cuerpo");
+
+				writer.WriteAttributeString("NumeroDeBloques", Bloques.Count.ToString());
+
+				foreach (var bloque in Bloques)
+				{
+					writer.WriteStartElement("Bloque");
+
+					bloque.ConvertirHaciaXML(writer);
+
+					writer.WriteEndElement();
+				}
 
 				writer.WriteEndElement();
+				writer.WriteEndDocument();
+			}
+			catch (Exception ex)
+			{
+				SistemaPrincipal.LoggerGlobal.LogCrash($"Error al guardar funcion {NombreCompletoArchivoFuncion}{Environment.NewLine}Excepcion:{ex.Message}");
 			}
 
-			writer.WriteEndElement();
-			writer.WriteEndDocument();
+			if(modelo.Id == 0)
+				SistemaPrincipal.GuardarModelo(modelo);
 		}
 
 		public async Task GuardarXMLAsync()
@@ -217,6 +242,28 @@ namespace AppGM.Core
 			{
 				//TODO: Implementar
 			}
+		}
+
+		public override void Eliminar()
+		{
+			//Comprobamos que el archivo xml de la funcion exista
+			if (File.Exists(NombreCompletoArchivoFuncion))
+			{
+				//Intentamos eliminarlo
+				try
+				{
+					File.Delete(NombreCompletoArchivoFuncion);
+				}
+				catch(Exception ex)
+				{
+					SistemaPrincipal.LoggerGlobal.LogCrash($"Error al intentar eliminar {NombreCompletoArchivoFuncion}{Environment.NewLine}Excepcion:{ex.Message}");
+				}
+			}
+
+			//Eliminamos el modelo de la base de datos
+			SistemaPrincipal.EliminarModelo(modelo);
+
+			modelo = null;
 		}
 
 		/// <summary>
