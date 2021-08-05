@@ -269,6 +269,9 @@ namespace AppGM.Core
 		{
 			List<SeccionArgumentoBase> seccionesArgumento = new List<SeccionArgumentoBase>();
 
+			if (mBase == null && (TipoArgumento.IsValueType || TipoArgumento == typeof(object)))
+				seccionesArgumento.Add(new SeccionArgumentoConstante(TipoArgumento, TextoActual));
+
 			//Solo añadimos una seccion si la base es una variable
 			if(mBase is BloqueVariable var)
 				seccionesArgumento.Add(new SeccionArgumentoVariable(var.IDBloque, var.tipo));
@@ -878,12 +881,6 @@ namespace AppGM.Core
 
 			return true;
 		}
-
-		/// <summary>
-		/// Actualiza el valor de la variable <see cref="EsValido"/>.
-		/// </summary>
-		//Esto es una funcion para no tener que reescribir VerificarValidez de manera que sea un void 
-		public void ActualizarValidez() => EsValido = VerificarValidez();
 
 		/// <summary>
 		/// Actualiza <see cref="mBase"/> y <see cref="mTipoBase"/>

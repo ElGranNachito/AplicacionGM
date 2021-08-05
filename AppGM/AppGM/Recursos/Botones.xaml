@@ -288,4 +288,50 @@
 
     </Style>
 
+    <Style TargetType="{x:Type CheckBox}" x:Key="CheckBoxSolapa">
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type CheckBox}">
+
+                    <Border x:Name="Border"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Padding="0 0 2 0">
+
+                        <!-- El unico elemento que necesitamos es un bloque de texto -->
+                        <TextBlock 
+                            x:Name="Texto"
+                            Foreground="{TemplateBinding Foreground}"
+                            FontFamily="{TemplateBinding FontFamily}"
+                            Text="{TemplateBinding Tag}"
+                            FontSize="{TemplateBinding FontSize}">
+
+                            <TextBlock.LayoutTransform>
+                                <RotateTransform Angle="90"/>
+                            </TextBlock.LayoutTransform>
+                        </TextBlock>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.Setters>
+                                <Setter TargetName="Border" Property="BorderBrush" Value="BlueViolet"/>
+                            </Trigger.Setters>
+                        </Trigger>
+
+                        <Trigger Property="IsChecked" Value="True">
+                            <Trigger.Setters>
+                                
+                            </Trigger.Setters>
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+    </Style>
+
 </ResourceDictionary>

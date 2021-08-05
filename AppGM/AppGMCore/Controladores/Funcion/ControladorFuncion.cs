@@ -15,10 +15,16 @@ namespace AppGM.Core
 	/// </summary>
 	public abstract class ControladorFuncionBase : Controlador<ModeloFuncion>
 	{
+		#region Campos & Propiedades
+
+		//----------------------------------CAMPOS------------------------------------
+
 		/// <summary>
 		/// Contiene todas los <see cref="ControladorVariableFuncionBase"/> de las variables persistentes de esta funcion
 		/// </summary>
 		private Dictionary<int, ControladorVariableFuncionBase> mVariablesPersistenes;
+
+		//-------------------------------PROPIEDADES-------------------------------------
 
 		/// <summary>
 		/// <see cref="List{T}"/> que contiene todos los <see cref="BloqueBase"/> que componen esta funcion
@@ -62,7 +68,11 @@ namespace AppGM.Core
 
 				modelo.NombreFuncion = value;
 			}
-		}
+		} 
+
+		#endregion
+
+		#region Constructor
 
 		public ControladorFuncionBase(ModeloFuncion _modelo)
 			: base(_modelo)
@@ -72,33 +82,13 @@ namespace AppGM.Core
 
 			mVariablesPersistenes = new Dictionary<int, ControladorVariableFuncionBase>(modelo.VariablesPersistentes.Select(var =>
 			{
-				Type tipoVariable = null;
-
-				try
-				{
-					tipoVariable = Type.GetType(var.Variable.TipoVariable);
-				}
-				catch (Exception ex)
-				{
-					SistemaPrincipal.LoggerGlobal.Log(
-						@$"Error al intentar obtener tipo de variable. IDFuncion: {var.Funcion.Id} - IDVariable: {var.Variable.Id} - TipoVariable: {var.Variable.TipoVariable}
-															{Environment.NewLine} Excepcion: {ex.Message}.");
-
-					return new KeyValuePair<int, ControladorVariableFuncionBase>();
-				}
-
-				if (tipoVariable == typeof(int))
-					return new KeyValuePair<int, ControladorVariableFuncionBase>(var.Variable.IDVariable, new ControladorVariableFuncion_Int(var.Variable));
-				else if (tipoVariable == typeof(float))
-					return new KeyValuePair<int, ControladorVariableFuncionBase>(var.Variable.IDVariable, new ControladorVariableFuncion_Float(var.Variable));
-				else if (tipoVariable == typeof(string))
-					return new KeyValuePair<int, ControladorVariableFuncionBase>(var.Variable.IDVariable, new ControladorVariableFuncion_String(var.Variable));
-
-				SistemaPrincipal.LoggerGlobal.Log($"{tipoVariable} no soportado!", ESeveridad.Error);
-
-				return new KeyValuePair<int, ControladorVariableFuncionBase>();
+				return new KeyValuePair<int, ControladorVariableFuncionBase>(var.Variable.IDVariable, ControladorVariableFuncionBase.CrearControladorCorrespondiente(var.Variable));
 			}));
-		}
+		} 
+
+		#endregion
+
+		#region Metodo
 
 		/// <summary>
 		/// Carga los <see cref="Bloques"/>
@@ -108,9 +98,14 @@ namespace AppGM.Core
 		{
 			SistemaPrincipal.LoggerGlobal.Log($"Cargando bloques para funcion {NombreFuncion}", ESeveridad.Info);
 
-			Bloques = BloqueBase.DesdeXmlMultiple(NombreCompletoArchivoFuncion);
+			var bloquesCargados = BloqueBase.DesdeXmlMultiple(NombreCompletoArchivoFuncion);
 
-			return Bloques != null;
+			if (bloquesCargados == null)
+				return false;
+
+			Bloques = bloquesCargados;
+
+			return true;
 		}
 
 		/// <summary>
@@ -122,6 +117,10 @@ namespace AppGM.Core
 			return await Task.Run(CargarBloques);
 		}
 
+		/// <summary>
+		/// Actualiza <see cref="Bloques"/>.
+		/// </summary>
+		/// <param name="nuevosBloques">Lista con los bloques actuales</param>
 		public void ActualizarBloques(List<BloqueBase> nuevosBloques)
 		{
 			Bloques.Clear();
@@ -130,33 +129,38 @@ namespace AppGM.Core
 
 			Bloques.TrimExcess();
 
-			List<int> idsVariablesPersistentesExistentes = 
+			List<int> idsVariablesPersistentesExistentes =
 				modelo.VariablesPersistentes.Select(var => var.IDVariable).ToList();
 
 			foreach (var bloque in nuevosBloques)
 			{
-				if (bloque is BloqueVariable var)
+				if (bloque is BloqueVariable {EsPersistente: true} var)
 				{
+					//Si la variable no existe en la lista actual de variables persistentes...
 					if (!idsVariablesPersistentesExistentes.Remove(var.IDBloque))
 					{
-						ModeloVariableFuncionBase modeloVariable = null;
+						//Creamos un modelo para la variable
+						var modeloVariable = ControladorVariableFuncionBase.CrearModeloCorrespondiente(var.tipo, var.IDBloque, var.nombre);
 
-						if (var.tipo == typeof(int))
-							modeloVariable = new ModeloVariableFuncion_Int{IDVariable = var.IDBloque, NombreVariable = var.nombre};
-						else if (var.tipo == typeof(float))
-							modeloVariable = new ModeloVariableFuncion_Float {IDVariable = var.IDBloque, NombreVariable = var.nombre };
-						else if (var.tipo == typeof(string))
-							modeloVariable = new ModeloVariableFuncion_String {IDVariable = var.IDBloque, NombreVariable = var.nombre };
-						else
+						var nuevaVariablePersistente = new TIFuncionVariable
 						{
-							SistemaPrincipal.LoggerGlobal.Log($"No se pudo crear modelo para variable persistente ({var})", ESeveridad.Error);
+							Variable = modeloVariable,
+							Funcion = modelo
+						};
 
-							continue;
-						}
+						//La añadimos al modelo
+						modelo.VariablesPersistentes.Add(nuevaVariablePersistente);
 
-						var tiFuncionVariable = new TIFuncionVariable {Funcion = modelo, Variable = modeloVariable};
+						//Creamos el controlador y lo añadimos a la lista de variables persistenes
+						mVariablesPersistenes.Add(var.IDBloque, ControladorVariableFuncionBase.CrearControladorCorrespondiente(modeloVariable));
+					}
+					//Si existe solamente la actualizamos
+					else
+					{
+						var variablePersistente = mVariablesPersistenes[var.IDBloque];
 
-						modelo.VariablesPersistentes.Add(tiFuncionVariable);
+						variablePersistente.NombreVariable = var.nombre;
+						variablePersistente.TipoVariable = var.tipo;
 					}
 				}
 			}
@@ -180,13 +184,27 @@ namespace AppGM.Core
 			GuardarXML();
 		}
 
-		public void GuardarXML()
+		/// <summary>
+		/// Version asincronica de <see cref="ActualizarBloques"/>
+		/// </summary>
+		/// <param name="nuevosBloques">Lista con los bloques actuales</param>
+		public async Task ActualizarBloquesAsync(List<BloqueBase> nuevosBloques)
+		{
+			await Task.Run(() =>
+			{
+				ActualizarBloques(nuevosBloques);
+			});
+		}
+
+		/// <summary>
+		/// Guarda la funcion a un archivo XML
+		/// </summary>
+		private void GuardarXML()
 		{
 			try
 			{
-
 				XmlWriterSettings config = new XmlWriterSettings
-					{Encoding = Encoding.UTF8, Indent = true, NewLineOnAttributes = true};
+				{ Encoding = Encoding.UTF8, Indent = true, NewLineOnAttributes = true };
 
 				using XmlWriter writer =
 					XmlWriter.Create(
@@ -216,13 +234,8 @@ namespace AppGM.Core
 				SistemaPrincipal.LoggerGlobal.LogCrash($"Error al guardar funcion {NombreCompletoArchivoFuncion}{Environment.NewLine}Excepcion:{ex.Message}");
 			}
 
-			if(modelo.Id == 0)
+			if (modelo.Id == 0)
 				SistemaPrincipal.GuardarModelo(modelo);
-		}
-
-		public async Task GuardarXMLAsync()
-		{
-			await Task.Run(GuardarXML);
 		}
 
 		[IndexerName("VariablesPersistentes")]
@@ -240,7 +253,11 @@ namespace AppGM.Core
 
 			set
 			{
-				//TODO: Implementar
+				if (mVariablesPersistenes.ContainsKey(idVariable))
+					mVariablesPersistenes[idVariable].GuardarValorVariable(value);
+
+				SistemaPrincipal.LoggerGlobal.Log($@"Se intento actualizar el valor de una variable con id {idVariable} pero no se hallo.
+														{Environment.NewLine}{this}");
 			}
 		}
 
@@ -254,7 +271,7 @@ namespace AppGM.Core
 				{
 					File.Delete(NombreCompletoArchivoFuncion);
 				}
-				catch(Exception ex)
+				catch (Exception ex)
 				{
 					SistemaPrincipal.LoggerGlobal.LogCrash($"Error al intentar eliminar {NombreCompletoArchivoFuncion}{Environment.NewLine}Excepcion:{ex.Message}");
 				}
@@ -265,6 +282,15 @@ namespace AppGM.Core
 
 			modelo = null;
 		}
+
+		public override string ToString()
+		{
+			return $"Controlador Funcion: {NombreFuncion}, {NombreArchivoFuncion})";
+		}
+
+		#endregion
+
+		#region Metodos Estaticos
 
 		/// <summary>
 		/// Crea el <see cref="ControladorFuncionBase"/> para un <paramref name="tipoFuncion"/>
@@ -296,6 +322,8 @@ namespace AppGM.Core
 		{
 			return Path.Combine(SistemaPrincipal.ControladorDeArchivos.DirectorioFunciones, nombreArchivoFuncion);
 		}
+
+		#endregion
 	}
 
 	public abstract class ControladorFuncion<TipoFuncion> : ControladorFuncionBase
@@ -318,7 +346,7 @@ namespace AppGM.Core
 
 	}
 
-	public class ControladorFuncion_Habilidad : ControladorFuncion<Action<ControladorPersonaje, List<ControladorPersonaje>, List<object>>>
+	public class ControladorFuncion_Habilidad : ControladorFuncion<Action<ControladorFuncionBase, ControladorPersonaje, List<ControladorPersonaje>, List<object>>>
 	{
 		public ControladorFuncion_Habilidad(ModeloFuncion _modelo)
 			: base(_modelo)

@@ -99,7 +99,7 @@ namespace AppGM.Core
 						this,
 						mMetodo.Parametros[i].ParameterType,
 						mMetodo.ObtenerNombreParametro(i),
-						false, 
+						mMetodo.Parametros[i].ParameterType == typeof(object), 
 						mMetodo.Parametros[i].IsOptional));
 			}
 		}
@@ -115,19 +115,14 @@ namespace AppGM.Core
 
 			for (int i = 0; i < parametros.Length; ++i)
 			{
+				ArgumentosFuncion[i].ActualizarValidez();
+
 				if (!ArgumentosFuncion[i].EsValido)
 					return false;
 
 				//No deberia poder ocurrir pero por si acaso revisamos que se pueda asignar al parametro
 				//utilizando el argumento que le corresponde
 				if (!parametros[i].ParameterType.IsAssignableFrom(ArgumentosFuncion[i].TipoArgumento))
-					return false;
-			}
-
-			//Revisamos que los parametros sean validos
-			foreach (var parametro in ArgumentosFuncion)
-			{
-				if (!parametro.EsValido)
 					return false;
 			}
 

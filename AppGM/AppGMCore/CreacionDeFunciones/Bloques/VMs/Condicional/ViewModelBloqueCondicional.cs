@@ -106,7 +106,17 @@ namespace AppGM.Core
 			IEnumerable<BloqueArgumento> argumentos = ArgumentosCondicion.argumentos.Select(arg => arg.GenerarBloque_Impl());
 
 			return new BloqueCondicional(IDBloque, argumentos.ToList(), ArgumentosCondicion.operaciones, TipoCondicional);
-		} 
+		}
+
+		public override bool VerificarValidez()
+		{
+			return Bloques.Elementos.Any(b =>
+			{
+				b.ActualizarValidez();
+
+				return b.EsValido;
+			}) || !ArgumentosCondicion.VerificarValidez();
+		}
 
 		#endregion
 	}

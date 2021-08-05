@@ -26,9 +26,9 @@ namespace AppGM
                     switch ((EPagina)value)
                     {
                         case EPagina.PaginaPrincipal:
-                            return new UserControlPaginaInicio();
+                            //return new UserControlPaginaInicio();
 
-                            ModeloFuncion mf = new ModeloFuncion {Id = 0, NombreFuncion = "FuncionDeMierda"};
+                            ModeloFuncion mf = new ModeloFuncion {Id = 0, NombreFuncion = "FuncionDeMierdaa"};
 
 							return new UserControlCreacionFuncion
 							{

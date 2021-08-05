@@ -46,6 +46,11 @@
 		/// </summary>
 		public virtual void Eliminar() { }
 
+		/// <summary>
+		/// Guarda el <see cref="modelo"/>
+		/// </summary>
+		public virtual void Guardar(){}
+
 		#endregion
     }
 }

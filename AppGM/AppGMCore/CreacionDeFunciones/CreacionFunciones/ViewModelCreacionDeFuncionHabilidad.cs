@@ -8,22 +8,34 @@ namespace AppGM.Core
 	/// <see cref="ViewModelCreacionDeFuncionBase"/> para la creacion de una habilidad
 	/// </summary>
 	public class ViewModelCreacionDeFuncionHabilidad : 
-		ViewModelCreacionDeFuncion<Action<ControladorPersonaje, List<ControladorPersonaje>, List<object>>>
+		ViewModelCreacionDeFuncion<Action<ControladorFuncionBase, ControladorPersonaje, List<ControladorPersonaje>, List<object>>>
 	{
 		public ViewModelCreacionDeFuncionHabilidad(ControladorFuncion_Habilidad _controladorFuncion = null)
 			: base(_controladorFuncion, ETipoFuncion.Habilidad) {}
 
 		protected override void CrearFuncion()
 		{
+			foreach (var bloque in Bloques)
+			{
+				if (!bloque.VerificarValidez())
+					return;
+			}
+
 			Compilador compilador = new Compilador(VariablesBase.Concat(
 				from bloque in Bloques
 				select bloque.GenerarBloque()).ToList());
 
-			var resultado = compilador.Compilar<Action<ControladorPersonaje, ControladorPersonaje[], ControladorHabilidad, object[]>>();
+			ControladorFuncion.ActualizarBloques(VariablesBase.Concat(
+				from bloque in Bloques
+				select bloque.GenerarBloque()).ToList());
+
+			var resultado = compilador.Compilar<Action<ControladorFuncionBase, ControladorPersonaje, ControladorPersonaje[], ControladorHabilidad, object[]>>();
 
 			var controladorHabilidad = new ControladorHabilidad(new ModeloHabilidad {Nombre = "Ultra destructor de nada"});
 
-			resultado.Funcion(null, null, controladorHabilidad, new object[]{1, 1});
+			ControladorPersonaje[] objectivos = new ControladorPersonaje[1];
+
+			resultado.Funcion(ControladorFuncion, null, objectivos, controladorHabilidad, new object[]{1, 1});
 		}
 
 		protected override void Guardar()

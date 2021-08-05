@@ -193,6 +193,17 @@ namespace AppGM.Core
 			}
 		}
 
+		/// <summary>
+		/// Verifica la validez de las <see cref="Secciones"/>
+		/// </summary>
+		/// <returns><see cref="bool"/> indicando si todas las secciones son validas</returns>
+		public bool VerificarValidez()
+		{
+			ActualizarValidezDeLasSecciones();
+
+			return Secciones.All(s => s.EsValida);
+		}
+
 		#endregion
 	}
 }

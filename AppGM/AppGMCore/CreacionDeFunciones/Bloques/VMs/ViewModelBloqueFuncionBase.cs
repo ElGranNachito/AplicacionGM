@@ -183,6 +183,12 @@ namespace AppGM.Core
 		public virtual bool VerificarValidez() => true;
 
 		/// <summary>
+		/// Actualiza el valor de <see cref="EsValido"/>
+		/// </summary>
+		/// <returns></returns>
+		public virtual bool ActualizarValidez() => EsValido = VerificarValidez();
+
+		/// <summary>
 		/// Obtiene los <see cref="BloqueVariable"/> disponibles.
 		/// </summary>
 		/// <returns><see cref="List{T}"/> que contiene los <see cref="BloqueVariable"/> disponibles</returns>

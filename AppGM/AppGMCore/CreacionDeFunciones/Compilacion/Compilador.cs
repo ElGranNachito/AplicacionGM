@@ -24,6 +24,8 @@ namespace AppGM.Core
 		/// </summary>
 		private List<ParameterExpression> mParametros = new List<ParameterExpression>();
 
+		private List<BloqueVariable> mBloquesVariables = new List<BloqueVariable>();
+
 		/// <summary>
 		/// Parametros de la funcion siendo compilada que fueron añadidos por el usuario
 		/// </summary>
@@ -33,6 +35,11 @@ namespace AppGM.Core
 		/// Variables del afuncion siendo compilada
 		/// </summary>
 		private List<ParameterExpression> mVars = new List<ParameterExpression>();
+
+		/// <summary>
+		/// Variables persistentes
+		/// </summary>
+		private List<(ParameterExpression expresion, Type tipo)> mVariablesPersistentes = new List<(ParameterExpression expresion, Type tipo)>();
 
 		/// <summary>
 		/// Bloques que componen la funcion, sin contar la variables
@@ -101,25 +108,53 @@ namespace AppGM.Core
 
 			SistemaPrincipal.LoggerGlobal.Log($"Iniciando Compilacion... (TipoFuncion: {typeof(TipoFuncion)})", ESeveridad.Info);
 
+			//Label que se encuentra al final de la funcion. Esta etiqueta es utilizada por los return
+			var labelFinalFuncion = Expression.Label(typeof(void), "FinalFuncion");
+
 			//Lista de expresiones que componen la funcion
 			List<Expression> expresiones = new List<Expression>();
 
 			try
 			{
-				//Asignamos los valores correspondientes a los parametros creados por el usuario
-				for (int i = 0; i < mParametrosCreadosPorElUsuario.Count; ++i)
+				//Inicialzamos las variables
+				foreach (var var in mBloquesVariables)
 				{
-					expresiones.Add(Expression.Assign(mParametrosCreadosPorElUsuario[i].expresion, Expression.Convert(Expression.ArrayIndex(mVariables[Variables.ParametrosCreados], Expression.Constant(i)), mParametrosCreadosPorElUsuario[i].tipo)));
+					if (var.ObtenerExpresionInicializacion(this) is { } exp)
+					{
+						expresiones.Add(Expression.Assign(var.ObtenerExpresion(this), exp));
+					}
+				}
+
+				var parametrosCreadosPorElUsuario =
+					mBloquesVariables.FindAll(b =>
+						b.tipoVariable == ETipoVariable.ParametroCreadoPorElUsuario);
+
+				//Asignamos los valores correspondientes a los parametros creados por el usuario
+				for (int i = 0; i < parametrosCreadosPorElUsuario.Count; ++i)
+				{
+					expresiones.Add(Expression.Assign(parametrosCreadosPorElUsuario[i].ObtenerExpresion(this), Expression.Convert(Expression.ArrayIndex(mVariables[Variables.ParametrosCreados], Expression.Constant(i)), parametrosCreadosPorElUsuario[i].tipo)));
 				}
 				
-				mParametrosCreadosPorElUsuario = null;
-
 				//Luego añadimos el resto de bloques en orden
 				foreach (var bloque in mBloques)
 					expresiones.Add(bloque.ObtenerExpresion(this));
 
+				//Colocamos la label al final de funcion
+				expresiones.Add(Expression.Label(labelFinalFuncion));
+
+				//Guardamos el valor de las variables persistentes
+				expresiones.AddRange(mBloquesVariables.FindAll(b => b.tipoVariable == ETipoVariable.Persistente).Select(b =>
+				{
+					//Por favor perdonenme por escribir esta monstruosidad inentendible ;u
+					return
+						Expression.Assign(Expression.Property(
+							mVariables[Compilador.Variables.Controlador],
+							typeof(ControladorFuncionBase).GetProperty("VariablesPersistentes", typeof(object), new[] {typeof(int)}),
+							Expression.Constant(b.IDBloque)), Expression.Convert(mVariables[b.IDBloque], typeof(object)));
+				}));
+
 				//Expresion final representando toda la funcion
-				var expresionFinal = Expression.Block(mVars, expresiones);
+				var expresionFinal = Expression.Block(mBloquesVariables.Select(b => b.ObtenerExpresion(this)).Cast<ParameterExpression>(), expresiones);
 
 				//Generamos la lambda y la compilamos
 				resultado.Funcion = Expression.Lambda<TipoFuncion>(expresionFinal, mParametros).Compile();
@@ -158,29 +193,47 @@ namespace AppGM.Core
 			mBloques.Clear();
 			mParametros.Clear();
 			mVariables.Clear();
-			mVars.Clear();
+			mBloquesVariables.Clear();
+
+			mParametros.Add(Expression.Parameter(typeof(ControladorFuncionBase), "ControladorFuncion"));
+			mVariables.Add(Compilador.Variables.Controlador, mParametros.Last());
 
 			foreach (var bloque in bloques)
 			{
 				if (bloque is BloqueVariable var)
 				{
-					ParameterExpression expresionVariableActual = (ParameterExpression)var.ObtenerExpresion(this);
+					var expresionVaraibleActual = (ParameterExpression) var.ObtenerExpresion(this);
 
-					mVariables.Add(var.IDBloque, expresionVariableActual);
+					mVariables.Add(var.IDBloque, expresionVaraibleActual);
 
-					if (var.tipoVariable == ETipoVariable.Parametro)
+					if(var.tipoVariable != ETipoVariable.Parametro)
+						mBloquesVariables.Add(var);
+					else
+						mParametros.Add(expresionVaraibleActual);
+					/*if (var.tipoVariable == ETipoVariable.Parametro)
 					{
-						mParametros.Add(expresionVariableActual);
+						
 					}
-					else 
+					else if(var.Argumento == null)
 					{
+						mBloquesVariables.Add(new VariableCompilador(
+							var.ObtenerExpresion(this), 
+							var.ObtenerExpresionInicializacion(this),
+							var.tipo,
+							var.EsPersistente, 
+							var.tipoVariable == ETipoVariable.ParametroCreadoPorElUsuario));
+
 						if (var.tipoVariable == ETipoVariable.ParametroCreadoPorElUsuario)
 						{
 							mParametrosCreadosPorElUsuario.Add(new ValueTuple<ParameterExpression, Type>(expresionVariableActual, var.tipo));
 						}
+						else if (var.EsPersistente)
+						{
+							mVariablesPersistentes.Add(new ValueTuple<ParameterExpression, Type>(expresionVariableActual, var.tipo));
+						}
 
 						mVars.Add(expresionVariableActual);
-					}
+					}*/
 					
 					continue;
 				}
@@ -193,9 +246,30 @@ namespace AppGM.Core
 
 			mBloques.TrimExcess();
 			mParametros.TrimExcess();
-			mParametrosCreadosPorElUsuario.TrimExcess();
 			mVariables.TrimExcess();
-			mVars.TrimExcess();
+			mBloquesVariables.TrimExcess();
+		}
+	}
+
+	class VariableCompilador
+	{
+		public Expression expresionVariable;
+
+		public Expression expresionValorDefault;
+
+		public Type tipoVariable;
+
+		public bool esPersistente;
+
+		public bool esParametro;
+
+		public VariableCompilador(Expression _expresionVariable, Expression _expresionValorDefault, Type _tipoVariable, bool _esPersistente, bool _esParametro)
+		{
+			expresionVariable     = _expresionVariable;
+			expresionValorDefault = _expresionValorDefault;
+			tipoVariable          = _tipoVariable;
+			esPersistente         = _esPersistente;
+			esParametro           = _esParametro;
 		}
 	}
 }

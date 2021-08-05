@@ -33,7 +33,7 @@ namespace AppGM.Core
 		/// <summary>
 		/// Tipo de esta variable
 		/// </summary>
-		private ETipoVariable mTipoDeVariable;
+		private ETipoVariable mTipoDeVariable = ETipoVariable.Normal;
 
 
 		//-------------------------------------PROPIEDADES------------------------------------

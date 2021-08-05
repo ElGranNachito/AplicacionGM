@@ -22,5 +22,10 @@ namespace AppGM.Core
 		/// Mensajes dejados por el compilador
 		/// </summary>
 		public string Mensaje { get; set; }
+
+		/// <summary>
+		/// Indica si la compilacion se realizo con exito
+		/// </summary>
+		public bool FueExitosa { get; set; }
 	}
 }

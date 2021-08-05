@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Xml;
@@ -210,6 +210,61 @@ namespace AppGM.Core
 			reader.ReadToFollowing("IDVariable");
 
 			idVariable = reader.ReadElementContentAsInt();
+		}
+	}
+
+	/// <summary>
+	/// Seccion que representa una constante
+	/// </summary>
+	public class SeccionArgumentoConstante : SeccionArgumentoBase
+	{
+		/// <summary>
+		/// Tipo de la constante
+		/// </summary>
+		public Type tipo;
+
+		/// <summary>
+		/// Valor de la constante guardado como string
+		/// </summary>
+		public string valor;
+
+		public SeccionArgumentoConstante(Type _tipo, object _valor)
+		{
+			tipo = _tipo;
+			valor = _valor.ToString();
+		}
+
+		public SeccionArgumentoConstante(XmlReader _reader)
+			:base(_reader){}
+
+		public override Expression GenerarExpresion(Compilador compilador, Expression expresionAnterior)
+		{
+			//Convertimos el string al tipo de la constante y devolvemos una expresion constante
+			return Expression.Constant(TypeDescriptor.GetConverter(tipo).ConvertFrom(valor), tipo);
+		}
+
+		public override void ConvertirHaciaXML(XmlWriter writer)
+		{
+			writer.WriteStartElement(nameof(SeccionArgumentoConstante));
+
+			writer.WriteElementString("Tipo", tipo.AssemblyQualifiedName);
+			writer.WriteElementString("Valor", valor);
+
+			writer.WriteEndElement();
+		}
+
+		public override void ConvertirDesdeXML(XmlReader reader)
+		{
+			if (reader.Name != nameof(SeccionArgumentoConstante))
+				return;
+
+			reader.ReadToFollowing("Tipo");
+
+			tipo = Type.GetType(reader.ReadElementContentAsString());
+
+			reader.ReadToFollowing("Valor");
+
+			valor = reader.ReadElementContentAsString();
 		}
 	}
 }

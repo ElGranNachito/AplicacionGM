@@ -103,7 +103,7 @@ namespace AppGM.Core
 	        ControladorPersonaje usuario, ControladorPersonaje[] objetivos,
 	        object parametroExtra, object segundoParametroExtra)
         {
-	        mUtilizarHabilidad(usuario, objetivos, parametroExtra, segundoParametroExtra);
+	        //mUtilizarHabilidad(usuario, objetivos, parametroExtra, segundoParametroExtra);
         }
 
         public void Utilizar(

@@ -153,6 +153,8 @@ namespace AppGM.Core
 
 		public override bool VerificarValidez()
 		{
+			Caller.ActualizarValidez();
+
 			return mMetodoSeleccionado != null &&
 			       Caller.EsValido &&
 			       mMetodoSeleccionado.VerificarValidez();

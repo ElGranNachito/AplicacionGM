@@ -69,33 +69,35 @@ namespace AppGM.Core
 
 		public override Expression ObtenerExpresion(Compilador compilador)
 		{
+			//Si la variable ya fue añadida al compilador entonces simplemente devolvemos la que ya esta ahi
 			if (compilador[IDBloque] is {} exp)
 				return exp;
 
-			var metodoObtenerValorVariable = typeof(ControladorVariableFuncionBase).GetMethod(nameof(ControladorVariableFuncionBase.ObtenerValorVariable));
+			if(tipoVariable == ETipoVariable.Parametro)
+				return Expression.Parameter(tipo, nombre);
 
+			return Expression.Variable(tipo, nombre);
+		}
+
+		public Expression ObtenerExpresionInicializacion(Compilador compilador)
+		{
 			switch (tipoVariable)
 			{
 				case ETipoVariable.Normal:
-					return Expression.Variable(tipo, nombre);
-
-				case ETipoVariable.Parametro:
+					return Argumento != null ? Argumento.ObtenerExpresion(compilador) : Expression.Default(tipo);
 				case ETipoVariable.ParametroCreadoPorElUsuario:
-					return Expression.Parameter(tipo, nombre);
-
+				case ETipoVariable.Parametro:
+					return null;
 				case ETipoVariable.Persistente:
 				{
-					var controlador = compilador[Compilador.Variables.Controlador];
-
-					return Expression.Call(Expression.Property(controlador, "VariablesPersistentes", Expression.Constant(IDBloque)), metodoObtenerValorVariable);
+					return Expression.Convert(
+							Expression.Property(compilador[Compilador.Variables.Controlador], "VariablesPersistentes", Expression.Constant(IDBloque)), 
+							tipo);
 				}
 
 				default:
-				{
-					SistemaPrincipal.LoggerGlobal.Log($"valor de tipoVariable no soportado! ({tipoVariable})", ESeveridad.Advertencia);
-
-					return Expression.Empty();
-				}
+					SistemaPrincipal.LoggerGlobal.Log($"{tipoVariable} no soportado!", ESeveridad.Error);
+					return null;
 			}
 		}
 

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
+
 using CoolLogs;
 
 namespace AppGM.Core
@@ -123,7 +124,17 @@ namespace AppGM.Core
 			}
 
 			return base.OnDrop_Impl(vm);
-		} 
+		}
+
+		public override bool VerificarValidez()
+		{
+			return Bloques.Elementos.All(b =>
+			{
+				b.ActualizarValidez();
+
+				return b.EsValido;
+			});
+		}
 
 		#endregion
 	}

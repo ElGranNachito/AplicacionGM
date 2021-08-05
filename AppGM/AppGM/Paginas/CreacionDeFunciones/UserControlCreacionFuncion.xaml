@@ -9,192 +9,241 @@
 
     <!--ViewModel: ViewModelCreacionDeFuncionBase-->
 
-    <Grid>
-        <Grid
-            Background="White">
+    <Grid
+        Background="White">
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Bloques de texto 'Bloques' y 'Codigo' -->
+        <Grid 
+            Grid.ColumnSpan="2"
+            Margin="0 0 0 2">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
 
-            <!-- Bloques de texto 'Bloques' y 'Codigo' -->
-            <Grid 
-                Grid.ColumnSpan="2">
+            <!-- Texto 'Bloques' -->
+            <TextBlock 
+                HorizontalAlignment="Center"
+                FontSize="20"
+                Text="Bloques"/>
+
+            <!-- Texto 'Codigo' -->
+            <TextBlock 
+                Grid.Column="1"
+                HorizontalAlignment="Center"
+                FontSize="20"
+                Text="Codigo"/>
+
+            <Border Grid.ColumnSpan="2"
+                    BorderBrush="Black"/>
+
+        </Grid>
+
+        <Grid
+            Grid.Row="1">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="35*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions></Grid.RowDefinitions>
+
+            <Grid
+                Grid.Column="1">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="35*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*"/>
                     <ColumnDefinition Width="3*"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- Texto 'Bloques' -->
-                <TextBlock 
-                    HorizontalAlignment="Center"
-                    FontSize="20"
-                    Text="Bloques"/>
+                <!-- Lista de bloques disponibles -->
+                <Border
+                    Grid.Row="1"
+                    BorderBrush="Black"
+                    BorderThickness="1"
+                    Padding="5">
 
-                <!-- Texto 'Codigo' -->
-                <TextBlock 
+                    <ScrollViewer
+                        HorizontalScrollBarVisibility="Disabled"
+                        VerticalScrollBarVisibility="Auto">
+
+                        <ItemsControl
+                            ItemsSource="{Binding BloquesDisponibles.Elementos}">
+
+                            <ItemsControl.ItemTemplateSelector>
+                                <local:BloqueDataTemplateSelector
+                                    EsBloqueDeMuestra="True"/>
+                            </ItemsControl.ItemTemplateSelector>
+
+                        </ItemsControl>
+
+                    </ScrollViewer>
+
+                    <!-- TODO: Añadir lista de bloques disponibles -->
+
+                </Border>
+
+                <!-- Lista de bloques colocados -->
+                <Border
+                    Grid.Row="1"
                     Grid.Column="1"
-                    HorizontalAlignment="Center"
-                    FontSize="20"
-                    Text="Codigo"/>
+                    Background="Transparent"
+                    BorderBrush="Black"
+                    BorderThickness="{Binding GrosorBordesGridBloquesColocados, Converter={local:GrosorToThicknessConverter}}"
+                    Padding="5"
+                    local:ReceptorDeDragProperty.Value="True">
 
-                <Border Grid.ColumnSpan="2"
-                        BorderBrush="Black"/>
+                    <ScrollViewer
+                        HorizontalScrollBarVisibility="Disabled"
+                        VerticalScrollBarVisibility="Auto">
 
-            </Grid>
+                        <ItemsControl
+                            ItemsSource="{Binding Bloques.Elementos}">
 
-            <!-- Lista de bloques disponibles -->
-            <Border
-                Grid.Row="1"
-                Grid.Column="0"
-                BorderBrush="Black"
-                BorderThickness="0 1 1 1"
-                Padding="5">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <ContentPresenter Content="{Binding Converter={local:ViewModelABloqueConverter}}"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
 
-                <ScrollViewer
-                    HorizontalScrollBarVisibility="Disabled"
-                    VerticalScrollBarVisibility="Auto">
+                        </ItemsControl>
 
-                    <ItemsControl
-                        ItemsSource="{Binding BloquesDisponibles.Elementos}">
+                    </ScrollViewer>
 
-                        <ItemsControl.ItemTemplateSelector>
-                            <local:BloqueDataTemplateSelector
-                                EsBloqueDeMuestra="True"/>
-                        </ItemsControl.ItemTemplateSelector>
+                </Border>
 
-                    </ItemsControl>
+                <!-- Botones inferiores -->
+                <Grid 
+                    Grid.Row="2"
+                    Grid.ColumnSpan="2"
+                    Margin="0 5">
 
-                </ScrollViewer>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
-                <!-- TODO: Añadir lista de bloques disponibles -->
+                    <!-- Boton cancelar -->
+                    <Button
+                        Padding="10 0"
+                        HorizontalAlignment="Center"
+                        Content="Cancelar"
+                        Command="{Binding ComandoCancelar}"/>
 
-            </Border>
+                    <!-- Boton compilar -->
+                    <Button
+                        Grid.Column="1"
+                        Padding="10 0"
+                        HorizontalAlignment="Center"
+                        Content="Compilar"
+                        Command="{Binding ComandoCompilar}"/>
 
-            <!-- Lista de bloques colocados -->
-            <Border
-                Grid.Row="1"
-                Grid.Column="1"
-                Background="Transparent"
-                BorderBrush="Black"
-                BorderThickness="{Binding GrosorBordesGridBloquesColocados, Converter={local:GrosorToThicknessConverter}}"
-                Padding="5"
-                local:ReceptorDeDragProperty.Value="True">
+                    <!-- Boton guardar -->
+                    <Button
+                        Grid.Column="2"
+                        Padding="10 0"
+                        HorizontalAlignment="Center"
+                        Content="Guardar"
+                        Command="{Binding ComandoGuardar}"/>
 
-                <ScrollViewer
-                    HorizontalScrollBarVisibility="Disabled"
-                    VerticalScrollBarVisibility="Auto">
-
-                    <ItemsControl
-                        ItemsSource="{Binding Bloques.Elementos}">
-
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <ContentPresenter Content="{Binding Converter={local:ViewModelABloqueConverter}}"/>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-
-                    </ItemsControl>
-
-                </ScrollViewer>
-
-            </Border>
-
-            <!-- Botones inferiores -->
-            <Grid 
-                Grid.Row="2"
-                Grid.Column="1"
-                Margin="0 5">
-
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-
-                <!-- Boton cancelar -->
-                <Button
-                    Padding="10 0"
-                    HorizontalAlignment="Center"
-                    Content="Cancelar"
-                    Command="{Binding ComandoCancelar}"/>
-
-                <!-- Boton compilar -->
-                <Button
-                    Grid.Column="1"
-                    Padding="10 0"
-                    HorizontalAlignment="Center"
-                    Content="Compilar"
-                    Command="{Binding ComandoCompilar}"/>
-
-                <!-- Boton guardar -->
-                <Button
-                    Grid.Column="2"
-                    Padding="10 0"
-                    HorizontalAlignment="Center"
-                    Content="Guardar"
-                    Command="{Binding ComandoGuardar}"/>
-
-            </Grid>
-
-        </Grid>
-
-        <!--TODO: Cambiar el estilo a traves de una animacion para que no interfiera tanto con la interfaz grafica cuando no esta expandido -->
-        <!-- Contenedor del panel de detalles de la funcion -->
-        <Border
-            HorizontalAlignment="Right"
-            VerticalAlignment="Top"
-            BorderThickness="1"
-            BorderBrush="Black"
-            Background="White"
-            Padding="5">
-
-            <Grid>
-
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-
-                <!-- Checkbox -->
-                <CheckBox 
-                    VerticalAlignment="Top"
-                    x:Name="CheckBoxMostrarDetalles"
-                    Margin="5 5 10 0"
-                    Style="{StaticResource CheckBoxDropDown}"
-                    ToolTip="Mostrar u ocultar detalles de la funcion"/>
-
-                <Grid
-                    Grid.Column="1"
-                    Margin="5 0 0 0"
-                    Visibility="{Binding ElementName=CheckBoxMostrarDetalles, Path=IsChecked,
-                    Converter={local:BooleanToVisibilityConverterColapsar}}">
-
-                    <StackPanel>
-                        <TextBox 
-                            Width="200"
-                            Height="30"
-                            TextAlignment="Center"
-                            VerticalContentAlignment="Center"
-                            Tag="Nombre de la funcion"
-                            Style="{StaticResource TextoDescriptivo}"
-                            Text="{Binding NombreFuncion}"/>
-                    </StackPanel>
-
-                    <!--TODO: Lista de las variables disponibles-->
                 </Grid>
 
             </Grid>
 
-        </Border>
+            <Border
+                Grid.Row="1"
+                Grid.Column="1"
+
+                VerticalAlignment="Top"
+                HorizontalAlignment="Left"
+                    
+                x:Name="MenuActual"
+
+                Background="White"
+
+                Padding="10"
+
+                BorderThickness=" 1"
+                BorderBrush="Black"
+
+                Height="500"
+                Width="400"
+                    
+                Visibility="{Binding 
+                    ElementName=CheckBoxMostrarDetalles, 
+                    Converter={local:BooleanToVisibilityConverterColapsar},
+                    Path=IsChecked}">
+
+                <StackPanel>
+                    <TextBox 
+                        Width="200"
+                        Height="30"
+                        TextAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        Tag="Nombre de la funcion"
+                        Style="{StaticResource TextoDescriptivo}"
+                        Text="{Binding NombreFuncion}"/>
+                </StackPanel>
+
+            </Border>
+
+            <Border>
+                <StackPanel>
+
+                    <!-- Checkbox mostrar detalles -->
+                    <CheckBox 
+                        Grid.Column="1"
+                        VerticalAlignment="Top"
+
+                        x:Name="CheckBoxMostrarDetalles"
+
+                        BorderBrush="Blue"
+                        BorderThickness="0 0 2 0"
+
+                        FontSize="15"
+
+                        Margin="5 10 5 0"
+
+                        Style="{StaticResource CheckBoxSolapa}"
+                        Tag="Configuracion"
+                        ToolTip="Mostrar u ocultar detalles de la funcion"/>
+
+                    <!-- Checkbox mostrar log -->
+                    <CheckBox 
+                        Grid.Column="1"
+                        VerticalAlignment="Top"
+
+                        x:Name="CheckBoxMostrarLogs"
+
+                        BorderBrush="Blue"
+                        BorderThickness="0 0 2 0"
+
+                        FontSize="15"
+                        
+                        Margin="5 25 5 0"
+
+                        Style="{StaticResource CheckBoxSolapa}"
+                        Tag="Logs"
+                        ToolTip="Mostrar u ocultar logs"/>
+
+                </StackPanel>
+            </Border>
+
+        </Grid>
 
         <!-- Ventana de autocompletado -->
         <Canvas

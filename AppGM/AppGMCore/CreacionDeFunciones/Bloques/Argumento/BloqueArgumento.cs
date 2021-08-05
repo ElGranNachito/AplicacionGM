@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Xml;
+using CoolLogs;
 
 namespace AppGM.Core
 {
@@ -79,7 +80,7 @@ namespace AppGM.Core
 				//Obtenemos la expresion del bloque actual
 				expresion = mSeccionesArgumento[i].GenerarExpresion(compilador, expresion);
 			}
-
+			
 			return expresion;
 		}
 
@@ -174,7 +175,7 @@ namespace AppGM.Core
 						mSeccionesArgumento.Add(new SeccionArgumentoVariable(reader));
 						break;
 					default:
-						SistemaPrincipal.LoggerGlobal.Log($"Tipo de seccion ({reader.Name}) desconocido en BloqueArgumento: {Nombre}");
+						SistemaPrincipal.LoggerGlobal.Log($"Tipo de seccion ({reader.Name}) desconocido en BloqueArgumento: {Nombre}", ESeveridad.Error);
 						break;
 				}
 			}
