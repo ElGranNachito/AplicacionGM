@@ -5,9 +5,54 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AppGM"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="560" d:DesignWidth="1000">
 
     <!--ViewModel: ViewModelCreacionDeFuncionBase-->
+
+    <!--#region Estilos -->
+
+    <UserControl.Resources>
+
+        <Style x:Key="EstiloContendorFelicitaciones" TargetType="{x:Type Border}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding MostrarContenedorFelicitaciones}" Value="true">
+                    <DataTrigger.EnterActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation From="0.0" To="1.0" Duration="0:0:02" Storyboard.TargetProperty="Opacity"/>
+                                <DoubleAnimation From="1.0" To="0.0" Duration="0:0:01" BeginTime="0:0:4" Storyboard.TargetProperty="Opacity"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </DataTrigger.EnterActions>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="EstiloTextoFelicitaciones" TargetType="{x:Type TextBlock}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding MostrarContenedorFelicitaciones}" Value="true">
+                    <DataTrigger.EnterActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <ColorAnimation From="Black" To="Red" Duration="0:0:001" BeginTime="0:0:000" Storyboard.TargetProperty="(Foreground).(SolidColorBrush.Color)"/>
+                                <ColorAnimation From="Red" To="Blue" Duration="0:0:001" BeginTime="0:0:001" Storyboard.TargetProperty="(Foreground).(SolidColorBrush.Color)"/>
+                                <ColorAnimation From="Blue" To="Green" Duration="0:0:001" BeginTime="0:0:002" Storyboard.TargetProperty="(Foreground).(SolidColorBrush.Color)"/>
+                                <ColorAnimation From="Green" To="BlueViolet" Duration="0:0:001" BeginTime="0:0:003" Storyboard.TargetProperty="(Foreground).(SolidColorBrush.Color)"/>
+                                <ColorAnimation From="BlueViolet" To="DeepPink" Duration="0:0:001" BeginTime="0:0:004" Storyboard.TargetProperty="(Foreground).(SolidColorBrush.Color)"/>
+                                <ColorAnimation From="DeepPink" To="DeepSkyBlue" Duration="0:0:001" BeginTime="0:0:005" Storyboard.TargetProperty="(Foreground).(SolidColorBrush.Color)"/>
+                                <ColorAnimation From="DeepSkyBlue" To="Yellow" Duration="0:0:001" BeginTime="0:0:006" Storyboard.TargetProperty="(Foreground).(SolidColorBrush.Color)"/>
+                                <ColorAnimation From="Yellow" To="Magenta" Duration="0:0:001" BeginTime="0:0:006" Storyboard.TargetProperty="(Foreground).(SolidColorBrush.Color)"/>
+                                <ColorAnimation From="Magenta" To="Crimson" Duration="0:0:001" BeginTime="0:0:006" Storyboard.TargetProperty="(Foreground).(SolidColorBrush.Color)"/>
+                                <ColorAnimation From="Crimson" To="Brown" Duration="0:0:001" BeginTime="0:0:006" Storyboard.TargetProperty="(Foreground).(SolidColorBrush.Color)"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </DataTrigger.EnterActions>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
+    <!--#endregion-->
 
     <Grid
         Background="White">
@@ -53,8 +98,6 @@
                 <ColumnDefinition Width="35*"/>
             </Grid.ColumnDefinitions>
 
-            <Grid.RowDefinitions></Grid.RowDefinitions>
-
             <Grid
                 Grid.Column="1">
 
@@ -91,9 +134,6 @@
                         </ItemsControl>
 
                     </ScrollViewer>
-
-                    <!-- TODO: Añadir lista de bloques disponibles -->
-
                 </Border>
 
                 <!-- Lista de bloques colocados -->
@@ -150,6 +190,7 @@
                         Padding="10 0"
                         HorizontalAlignment="Center"
                         Content="Compilar"
+                        IsEnabled="{Binding PuedeCompilar}"
                         Command="{Binding ComandoCompilar}"/>
 
                     <!-- Boton guardar -->
@@ -164,14 +205,13 @@
 
             </Grid>
 
+            <!-- Contenedor de los menus desplegables izquierdos -->
             <Border
                 Grid.Row="1"
                 Grid.Column="1"
 
                 VerticalAlignment="Top"
                 HorizontalAlignment="Left"
-                    
-                x:Name="MenuActual"
 
                 Background="White"
 
@@ -182,23 +222,97 @@
 
                 Height="500"
                 Width="400"
+                
+                Visibility="{Binding MostrarMenuIzquierdo, Converter={local:BooleanToVisibilityConverterColapsar}}">
+
+                <Grid>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button 
+                        Grid.Column="1"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Right"
+                        FontFamily="{StaticResource 'Font Awesome Regular'}"
+                        Content="{StaticResource Fa-Cruz}"
+                        Style="{StaticResource BotonBase}"
+                        Command="{Binding ComandoCerrarMenuIzquierdo}"/>
+
+                    <!-- Menu configuracion -->
+                    <StackPanel
+                        Grid.RowSpan="2"
+                        Visibility="{Binding 
+                        ElementName=CheckBoxMostrarDetalles, 
+                        Converter={local:BooleanToVisibilityConverterColapsar},
+                        Path=IsChecked}">
+
+                        <TextBlock
+                            HorizontalAlignment="Center"
+
+                            Margin="0 0 0 10"
+
+                            Text="Configuracion"
+                            FontSize="20"
+                            FontWeight="Bold"/>
+
+                        <TextBox 
+                            Width="200"
+                            Height="30"
+                            TextAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            Tag="Nombre de la funcion"
+                            IsEnabled="{Binding PuedeCompilar}"
+                            Style="{StaticResource TextoDescriptivo}"
+                            Text="{Binding NombreFuncion}"/>
+                    </StackPanel>
+
+                    <!-- Logs -->
+                    <StackPanel
+                        Grid.RowSpan="2"
+                        Visibility="{Binding 
+                        ElementName=CheckBoxMostrarLogs, 
+                        Converter={local:BooleanToVisibilityConverterColapsar},
+                        Path=IsChecked}">
+
+                        <TextBlock
+                            HorizontalAlignment="Center"
+
+                            Margin="0 0 0 10"
+
+                            Text="Logs"
+                            FontSize="20"
+                            FontWeight="Bold"/>
+
+                        <!-- TODO: Implementar -->
+                        <ScrollViewer 
+
+                            VerticalScrollBarVisibility="Auto"
+                            HorizontalScrollBarVisibility="Auto">
+
+                            <ItemsControl ItemsSource="{Binding Logs.Elementos}">
+
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock 
+                                            Foreground="{Binding Severidad, Converter={local:Convertidor_SeveridadAColor}}"
+                                            Text="{Binding Mensaje}"/>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+
+                            </ItemsControl>
+
+                        </ScrollViewer>
+                    </StackPanel>
                     
-                Visibility="{Binding 
-                    ElementName=CheckBoxMostrarDetalles, 
-                    Converter={local:BooleanToVisibilityConverterColapsar},
-                    Path=IsChecked}">
-
-                <StackPanel>
-                    <TextBox 
-                        Width="200"
-                        Height="30"
-                        TextAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        Tag="Nombre de la funcion"
-                        Style="{StaticResource TextoDescriptivo}"
-                        Text="{Binding NombreFuncion}"/>
-                </StackPanel>
-
+                </Grid>
             </Border>
 
             <Border>
@@ -206,7 +320,6 @@
 
                     <!-- Checkbox mostrar detalles -->
                     <CheckBox 
-                        Grid.Column="1"
                         VerticalAlignment="Top"
 
                         x:Name="CheckBoxMostrarDetalles"
@@ -220,11 +333,12 @@
 
                         Style="{StaticResource CheckBoxSolapa}"
                         Tag="Configuracion"
-                        ToolTip="Mostrar u ocultar detalles de la funcion"/>
+                        ToolTip="Mostrar u ocultar detalles de la funcion"
+                        
+                        IsChecked="{Binding MostrarConfiguracion}"/>
 
                     <!-- Checkbox mostrar log -->
                     <CheckBox 
-                        Grid.Column="1"
                         VerticalAlignment="Top"
 
                         x:Name="CheckBoxMostrarLogs"
@@ -238,12 +352,40 @@
 
                         Style="{StaticResource CheckBoxSolapa}"
                         Tag="Logs"
-                        ToolTip="Mostrar u ocultar logs"/>
+                        ToolTip="Mostrar u ocultar logs"
+                        
+                        IsChecked="{Binding MostrarLogs}"/>
 
                 </StackPanel>
             </Border>
 
         </Grid>
+
+        <!-- Imagen y frase de felicitacion -->
+        <Border
+            Opacity="0"
+            Grid.RowSpan="2"
+            IsHitTestVisible="False"
+            Style="{StaticResource EstiloContendorFelicitaciones}">
+
+            <StackPanel
+                VerticalAlignment="Center">
+
+                <Image
+                    Width="400"
+                    Height="400"
+                    Source="{Binding PathImagenFelicitacion, Converter={local:FullPathToImageConverter}}">
+                </Image>
+
+                <TextBlock 
+                    Margin="0 10 0 0"
+                    HorizontalAlignment="Center"
+                    FontSize="25"
+                    Style="{StaticResource EstiloTextoFelicitaciones}"
+                    Text="{Binding FraseFelicitacion}"/>
+            </StackPanel>
+
+        </Border>
 
         <!-- Ventana de autocompletado -->
         <Canvas

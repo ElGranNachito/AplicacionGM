@@ -49,12 +49,14 @@
 
                                 <!-- Texto de ayuda -->
                                 <TextBlock
+                                    x:Name="TextoDeAyuda"
                                     IsHitTestVisible="False"
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
+                                    IsEnabled="{TemplateBinding IsEnabled}"
                                     FontSize="{TemplateBinding FontSize}"
                                     FontFamily="{TemplateBinding FontFamily}"
-                                    Foreground="{TemplateBinding Foreground}"
+                                    Foreground="{StaticResource Color.CampoDeTexto.TextoAyuda}"
                                     Text="{TemplateBinding Tag}">
 
                                     <TextBlock.Style>
@@ -80,6 +82,13 @@
 
             </Setter.Value>
         </Setter>
+
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="{StaticResource Color.CampoDeTexto.TextoDeshabilitado}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource Color.CampoDeTexto.BordeDeshabilitado}"/>
+            </Trigger>
+        </Style.Triggers>
 
     </Style>
     

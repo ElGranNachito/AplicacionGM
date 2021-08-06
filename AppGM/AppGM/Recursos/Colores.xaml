@@ -8,6 +8,10 @@
     <system:SolidColorBrush x:Key="ColorVentanaAutocompletado" Color="White"/>
     <system:SolidColorBrush x:Key="ColorBordeVentanaAutocompletado" Color="DimGray"/>
 
+    <system:SolidColorBrush x:Key="Color.CampoDeTexto.TextoDeshabilitado" Color="DarkGray"/>
+    <system:SolidColorBrush x:Key="Color.CampoDeTexto.BordeDeshabilitado" Color="Gray"/>
+    <system:SolidColorBrush x:Key="Color.CampoDeTexto.TextoAyuda" Color="DarkGray"/>
+
     <!--......................................BLOQUES...........................................-->
 
     <!-- Color error bloque -->

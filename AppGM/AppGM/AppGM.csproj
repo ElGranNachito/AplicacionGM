@@ -145,6 +145,16 @@
     <Resource Include="Media\Imagenes\Animaciones\FondoMenuPrincipal\FondoMenuPrincipal_6.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Media\Imagenes\GuraScratch\GuraScratchLogo-v1.png" />
+    <Resource Include="Media\Imagenes\GuraScratch\GuraScratchLogo-v2.png" />
+    <Resource Include="Media\Imagenes\GuraScratch\GuraScratchLogo-v3.png" />
+    <Resource Include="Media\Imagenes\GuraScratch\GuraScratchLogo-v4.png" />
+    <Resource Include="Media\Imagenes\GuraScratch\GuraScratchLogo-v5.png" />
+    <Resource Include="Media\Imagenes\GuraScratch\GuraScratchLogo-v6.png" />
+    <Resource Include="Media\Imagenes\GuraScratch\GuraScratchLogo-v7.png" />
+    <Resource Include="Media\Imagenes\GuraScratch\GuraScratchLogo-v8.png" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Remove="BaseDesignModel.cs" />
     <Compile Remove="DesignModelRolItem.cs" />
     <Compile Remove="Viewmodels\BaseViewModel.cs" />

@@ -1032,7 +1032,10 @@ namespace AppGM.Core
         NINGUNO = 0
     }
 
-    public enum ETipoFuncion
+    /// <summary>
+    /// Indica el proposito de una funcion
+    /// </summary>
+    public enum EPropositoFuncion
     {
         /// <summary>
         /// Funcion que representa alguna <see cref="ControladorHabilidad"/> de un <see cref="ControladorPersonaje"/>

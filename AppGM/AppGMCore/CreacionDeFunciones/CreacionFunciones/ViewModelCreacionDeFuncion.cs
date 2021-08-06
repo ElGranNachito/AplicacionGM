@@ -1,5 +1,7 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
+using CoolLogs;
 
 namespace AppGM.Core
 {
@@ -16,12 +18,13 @@ namespace AppGM.Core
 
 		private ControladorFuncion<TFuncion> mControladorFuncion;
 
+
+		//--------------------------PROPIEDADES------------------------------
+
 		/// <summary>
 		/// Resultado de <see cref="CrearFuncion"/>
 		/// </summary>
-		private ResultadoCompilacion<TFuncion> mResultadoCompilacion;
-
-		//--------------------------PROPIEDADES------------------------------
+		public ResultadoCompilacion<TFuncion> ResultadoCompilacion { get; private set; }
 
 		/// <summary>
 		/// Controlador de la funcion actualmente siendo creada
@@ -35,7 +38,7 @@ namespace AppGM.Core
 					ModeloFuncion modeloFuncion = new ModeloFuncion();
 
 					mControladorFuncion =
-						(ControladorFuncion<TFuncion>)ControladorFuncionBase.CrearControladorCorrespondiente(modeloFuncion, TipoFuncion);
+						(ControladorFuncion<TFuncion>)ControladorFuncionBase.CrearControladorCorrespondiente(modeloFuncion, PropositoFuncion);
 				}
 
 				//Actualizamos el nombre de la funcion en el modelo
@@ -57,12 +60,21 @@ namespace AppGM.Core
 
 		#region Constructor
 
-		public ViewModelCreacionDeFuncion(ControladorFuncion<TFuncion> _controladorFuncion, ETipoFuncion _tipoDeFuncion)
+		protected ViewModelCreacionDeFuncion(ControladorFuncion<TFuncion> _controladorFuncion, EPropositoFuncion _propositoDeFuncion)
 		{
-			TipoFuncion = _tipoDeFuncion;
+			PropositoFuncion = _propositoDeFuncion;
 
-			ComandoCompilar = new Comando(CrearFuncion);
-			ComandoGuardar = new Comando(Guardar);
+			ComandoCompilar = new Comando(async () =>
+			{
+				PuedeCompilar = false;
+
+				MostrarContenedorFelicitaciones = await CrearFuncion();
+
+				MostrarContenedorFelicitaciones = false;
+				PuedeCompilar = true;
+			});
+
+			ComandoGuardar  = new Comando(Guardar);
 
 			ComandoCancelar = new Comando(() =>
 			{
@@ -77,37 +89,88 @@ namespace AppGM.Core
 
 				NombreFuncion = ControladorFuncion.NombreFuncion;
 
-				if (ControladorFuncion.CargarBloques())
-				{
-					var bloques = ControladorFuncion.Bloques.FindAll(bloque =>
-					{
-						if (bloque is BloqueVariable var)
-						{
-							if (var.Argumento == null)
-								return false;
-
-							return true;
-						}
-
-						return true;
-					}).Select(bloque => bloque.ObtenerViewModel(this));
-
-					foreach (var bloque in bloques)
-					{
-						AñadirBloque(bloque, -1);
-					}
-				}
+				DebeCargarBloquesDesdeControlador = true;
 			}
-		} 
+		}
 
 		#endregion
 
 		#region Metodos
 
+		public override async void CargarBloquesFuncion()
+		{
+			if (!DebeCargarBloquesDesdeControlador)
+				return;
+
+			DebeCargarBloquesDesdeControlador = false;
+
+			var resultado = await ControladorFuncion.CargarBloquesAsync();
+
+			if (resultado)
+			{
+				var bloques = ControladorFuncion.Bloques.FindAll(bloque =>
+				{
+					if (bloque is BloqueVariable var)
+					{
+						if (var.Argumento == null)
+							return false;
+
+						return true;
+					}
+
+					return true;
+				}).Select(bloque => bloque.ObtenerViewModel(this));
+
+				foreach (var bloque in bloques)
+				{
+					AñadirBloque(bloque, -1);
+				}
+			}
+		}
+
 		/// <summary>
 		/// Funcion llamada por <see cref="ComandoCompilar"/>
 		/// </summary>
-		protected abstract void CrearFuncion();
+		//Este metodo no es abstracto porque no se puede tener un metodo async sin cuerpo
+		protected async Task<bool> CrearFuncion()
+		{
+			foreach (var bloque in Bloques)
+			{
+				if (!bloque.VerificarValidez())
+					await Task.FromResult(false);
+			}
+
+			var bloques = VariablesBase.Concat(
+				from bloque in Bloques
+				select bloque.GenerarBloque()).ToList();
+
+			ResultadoCompilacion = await Task.Run(() =>
+			{
+				SistemaPrincipal.ThreadUISyncContext.Post(s => { Logs.Add(new ViewModelLog("Actualizando bloques...")); }, null);
+
+				ControladorFuncion.ActualizarBloques(bloques);
+
+				SistemaPrincipal.ThreadUISyncContext.Post(s => { Logs.Add(new ViewModelLog("Iniciando compilacion...")); }, null);
+
+				Compilador compilador = new Compilador(bloques);
+
+				return compilador
+					.Compilar<TFuncion>();
+			});
+
+			if (ResultadoCompilacion.FueExitosa)
+			{
+				Logs.Add(new ViewModelLog("Compilacion finalizada con exito!"));
+
+				var controladorHabilidad = new ControladorHabilidad(new ModeloHabilidad { Nombre = "Ultra destructor de nada" });
+
+				ControladorPersonaje[] objectivos = new ControladorPersonaje[1];
+			}
+			else
+				Logs.Add(new ViewModelLog($"Compilacion fallo! {ResultadoCompilacion.Mensaje}", ESeveridad.Error));
+
+			return ResultadoCompilacion.FueExitosa;
+		}
 
 		/// <summary>
 		/// Funcion llamada por <see cref="ComandoGuardar"/>

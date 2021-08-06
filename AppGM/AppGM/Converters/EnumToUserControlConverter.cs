@@ -30,9 +30,14 @@ namespace AppGM
 
                             ModeloFuncion mf = new ModeloFuncion {Id = 0, NombreFuncion = "FuncionDeMierdaa"};
 
-							return new UserControlCreacionFuncion
+                            var controlador = new ControladorFuncion_Habilidad(mf);
+                            var vm = new ViewModelCreacionDeFuncionHabilidad(controlador);
+
+                            vm.CargarBloquesFuncion();
+
+                            return new UserControlCreacionFuncion
 							{
-								DataContext = new ViewModelCreacionDeFuncionHabilidad(new ControladorFuncion_Habilidad(mf))
+								DataContext = vm
 							};
 						case EPagina.PaginaPrincipalRol:
                             return new UserControlPaginaPrincipalRol();

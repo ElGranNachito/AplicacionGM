@@ -106,7 +106,7 @@ namespace AppGM.Core
 				return resultado;
 			}
 
-			SistemaPrincipal.LoggerGlobal.Log($"Iniciando Compilacion... (TipoFuncion: {typeof(TipoFuncion)})", ESeveridad.Info);
+			SistemaPrincipal.LoggerGlobal.Log($"Iniciando Compilacion... (PropositoFuncion: {typeof(TipoFuncion)})", ESeveridad.Info);
 
 			//Label que se encuentra al final de la funcion. Esta etiqueta es utilizada por los return
 			var labelFinalFuncion = Expression.Label(typeof(void), "FinalFuncion");
@@ -160,6 +160,8 @@ namespace AppGM.Core
 				resultado.Funcion = Expression.Lambda<TipoFuncion>(expresionFinal, mParametros).Compile();
 				
 				SistemaPrincipal.LoggerGlobal.Log("Compilacion Finalizada!", ESeveridad.Info);
+
+				resultado.FueExitosa = true;
 			}
 			catch (Exception ex)
 			{

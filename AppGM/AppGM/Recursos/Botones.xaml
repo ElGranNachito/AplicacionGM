@@ -322,7 +322,7 @@
 
                         <Trigger Property="IsChecked" Value="True">
                             <Trigger.Setters>
-                                
+                                <Setter TargetName="Border" Property="BorderBrush" Value="BlueViolet"/>
                             </Trigger.Setters>
                         </Trigger>
 

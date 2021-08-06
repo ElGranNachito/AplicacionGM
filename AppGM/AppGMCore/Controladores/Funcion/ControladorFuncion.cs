@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+
 using CoolLogs;
 
 namespace AppGM.Core
@@ -130,7 +131,7 @@ namespace AppGM.Core
 			Bloques.TrimExcess();
 
 			List<int> idsVariablesPersistentesExistentes =
-				modelo.VariablesPersistentes.Select(var => var.IDVariable).ToList();
+				modelo.VariablesPersistentes.Select(var => var.Variable.IDVariable).ToList();
 
 			foreach (var bloque in nuevosBloques)
 			{
@@ -145,7 +146,7 @@ namespace AppGM.Core
 						var nuevaVariablePersistente = new TIFuncionVariable
 						{
 							Variable = modeloVariable,
-							Funcion = modelo
+							Funcion = modelo,
 						};
 
 						//La añadimos al modelo
@@ -203,8 +204,8 @@ namespace AppGM.Core
 		{
 			try
 			{
-				XmlWriterSettings config = new XmlWriterSettings
-				{ Encoding = Encoding.UTF8, Indent = true, NewLineOnAttributes = true };
+				XmlWriterSettings config = new XmlWriterSettings 
+					{ Encoding = Encoding.UTF8, Indent = true, NewLineOnAttributes = true };
 
 				using XmlWriter writer =
 					XmlWriter.Create(
@@ -293,24 +294,24 @@ namespace AppGM.Core
 		#region Metodos Estaticos
 
 		/// <summary>
-		/// Crea el <see cref="ControladorFuncionBase"/> para un <paramref name="tipoFuncion"/>
+		/// Crea el <see cref="ControladorFuncionBase"/> para un <paramref name="propositoFuncion"/>
 		/// </summary>
 		/// <param name="modelo"><see cref="ModeloFuncion"/> para el que se creara el <see cref="ControladorFuncionBase"/></param>
-		/// <param name="tipoFuncion"><see cref="ETipoFuncion"/></param>
+		/// <param name="propositoFuncion"><see cref="EPropositoFuncion"/></param>
 		/// <returns><see cref="ControladorFuncionBase"/> para el <paramref name="modelo"/></returns>
-		public static ControladorFuncionBase CrearControladorCorrespondiente(ModeloFuncion modelo, ETipoFuncion tipoFuncion)
+		public static ControladorFuncionBase CrearControladorCorrespondiente(ModeloFuncion modelo, EPropositoFuncion propositoFuncion)
 		{
-			switch (tipoFuncion)
+			switch (propositoFuncion)
 			{
-				case ETipoFuncion.Habilidad:
+				case EPropositoFuncion.Habilidad:
 					return new ControladorFuncion_Habilidad(modelo);
-				case ETipoFuncion.Efecto:
+				case EPropositoFuncion.Efecto:
 					return new ControladorFuncion_Efecto(modelo);
-				case ETipoFuncion.Predicado:
+				case EPropositoFuncion.Predicado:
 					return new ControladorFuncion_Predicado(modelo);
 				default:
 
-					SistemaPrincipal.LoggerGlobal.Log($"{nameof(tipoFuncion)}({tipoFuncion}), valor no soportado!", ESeveridad.Error);
+					SistemaPrincipal.LoggerGlobal.Log($"{nameof(propositoFuncion)}({propositoFuncion}), valor no soportado!", ESeveridad.Error);
 
 					return null;
 			}
@@ -346,7 +347,7 @@ namespace AppGM.Core
 
 	}
 
-	public class ControladorFuncion_Habilidad : ControladorFuncion<Action<ControladorFuncionBase, ControladorPersonaje, List<ControladorPersonaje>, List<object>>>
+	public class ControladorFuncion_Habilidad : ControladorFuncion<Action<ControladorFuncionBase, ControladorPersonaje, ControladorPersonaje[], ControladorHabilidad, object[]>>
 	{
 		public ControladorFuncion_Habilidad(ModeloFuncion _modelo)
 			: base(_modelo)

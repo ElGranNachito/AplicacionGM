@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Windows.Input;
 using CoolLogs;
 
 namespace AppGM.Core
@@ -29,16 +33,62 @@ namespace AppGM.Core
 
 		#region Propiedades & Campos
 
+
+		//----------------------------------CAMPOS-----------------------------------
+
+
 		/// <summary>
 		/// Indica el proximo ID a otorgar
 		/// </summary>
 		private int mIDActual = 0;
 
-		public ETipoFuncion TipoFuncion { get; set; }
+		/// <summary>
+		/// Indica si se deben mostrar las felicitaciones
+		/// </summary>
+		private bool mMostrarContenedorFelicitaciones = false;
+
+		/// <summary>
+		/// Repertorio de frases de felicitacion
+		/// </summary>
+		private List<string> mFrasesDeFelicitacion = new List<string>
+		{
+			"10/10", 
+			"Que capo", 
+			"Una maravilla",
+			"Segui asi",
+			"UwU"
+		};
+
+		/// <summary>
+		/// Repertorio de imagenes de felicitacion
+		/// </summary>
+		private List<string> mPathsImagenesFelicitacion = new List<string> 
+		{ 
+			$"{Path.Combine(SistemaPrincipal.ControladorDeArchivos.DirectorioImagenes, $"GuraScratch{Path.DirectorySeparatorChar}GuraScratchLogo-v1.png")}",
+			$"{Path.Combine(SistemaPrincipal.ControladorDeArchivos.DirectorioImagenes, $"GuraScratch{Path.DirectorySeparatorChar}GuraScratchLogo-v4.png")}",
+			$"{Path.Combine(SistemaPrincipal.ControladorDeArchivos.DirectorioImagenes, $"GuraScratch{Path.DirectorySeparatorChar}GuraScratchLogo-v5.png")}",
+			$"{Path.Combine(SistemaPrincipal.ControladorDeArchivos.DirectorioImagenes, $"GuraScratch{Path.DirectorySeparatorChar}GuraScratchLogo-v7.png")}",
+			$"{Path.Combine(SistemaPrincipal.ControladorDeArchivos.DirectorioImagenes, $"GuraScratch{Path.DirectorySeparatorChar}GuraScratchLogo-v8.png")}"
+		};
+
+		/// <summary>
+		/// Almacena los valores de <see cref="MostrarConfiguracion"/> y <see cref="MostrarLogs"/>
+		/// </summary>
+		private BitVector32 mMenuActivo = new BitVector32();
+
+
+		//-------------------------------------------------PROPIEDADES-------------------------------------------------
+
+
+		/// <summary>
+		/// Indica el proposito de esta funcion. Es decir si es para una habilidad, un predicado, etc.
+		/// </summary>
+		public EPropositoFuncion PropositoFuncion { get; set; }
 
 		/// <summary>
 		/// El padre de una instancia de este <see cref="ViewModel"/> siempre es null
 		/// </summary>
+		//Es null porque este vm no puede tener un padre, es El Padre
 		public IContenedorDeBloques Padre => null;
 
 		/// <summary>
@@ -67,6 +117,11 @@ namespace AppGM.Core
 		public ViewModelVentanaAutocompletado Autocompletado { get; set; } = new ViewModelVentanaAutocompletado();
 
 		/// <summary>
+		/// Los que apareceran en la solapa de Logs
+		/// </summary>
+		public ViewModelListaDeElementos<ViewModelLog> Logs { get; set; } = new ViewModelListaDeElementos<ViewModelLog>();
+
+		/// <summary>
 		/// <see cref="Grosor"/> de los bordes del grid que contiene los <see cref="BloquesColocados"/>
 		/// </summary>
 		public Grosor GrosorBordesGridBloquesColocados { get; set; }
@@ -76,7 +131,107 @@ namespace AppGM.Core
 		/// </summary>
 		public string NombreFuncion { get; set; }
 
+		/// <summary>
+		/// Indica si se puede iniciar una compilacion
+		/// </summary>
+		public bool PuedeCompilar { get; protected set; } = true;
+
+		/// <summary>
+		/// Indica si debe cargar los bloques disponibles en el controlador de funcion pasado
+		/// </summary>
+		public bool DebeCargarBloquesDesdeControlador { get; protected set; }
+
+		/// <summary>
+		/// Obtiene una frase aleatoria de <see cref="mFrasesDeFelicitacion"/>
+		/// </summary>
+		public string FraseFelicitacion => mFrasesDeFelicitacion[RandomNumberGenerator.GetInt32(mFrasesDeFelicitacion.Count)];
+
+		/// <summary>
+		/// Obtiene un path aleatorio de <see cref="mPathsImagenesFelicitacion"/>
+		/// </summary>
+		public string PathImagenFelicitacion => mPathsImagenesFelicitacion[RandomNumberGenerator.GetInt32(mPathsImagenesFelicitacion.Count)];
+
+		/// <summary>
+		/// Indica si mostrar la imagen y frase de exito
+		/// </summary>
+		public bool MostrarContenedorFelicitaciones
+		{
+			get => mMostrarContenedorFelicitaciones;
+			set
+			{
+				if (value == mMostrarContenedorFelicitaciones)
+					return;
+
+				mMostrarContenedorFelicitaciones = value;
+
+				DispararPropertyChanged(nameof(FraseFelicitacion));
+				DispararPropertyChanged(nameof(PathImagenFelicitacion));
+			}
+		}
+
+		/// <summary>
+		/// Indica si se debe mostrar el menu izquierdo
+		/// </summary>
+		public bool MostrarMenuIzquierdo
+		{
+			get => MostrarConfiguracion || MostrarLogs;
+			set
+			{
+				//Si el valor es true entonces no hacemos nada porque no sabemos que menu mostrar
+				if (value)
+					return;
+
+				MostrarConfiguracion = false;
+				MostrarLogs = false;
+			}
+		}
+
+		/// <summary>
+		/// Indica si se debe mostrar el menu de configuracion
+		/// </summary>
+		public bool MostrarConfiguracion
+		{
+			get => mMenuActivo[1];
+			set
+			{
+				if (value == mMenuActivo[1])
+					return;
+
+				//Si este menu ahora es visible, ocultamos el de logs
+				if (value)
+					MostrarLogs = false;
+
+				mMenuActivo[1] = value;
+
+				//Le avisamos al menu izquierdo que el esta actual de visibilidad cambio
+				DispararPropertyChanged(nameof(MostrarMenuIzquierdo));
+			}
+		}
+
+		/// <summary>
+		/// Indica si se debe mostrar el menu de logs
+		/// </summary>
+		public bool MostrarLogs
+		{
+			get => mMenuActivo[2];
+			set
+			{
+				if (value == mMenuActivo[2])
+					return;
+
+				//Si este menu ahora es visible, ocultamos el de configuracion
+				if (value)
+					MostrarConfiguracion = false;
+
+				mMenuActivo[2] = value;
+
+				DispararPropertyChanged(nameof(MostrarMenuIzquierdo));
+			}
+		}
+
 		public int IndiceZ { get; set; }
+
+		public ICommand ComandoCerrarMenuIzquierdo { get; set; }
 
 		#endregion
 
@@ -87,73 +242,24 @@ namespace AppGM.Core
 		/// </summary>
 		public ViewModelCreacionDeFuncionBase()
 		{
+			//Añadimos este vm al sistema principal para que se pueda acceder a el globalmente
 			SistemaPrincipal.Atar<ViewModelCreacionDeFuncionBase>(this);
 
+			//Obtenemos los bloques disponibles y las variables por defecto
 			BloquesDisponibles = new ViewModelListaDeElementos<ViewModelBloqueMuestra>(AsignarListaDeBloques());
 			VariablesBase = AsignarVariablesBase();
 
 			GrosorBordesGridBloquesColocados = new Grosor(0, 1);
+
+			ComandoCerrarMenuIzquierdo = new Comando(() =>
+			{
+				MostrarMenuIzquierdo = false;
+			});
 		}
 
 		#endregion
 
 		#region Metodos
-
-		public List<BloqueVariable> ObtenerVariables(ViewModelBloqueFuncionBase bloqueQueIntentaObtenerLasVariables)
-		{
-			var variables = VariablesBase;
-
-			var variablesCreadasValidas = ObtenerVariablesCreadas(bloqueQueIntentaObtenerLasVariables);
-
-			variables = variables.Concat(variablesCreadasValidas.Select(elemento => elemento.GenerarBloque_Impl())).ToList();
-
-			return variables;
-		}
-
-		public List<ViewModelBloqueDeclaracionVariable> ObtenerVariablesCreadas(ViewModelBloqueFuncionBase bloqueQueIntentaObtenerLasVariables)
-		{
-			return VariablesCreadas.FindAll(
-				var => var.EsValido && bloqueQueIntentaObtenerLasVariables.IndiceBloque > var.IndiceBloque);
-		}
-
-		public void AñadirBloque(ViewModelBloqueFuncionBase bloque, int indice)
-		{
-			if(SistemaPrincipal.Drag.HayUnDragActivo)
-				GrosorBordesGridBloquesColocados = new Grosor(0, 1);
-
-			if (bloque is ViewModelBloqueDeclaracionVariable var)
-				VariablesCreadas.Add(var);
-
-			if (indice != -1)
-			{
-				Base<IContenedorDeBloques>()?.InsertarBloque(bloque, indice);
-
-				DispararBloqueAñadido(bloque, this);
-
-				return;
-			}
-
-			bloque.IndiceBloque = Bloques.Count;
-			bloque.IndiceZ      = 1;
-
-			Bloques.Add(bloque);
-
-			bloque.Inicializar();
-
-			DispararBloqueAñadido(bloque, this);
-		}
-
-		public void QuitarBloque(ViewModelBloqueFuncionBase bloque)
-		{
-			Bloques.Remove(bloque);
-
-			if (bloque is ViewModelBloqueDeclaracionVariable var)
-				VariablesCreadas.Remove(var);
-
-			DispararBloqueRemovido(bloque, this);
-
-			Base<IContenedorDeBloques>().ActualizarIndicesBloques(bloque.IndiceBloque);
-		}
 
 		/// <summary>
 		/// Obtiene el ID para asignar a un bloque.
@@ -195,7 +301,72 @@ namespace AppGM.Core
 		/// <returns><see cref="List{T}"/> que se asignara a <see cref="VariablesBase"/></returns>
 		protected abstract List<BloqueVariable> AsignarVariablesBase();
 
-		#region Implementacion IReceptorDeDrag
+		/// <summary>
+		/// Cargas los bloques del <see cref="ControladorFuncion{TipoFuncion}"/> y los carga a <see cref="Bloques"/>
+		/// </summary>
+		public virtual async void CargarBloquesFuncion(){}
+
+		#region Implementacion de IContenedorDeBloques
+
+		public List<BloqueVariable> ObtenerVariables(ViewModelBloqueFuncionBase bloqueQueIntentaObtenerLasVariables)
+		{
+			var variables = VariablesBase;
+
+			var variablesCreadasValidas = ObtenerVariablesCreadas(bloqueQueIntentaObtenerLasVariables);
+
+			variables = variables.Concat(variablesCreadasValidas.Select(elemento => elemento.GenerarBloque_Impl())).ToList();
+
+			return variables;
+		}
+
+		public List<ViewModelBloqueDeclaracionVariable> ObtenerVariablesCreadas(ViewModelBloqueFuncionBase bloqueQueIntentaObtenerLasVariables)
+		{
+			return VariablesCreadas.FindAll(
+				var => var.EsValido && bloqueQueIntentaObtenerLasVariables.IndiceBloque > var.IndiceBloque);
+		}
+
+		public void AñadirBloque(ViewModelBloqueFuncionBase bloque, int indice)
+		{
+			if (SistemaPrincipal.Drag.HayUnDragActivo)
+				GrosorBordesGridBloquesColocados = new Grosor(0, 1);
+
+			if (bloque is ViewModelBloqueDeclaracionVariable var)
+				VariablesCreadas.Add(var);
+
+			if (indice != -1)
+			{
+				Base<IContenedorDeBloques>()?.InsertarBloque(bloque, indice);
+
+				DispararBloqueAñadido(bloque, this);
+
+				return;
+			}
+
+			bloque.IndiceBloque = Bloques.Count;
+			bloque.IndiceZ = 1;
+
+			Bloques.Add(bloque);
+
+			bloque.Inicializar();
+
+			DispararBloqueAñadido(bloque, this);
+		}
+
+		public void QuitarBloque(ViewModelBloqueFuncionBase bloque)
+		{
+			Bloques.Remove(bloque);
+
+			if (bloque is ViewModelBloqueDeclaracionVariable var)
+				VariablesCreadas.Remove(var);
+
+			DispararBloqueRemovido(bloque, this);
+
+			Base<IContenedorDeBloques>().ActualizarIndicesBloques(bloque.IndiceBloque);
+		}
+
+		#endregion
+
+		#region Implementacion de IReceptorDeDrag
 
 		public void OnDragEntro_Impl(IDrageable vm)
 		{
