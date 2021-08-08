@@ -8,7 +8,7 @@ namespace AppGM.Core
     /// <summary>
     /// View model para una ventana en la que se hayan que seguir varios pasos
     /// </summary>
-    public class ViewModelVentanaConPasos<TipoViewModel> : ViewModelMensajeBase
+    public class ViewModelVentanaConPasos<TipoViewModel> : ViewModel
         where TipoViewModel: ViewModelVentanaConPasos<TipoViewModel>
     {
         #region Campos & Propiedades
@@ -27,6 +27,11 @@ namespace AppGM.Core
 
 
         //---------------------------------------PROPIEDADES-------------------------------------------------
+
+        /// <summary>
+        /// Indica si mostrar la x en la esquina superior derecha para salir del control actual
+        /// </summary>
+        public bool MostrarBotonSalir { get; set; }
 
         /// <summary>
         /// Paso en el que el usuario se encuentra
@@ -52,6 +57,11 @@ namespace AppGM.Core
         /// Comando que se ejecuta al presionar el boton para retroceder de paso
         /// </summary>
         public ICommand ComandoPasoAnterior { get; private set; }
+
+        /// <summary>
+        /// Comando que se ejecuta al presionar la x
+        /// </summary>
+        public ICommand ComandoSalir { get; set; }
 
         /// <summary>
         /// Lista de los pasos

@@ -6,7 +6,7 @@ namespace AppGM.Core
     /// <summary>
     /// VM para la creacion de un mapa de un nuevo rol
     /// </summary>
-    public class ViewModelMensajeCrearRol_DatosMapa : ViewModelPaso<ViewModelMensajeCrearRol>
+    public class ViewModelCrearRol_DatosMapa : ViewModelPaso<ViewModelCrearRol>
     {
 	    #region Campos & Propiedades
 
@@ -49,7 +49,7 @@ namespace AppGM.Core
 
 		#region Constructor
 
-		public ViewModelMensajeCrearRol_DatosMapa(ModeloMapa _mapa)
+		public ViewModelCrearRol_DatosMapa(ModeloMapa _mapa)
 		{
 			mMapa = _mapa;
 
@@ -58,7 +58,7 @@ namespace AppGM.Core
 				mArchivoMapa = SistemaPrincipal.ControladorDeArchivos.MostrarDialogoAbrirArchivo(
 					"Seleccionar Imagen Mapa",
 					"Formatos imagen (*.jpg *.png)|*.jpg;*.png",
-					SistemaPrincipal.Aplicacion.VentanaMensajePrincipal);
+					SistemaPrincipal.Aplicacion.VentanaActual);
 
 				PathImagenMapa = mArchivoMapa.Ruta;
 			});
@@ -68,7 +68,7 @@ namespace AppGM.Core
 
 		#region Funciones
 
-		public override void Desactivar(ViewModelMensajeCrearRol vm)
+		public override void Desactivar(ViewModelCrearRol vm)
 		{
 			if (string.IsNullOrEmpty(NombreMapa) || string.IsNullOrEmpty(PathImagenMapa))
 				return;

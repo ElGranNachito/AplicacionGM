@@ -15,7 +15,19 @@ namespace AppGM.Core
         /// <summary>
         /// Pagina del rol
         /// </summary>
-        PaginaPrincipalRol = 2
+        PaginaPrincipalRol = 2,
+
+        /// <summary>
+        /// Pagina de creacion de rol
+        /// </summary>
+        CreacionDeRol = 3,
+
+        /// <summary>
+        /// Pagina de creacion de personaje
+        /// </summary>
+        CreacionDePersonaje = 4,
+
+        NINGUNA = 0
     }
 
     /// <summary>

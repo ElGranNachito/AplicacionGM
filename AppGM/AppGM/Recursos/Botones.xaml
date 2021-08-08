@@ -286,6 +286,12 @@
             </Setter.Value>
         </Setter>
 
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="{StaticResource Color.CampoDeTexto.TextoDeshabilitado}"/>
+            </Trigger>
+        </Style.Triggers>
+
     </Style>
 
     <Style TargetType="{x:Type CheckBox}" x:Key="CheckBoxSolapa">
@@ -316,13 +322,13 @@
 
                         <Trigger Property="IsMouseOver" Value="True">
                             <Trigger.Setters>
-                                <Setter TargetName="Border" Property="BorderBrush" Value="BlueViolet"/>
+                                <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=BorderBrush}"/>
                             </Trigger.Setters>
                         </Trigger>
 
                         <Trigger Property="IsChecked" Value="True">
                             <Trigger.Setters>
-                                <Setter TargetName="Border" Property="BorderBrush" Value="BlueViolet"/>
+                                <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=BorderBrush}"/>
                             </Trigger.Setters>
                         </Trigger>
 
@@ -332,6 +338,52 @@
             </Setter.Value>
         </Setter>
 
+    </Style>
+
+    <Style TargetType="{x:Type CheckBox}" x:Key="CheckBoxSolapaHorizontal">
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type CheckBox}">
+
+                    <Border x:Name="Border"
+                            Background="Transparent"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            Padding="{TemplateBinding Padding}">
+
+                        <!-- El unico elemento que necesitamos es un bloque de texto -->
+                        <TextBlock 
+                            x:Name="Texto"
+                            Foreground="{TemplateBinding Foreground}"
+                            FontFamily="{TemplateBinding FontFamily}"
+                            Text="{TemplateBinding Content}"
+                            FontSize="{TemplateBinding FontSize}">
+                        </TextBlock>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                                <Condition Property="IsEnabled" Value="True"/>
+                            </MultiTrigger.Conditions>
+
+                            <Setter TargetName="Border" Property="BorderThickness" Value="0 0 0 1"/>
+                        </MultiTrigger>
+
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsChecked" Value="True"/>
+                                <Condition Property="IsEnabled" Value="True"/>
+                            </MultiTrigger.Conditions>
+
+                            <Setter TargetName="Border" Property="BorderThickness" Value="0 0 0 1"/>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
 </ResourceDictionary>

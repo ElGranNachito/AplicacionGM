@@ -7,6 +7,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
+    <!-- ViewModel: ViewModelComboBox -->
+
     <!-- Combo box acompañada de una descripcion -->
 
     <Grid>
@@ -29,7 +31,15 @@
             Grid.Column="1"
             Margin="10 0 0 0"
             x:Name="ComboBox"
-            SelectedValue="{Binding OpcionSeleccionada}"/>
+            ItemsSource="{Binding ValoresPosibles}"
+            SelectedValue="{Binding ValorSeleccionado}">
+
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <local:UserControlItemComboBox/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
     </Grid>
 
 </UserControl>

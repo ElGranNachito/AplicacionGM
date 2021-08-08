@@ -27,22 +27,22 @@ namespace AppGM
                         };
 
                     //Creacion de un rol
-                    case ViewModelMensajeCrearRol vmc:
+                    case ViewModelCrearRol vmc:
                         return new UserControlMensajeConPasos
                         {
                             DataContext = vmc
                         };
 
                     //Creacion de un personaje
-                    case ViewModelMensajeCrearRol_CrearPersonaje vmc:
-                        return new UserControlCreacionRol_CreacionPersonaje
+                    case ViewModelCrearPersonaje vmc:
+                        return new UserControlCreacionPersonaje
                         {
                             DataContext = vmc
                         };
 
                     //Creacion de una habilidad
-                    case ViewModelMensajeCrearRol_CrearHabilidad vmc:
-                        return new UserControlCreacionRol_CreacionHabilidad
+                    case ViewModelCrearHabilidad vmc:
+                        return new UserControlCreacionHabilidad
                         {
                             DataContext = vmc
                         };

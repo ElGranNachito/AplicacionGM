@@ -16,6 +16,24 @@ namespace AppGM
         {
             switch (value)
             {
+	            case ViewModelPaginaInicio vm:
+		            return new UserControlPaginaInicio {DataContext = vm};
+
+	            case ViewModelRol vm:
+	                return new UserControlPaginaPrincipalRol {DataContext = vm};
+
+                case ViewModelCrearRol vm:
+	                return new UserControlMensajeConPasos {DataContext = vm};
+
+                case ViewModelCrearPersonaje vm:
+	                return new UserControlCreacionPersonaje {DataContext = vm};
+
+                case ViewModelCrearHabilidad vm:
+	                return new UserControlCreacionHabilidad {DataContext = vm};
+
+	            case ViewModelCreacionDeFuncionBase vm:
+		            return new UserControlCreacionFuncion { DataContext = vm };
+
                 //Globo para mostrar informacion de un rol
                 case ViewModelContenidoGloboInfoRol vm:
                     return new UserControlContenidoGloboInfoRol {DataContext = vm};
@@ -24,7 +42,7 @@ namespace AppGM
                 case ViewModelInfoCombateGlobo vm:
                     return new UserControlInfoCombateGlobo {DataContext = vm};
 
-                default:
+	            default:
                     return null;
             }
         }

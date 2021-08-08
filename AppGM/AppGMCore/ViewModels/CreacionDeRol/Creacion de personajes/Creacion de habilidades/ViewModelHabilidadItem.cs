@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Windows.Input;
 
 namespace AppGM.Core
 {
@@ -19,8 +20,10 @@ namespace AppGM.Core
         /// </summary>
         public string TituloHabilidad     => Habilidad.Nombre + $".{(EsMagia ? (Habilidad as ModeloMagia)?.Nivel.ToString() : Habilidad.Rango.ToString())}";
 
-        public string PathImagenHabilidad => Path.Combine(Path.Combine(SistemaPrincipal.ControladorDeArchivos.DirectorioImagenes, "Habilidades" + SistemaPrincipal.ControladorDeArchivos.CaracterSeparadorDeCarpetas), Habilidad.TipoDeHabilidad + ".png");
+        public string PathImagenHabilidad => Path.Combine(Path.Combine(SistemaPrincipal.ControladorDeArchivos.DirectorioImagenes, "Habilidades" + Path.DirectorySeparatorChar), Habilidad.TipoDeHabilidad + ".png");
 
+
+        public ICommand ComandoEditar { get; private set; }
         #endregion
 
         #region Constructor
@@ -28,6 +31,17 @@ namespace AppGM.Core
         public ViewModelHabilidadItem(ModeloHabilidad _habilidad)
         {
             Habilidad = _habilidad;
+
+            ComandoEditar = new Comando(() =>
+            {
+	            var vmActual = SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido;
+
+	            SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = new ViewModelCrearHabilidad(_habilidad.Dueño.Personaje,
+		            () =>
+		            {
+			            SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = vmActual;
+		            }, Habilidad);
+            });
         } 
 
         #endregion

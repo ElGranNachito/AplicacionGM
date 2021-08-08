@@ -16,6 +16,13 @@ namespace AppGM.Core
         /// Elimina el modelo de la base de datos
         /// </summary>
 		public virtual void Eliminar() => SistemaPrincipal.EliminarModelo(this);
+
+        /// <summary>
+        /// Crea una copia superficial de este modelo
+        /// </summary>
+        /// <returns></returns>
+        public ModeloBase Clonar() => (ModeloBase)MemberwiseClone();
+
 	}
 
     /// <summary>

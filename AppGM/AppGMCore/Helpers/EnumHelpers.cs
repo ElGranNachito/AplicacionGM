@@ -96,7 +96,23 @@ namespace AppGM.Core
 
 	        }
 
-	        return operacionesLogicasDisponibles.ToList();
+	        var resultado = operacionesLogicasDisponibles.ToList();
+
+	        resultado.Remove(EOperacionLogica.NINGUNA);
+
+	        return resultado;
+        }
+
+        public static List<ETipoHabilidad> ObtenerTiposDeHabilidadDisponibles(this ETipoPersonaje tipoPersonaje)
+        {
+	        var tiposDeHabilidad = Enum.GetValues(typeof(ETipoHabilidad)).Cast<ETipoHabilidad>().ToList();
+
+	        tiposDeHabilidad.Remove(ETipoHabilidad.NINGUNO);
+
+	        if (tipoPersonaje != ETipoPersonaje.Servant)
+		        tiposDeHabilidad.Remove(ETipoHabilidad.NoblePhantasm);
+
+	        return tiposDeHabilidad;
         }
     }
 }

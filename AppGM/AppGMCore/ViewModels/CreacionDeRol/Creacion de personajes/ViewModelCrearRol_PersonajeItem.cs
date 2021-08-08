@@ -2,7 +2,7 @@
 
 namespace AppGM.Core
 {
-    public class ViewModelMensajeCrearRol_PersonajeItem : ViewModel
+    public class ViewModelCrearRol_PersonajeItem : ViewModel
     {
         #region Propiedades
         public bool EsServant => Personaje.TipoPersonaje == ETipoPersonaje.Servant;
@@ -15,7 +15,7 @@ namespace AppGM.Core
 
         #region Constrcutor
 
-        public ViewModelMensajeCrearRol_PersonajeItem(DatosCreacionRol _datosRol, ModeloPersonaje _personaje, ViewModelMensajeCrearRol_ListaPersonajes _listaPersonajes)
+        public ViewModelCrearRol_PersonajeItem(DatosCreacionRol _datosRol, ModeloPersonaje _personaje, ViewModelMensajeCrearRol_ListaPersonajes _listaPersonajes)
         {
             Personaje = _personaje;
 

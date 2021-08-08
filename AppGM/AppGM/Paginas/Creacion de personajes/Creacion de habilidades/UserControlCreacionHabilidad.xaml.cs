@@ -5,9 +5,9 @@ namespace AppGM
     /// <summary>
     /// Lógica de interacción para UserControlCreacionRol_CreacionMagia.xaml
     /// </summary>
-    public partial class UserControlCreacionRol_CreacionHabilidad : UserControl
+    public partial class UserControlCreacionHabilidad : UserControl
     {
-        public UserControlCreacionRol_CreacionHabilidad()
+        public UserControlCreacionHabilidad()
         {
             InitializeComponent();
         }

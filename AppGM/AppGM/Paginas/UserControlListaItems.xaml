@@ -37,7 +37,19 @@
                         Content="{StaticResource Fa-BotonPlus}"
                         Style="{StaticResource BotonFondoResaltable}"
                         Command="{Binding ComandoAñadirItem}"/>
-                    
+
+                    <ScrollViewer
+                        Grid.Row="1">
+
+                        <ItemsControl 
+                            ItemsSource="{Binding Items.Elementos}"
+                            ItemTemplate="{Binding 
+                            RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}, 
+                            Path=ItemTemplate}"/>
+
+                    </ScrollViewer>
+
+                    <!--TODO:Quitar una vez se hayan actualizado todos los controles que lo utilizan-->
                     <!-- Contenido -->
                     <ContentControl 
                         Grid.Row="1"

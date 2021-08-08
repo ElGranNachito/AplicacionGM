@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -10,13 +11,9 @@ namespace AppGM.Core
     /// <summary>
     /// Viewmodel para la creacion de un personaje
     /// </summary>
-    public class ViewModelMensajeCrearRol_CrearPersonaje : ViewModelMensajeBase
+    public class ViewModelCrearPersonaje : ViewModelConResultado
     {
         #region Miembros
-
-        private DatosCreacionRol         mDatosCreacionRol;
-        private ViewModelMensajeCrearRol mViewModelCrearRol;
-        private ModeloPersonaje          mModeloPersonaje;
 
         private int    mHP  { get; set; } = 20;
         private ushort mSTR { get; set; } = 10;
@@ -38,10 +35,24 @@ namespace AppGM.Core
 
         private ERango mNP  { get; set; } = ERango.F;
 
+        private BitVector32 mValoresSolapas = new BitVector32(1);
+
         #endregion
 
         #region Propiedades
 
+        /// <summary>
+        /// Controlador del personaje creado
+        /// </summary>
+        public ControladorPersonaje Resultado { get; private set; }
+
+        /// <summary>
+        /// Modelo del personaje creado
+        /// </summary>
+        public ModeloPersonaje ModeloPersonaje { get; private set; }
+
+        public ModeloPersonaje ModeloPersonajeSiendoEditado { get; private set; }
+            
         public string Nombre     { get; set; } = "Mr Sin Nombre";
         public string NombreReal { get; set; } = "Nadie";
         public string PathImagen { get; set; } = Path.Combine(SistemaPrincipal.ControladorDeArchivos.DirectorioImagenes, "camarita.png");
@@ -49,31 +60,84 @@ namespace AppGM.Core
 
         public int PuntosHabilidadRestantes => 75 - mSTR - mEND - mAGI - mINT - mLCK - mCHR;
 
-        public ETipoPersonaje TipoPersonajeSeleccionado => VMSeleccionTipoPersonaje.OpcionSeleccionada;
-        public EClaseServant  ClaseServantSeleccionada  => VMSeleccionClaseServant.OpcionSeleccionada;
-        public EArquetipo     ArquetipoSeleccionado     => VMSeleccionArquetipo.OpcionSeleccionada;
-        public ESexo          SexoSeleccionado          => VMSeleccionSexo.OpcionSeleccionada;
+        public ETipoPersonaje TipoPersonajeSeleccionado => ComboBoxTipoPersonaje.Valor;
+        public EClaseServant  ClaseServantSeleccionada  => ComboBoxClaseServant.Valor;
+        public EArquetipo     ArquetipoSeleccionado     => ComboBoxArquetipo.Valor;
+        public ESexo          SexoSeleccionado          => ComboBoxSexo.Valor;
 
         public bool EsMasterOServant => (TipoPersonajeSeleccionado & (ETipoPersonaje.Master | ETipoPersonaje.Servant)) != 0;
         public bool EsServant    => TipoPersonajeSeleccionado == ETipoPersonaje.Servant;
         public bool EsMaster     => TipoPersonajeSeleccionado == ETipoPersonaje.Master;
         public bool EsInvocacion => TipoPersonajeSeleccionado == ETipoPersonaje.Invocacion;
         public bool UsarRangos   => EsServant || (EsInvocacion && CheckUsarRangos);
-        public bool PuedeAñadirHabilidades => mModeloPersonaje != null;
+        public bool PuedeAñadirHabilidades => true;
+        public bool EstaEditandoModeloExistente => ModeloPersonajeSiendoEditado != null;
 
         public bool PuedeFinalizar => PuedeCrearPersonaje();
 
-        public ViewModelListaItems ContenedorListaItems       { get; set; }
-        public ViewModelListaItems ContenedorListaHabilidades { get; set; }
-        public ViewModelListaItems ContendorListaNPs          { get; set; }
+        public bool MostrarCaracteristicasGenerales
+        {
+	        get => mValoresSolapas[1];
+	        set
+	        {
+		        if (value == mValoresSolapas[1])
+			        return;
 
-        public ViewModelListaDeHabilidades ListaHabilidades { get; set; }
+		        if (value)
+		        {
+			        MostrarInventario  = false;
+			        MostrarHabilidades = false;
+		        }
 
-        public ViewModelComboBoxConDescripcion<ETipoPersonaje> VMSeleccionTipoPersonaje { get; set; } = new ViewModelComboBoxConDescripcion<ETipoPersonaje>();
-        public ViewModelComboBoxConDescripcion<EClaseServant>  VMSeleccionClaseServant  { get; set; } = new ViewModelComboBoxConDescripcion<EClaseServant>();
-        public ViewModelComboBoxConDescripcion<EArquetipo>     VMSeleccionArquetipo     { get; set; } = new ViewModelComboBoxConDescripcion<EArquetipo>();
-        public ViewModelComboBoxConDescripcion<ESexo>          VMSeleccionSexo          { get; set; } = new ViewModelComboBoxConDescripcion<ESexo>();
-        public ViewModelComboBoxConDescripcion<EManoDominante> VMSeleccionManoDominante { get; set; } = new ViewModelComboBoxConDescripcion<EManoDominante>();
+		        mValoresSolapas[1] = value;
+	        }
+        }
+
+        public bool MostrarInventario
+        {
+	        get => mValoresSolapas[2];
+	        set
+	        {
+		        if (value == mValoresSolapas[2])
+			        return;
+
+		        if (value)
+		        {
+			        MostrarCaracteristicasGenerales = false;
+			        MostrarHabilidades = false;
+		        }
+
+		        mValoresSolapas[2] = value;
+            }
+        }
+
+        public bool MostrarHabilidades
+        {
+	        get => mValoresSolapas[4];
+	        set
+	        {
+		        if (value == mValoresSolapas[4])
+			        return;
+
+		        if (value)
+		        {
+			        MostrarCaracteristicasGenerales = false;
+			        MostrarInventario = false;
+		        }
+
+		        mValoresSolapas[4] = value;
+            }
+        }
+
+        public ViewModelListaItems<ViewModelItem> ContenedorListaItems                { get; set; }
+        public ViewModelListaItems<ViewModelHabilidadItem> ContenedorListaHabilidades { get; set; }
+        public ViewModelListaItems<ViewModelHabilidadItem> ContendorListaNPs          { get; set; }
+
+        public ViewModelComboBox<ETipoPersonaje> ComboBoxTipoPersonaje { get; set; } = new ViewModelComboBox<ETipoPersonaje>(EnumHelpers.TiposDePersonajesDisponibles);
+        public ViewModelComboBox<EClaseServant>  ComboBoxClaseServant  { get; set; } = new ViewModelComboBox<EClaseServant>(EnumHelpers.ClasesDisponibles);
+        public ViewModelComboBox<EArquetipo>     ComboBoxArquetipo     { get; set; } = new ViewModelComboBox<EArquetipo>(EnumHelpers.ArquetiposDisponibles);
+        public ViewModelComboBox<ESexo>          ComboBoxSexo          { get; set; } = new ViewModelComboBox<ESexo>(EnumHelpers.SexosDisponibles);
+        public ViewModelComboBox<EManoDominante> ComboBoxManoDominante { get; set; } = new ViewModelComboBox<EManoDominante>(EnumHelpers.TiposDeManoDominanteDisponibles);
 
         public List<EClaseServant>  ClasesDeServantDisponibles => ObtenerClasesDeServantDisponibles();
 
@@ -93,22 +157,35 @@ namespace AppGM.Core
 
         #region Constructor
 
-        public ViewModelMensajeCrearRol_CrearPersonaje(DatosCreacionRol _datosCreacionRol, ViewModelMensajeCrearRol _viewModelCrearRol)
+        public ViewModelCrearPersonaje(Action accionSalir, ModeloPersonaje _modeloPersonaje = null)
         {
-            mDatosCreacionRol  = _datosCreacionRol;
-            mViewModelCrearRol = _viewModelCrearRol;
-            mModeloPersonaje   = _datosCreacionRol.modeloPersonajaActual;
+	        if (_modeloPersonaje != null)
+	        {
+		        ModeloPersonajeSiendoEditado = _modeloPersonaje;
 
-            mAccionAñadirHabilidad = () =>
-            {
-                SistemaPrincipal.Aplicacion.VentanaMensajePrincipal.EstablecerViewModel(new ViewModelMensajeCrearRol_CrearHabilidad(this, mModeloPersonaje));
-            };
+		        ModeloPersonaje = (ModeloPersonaje) ModeloPersonajeSiendoEditado.Clonar();
 
-            ContenedorListaHabilidades = new ViewModelListaItems(mAccionAñadirHabilidad, true, "Habilidades");
-            ContenedorListaItems       = new ViewModelListaItems(mAccionAñadirItem, true, "Items");
-            ContendorListaNPs          = new ViewModelListaItems(mAccionAñadirNP, true, "NPs");
+                DispararPropertyChanged(nameof(EstaEditandoModeloExistente));
+	        }
+	        else
+		        ModeloPersonaje = new ModeloPersonaje();
 
-            VMSeleccionTipoPersonaje.PropertyChanged += (sender, args) =>
+	        mAccionAñadirHabilidad = () =>
+	        {
+		        SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = new ViewModelCrearHabilidad(ModeloPersonaje, () =>
+			        {
+				        SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = this;
+			        });
+	        };
+
+            ContenedorListaHabilidades = new ViewModelListaItems<ViewModelHabilidadItem>(mAccionAñadirHabilidad, true, "Habilidades");
+            ContendorListaNPs          = new ViewModelListaItems<ViewModelHabilidadItem>(mAccionAñadirNP, true, "NPs");
+
+            ContenedorListaItems       = new ViewModelListaItems<ViewModelItem>(mAccionAñadirItem, true, "Items");
+
+            ContenedorListaHabilidades.Items.Elementos.Add(new ViewModelHabilidadItem(new ModeloHabilidad{Nombre = "Nada interesante", TipoDeHabilidad = ETipoHabilidad.Skill, Dueño = new TIPersonajeHabilidad{Personaje = ModeloPersonaje}}));
+
+            ComboBoxTipoPersonaje.OnValorSeleccionadoCambio += (anterior, actual) =>
             {
                 DispararPropertyChanged(new PropertyChangedEventArgs(nameof(ClasesDeServantDisponibles)));
                 DispararPropertyChanged(new PropertyChangedEventArgs(nameof(EsMasterOServant)));
@@ -130,31 +207,10 @@ namespace AppGM.Core
             {
                 CrearPersonaje();
 
-                mDatosCreacionRol.personajes.Add(mModeloPersonaje);
-
-                switch (mModeloPersonaje.TipoPersonaje)
-                {
-                    case ETipoPersonaje.Master:
-                        mDatosCreacionRol.masters.Add(mModeloPersonaje);
-                        break;
-                    case ETipoPersonaje.Servant:
-                        mDatosCreacionRol.servants.Add(mModeloPersonaje);
-                        break;
-                    case ETipoPersonaje.Invocacion:
-                        mDatosCreacionRol.invocaciones.Add(mModeloPersonaje);
-                        break;
-                    default:
-                        mDatosCreacionRol.npcs.Add(mModeloPersonaje);
-                        break;
-                }
-
-                SistemaPrincipal.Aplicacion.VentanaMensajePrincipal.EstablecerViewModel(_viewModelCrearRol);
+                accionSalir();
             });
 
-            ComandoCancelar = new Comando(() =>
-            {
-                SistemaPrincipal.Aplicacion.VentanaMensajePrincipal.EstablecerViewModel(_viewModelCrearRol);
-            });
+            ComandoCancelar = new Comando(accionSalir);
         }
 
         #endregion
@@ -177,12 +233,12 @@ namespace AppGM.Core
 
         private bool PuedeSeleccionarClase(EClaseServant claseDeseada)
         {
-            for (int i = 0; i < mDatosCreacionRol.personajes.Count; ++i)
-            {
-                if (mDatosCreacionRol.personajes[i] is ModeloPersonajeJugable mpj)
-                    if (mpj.EClaseServant == claseDeseada && TipoPersonajeSeleccionado == mpj.TipoPersonaje)
-                        return false;
-            }
+            //for (int i = 0; i < mDatosCreacionRol.personajes.Count; ++i)
+            //{
+            //    if (mDatosCreacionRol.personajes[i] is ModeloPersonajeJugable mpj)
+            //        if (mpj.EClaseServant == claseDeseada && TipoPersonajeSeleccionado == mpj.TipoPersonaje)
+            //            return false;
+            //}
 
             return true;
         }
@@ -219,22 +275,22 @@ namespace AppGM.Core
 
         private void ActualizarStatsPersonaje()
         {
-            if (mModeloPersonaje == null)
-                mModeloPersonaje = Creador.CrearPersonaje(TipoPersonajeSeleccionado);
+            //if (mModeloPersonaje == null)
+            //    mModeloPersonaje = Creador.CrearPersonaje(TipoPersonajeSeleccionado);
 
-            mModeloPersonaje.MaxHp = mHP;
-            mModeloPersonaje.Str   = mSTR;
-            mModeloPersonaje.End   = mEND;
-            mModeloPersonaje.Agi   = mAGI;
-            mModeloPersonaje.Int   = mINT;
-            mModeloPersonaje.Lck   = mLCK;
+            //mModeloPersonaje.MaxHp = mHP;
+            //mModeloPersonaje.Str   = mSTR;
+            //mModeloPersonaje.End   = mEND;
+            //mModeloPersonaje.Agi   = mAGI;
+            //mModeloPersonaje.Int   = mINT;
+            //mModeloPersonaje.Lck   = mLCK;
 
-            if (EsServant)
-                ((ModeloServant)mModeloPersonaje).mERangoNP = mNP;
-            else if (EsMaster)
-                ((ModeloMaster) mModeloPersonaje).Chr = mCHR;
+            //if (EsServant)
+            //    ((ModeloServant)mModeloPersonaje).mERangoNP = mNP;
+            //else if (EsMaster)
+            //    ((ModeloMaster) mModeloPersonaje).Chr = mCHR;
 
-            DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PuedeAñadirHabilidades)));
+            //DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PuedeAñadirHabilidades)));
         }
 
         private void CrearPersonaje()

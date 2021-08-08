@@ -15,7 +15,7 @@ namespace AppGM.Core
         /// <summary>
         /// Pagina actual de la app
         /// </summary>
-        private EPagina mEPagina = EPagina.PaginaPrincipal;
+        private EPagina mPaginaActual;
 
 
         //------------------------PROPIEDADES-------------------------
@@ -39,24 +39,42 @@ namespace AppGM.Core
         /// <summary>
         /// Pagina actual de la aplicacion
         /// </summary>
-        public EPagina EPagina
+        public EPagina PaginaActual
         {
-            get => mEPagina;
+            get => mPaginaActual;
             set
             {
                 //Si el valor es igual a la pagina actual regresamos para no disparar el evento
-                if (value == mEPagina)
+                if (value == mPaginaActual)
                     return;
 
                 //Hacemos una variable temporal con la pagina anterior
-                EPagina paginaAnterior = mEPagina;
+                PaginaAnterior = mPaginaActual;
 
-                mEPagina = value;
+                mPaginaActual = value;
+
+                switch (PaginaActual)
+                {
+                    case EPagina.PaginaPrincipal:
+	                    VentanaPrincipal.DataContextContenido = SistemaPrincipal.ObtenerInstancia<ViewModelPaginaInicio>();
+	                    break;
+                    case EPagina.PaginaPrincipalRol:
+	                    VentanaPrincipal.DataContextContenido = SistemaPrincipal.RolSeleccionado;
+	                    break;
+                    case EPagina.CreacionDeRol:
+	                    VentanaPrincipal.DataContextContenido = new ViewModelCrearRol();
+	                    break;
+                }
 
                 //Disparamos el evento una vez la pagina actual ya ha sido actualizada por si el recibidor del evento quiere acceder a ella
-                OnPaginaActualCambio(paginaAnterior, mEPagina);
+                OnPaginaActualCambio(PaginaAnterior, mPaginaActual);
             }
         }
+
+        /// <summary>
+        /// Pagina que estuvo antes a <see cref="PaginaActual"/>
+        /// </summary>
+        public EPagina PaginaAnterior { get; private set; }
 
         #endregion
 

@@ -19,6 +19,8 @@ namespace AppGM
 
             DataContext    = ventanaPrincipal;
 
+            SistemaPrincipal.Aplicacion.PaginaActual = EPagina.PaginaPrincipal;
+
             InitializeComponent();
         }
     }

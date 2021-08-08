@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="AppGM.UserControlCreacionRol_CreacionHabilidad"
+﻿<UserControl x:Class="AppGM.UserControlCreacionHabilidad"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -32,13 +32,28 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <StackPanel>
+                <StackPanel
+                    Grid.RowSpan="2">
 
                     <!-- Nombre de la habilidad -->
                     <TextBox
                         TextAlignment="Center"
                         Tag="Nombre de la habilidad"
                         MaxLength="50"
+                        MinHeight="20"
+                        Style="{StaticResource TextoDescriptivo}"/>
+
+                    <!-- Descripcion de la habilidad -->
+                    <TextBox
+                        TextAlignment="Center"
+                        TextWrapping="Wrap"
+                        AcceptsReturn="True"
+
+                        Margin="0 10 0 0"
+
+                        Tag="Descripcion"
+                        MaxLength="2000"
+                        Height="50"
                         Style="{StaticResource TextoDescriptivo}"/>
 
                     <!-- Checkbox usa rango -->
@@ -60,8 +75,7 @@
                     <local:UserControlComboBoxConDescripcion
                         Margin="0 15 0 10"
                         Descripcion="Tipo de habilidad:"
-                        ItemsSource="{Binding Source={x:Static core:EnumHelpers.TiposDeHabilidadDisponibles}}"
-                        DataContext="{Binding VMSeleccionTipoHabilidad}"
+                        DataContext="{Binding ComboBoxTipoHabilidad}"
                     />
 
                     <!-- Rango de la habilidad -->
@@ -69,72 +83,90 @@
                         Margin="0 0 0 10"
                         Descripcion="Rango habilidad:"
                         Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Grid}, Path=DataContext.RequiereRango, Converter={local:BooleanToVisibilityConverterColapsar}}"
-                        ItemsSource="{Binding Source={x:Static core:EnumHelpers.RangosDisponibles}}"
-                        DataContext="{Binding VMSeleccionRangoHabilidad}"
+                        DataContext="{Binding ComboBoxRangoHabilidad}"
                         />
 
-
-                    <!-- Nivel de la magia -->
+                    <!-- Nivel de hechizo -->
                     <TextBlock
                         HorizontalAlignment="Center"
                         Visibility="{Binding EsMagia, Converter={local:BooleanToVisibilityConverterColapsar}}"
                         Text="{Binding TextoNivelMagia}"/>
 
-                    <!-- Costo de mana magia -->
+                    <!-- Costo de od hechizo -->
+                    <TextBox
+                        Margin="0 0 0 10"
+                        Tag="Costo de od"
+                        MaxLength="4"
+                        TextAlignment="Center"
+
+                        MinHeight="20"
+
+                        local:CampoDeTextoNumericoProperty.Value="True"
+
+                        Visibility="{Binding UtilizaOdYMana, Converter={local:BooleanToVisibilityConverterColapsar}}"
+                        Style="{StaticResource TextoDescriptivo}"
+                        Text="{Binding CostoDeOd}"/>
+
+                    <!-- Costo de mana hechizo -->
                     <TextBox
                         Margin="0 0 0 10"
                         Tag="Costo de mana"
                         MaxLength="4"
                         TextAlignment="Center"
+
+                        MinHeight="20"
+
                         local:CampoDeTextoNumericoProperty.Value="True"
-                        Visibility="{Binding EsMagia, Converter={local:BooleanToVisibilityConverterColapsar}}"
+
+                        Visibility="{Binding UtilizaOdYMana, Converter={local:BooleanToVisibilityConverterColapsar}}"
                         Style="{StaticResource TextoDescriptivo}"
                         Text="{Binding CostoDeMana}"/>
 
-                    <!-- Descripcion de la habilidad -->
+                    <!-- Costo de prana hechizo -->
                     <TextBox
+                        Margin="0 0 0 10"
+                        Tag="Costo de prana"
+                        MaxLength="4"
                         TextAlignment="Center"
-                        TextWrapping="Wrap"
-                        AcceptsReturn="True"
-                        Tag="Descripcion"
-                        MaxLength="2000"
-                        Style="{StaticResource TextoDescriptivo}"/>
+
+                        MinHeight="20"
+
+                        local:CampoDeTextoNumericoProperty.Value="True"
+
+                        Visibility="{Binding UtilizaPrana, Converter={local:BooleanToVisibilityConverterColapsar}}"
+                        Style="{StaticResource TextoDescriptivo}"
+                        Text="{Binding CostoDePrana}"/>
+
+                </StackPanel>
+
+                <StackPanel
+                    Grid.Column="1"
+                    HorizontalAlignment="Center">
+
+                    <TextBlock
+                        Text="Funcion utilizar"/>
+
+                    <local:UserControlFuncion
+                        DataContext="{Binding FuncionUtilizar}"/>
+
+                    <TextBlock
+                        Text="Condicion uso"/>
+
+                    <local:UserControlFuncion
+                        DataContext="{Binding FuncionCondicion}"/>
 
                 </StackPanel>
 
                 <!-- Efectos -->
                 <local:UserControlListaItems
-                    Grid.Row="1"
-                    DataContext="{Binding ContenedorListaEfectos}">
-
-                </local:UserControlListaItems>
-
-                <!-- Condiciones para utilizar habilidad -->
-                <local:UserControlListaItems
-                    Grid.Column="1"
-                    Padding="5"
-                    DataContext="{Binding ContenedorListaCondiciones}">
-                </local:UserControlListaItems>
-
-                <!--  Items que consume el utilizar esta habilidad -->
-                <local:UserControlListaItems
                     Grid.Column="2"
-                    Padding="5"
-                    DataContext="{Binding ContenedorListaItemsQueConsume}">
-                </local:UserControlListaItems>
-
-                <!-- Limitadores -->
-                <local:UserControlListaItems
-                    Grid.Row="1"
-                    Grid.Column="1"
-                    Padding="5"
-                    DataContext="{Binding ContenedorListaLimitadores}">
+                    DataContext="{Binding ContenedorListaEfectos}">
 
                 </local:UserControlListaItems>
 
                 <!-- Tiradas de la habilidad -->
                 <local:UserControlListaItems
-                    Grid.Row="1" 
+                    Grid.Row="1"
                     Grid.Column="2"
                     Padding="5"
                     DataContext="{Binding ContenedorListaTiradas}">

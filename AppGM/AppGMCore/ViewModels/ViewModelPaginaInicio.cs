@@ -9,7 +9,7 @@ namespace AppGM.Core
     /// <summary>
     /// VM utilizado por el control de la pagina principal
     /// </summary>
-    public class ViewModelPaginaPrincipal : ViewModel
+    public class ViewModelPaginaInicio : ViewModel
     {
         #region Campos & Propiedades
 
@@ -124,14 +124,14 @@ namespace AppGM.Core
         /// <summary>
         /// Constructor
         /// </summary>
-        public ViewModelPaginaPrincipal()
+        public ViewModelPaginaInicio()
         {
             //Comando que se ejecuta al presionar la carta de seleccionar rol
 	        CartaSeleccionarRol.Comando = new Comando(async () =>
             {
 	            await SistemaPrincipal.CargarRolAsincronicamente(RolActual);
 
-	            SistemaPrincipal.Aplicacion.EPagina =
+	            SistemaPrincipal.Aplicacion.PaginaActual =
 		            EPagina.PaginaPrincipalRol;
             });
 
@@ -195,10 +195,11 @@ namespace AppGM.Core
         /// </summary>
         private static async void CrearRol()
         {
-            ViewModelMensajeCrearRol viewModelCreacionDeRol = new ViewModelMensajeCrearRol();
+	        SistemaPrincipal.Aplicacion.PaginaActual = EPagina.CreacionDeRol;
+	        //ViewModelCrearRol viewModelCreacionDeRol = new ViewModelCrearRol();
 
-            //Creamos el popup de creacion de rol
-            await SistemaPrincipal.Aplicacion.VentanaMensajePrincipal.Mostrar(viewModelCreacionDeRol, "Creacion de Rol", true, 575, -1);
+	        //Creamos el popup de creacion de rol
+	        //await SistemaPrincipal.Aplicacion.VentanaMensajePrincipal.Mostrar(viewModelCreacionDeRol, "Creacion de Rol", true, 575, -1);
         }
         #endregion
     }

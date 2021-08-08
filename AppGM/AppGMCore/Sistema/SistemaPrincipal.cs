@@ -32,7 +32,7 @@ namespace AppGM.Core
         /// <summary>
         /// Viewm model de la pagina principal del rol
         /// </summary>
-        public static ViewModelSolapaMenuRol        RolSeleccionado         => ObtenerInstancia<ViewModelSolapaMenuRol>();
+        public static ViewModelRol        RolSeleccionado         => ObtenerInstancia<ViewModelRol>();
 
         /// <summary>
         /// View model del menu de seleccion de combate
@@ -99,7 +99,7 @@ namespace AppGM.Core
 
             //Atamos los view models basicos, es decir que necesitamos independientemente del rol que se seleccione
             Kernel.Bind<ViewModelAplicacion>().ToConstant(new ViewModelAplicacion());
-            Kernel.Bind<ViewModelPaginaPrincipal>().ToConstant(new ViewModelPaginaPrincipal());
+            Kernel.Bind<ViewModelPaginaInicio>().ToConstant(new ViewModelPaginaInicio());
             Kernel.Bind<Drag>().ToConstant(new Drag());
 
             Aplicacion.OnPaginaActualCambio += PaginaActualCambioHandler;
@@ -114,7 +114,7 @@ namespace AppGM.Core
         {
             //Atamos primero estos das clases al IoC porque son necesarias para la carga
 	        Kernel.Bind<ModeloRol>().ToConstant(modelo);
-            Kernel.Bind<ViewModelSolapaMenuRol>().ToConstant(new ViewModelSolapaMenuRol());
+            Kernel.Bind<ViewModelRol>().ToConstant(new ViewModelRol());
 
             //Cargamos los datos
             await DatosRolSeleccionado.CargarDatos();
@@ -234,7 +234,7 @@ namespace AppGM.Core
             Kernel.Unbind<ViewModelMapaPrincipal>();
             Kernel.Unbind<ViewModelMenuSeleccionCombate>();
             Kernel.Unbind<ViewModelCombate>();
-            Kernel.Unbind<ViewModelSolapaMenuRol>();
+            Kernel.Unbind<ViewModelRol>();
             Kernel.Unbind<ModeloRol>();
         }
 

@@ -4,7 +4,7 @@ using System.Windows.Input;
 
 namespace AppGM.Core
 {
-    public class ViewModelMensajeCrearRol_DatosPersonajes : ViewModelPaso<ViewModelMensajeCrearRol>
+    public class ViewModelCrearRol_DatosPersonajes : ViewModelPaso<ViewModelCrearRol>
     {
         #region Miembros
 
@@ -27,7 +27,7 @@ namespace AppGM.Core
 
         #region Constructor
 
-        public ViewModelMensajeCrearRol_DatosPersonajes(DatosCreacionRol _datosRol, ViewModelMensajeCrearRol vmCrearRol)
+        public ViewModelCrearRol_DatosPersonajes(DatosCreacionRol _datosRol, ViewModelCrearRol vmCrearRol)
         {
             mDatosCreacionRol = _datosRol;
 
@@ -35,9 +35,12 @@ namespace AppGM.Core
 
             ComandoAñadirPersonaje = new Comando(() =>
             {
-	            mDatosCreacionRol.modeloPersonajaActual = new ModeloPersonaje();
+	            var vmCreacionPj = new ViewModelCrearPersonaje(() =>
+	            {
+		            SistemaPrincipal.Aplicacion.VentanaPrincipal.DataContextContenido = this;
+	            });
 
-                SistemaPrincipal.Aplicacion.VentanaMensajePrincipal.EstablecerViewModel(new ViewModelMensajeCrearRol_CrearPersonaje(mDatosCreacionRol, vmCrearRol));
+	            SistemaPrincipal.Aplicacion.VentanaPrincipal.DataContextContenido = vmCreacionPj;
             });
         }
 

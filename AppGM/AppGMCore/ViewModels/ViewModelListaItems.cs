@@ -6,7 +6,8 @@ namespace AppGM.Core
     /// <summary>
     /// Viewmodel que representa una lista de items con titulo
     /// </summary>
-    public class ViewModelListaItems
+    public class ViewModelListaItems<TItem>
+        where TItem: ViewModel
     {
         #region Propiedades
 
@@ -24,6 +25,11 @@ namespace AppGM.Core
         /// Delegado que se ejecutara cuando se presione el boton añadir
         /// </summary>
         public Action DelegadoAñadirItem { get; set; }
+
+        /// <summary>
+        /// Items contenidos
+        /// </summary>
+        public ViewModelListaDeElementos<TItem> Items { get; set; } = new ViewModelListaDeElementos<TItem>();
 
         /// <summary>
         /// Comando que se llamara cuando se presione el boton añadir

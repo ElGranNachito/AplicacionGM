@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using CoolLogs;
@@ -52,21 +53,24 @@ namespace AppGM.Core
 
 		public ICommand ComandoCompilar { get; set; }
 
+		public ICommand ComandoGuardar { get; set; }
+
 		public ICommand ComandoCancelar { get; set; }
 
-		public ICommand ComandoGuardar { get; set; } 
+		public ICommand ComandoAceptar { get; set; }
 
 		#endregion
 
 		#region Constructor
 
-		protected ViewModelCreacionDeFuncion(ControladorFuncion<TFuncion> _controladorFuncion, EPropositoFuncion _propositoDeFuncion)
+		protected ViewModelCreacionDeFuncion(Action<ViewModelCreacionDeFuncionBase> accionSalir, ControladorFuncion<TFuncion> _controladorFuncion, EPropositoFuncion _propositoDeFuncion)
 		{
 			PropositoFuncion = _propositoDeFuncion;
 
 			ComandoCompilar = new Comando(async () =>
 			{
 				PuedeCompilar = false;
+				PuedeGuardar  = false;
 
 				MostrarContenedorFelicitaciones = await CrearFuncion();
 
@@ -74,12 +78,35 @@ namespace AppGM.Core
 				PuedeCompilar = true;
 			});
 
-			ComandoGuardar  = new Comando(Guardar);
+			ComandoGuardar  = new Comando(async () =>
+			{
+				PuedeGuardar  = false;
+				PuedeCompilar = false;
+
+				await ControladorFuncion.ActualizarBloquesAsync(VariablesBase.Concat(
+					from bloque in Bloques
+					select bloque.GenerarBloque()).ToList());
+
+				PuedeGuardar  = true;
+				PuedeCompilar = true;
+			});
 
 			ComandoCancelar = new Comando(() =>
 			{
-				//TODO: Expandir para que tambien cambie el contenido actual de la ventana o dispare algun evento para que se haga en otro lado
 				SistemaPrincipal.Desatar<ViewModelCreacionDeFuncionBase>();
+
+				Resultado = EResultadoViewModel.Cancelar;
+
+				accionSalir(this);
+			});
+
+			ComandoAceptar = new Comando(() =>
+			{
+				SistemaPrincipal.Desatar<ViewModelCreacionDeFuncionBase>();
+
+				Resultado = EResultadoViewModel.Aceptar;
+
+				accionSalir(this);
 			});
 
 			//No queremos disparar la propiedad si el controlador es null asi que hacemos este if
@@ -150,7 +177,12 @@ namespace AppGM.Core
 
 				ControladorFuncion.ActualizarBloques(bloques);
 
-				SistemaPrincipal.ThreadUISyncContext.Post(s => { Logs.Add(new ViewModelLog("Iniciando compilacion...")); }, null);
+				SistemaPrincipal.ThreadUISyncContext.Post(s =>
+				{
+					PuedeGuardar = true;
+
+					Logs.Add(new ViewModelLog("Iniciando compilacion..."));
+				}, null);
 
 				Compilador compilador = new Compilador(bloques);
 
@@ -171,11 +203,6 @@ namespace AppGM.Core
 
 			return ResultadoCompilacion.FueExitosa;
 		}
-
-		/// <summary>
-		/// Funcion llamada por <see cref="ComandoGuardar"/>
-		/// </summary>
-		protected abstract void Guardar(); 
 
 		#endregion
 	}

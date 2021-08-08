@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using CoolLogs;
 
 namespace AppGM.Core
 {
@@ -13,15 +10,8 @@ namespace AppGM.Core
 	public class ViewModelCreacionDeFuncionHabilidad : 
 		ViewModelCreacionDeFuncion<Action<ControladorFuncionBase, ControladorPersonaje, ControladorPersonaje[], ControladorHabilidad, object[]>>
 	{
-		public ViewModelCreacionDeFuncionHabilidad(ControladorFuncion_Habilidad _controladorFuncion = null)
-			: base(_controladorFuncion, EPropositoFuncion.Habilidad){}
-
-		protected override void Guardar()
-		{
-			ControladorFuncion.ActualizarBloques(VariablesBase.Concat(
-				from bloque in Bloques
-				select bloque.GenerarBloque()).ToList());
-		}
+		public ViewModelCreacionDeFuncionHabilidad(Action<ViewModelCreacionDeFuncionBase> accionSalir, ControladorFuncion_Habilidad _controladorFuncion = null)
+			: base(accionSalir, _controladorFuncion, EPropositoFuncion.Habilidad){}
 
 		protected override List<ViewModelBloqueMuestra> AsignarListaDeBloques()
 		{

@@ -289,6 +289,8 @@ namespace AppGM.Core
 			return $"Controlador Funcion: {NombreFuncion}, {NombreArchivoFuncion})";
 		}
 
+		public abstract ViewModelCreacionDeFuncionBase CrearVMParaEditar(Action<ViewModelCreacionDeFuncionBase> accionSalir);
+
 		#endregion
 
 		#region Metodos Estaticos
@@ -329,7 +331,7 @@ namespace AppGM.Core
 
 	public abstract class ControladorFuncion<TipoFuncion> : ControladorFuncionBase
 	{
-		public TipoFuncion funcion;
+		public TipoFuncion Funcion { get; private set; }
 
 		public ControladorFuncion(ModeloFuncion _modelo)
 			: base(_modelo)
@@ -344,7 +346,10 @@ namespace AppGM.Core
 			: base(_modelo)
 		{ }
 
-
+		public override ViewModelCreacionDeFuncionBase CrearVMParaEditar(Action<ViewModelCreacionDeFuncionBase> accionSalir)
+		{
+			throw new NotImplementedException();
+		}
 	}
 
 	public class ControladorFuncion_Habilidad : ControladorFuncion<Action<ControladorFuncionBase, ControladorPersonaje, ControladorPersonaje[], ControladorHabilidad, object[]>>
@@ -353,7 +358,10 @@ namespace AppGM.Core
 			: base(_modelo)
 		{}
 
-
+		public override ViewModelCreacionDeFuncionBase CrearVMParaEditar(Action<ViewModelCreacionDeFuncionBase> accionSalir)
+		{
+			return new ViewModelCreacionDeFuncionHabilidad(accionSalir, this);
+		}
 	}
 
 	public class ControladorFuncion_Predicado : ControladorFuncion<Func<ControladorEfecto, ControladorPersonaje, List<ControladorPersonaje>, ControladorFuncionBase, bool>>
@@ -362,6 +370,9 @@ namespace AppGM.Core
 			: base(_modelo)
 		{ }
 
-
+		public override ViewModelCreacionDeFuncionBase CrearVMParaEditar(Action<ViewModelCreacionDeFuncionBase> accionSalir)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

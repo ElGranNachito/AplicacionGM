@@ -1,6 +1,6 @@
 ﻿namespace AppGM.Core
 {
-    public class ViewModelMensajeCrearRol_DatosRol : ViewModelPaso<ViewModelMensajeCrearRol>
+    public class ViewModelCrearRol_DatosRol : ViewModelPaso<ViewModelCrearRol>
     {
         #region Campos & Propiedades
 
@@ -34,13 +34,13 @@
 		/// <summary>
 		/// No usar para construir instancia de la clase!
 		/// </summary>
-		public ViewModelMensajeCrearRol_DatosRol() { }
+		public ViewModelCrearRol_DatosRol() { }
 
 		/// <summary>
 		/// Constrcutor
 		/// </summary>
 		/// <param name="_modeloRol">Modelo del rol que estamos creando</param>
-		public ViewModelMensajeCrearRol_DatosRol(ModeloRol _modeloRol)
+		public ViewModelCrearRol_DatosRol(ModeloRol _modeloRol)
 		{
 			mModeloRol = _modeloRol;
 		} 
@@ -49,7 +49,7 @@
 
 		#region Funciones
 
-		public override void Desactivar(ViewModelMensajeCrearRol vm)
+		public override void Desactivar(ViewModelCrearRol vm)
         {
             mModeloRol.Nombre = NombreRol;
             mModeloRol.Descripcion = DescripcionRol;

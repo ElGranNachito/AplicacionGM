@@ -80,7 +80,12 @@ namespace AppGM.Core
         /// Solo si es una habilidad ofensiva
         /// </summary>
         public virtual TIHabilidadTiradaDeDaño    TiradaDeDaño    { get; set; }
-        
+
+        /// <summary>
+        /// <see cref="ModeloPersonaje"/> que posee esta habilidad
+        /// </summary>
+        public virtual TIPersonajeHabilidad Dueño { get; set; }
+
         /// <summary>
         /// Items utilizados para invocar otro item
         /// Primer indice es el item que invoca, el resto de indices son los items que cuesta

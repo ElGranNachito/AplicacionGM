@@ -15,21 +15,21 @@ namespace AppGM
             switch (value)
             {
                 //Introduccion de datos basicos de un rol
-                case ViewModelMensajeCrearRol_DatosRol crdr:
+                case ViewModelCrearRol_DatosRol crdr:
                     return new UserControlCreacionRol_DatosRol
                     {
                         ViewModel = crdr
                     };
 
                 //Seleccion de mapa de un rol
-                case ViewModelMensajeCrearRol_DatosMapa crdt:
+                case ViewModelCrearRol_DatosMapa crdt:
                     return new UserControlCreacionRol_DatosMapa
                     {
                         DataContext = crdt
                     };
 
                 //Creacion de personajes de un rol
-                case ViewModelMensajeCrearRol_DatosPersonajes crdp:
+                case ViewModelCrearRol_DatosPersonajes crdp:
                     return new UserControlCreacionRol_Personajes
                     {
                         DataContext = crdp

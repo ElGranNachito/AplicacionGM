@@ -5,6 +5,8 @@ namespace AppGM.Core
 {
 	public delegate void EventoVentana(IVentana ventana);
 
+	public delegate void DataContextContenidoCambioHandler(IVentana vetnana, ViewModel vmAnterior, ViewModel vmActual);
+
 	/// <summary>
 	/// Interface que abstrae funcione comunes y propiedades de una ventana
 	/// </summary>
@@ -25,6 +27,16 @@ namespace AppGM.Core
 		/// Indica si esta es actualmente la ventana siendo utilizada por el usuario
 		/// </summary>
 		bool EsVentanaActual { get; }
+
+		/// <summary>
+		/// <see cref="ViewModel"/> actual de la ventana
+		/// </summary>
+		ViewModel DataContext { get; set; }
+
+		/// <summary>
+		/// <see cref="ViewModel"/> del contenido actual de la ventana
+		/// </summary>
+		ViewModel DataContextContenido { get; set; }
 
 		/// <summary>
 		/// Ventana de popup
@@ -102,6 +114,7 @@ namespace AppGM.Core
 		event EventoVentana OnVentanaCerrada;
 		event EventoVentana OnVentanaAbierta;
 		event EventoVentana OnFotogramaActualizado;
+		event DataContextContenidoCambioHandler OnDataContextContenidoModificado;
 	}
 
 	/// <summary>

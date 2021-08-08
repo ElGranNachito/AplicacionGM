@@ -21,26 +21,49 @@ namespace AppGM
 
             switch (int.Parse(parameter.ToString()))
             {
-                //Si el valor del parametro es 1 entonces el tipo de value tiene que ser de tipo EPagina
+                //Si el valor del parametro es 1 entonces el tipo de value tiene que ser de tipo PaginaActual
                 case 1:
                     switch ((EPagina)value)
                     {
                         case EPagina.PaginaPrincipal:
-                            //return new UserControlPaginaInicio();
+                            return new UserControlPaginaInicio();
 
                             ModeloFuncion mf = new ModeloFuncion {Id = 0, NombreFuncion = "FuncionDeMierdaa"};
 
-                            var controlador = new ControladorFuncion_Habilidad(mf);
-                            var vm = new ViewModelCreacionDeFuncionHabilidad(controlador);
+                            /*var controlador = new ControladorFuncion_Habilidad(mf);
+                            var vm = new ViewModelCreacionDeFuncionHabilidad(, controlador);
 
                             vm.CargarBloquesFuncion();
 
                             return new UserControlCreacionFuncion
 							{
 								DataContext = vm
-							};
+							};*/
 						case EPagina.PaginaPrincipalRol:
                             return new UserControlPaginaPrincipalRol();
+
+                        case EPagina.CreacionDeRol:
+                        {
+	                        if (SistemaPrincipal.Aplicacion.VentanaActual.DataContext is ViewModelCrearRol v)
+		                        return new UserControlMensajeConPasos { DataContext = v };
+
+	                        return new UserControlMensajeConPasos {DataContext = new ViewModelCrearRol()};
+                        }
+
+                        case EPagina.CreacionDePersonaje:
+                        {
+	                        if (SistemaPrincipal.Aplicacion.VentanaActual.DataContext is ViewModelCrearPersonaje v)
+		                        return new UserControlCreacionPersonaje {DataContext = v};
+	                        
+		                    return new UserControlCreacionPersonaje
+		                    {
+			                    DataContext = new ViewModelCrearPersonaje(
+				                    () =>
+				                    {
+					                    SistemaPrincipal.Aplicacion.PaginaActual = SistemaPrincipal.Aplicacion.PaginaAnterior;
+				                    })
+		                    };
+                        }
                     }
                     break;
 
@@ -57,7 +80,7 @@ namespace AppGM
                         case EMenuRol.Mapas:
                             return new UserControlSolapasMapa()
                             {
-                                DataContext = SistemaPrincipal.ObtenerInstancia<ViewModelSolapaMenuRol>()
+                                DataContext = SistemaPrincipal.ObtenerInstancia<ViewModelRol>()
                                     .SeccionMapaSeleccionada
                             };
                         case EMenuRol.AdministrarCombates:

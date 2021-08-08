@@ -19,7 +19,7 @@ namespace AppGM.Core
 	/// <summary>
 	/// <see cref="ViewModel"/> que representa un control para la creacion de una funcion
 	/// </summary>
-	public abstract class ViewModelCreacionDeFuncionBase: ViewModel, IReceptorDeDrag, IContenedorDeBloques
+	public abstract class ViewModelCreacionDeFuncionBase: ViewModelConResultado, IReceptorDeDrag, IContenedorDeBloques
 	{
 		/// <summary>
 		/// Evento que se dispara cuando un bloque es removido
@@ -135,6 +135,11 @@ namespace AppGM.Core
 		/// Indica si se puede iniciar una compilacion
 		/// </summary>
 		public bool PuedeCompilar { get; protected set; } = true;
+
+		/// <summary>
+		/// Indica si se puede guardar la funcion actual
+		/// </summary>
+		public bool PuedeGuardar { get; protected set; } = true;
 
 		/// <summary>
 		/// Indica si debe cargar los bloques disponibles en el controlador de funcion pasado

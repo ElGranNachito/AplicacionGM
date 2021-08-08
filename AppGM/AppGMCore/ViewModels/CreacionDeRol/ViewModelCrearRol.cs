@@ -1,13 +1,11 @@
-﻿using System.Collections.Generic;
-
-namespace AppGM.Core
+﻿namespace AppGM.Core
 {
     /// <summary>
     /// Popup de creacion de rol
     /// </summary>
-    public class ViewModelMensajeCrearRol : ViewModelVentanaConPasos<ViewModelMensajeCrearRol>
+    public class ViewModelCrearRol : ViewModelVentanaConPasos<ViewModelCrearRol>
     {
-        /// <summary>
+	    /// <summary>
         /// Datos del rol que estamos creando
         /// </summary>
         public DatosCreacionRol datosRol { get; set; } = new DatosCreacionRol();
@@ -15,21 +13,25 @@ namespace AppGM.Core
         /// <summary>
         /// Constructor
         /// </summary>
-        public ViewModelMensajeCrearRol()
+        public ViewModelCrearRol()
         {
+	        MostrarBotonSalir = true;
+
             ModeloMapa mapaPrincipal = new ModeloMapa();
 
             datosRol.mapas.Add(mapaPrincipal);
 
             //Añadimos los pasos
-            mViewModelsPasos.AddRange(new ViewModelPaso<ViewModelMensajeCrearRol>[]
+            mViewModelsPasos.AddRange(new ViewModelPaso<ViewModelCrearRol>[]
             {
-                new ViewModelMensajeCrearRol_DatosRol(datosRol.modeloRol),
-                new ViewModelMensajeCrearRol_DatosMapa(mapaPrincipal),
-                new ViewModelMensajeCrearRol_DatosPersonajes(datosRol, this) 
+                new ViewModelCrearRol_DatosRol(datosRol.modeloRol),
+                new ViewModelCrearRol_DatosMapa(mapaPrincipal),
+                new ViewModelCrearRol_DatosPersonajes(datosRol, this) 
             });
 
             PasoActual.PropertyChanged += mHandlerPasoActualPropertyChanged;
+
+            ComandoSalir = new Comando(() => { SistemaPrincipal.Aplicacion.PaginaActual = EPagina.PaginaPrincipal; });
 
             Inicializar();
         }

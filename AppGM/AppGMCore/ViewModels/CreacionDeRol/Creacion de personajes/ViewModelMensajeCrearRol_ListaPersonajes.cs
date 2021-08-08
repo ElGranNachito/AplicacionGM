@@ -4,12 +4,12 @@ namespace AppGM.Core
 {
     public class ViewModelMensajeCrearRol_ListaPersonajes : ViewModel
     { 
-        public ObservableCollection<ViewModelMensajeCrearRol_PersonajeItem> Personajes { get; set; } = new ObservableCollection<ViewModelMensajeCrearRol_PersonajeItem>();
+        public ObservableCollection<ViewModelCrearRol_PersonajeItem> Personajes { get; set; } = new ObservableCollection<ViewModelCrearRol_PersonajeItem>();
 
         public ViewModelMensajeCrearRol_ListaPersonajes(DatosCreacionRol _datosRol, ObservableCollection<ModeloPersonaje> _personajes)
         {
             for (int i = 0; i < _personajes.Count; ++i)
-                Personajes.Add(new ViewModelMensajeCrearRol_PersonajeItem(_datosRol, _personajes[i], this));
+                Personajes.Add(new ViewModelCrearRol_PersonajeItem(_datosRol, _personajes[i], this));
         }
     }
 }

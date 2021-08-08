@@ -117,7 +117,7 @@
             Panel.ZIndex="10"/>
 
         <!-- Contenido de la ventana -->
-        <ContentControl Content="{Binding EPagina, Converter={local:EnumToUserControlConverter}, ConverterParameter=1}"/>
+        <ContentControl Content="{Binding DataContextContenido, Converter={local:ViewModelToContenidoConverter}, ConverterParameter=1}"/>
 
         <Canvas>
             <!-- Drag de la ventana -->

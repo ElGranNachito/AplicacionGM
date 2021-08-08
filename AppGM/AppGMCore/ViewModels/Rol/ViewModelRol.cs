@@ -6,7 +6,7 @@ namespace AppGM.Core
     /// <summary>
     /// VM que representa el contenido de la pagina principal del rol
     /// </summary>
-    public class ViewModelSolapaMenuRol : ViewModel, IBotonSeleccionado<object>
+    public class ViewModelRol : ViewModel, IBotonSeleccionado<object>
     {
         #region Miembros
 
@@ -86,7 +86,7 @@ namespace AppGM.Core
         /// <summary>
         /// Constructor default
         /// </summary>
-        public ViewModelSolapaMenuRol()
+        public ViewModelRol()
         {
             ControladorRol = new ControladorRol(SistemaPrincipal.ModeloRolActual);
 
@@ -100,7 +100,7 @@ namespace AppGM.Core
 
                 SistemaPrincipal.GuardarDatosRol();
 
-                SistemaPrincipal.Aplicacion.EPagina =
+                SistemaPrincipal.Aplicacion.PaginaActual =
                         EPagina.PaginaPrincipal;
             });
         }

@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+
+using AppGM.Core.Delegados;
 
 namespace AppGM.Core
 {
@@ -11,7 +14,11 @@ namespace AppGM.Core
 	/// <typeparam name="TipoValor"><see cref="Type"/> del valor que almacenan sus opciones</typeparam>
 	public class ViewModelComboBox<TipoValor>
 	{
-		#region Propiedades
+		#region Campos & Propiedades
+
+		private ViewModelItemComboBoxBase<TipoValor> mValorSeleccionado;
+
+		public DVariableCambio<ViewModelItemComboBoxBase<TipoValor>> OnValorSeleccionadoCambio = delegate { };
 
 		/// <summary>
 		/// <see cref="List{T}"/> de <see cref="ViewModelItemComboBoxBase{TipoValor}"/> que puede
@@ -22,13 +29,35 @@ namespace AppGM.Core
 		/// <summary>
 		/// <see cref="ViewModelItemComboBoxBase{TipoValor}"/> seleccionado
 		/// </summary>
-		public ViewModelItemComboBoxBase<TipoValor> ValorSeleccionado { get; set; }
+		public ViewModelItemComboBoxBase<TipoValor> ValorSeleccionado
+		{
+			get => mValorSeleccionado;
+			set
+			{
+				if (value == mValorSeleccionado)
+					return;
+
+				var valorAnterior = mValorSeleccionado;
+
+				mValorSeleccionado = value;
+
+				OnValorSeleccionadoCambio(valorAnterior, mValorSeleccionado);
+			}
+		}
 
 		/// <summary>
 		/// <see cref="TipoValor"/> seleccionado por el usuario
 		/// </summary>
-		[MaybeNull]
-		public TipoValor Valor => ValorSeleccionado.valor;
+		public TipoValor Valor
+		{
+			get
+			{
+				if (ValorSeleccionado != null)
+					return ValorSeleccionado.valor;
+
+				return default;
+			}
+		}
 
 		#endregion
 

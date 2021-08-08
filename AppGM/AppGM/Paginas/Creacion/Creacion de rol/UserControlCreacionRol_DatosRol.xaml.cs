@@ -7,7 +7,7 @@ namespace AppGM
     /// <summary>
     /// Lógica de interacción para UserControlCreacionRol_DatosRol.xaml
     /// </summary>
-    public partial class UserControlCreacionRol_DatosRol : BaseUserControl<ViewModelMensajeCrearRol_DatosRol>
+    public partial class UserControlCreacionRol_DatosRol : BaseUserControl<ViewModelCrearRol_DatosRol>
     {
         public UserControlCreacionRol_DatosRol()
         {
@@ -18,7 +18,7 @@ namespace AppGM
         {
             ViewModel.DescripcionRol = ((TextBox) sender).Text;
 
-            ViewModel.DispararPropertyChanged(new PropertyChangedEventArgs(nameof(ViewModelMensajeCrearRol_DatosRol.TextoLetrasRestantes)));
+            ViewModel.DispararPropertyChanged(new PropertyChangedEventArgs(nameof(ViewModelCrearRol_DatosRol.TextoLetrasRestantes)));
         } 
     }
 }

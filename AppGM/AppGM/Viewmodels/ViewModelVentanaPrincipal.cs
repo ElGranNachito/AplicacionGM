@@ -18,7 +18,7 @@ namespace AppGM.Viewmodels
         /// <summary>
         /// Pagina actual de la ventana principal
         /// </summary>
-        public EPagina EPagina => SistemaPrincipal.Aplicacion.EPagina;
+        public EPagina PaginaActual => SistemaPrincipal.Aplicacion.PaginaActual;
 
         public double Altura => System.Windows.SystemParameters.PrimaryScreenHeight;
         public double Ancho => System.Windows.SystemParameters.PrimaryScreenWidth;
