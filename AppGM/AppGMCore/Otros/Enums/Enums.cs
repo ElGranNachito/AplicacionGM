@@ -902,34 +902,101 @@ namespace AppGM.Core
     public enum ETipoUnidad
     {
         /// <summary>
-        /// Master
+        /// Master.
         /// </summary>
 	    Master = 1<<0,
 
         /// <summary>
-        /// Servant
+        /// Servant.
         /// </summary>
 	    Servant = 1<<1,
 
         /// <summary>
-        /// Invocacion
+        /// Invocacion.
         /// </summary>
 	    Invocacion = 1<<2,
 
         /// <summary>
-        /// Trampa
+        /// Trampa.
         /// </summary>
 	    Trampa = 1<<3,
 
         /// <summary>
-        /// Iglesia
+        /// Iglesia.
         /// </summary>
 	    Iglesia = 1<<4,
+        
+        /// <summary>
+        /// Cadaver de un Master.
+        /// </summary>
+        CadaverMaster = 1<<5,
+
+        /// <summary>
+        /// Cadaver de un Servant.
+        /// </summary>
+        CadaverServant = 1<<6,
+
+        /// <summary>
+        /// Grupo de personajes de un mismo equipo (Master y su Servant).
+        /// </summary>
+        Party = 1<<7,
+
+        /// <summary>
+        /// Unidad de un personaje que muestra a que alianzas pertenece.
+        /// </summary>
+        PersonajeConAlianza = 1<<8,
 
         /// <summary>
         /// Un fantasma con toda probabilidad
         /// </summary>
 	    NINGUNO = 0
+    }
+
+    /// <summary>
+    /// Representa la cantidad total de parties posibles segun su clasificacion numerica.
+    /// Grupo de un Master con o sin su Servant al que pertenece un jugador.
+    /// </summary>
+    public enum ENumeroParty
+    {
+        /// <summary>
+        /// Equipo numero 1
+        /// </summary>
+        Party1 = 1,
+
+        /// <summary>
+        /// Equipo numero 2
+        /// </summary>
+        Party2 = 2,
+
+        /// <summary>
+        /// Equipo numero 3
+        /// </summary>
+        Party3 = 3,
+
+        /// <summary>
+        /// Equipo numero 4
+        /// </summary>
+        Party4 = 4,
+
+        /// <summary>
+        /// Equipo numero 5
+        /// </summary>
+        Party5 = 5,
+
+        /// <summary>
+        /// Equipo numero 6
+        /// </summary>
+        Party6 = 6,
+
+        /// <summary>
+        /// Equipo numero 7
+        /// </summary>
+        Party7 = 7,
+
+        /// <summary>
+        /// Convengamos que podria ser un party extra.
+        /// </summary>
+        NINGUNO = 0
     }
 
     /// <summary>

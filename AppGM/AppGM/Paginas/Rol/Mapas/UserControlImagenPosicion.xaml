@@ -58,14 +58,14 @@
                         <!-- Imagen de la alianza -->
                         <Image
                             Source="{Binding PathImagenIcono, Mode=OneWay}"
-                            Width="45.00"
-                            Height="45.00"
+                            Width="40.00"
+                            Height="40.00"
                             SnapsToDevicePixels="True">
 
                             <Image.RenderTransform>
                                 <TranslateTransform 
-                                    X="3.00"
-                                    Y="3.00"/>
+                                    X="-20.00"
+                                    Y="10.00"/>
                             </Image.RenderTransform>
 
                         </Image>
