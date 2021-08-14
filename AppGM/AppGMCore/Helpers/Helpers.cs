@@ -65,6 +65,23 @@ namespace AppGM.Core
 			return listaElementos;
 		}
 
+		public static IEnumerable<T> RemoverPrimero<T>(this IEnumerable<T> coleccion, Predicate<T> p)
+		{
+			var listaElementos = coleccion.ToList();
+
+			foreach (var elemento in listaElementos)
+			{
+				if (p(elemento))
+				{
+					listaElementos.Remove(elemento);
+
+					break;
+				}
+			}
+
+			return listaElementos;
+		}
+
 		public static bool EsAccesibleEnGuraScratch(this MemberInfo miembro) =>
 			miembro.HasAttribute(typeof(AccesibleEnGuraScratch));
 

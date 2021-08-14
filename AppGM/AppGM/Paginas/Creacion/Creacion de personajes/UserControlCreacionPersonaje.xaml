@@ -395,6 +395,8 @@
                     Margin="5"
                     BorderBrush="Black"
                     BorderThickness="1"
+                    TamañoFontTitulo="18"
+
                     DataContext="{Binding ContenedorListaItems}">
 
                 </local:UserControlListaItems>
@@ -415,6 +417,7 @@
                     Margin="5"
                     BorderBrush="Black"
                     BorderThickness="1"
+                    TamañoFontTitulo="18"
 
                     DataContext="{Binding ContenedorListaHabilidades}">
 

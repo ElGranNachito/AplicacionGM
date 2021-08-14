@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using AppGM.Core.Controladores.Efectos;
 
 namespace AppGM.Core
 {
@@ -352,7 +351,7 @@ namespace AppGM.Core
         public virtual void AvanzarTurno()
         {
             for (int i = 0; i < Efectos.Count; ++i)
-                Efectos[i].AplicarEfecto(this);
+                Efectos[i].AplicarEfecto();
 
             //TODO: Aplicar los efectos
         }

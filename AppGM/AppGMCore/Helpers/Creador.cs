@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using AppGM.Core.Controladores.Efectos;
 
 namespace AppGM.Core
 {
@@ -75,42 +73,42 @@ namespace AppGM.Core
         public static void Inicializar(this ModeloEfectoSiendoAplicado efectoSiendoAplicado, ControladorEfecto efecto,
 	        ControladorPersonaje instigador, List<ControladorPersonaje> objetivos, bool añadirABaseDeDatos = true)
         {
-	        efectoSiendoAplicado.Efecto = new TIEfectoSiendoAplicadoEfecto
-	        {
-		        Efecto = efecto.modelo,
-		        EfectoAplicandose = efectoSiendoAplicado
-	        };
+	        //efectoSiendoAplicado.Efecto = new TIEfectoSiendoAplicadoEfecto
+	        //{
+		       // Efecto = efecto.modelo,
+		       // EfectoAplicandose = efectoSiendoAplicado
+	        //};
 
-	        efectoSiendoAplicado.Instigador =  new TIEfectoSiendoAplicadoPersonajeInstigador
-	        {
-		        EfectoAplicandose   = efectoSiendoAplicado,
-		        PersonajeInstigador = instigador.modelo
-	        };
+	        //efectoSiendoAplicado.Instigador =  new TIEfectoSiendoAplicadoPersonajeInstigador
+	        //{
+		       // EfectoAplicandose   = efectoSiendoAplicado,
+		       // PersonajeInstigador = instigador.modelo
+	        //};
 
-	        efectoSiendoAplicado.Objetivos = new List<TIEfectoSiendoAplicadoPersonajeObjetivo>(
-		        from personaje in objetivos
-		        select new TIEfectoSiendoAplicadoPersonajeObjetivo
-		        {
-			        EfectoAplicandose = efectoSiendoAplicado,
-			        PersonajeObjetivo = personaje.modelo
-		        });
+	        //efectoSiendoAplicado.Objetivos = new List<TIEfectoSiendoAplicadoPersonajeObjetivo>(
+		       // from personaje in objetivos
+		       // select new TIEfectoSiendoAplicadoPersonajeObjetivo
+		       // {
+			      //  EfectoAplicandose = efectoSiendoAplicado,
+			      //  PersonajeObjetivo = personaje.modelo
+		       // });
 
-	        efectoSiendoAplicado.TurnosRestantes = efecto.modelo.TurnosDeDuracion;
-	        efectoSiendoAplicado.EstaSiendoAplicado = false;
+	        //efectoSiendoAplicado.TurnosRestantes = efecto.modelo.TurnosDeDuracion;
+	        //efectoSiendoAplicado.EstaSiendoAplicado = false;
 
-            //Si debemos guardar el modelo...
-	        if (añadirABaseDeDatos)
-	        {
-		        SistemaPrincipal.GuardarModelo(efectoSiendoAplicado);
+         //   //Si debemos guardar el modelo...
+	        //if (añadirABaseDeDatos)
+	        //{
+		       // SistemaPrincipal.GuardarModelo(efectoSiendoAplicado);
 
-                SistemaPrincipal.GuardarModelo(efectoSiendoAplicado.Efecto);
-                SistemaPrincipal.GuardarModelo(efectoSiendoAplicado.Instigador);
+         //       SistemaPrincipal.GuardarModelo(efectoSiendoAplicado.Efecto);
+         //       SistemaPrincipal.GuardarModelo(efectoSiendoAplicado.Instigador);
 
-                foreach (var obj in efectoSiendoAplicado.Objetivos)
-	                SistemaPrincipal.GuardarModelo(obj);
+         //       foreach (var obj in efectoSiendoAplicado.Objetivos)
+	        //        SistemaPrincipal.GuardarModelo(obj);
 
-                SistemaPrincipal.GuardarDatosRol();
-	        }
+         //       SistemaPrincipal.GuardarDatosRol();
+	        //}
         }
     }
 }

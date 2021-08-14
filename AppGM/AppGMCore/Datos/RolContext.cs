@@ -4,8 +4,7 @@ namespace AppGM.Core
 {
     public class RolContext : DbContext
     {
-
-        #region Propiedades
+	    #region Propiedades
 
         // ------------------------------------MODELOS------------------------------------
 
@@ -90,12 +89,16 @@ namespace AppGM.Core
         public DbSet<TIRolCombate> CombatesRol { get; set; }
         public DbSet<TIRolMapa> MapasRol { get; set; } 
         public DbSet<TIRolPersonaje> PersonajesRol { get; set; }
-        #endregion
+		#endregion
 
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        public RolContext(){}
+		#region Constructor
+
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		public RolContext() { }
+
+        #endregion
 
         #region Configuracion de la base de datos
 
@@ -340,16 +343,6 @@ namespace AppGM.Core
             
             modelBuilder.Entity<ModeloEfecto>().ToTable("ModeloEfecto").HasNoDiscriminator();
 
-            modelBuilder.Entity<TIEfectoModificadorDeStatBase>().HasKey(e => new { e.IdEfecto, e.IdModificadorDeStat });
-
-            modelBuilder.Entity<TIEfectoModificadorDeStatBase>()
-                .HasOne(i => i.Modificador);
-
-            modelBuilder.Entity<TIEfectoModificadorDeStatBase>()
-                .HasOne(i => i.Efecto)
-                .WithMany(p => p.Modificaciones)
-                .HasForeignKey(ip => ip.IdEfecto);
-
             // Efectos siendo aplicados:
 
             modelBuilder.Entity<ModeloEfectoSiendoAplicado>().ToTable("ModeloEfectoSiendoAplicado").HasNoDiscriminator();
@@ -377,15 +370,15 @@ namespace AppGM.Core
                 .HasForeignKey<TIEfectoSiendoAplicadoPersonajeInstigador>(ip => ip.IdEfectoSiendoAplicado);
 
             // - Efecto siendo aplicado personaje objetivos
-            modelBuilder.Entity<TIEfectoSiendoAplicadoPersonajeObjetivo>().HasKey(e => new { e.IdEfectoSiendoAplicado, e.IdPersonajeObjetivo});
+            modelBuilder.Entity<TIEfectoSiendoAplicadoPersonajeObjetivo>()
+	            .HasKey(e => new { e.IdEfectoSiendoAplicado, e.IdPersonajeObjetivo});
 
             modelBuilder.Entity<TIEfectoSiendoAplicadoPersonajeObjetivo>()
                 .HasOne(i => i.PersonajeObjetivo);
 
             modelBuilder.Entity<TIEfectoSiendoAplicadoPersonajeObjetivo>()
-                .HasOne(i => i.EfectoAplicandose)
-                .WithMany(p => p.Objetivos)
-                .HasForeignKey(ip => ip.IdEfectoSiendoAplicado);
+	            .HasOne(i => i.EfectoAplicandose)
+	            .WithOne(p => p.Objetivo);
 
             // Alianzas:
             modelBuilder.Entity<ModeloAlianza>().ToTable("ModeloAlianza").HasNoDiscriminator();

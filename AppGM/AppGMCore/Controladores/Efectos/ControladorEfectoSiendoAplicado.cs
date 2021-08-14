@@ -1,16 +1,28 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Reflection;
 
-namespace AppGM.Core.Controladores.Efectos
+namespace AppGM.Core
 {
 	/// <summary>
 	/// Controlador de <see cref="ModeloEfectoSiendoAplicado"/>
 	/// </summary>
-	public class ControladorEfectoSiendoAplicado : Controlador<ModeloEfectoSiendoAplicado>
+	public class ControladorEfectoSiendoAplicado : ControladorEfectoBase<ModeloEfectoSiendoAplicado>
 	{
+		#region Eventos
+
+		public event Action<ControladorEfectoSiendoAplicado> OnEfectoQuitado = delegate{}; 
+
+		#endregion
+
 		#region Campos & Propiedades
 
 		//---------------------------------------CAMPOS--------------------------------------
 
+		private ControladorFuncion_Predicado mFnPuedeAplicarEfecto;
+
+		private ControladorFuncion_Efecto mFnAplicarEfecto;
+
+		private ControladorFuncion_Efecto mFnQuitarEfecto;
 
 		/// <summary>
 		/// Personaje que aplico el efecto
@@ -20,7 +32,7 @@ namespace AppGM.Core.Controladores.Efectos
 		/// <summary>
 		/// Personajes a quienes se les esta aplicando el efecto
 		/// </summary>
-		public readonly List<ControladorPersonaje> objetivos;
+		public readonly ControladorPersonaje objetivo;
 
 		/// <summary>
 		/// Controlador del efecto
@@ -30,6 +42,23 @@ namespace AppGM.Core.Controladores.Efectos
 
 		//-------------------------------------PROPIEDADES----------------------------------
 
+		public override ControladorFuncion_Predicado FnPuedeAplicarEfecto
+		{
+			get => mFnPuedeAplicarEfecto ?? controladorEfecto.FnPuedeAplicarEfecto;
+			protected set => mFnPuedeAplicarEfecto = value;
+		}
+
+		public override ControladorFuncion_Efecto FnAplicarEfecto
+		{
+			get => mFnAplicarEfecto ?? controladorEfecto.FnAplicarEfecto;
+			protected set => mFnAplicarEfecto = value;
+		}
+
+		public override ControladorFuncion_Efecto FnQuitarEfecto
+		{
+			get => mFnQuitarEfecto ?? controladorEfecto.FnQuitarEfecto;
+			protected set => mFnQuitarEfecto = value;
+		}
 
 		/// <summary>
 		/// <see cref="ModeloEfecto"/> que representa este <see cref="ModeloEfectoSiendoAplicado"/>
@@ -39,22 +68,80 @@ namespace AppGM.Core.Controladores.Efectos
 		/// <summary>
 		/// <see cref="ModeloEfectoSiendoAplicado"/> que este controlador contiene
 		/// </summary>
-		public ModeloEfectoSiendoAplicado AplicacionEfecto => modelo; 
+		public ModeloEfectoSiendoAplicado AplicacionEfecto => modelo;
+			
+		public int TurnosDeDuracion => modelo.Efecto.Efecto.TurnosDeDuracion;
+
+		public int TurnosRestantes
+		{
+			get => modelo.TurnosRestantes;
+			set => modelo.TurnosRestantes = value;
+		}
+
+		public int ContadorAcumulaciones
+		{
+			get => modelo.ContadorAcumulaciones;
+			set => modelo.ContadorAcumulaciones = value;
+		}
+
+		public EComportamientoAcumulativo ComportamientoAcumulativo
+		{
+			get => modelo.ComportamientoAcumulativo;
+			set => ModificarComportamientoAcumulativo(value, EModoDeCambioDeComportamiento.SumarTurnosRestantes);
+		}
 
 		#endregion
 
 		/// <summary>
-		/// Constructor
+		/// Inicializa esta instancia a partir de un nuevo <see cref="ModeloEfectoSiendoAplicado"/> creado a partir de <paramref name="_controladorEfecto"/>
 		/// </summary>
 		/// <param name="efecto">Controlador del <see cref="ModeloEfecto"/> que se aplicara</param>
-		public ControladorEfectoSiendoAplicado(ControladorEfecto _controladorEfecto, ControladorPersonaje _instigador, List<ControladorPersonaje> _objetivos)
+		public ControladorEfectoSiendoAplicado(ControladorEfecto _controladorEfecto, ControladorPersonaje _instigador, ControladorPersonaje _objetivo)
+			: base(null)
 		{
 			controladorEfecto = _controladorEfecto;
-			instigador        = _instigador;
-			objetivos         = _objetivos;
-			
-			modelo = new ModeloEfectoSiendoAplicado();
-			modelo.Inicializar(controladorEfecto, instigador, objetivos);
+			instigador = _instigador;
+			objetivo = _objetivo;
+
+			modelo.Efecto = new TIEfectoSiendoAplicadoEfecto
+			{
+				Efecto = controladorEfecto.modelo,
+				EfectoAplicandose = modelo
+			};
+
+			modelo.Instigador = new TIEfectoSiendoAplicadoPersonajeInstigador
+			{
+				EfectoAplicandose = modelo,
+				PersonajeInstigador = instigador.modelo
+			};
+
+			modelo.Objetivo = new TIEfectoSiendoAplicadoPersonajeObjetivo
+			{
+				EfectoAplicandose = modelo,
+				PersonajeObjetivo = objetivo.modelo
+			};
+
+			modelo.TurnosRestantes = controladorEfecto.modelo.TurnosDeDuracion;
+			modelo.EstaSiendoAplicado = false;
+
+			SistemaPrincipal.GuardarModelo(modelo);
+			SistemaPrincipal.GuardarModelo(modelo.Efecto);
+			SistemaPrincipal.GuardarModelo(modelo.Instigador);
+			SistemaPrincipal.GuardarModelo(modelo.Objetivo);
+
+			SistemaPrincipal.GuardarDatosRol();
+		}
+
+		public void AñadirAcumulacion()
+		{
+			//Si los efecto deben solapar entonces este metodo no debe hacer nada
+			if(ComportamientoAcumulativo == EComportamientoAcumulativo.Solapar)
+				return;
+
+			if (ComportamientoAcumulativo == EComportamientoAcumulativo.SumarTurnos)
+				TurnosRestantes += TurnosDeDuracion;
+
+			ContadorAcumulaciones++;
 		}
 
 		/// <summary>
@@ -68,43 +155,81 @@ namespace AppGM.Core.Controladores.Efectos
 		}
 
 		/// <summary>
-		/// Aplica el efecto sobre un <paramref name="objetivo"/>
+		/// Aplica el efecto sobre su <see cref="objetivo"/>
 		/// </summary>
-		/// <param name="objetivo">Objetivo sobre el cual aplicar el efecto</param>
-		public void AplicarEfecto(ControladorPersonaje objetivo)
+		public void AplicarEfecto()
 		{
-			controladorEfecto.AplicarEfecto(instigador, objetivo);
+			if(--TurnosRestantes <= 0)
+				QuitarEfecto();
 		}
 
 		/// <summary>
-		/// Quita el efecto de un <paramref name="objetivo"/>
+		/// Quita el efecto de su <see cref="objetivo"/>
 		/// </summary>
-		/// <param name="objetivo"><see cref="ControladorPersonaje"/> al que se le quitara el efecto</param>
-		public void QuitarEfecto(ControladorPersonaje objetivo)
+		public void QuitarEfecto()
 		{
-			controladorEfecto.QuitarEfecto(instigador, objetivo);
+			OnEfectoQuitado(this);
 
-			objetivos.Remove(objetivo);
+			Eliminar();
+		}
 
-			//Si el efecto ya no esta siendo aplicado a nadie...
-			if (objetivos.Count <= 0)
-				Eliminar();
+		public override void ModificarComportamientoAcumulativo(
+			EComportamientoAcumulativo nuevoComportamiento,
+			EModoDeCambioDeComportamiento modoDeCambio)
+		{
+			if (nuevoComportamiento == ComportamientoAcumulativo)
+				return;
+
+			switch (nuevoComportamiento)
+			{
+				
+			}
+		}
+
+		public override void ActulizarModelo(ModeloEfectoSiendoAplicado nuevoModelo)
+		{
+			base.ActulizarModelo(modelo);
+
+			var nuevoEfecto = nuevoModelo.Efecto.Efecto;
+
+			ActualizarFuncion(GetType().GetProperty(nameof(FnPuedeAplicarEfecto), typeof(ControladorFuncion_Predicado)), nuevoEfecto.FuncionPuedeAplicar.Funcion);
+			ActualizarFuncion(GetType().GetProperty(nameof(FnAplicarEfecto), typeof(ControladorFuncion_Efecto)), nuevoEfecto.FuncionAplicar.Funcion);
+			ActualizarFuncion(GetType().GetProperty(nameof(FnQuitarEfecto), typeof(ControladorFuncion_Efecto)), nuevoEfecto.FuncionQuitar.Funcion);
+
+			ComportamientoAcumulativo = nuevoModelo.ComportamientoAcumulativo;
+			TurnosRestantes           = nuevoModelo.TurnosRestantes;
+		}
+
+		private void ActualizarFuncion(PropertyInfo propertyFuncionActualizar, ModeloFuncion nuevaFuncion)
+		{
+			var funcionActulizar = propertyFuncionActualizar.GetValue(this) as ControladorFuncionBase;
+			
+			if (nuevaFuncion != funcionActulizar?.modelo)
+			{
+				if (nuevaFuncion.VariablesPersistentes.Count > 0 && funcionActulizar == null)
+				{
+					propertyFuncionActualizar.SetValue(this, new ControladorFuncion_Efecto(nuevaFuncion));
+				}
+				else if (nuevaFuncion.VariablesPersistentes.Count == 0 && funcionActulizar != null)
+				{
+					funcionActulizar.Eliminar();
+					propertyFuncionActualizar.SetValue(this, null);
+				}
+				else
+				{
+					funcionActulizar?.ActulizarModelo(nuevaFuncion);
+				}
+			}
 		}
 
 		/// <summary>
-		/// Quita el efecto de todos los <see cref="objetivos"/>
+		/// Elimina el modelo y quita el efecto de su <see cref="objetivo"/>
 		/// </summary>
-		public void QuitarEfectoATodosLosAfectados()
-		{
-			foreach (var obj in objetivos)
-				controladorEfecto.QuitarEfecto(instigador, obj);
-		}
-
 		public override void Eliminar()
 		{
+			base.Eliminar();
+
 			SistemaPrincipal.EliminarModelo(modelo);
-
-
 		}
 	}
 }

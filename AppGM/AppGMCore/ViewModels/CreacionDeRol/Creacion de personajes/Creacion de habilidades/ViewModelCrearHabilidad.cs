@@ -5,10 +5,16 @@ using System.Windows.Input;
 
 namespace AppGM.Core
 {
-    public class ViewModelCrearHabilidad : ViewModelConResultado
+    /// <summary>
+    /// Representa una habilidad en un <see cref="ViewModelCrearPersonaje"/>
+    /// </summary>
+    public class ViewModelCrearHabilidad : ViewModelConResultado<ViewModelCrearHabilidad>
     {
         #region Miembros
 
+        /// <summary>
+        /// Personaje para el que estamos creando la habilidad
+        /// </summary>
         private ModeloPersonaje         mModeloPersonaje;
 
         private string mCostoDeMana  = "0";
@@ -26,10 +32,11 @@ namespace AppGM.Core
         public string TextoNivelMagia => $"Lv.{ObtenerNivelDeMagia()}";
 
         public bool PuedeFinalizar => PuedeFinalizarCreacion();
-        public bool EsMagia        => VMSeleccionTipoHabilidad.OpcionSeleccionada == ETipoHabilidad.Hechizo;
+        public bool EsMagia        => ComboBoxTipoHabilidad.Valor == ETipoHabilidad.Hechizo;
         public bool PuedeElegirSiEsMagiaParticular => PuedeAñadirMagiasParticulares();
-        public bool RequiereRango           { get; set; }
-        public bool PuedeElegirSiTieneRango { get; set; }
+        public bool PuedeElegirSiTieneRango => !EsMagia && !RequiereRango;
+
+        public bool RequiereRango { get; set; }
 
         public bool UtilizaPrana => EsMagia && (mModeloPersonaje.TipoPersonaje & (ETipoPersonaje.Servant | ETipoPersonaje.Invocacion)) != 0;
         public bool UtilizaOd => EsMagia && (mModeloPersonaje.TipoPersonaje & (ETipoPersonaje.Servant | ETipoPersonaje.NPC)) != 0;
@@ -69,16 +76,12 @@ namespace AppGM.Core
             }
         }
 
-        /*public ViewModelListaItems ContenedorListaEfectos          { get; set; }
-        public ViewModelListaItems ContenedorListaItemsQueConsume  { get; set; }
-        public ViewModelListaItems ContenedorListaCondiciones      { get; set; }
-        public ViewModelListaItems ContenedorListaLimitadores      { get; set; }
-        public ViewModelListaItems ContenedorListaTiradas          { get; set; }*/
+        public ViewModelListaItems<ViewModelEfectoItem> ContenedorListaEfectos          { get; set; }
+        public ViewModelListaItems<ViewModelItemLista> ContenedorListaTiradas          { get; set; }
 
         public ViewModelComboBox<ETipoHabilidad> ComboBoxTipoHabilidad { get; set; }
-        public ViewModelComboBox<ERango> ComboBoxRangoHabilidad { get; set; }
-        public ViewModelComboBoxConDescripcion<ETipoHabilidad> VMSeleccionTipoHabilidad  { get; set; } = new ViewModelComboBoxConDescripcion<ETipoHabilidad>();
-        public ViewModelComboBoxConDescripcion<ERango>         VMSeleccionRangoHabilidad { get; set; } = new ViewModelComboBoxConDescripcion<ERango>();
+
+        public ViewModelComboBox<ERango> ComboBoxRangoHabilidad { get; set; } = new ViewModelComboBox<ERango>(EnumHelpers.RangosDisponibles);
 
         public ViewModelFuncionItem<ControladorFuncion_Habilidad> FuncionUtilizar { get; set; }
         public ViewModelFuncionItem<ControladorFuncion_Predicado> FuncionCondicion { get; set; }
@@ -90,7 +93,8 @@ namespace AppGM.Core
 
         #region Constructor
 
-        public ViewModelCrearHabilidad(ModeloPersonaje _modeloPersonaje, Action accionSalir, ModeloHabilidad _habilidad = null)
+        public ViewModelCrearHabilidad(ModeloPersonaje _modeloPersonaje, Action<ViewModelCrearHabilidad> accionSalir, ModeloHabilidad _habilidad = null)    
+			:base(accionSalir)
         {
 	        mModeloPersonaje  = _modeloPersonaje;
 
@@ -119,52 +123,36 @@ namespace AppGM.Core
 
             ComboBoxTipoHabilidad.OnValorSeleccionadoCambio += (anterior, actual) =>
             {
-	            DispararPropertyChanged(new PropertyChangedEventArgs(nameof(EsMagia)));
-                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(UtilizaOd)));
-	            DispararPropertyChanged(new PropertyChangedEventArgs(nameof(UtilizaPrana)));
+	            DispararPropertyChanged(nameof(EsMagia));
+                DispararPropertyChanged(nameof(UtilizaOd));
+                DispararPropertyChanged(nameof(UtilizaPrana));
+                DispararPropertyChanged(nameof(PuedeElegirSiTieneRango));
             };
-
-            ComboBoxRangoHabilidad = new ViewModelComboBox<ERango>(EnumHelpers.RangosDisponibles);
 
             FuncionUtilizar = new ViewModelFuncionItem<ControladorFuncion_Habilidad>(new ControladorFuncion_Habilidad(new ModeloFuncion{NombreFuncion = "CoolerFunc"}));
             //FuncionCondicion = new ViewModelFuncionItem<ControladorFuncion_Predicado>(null);
 
-            /*ContenedorListaCondiciones     = new ViewModelListaItems(()=>{}, true, "Condiciones");
-            ContenedorListaEfectos         = new ViewModelListaItems(()=>{}, true, "Efectos");
-            ContenedorListaLimitadores     = new ViewModelListaItems(()=>{}, true, "Limitadores");
-            ContenedorListaTiradas         = new ViewModelListaItems(()=>{}, true, "Tiradas");
-            ContenedorListaItemsQueConsume = new ViewModelListaItems(()=>{}, true, "Items que consume");*/
+            ContenedorListaEfectos         = new ViewModelListaItems<ViewModelEfectoItem>(()=>{}, true, "Efectos");
+            ContenedorListaTiradas         = new ViewModelListaItems<ViewModelItemLista>(()=>{}, true, "Tiradas");
 
             ComandoCancelar = new Comando(() =>
             {
 	            Resultado = EResultadoViewModel.Aceptar;
 
-                accionSalir();
+                accionSalir(this);
             });
 
             ComandoFinalizar = new Comando(() =>
             {
 	            Resultado = EResultadoViewModel.Cancelar;
 
-	            accionSalir();
+	            accionSalir(this);
             });
 
             PropertyChanged += (sender, args) =>
             {
                 if(args.PropertyName != nameof(PuedeFinalizar))
                     DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PuedeFinalizar)));
-            };
-
-            VMSeleccionTipoHabilidad.PropertyChanged += (sender, args) =>
-            {
-                RequiereRango           = VMSeleccionTipoHabilidad.OpcionSeleccionada == ETipoHabilidad.NoblePhantasm;
-                PuedeElegirSiTieneRango = !RequiereRango && !EsMagia;
-
-                if (EsMagia)
-                {
-                    DispararPropertyChanged(new PropertyChangedEventArgs(nameof(EsMagia)));
-                    DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PuedeElegirSiEsMagiaParticular)));
-                }
             };
         }
 

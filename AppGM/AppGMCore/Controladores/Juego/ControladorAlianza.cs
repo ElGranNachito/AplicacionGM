@@ -68,6 +68,8 @@ namespace AppGM.Core
         /// </summary>
         public override void Eliminar()
         {
+            base.Eliminar();
+
             SistemaPrincipal.EliminarModelo(modelo.ContratoDeAlianza);
             SistemaPrincipal.EliminarModelo(modelo);
         }

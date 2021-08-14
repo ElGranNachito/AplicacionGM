@@ -18,6 +18,19 @@ namespace AppGM.Core
     }
 
     /// <summary>
+    /// Representa una realcion entre un <see cref="ModeloEfecto"/> y un <see cref="ModeloFuncion"/>
+    /// </summary>
+    public class TIEfectoFuncion : ModeloBaseSK
+    {
+	    [ForeignKey(nameof(Efecto))]
+	    public int IdEfecto { get; set; }
+	    public virtual ModeloEfecto Efecto { get; set; }
+
+        public int IdFuncion { get; set; }
+        public virtual ModeloFuncion Funcion { get; set; }
+    }
+
+    /// <summary>
     /// Relacion entre un <see cref="ModeloEfectoSiendoAplicado"/> y un <see cref="ModeloBase"/>
     /// </summary>
     public class TIEfectoSiendoAplicado : ModeloBaseSK

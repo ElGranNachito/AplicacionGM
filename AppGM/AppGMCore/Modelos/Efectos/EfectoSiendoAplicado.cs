@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace AppGM.Core
+﻿namespace AppGM.Core
 {
 	//En busca de un mejor nombre
 
@@ -13,12 +10,22 @@ namespace AppGM.Core
 		/// <summary>
 		/// Turnos que le restan al efecto
 		/// </summary>
-		public ushort TurnosRestantes { get; set; }
+		public int TurnosRestantes { get; set; }
 
 		/// <summary>
 		/// Indica si esta siendo aplicado actualmente
 		/// </summary>
 		public bool EstaSiendoAplicado { get; set; }
+
+		/// <summary>
+		/// Cuenta el numero de acumulaciones de este efecto
+		/// </summary>
+		public int ContadorAcumulaciones { get; set; }
+
+		/// <summary>
+		/// Comportamiento acumulativo de esta aplicacion
+		/// </summary>
+		public EComportamientoAcumulativo ComportamientoAcumulativo { get; set; }
 
 		/// <summary>
 		/// Modelo del efecto
@@ -28,17 +35,11 @@ namespace AppGM.Core
 		/// <summary>
 		/// <see cref="ModeloPersonaje"/> que causo o instigo el efecto
 		/// </summary>
-		public virtual TIEfectoSiendoAplicadoPersonajeInstigador     Instigador { get; set; }
+		public virtual TIEfectoSiendoAplicadoPersonajeInstigador Instigador { get; set; }
 
 		/// <summary>
 		/// <see cref="ModeloPersonaje"/> a los que se les esta aplicando el efecto
 		/// </summary>
-		public virtual List<TIEfectoSiendoAplicadoPersonajeObjetivo> Objetivos { get; set; }
-
-		/// <summary>
-		/// Atajo para obtener el <see cref="ModeloEfecto"/>
-		/// </summary>
-		[NotMapped]
-		public ModeloEfecto ModeloEfecto => Efecto.Efecto;
+		public virtual TIEfectoSiendoAplicadoPersonajeObjetivo Objetivo { get; set; }
 	}
 }

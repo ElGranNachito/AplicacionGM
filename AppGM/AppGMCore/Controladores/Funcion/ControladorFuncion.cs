@@ -278,6 +278,8 @@ namespace AppGM.Core
 				}
 			}
 
+			base.Eliminar();
+
 			//Eliminamos el modelo de la base de datos
 			SistemaPrincipal.EliminarModelo(modelo);
 

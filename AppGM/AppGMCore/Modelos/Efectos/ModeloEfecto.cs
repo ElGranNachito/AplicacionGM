@@ -16,7 +16,7 @@ namespace AppGM.Core
 		/// <summary>
 		/// Turnos que dura el efecto
 		/// </summary>
-		public ushort TurnosDeDuracion { get; set; }
+		public int TurnosDeDuracion { get; set; }
 
 		/// <summary>
 		/// Nombre del efecto
@@ -31,10 +31,29 @@ namespace AppGM.Core
 		public string Descripcion { get; set; }
 
 		/// <summary>
-		/// Modificaciones que aplica el efecto
-		/// TODO: Quitar esto, te lo dejo a vos Contykpo para no cagarte el RolContext UwU. Att: Creisi como vos dirias
+		/// Tipo de este efecto
 		/// </summary>
-		public virtual List<TIEfectoModificadorDeStatBase> Modificaciones { get; set; } = new List<TIEfectoModificadorDeStatBase>();
+		public ETipoEfecto Tipo { get; set; }
+
+		/// <summary>
+		/// Comportamiento acumulativo de este efecto
+		/// </summary>
+		public EComportamientoAcumulativo ComportamientoAcumulativo { get; set; }
+
+		/// <summary>
+		/// Funcion que determina si se puede aplicar este efecto a un objetivo
+		/// </summary>
+		public TIEfectoFuncion FuncionPuedeAplicar { get; set; }
+
+		/// <summary>
+		/// Funcion que aplica este efecto
+		/// </summary>
+		public TIEfectoFuncion FuncionAplicar { get; set; }
+
+		/// <summary>
+		/// Funcion que quita este efecto
+		/// </summary>
+		public TIEfectoFuncion FuncionQuitar { get; set; }
 
 		/// <summary>
 		/// Todas las aplicaciones de este efecto
