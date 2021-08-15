@@ -239,6 +239,12 @@ namespace AppGM.Core
 				SistemaPrincipal.GuardarModelo(modelo);
 		}
 
+		/// <summary>
+		/// Cuando se lo sobreescribe en una clase derivada intenta compilar la funcion asincronicamente
+		/// </summary>
+		/// <returns><see cref="Task"/> de compilacion</returns>
+		public virtual async Task CompilarAsync() => await Task.FromResult(true);
+
 		[IndexerName("VariablesPersistentes")]
 		public object this[int idVariable]
 		{
@@ -278,6 +284,8 @@ namespace AppGM.Core
 				}
 			}
 
+			base.Eliminar();
+
 			//Eliminamos el modelo de la base de datos
 			SistemaPrincipal.EliminarModelo(modelo);
 
@@ -289,6 +297,11 @@ namespace AppGM.Core
 			return $"Controlador Funcion: {NombreFuncion}, {NombreArchivoFuncion})";
 		}
 
+		/// <summary>
+		/// Inicializa un <see cref="ViewModelCreacionDeFuncionBase"/> del tipo correcto para editar esta funcion
+		/// </summary>
+		/// <param name="accionSalir">Contiene el delegado que se ejecutara al salir de la edicion</param>
+		/// <returns>Instancia de <see cref="ViewModelCreacionDeFuncionBase"/></returns>
 		public abstract ViewModelCreacionDeFuncionBase CrearVMParaEditar(Action<ViewModelCreacionDeFuncionBase> accionSalir);
 
 		#endregion
@@ -331,16 +344,34 @@ namespace AppGM.Core
 
 	public abstract class ControladorFuncion<TipoFuncion> : ControladorFuncionBase
 	{
+		/// <summary>
+		/// Funcion compilada y lista para utilizar
+		/// </summary>
 		public TipoFuncion Funcion { get; private set; }
 
-		public ControladorFuncion(ModeloFuncion _modelo)
-			: base(_modelo)
-		{
+		/// <summary>
+		/// Ultimo resultado de intentar compilar la funcion
+		/// </summary>
+		public ResultadoCompilacion<TipoFuncion> ResultadoCompilacion { get; private set; }
 
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="_modelo"></param>
+		public ControladorFuncion(ModeloFuncion _modelo)
+			: base(_modelo){}
+
+		public override async Task CompilarAsync()
+		{
+			var compilador = new Compilador(Bloques);
+
+			ResultadoCompilacion = await Task.Run(() => compilador.Compilar<TipoFuncion>());
+
+			Funcion = ResultadoCompilacion.Funcion;
 		}
 	}
 
-	public class ControladorFuncion_Efecto : ControladorFuncion<Func<ControladorEfecto, ControladorPersonaje, List<ControladorPersonaje>, ControladorFuncionBase, bool>>
+	public class ControladorFuncion_Efecto : ControladorFuncion<Func<ControladorEfecto, ControladorPersonaje, ControladorPersonaje, ControladorFuncionBase, bool>>
 	{
 		public ControladorFuncion_Efecto(ModeloFuncion _modelo)
 			: base(_modelo)
@@ -364,7 +395,7 @@ namespace AppGM.Core
 		}
 	}
 
-	public class ControladorFuncion_Predicado : ControladorFuncion<Func<ControladorEfecto, ControladorPersonaje, List<ControladorPersonaje>, ControladorFuncionBase, bool>>
+	public class ControladorFuncion_Predicado : ControladorFuncion<Func<ControladorEfecto, ControladorPersonaje, ControladorPersonaje, ControladorFuncionBase, bool>>
 	{
 		public ControladorFuncion_Predicado(ModeloFuncion _modelo)
 			: base(_modelo)

@@ -18,10 +18,27 @@ namespace AppGM
 	        typeof(DataTemplate),
 	        typeof(UserControlListaItems), new PropertyMetadata(defaultValue: null));
 
+        /// <summary>
+        /// <see cref="DataTemplate"/> de los items contenidos en esta lista
+        /// </summary>
         public DataTemplate ItemTemplate
         {
 	        get => GetValue(ItemTemplateProperty) as DataTemplate;
 	        set => SetValue(ItemTemplateProperty, value);
+        }
+
+        private static readonly DependencyProperty TamañoFontTituloProperty = DependencyProperty.Register(
+            "TamañoFontTitulo",
+	        typeof(int),
+	        typeof(UserControlListaItems), new PropertyMetadata(defaultValue: 10));
+
+        /// <summary>
+        /// Tamaño del font del titulo de esta lista
+        /// </summary>
+        public int TamañoFontTitulo
+        {
+	        get => (int)GetValue(TamañoFontTituloProperty);
+	        set => SetValue(TamañoFontTituloProperty, value);
         }
     }
 }

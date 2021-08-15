@@ -11,7 +11,7 @@ namespace AppGM.Core
     /// <summary>
     /// Viewmodel para la creacion de un personaje
     /// </summary>
-    public class ViewModelCrearPersonaje : ViewModelConResultado
+    public class ViewModelCrearPersonaje : ViewModelConResultado<ViewModelCrearPersonaje>
     {
         #region Miembros
 
@@ -157,7 +157,8 @@ namespace AppGM.Core
 
         #region Constructor
 
-        public ViewModelCrearPersonaje(Action accionSalir, ModeloPersonaje _modeloPersonaje = null)
+        public ViewModelCrearPersonaje(Action<ViewModelCrearPersonaje> _accionSalir, ModeloPersonaje _modeloPersonaje = null)
+			:base(_accionSalir)
         {
 	        if (_modeloPersonaje != null)
 	        {
@@ -172,7 +173,8 @@ namespace AppGM.Core
 
 	        mAccionAñadirHabilidad = () =>
 	        {
-		        SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = new ViewModelCrearHabilidad(ModeloPersonaje, () =>
+		        SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = new ViewModelCrearHabilidad(ModeloPersonaje, 
+			        vm =>
 			        {
 				        SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = this;
 			        });
@@ -207,10 +209,10 @@ namespace AppGM.Core
             {
                 CrearPersonaje();
 
-                accionSalir();
+                mAccionSalir(this);
             });
 
-            ComandoCancelar = new Comando(accionSalir);
+            ComandoCancelar = new Comando(()=>mAccionSalir(this));
         }
 
         #endregion

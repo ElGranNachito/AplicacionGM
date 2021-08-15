@@ -137,9 +137,11 @@ namespace AppGM.Core.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    TurnosDeDuracion = table.Column<ushort>(type: "INTEGER", nullable: false),
+                    TurnosDeDuracion = table.Column<int>(type: "INTEGER", nullable: false),
                     Nombre = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
-                    Descripcion = table.Column<string>(type: "TEXT", maxLength: 500, nullable: true)
+                    Descripcion = table.Column<string>(type: "TEXT", maxLength: 500, nullable: true),
+                    Tipo = table.Column<int>(type: "INTEGER", nullable: false),
+                    ComportamientoAcumulativo = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -152,8 +154,10 @@ namespace AppGM.Core.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    TurnosRestantes = table.Column<ushort>(type: "INTEGER", nullable: false),
-                    EstaSiendoAplicado = table.Column<bool>(type: "INTEGER", nullable: false)
+                    TurnosRestantes = table.Column<int>(type: "INTEGER", nullable: false),
+                    EstaSiendoAplicado = table.Column<bool>(type: "INTEGER", nullable: false),
+                    ContadorAcumulaciones = table.Column<int>(type: "INTEGER", nullable: false),
+                    ComportamientoAcumulativo = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -456,6 +460,57 @@ namespace AppGM.Core.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TIEfectoFuncion",
+                columns: table => new
+                {
+                    IdEfecto = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdFuncion = table.Column<int>(type: "INTEGER", nullable: false),
+                    FuncionId = table.Column<int>(type: "INTEGER", nullable: true),
+                    TipoFuncion = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TIEfectoFuncion", x => new { x.IdEfecto, x.IdFuncion });
+                    table.ForeignKey(
+                        name: "FK_TIEfectoFuncion_ModeloEfecto_IdEfecto",
+                        column: x => x.IdEfecto,
+                        principalTable: "ModeloEfecto",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TIEfectoFuncion_ModeloFuncion_FuncionId",
+                        column: x => x.FuncionId,
+                        principalTable: "ModeloFuncion",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TIEfectoSiendoAplicadoFuncion",
+                columns: table => new
+                {
+                    IdEfectoSiendoAplicado = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdFuncion = table.Column<int>(type: "INTEGER", nullable: false),
+                    TipoFuncion = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TIEfectoSiendoAplicadoFuncion", x => new { x.IdEfectoSiendoAplicado, x.IdFuncion });
+                    table.ForeignKey(
+                        name: "FK_TIEfectoSiendoAplicadoFuncion_ModeloEfectoSiendoAplicado_IdEfectoSiendoAplicado",
+                        column: x => x.IdEfectoSiendoAplicado,
+                        principalTable: "ModeloEfectoSiendoAplicado",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TIEfectoSiendoAplicadoFuncion_ModeloFuncion_IdFuncion",
+                        column: x => x.IdFuncion,
+                        principalTable: "ModeloFuncion",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TIHabilidadCargasHabilidad",
                 columns: table => new
                 {
@@ -571,30 +626,6 @@ namespace AppGM.Core.Migrations
                         name: "FK_TIMapaAmbiente_ModeloMapa_IdMapa",
                         column: x => x.IdMapa,
                         principalTable: "ModeloMapa",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "TIEfectoModificadorDeStatBase",
-                columns: table => new
-                {
-                    IdEfecto = table.Column<int>(type: "INTEGER", nullable: false),
-                    IdModificadorDeStat = table.Column<int>(type: "INTEGER", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TIEfectoModificadorDeStatBase", x => new { x.IdEfecto, x.IdModificadorDeStat });
-                    table.ForeignKey(
-                        name: "FK_TIEfectoModificadorDeStatBase_ModeloEfecto_IdEfecto",
-                        column: x => x.IdEfecto,
-                        principalTable: "ModeloEfecto",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_TIEfectoModificadorDeStatBase_ModeloModificadorDeStatBase_IdModificadorDeStat",
-                        column: x => x.IdModificadorDeStat,
-                        principalTable: "ModeloModificadorDeStatBase",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -1138,6 +1169,7 @@ namespace AppGM.Core.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Nombre = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
                     TipoPersonaje = table.Column<int>(type: "INTEGER", nullable: false),
+                    NumeroParty = table.Column<int>(type: "INTEGER", nullable: false),
                     MaxHp = table.Column<int>(type: "INTEGER", nullable: false),
                     Hp = table.Column<int>(type: "INTEGER", nullable: false),
                     Str = table.Column<int>(type: "INTEGER", nullable: false),
@@ -1829,7 +1861,8 @@ namespace AppGM.Core.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_PersonajeSkills_IdHabilidad",
                 table: "PersonajeSkills",
-                column: "IdHabilidad");
+                column: "IdHabilidad",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_PersonajesRol_IdPersonaje",
@@ -1903,9 +1936,9 @@ namespace AppGM.Core.Migrations
                 column: "IdTirada");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TIEfectoModificadorDeStatBase_IdModificadorDeStat",
-                table: "TIEfectoModificadorDeStatBase",
-                column: "IdModificadorDeStat");
+                name: "IX_TIEfectoFuncion_FuncionId",
+                table: "TIEfectoFuncion",
+                column: "FuncionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TIEfectoSiendoAplicadoEfecto_IdEfecto",
@@ -1919,6 +1952,11 @@ namespace AppGM.Core.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_TIEfectoSiendoAplicadoFuncion_IdFuncion",
+                table: "TIEfectoSiendoAplicadoFuncion",
+                column: "IdFuncion");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TIEfectoSiendoAplicadoPersonajeInstigador_IdEfectoSiendoAplicado",
                 table: "TIEfectoSiendoAplicadoPersonajeInstigador",
                 column: "IdEfectoSiendoAplicado",
@@ -1928,6 +1966,12 @@ namespace AppGM.Core.Migrations
                 name: "IX_TIEfectoSiendoAplicadoPersonajeInstigador_IdPersonajeInstigador",
                 table: "TIEfectoSiendoAplicadoPersonajeInstigador",
                 column: "IdPersonajeInstigador");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TIEfectoSiendoAplicadoPersonajeObjetivo_IdEfectoSiendoAplicado",
+                table: "TIEfectoSiendoAplicadoPersonajeObjetivo",
+                column: "IdEfectoSiendoAplicado",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_TIEfectoSiendoAplicadoPersonajeObjetivo_IdPersonajeObjetivo",
@@ -2224,10 +2268,13 @@ namespace AppGM.Core.Migrations
                 name: "TIArmasDistanciaTiradaVariable");
 
             migrationBuilder.DropTable(
-                name: "TIEfectoModificadorDeStatBase");
+                name: "TIEfectoFuncion");
 
             migrationBuilder.DropTable(
                 name: "TIEfectoSiendoAplicadoEfecto");
+
+            migrationBuilder.DropTable(
+                name: "TIEfectoSiendoAplicadoFuncion");
 
             migrationBuilder.DropTable(
                 name: "TIEfectoSiendoAplicadoPersonajeInstigador");

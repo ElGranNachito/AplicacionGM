@@ -19,7 +19,7 @@ namespace AppGM.Core
 	/// <summary>
 	/// <see cref="ViewModel"/> que representa un control para la creacion de una funcion
 	/// </summary>
-	public abstract class ViewModelCreacionDeFuncionBase: ViewModelConResultado, IReceptorDeDrag, IContenedorDeBloques
+	public abstract class ViewModelCreacionDeFuncionBase: ViewModelConResultado<ViewModelCreacionDeFuncionBase>, IReceptorDeDrag, IContenedorDeBloques
 	{
 		/// <summary>
 		/// Evento que se dispara cuando un bloque es removido

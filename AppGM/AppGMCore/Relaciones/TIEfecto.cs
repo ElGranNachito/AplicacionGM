@@ -18,6 +18,21 @@ namespace AppGM.Core
     }
 
     /// <summary>
+    /// Representa una realcion entre un <see cref="ModeloEfecto"/> y un <see cref="ModeloFuncion"/>
+    /// </summary>
+    public class TIEfectoFuncion : ModeloBaseSK
+    {
+	    [ForeignKey(nameof(Efecto))]
+	    public int IdEfecto { get; set; }
+	    public virtual ModeloEfecto Efecto { get; set; }
+
+        public int IdFuncion { get; set; }
+        public virtual ModeloFuncion Funcion { get; set; }
+
+        public ETipoFuncionEfecto TipoFuncion { get; set; }
+    }
+
+    /// <summary>
     /// Relacion entre un <see cref="ModeloEfectoSiendoAplicado"/> y un <see cref="ModeloBase"/>
     /// </summary>
     public class TIEfectoSiendoAplicado : ModeloBaseSK
@@ -55,5 +70,14 @@ namespace AppGM.Core
         [ForeignKey(nameof(PersonajeObjetivo))]
         public int IdPersonajeObjetivo { get; set; }
         public virtual ModeloPersonaje PersonajeObjetivo { get; set; }
+    }
+
+    public class TIEfectoSiendoAplicadoFuncion : TIEfectoSiendoAplicado
+    {
+        [ForeignKey(nameof(ModeloFuncion))]
+        public int IdFuncion { get; set; }
+        public virtual ModeloFuncion ModeloFuncion { get; set; }
+
+        public ETipoFuncionEfecto TipoFuncion { get; set; }
     }
 }

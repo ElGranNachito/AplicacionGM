@@ -37,7 +37,7 @@ namespace AppGM.Core
 	            var vmActual = SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido;
 
 	            SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = new ViewModelCrearHabilidad(_habilidad.Dueño.Personaje,
-		            () =>
+		            vm =>
 		            {
 			            SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = vmActual;
 		            }, Habilidad);

@@ -118,6 +118,8 @@ namespace AppGM.Core
         /// </summary>
         public override void Eliminar()
         {
+            base.Eliminar();
+
             SistemaPrincipal.EliminarModelo(modelo.Posicion);
             SistemaPrincipal.EliminarModelo(modelo.Personaje);
             SistemaPrincipal.EliminarModelo(modelo);

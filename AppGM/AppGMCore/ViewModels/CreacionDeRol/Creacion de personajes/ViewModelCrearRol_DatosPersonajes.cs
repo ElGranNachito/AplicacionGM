@@ -35,9 +35,9 @@ namespace AppGM.Core
 
             ComandoAñadirPersonaje = new Comando(() =>
             {
-	            var vmCreacionPj = new ViewModelCrearPersonaje(() =>
+	            var vmCreacionPj = new ViewModelCrearPersonaje(vm =>
 	            {
-		            SistemaPrincipal.Aplicacion.VentanaPrincipal.DataContextContenido = this;
+		            SistemaPrincipal.Aplicacion.VentanaPrincipal.DataContextContenido = vmCrearRol;
 	            });
 
 	            SistemaPrincipal.Aplicacion.VentanaPrincipal.DataContextContenido = vmCreacionPj;

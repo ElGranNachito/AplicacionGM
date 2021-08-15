@@ -58,7 +58,7 @@ namespace AppGM
 		                    return new UserControlCreacionPersonaje
 		                    {
 			                    DataContext = new ViewModelCrearPersonaje(
-				                    () =>
+				                    vm =>
 				                    {
 					                    SistemaPrincipal.Aplicacion.PaginaActual = SistemaPrincipal.Aplicacion.PaginaAnterior;
 				                    })

@@ -27,7 +27,7 @@ namespace AppGM.Core
         public override void AvanzarTurno()
         {
             for (int i = 0; i < Efectos.Count; ++i)
-                Efectos[i].AplicarEfecto(this);
+                Efectos[i].AplicarEfecto();
         }
 
         #endregion
@@ -51,7 +51,7 @@ namespace AppGM.Core
         {
             for (int i = 0; i < Efectos.Count; ++i)
             {
-                Efectos[i].AplicarEfecto(this);
+                Efectos[i].AplicarEfecto();
             }
         }
 
@@ -77,7 +77,7 @@ namespace AppGM.Core
         {
             for (int i = 0; i < Efectos.Count; ++i)
             {
-                Efectos[i].AplicarEfecto(this);
+                Efectos[i].AplicarEfecto();
             }
         }
 

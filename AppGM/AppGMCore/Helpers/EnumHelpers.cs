@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text;
 
 namespace AppGM.Core
 {
@@ -113,6 +114,16 @@ namespace AppGM.Core
 		        tiposDeHabilidad.Remove(ETipoHabilidad.NoblePhantasm);
 
 	        return tiposDeHabilidad;
+        }
+
+        public static string ToStringUtil(this EModoDeCambioDeComportamientoAcumulativo modoDeCambio)
+        {
+	        StringBuilder strBld = new StringBuilder();
+
+	        if ((modoDeCambio & EModoDeCambioDeComportamientoAcumulativo.ModificarAplicacionesActivas) != 0)
+		        strBld.AppendLine(nameof(EModoDeCambioDeComportamientoAcumulativo.ModificarAplicacionesActivas));
+
+	        return strBld.ToString();
         }
     }
 }
