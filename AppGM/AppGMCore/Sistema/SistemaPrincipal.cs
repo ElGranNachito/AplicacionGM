@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+
 using CoolLogs;
+
 using Ninject;
 
 namespace AppGM.Core
@@ -12,7 +15,13 @@ namespace AppGM.Core
     /// </summary>
     public static class SistemaPrincipal
     {
-        #region Propiedades
+        #region Propiedades & Campos
+
+        //---------------------------------CAMPOS---------------------------------
+
+        private static Dictionary<ModeloBaseSK, ControladorBase> mControladores = new Dictionary<ModeloBaseSK, ControladorBase>();
+
+        //------------------------------PROPIEDADES-------------------------------
 
         /// <summary>
         /// Instancia de <see cref="StandardKernel"/> de Ninject.
@@ -75,7 +84,6 @@ namespace AppGM.Core
         /// Contexto del thread principal
         /// </summary>
         public static SynchronizationContext ThreadUISyncContext;
-
         #endregion
 
         #region Funciones
@@ -239,6 +247,69 @@ namespace AppGM.Core
         }
 
         /// <summary>
+		/// Intenta obtener el <see cref="Controlador{TipoModelo}"/> para <paramref name="modelo"/>
+		/// </summary>
+		/// <typeparam name="TControlador">Tipo del controlador</typeparam>
+		/// <typeparam name="TModelo">Tipo del modelo</typeparam>
+		/// <param name="modelo">Modelo del que se quiere obtener el controlador</param>
+		/// <param name="intenarCrearSiNoExiste">Indica si se debe intentar crear el controlador en caso de que no se encuentre en el diccionario</param>
+		/// <returns>El <see cref="TControlador"/> obtenido o null</returns>
+		public static TControlador ObtenerControlador<TControlador, TModelo>(TModelo modelo, bool intenarCrearSiNoExiste = false)
+            where TModelo : ModeloBaseSK, new()
+            where TControlador : Controlador<TModelo>
+        {
+            if (mControladores.ContainsKey(modelo))
+                return mControladores[modelo] as TControlador;
+
+            if (!intenarCrearSiNoExiste)
+                return null;
+
+            try
+            {
+                var nuevoControlador = Activator.CreateInstance(typeof(TControlador), modelo) as TControlador;
+
+                mControladores.Add(modelo, nuevoControlador);
+
+                return nuevoControlador;
+            }
+            catch (Exception ex)
+            {
+                SistemaPrincipal.LoggerGlobal.Log($"Error la intentar crear controlador de tipo {typeof(TControlador)}.{Environment.NewLine}Exception:{ex.Message}", ESeveridad.Error);
+
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Añade el <paramref name="controlador"/> al diccionario
+        /// </summary>
+        /// <typeparam name="TControlador">Tipo del controlador</typeparam>
+        /// <typeparam name="TModelo">Tipo del modelo</typeparam>
+        /// <param name="modelo"><see cref="ModeloBaseSK"/> del controlador</param>
+        /// <param name="controlador"><see cref="ControladorBase"/>que sera añadido</param>
+        public static void AñadirControlador<TModelo, TControlador>(TModelo modelo, TControlador controlador)
+            where TModelo : ModeloBaseSK, new()
+            where TControlador : Controlador<TModelo>
+        {
+            try
+            {
+                mControladores.Add(modelo, controlador);
+            }
+            catch (Exception ex)
+            {
+                SistemaPrincipal.LoggerGlobal.Log($"Error añadir controlador ({controlador}) al diccionario.{Environment.NewLine}Exception:{ex.Message}", ESeveridad.Error);
+            }
+        }
+
+        /// <summary>
+        /// Quita el <see cref="Controlador{TipoModelo}"/> asociado a <paramref name="modelo"/>
+        /// </summary>
+        /// <param name="modelo"><see cref="ModeloBaseSK"/> al que esta asociado el
+        /// <see cref="Controlador{TipoModelo}"/> que se queire quitar</param>
+        public static void QuitarControlador(ModeloBaseSK modelo)
+            => mControladores.Remove(modelo);
+
+        /// <summary>
         /// Funcion que se encarga de lidiar con el evento de cambio de pagina actual
         /// </summary>
         /// <param name="paginaAnterior">Pagina anterior</param>
@@ -246,8 +317,9 @@ namespace AppGM.Core
         private static void PaginaActualCambioHandler(EPagina paginaAnterior, EPagina paginaActual)
         {
             //Si volvimos a la pagina principal descargamos los datos del rol
-            if (paginaActual == EPagina.PaginaPrincipal)
-                DescargarRol();
+            if (paginaActual == EPagina.PaginaPrincipal &&
+                paginaAnterior == EPagina.PaginaPrincipalRol)
+	            DescargarRol();
         }
 
         #endregion

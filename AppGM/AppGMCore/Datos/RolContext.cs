@@ -380,6 +380,29 @@ namespace AppGM.Core
 	            .HasOne(i => i.EfectoAplicandose)
 	            .WithOne(p => p.Objetivo);
 
+            // - Efecto - Funcion
+
+            modelBuilder.Entity<TIEfectoFuncion>()
+	            .HasKey(e => new {e.IdEfecto, e.IdFuncion});
+
+            modelBuilder.Entity<TIEfectoFuncion>()
+	            .HasOne(e => e.Efecto)
+	            .WithMany(e => e.Funciones);
+
+            modelBuilder.Entity<TIEfectoFuncion>()
+	            .HasOne(e => e.Funcion);
+
+            // - Efecto siendo aplicado funcion
+            modelBuilder.Entity<TIEfectoSiendoAplicadoFuncion>()
+	            .HasKey(e => new {e.IdEfectoSiendoAplicado, e.IdFuncion});
+
+            modelBuilder.Entity<TIEfectoSiendoAplicadoFuncion>()
+	            .HasOne(e => e.EfectoAplicandose)
+	            .WithMany(f => f.Funciones);
+
+            modelBuilder.Entity<TIEfectoSiendoAplicadoFuncion>()
+	            .HasOne(e => e.ModeloFuncion);
+
             // Alianzas:
             modelBuilder.Entity<ModeloAlianza>().ToTable("ModeloAlianza").HasNoDiscriminator();
 

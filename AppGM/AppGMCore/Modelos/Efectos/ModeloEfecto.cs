@@ -41,19 +41,9 @@ namespace AppGM.Core
 		public EComportamientoAcumulativo ComportamientoAcumulativo { get; set; }
 
 		/// <summary>
-		/// Funcion que determina si se puede aplicar este efecto a un objetivo
+		/// Contiene las funciones requeridas para el funcionamiento de este efecto
 		/// </summary>
-		public TIEfectoFuncion FuncionPuedeAplicar { get; set; }
-
-		/// <summary>
-		/// Funcion que aplica este efecto
-		/// </summary>
-		public TIEfectoFuncion FuncionAplicar { get; set; }
-
-		/// <summary>
-		/// Funcion que quita este efecto
-		/// </summary>
-		public TIEfectoFuncion FuncionQuitar { get; set; }
+		public virtual List<TIEfectoFuncion> Funciones { get; set; } = new List<TIEfectoFuncion>();
 
 		/// <summary>
 		/// Todas las aplicaciones de este efecto

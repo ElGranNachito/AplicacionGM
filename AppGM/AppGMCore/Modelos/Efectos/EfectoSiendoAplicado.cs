@@ -1,4 +1,6 @@
-﻿namespace AppGM.Core
+﻿using System.Collections.Generic;
+
+namespace AppGM.Core
 {
 	//En busca de un mejor nombre
 
@@ -41,5 +43,10 @@
 		/// <see cref="ModeloPersonaje"/> a los que se les esta aplicando el efecto
 		/// </summary>
 		public virtual TIEfectoSiendoAplicadoPersonajeObjetivo Objetivo { get; set; }
+
+		/// <summary>
+		/// Contiene las funciones requeridas para el funcionamiento de este efecto
+		/// </summary>
+		public virtual List<TIEfectoSiendoAplicadoFuncion> Funciones { get; set; }
 	}
 }

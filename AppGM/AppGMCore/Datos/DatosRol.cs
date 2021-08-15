@@ -14,9 +14,7 @@ namespace AppGM.Core
 		private RolContext mDBRol;
         private ModeloRol mRolSeleccionado;
 
-        private Dictionary<ModeloBaseSK, ControladorBase> mControladores = new Dictionary<ModeloBaseSK, ControladorBase>();
-
-		#endregion
+        #endregion
 
 		#region Propiedades
 
@@ -62,64 +60,6 @@ namespace AppGM.Core
         }
 
 		#region Metodos
-
-		/// <summary>
-		/// Intenta obtener el <see cref="Controlador{TipoModelo}"/> para <paramref name="modelo"/>
-		/// </summary>
-		/// <typeparam name="TControlador">Tipo del controlador</typeparam>
-		/// <typeparam name="TModelo">Tipo del modelo</typeparam>
-		/// <param name="modelo">Modelo del que se quiere obtener el controlador</param>
-		/// <param name="intenarCrearSiNoExiste">Indica si se debe intentar crear el controlador en caso de que no se encuentre en el diccionario</param>
-		/// <returns>El <see cref="TControlador"/> obtenido o null</returns>
-		public TControlador ObtenerControlador<TControlador, TModelo>(TModelo modelo, bool intenarCrearSiNoExiste = false)
-			where TModelo : ModeloBaseSK, new()
-			where TControlador : Controlador<TModelo>
-		{
-			if (mControladores.ContainsKey(modelo))
-				return mControladores[modelo] as TControlador;
-
-			if (!intenarCrearSiNoExiste)
-				return null;
-
-			try
-			{
-				var nuevoControlador = Activator.CreateInstance(typeof(TControlador), modelo) as TControlador;
-
-				mControladores.Add(modelo, nuevoControlador);
-
-				return nuevoControlador;
-			}
-			catch (Exception ex)
-			{
-				SistemaPrincipal.LoggerGlobal.Log($"Error la intentar crear controlador de tipo {typeof(TControlador)}.{Environment.NewLine}Exception:{ex.Message}", ESeveridad.Error);
-
-				return null;
-			}
-		}
-
-		/// <summary>
-		/// Añade el <paramref name="controlador"/> al diccionario
-		/// </summary>
-		/// <typeparam name="TControlador">Tipo del controlador</typeparam>
-		/// <typeparam name="TModelo">Tipo del modelo</typeparam>
-		/// <param name="modelo"><see cref="ModeloBaseSK"/> del controlador</param>
-		/// <param name="controlador"><see cref="ControladorBase"/>que sera añadido</param>
-		public void AñadirControlador<TModelo, TControlador>(TModelo modelo, TControlador controlador)
-			where TModelo : ModeloBaseSK, new()
-			where TControlador : Controlador<TModelo>
-		{
-			try
-			{
-				mControladores.Add(modelo, controlador);
-			}
-			catch (Exception ex)
-			{
-				SistemaPrincipal.LoggerGlobal.Log($"Error añadir controlador ({controlador}) al diccionario.{Environment.NewLine}Exception:{ex.Message}", ESeveridad.Error);
-			}
-		}
-
-		public void QuitarControlador(ModeloBaseSK modelo)
-			=> mControladores.Remove(modelo);
 
 		public async Task CargarDatos()
 		{

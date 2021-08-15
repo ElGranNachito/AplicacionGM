@@ -116,12 +116,12 @@ namespace AppGM.Core
 	        return tiposDeHabilidad;
         }
 
-        public static string ToStringUtil(this EModoDeCambioDeComportamiento modoDeCambio)
+        public static string ToStringUtil(this EModoDeCambioDeComportamientoAcumulativo modoDeCambio)
         {
 	        StringBuilder strBld = new StringBuilder();
 
-	        if ((modoDeCambio & EModoDeCambioDeComportamiento.ModificarAplicacionesActivas) != 0)
-		        strBld.AppendLine(nameof(EModoDeCambioDeComportamiento.ModificarAplicacionesActivas));
+	        if ((modoDeCambio & EModoDeCambioDeComportamientoAcumulativo.ModificarAplicacionesActivas) != 0)
+		        strBld.AppendLine(nameof(EModoDeCambioDeComportamientoAcumulativo.ModificarAplicacionesActivas));
 
 	        return strBld.ToString();
         }

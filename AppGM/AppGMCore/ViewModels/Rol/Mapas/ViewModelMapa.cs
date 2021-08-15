@@ -1,5 +1,7 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Input;
 
 namespace AppGM.Core
@@ -70,7 +72,12 @@ namespace AppGM.Core
         /// <summary>
         /// VM de para el ingreso y visualizacion de las posiciones de las diferentes entidades presentes en el mapa
         /// </summary>
-        public ObservableCollection<ViewModelIngresoPosicion> Posiciones { get; set; } = new ObservableCollection<ViewModelIngresoPosicion>();
+        public ObservableCollection<ViewModelIngresoPosicion> Posiciones   { get; set; } = new ObservableCollection<ViewModelIngresoPosicion>();
+
+        /// <summary>
+        /// VM de para el ingreso y visualizacion de las posiciones de las diferentes entidades presentes en el mapa
+        /// </summary>
+        public ObservableCollection<ViewModelUnidadParty> PosicionesParties { get; set; } = new ObservableCollection<ViewModelUnidadParty>();
 
         /// <summary>
         /// Ruta completa a la imagen del mapa
@@ -226,13 +233,13 @@ namespace AppGM.Core
             {
                 mostrarCadaveresMasters = value;
 
-                //for (int i = 0; i < Posiciones.Count; ++i)
-                //{
-                //    if (Posiciones[i].unidad.TipoUnidad == ETipoUnidad.CadaverMaster)
-                //    {
-                //        Posiciones[i].ImagenPosicionEsVisible = value;
-                //    }
-                //}
+                for (int i = 0; i < Posiciones.Count; ++i)
+                {
+                    if (Posiciones[i].unidad.TipoUnidad == ETipoUnidad.CadaverMaster)
+                    {
+                        Posiciones[i].ImagenPosicionEsVisible = value;
+                    }
+                }
             }
         }
 
@@ -243,13 +250,13 @@ namespace AppGM.Core
             {
                 mostrarCadaveresServants = value;
 
-                //for (int i = 0; i < Posiciones.Count; ++i)
-                //{
-                //    if (Posiciones[i].unidad.TipoUnidad == ETipoUnidad.CadaverMaster)
-                //    {
-                //        Posiciones[i].ImagenPosicionEsVisible = value;
-                //    }
-                //}
+                for (int i = 0; i < Posiciones.Count; ++i)
+                {
+                    if (Posiciones[i].unidad.TipoUnidad == ETipoUnidad.CadaverMaster)
+                    {
+                        Posiciones[i].ImagenPosicionEsVisible = value;
+                    }
+                }
             }
         }
 
@@ -274,8 +281,24 @@ namespace AppGM.Core
             {
                 mostrarParties = value;
 
+                mostrarMasters  = !value;
+                mostrarServants = !value;
+
                 //TODO: Implementar sistemas de indicadores party por una unica unidad.
                 //TODO: Al cambiar la posicion de dicha unidad se estaria cambiando l
+
+                for (int i = 0; i < Posiciones.Count; ++i)
+                {
+                    if (Posiciones[i].unidad.TipoUnidad == ETipoUnidad.Master || Posiciones[i].unidad.TipoUnidad == ETipoUnidad.Servant) 
+                    {
+                        Posiciones[i].ImagenPosicionEsVisible = !value;
+                    }
+                }
+
+                for (int i = 0; i < PosicionesParties.Count; ++i)
+                {
+                    PosicionesParties[i].ImagenPosicionEsVisible = value;
+                }
             }
         }
 
@@ -294,9 +317,25 @@ namespace AppGM.Core
             PathImagen = "../../../Media/Imagenes/Mapas/" +
                           controladorMapa.NombreMapa + controladorMapa.ObtenerExtension();
 
-            //Creamos los view models para el ingreso de las diferentes posiciones
-            for(int i = 0; i < controladorMapa.controladoresUnidadesMapa.Count; ++i)
+            Dictionary<ENumeroParty, ViewModelUnidadParty> posicionesParty = new Dictionary<ENumeroParty, ViewModelUnidadParty>();
+
+            //Creamos los view models para el ingreso de las diferentes posiciones.
+            for (int i = 0; i < controladorMapa.controladoresUnidadesMapa.Count; ++i)
+            {
                 Posiciones.Add(new ViewModelIngresoPosicion(this, controladorMapa.controladoresUnidadesMapa[i]));
+
+                if (!posicionesParty.ContainsKey(Posiciones.Last().unidad.personaje.modelo.NumeroParty))
+                {
+                    posicionesParty.Add(Posiciones.Last().unidad.personaje.modelo.NumeroParty, new ViewModelUnidadParty(this, controladorMapa.controladoresUnidadesMapa[i]));
+                }
+
+                posicionesParty[Posiciones.Last().unidad.personaje.modelo.NumeroParty].PersonajesParty.Add(Posiciones[i]);
+            }
+
+            foreach (var party in posicionesParty)
+            {
+                PosicionesParties.Add(party.Value);
+            }
 
             ComandoAñadirParticipante = new Comando(AñadirUnidad);
         }
@@ -336,14 +375,14 @@ namespace AppGM.Core
                         break;
                     case ETipoUnidad.Trampa: vmNuevaUndiad.ImagenPosicionEsVisible = mostrarTrampas; 
                         break;
-                    //case ETipoUnidad.CadaverMaster: vmNuevaUndiad.ImagenPosicionEsVisible = mostrarCadaveresMasters; 
-                    //    break;
-                    //case ETipoUnidad.CadaverServant: vmNuevaUndiad.ImagenPosicionEsVisible = mostrarCadaveresServants; 
-                    //    break;
-                    //case ETipoUnidad.Party: vmNuevaUndiad.ImagenPosicionEsVisible = mostrarParties; 
-                    //    break;
-                    //case ETipoUnidad.Alianza: vmNuevaUndiad.ImagenPosicionEsVisible = mostrarAlianzas; 
-                    //    break;
+                    case ETipoUnidad.CadaverMaster: vmNuevaUndiad.ImagenPosicionEsVisible = mostrarCadaveresMasters;
+                        break;
+                    case ETipoUnidad.CadaverServant: vmNuevaUndiad.ImagenPosicionEsVisible = mostrarCadaveresServants;
+                        break;
+                    case ETipoUnidad.Party: vmNuevaUndiad.ImagenPosicionEsVisible = mostrarParties;
+                        break;
+                    case ETipoUnidad.PersonajeConAlianza: vmNuevaUndiad.ImagenPosicionEsVisible = mostrarAlianzas;
+                        break;
                 }
 
                 Posiciones.Add(vmNuevaUndiad);

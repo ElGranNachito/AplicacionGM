@@ -49,7 +49,7 @@ namespace AppGM.Core
 		{
 			modelo = _modelo;
 
-			SistemaPrincipal.DatosRolSeleccionado.AñadirControlador(modelo, this);
+			SistemaPrincipal.AñadirControlador(modelo, this);
 		} 
 
 		#endregion
@@ -61,7 +61,7 @@ namespace AppGM.Core
 		/// </summary>
 		public virtual void Eliminar()
 		{
-			SistemaPrincipal.DatosRolSeleccionado.QuitarControlador(modelo);
+			SistemaPrincipal.QuitarControlador(modelo);
 
 			OnControladorEliminado();
 		}
@@ -75,11 +75,15 @@ namespace AppGM.Core
 		/// Actualiza las propiedades de <see cref="modelo"/> con las de <paramref name="nuevoModelo"/>.
 		/// </summary>
 		/// <param name="nuevoModelo"><see cref="TipoModelo"/> con el que actualizar el <see cref="modelo"/></param>
-		public virtual void ActulizarModelo(TipoModelo nuevoModelo)
+		/// <param name="eliminarSiNuevoModeloEsNull">Indica si se debe eliminar el controlador cuando <paramref name="nuevoModelo"/> sea null</param>
+		public virtual void ActulizarModelo(TipoModelo nuevoModelo, bool eliminarSiNuevoModeloEsNull = false)
 		{
 			if (nuevoModelo == null)
 			{
-				Eliminar();
+				if (eliminarSiNuevoModeloEsNull)
+					Eliminar();
+				else
+					SistemaPrincipal.LoggerGlobal.Log($"{nameof(nuevoModelo)} fue null!", ESeveridad.Error);
 
 				return;
 			}

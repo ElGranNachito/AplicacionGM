@@ -1,37 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using CoolLogs;
 
 namespace AppGM.Core
 {
-	public abstract class ControladorEfectoBase<TModelo> : Controlador<TModelo>
-		where TModelo : ModeloBase, new()
-	{
-		/// <summary>
-		/// Funcion que nos permite saber si el <see cref="ModeloEfecto"/> puede aplicarse desde determinado <see cref="ControladorPersonaje"/>
-		/// a determinados <see cref="ControladorPersonaje"/>
-		/// </summary>
-		public virtual ControladorFuncion_Predicado FnPuedeAplicarEfecto { get; protected set; }
-
-        /// <summary>
-        /// Funcion que aplica el <see cref="ModeloEfecto"/> desde cierto <see cref="ControladorPersonaje"/> a otros <see cref="ControladorPersonaje"/>
-        /// </summary>
-        public virtual ControladorFuncion_Efecto FnAplicarEfecto { get; protected set; }
-
-        /// <summary>
-        /// Funcion que quita el <see cref="ModeloEfecto"/> desde cierto <see cref="ControladorPersonaje"/> a otros <see cref="ControladorPersonaje"/>
-        /// </summary>
-        public virtual ControladorFuncion_Efecto FnQuitarEfecto { get; protected set; }
-
-		public ControladorEfectoBase(TModelo _modelo)
-			:base(_modelo){}
-
-        [AccesibleEnGuraScratch(nameof(ModificarComportamientoAcumulativo))]
-		public abstract void ModificarComportamientoAcumulativo(EComportamientoAcumulativo nuevoComportamiento, EModoDeCambioDeComportamiento modoDeCambio);
-	}
-
-
-    /// <summary>
+	/// <summary>
     /// Constrolador de un efecto
     /// </summary>
     //TODO: Añadir una funcion para sacar este efecto a todos sus afectados
@@ -85,13 +59,30 @@ namespace AppGM.Core
 
         #region Propiedades & Campos
 
-        [AccesibleEnGuraScratch(nameof(AplicacionesEfecto))]
-        private List<ControladorEfectoSiendoAplicado> AplicacionesEfecto;
+        //---------------------------------------------CAMPOS----------------------------------------
 
+        /// <summary>
+        /// Contiene todas las aplicaciones de este efecto
+        /// </summary>
+        [AccesibleEnGuraScratch(nameof(AplicacionesEfectoGlobal))]
+        private List<ControladorEfectoSiendoAplicado> AplicacionesEfectoGlobal = new List<ControladorEfectoSiendoAplicado>();
+
+        /// <summary>
+        /// Contiene los efectos solapantes aplicados a cierto <see cref="ControladorPersonaje"/>
+        /// </summary>
         private Dictionary<ControladorPersonaje, List<ControladorEfectoSiendoAplicado>> mAplicacionesEfectoSolapantes;
 
+        /// <summary>
+        /// Contiene todos los efectos que no sean solapantes aplicados a cierto <see cref="ControladorPersonaje"/>
+        /// </summary>
         private Dictionary<ControladorPersonaje, Dictionary<EComportamientoAcumulativo, ControladorEfectoSiendoAplicado>> mAplicacionesEfectoNoSolapantes;
 
+
+        //-------------------------------------------PROPIEDADES-----------------------------------------------
+
+        /// <summary>
+        /// Propiedad para incializar <see cref="mAplicacionesEfectoSolapantes"/> perezosamente
+        /// </summary>
         private Dictionary<ControladorPersonaje, List<ControladorEfectoSiendoAplicado>> AplicacionesEfectoSolapantes
         {
 	        get
@@ -102,6 +93,9 @@ namespace AppGM.Core
 	        }
         }
 
+        /// <summary>
+        /// Propiedad para incializar <see cref="mAplicacionesEfectoNoSolapantes"/> perezosamente
+        /// </summary>
         private Dictionary<ControladorPersonaje, Dictionary<EComportamientoAcumulativo, ControladorEfectoSiendoAplicado>> AplicacionesEfectoNoSolapantes
         {
 	        get
@@ -132,10 +126,13 @@ namespace AppGM.Core
 	        set => modelo.Tipo = value;
         }
 
+        /// <summary>
+        /// Obtiene o establece el valor de <see cref="ModeloEfecto.ComportamientoAcumulativo"/>
+        /// </summary>
         public EComportamientoAcumulativo ComportamientoAcumulativo
         {
 	        get => modelo.ComportamientoAcumulativo;
-	        set => ModificarComportamientoAcumulativo(value, EModoDeCambioDeComportamiento.SumarTurnosRestantes);
+	        set => ModificarComportamientoAcumulativo(value, EModoDeCambioDeComportamientoAcumulativo.SumarTurnosRestantes);
         }
 
         /// <summary>
@@ -162,14 +159,14 @@ namespace AppGM.Core
 	        foreach (var aplicacion in modelo.Aplicaciones)
 	        {
 		        var instigador =
-			        SistemaPrincipal.DatosRolSeleccionado.ObtenerControlador<ControladorPersonaje, ModeloPersonaje>(
+			        SistemaPrincipal.ObtenerControlador<ControladorPersonaje, ModeloPersonaje>(
 				        aplicacion.EfectoAplicandose.Instigador.PersonajeInstigador, true);
 
 		        var objetivo = 
-			        SistemaPrincipal.DatosRolSeleccionado.ObtenerControlador<ControladorPersonaje, ModeloPersonaje>(
+			        SistemaPrincipal.ObtenerControlador<ControladorPersonaje, ModeloPersonaje>(
 				        aplicacion.EfectoAplicandose.Instigador.PersonajeInstigador, true);
 
-		        AplicarEfecto(instigador, objetivo, aplicacion.EfectoAplicandose.ComportamientoAcumulativo);
+		        AplicarEfecto(instigador, objetivo, aplicacion.EfectoAplicandose.ComportamientoAcumulativo, aplicacion.EfectoAplicandose);
 	        }
         }
 
@@ -178,15 +175,30 @@ namespace AppGM.Core
         #region Metodos
 
         /// <summary>
-        /// Chequea que el efecto pueda ser aplicado 
+        /// Compila todas las funciones requeridas para este efecto de manera asincronica
+        /// </summary>
+        /// <returns></returns>
+        public async Task CompilarFuncionesAsync()
+        {
+	        List<ControladorFuncionBase> controladoresCreados = new List<ControladorFuncionBase>(modelo.Funciones.Count);
+
+	        foreach (var func in modelo.Funciones)
+	        {
+		        var controladorCreado = InicializarFuncion(func.Funcion, func.TipoFuncion);
+
+		        await controladorCreado.CompilarAsync();
+	        }
+        }
+
+        /// <summary>
+        /// Revisa si este efecto puede ser aplicado a un <paramref name="objetivo"/> por <paramref name="usuario"/>
         /// </summary>
         /// <param name="usuario">Personaje que intenta aplicar el efecto</param>
-        /// <param name="objetivos">Personaje/s a quienes se intenta aplicar el efecto</param>
-        /// <returns></returns>
-        public bool PuedeAplicarEfecto(ControladorPersonaje usuario, ControladorPersonaje objetivos)
+        /// <param name="objetivo">Personaje a quienes se intenta aplicar el efecto</param>
+        /// <returns><see cref="bool"/> indicando si el efecto puede ser aplicado al <paramref name="objetivo"/></returns>
+        public bool PuedeAplicarEfecto(ControladorPersonaje usuario, ControladorPersonaje objetivo)
         {
-	        //return mPuedeAplicarEfecto(this, usuario, objetivos);
-	        return false;
+	        return FnPuedeAplicarEfecto.Funcion(this, usuario, objetivo, FnPuedeAplicarEfecto);
         }
 
         /// <summary>
@@ -196,7 +208,8 @@ namespace AppGM.Core
         /// <param name="objetivo">Personaje/s a quienes se les aplicara el efecto</param>
         /// <param name="comportamientoAcumulativoSeleccionado">Comportamiento acumulativo que se utilizara en esta aplicacion particular del efecto.
         /// El valor de este parametro sera ignorado a menos que <see cref="ComportamientoAcumulativo"/> sea <see cref="EComportamientoAcumulativo.SeleccionManual"/></param>
-        public void AplicarEfecto(ControladorPersonaje usuario, ControladorPersonaje objetivo, EComportamientoAcumulativo comportamientoAcumulativoSeleccionado = EComportamientoAcumulativo.NINGUNO)
+        /// <param name="modeloEfectoSiendoAplicado">Modelo a partir del cual crear el nuevo <see cref="ControladorEfectoSiendoAplicado"/></param>
+        public void AplicarEfecto(ControladorPersonaje usuario, ControladorPersonaje objetivo, EComportamientoAcumulativo comportamientoAcumulativoSeleccionado = EComportamientoAcumulativo.NINGUNO, ModeloEfectoSiendoAplicado modeloEfectoSiendoAplicado = null)
         {
 	        ControladorEfectoSiendoAplicado nuevoEfectoSiendoAplicado = null;
 
@@ -210,15 +223,20 @@ namespace AppGM.Core
 	        {
 		        case EComportamientoAcumulativo.Solapar:
 		        {
-			        nuevoEfectoSiendoAplicado = new ControladorEfectoSiendoAplicado(this, usuario, objetivo);
+                    //Si el comportamiento es solapar entonces tenemos que crear un nuevo controlador si o si
+			        nuevoEfectoSiendoAplicado = modeloEfectoSiendoAplicado == null 
+				        ? new ControladorEfectoSiendoAplicado(this, usuario, objetivo)
+				        : new ControladorEfectoSiendoAplicado(modeloEfectoSiendoAplicado, this, usuario, objetivo);
 
-			        AplicacionesEfecto.Add(nuevoEfectoSiendoAplicado);
+			        AplicacionesEfectoGlobal.Add(nuevoEfectoSiendoAplicado);
                     
+                    //Si el diccionario de aplicaciones solapantes no contiene una entrada para este objetivo entonces creamos una
                     if(!AplicacionesEfectoSolapantes.ContainsKey(objetivo))
                         AplicacionesEfectoSolapantes.Add(objetivo, new List<ControladorEfectoSiendoAplicado>());
 
                     AplicacionesEfectoSolapantes[objetivo].Add(nuevoEfectoSiendoAplicado);
 
+                    //Actualizamos las acumulaciones de los efectos solapantes ya aplicados
                     AplicacionesEfectoSolapantes[objetivo].ForEach(e => e.ContadorAcumulaciones = AplicacionesEfectoSolapantes[objetivo].Count);
 
                     break;
@@ -230,7 +248,9 @@ namespace AppGM.Core
 		        {
 			        if (!AplicacionesEfectoNoSolapantes[objetivo].ContainsKey(comportamientoAcumulativoActual))
 			        {
-				        nuevoEfectoSiendoAplicado = new ControladorEfectoSiendoAplicado(this, usuario, objetivo);
+				        nuevoEfectoSiendoAplicado = modeloEfectoSiendoAplicado == null
+					        ? new ControladorEfectoSiendoAplicado(this, usuario, objetivo)
+					        : new ControladorEfectoSiendoAplicado(modeloEfectoSiendoAplicado, this, usuario, objetivo);
 
 				        AplicacionesEfectoNoSolapantes[objetivo][comportamientoAcumulativoActual] = nuevoEfectoSiendoAplicado;
 			        }
@@ -264,35 +284,46 @@ namespace AppGM.Core
         /// <summary>
         /// Aplica el efecto sobre el personaje
         /// </summary>
-        /// <param name="usuario">Personaje que origino el efecto</param>
-        /// <param name="objetivos">Personaje/s a quienes se les quitara el efecto</param>
+        /// <param name="efecto">Controlador de la aplicacion que quitaremos</param>
         public virtual void QuitarEfecto(ControladorEfectoSiendoAplicado efecto)
         {
 	        if (efecto.ComportamientoAcumulativo == EComportamientoAcumulativo.Solapar)
 	        {
 		        AplicacionesEfectoSolapantes[efecto.objetivo].Remove(efecto);
-	        }
+
+                //Actualizamos el contador de acumulaciones de los efectos restantes
+		        AplicacionesEfectoSolapantes[efecto.objetivo].ForEach(e => --e.ContadorAcumulaciones);
+
+            }
 	        else
 	        {
+                //Quitamos de una la entrada en el diccionario ya que si el comportamiento no es acumulativo solamente hay un controlador
 		        AplicacionesEfectoNoSolapantes[efecto.objetivo].Remove(efecto.ComportamientoAcumulativo);
 	        }
 
 	        OnQuitarEfecto(efecto.instigador, efecto.objetivo, this);
         }
 
+        /// <summary>
+        /// Modifica el <see cref="EComportamientoAcumulativo"/> de los <see cref="ControladorEfectoSiendoAplicado"/>
+        /// creados a partir de esta instancia
+        /// </summary>
+        /// <param name="nuevoComportamiento">Nuevo comportamiento</param>
+        /// <param name="modoDeCambio">Manera en la que se realizara el cambio de comportamiento</param>
         public override void ModificarComportamientoAcumulativo(
 	        EComportamientoAcumulativo nuevoComportamiento,
-	        EModoDeCambioDeComportamiento modoDeCambio)
+	        EModoDeCambioDeComportamientoAcumulativo modoDeCambio)
         {
+            //Si el nuevo comportamiento es igual al actual nos pegamos media vuelta
 	        if (nuevoComportamiento == ComportamientoAcumulativo)
 		        return;
 
 	        switch (modoDeCambio)
 	        {
 		        case var val 
-			        when (val & EModoDeCambioDeComportamiento.EliminarAplicacionesConElComportamientoAnterior) != 0:
+			        when (val & EModoDeCambioDeComportamientoAcumulativo.EliminarAplicacionesConElComportamientoAnterior) != 0:
 		        {
-			        AplicacionesEfecto.ForEach(a =>
+			        AplicacionesEfectoGlobal.ForEach(a =>
 			        {
 				        if (a.ComportamientoAcumulativo == ComportamientoAcumulativo)
 					        a.QuitarEfecto();
@@ -302,9 +333,9 @@ namespace AppGM.Core
 		        }
 
 		        case var val 
-			        when (val & EModoDeCambioDeComportamiento.EliminarAplicacionesConComportamientoDistinto) != 0:
+			        when (val & EModoDeCambioDeComportamientoAcumulativo.EliminarAplicacionesConComportamientoDistinto) != 0:
 		        {
-			        AplicacionesEfecto.ForEach(a =>
+			        AplicacionesEfectoGlobal.ForEach(a =>
 			        {
 				        a.QuitarEfecto();
 			        });
@@ -313,9 +344,9 @@ namespace AppGM.Core
 		        }
 
 		        case var val 
-			        when (val & EModoDeCambioDeComportamiento.ModificarAplicacionesActivas) != 0:
+			        when (val & EModoDeCambioDeComportamientoAcumulativo.ModificarAplicacionesActivas) != 0:
 		        {
-			        AplicacionesEfecto.ForEach(a =>
+			        AplicacionesEfectoGlobal.ForEach(a =>
 			        {
 				        a.ModificarComportamientoAcumulativo(nuevoComportamiento, modoDeCambio);
 			        });
@@ -324,9 +355,9 @@ namespace AppGM.Core
 		        }
 
 		        case var val 
-			        when (val & EModoDeCambioDeComportamiento.ModificarAplicacionesActivasConElComportamientoAnterior) != 0:
+			        when (val & EModoDeCambioDeComportamientoAcumulativo.ModificarAplicacionesActivasConElComportamientoAnterior) != 0:
 		        {
-			        AplicacionesEfecto.ForEach(a =>
+			        AplicacionesEfectoGlobal.ForEach(a =>
 			        {
                         if(a.ComportamientoAcumulativo == ComportamientoAcumulativo)
 							a.ModificarComportamientoAcumulativo(nuevoComportamiento, modoDeCambio);
@@ -344,20 +375,19 @@ namespace AppGM.Core
 	        }
         }
 
-        public override void ActulizarModelo(ModeloEfecto nuevoModelo)
+        public override void ActulizarModelo(ModeloEfecto nuevoModelo, bool eliminarSiNuevoModeloEsNull = false)
         {
-	        if (nuevoModelo == null)
-	        {
-                SistemaPrincipal.LoggerGlobal.Log($"{nameof(nuevoModelo)} fue null!", ESeveridad.Error);
+	        base.ActulizarModelo(nuevoModelo, eliminarSiNuevoModeloEsNull);
 
-                return;
-	        }
+	        var nuevaFuncionPuedeAplicar = nuevoModelo.Funciones.Find(f => f.TipoFuncion == ETipoFuncionEfecto.FuncionPuedeAplicar);
+	        var nuevaFuncionAplicar      = nuevoModelo.Funciones.Find(f => f.TipoFuncion == ETipoFuncionEfecto.FuncionAplicar);
+	        var nuevaFuncionQuitar       = nuevoModelo.Funciones.Find(f => f.TipoFuncion == ETipoFuncionEfecto.FuncionQuitar);
 
             //Obtenemos una copia de las aplicaciones del efecto del nuevo modelo
 	        var aplicacionesNuevoModelo = new List<ModeloEfectoSiendoAplicado>(nuevoModelo.Aplicaciones.Select(a => a.EfectoAplicandose));
 
             //Por cada aplicacion en el efecto actual...
-	        AplicacionesEfecto.ForEach(a =>
+	        AplicacionesEfectoGlobal.ForEach(a =>
 	        {
                 //Intentamos obtener el indice de la aplicacion actual en la lista de nuevas aplicaciones
                 int indiceAplicacionActual = aplicacionesNuevoModelo.IndexOf(a.AplicacionEfecto);
@@ -375,16 +405,16 @@ namespace AppGM.Core
 	        });
 
             //Actualizamos las funciones del efecto
-	        FnPuedeAplicarEfecto.ActulizarModelo(nuevoModelo.FuncionPuedeAplicar.Funcion);
-            FnAplicarEfecto.ActulizarModelo(nuevoModelo.FuncionAplicar.Funcion);
-            FnQuitarEfecto.ActulizarModelo(nuevoModelo.FuncionQuitar.Funcion);
+	        FnPuedeAplicarEfecto.ActulizarModelo(nuevaFuncionPuedeAplicar?.Funcion);
+            FnAplicarEfecto.ActulizarModelo(nuevaFuncionAplicar?.Funcion);
+            FnQuitarEfecto.ActulizarModelo(nuevaFuncionQuitar?.Funcion);
 
             //Actualizamos las funciones de las aplicaciones
-	        AplicacionesEfecto.ForEach(ef =>
+	        AplicacionesEfectoGlobal.ForEach(ef =>
 	        {
-                ef.FnPuedeAplicarEfecto.ActulizarModelo(nuevoModelo.FuncionPuedeAplicar?.Funcion);
-                ef.FnAplicarEfecto.ActulizarModelo(nuevoModelo.FuncionAplicar?.Funcion);
-                ef.FnQuitarEfecto.ActulizarModelo(nuevoModelo.FuncionQuitar?.Funcion);
+                ef.FnPuedeAplicarEfecto.ActulizarModelo(nuevaFuncionPuedeAplicar?.Funcion, true);
+                ef.FnAplicarEfecto.ActulizarModelo(nuevaFuncionAplicar?.Funcion, true);
+                ef.FnQuitarEfecto.ActulizarModelo(nuevaFuncionQuitar?.Funcion, true);
 	        });
 
 	        modelo.Nombre      = nuevoModelo.Nombre;

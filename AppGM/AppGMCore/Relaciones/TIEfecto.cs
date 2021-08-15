@@ -28,6 +28,8 @@ namespace AppGM.Core
 
         public int IdFuncion { get; set; }
         public virtual ModeloFuncion Funcion { get; set; }
+
+        public ETipoFuncionEfecto TipoFuncion { get; set; }
     }
 
     /// <summary>
@@ -68,5 +70,14 @@ namespace AppGM.Core
         [ForeignKey(nameof(PersonajeObjetivo))]
         public int IdPersonajeObjetivo { get; set; }
         public virtual ModeloPersonaje PersonajeObjetivo { get; set; }
+    }
+
+    public class TIEfectoSiendoAplicadoFuncion : TIEfectoSiendoAplicado
+    {
+        [ForeignKey(nameof(ModeloFuncion))]
+        public int IdFuncion { get; set; }
+        public virtual ModeloFuncion ModeloFuncion { get; set; }
+
+        public ETipoFuncionEfecto TipoFuncion { get; set; }
     }
 }

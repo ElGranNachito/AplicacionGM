@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace AppGM.Core
@@ -25,6 +26,11 @@ namespace AppGM.Core
         /// Puede ser un personaje Master, Servant, Invocacion, o NPC
         /// </summary>
         public ETipoPersonaje TipoPersonaje { get; set; }
+
+        /// <summary>
+        /// Numero de party (equipo) a la que el personaje pertenece.
+        /// </summary>
+        public ENumeroParty NumeroParty { get; set; }
 
         //Stats del personaje
         public int MaxHp { get; set; }
