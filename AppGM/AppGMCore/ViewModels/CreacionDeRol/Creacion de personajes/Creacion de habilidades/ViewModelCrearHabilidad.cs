@@ -84,7 +84,7 @@ namespace AppGM.Core
         public ViewModelComboBox<ERango> ComboBoxRangoHabilidad { get; set; } = new ViewModelComboBox<ERango>(EnumHelpers.RangosDisponibles);
 
         public ViewModelFuncionItem<ControladorFuncion_Habilidad> FuncionUtilizar { get; set; }
-        public ViewModelFuncionItem<ControladorFuncion_Predicado> FuncionCondicion { get; set; }
+        public ViewModelFuncionItem<ControladorFuncion_PredicadoEfecto> FuncionCondicion { get; set; }
 
         public ICommand ComandoFinalizar { get; set; }
         public ICommand ComandoCancelar  { get; set; }

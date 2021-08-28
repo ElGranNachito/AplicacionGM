@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace AppGM.Core
 {
@@ -8,14 +7,14 @@ namespace AppGM.Core
 	/// <see cref="ViewModelCreacionDeFuncionBase"/> para la creacion de una habilidad
 	/// </summary>
 	public class ViewModelCreacionDeFuncionHabilidad : 
-		ViewModelCreacionDeFuncion<Action<ControladorFuncionBase, ControladorPersonaje, ControladorPersonaje[], ControladorHabilidad, object[]>>
+		ViewModelCreacionDeFuncion<Action<ControladorHabilidad, ControladorPersonaje, ControladorPersonaje[], ControladorFuncionBase, object[]>>
 	{
 		public ViewModelCreacionDeFuncionHabilidad(Action<ViewModelCreacionDeFuncionBase> accionSalir, ControladorFuncion_Habilidad _controladorFuncion = null)
 			: base(accionSalir, _controladorFuncion, EPropositoFuncion.Habilidad){}
 
-		protected override List<ViewModelBloqueMuestra> AsignarListaDeBloques()
+		protected override void AsignarListaDeBloques()
 		{
-			return new List<ViewModelBloqueMuestra>
+			BloquesDisponibles = new ViewModelListaDeElementos<ViewModelBloqueMuestra>
 			{
 				new ViewModelBloqueMuestra(this, typeof(ViewModelBloqueDeclaracionVariable)),
 				new ViewModelBloqueMuestra(this, typeof(ViewModelBloqueLlamarFuncion)),
@@ -23,9 +22,9 @@ namespace AppGM.Core
 			};
 		}
 
-		protected override List<BloqueVariable> AsignarVariablesBase()
+		protected override void AsignarVariablesBase()
 		{
-			return new List<BloqueVariable>
+			VariablesBase = new List<BloqueVariable>
 			{
 				new BloqueVariable(ObtenerID(),"Combate",  typeof(ControladorAdministradorDeCombate), ETipoVariable.Normal),
 				new BloqueVariable(ObtenerID(),"Usuario", typeof(ControladorPersonaje), ETipoVariable.Parametro),

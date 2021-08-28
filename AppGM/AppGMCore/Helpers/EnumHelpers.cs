@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using CoolLogs;
 
 namespace AppGM.Core
 {
@@ -116,14 +117,37 @@ namespace AppGM.Core
 	        return tiposDeHabilidad;
         }
 
-        public static string ToStringUtil(this EModoDeCambioDeComportamientoAcumulativo modoDeCambio)
+        /// <summary>
+        /// Obtiene el <see cref="EComportamientoAcumulativoFlags"/> correspondiente para <paramref name="comportamientoAcumulativo"/>
+        /// </summary>
+        /// <param name="comportamientoAcumulativo">Comportamiento acumulativo para el cual obtener la flag</param>
+        /// <returns><see cref="EComportamientoAcumulativoFlags"/> equivalente a <paramref name="comportamientoAcumulativo"/></returns>
+        public static EComportamientoAcumulativoFlags ObtenerFlag(this EComportamientoAcumulativo comportamientoAcumulativo)
         {
-	        StringBuilder strBld = new StringBuilder();
+	        switch (comportamientoAcumulativo)
+	        {
+                case EComportamientoAcumulativo.Contar:
+	                return EComportamientoAcumulativoFlags.Contar;
 
-	        if ((modoDeCambio & EModoDeCambioDeComportamientoAcumulativo.ModificarAplicacionesActivas) != 0)
-		        strBld.AppendLine(nameof(EModoDeCambioDeComportamientoAcumulativo.ModificarAplicacionesActivas));
+                case EComportamientoAcumulativo.Esperar:
+	                return EComportamientoAcumulativoFlags.Esperar;
 
-	        return strBld.ToString();
+                case EComportamientoAcumulativo.Solapar:
+	                return EComportamientoAcumulativoFlags.Solapar;
+
+                case EComportamientoAcumulativo.SumarTurnos:
+	                return EComportamientoAcumulativoFlags.SumarTurnos;
+
+                case EComportamientoAcumulativo.SeleccionManual:
+	                return EComportamientoAcumulativoFlags.SeleccionManual;
+
+                default:
+                {
+                    SistemaPrincipal.LoggerGlobal.Log($"{nameof(comportamientoAcumulativo)} contiene un valor no soportado {comportamientoAcumulativo}", ESeveridad.Error);
+
+                    return EComportamientoAcumulativoFlags.NINGUNO;
+                }
+	        }
         }
     }
 }

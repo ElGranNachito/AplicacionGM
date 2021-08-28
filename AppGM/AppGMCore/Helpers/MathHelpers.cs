@@ -44,5 +44,9 @@
         {
             return numero.ToString().Length;
         }
+
+        public static int ToInt(this decimal numero) => (int) numero;
+        public static int ToInt(this float numero) => (int) numero;
+        public static int ToInt(this double numero) => (int) numero;
     }
 }

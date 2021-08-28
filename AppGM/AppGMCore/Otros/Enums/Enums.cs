@@ -1129,7 +1129,7 @@ namespace AppGM.Core
         /// <summary>
         /// Funcion que retorna un <see cref="bool"/>
         /// </summary>
-        Predicado = 3,
+        PredicadoEfecto = 3,
 
         NINGUNO = 0
     }

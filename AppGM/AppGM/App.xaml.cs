@@ -22,5 +22,10 @@ namespace AppGM
 
             ControladorDeAnimaciones.Inicializar();
         }
+
+        protected override void OnExit(ExitEventArgs e)
+        {
+	        SistemaPrincipal.Apagar(e.ApplicationExitCode);
+        }
     }
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using Ninject.Infrastructure.Language;
 
 namespace AppGM.Core
@@ -121,6 +122,96 @@ namespace AppGM.Core
 			}
 
 			return resultado;
+		}
+
+		/// <summary>
+		/// Provee funciones para facilitar operaciones asincronicas
+		/// </summary>
+		public static class Threading
+		{
+			/// <summary>
+			/// Ejecuta una <see cref="accion"/> asincronicamente dentro de un bloque trycatch
+			/// </summary>
+			/// <param name="lck">Lock que se utilizara para la sincronizacion</param>
+			/// <param name="accion">Accion que se ejecutara dentro del trycatch si se pudo obtener posesion del <paramref name="lck"/></param>
+			/// <param name="mensajeEnCasoDeError">Mensaje que se mostrara en caso de que ocurra un error dentro del try</param>
+			/// <param name="timeout">Tiempo maximo de espera para obtener el <paramref name="lck"/> en milisegundos</param>
+			/// <returns>Tupla conteniendo el resultado de ejecutar <paramref name="accion"/> y <see cref="bool"/> indicando si se ejecuto <paramref name="accion"/></returns>
+			public static (TResultado resultado, bool accionEjecutada) ThreadSafeTryCatch<TResultado>(object lck, Func<TResultado> accion, string mensajeEnCasoDeError = "", int timeout = Int32.MaxValue)
+			{
+				bool lockObtenido = false;
+
+				try
+				{
+					//Intentamos obtener posesion del lock
+					Monitor.TryEnter(lck, timeout, ref lockObtenido);
+
+					//Si pudimos obtenerla entonces ejecutamos la funcion
+					if(lockObtenido)
+						return (accion(), true);
+
+					return (default, false);
+				}
+				catch (Exception ex)
+				{
+					SistemaPrincipal.LoggerGlobal.Log(mensajeEnCasoDeError.IsNullOrWhiteSpace()
+						? $"{ex.Message}"
+						: $"{mensajeEnCasoDeError}{Environment.NewLine}{ex.Message}");
+
+					return (default, false);
+				}
+				finally
+				{
+					//Si obtuvimos el lock lo liberamos y avisamos a cualquier otro hilo que este esperando su liberacion
+					if (lockObtenido)
+					{
+						Monitor.PulseAll(lck);
+						Monitor.Exit(lck);
+					}
+				}
+			}
+
+			/// <summary>
+			/// Ejecuta una <see cref="accion"/> asincronicamente dentro de un bloque trycatch
+			/// </summary>
+			/// <param name="lck">Lock que se utilizara para la sincronizacion</param>
+			/// <param name="accion">Accion que se ejecutara dentro del trycatch si se pudo obtener posesion del <paramref name="lck"/></param>
+			/// <param name="mensajeEnCasoDeError">Mensaje que se mostrara en caso de que ocurra un error dentro del try</param>
+			/// <param name="timeout">Tiempo maximo de espera para obtener el <paramref name="lck"/> en milisegundos</param>
+			/// <returns><see cref="bool"/> indicando si se ejecuto <paramref name="accion"/></returns>
+			public static bool ThreadSafeTryCatch(object lck, Action accion, string mensajeEnCasoDeError = "", int timeout = Int32.MaxValue)
+			{
+				bool lockObtenido = false;
+
+				try
+				{
+					//Intentamos obtener posesion del lock
+					Monitor.TryEnter(lck, timeout, ref lockObtenido);
+
+					//Si pudimos obtenerla entonces ejecutamos la funcion
+					if (lockObtenido)
+						accion();
+
+					return lockObtenido;
+				}
+				catch (Exception ex)
+				{
+					SistemaPrincipal.LoggerGlobal.Log(mensajeEnCasoDeError.IsNullOrWhiteSpace()
+						? $"{ex.Message}"
+						: $"{mensajeEnCasoDeError}{Environment.NewLine}{ex.Message}");
+
+					return false;
+				}
+				finally
+				{
+					//Si obtuvimos el lock lo liberamos y avisamos a cualquier otro hilo que este esperando su liberacion
+					if (lockObtenido)
+					{
+						Monitor.PulseAll(lck);
+						Monitor.Exit(lck);
+					}
+				}
+			}
 		}
 	}
 }

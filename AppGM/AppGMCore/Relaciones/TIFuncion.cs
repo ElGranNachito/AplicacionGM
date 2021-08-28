@@ -14,6 +14,16 @@ namespace AppGM.Core
 	}
 
 	/// <summary>
+	/// Clase que representa una relacion de un <see cref="ModeloFuncion"/> con otro <see cref="ModeloFuncion"/> que actua como su padre
+	/// </summary>
+	public class TIFuncionPadreFuncion : TIFuncion
+	{
+		public int IDPadre { get; set; }
+
+		public virtual ModeloFuncion Padre { get; set; }
+	}
+
+	/// <summary>
 	/// Representa la relacion de un <see cref="ModeloFuncion"/> con un <see cref="ModeloVariableFuncionBase"/>
 	/// </summary>
 	public class TIFuncionVariable : TIFuncion

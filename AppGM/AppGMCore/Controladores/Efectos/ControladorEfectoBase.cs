@@ -15,7 +15,7 @@ namespace AppGM.Core
 		/// Funcion que nos permite saber si el <see cref="ModeloEfecto"/> puede aplicarse desde determinado <see cref="ControladorPersonaje"/>
 		/// a determinados <see cref="ControladorPersonaje"/>
 		/// </summary>
-		public virtual ControladorFuncion_Predicado FnPuedeAplicarEfecto { get; protected set; }
+		public virtual ControladorFuncion_PredicadoEfecto FnPuedeAplicarEfecto { get; protected set; }
 
 		/// <summary>
 		/// Funcion que aplica el <see cref="ModeloEfecto"/> desde cierto <see cref="ControladorPersonaje"/> a otros <see cref="ControladorPersonaje"/>
@@ -52,7 +52,7 @@ namespace AppGM.Core
 			switch (tipoFuncion)
 			{
 				case ETipoFuncionEfecto.FuncionPuedeAplicar:
-					FnPuedeAplicarEfecto = SistemaPrincipal.ObtenerControlador<ControladorFuncion_Predicado, ModeloFuncion>(modeloFuncion, true);
+					FnPuedeAplicarEfecto = SistemaPrincipal.ObtenerControlador<ControladorFuncion_PredicadoEfecto, ModeloFuncion>(modeloFuncion, true);
 					return FnPuedeAplicarEfecto;
 
 				case ETipoFuncionEfecto.FuncionAplicar:

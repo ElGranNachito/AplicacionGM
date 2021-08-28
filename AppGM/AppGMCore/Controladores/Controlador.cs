@@ -84,8 +84,6 @@ namespace AppGM.Core
 					Eliminar();
 				else
 					SistemaPrincipal.LoggerGlobal.Log($"{nameof(nuevoModelo)} fue null!", ESeveridad.Error);
-
-				return;
 			}
 		}
 

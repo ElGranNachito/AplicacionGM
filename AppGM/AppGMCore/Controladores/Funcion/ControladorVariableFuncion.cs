@@ -41,6 +41,12 @@ namespace AppGM.Core
 			}
 		}
 
+		public int IDVariable
+		{
+			get => modelo.IDVariable;
+			set => modelo.IDVariable = value;
+		}
+
 		public ControladorVariableFuncionBase(ModeloVariableFuncionBase _modelo)
 			: base(_modelo)
 		{

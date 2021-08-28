@@ -97,11 +97,13 @@ namespace AppGM.Core
         {
             //Obtenemos el contexto del hilo que nos llamo
             ThreadUISyncContext = SynchronizationContext.Current;
-  
-            Kernel.Bind<LoggerFactory>().ToConstant(new CoolFactory(ESeveridad.TODOS, "%t-T [%a>%f:%l %s-u]: %m"));
-            Kernel.Bind<Logger>().ToConstant(new CoolLogger(LoggerFactoryGlobal, "LoggerPrincipal", "log"));
+			
+            CoolLogs.Globales.Inicializar<CoolFactory>(ESeveridad.TODOS, "%t-T [%a>%f:%l %s-u]: %m", "LoggerPrincipal", "log");
+            
+            Kernel.Bind<Logger>().ToConstant(CoolLogs.Globales.LoggerGlobal);
+            Kernel.Bind<LoggerFactory>().ToConstant(CoolLogs.Globales.Factory);
 
-            LoggerGlobal.Log("Inicializando sistema", ESeveridad.Info);
+            LoggerGlobal.Log("Inicializando sistema...", ESeveridad.Info);
 
             Kernel.Bind<IControladorDeArchivos>().ToConstant(controladorDeArchivos);
 
@@ -111,6 +113,17 @@ namespace AppGM.Core
             Kernel.Bind<Drag>().ToConstant(new Drag());
 
             Aplicacion.OnPaginaActualCambio += PaginaActualCambioHandler;
+        }
+
+        /// <summary>
+        /// Funcion llamada antes de salir de la aplicacion
+        /// </summary>
+        /// <param name="codigoSalida">Codigo de salida de la aplicacion <para/> Para ver los posibles codigos y sus significados: <seealso cref="https://docs.microsoft.com/es-es/windows/win32/debug/system-error-codes?redirectedfrom=MSDN"/></param>
+        public static void Apagar(int codigoSalida)
+        {
+            LoggerGlobal.Log($"Saliendo de la app... Codigo de salida: ({codigoSalida})", ESeveridad.Info);
+
+            CoolLogs.Globales.Finalizar();
         }
 
         /// <summary>

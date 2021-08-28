@@ -251,8 +251,8 @@ namespace AppGM.Core
 			SistemaPrincipal.Atar<ViewModelCreacionDeFuncionBase>(this);
 
 			//Obtenemos los bloques disponibles y las variables por defecto
-			BloquesDisponibles = new ViewModelListaDeElementos<ViewModelBloqueMuestra>(AsignarListaDeBloques());
-			VariablesBase = AsignarVariablesBase();
+			AsignarListaDeBloques();
+			AsignarVariablesBase();
 
 			GrosorBordesGridBloquesColocados = new Grosor(0, 1);
 
@@ -291,20 +291,16 @@ namespace AppGM.Core
 		public void DispararBloqueRemovido(ViewModelBloqueFuncionBase bloqueRemovido, IContenedorDeBloques padre) => OnBloqueRemovido(bloqueRemovido, padre);
 
 		/// <summary>
-		/// Metodo que debe asignar una lista de los <see cref="ViewModelBloqueFuncionBase"/> disponibles a
-		/// <see cref="BloquesDisponibles"/>.
-		/// No hacer nada extravagante en esta funcion puesto que se la llama desde el constructor base,
-		/// es decir no llamar propiedades de la clase cuya inicializacion dependa del constructor
+		/// Metodo que cuando sobreescrito en una clase derivada inicializa <see cref="BloquesDisponibles"/> con los bloques
+		/// disponibles para un tipo de funcion especifico
 		/// </summary>
-		/// <returns><see cref="List{T}"/> que se asignara a <see cref="BloquesDisponibles"/></returns>
-		protected abstract List<ViewModelBloqueMuestra> AsignarListaDeBloques();
+		protected abstract void AsignarListaDeBloques();
 
 		/// <summary>
-		/// Metodo que devuelve una <see cref="List{T}"/> de <see cref="BloqueVariable"/>
-		/// que compondran las variables base
+		/// Metodo que cuando se sobreescrito en una clase derivada inicializa <see cref="VariablesBase"/> con las variables
+		/// disponibles por defecto para un tipo de funcion especifico
 		/// </summary>
-		/// <returns><see cref="List{T}"/> que se asignara a <see cref="VariablesBase"/></returns>
-		protected abstract List<BloqueVariable> AsignarVariablesBase();
+		protected abstract void AsignarVariablesBase();
 
 		/// <summary>
 		/// Cargas los bloques del <see cref="ControladorFuncion{TipoFuncion}"/> y los carga a <see cref="Bloques"/>

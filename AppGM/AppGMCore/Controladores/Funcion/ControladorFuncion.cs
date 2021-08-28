@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -25,18 +27,26 @@ namespace AppGM.Core
 		/// </summary>
 		private Dictionary<int, ControladorVariableFuncionBase> mVariablesPersistenes;
 
+		/// <summary>
+		/// Lock para acceder a <see cref="Bloques"/>
+		/// </summary>
+		private object LockListaBloques = new object();
+
 		//-------------------------------PROPIEDADES-------------------------------------
 
 		/// <summary>
 		/// <see cref="List{T}"/> que contiene todos los <see cref="BloqueBase"/> que componen esta funcion
 		/// </summary>
-		public List<BloqueBase> Bloques { get; private set; } = new List<BloqueBase>();
+		public virtual List<BloqueBase> Bloques { get; protected set; } = new List<BloqueBase>();
 
 		/// <summary>
 		/// Nombre de la funcion incluyendo su extension
 		/// </summary>
-		public string NombreArchivoFuncion => string.Intern($"{modelo.NombreFuncion}_{modelo.Id}.xml");
+		public string NombreArchivoFuncion => string.Intern($"{modelo.NombreFuncion}_{modelo.IDFuncion}.xml");
 
+		/// <summary>
+		/// Ruta completa al archivo de la funcion
+		/// </summary>
 		public string NombreCompletoArchivoFuncion => string.Intern(ObtenerPathArchivoFuncion(NombreArchivoFuncion));
 
 		/// <summary>
@@ -69,7 +79,7 @@ namespace AppGM.Core
 
 				modelo.NombreFuncion = value;
 			}
-		} 
+		}
 
 		#endregion
 
@@ -239,6 +249,71 @@ namespace AppGM.Core
 				SistemaPrincipal.GuardarModelo(modelo);
 		}
 
+		public override void ActulizarModelo(ModeloFuncion nuevoModelo, bool eliminarSiNuevoModeloEsNull = false)
+		{
+			base.ActulizarModelo(nuevoModelo, true);
+
+			//Si el nuevo modelo es null nos pegamos media vuelta porque ya se debio haber llamado Eliminar desde base.ActualizarModelo
+			if (nuevoModelo == null)
+				return;
+
+			if (nuevoModelo.NombreFuncion != NombreFuncion && File.Exists(ObtenerPathArchivoFuncion(ObtenerNombreArchivo(nuevoModelo.NombreFuncion, nuevoModelo.IDFuncion))))
+			{
+				//Cambiamos el valor directamente al modelo para que no se intente mover el archivo desde la propiedad
+				modelo.NombreFuncion = nuevoModelo.NombreFuncion;
+			}
+			else
+			{
+				SistemaPrincipal.LoggerGlobal.LogCrash($"Se intento cambiar el archivo de origen de {this} pero el nuevo archivo {ObtenerNombreArchivo(nuevoModelo.NombreFuncion, nuevoModelo.Id)} no existe!");
+			}
+
+			//Obtenemos las variables persistentes del nuevo modelo y las del modelo actual
+			var variablesPersistentesNuevoModelo = nuevoModelo.VariablesPersistentes.Select(ti => ti.Variable).ToList();
+			var variablesPersistentesModeloActual = mVariablesPersistenes.Values.ToList();
+
+			//Quitamos de la lista de variables de ambos modelos las que se encuentren repetidas en ambos
+			variablesPersistentesModeloActual.RemoveAll(varModeloActual =>
+			{
+				foreach (var varNuevoModelo in variablesPersistentesNuevoModelo)
+				{
+					if (varNuevoModelo == varModeloActual.modelo)
+					{
+						variablesPersistentesNuevoModelo.Remove(varNuevoModelo);
+
+						return true;
+					}
+				}
+
+				return false;
+			});
+
+			//Eliminamos las variablesque quedaron en la lista del modelo actual
+			variablesPersistentesModeloActual.ForEach(var =>
+			{
+				mVariablesPersistenes.Remove(var.IDVariable);
+
+				modelo.VariablesPersistentes.RemoveAll(ti => ti.IDVariable == var.modelo.Id);
+
+				var.Eliminar();
+			});
+
+			//Añadimos al modelo las variables que quedaron en el nuevo modelo
+			variablesPersistentesNuevoModelo.ForEach(var =>
+			{
+				modelo.VariablesPersistentes.Add(new TIFuncionVariable
+				{
+					Funcion = modelo,
+					Variable = var
+				});
+
+				mVariablesPersistenes.Add(var.IDVariable, ControladorVariableFuncionBase.CrearControladorCorrespondiente(var));
+			});
+
+			SistemaPrincipal.LoggerGlobal.Log($@"Actualizado modelo para {this}. 
+													Variables persistentes eliminadas: {variablesPersistentesModeloActual.Count}. 
+													Variables persistentes nuevas: {variablesPersistentesNuevoModelo.Count}", ESeveridad.Debug);
+		}
+
 		/// <summary>
 		/// Cuando se lo sobreescribe en una clase derivada intenta compilar la funcion asincronicamente
 		/// </summary>
@@ -322,18 +397,28 @@ namespace AppGM.Core
 					return new ControladorFuncion_Habilidad(modelo);
 				case EPropositoFuncion.Efecto:
 					return new ControladorFuncion_Efecto(modelo);
-				case EPropositoFuncion.Predicado:
-					return new ControladorFuncion_Predicado(modelo);
+				case EPropositoFuncion.PredicadoEfecto:
+					return new ControladorFuncion_PredicadoEfecto(modelo);
 				default:
-
 					SistemaPrincipal.LoggerGlobal.Log($"{nameof(propositoFuncion)}({propositoFuncion}), valor no soportado!", ESeveridad.Error);
 
 					return null;
 			}
 		}
 
+		/// <summary>
+		/// Obtiene el nombre de archivo que tendria una funcion con determinado <paramref name="nombreFuncion"/> e <paramref name="id"/>
+		/// </summary>
+		/// <param name="nombreFuncion">Nombre de la funcion</param>
+		/// <param name="id">Id de la funcion</param>
+		/// <returns>Nombre del archivo que tendria la funcion</returns>
 		public static string ObtenerNombreArchivo(string nombreFuncion, int id) => $"{nombreFuncion}_{id}.xml";
 
+		/// <summary>
+		/// Obtiene la ruta a un archivo de funcion a partir del <paramref name="nombreArchivoFuncion"/>
+		/// </summary>
+		/// <param name="nombreArchivoFuncion">Nombre del archivo de la funcion</param>
+		/// <returns>Ruta completa al archivo</returns>
 		public static string ObtenerPathArchivoFuncion(string nombreArchivoFuncion)
 		{
 			return Path.Combine(SistemaPrincipal.ControladorDeArchivos.DirectorioFunciones, nombreArchivoFuncion);
@@ -342,36 +427,166 @@ namespace AppGM.Core
 		#endregion
 	}
 
-	public abstract class ControladorFuncion<TipoFuncion> : ControladorFuncionBase
+	/// <summary>
+	/// Controlador que contiene una funcion de tipo conocido
+	/// </summary>
+	/// <typeparam name="TFuncion">Tipo de la funcion contenida</typeparam>
+	public abstract class ControladorFuncion<TFuncion> : ControladorFuncionBase
 	{
+		#region Propiedades
+
 		/// <summary>
 		/// Funcion compilada y lista para utilizar
 		/// </summary>
-		public TipoFuncion Funcion { get; private set; }
+		[MaybeNull]
+		public TFuncion Funcion
+		{
+			get
+			{
+				if (mFuncionesConocidas.ContainsKey(NombreArchivoFuncion))
+					return mFuncionesConocidas[NombreArchivoFuncion].funcion;
+
+				return default;
+			}
+		}
 
 		/// <summary>
 		/// Ultimo resultado de intentar compilar la funcion
 		/// </summary>
-		public ResultadoCompilacion<TipoFuncion> ResultadoCompilacion { get; private set; }
+		[MaybeNull]
+		public ResultadoCompilacion<TFuncion> ResultadoCompilacion { get; private set; }
+
+		/// <summary>
+		/// Obtiene o establece los bloques de la funcion
+		/// </summary>
+		[MaybeNull]
+		public override List<BloqueBase> Bloques
+		{
+			get
+			{
+				if (mFuncionesConocidas.ContainsKey(NombreArchivoFuncion))
+					return mFuncionesConocidas[NombreArchivoFuncion].bloques;
+
+				return null;
+			}
+
+			protected set => mFuncionesConocidas[NombreArchivoFuncion].bloques = value;
+		}
+
+		/// <summary>
+		/// <para>
+		///		Relacion un path a un archivo xml que representa una funcion con la lambda compilada y lista de bloques que la representa.
+		/// </para>
+		///
+		/// <para>
+		///		El principal proposito de esta variable es para que si se crean varios controladores de una misma funcion porque esta tiene variables
+		///		estaticas y por lo tanto puede tener varias instancias, no necesitemos cargar el xml y compilar los bloques para cada una.
+		/// </para>
+		/// </summary>
+		internal static Dictionary<string, FuncionCargada<TFuncion>> mFuncionesConocidas = new Dictionary<string, FuncionCargada<TFuncion>>();
+		
+		#endregion
+
+		#region Constructor
 
 		/// <summary>
 		/// Constructor
 		/// </summary>
 		/// <param name="_modelo"></param>
 		public ControladorFuncion(ModeloFuncion _modelo)
-			: base(_modelo){}
+			: base(_modelo){} 
+
+		#endregion
+
+		#region Metodos
 
 		public override async Task CompilarAsync()
 		{
+			if (mFuncionesConocidas.ContainsKey(NombreArchivoFuncion))
+				return;
+
 			var compilador = new Compilador(Bloques);
 
-			ResultadoCompilacion = await Task.Run(() => compilador.Compilar<TipoFuncion>());
+			ResultadoCompilacion = await Task.Run(() => compilador.Compilar<TFuncion>());
 
-			Funcion = ResultadoCompilacion.Funcion;
+			mFuncionesConocidas[NombreArchivoFuncion].funcion = ResultadoCompilacion.Funcion;
+		} 
+
+		#endregion
+	}
+
+	/// <summary>
+	/// <para>
+	///		Representa una funcion cuya existencia es conocida y como minimo se han cargado sus bloques
+	/// </para>
+	/// <para>
+	///		Esta clase existe porque no se pueden modificar los valores de una tupla desde un diccionario
+	/// </para>
+	/// </summary>
+	/// <typeparam name="TFuncion">Tipo de la funcion</typeparam>
+	internal class FuncionCargada<TFuncion>
+	{
+		/// <summary>
+		/// Lambda compilada
+		/// </summary>
+		public TFuncion funcion;
+
+		/// <summary>
+		/// Bloques que conforman la funcion
+		/// </summary>
+		public List<BloqueBase> bloques;
+	}
+
+	#region Implementaciones especificas del controlador de funcion
+
+	/// <summary>
+	/// Controlador para una funcion de una habilidad
+	/// </summary>
+	public class ControladorFuncion_Habilidad : ControladorFuncion<Action<ControladorHabilidad, ControladorPersonaje, ControladorPersonaje[], ControladorFuncionBase, object[]>>
+	{
+		public ControladorFuncion_Habilidad(ModeloFuncion _modelo)
+			: base(_modelo)
+		{ }
+
+		public override ViewModelCreacionDeFuncionBase CrearVMParaEditar(Action<ViewModelCreacionDeFuncionBase> accionSalir)
+		{
+			return new ViewModelCreacionDeFuncionHabilidad(accionSalir, this);
+		}
+
+		/// <summary>
+		/// Wrapper para llamar a la funcion subyacente de manera segura
+		/// </summary>
+		/// <param name="controladorAplicacionEfecto">Controlador de la aplicacion del efecto que llama esta funcion</param>
+		/// <param name="controladorEfecto">Controlador del efecto</param>
+		/// <param name="instigador">Personaje responsable de aplicar el efecto</param>
+		/// <param name="objetivo">Personaje al que se le aplica el efecto</param>
+		/// <param name="parametrosExtra">Parametros extra que toma la funcion</param>
+		/// <returns><see cref="bool"/> indicando si se la funcion se ejecuto con extio</returns>
+		public bool EjecutarFuncion(
+			ControladorHabilidad controladorHabilidad,
+			ControladorPersonaje instigador,
+			ControladorPersonaje[] objetivo,
+			params object[] parametrosExtra)
+		{
+			try
+			{
+				Funcion(controladorHabilidad, instigador, objetivo, this, parametrosExtra);
+			}
+			catch (Exception ex)
+			{
+				SistemaPrincipal.LoggerGlobal.Log($"Error al intentar ejecutar funcion {this}.{Environment.NewLine}{ex.Message}", ESeveridad.Error);
+
+				return false;
+			}
+
+			return true;
 		}
 	}
 
-	public class ControladorFuncion_Efecto : ControladorFuncion<Func<ControladorEfecto, ControladorPersonaje, ControladorPersonaje, ControladorFuncionBase, bool>>
+	/// <summary>
+	/// Controlador para una funcion de un efecto
+	/// </summary>
+	public class ControladorFuncion_Efecto : ControladorFuncion<Action<ControladorEfectoSiendoAplicado, ControladorEfecto, ControladorPersonaje, ControladorPersonaje, ControladorFuncionBase, object[]>>
 	{
 		public ControladorFuncion_Efecto(ModeloFuncion _modelo)
 			: base(_modelo)
@@ -381,23 +596,44 @@ namespace AppGM.Core
 		{
 			throw new NotImplementedException();
 		}
-	}
 
-	public class ControladorFuncion_Habilidad : ControladorFuncion<Action<ControladorFuncionBase, ControladorPersonaje, ControladorPersonaje[], ControladorHabilidad, object[]>>
-	{
-		public ControladorFuncion_Habilidad(ModeloFuncion _modelo)
-			: base(_modelo)
-		{}
-
-		public override ViewModelCreacionDeFuncionBase CrearVMParaEditar(Action<ViewModelCreacionDeFuncionBase> accionSalir)
+		/// <summary>
+		/// Wrapper para llamar a la funcion subyacente
+		/// </summary>
+		/// <param name="controladorAplicacionEfecto">Controlador de la aplicacion del efecto que llama esta funcion</param>
+		/// <param name="controladorEfecto">Controlador del efecto</param>
+		/// <param name="instigador">Personaje responsable de aplicar el efecto</param>
+		/// <param name="objetivo">Personaje al que se le aplica el efecto</param>
+		/// <param name="parametrosExtra">Parametros extra que toma la funcion</param>
+		/// <returns><see cref="bool"/> indicando si se la funcion se ejecuto con extio</returns>
+		public bool EjecutarFuncion(
+			ControladorEfectoSiendoAplicado controladorAplicacionEfecto,
+			ControladorEfecto controladorEfecto,
+			ControladorPersonaje instigador,
+			ControladorPersonaje objetivo,
+			params object[] parametrosExtra)
 		{
-			return new ViewModelCreacionDeFuncionHabilidad(accionSalir, this);
+			try
+			{
+				Funcion(controladorAplicacionEfecto, controladorEfecto, instigador, objetivo, this, parametrosExtra);
+			}
+			catch (Exception ex)
+			{
+				SistemaPrincipal.LoggerGlobal.Log($"Error al intentar ejecutar funcion {this}.{Environment.NewLine}{ex.Message}", ESeveridad.Error);
+
+				return false;
+			}
+
+			return true;
 		}
 	}
 
-	public class ControladorFuncion_Predicado : ControladorFuncion<Func<ControladorEfecto, ControladorPersonaje, ControladorPersonaje, ControladorFuncionBase, bool>>
+	/// <summary>
+	/// Controlador para un predicado de un efecto
+	/// </summary>
+	public class ControladorFuncion_PredicadoEfecto : ControladorFuncion<Func<ControladorEfectoSiendoAplicado, ControladorEfecto, ControladorPersonaje, ControladorPersonaje, ControladorFuncionBase, object[], bool>>
 	{
-		public ControladorFuncion_Predicado(ModeloFuncion _modelo)
+		public ControladorFuncion_PredicadoEfecto(ModeloFuncion _modelo)
 			: base(_modelo)
 		{ }
 
@@ -405,5 +641,38 @@ namespace AppGM.Core
 		{
 			throw new NotImplementedException();
 		}
-	}
+
+		/// <summary>
+		/// Wrapper para llamar a la funcion subyacente de manera segura
+		/// </summary>
+		/// <param name="controladorAplicacionEfecto">Controlador de la aplicacion del efecto que llama esta funcion</param>
+		/// <param name="controladorEfecto">Controlador del efecto</param>
+		/// <param name="instigador">Personaje responsable de aplicar el efecto</param>
+		/// <param name="objetivo">Personaje al que se le aplica el efecto</param>
+		/// <param name="parametrosExtra">Parametros extra que toma la funcion</param>
+		/// <returns>Tupla con dos <see cref="bool"/>, el primero indica si se pudo ejecutar la funcion en su totalidad y el segundo contiene su resultado</returns>
+		public (bool funcionEjecutadaConExito, bool resultadoFuncion) EjecutarFuncion(
+			ControladorEfectoSiendoAplicado controladorAplicacionEfecto,
+			ControladorEfecto controladorEfecto,
+			ControladorPersonaje instigador,
+			ControladorPersonaje objetivo,
+			params object[] parametrosExtra)
+		{
+			bool res = false;
+
+			try
+			{
+				res = Funcion(controladorAplicacionEfecto, controladorEfecto, instigador, objetivo, this, parametrosExtra);
+			}
+			catch (Exception ex)
+			{
+				SistemaPrincipal.LoggerGlobal.Log($"Error al intentar ejecutar funcion {this}.{Environment.NewLine}{ex.Message}", ESeveridad.Error);
+
+				return (false, res);
+			}
+
+			return (true, res);
+		}
+	} 
+	#endregion
 }

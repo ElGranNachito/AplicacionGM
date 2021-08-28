@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
+
 using CoolLogs;
 
 namespace AppGM.Core
@@ -14,7 +18,20 @@ namespace AppGM.Core
 		/// <summary>
 		/// Evento que se dispara cuando se deja de aplicar este efecto a su objetivo
 		/// </summary>
-		public event Action<ControladorEfectoSiendoAplicado> OnEfectoQuitado = delegate{}; 
+		public event Action<ControladorEfectoSiendoAplicado> OnEfectoQuitado = delegate{};
+
+		/// <summary>
+		/// Representa a un metodo que lidia con el evento de cambio de <see cref="EComportamientoAcumulativo"/> de una <paramref name="aplicacionEfecto"/>
+		/// </summary>
+		/// <param name="aplicacionEfecto"><see cref="ControladorEfectoSiendoAplicado"/> cuyo comportamiento acumulativo cambio</param>
+		/// <param name="comportamientoAnterior">Comportamiento acumulativo anterior</param>
+		/// <param name="comportameintoActual">Comportamiento acumulativo actual</param>
+		public delegate void DComportamientoAcumulativoModificado(ControladorEfectoSiendoAplicado aplicacionEfecto, EComportamientoAcumulativo comportamientoAnterior, EComportamientoAcumulativo comportameintoActual);
+
+		/// <summary>
+		/// Evento que se dispara cuando el <see cref="ComportamientoAcumulativo"/> cambia
+		/// </summary>
+		public event DComportamientoAcumulativoModificado OnComportamientoAcumulativoModificado = delegate{};
 
 		#endregion
 
@@ -25,7 +42,7 @@ namespace AppGM.Core
 		/// <summary>
 		/// Controlador del predicado que indica si este efecto puede ser aplicado
 		/// </summary>
-		private ControladorFuncion_Predicado mFnPuedeAplicarEfecto;
+		private ControladorFuncion_PredicadoEfecto mFnPuedeAplicarEfecto;
 
 		/// <summary>
 		/// Controlador de la funcion que aplica este efecto
@@ -52,14 +69,13 @@ namespace AppGM.Core
 		/// </summary>
 		public readonly ControladorEfecto controladorEfecto;
 
-
 		//-------------------------------------PROPIEDADES----------------------------------
 
 		/// <summary>
 		/// Obtiene el predicado desde el <see cref="controladorEfecto"/> o desde <see cref="mFnPuedeAplicarEfecto"/>
 		/// en caso de que no sea null
 		/// </summary>
-		public override ControladorFuncion_Predicado FnPuedeAplicarEfecto
+		public override ControladorFuncion_PredicadoEfecto FnPuedeAplicarEfecto
 		{
 			get => mFnPuedeAplicarEfecto ?? controladorEfecto.FnPuedeAplicarEfecto;
 			protected set => mFnPuedeAplicarEfecto = value;
@@ -209,14 +225,14 @@ namespace AppGM.Core
 
 		#region Metodos
 
-		public void AñadirAcumulacion()
+		public void AñadirAcumulacion(ControladorEfectoSiendoAplicado controladorNuevaAcumulacion = null)
 		{
 			//Si los efecto deben solapar entonces este metodo no debe hacer nada
 			if (ComportamientoAcumulativo == EComportamientoAcumulativo.Solapar)
 				return;
 
 			if (ComportamientoAcumulativo == EComportamientoAcumulativo.SumarTurnos)
-				TurnosRestantes += TurnosDeDuracion;
+				TurnosRestantes += controladorNuevaAcumulacion?.TurnosRestantes ?? TurnosDeDuracion;
 
 			ContadorAcumulaciones++;
 		}
@@ -236,10 +252,12 @@ namespace AppGM.Core
 		/// </summary>
 		public void AplicarEfecto()
 		{
-			//FnAplicarEfecto.Funcion()
+			FnAplicarEfecto.EjecutarFuncion(this, controladorEfecto, instigador, objetivo);
 
-			if (--TurnosRestantes <= 0)
+			if (--TurnosRestantes <= 0 && (ComportamientoAcumulativo != EComportamientoAcumulativo.Esperar || --ContadorAcumulaciones <= 0))
+			{
 				QuitarEfecto();
+			}
 		}
 
 		/// <summary>
@@ -266,12 +284,22 @@ namespace AppGM.Core
 			if (nuevoComportamiento == ComportamientoAcumulativo)
 				return;
 
-			//TODO: Implementar
-
-			switch (nuevoComportamiento)
+			if (nuevoComportamiento == EComportamientoAcumulativo.SeleccionManual)
 			{
+				SistemaPrincipal.LoggerGlobal.Log($"No se puede pasar a {EComportamientoAcumulativo.SeleccionManual} en un {nameof(ControladorEfectoSiendoAplicado)}", ESeveridad.Error);
 
+				return;
 			}
+
+			controladorEfecto.ModificarComportamientoAcumulativoAplicacion(
+				this, 
+				ComportamientoAcumulativo,
+				nuevoComportamiento, 
+				modoDeCambio);
+
+			OnComportamientoAcumulativoModificado(this, ComportamientoAcumulativo, nuevoComportamiento);
+
+			ComportamientoAcumulativo = nuevoComportamiento;
 		}
 
 		public override void ActulizarModelo(ModeloEfectoSiendoAplicado nuevoModelo, bool eliminarSiNuevoModeloEsNull = false)
@@ -281,28 +309,29 @@ namespace AppGM.Core
 			var nuevoEfecto = nuevoModelo.Efecto.Efecto;
 
 			ActualizarFuncion(
-				GetType().GetProperty(nameof(FnPuedeAplicarEfecto), typeof(ControladorFuncion_Predicado)), 
+				GetType().GetProperty(nameof(FnPuedeAplicarEfecto), typeof(ControladorFuncion_PredicadoEfecto)), controladorEfecto.FnPuedeAplicarEfecto.modelo,
 				nuevoEfecto.Funciones.Find(f => f.TipoFuncion == ETipoFuncionEfecto.FuncionPuedeAplicar)?.Funcion);
 
 			ActualizarFuncion(
-				GetType().GetProperty(nameof(FnAplicarEfecto), typeof(ControladorFuncion_Efecto)),
+				GetType().GetProperty(nameof(FnAplicarEfecto), typeof(ControladorFuncion_Efecto)), controladorEfecto.FnAplicarEfecto.modelo,
 				nuevoEfecto.Funciones.Find(f => f.TipoFuncion == ETipoFuncionEfecto.FuncionAplicar)?.Funcion);
 
-			ActualizarFuncion(GetType().GetProperty(nameof(FnQuitarEfecto), typeof(ControladorFuncion_Efecto)),
+			ActualizarFuncion(GetType().GetProperty(nameof(FnQuitarEfecto), typeof(ControladorFuncion_Efecto)), controladorEfecto.FnQuitarEfecto.modelo,
 				nuevoEfecto.Funciones.Find(f => f.TipoFuncion == ETipoFuncionEfecto.FuncionQuitar)?.Funcion);
 
 			ComportamientoAcumulativo = nuevoModelo.ComportamientoAcumulativo;
-			TurnosRestantes = nuevoModelo.TurnosRestantes;
+			TurnosRestantes           = nuevoModelo.TurnosRestantes;
 		}
 
 		/// <summary>
 		/// Actualiza el valor de las propiedades <see cref="FnPuedeAplicarEfecto"/>, <see cref="FnAplicarEfecto"/> o <see cref="FnQuitarEfecto"/>
 		/// </summary>
 		/// <param name="propertyFuncionActualizar">Propiedad cuyo valor actualizar</param>
+		/// <param name="funcionEfectoPrincipal">Funcion del <see cref="controladorEfecto"/>en la que se basa <paramref name="nuevaFuncion"/></param>
 		/// <param name="nuevaFuncion">Modelo de la nueva funcion</param>
-		private void ActualizarFuncion(PropertyInfo propertyFuncionActualizar, ModeloFuncion nuevaFuncion)
+		private void ActualizarFuncion(PropertyInfo propertyFuncionActualizar, ModeloFuncion funcionEfectoPrincipal, ModeloFuncion nuevaFuncion)
 		{
-			if (!propertyFuncionActualizar.PropertyType.IsAssignableFrom(nuevaFuncion.GetType()))
+			if ((!propertyFuncionActualizar.PropertyType.IsInstanceOfType(nuevaFuncion)))
 			{
 				SistemaPrincipal.LoggerGlobal.Log($"No se puede asignar a {propertyFuncionActualizar.Name} utilizando una variable de tipo {nuevaFuncion.GetType()}!", ESeveridad.Error);
 
@@ -315,11 +344,16 @@ namespace AppGM.Core
 			if (nuevaFuncion == funcionActual?.modelo)
 				return;
 
+			//Establecemos el padre del modelo de la nueva funcion
+			nuevaFuncion.Padre = new TIFuncionPadreFuncion
+			{
+				Funcion = nuevaFuncion,
+				Padre = funcionEfectoPrincipal
+			};
+
 			//Si la nueva funcion tiene variables persistentes y la funcion actual no existe...
 			if (nuevaFuncion.VariablesPersistentes.Count > 0 && funcionActual == null)
 			{
-				//TODO: Compilar nueva funcion
-
 				//Creamos el controlador para la nueva funcion y asignamos el valor a la propiedad
 				propertyFuncionActualizar.SetValue(this, new ControladorFuncion_Efecto(nuevaFuncion));
 			}
