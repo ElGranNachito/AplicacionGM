@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
@@ -41,20 +42,27 @@ namespace AppGM.Core
         /// <summary>
         /// Indica si los indicadores de cadaveres de masters en el mapa deben ser visibles o no.
         /// </summary>
-        private bool mostrarCadaveresMasters  = true;
+        private bool mostrarCadaveresMasters  = false;
         /// <summary>
         /// Indica si los indicadores de cadaveres de servants en el mapa deben ser visibles o no.
         /// </summary>
-        private bool mostrarCadaveresServants = true;
+        private bool mostrarCadaveresServants = false;
+
+        /// <summary>
+        /// Indica si las insignia de alianzas de personajes deben ser visibles sobre los indicadores de los mismos.
+        /// </summary>
+        private bool mostrarAlianzas          = false;
 
         /// <summary>
         /// Indica si solo los indicadores de servants y masters (parties) deben ser visibles o no.
         /// </summary>
-        private bool mostrarParties           = true;
+        private bool mostrarParties           = false;
+
         /// <summary>
-        /// Indica si las insignia de alianzas de personajes deben ser visibles sobre los indicadores de los mismos.
+        /// Indica si el valor de <see cref="MuestraUnidadesParties"/> cambia para actualizar el valor de
+        /// la checkbox en UserControlOpcionesMapa de opciones parties.
         /// </summary>
-        private bool mostrarAlianzas          = true;
+        private bool actualizaMostrarPartiesCheckbox;
 
         /// <summary>
         /// Controlador del mapa
@@ -78,6 +86,11 @@ namespace AppGM.Core
         /// VM de para el ingreso y visualizacion de las posiciones de las diferentes entidades presentes en el mapa
         /// </summary>
         public ObservableCollection<ViewModelUnidadParty> PosicionesParties { get; set; } = new ObservableCollection<ViewModelUnidadParty>();
+
+        /// <summary>
+        /// VM de para el ingreso y visualizacion de las posiciones de las diferentes entidades presentes en el mapa
+        /// </summary>
+        public ObservableCollection<ViewModelUnidadParty> UnidadesPartiesVisibles { get; set; } = new ObservableCollection<ViewModelUnidadParty>();
 
         /// <summary>
         /// Ruta completa a la imagen del mapa
@@ -141,7 +154,10 @@ namespace AppGM.Core
 
         // Propiedades de visibilidad de unidades en el mapa:
 
-        public bool MuestraUnidadeIglesia
+        /// <summary>
+        /// Indica si se debe mostrar la unidad de iglesia
+        /// </summary>
+        public bool MuestraUnidadIglesia
         {
             get => mostrarIglesia;
             set
@@ -158,6 +174,9 @@ namespace AppGM.Core
             }
         }
 
+        /// <summary>
+        /// Indica si se deben mostrar las unidades de masters
+        /// </summary>
         public bool MuestraUnidadesMasters
         {
             get => mostrarMasters;
@@ -175,6 +194,9 @@ namespace AppGM.Core
             }
         }
 
+        /// <summary>
+        /// Indica si se deben mostrar las unidades de servants
+        /// </summary>
         public bool MuestraUnidadesServants
         {
             get => mostrarServants;
@@ -192,6 +214,9 @@ namespace AppGM.Core
             }
         }
 
+        /// <summary>
+        /// Indica si se deben mostrar las unidades de invocaciones
+        /// </summary>
         public bool MuestraUnidadesInvocaciones
         {
             get => mostrarInvocaciones;
@@ -209,6 +234,9 @@ namespace AppGM.Core
             }
         }
 
+        /// <summary>
+        /// Indica si se deben mostrar las unidades de trampas
+        /// </summary>
         public bool MuestraUnidadesTrampas
         {
             get => mostrarTrampas;
@@ -226,6 +254,9 @@ namespace AppGM.Core
             }
         }
 
+        /// <summary>
+        /// Indica si se deben mostrar las unidades de cadaveres de masters
+        /// </summary>
         public bool MuestraUnidadesCadaveresMasters
         {
             get => mostrarCadaveresMasters;
@@ -243,6 +274,9 @@ namespace AppGM.Core
             }
         }
 
+        /// <summary>
+        /// Indica si se deben mostrar las unidades de servants
+        /// </summary>
         public bool MuestraUnidadesCadaveresServants
         {
             get => mostrarCadaveresServants;
@@ -260,6 +294,9 @@ namespace AppGM.Core
             }
         }
 
+        /// <summary>
+        /// Indica si se deben mostrar las unidades indicadoras de alianzas
+        /// </summary>
         public bool MuestraUnidadesAlianzas
         {
             get => mostrarAlianzas;
@@ -274,6 +311,9 @@ namespace AppGM.Core
             }
         }
 
+        /// <summary>
+        /// Indica si se deben mostrar las unidades de parties
+        /// </summary>
         public bool MuestraUnidadesParties
         {
             get => mostrarParties;
@@ -281,24 +321,12 @@ namespace AppGM.Core
             {
                 mostrarParties = value;
 
-                mostrarMasters  = !value;
-                mostrarServants = !value;
+                if (!actualizaMostrarPartiesCheckbox)
+                    for (int i = 0; i < PosicionesParties.Count; ++i)
+                        PosicionesParties[i].ImagenPosicionEsVisible = value;
 
-                //TODO: Implementar sistemas de indicadores party por una unica unidad.
-                //TODO: Al cambiar la posicion de dicha unidad se estaria cambiando l
-
-                for (int i = 0; i < Posiciones.Count; ++i)
-                {
-                    if (Posiciones[i].unidad.TipoUnidad == ETipoUnidad.Master || Posiciones[i].unidad.TipoUnidad == ETipoUnidad.Servant) 
-                    {
-                        Posiciones[i].ImagenPosicionEsVisible = !value;
-                    }
-                }
-
-                for (int i = 0; i < PosicionesParties.Count; ++i)
-                {
-                    PosicionesParties[i].ImagenPosicionEsVisible = value;
-                }
+                UnidadesPartiesVisibles.Clear();
+                actualizaMostrarPartiesCheckbox = false;
             }
         }
 
@@ -324,18 +352,23 @@ namespace AppGM.Core
             {
                 Posiciones.Add(new ViewModelIngresoPosicion(this, controladorMapa.controladoresUnidadesMapa[i]));
 
-                if (!posicionesParty.ContainsKey(Posiciones.Last().unidad.personaje.modelo.NumeroParty))
+                var numeroParty = Posiciones.Last().unidad.personaje.modelo.NumeroParty;
+
+                if (!posicionesParty.ContainsKey(numeroParty))
                 {
-                    posicionesParty.Add(Posiciones.Last().unidad.personaje.modelo.NumeroParty, new ViewModelUnidadParty(this, controladorMapa.controladoresUnidadesMapa[i]));
+                    posicionesParty.Add(numeroParty, new ViewModelUnidadParty(this, controladorMapa.controladoresUnidadesMapa[i]));
                 }
 
-                posicionesParty[Posiciones.Last().unidad.personaje.modelo.NumeroParty].PersonajesParty.Add(Posiciones[i]);
+                posicionesParty[numeroParty].PersonajesParty.Add(Posiciones[i]);
+                posicionesParty[numeroParty].NumeroParty = numeroParty;
             }
 
             foreach (var party in posicionesParty)
             {
                 PosicionesParties.Add(party.Value);
             }
+
+            UnidadesPartiesVisibles.CollectionChanged += this.OnUnidadesPartiesCollectionChanged;
 
             ComandoAñadirParticipante = new Comando(AñadirUnidad);
         }
@@ -387,8 +420,27 @@ namespace AppGM.Core
 
                 Posiciones.Add(vmNuevaUndiad);
             }
-        } 
+        }
 
-		#endregion
-	}
+        /// <summary>
+        /// Funcion llamada cuando <see cref="UnidadesPartiesVisibles"/> dispara el envento CollectionChanged/>
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnUnidadesPartiesCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (PosicionesParties.All(a => !a.ImagenPosicionEsVisible))
+            {
+                actualizaMostrarPartiesCheckbox = true;
+                MuestraUnidadesParties = false;
+            }
+            else if (PosicionesParties.All(a => a.ImagenPosicionEsVisible))
+            {
+                actualizaMostrarPartiesCheckbox = true;
+                MuestraUnidadesParties = true;
+            }
+        }
+
+        #endregion
+    }
 }

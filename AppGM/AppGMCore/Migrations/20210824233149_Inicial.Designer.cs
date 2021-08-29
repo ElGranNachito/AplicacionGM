@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AppGM.Core.Migrations
 {
     [DbContext(typeof(RolContext))]
-    [Migration("20210815010223_Inicial")]
+    [Migration("20210824233149_Inicial")]
     partial class Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

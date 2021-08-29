@@ -310,19 +310,24 @@ namespace AppGM.Core
     public enum EIconoAlianza
     {
         /// <summary>
+        /// Alianza sin icono personalizado.
+        /// </summary>
+        Team_Default = 1,
+
+        /// <summary>
         /// TeamUwU, un tipo de alianza con su propio icono.
         /// </summary>
-        TeamUwU = 1,
+        Team_UwU = 2,
 
         /// <summary>
         /// TeamHetero, otro tipo de alianza con su propio icono.
         /// </summary>
-        TeamHetero = 2,
+        Team_Hetero = 3,
 
         /// <summary>
-        /// Alianza sin icono personalizado.
+        /// Alianza con su propio icono personalizado.
         /// </summary>
-        NINGUNO = 0
+        NINGUNO = 0,
     }
 
     /// <summary>
@@ -959,44 +964,45 @@ namespace AppGM.Core
     public enum ENumeroParty
     {
         /// <summary>
+        /// Equipo numero 0
+        /// Convengamos que podria ser un party extra.
+        /// </summary>
+        Party_0 = 0,
+
+        /// <summary>
         /// Equipo numero 1
         /// </summary>
-        Party1 = 1,
+        Party_1 = 1,
 
         /// <summary>
         /// Equipo numero 2
         /// </summary>
-        Party2 = 2,
+        Party_2 = 2,
 
         /// <summary>
         /// Equipo numero 3
         /// </summary>
-        Party3 = 3,
+        Party_3 = 3,
 
         /// <summary>
         /// Equipo numero 4
         /// </summary>
-        Party4 = 4,
+        Party_4 = 4,
 
         /// <summary>
         /// Equipo numero 5
         /// </summary>
-        Party5 = 5,
+        Party_5 = 5,
 
         /// <summary>
         /// Equipo numero 6
         /// </summary>
-        Party6 = 6,
+        Party_6 = 6,
 
         /// <summary>
         /// Equipo numero 7
         /// </summary>
-        Party7 = 7,
-
-        /// <summary>
-        /// Convengamos que podria ser un party extra.
-        /// </summary>
-        NINGUNO = 0
+        Party_7 = 7
     }
 
     /// <summary>

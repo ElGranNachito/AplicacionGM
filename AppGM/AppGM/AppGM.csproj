@@ -26,6 +26,9 @@
     <Resource Include="Media\Imagenes\Carta_Servant.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Media\Imagenes\MenuPrincipal1.png" />
+  </ItemGroup>
+  <ItemGroup>
     <Resource Include="Media\Imagenes\UiFondoMenuPrincipal.png" />
   </ItemGroup>
   <ItemGroup>
@@ -153,6 +156,21 @@
     <Resource Include="Media\Imagenes\GuraScratch\GuraScratchLogo-v6.png" />
     <Resource Include="Media\Imagenes\GuraScratch\GuraScratchLogo-v7.png" />
     <Resource Include="Media\Imagenes\GuraScratch\GuraScratchLogo-v8.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Media\Imagenes\Iconos\Parties\Party_0.png" />
+    <Resource Include="Media\Imagenes\Iconos\Parties\Party_1.png" />
+    <Resource Include="Media\Imagenes\Iconos\Parties\Party_2.png" />
+    <Resource Include="Media\Imagenes\Iconos\Parties\Party_3.png" />
+    <Resource Include="Media\Imagenes\Iconos\Parties\Party_4.png" />
+    <Resource Include="Media\Imagenes\Iconos\Parties\Party_5.png" />
+    <Resource Include="Media\Imagenes\Iconos\Parties\Party_6.png" />
+    <Resource Include="Media\Imagenes\Iconos\Parties\Party_7.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Media\Imagenes\Iconos\Alianzas\Team_Default.png" />
+    <Resource Include="Media\Imagenes\Iconos\Alianzas\Team_UwU.png" />
+    <Resource Include="Media\Imagenes\Iconos\Alianzas\Team_Hetero.png" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="BaseDesignModel.cs" />
