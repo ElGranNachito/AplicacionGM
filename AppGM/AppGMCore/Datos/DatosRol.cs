@@ -88,8 +88,9 @@ namespace AppGM.Core
 						Chr = 12,
 
 						EClaseDeSuServant = EClaseServant.Berserker,
-						TipoPersonaje = ETipoPersonaje.Master
-					};
+						TipoPersonaje     = ETipoPersonaje.Master,
+						NumeroParty       = ENumeroParty.Party_1
+                    };
 
 					ModeloServant servant1 = new ModeloServant
 					{
@@ -107,7 +108,8 @@ namespace AppGM.Core
 						Lck = 13,
 
 						EClaseServant = EClaseServant.Berserker,
-						TipoPersonaje = ETipoPersonaje.Servant
+						TipoPersonaje = ETipoPersonaje.Servant,
+						NumeroParty   = ENumeroParty.Party_1
 					};
 
 					ModeloMaster master2 = new ModeloMaster
@@ -127,7 +129,8 @@ namespace AppGM.Core
 						Chr = 12,
 
 						EClaseDeSuServant = EClaseServant.Rider,
-						TipoPersonaje = ETipoPersonaje.Master
+						TipoPersonaje     = ETipoPersonaje.Master,
+                        NumeroParty       = ENumeroParty.Party_2
 					};
 
 					ModeloServant servant2 = new ModeloServant
@@ -146,7 +149,8 @@ namespace AppGM.Core
 						Lck = 13,
 
 						EClaseServant = EClaseServant.Rider,
-						TipoPersonaje = ETipoPersonaje.Servant
+						TipoPersonaje = ETipoPersonaje.Servant,
+                        NumeroParty   = ENumeroParty.Party_2
 					};
 
 					ModeloContrato contratoPiola = new ModeloContrato
@@ -174,7 +178,7 @@ namespace AppGM.Core
 
 					ModeloAlianza alianzaPiola = new ModeloAlianza
 					{
-						EIconoAlianza = EIconoAlianza.TeamUwU,
+						EIconoAlianza = EIconoAlianza.Team_UwU,
 						FormatoImagen = EFormatoImagen.Png,
 
 						PathImagenIcono = "Team_UwU",

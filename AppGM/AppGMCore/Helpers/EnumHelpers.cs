@@ -125,5 +125,32 @@ namespace AppGM.Core
 
 	        return strBld.ToString();
         }
+
+        public static string ToStringNumeroParty(this ENumeroParty numeroParty)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+
+            switch (numeroParty)
+            {
+                case ENumeroParty.Party_0: stringBuilder.Append("Party 0");
+                    break;
+                case ENumeroParty.Party_1: stringBuilder.Append("Party 1");
+                    break;
+                case ENumeroParty.Party_2: stringBuilder.Append("Party 2");
+                    break;
+                case ENumeroParty.Party_3: stringBuilder.Append("Party 3");
+                    break;
+                case ENumeroParty.Party_4: stringBuilder.Append("Party 4");
+                    break;
+                case ENumeroParty.Party_5: stringBuilder.Append("Party 5");
+                    break;
+                case ENumeroParty.Party_6: stringBuilder.Append("Party 6");
+                    break;
+                case ENumeroParty.Party_7: stringBuilder.Append("Party 7");
+                    break;
+            }
+
+            return stringBuilder.ToString();
+        }
     }
 }
