@@ -60,7 +60,25 @@ namespace AppGM.Core
         /// <returns>Ruta absoluta del icono de la alianza</returns>
         public string ObtenerPathAImagen()
         {
-            return $"../../../Media/Imagenes/Iconos/Alianzas/{modelo.PathImagenIcono}.png";
+            StringBuilder stringBuilder = new StringBuilder("../../../Media/Imagenes/Iconos/Alianzas/");
+
+            switch (IconoAlianza)
+            {
+                case EIconoAlianza.Team_Default: stringBuilder.Append("Team_Default");
+                    break;
+                case EIconoAlianza.Team_UwU: stringBuilder.Append("Team_UwU");
+                    break;
+                case EIconoAlianza.Team_Hetero: stringBuilder.Append("Team_Hetero");
+                    break;
+                case EIconoAlianza.NINGUNO:
+                {
+                    return $"{modelo.PathImagenIcono}.png";
+                }
+            }
+            
+            stringBuilder.Append(".png");
+
+            return stringBuilder.ToString();
         }
 
         /// <summary>

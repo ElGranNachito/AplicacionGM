@@ -26,6 +26,16 @@ namespace AppGM.Core
         /// </summary>
         public ControladorUnidadMapa unidad;
 
+        /// <summary>
+        /// Indica si se debe mostrar la imagen de la unidad sobre el mapa.
+        /// </summary>
+        private bool imagenPosicionEsVisible = true;
+
+        /// <summary>
+        /// Indica si se debe mostrar la imagen de la unidad sobre el mapa.
+        /// </summary>
+        private bool modoPartyHabilitado = false;
+
 
         // -----------------------PROPIEDADES----------------------------------
 
@@ -50,14 +60,9 @@ namespace AppGM.Core
         public bool DebeMostrarDatosExtra { get; set; } = false;
 
         /// <summary>
-        /// Indica si el indicador en el mapa debe ser visible o no
-        /// </summary>
-        public bool ImagenPosicionEsVisible { get; set; } = true;
-
-        /// <summary>
         /// Indica si las alianzas a las que pertenece el indicador del mapa deber ser visibles.
         /// </summary>
-        public bool InsigneasAlianzasSonVisibles { get; set; } = true;
+        public bool InsigneasAlianzasSonVisibles { get; set; } = false;
 
         /// <summary>
         /// Ruta de la imagen de la unidad
@@ -70,14 +75,76 @@ namespace AppGM.Core
         public string Nombre => EsInvocacionOTrampa ? string.Format($"{unidad.Nombre} ({Cantidad})") : unidad.Nombre;
 
         /// <summary>
+        /// Cantidad de elementos que representa
+        /// </summary>
+        public int Cantidad => EsInvocacionOTrampa ? unidad.Cantidad : 0;
+
+        /// <summary>
         /// Devuelve verdadero si esta unidad es una invocacion o una trampa
         /// </summary>
         public bool EsInvocacionOTrampa => (unidad.TipoUnidad & (ETipoUnidad.Invocacion | ETipoUnidad.Trampa)) != 0;
 
         /// <summary>
-        /// Cantidad de elementos que representa
+        /// Indica si el indicador en el mapa debe ser visible o no
         /// </summary>
-        public int Cantidad => EsInvocacionOTrampa ? unidad.Cantidad : 0;
+        public bool ImagenPosicionEsVisible
+        {
+            get => imagenPosicionEsVisible;
+            set
+            {
+                imagenPosicionEsVisible = value;
+
+                if (UnidadParty.PersonajesParty.All(a => a.ImagenPosicionEsVisible))
+                {
+                    UnidadParty.ImagenPosicionEsVisible = false;
+                    modoPartyHabilitado = false;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Indica si el modo party de la unidad en el mapa debe ser habilitado.
+        /// </summary>
+        public bool ModoPartyHabilitado
+        {
+            get => modoPartyHabilitado;
+            set
+            {
+                modoPartyHabilitado = value;
+
+                if (modoPartyHabilitado)
+                    ImagenPosicionEsVisible = !value;
+
+                UnidadParty.ImagenPosicionEsVisible = !ImagenPosicionEsVisible;
+
+                Posicion = new ViewModelVector2(UnidadParty.Posicion.X, UnidadParty.Posicion.Y);
+            }
+        }
+
+        /// <summary>
+        /// Unidad party a la que corresponde esta unidad.
+        /// </summary>
+        public ViewModelUnidadParty UnidadParty
+        {
+            get
+            {
+                foreach (var party in mapa.PosicionesParties)
+                {
+                    if (party.NumeroParty == unidad.personaje.modelo.NumeroParty)
+                        return party;
+                }
+
+                return null;
+            }
+            set
+            {
+                foreach (var party in mapa.PosicionesParties)
+                {
+                    if (party.NumeroParty == unidad.personaje.modelo.NumeroParty)
+                        value = party;
+                }
+            }
+        }
 
         /// <summary>
         /// Tamaño de la imagen

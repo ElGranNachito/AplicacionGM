@@ -13,10 +13,16 @@
     <Grid>
 
         <!-- Imagen de fondo -->
-        <Grid.Background>
+        <!--<Grid.Background>
             <ImageBrush 
                 Stretch="UniformToFill"
                 ImageSource="{Binding FotogramaActualAnimacionFondo, Converter={local:FullPathToImageConverter}}"/>
+        </Grid.Background>-->
+
+        <!-- Imagen de fondo -->
+        <Grid.Background>
+            <ImageBrush
+                ImageSource="../../Media/Imagenes/MenuPrincipal1.png"/>
         </Grid.Background>
 
         <Grid.ColumnDefinitions>
