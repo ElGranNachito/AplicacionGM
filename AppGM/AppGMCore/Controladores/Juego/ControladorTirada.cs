@@ -2,13 +2,15 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Security.Cryptography;
 using System.Text;
+using CoolLogs;
 
 namespace AppGM.Core
 {
-    //Comentario extra: Es una interfaz porque no tenemos herencia multiple y el controlador de tirada ya hereda de ControladorBase
+    //Comentario extra: Es una interfaz para poder tener tiradas arregladas
     /// <summary>
     /// Interfaz que define la funcionalidad base de una tirada
     /// </summary>
+    [AccesibleEnGuraScratch(nameof(IControladorTiradaBase))]
     public interface IControladorTiradaBase
     {
         #region Propiedades
@@ -16,6 +18,7 @@ namespace AppGM.Core
         /// <summary>
         /// Resultado de la tirada
         /// </summary>
+        [AccesibleEnGuraScratch(nameof(Resultado))]
         int Resultado { get; set; }
 
         /// <summary>
@@ -30,13 +33,39 @@ namespace AppGM.Core
         /// <summary>
         /// Reliza la tirada
         /// </summary>
+        [AccesibleEnGuraScratch(nameof(RealizarTirada))]
         void RealizarTirada();
 
         /// <summary>
         /// Realiza la tirada
         /// </summary>
         /// <param name="parametro">Parametro extra, no puede ser null. Si no es necesario usar la sobrecarga que no toma parametros</param>
+        [AccesibleEnGuraScratch("RealizarTirada_ParametroExtra")]
         void RealizarTirada([NotNull]object parametro);
+
+        /// <summary>
+        /// Crea el <see cref="IControladorTiradaBase"/> correspondiente para el <paramref name="modeloTirada"/> especificado
+        /// </summary>
+        /// <param name="modeloTirada">Modelo de la tirada para la que se quiere crear el controlador</param>
+        /// <returns>Controlador para <paramref name="modeloTirada"/></returns>
+        public static IControladorTiradaBase CrearControladorDeTiradaCorrespondiente(ModeloTiradaBase modeloTirada)
+        {
+	        switch (modeloTirada)
+	        {
+		        case ModeloTiradaStat t:
+			        return new ControladorTiradaStat(t);
+                case ModeloTiradaDeDaño t:
+			        return new ControladorTiradaDaño(t);
+		        case ModeloTiradaVariable t:
+	                return new ControladorTiradaVariable(t);
+                default:
+                {
+                    SistemaPrincipal.LoggerGlobal.Log($"Tipo de {nameof(modeloTirada)}({modeloTirada.GetType()}) no soportado!", ESeveridad.Error);
+
+                    return null;
+                }
+	        }
+        }
 
         #endregion
     }
@@ -54,7 +83,6 @@ namespace AppGM.Core
 
         public int[] Resultados { get; set; } = null;
 
-        [AccesibleEnGuraScratch("RealizarTirada")]
         public virtual void RealizarTirada()
         {
             SistemaPrincipal.LoggerGlobal.Log($@"Llamada funcion {nameof(RealizarTirada)} sin parametros pero no esta implementada. 

@@ -19,16 +19,6 @@ namespace AppGM.Core
 		public ControladorEfecto EfectoSiendoEditado { get; private set; }
 
 		/// <summary>
-		/// Comando que se ejecuta al presionar 'Confirmar'
-		/// </summary>
-		public ICommand ComandoConfirmar { get; private set; }
-
-		/// <summary>
-		/// Comando que se ejecuta al presionar 'Cancelar'
-		/// </summary>
-		public ICommand ComandoCancelar { get; private set; }
-
-		/// <summary>
 		/// Constructor
 		/// </summary>
 		/// <param name="_accionSalir">Lambda llamada al salir del control representado por este vm</param>
@@ -43,7 +33,7 @@ namespace AppGM.Core
 			else
 				Efecto = new ModeloEfecto();
 
-			ComandoConfirmar = new Comando(() =>
+			ComandoAceptar = new Comando(() =>
 			{
 				EfectoSiendoEditado?.ActulizarModelo(Efecto);
 

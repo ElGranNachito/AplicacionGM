@@ -13,9 +13,9 @@ namespace AppGM.Core
 
 		public static class Variables
 		{
-			public static readonly int VariableDueña     = int.MinValue;
-			public static readonly int ParametrosCreados = int.MinValue + 1;
-			public static readonly int Controlador       = int.MinValue + 2;
+			public static readonly int VariableDueña      = int.MinValue;
+			public static readonly int ParametrosCreados  = int.MinValue + 1;
+			public static readonly int ControladorFuncion = int.MinValue + 2;
 		}
 	}
 }

@@ -1,13 +1,12 @@
 ﻿using System;
 using CoolLogs;
-using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 
 namespace AppGM.Core
 {
 	/// <summary>
-	/// Controlador base para <see cref="ModeloVariableFuncion{TipoVariable}"/>
+	/// Controlador base para <see cref="ModeloVariable{TipoVariable}"/>
 	/// </summary>
-	public abstract class ControladorVariableFuncionBase : Controlador<ModeloVariableFuncionBase>
+	public abstract class ControladorVariableBase : Controlador<ModeloVariableBase>
 	{
 		/// <summary>
 		/// Tipo de la variable.
@@ -47,7 +46,7 @@ namespace AppGM.Core
 			set => modelo.IDVariable = value;
 		}
 
-		public ControladorVariableFuncionBase(ModeloVariableFuncionBase _modelo)
+		public ControladorVariableBase(ModeloVariableBase _modelo)
 			: base(_modelo)
 		{
 			//No queremos disparar la propiedad asi que establecemos el valor del campo directamente
@@ -70,20 +69,20 @@ namespace AppGM.Core
 			$"ID: {modelo.Id} - Nombre: {modelo.NombreVariable} - IDVariable: {modelo.IDVariable}";
 
 		/// <summary>
-		/// Crea el <see cref="ControladorVariableFuncionBase"/> de tipo correspondiente para <paramref name="var"/>
+		/// Crea el <see cref="ControladorVariableBase"/> de tipo correspondiente para <paramref name="var"/>
 		/// </summary>
-		/// <param name="var"><see cref="ModeloVariableFuncionBase"/> para el que se creara el controlador</param>
+		/// <param name="var"><see cref="ModeloVariableBase"/> para el que se creara el controlador</param>
 		/// <returns>Controlador para <paramref name="var"/></returns>
-		public static ControladorVariableFuncionBase CrearControladorCorrespondiente(ModeloVariableFuncionBase var)
+		public static ControladorVariableBase CrearControladorCorrespondiente(ModeloVariableBase var)
 		{
 			switch (var)
 			{
-				case ModeloVariableFuncion_Int i:
-					return new ControladorVariableFuncion_Int(i);
-				case ModeloVariableFuncion_Float f:
-					return new ControladorVariableFuncion_Float(f);
-				case ModeloVariableFuncion_String s:
-					return new ControladorVariableFuncion_String(s);
+				case ModeloVariableInt i:
+					return new ControladorVariableInt(i);
+				case ModeloVariableFloat f:
+					return new ControladorVariableFloat(f);
+				case ModeloVariableString s:
+					return new ControladorVariableString(s);
 				default:
 					SistemaPrincipal.LoggerGlobal.Log($"Tipo de {nameof(var)}({var.GetType()}) no soportado!", ESeveridad.Error);
 					return null;
@@ -91,22 +90,22 @@ namespace AppGM.Core
 		}
 
 		/// <summary>
-		/// Crea el <see cref="ModeloVariableFuncionBase"/> correspondiente para un <paramref name="tipo"/>
+		/// Crea el <see cref="ModeloVariableBase"/> correspondiente para un <paramref name="tipo"/>
 		/// </summary>
 		/// <param name="tipo"><see cref="Type"/> de la variable</param>
 		/// <param name="id">ID de la variable</param>
 		/// <param name="nombre">Nombre de la variable</param>
 		/// <returns>Modelo que representa la variable persistente creada</returns>
-		public static ModeloVariableFuncionBase CrearModeloCorrespondiente(Type tipo, int id, string nombre)
+		public static ModeloVariableBase CrearModeloCorrespondiente(Type tipo, int id, string nombre)
 		{
-			ModeloVariableFuncionBase resultado = null;
+			ModeloVariableBase resultado = null;
 
 			if (tipo == typeof(int))
-				resultado = new ModeloVariableFuncion_Int();
+				resultado = new ModeloVariableInt();
 			else if (tipo == typeof(float))
-				resultado = new ModeloVariableFuncion_Float();
+				resultado = new ModeloVariableFloat();
 			else if (tipo == typeof(string))
-				resultado = new ModeloVariableFuncion_String();
+				resultado = new ModeloVariableString();
 
 			resultado.TipoVariable   = tipo.AssemblyQualifiedName;
 			resultado.IDVariable     = id;
@@ -117,21 +116,21 @@ namespace AppGM.Core
 	}
 
 	/// <summary>
-	/// Controlador para un <see cref="ModeloVariableFuncion{TipoVariable}"/>
+	/// Controlador para un <see cref="ModeloVariable{TipoVariable}"/>
 	/// </summary>
 	/// <typeparam name="TipoVariable">Tipo de la variable representada por el modelo</typeparam>
-	public class ControladorVariableFuncion<TipoVariable> : ControladorVariableFuncionBase
+	public class ControladorVariable<TipoVariable> : ControladorVariableBase
 	{
-		public ControladorVariableFuncion(ModeloVariableFuncionBase _modelo)
+		public ControladorVariable(ModeloVariableBase _modelo)
 			: base(_modelo) { }
 
 		public override object ObtenerValorVariable()
 		{
-			if (modelo is ModeloVariableFuncion<TipoVariable> m)
+			if (modelo is ModeloVariable<TipoVariable> m)
 				return m.ValorVariable;
 
 			SistemaPrincipal.LoggerGlobal.Log(
-				$"No se pudo obtener el valor de la variable {this}. Error al intentar castearla a ModeloVariableFuncion de tipo {typeof(TipoVariable)}",
+				$"No se pudo obtener el valor de la variable {this}. Error al intentar castearla a ModeloVariable de tipo {typeof(TipoVariable)}",
 				ESeveridad.Error);
 
 			return null;
@@ -141,7 +140,7 @@ namespace AppGM.Core
 		{
 			if (nuevoValor is TipoVariable n)
 			{
-				((ModeloVariableFuncion<TipoVariable>) modelo).ValorVariable = n;
+				((ModeloVariable<TipoVariable>) modelo).ValorVariable = n;
 
 				return;
 			}
@@ -151,21 +150,21 @@ namespace AppGM.Core
 		}
 	}
 
-	public class ControladorVariableFuncion_Int : ControladorVariableFuncion<int>
+	public class ControladorVariableInt : ControladorVariable<int>
 	{
-		public ControladorVariableFuncion_Int(ModeloVariableFuncionBase _modelo)
+		public ControladorVariableInt(ModeloVariableBase _modelo)
 			: base(_modelo) { }
 	}
 
-	public class ControladorVariableFuncion_Float : ControladorVariableFuncion<float>
+	public class ControladorVariableFloat : ControladorVariable<float>
 	{
-		public ControladorVariableFuncion_Float(ModeloVariableFuncionBase _modelo)
+		public ControladorVariableFloat(ModeloVariableBase _modelo)
 			: base(_modelo) { }
 	}
 
-	public class ControladorVariableFuncion_String : ControladorVariableFuncion<string>
+	public class ControladorVariableString : ControladorVariable<string>
 	{
-		public ControladorVariableFuncion_String(ModeloVariableFuncionBase _modelo)
+		public ControladorVariableString(ModeloVariableBase _modelo)
 			: base(_modelo) { }
 	}
 }

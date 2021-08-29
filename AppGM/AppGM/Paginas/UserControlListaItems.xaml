@@ -49,6 +49,8 @@
                         Command="{Binding ComandoAñadirItem}"/>
 
                     <ScrollViewer
+                        VerticalScrollBarVisibility="Auto"
+                        HorizontalScrollBarVisibility="Auto"
                         Grid.Row="1">
 
                         <ItemsControl 

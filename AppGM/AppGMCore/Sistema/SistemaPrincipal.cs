@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -294,6 +295,60 @@ namespace AppGM.Core
         }
 
         /// <summary>
+        /// Intenta obtener el <see cref="Controlador{TipoModelo}"/> para <paramref name="modelo"/>
+        /// </summary>
+        /// <param name="modelo">Modelo del que se quiere obtener el controlador</param>
+        /// <param name="intenarCrearSiNoExiste">Indica si se debe intentar crear el controlador en caso de que no se encuentre en el diccionario</param>
+        /// <returns>El controlador encontrado o null</returns>
+        public static ControladorBase ObtenerControlador(ModeloBase modelo, Type tipoControlador = null, bool intenarCrearSiNoExiste = false)
+        {
+	        if (mControladores.ContainsKey(modelo))
+		        return mControladores[modelo];
+
+	        if (tipoControlador == null || !intenarCrearSiNoExiste || tipoControlador.IsSubclassOf(typeof(ControladorBase)))
+		        return null;
+
+	        try
+	        {
+		        var nuevoControlador = Activator.CreateInstance(tipoControlador, modelo) as ControladorBase;
+
+		        mControladores.Add(modelo, nuevoControlador);
+
+		        return nuevoControlador;
+	        }
+	        catch (Exception ex)
+	        {
+		        SistemaPrincipal.LoggerGlobal.Log($"Error la intentar crear controlador para el modelo de tipo {modelo.GetType()}.{Environment.NewLine}Exception:{ex.Message}", ESeveridad.Error);
+
+		        return null;
+	        }
+        }
+
+        /// <summary>
+        /// Intenta obtener el <see cref="Controlador{TipoModelo}"/> para <paramref name="modelo"/>
+        /// </summary>
+        /// <param name="modelo">Modelo del que se quiere obtener el controlador</param>
+        /// <param name="intenarCrearSiNoExiste">Indica si se debe intentar crear el controlador en caso de que no se encuentre en el diccionario</param>
+        /// <returns>El controlador encontrado o null</returns>
+        public static List<ControladorBase> ObtenerControladores(Type tipoControladores, bool incluirSubclases)
+        {
+	        var controladoresExistente = mControladores.Values.ToList();
+
+	        return controladoresExistente.FindAll(controlador =>
+	        {
+		        Type tipoControladorActual = controlador.GetType();
+
+		        if (tipoControladorActual == tipoControladores ||
+		            (incluirSubclases && tipoControladorActual.IsSubclassOf(tipoControladores)))
+		        {
+			        return true;
+		        }
+
+		        return false;
+	        });
+        }
+
+        /// <summary>
         /// Añade el <paramref name="controlador"/> al diccionario
         /// </summary>
         /// <typeparam name="TControlador">Tipo del controlador</typeparam>
@@ -321,6 +376,25 @@ namespace AppGM.Core
         /// <see cref="Controlador{TipoModelo}"/> que se queire quitar</param>
         public static void QuitarControlador(ModeloBaseSK modelo)
             => mControladores.Remove(modelo);
+
+        /// <summary>
+        /// Muestra un mensaje sobre la ventana actualmente activa
+        /// </summary>
+        /// <param name="vm">View model que se le pasara a la ventana del mensaje</param>
+        /// <param name="titulo">Titulo del mensaje</param>
+        /// <param name="esperarCierre">Indica si la ventana actual debe esperar al cierre del mensaje</param>
+        /// <param name="alto">Alto de la ventana del mensaje</param>
+        /// <param name="ancho">Ancho de la ventana del mensaje</param>
+        /// <returns></returns>
+        public static async Task<EResultadoViewModel> MostrarMensaje(
+	        ViewModelConResultadoBase vm, 
+	        string titulo,
+	        bool esperarCierre, 
+	        int alto = -1,
+	        int ancho = -1)
+        {
+	        return await Aplicacion.VentanaActual.MostrarMensaje(vm, titulo, esperarCierre, alto, ancho);
+        }
 
         /// <summary>
         /// Funcion que se encarga de lidiar con el evento de cambio de pagina actual

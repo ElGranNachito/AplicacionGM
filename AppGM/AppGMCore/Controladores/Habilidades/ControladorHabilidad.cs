@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using CoolLogs;
 
 namespace AppGM.Core
 {
@@ -12,12 +13,12 @@ namespace AppGM.Core
         /// <summary>
         /// Funcion que toma un control de personaje y devuelve un booleano indicando si el personaje puede utilizar la habilidad
         /// </summary>
-        private Func<ControladorPersonaje, ControladorPersonaje[], bool> mPuedeSerUtilizada;
-
+        private ControladorFuncion_PredicadoHabilidad mPuedeSerUtilizada;
+        
         /// <summary>
         /// Funcion que realiza la habilidad
         /// </summary>
-        private Action<ControladorPersonaje, ControladorPersonaje[], object, object> mUtilizarHabilidad;
+        private ControladorFuncion_Habilidad mUtilizarHabilidad;
 
         /// <summary>
         /// Funcion que se encarga de realizar acciones necesaria por cada paso de turno
@@ -32,42 +33,10 @@ namespace AppGM.Core
         //-----------------------PROPIEDADES-----------------------
 
         /// <summary>
-        /// Controlador del limitador de usos de la habilidad.
-        /// Null si la habilidad no tiene un limite de usos
-        /// </summary>
-        public ControladorLimitador ControladorLimiteDeUsos { get; set; }
-
-        /// <summary>
-        /// Controlador de cargas de la habilidad.
-        /// Null si la habilidad no tiene cargas
-        /// </summary>
-        public ControladorCargasHabilidad ControladorCargasHabilidad { get; set; }
-
-        /// <summary>
-        /// Lista de las tiradas que tienen que realizarse al utilizar la habilidad
-        /// </summary>
-        public List<IControladorTiradaBase> ControladorTiradasDeUso { get; set; }
-
-        /// <summary>
         /// Tirada de daño de la habilidad
         /// </summary>
         [AccesibleEnGuraScratch("TiradaDeDaño")]
         public ControladorTiradaDaño ControladorTiradaDeDaño { get; set; }
-
-        /// <summary>
-        /// Items que invoca
-        /// </summary>
-        public List<ControladorUtilizable> ControladorItemInvocacion { get; set; }
-
-        /// <summary>
-        /// Items que cuesta
-        /// </summary>
-        public List<ControladorUtilizable> ControladorItemsQueCuesta { get; set; }
-
-        /// <summary>
-        /// Invocacion que crea
-        /// </summary>
-        public List<ControladorInvocacion> ControladorInvocacion { get; set; }
 
         /// <summary>
         /// Efectos sobre su usuario
@@ -79,12 +48,20 @@ namespace AppGM.Core
         /// </summary>
         public List<ControladorEfecto> ControladorEfectoSobreObjetivo { get; set; }
 
+        /// <summary>
+        /// Devuelve el controlador del personaja a quien pertenece esta habilidad
+        /// </summary>
+        public ControladorPersonaje DueñoHabilidad => SistemaPrincipal.ObtenerControlador<ControladorPersonaje, ModeloPersonaje>(modelo.Dueño.Personaje);
+
         #endregion
 
         #region Constructor
 
         public ControladorHabilidad(ModeloHabilidad _modeloHabilidad)
-            :base(_modeloHabilidad){}
+	        : base(_modeloHabilidad)
+        {
+            CargarVariablesYTiradas();
+        }
 
         #endregion
 
@@ -98,25 +75,36 @@ namespace AppGM.Core
 
         #region Funciones
 
-        [AccesibleEnGuraScratch(nombreQueMostrar = "Utilizar")]
+        //TODO: Para todas estas funciones de utilizar, puede utilizar vamos a tener que implementar una manera de obtener los parametros extra que puedan requerir
+        //TODO: asi el GM puede establecer sus valores antes de llamar Utilizar
+
+        [AccesibleEnGuraScratch(nameof(Utilizar))]
         public void Utilizar(
 	        ControladorPersonaje usuario, ControladorPersonaje[] objetivos,
 	        object parametroExtra, object segundoParametroExtra)
         {
-	        //mUtilizarHabilidad(usuario, objetivos, parametroExtra, segundoParametroExtra);
+	        foreach (var objetivo in objetivos)
+		        mUtilizarHabilidad.EjecutarFuncion(this, usuario, objetivo, new[] {parametroExtra, segundoParametroExtra});
         }
 
         public void Utilizar(
 	        ControladorPersonaje usuario,
 	        object parametroExtra, object segundoParametroExtra)
         {
-	        mUtilizarHabilidad(usuario, null, parametroExtra, segundoParametroExtra);
+	        mUtilizarHabilidad.EjecutarFuncion(this, usuario, null, new[]{parametroExtra, segundoParametroExtra});
         }
 
         public virtual bool PuedeUtilizar(ControladorPersonaje usuario, ControladorPersonaje[] objetivos)
         {
-	        return mPuedeSerUtilizada(usuario, objetivos);
+	        foreach (var objetivo in objetivos)
+	        {
+		        if (!mPuedeSerUtilizada.EjecutarFuncion(this, usuario, objetivo).resultadoFuncion)
+			        return false;
+	        }
+
+	        return true;
         }
+
         protected virtual void AlAvanzarTurno(ControladorPersonaje usuario)
         {
 	        mAvanzarTurno(usuario);
@@ -124,6 +112,20 @@ namespace AppGM.Core
         protected virtual void AlCambiarDeDia(ControladorPersonaje usuario)
         {
 	        mAvanzarDia(usuario);
+        }
+
+        public override ControladorVariableBase ObtenerControladorVariable(int idVariable)
+        {
+	        if (mVariablesPersistenes.ContainsKey(idVariable))
+		        return mVariablesPersistenes[idVariable];
+
+	        //Si la variable no se encuentra en esta habilidad entonces intentamos obtenerla a traves de su dueño
+            if (DueñoHabilidad.ObtenerControladorVariable(idVariable) is { } controladorVariable)
+		        return controladorVariable;
+
+	        SistemaPrincipal.LoggerGlobal.Log($"Se intento obtener una variable con id: {idVariable}, pero no se encuentra en {nameof(mVariablesPersistenes)}", ESeveridad.Error);
+
+	        return null;
         }
 
         #endregion

@@ -13,7 +13,9 @@ namespace AppGM.Viewmodels
 
         public IVentana VentanaPadre { get; set; }
 
-        public ViewModelMensajeBase ViewModelContenidoVentana { get; set; }
+        public override Lazy<IVentanaMensaje> VentanaMensaje { get; set; } = new Lazy<IVentanaMensaje>(() => new ViewModelVentanaMensaje(new Window()));
+
+        public ViewModelConResultadoBase ViewModelContenidoVentana { get; set; }
 
         #endregion
 
@@ -25,6 +27,11 @@ namespace AppGM.Viewmodels
 
         #region Implementacion Interfaz Ventana Mensaje
 
+        public override async Task<EResultadoViewModel> MostrarMensaje(ViewModelConResultadoBase vm, string titulo, bool esperarCierre, int alto, int ancho)
+        {
+	        return await ObtenerVentanaMensaje().Mostrar(vm, titulo, esperarCierre, alto, ancho);
+        }
+
         /// <summary>
         /// Muestra una ventana con contenido que se superpone sobre la ventana principal
         /// </summary>
@@ -33,7 +40,7 @@ namespace AppGM.Viewmodels
         /// <param name="alto">Alto de la ventana, si se deja el valor default esta simplemente se iniciara con los valores default</param>
         /// <param name="ancho">Ancho de la ventana, si se deja el valor default esta simplemente se iniciara con los valores default</param>
         /// <returns></returns>
-        public async Task Mostrar(ViewModelMensajeBase vm, string titulo, bool esperarCierre, int alto = -1, int ancho = -1)
+        public async Task<EResultadoViewModel> Mostrar(ViewModelConResultadoBase vm, string titulo, bool esperarCierre, int alto = -1, int ancho = -1)
         {
             ViewModelContenidoVentana = vm;
 
@@ -41,6 +48,9 @@ namespace AppGM.Viewmodels
 
             mVentana.Height = alto != -1 ? alto : mVentana.Height;
             mVentana.Width = ancho != -1 ? ancho : mVentana.Width;
+
+            //Cuando se establezca el resultado del vm debemos cerrar la ventana
+            vm.OnResultadoEstablecido += vm => mVentana.Close();
 
             //Si debemos esperar al cierre de la ventana...
             if (esperarCierre)
@@ -56,14 +66,16 @@ namespace AppGM.Viewmodels
 
                 VentanaPadre.DebeEsperarCierreDeMensaje = false;
 
-                return;
+                return vm.Resultado;
             }
 
             //Si no debemos esperar a que termine entonces sencillamente la mostramos
             mVentana.Show();
+
+            return EResultadoViewModel.NoEstablecido;
         }
 
-        public void EstablecerViewModel(ViewModelMensajeBase nuevoVM) => ViewModelContenidoVentana = nuevoVM;
+        public void EstablecerViewModel(ViewModelConResultadoBase nuevoVM) => ViewModelContenidoVentana = nuevoVM;
 
         public override void CerrarVentana() => mVentana.Hide();
 

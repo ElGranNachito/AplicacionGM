@@ -7,7 +7,7 @@ namespace AppGM.Core
 	/// <see cref="ViewModelCreacionDeFuncionBase"/> para la creacion de una habilidad
 	/// </summary>
 	public class ViewModelCreacionDeFuncionHabilidad : 
-		ViewModelCreacionDeFuncion<Action<ControladorHabilidad, ControladorPersonaje, ControladorPersonaje[], ControladorFuncionBase, object[]>>
+		ViewModelCreacionDeFuncion<Action<ControladorHabilidad, ControladorPersonaje, ControladorPersonaje, ControladorFuncionBase, object[]>>
 	{
 		public ViewModelCreacionDeFuncionHabilidad(Action<ViewModelCreacionDeFuncionBase> accionSalir, ControladorFuncion_Habilidad _controladorFuncion = null)
 			: base(accionSalir, _controladorFuncion, EPropositoFuncion.Habilidad){}

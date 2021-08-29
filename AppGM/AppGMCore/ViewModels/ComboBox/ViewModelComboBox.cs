@@ -12,7 +12,7 @@ namespace AppGM.Core
 	/// <see cref="ViewModel"/> para representar un control de tipo ComboBox
 	/// </summary>
 	/// <typeparam name="TipoValor"><see cref="Type"/> del valor que almacenan sus opciones</typeparam>
-	public class ViewModelComboBox<TipoValor>
+	public class ViewModelComboBox<TipoValor> : ViewModel
 	{
 		#region Campos & Propiedades
 

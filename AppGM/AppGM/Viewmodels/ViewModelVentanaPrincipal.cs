@@ -20,6 +20,8 @@ namespace AppGM.Viewmodels
         /// </summary>
         public EPagina PaginaActual => SistemaPrincipal.Aplicacion.PaginaActual;
 
+        public override Lazy<IVentanaMensaje> VentanaMensaje { get; set; } = new Lazy<IVentanaMensaje>(() => SistemaPrincipal.Aplicacion.VentanaMensajePrincipal);
+
         public double Altura => System.Windows.SystemParameters.PrimaryScreenHeight;
         public double Ancho => System.Windows.SystemParameters.PrimaryScreenWidth;
 

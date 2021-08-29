@@ -91,7 +91,7 @@ namespace AppGM.Core
 				case ETipoVariable.Persistente:
 				{
 					return Expression.Convert(
-							Expression.Property(compilador[Compilador.Variables.Controlador], "VariablesPersistentes", Expression.Constant(IDBloque)), 
+							Expression.Call(compilador[Compilador.Variables.ControladorFuncion], typeof(ControladorBase).GetMethod(nameof(ControladorBase.ObtenerValorVariable), new []{typeof(int)}) , Expression.Constant(IDBloque)), 
 							tipo);
 				}
 

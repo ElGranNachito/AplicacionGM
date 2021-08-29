@@ -9,7 +9,7 @@ namespace AppGM.Core
     /// <summary>
     /// VM para la creacion de la representacion de un elemento en un mMapa
     /// </summary>
-    public class ViewModelMensajeCrearUnidadMapa : ViewModelMensajeBase
+    public class ViewModelCrearUnidadMapa : ViewModelConResultado<ViewModelCrearUnidadMapa>
     {
         #region Campos & Propiedades
 
@@ -106,7 +106,7 @@ namespace AppGM.Core
         /// Constructor
         /// </summary>
         /// <param name="mMapa">Mapa al que se añadira la unidad</param>
-        public ViewModelMensajeCrearUnidadMapa(ViewModelMapa _mapa)
+        public ViewModelCrearUnidadMapa(ViewModelMapa _mapa)
         {
             mMapa = _mapa;
 
@@ -134,7 +134,7 @@ namespace AppGM.Core
 
         #endregion
 
-        #region Funciones
+        #region Metodos
 
         /// <summary>
         /// Crea el VM
@@ -211,7 +211,7 @@ namespace AppGM.Core
             SistemaPrincipal.GuardarModelo(tiUnidadPosicion);
             SistemaPrincipal.GuardarDatosRolAsincronicamente();
 
-            mVentana.CerrarVentana();
+            Resultado = EResultadoViewModel.Aceptar;
         }
 
         #endregion

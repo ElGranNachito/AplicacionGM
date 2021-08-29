@@ -340,7 +340,7 @@ namespace AppGM.Core.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ModeloVariableFuncionBase",
+                name: "ModeloVariableBase",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
@@ -1132,7 +1132,7 @@ namespace AppGM.Core.Migrations
                     table.ForeignKey(
                         name: "FK_TIFuncionVariable_ModeloVariableFuncionBase_IDVariable",
                         column: x => x.IDVariable,
-                        principalTable: "ModeloVariableFuncionBase",
+                        principalTable: "ModeloVariableBase",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -2379,7 +2379,7 @@ namespace AppGM.Core.Migrations
                 name: "ModeloFuncion");
 
             migrationBuilder.DropTable(
-                name: "ModeloVariableFuncionBase");
+                name: "ModeloVariableBase");
 
             migrationBuilder.DropTable(
                 name: "ModeloCargas");

@@ -76,8 +76,10 @@ namespace AppGM.Core
             }
         }
 
-        public ViewModelListaItems<ViewModelEfectoItem> ContenedorListaEfectos          { get; set; }
-        public ViewModelListaItems<ViewModelItemLista> ContenedorListaTiradas          { get; set; }
+        public ViewModelListaItems<ViewModelEfectoItem> ContenedorListaEfectos { get; set; }
+        public ViewModelListaItems<ViewModelTiradaItem> ContenedorListaTiradas { get; set; }
+
+        public ViewModelListaItems<ViewModelVariableItem> ContenedorListaVariables  { get; set; }
 
         public ViewModelComboBox<ETipoHabilidad> ComboBoxTipoHabilidad { get; set; }
 
@@ -85,9 +87,6 @@ namespace AppGM.Core
 
         public ViewModelFuncionItem<ControladorFuncion_Habilidad> FuncionUtilizar { get; set; }
         public ViewModelFuncionItem<ControladorFuncion_PredicadoEfecto> FuncionCondicion { get; set; }
-
-        public ICommand ComandoFinalizar { get; set; }
-        public ICommand ComandoCancelar  { get; set; }
 
         #endregion
 
@@ -132,8 +131,20 @@ namespace AppGM.Core
             FuncionUtilizar = new ViewModelFuncionItem<ControladorFuncion_Habilidad>(new ControladorFuncion_Habilidad(new ModeloFuncion{NombreFuncion = "CoolerFunc"}));
             //FuncionCondicion = new ViewModelFuncionItem<ControladorFuncion_Predicado>(null);
 
-            ContenedorListaEfectos         = new ViewModelListaItems<ViewModelEfectoItem>(()=>{}, true, "Efectos");
-            ContenedorListaTiradas         = new ViewModelListaItems<ViewModelItemLista>(()=>{}, true, "Tiradas");
+            ContenedorListaEfectos   = new ViewModelListaItems<ViewModelEfectoItem>(()=>{}, true, "Efectos");
+            ContenedorListaTiradas   = new ViewModelListaItems<ViewModelTiradaItem>(()=>{}, true, "Tiradas");
+            ContenedorListaVariables = new ViewModelListaItems<ViewModelVariableItem>(() =>
+            {
+	            SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = new ViewModelCreacionDeVariable((vm) =>
+	            {
+		            if (vm.Resultado == EResultadoViewModel.Aceptar)
+		            {
+			            ContenedorListaVariables.Items.Add(new ViewModelVariableItem(vm.VariableCreada));
+		            }
+
+		            SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = this;
+	            });
+            }, true, "Variables");
 
             ComandoCancelar = new Comando(() =>
             {
@@ -142,7 +153,7 @@ namespace AppGM.Core
                 accionSalir(this);
             });
 
-            ComandoFinalizar = new Comando(() =>
+            ComandoAceptar = new Comando(() =>
             {
 	            Resultado = EResultadoViewModel.Cancelar;
 

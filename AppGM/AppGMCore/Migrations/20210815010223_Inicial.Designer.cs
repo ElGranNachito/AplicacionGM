@@ -580,7 +580,7 @@ namespace AppGM.Core.Migrations
                     b.HasDiscriminator<int>("Tipo").HasValue(1);
                 });
 
-            modelBuilder.Entity("AppGM.Core.ModeloVariableFuncionBase", b =>
+            modelBuilder.Entity("AppGM.Core.ModeloVariableBase", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -597,7 +597,7 @@ namespace AppGM.Core.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ModeloVariableFuncionBase");
+                    b.ToTable("ModeloVariableBase");
                 });
 
             modelBuilder.Entity("AppGM.Core.ModeloVector2", b =>
@@ -2075,7 +2075,7 @@ namespace AppGM.Core.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AppGM.Core.ModeloVariableFuncionBase", "Variable")
+                    b.HasOne("AppGM.Core.ModeloVariableBase", "Variable")
                         .WithMany()
                         .HasForeignKey("IDVariable")
                         .OnDelete(DeleteBehavior.Cascade)

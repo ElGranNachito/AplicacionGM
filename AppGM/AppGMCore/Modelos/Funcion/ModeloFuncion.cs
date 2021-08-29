@@ -1,19 +1,21 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AppGM.Core
 {
-	public class ModeloFuncion : ModeloBase
+	/// <summary>
+	/// Representa una funcion escrita en GuraScratch
+	/// </summary>
+	public class ModeloFuncion : ModeloConVariablesYTiradas
 	{
-		/// <summary>
-		/// Lista de las variables de la funcion cuyo valor no se resetea en cada llamada a la funcion
-		/// </summary>
-		public virtual List<TIFuncionVariable> VariablesPersistentes { get; set; }
-
 		/// <summary>
 		/// Padre de este modelo
 		/// </summary>
 		public virtual TIFuncionPadreFuncion Padre { get; set; }
+
+		/// <summary>
+		/// Modelo que contiene esta funcion
+		/// </summary>
+		public virtual TIFuncionContenedor ContenedorFuncion { get; set; }
 
 		public string NombreFuncion { get; set; }
 

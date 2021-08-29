@@ -88,10 +88,16 @@ namespace AppGM.Core
 		void EstablecerTamañoY(float y);
 
 		/// <summary>
-		/// 
+		/// Indica si la ventana esta maximizada
 		/// </summary>
 		/// <returns><see cref="bool"/> indicando si la ventana esta maximizada</returns>
 		bool EstaMaximizada();
+
+		/// <summary>
+		/// Obtiene la ventana de mensajes de esta ventana
+		/// </summary>
+		/// <returns>Instancia de la ventana de mensajes</returns>
+		IVentanaMensaje ObtenerVentanaMensaje();
 
 		/// <summary>
 		/// 
@@ -104,6 +110,13 @@ namespace AppGM.Core
 		/// </summary>
 		/// <returns><see cref="Vector2"/> que representa el tamaño de la ventana</returns>
 		Vector2 ObtenerTamaño();
+
+		/// <summary>
+		/// Muestra un mensaje sobre esta ventana
+		/// </summary>
+		/// <param name="vm">View model del contenido el mensaje</param>
+		/// <param name="esperarCierre">Si el valor es <see cref="true"/>la ventana actual quedara bloqueada hasta que el mensaje se cierre</param>
+		Task<EResultadoViewModel> MostrarMensaje(ViewModelConResultadoBase vm, string titulo, bool esperarCierre, int alto, int ancho);
 
 		event EventoVentana OnTamañoModificado;
 		event EventoVentana OnEstadoModificado;
@@ -127,13 +140,13 @@ namespace AppGM.Core
 		/// </summary>
 		/// <param name="vm">View model del contenido el mensaje</param>
 		/// <param name="esperarCierre">Si el valor es <see cref="true"/>la ventana principal queda bloqueada hasta que el mensaje se cierre</param>
-		Task Mostrar(ViewModelMensajeBase vm, string titulo, bool esperarCierre, int alto, int ancho);
+		Task<EResultadoViewModel> Mostrar(ViewModelConResultadoBase vm, string titulo, bool esperarCierre, int alto, int ancho);
 
 		/// <summary>
 		/// Establece el viewmodel de la ventana
 		/// </summary>
 		/// <param name="nuevoVM">Nuevo viewmodel</param>
-		void EstablecerViewModel(ViewModelMensajeBase nuevoVM);
+		void EstablecerViewModel(ViewModelConResultadoBase nuevoVM);
 
 		/// <summary>
 		/// Ventana de la que depende este mensaje

@@ -6,7 +6,7 @@ namespace AppGM.Core
     /// <summary>
     /// Modelo de datos para habilidades de un <see cref="ModeloPersonaje"/>
     /// </summary>
-    public class ModeloHabilidad : ModeloBase
+    public class ModeloHabilidad : ModeloConVariablesYTiradas
     {
         /// <summary>
         /// Controlador

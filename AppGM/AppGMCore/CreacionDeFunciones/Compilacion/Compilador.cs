@@ -27,21 +27,6 @@ namespace AppGM.Core
 		private List<BloqueVariable> mBloquesVariables = new List<BloqueVariable>();
 
 		/// <summary>
-		/// Parametros de la funcion siendo compilada que fueron añadidos por el usuario
-		/// </summary>
-		private List<(ParameterExpression expresion, Type tipo)> mParametrosCreadosPorElUsuario = new List<(ParameterExpression expresion, Type tipo)>();
-
-		/// <summary>
-		/// Variables del afuncion siendo compilada
-		/// </summary>
-		private List<ParameterExpression> mVars = new List<ParameterExpression>();
-
-		/// <summary>
-		/// Variables persistentes
-		/// </summary>
-		private List<(ParameterExpression expresion, Type tipo)> mVariablesPersistentes = new List<(ParameterExpression expresion, Type tipo)>();
-
-		/// <summary>
 		/// Bloques que componen la funcion, sin contar la variables
 		/// </summary>
 		private List<BloqueBase> mBloques = new List<BloqueBase>();
@@ -142,15 +127,19 @@ namespace AppGM.Core
 				//Colocamos la label al final de funcion
 				expresiones.Add(Expression.Label(labelFinalFuncion));
 
+				var metodoAsignarValorAVariable = typeof(ControladorBase).GetMethod(nameof(ControladorBase.AsignarAVariable), new[] {typeof(object)});
+
+				if (metodoAsignarValorAVariable == null)
+					throw new Exception($"No se pudo hallar el metodo {nameof(ControladorBase.AsignarAVariable)}!");
+
 				//Guardamos el valor de las variables persistentes
 				expresiones.AddRange(mBloquesVariables.FindAll(b => b.tipoVariable == ETipoVariable.Persistente).Select(b =>
 				{
-					//Por favor perdonenme por escribir esta monstruosidad inentendible ;u
-					return
-						Expression.Assign(Expression.Property(
-							mVariables[Compilador.Variables.Controlador],
-							typeof(ControladorFuncionBase).GetProperty("VariablesPersistentes", typeof(object), new[] {typeof(int)}),
-							Expression.Constant(b.IDBloque)), Expression.Convert(mVariables[b.IDBloque], typeof(object)));
+					return Expression.Call(
+						mVariables[Compilador.Variables.ControladorFuncion],
+						metodoAsignarValorAVariable, 
+						Expression.Constant(b.IDBloque),
+						Expression.Convert(mVariables[b.IDBloque], typeof(object)));
 				}));
 
 				//Expresion final representando toda la funcion
@@ -197,9 +186,6 @@ namespace AppGM.Core
 			mVariables.Clear();
 			mBloquesVariables.Clear();
 
-			mParametros.Add(Expression.Parameter(typeof(ControladorFuncionBase), "ControladorFuncion"));
-			mVariables.Add(Compilador.Variables.Controlador, mParametros.Last());
-
 			foreach (var bloque in bloques)
 			{
 				if (bloque is BloqueVariable var)
@@ -242,6 +228,9 @@ namespace AppGM.Core
 
 				mBloques.Add(bloque);
 			}
+
+			mParametros.Add(Expression.Parameter(typeof(ControladorFuncionBase), "ControladorFuncion"));
+			mVariables.Add(Compilador.Variables.ControladorFuncion, mParametros.Last());
 
 			mVariables.Add(Variables.ParametrosCreados, Expression.Parameter(typeof(object[]), "ParametrosCreados"));
 			mParametros.Add((ParameterExpression) mVariables.Last().Value);

@@ -20,7 +20,7 @@ namespace AppGM
                 switch (vm)
                 {
                     //Creacion de una unidad para un mapa
-                    case ViewModelMensajeCrearUnidadMapa vcu:
+                    case ViewModelCrearUnidadMapa vcu:
                         return new UserControlMensajeCrearUnidadMapa
                         {
                             DataContext = vcu

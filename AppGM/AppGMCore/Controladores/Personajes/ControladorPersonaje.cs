@@ -187,7 +187,7 @@ namespace AppGM.Core
         /// Muestra datos basicos del personaje
         /// </summary>
         /// <returns></returns>
-        public override string ToString() => string.Format($"Nombre={modelo.Nombre} Id={modelo.Id}");
+        public override string ToString() => $"Nombre={modelo.Nombre} Id={modelo.Id}";
 
         #endregion
 
@@ -278,6 +278,8 @@ namespace AppGM.Core
             {
                 Alianzas.Add(new ControladorAlianza(modelo.Alianzas[i].Alianza));
             }
+
+            CargarVariablesYTiradas();
         }
 
         #endregion

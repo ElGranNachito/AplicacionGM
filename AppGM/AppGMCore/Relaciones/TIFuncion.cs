@@ -24,14 +24,25 @@ namespace AppGM.Core
 	}
 
 	/// <summary>
-	/// Representa la relacion de un <see cref="ModeloFuncion"/> con un <see cref="ModeloVariableFuncionBase"/>
+	/// Representa una relacion entre un <see cref="ModeloBase"/> y un <see cref="ModeloFuncion"/> contenido en este
+	/// </summary>
+	public class TIFuncionContenedor : TIFuncion
+	{
+		[ForeignKey(nameof(Contenedor))]
+		public int IdContenedor { get; set; }
+
+		public virtual ModeloBase Contenedor { get; set; }
+	}
+
+	/// <summary>
+	/// Representa la relacion de un <see cref="ModeloFuncion"/> con un <see cref="ModeloVariableBase"/>
 	/// </summary>
 	public class TIFuncionVariable : TIFuncion
 	{
 		[ForeignKey(nameof(Variable))]
 		public int IDVariable { get; set; }
 
-		public virtual ModeloVariableFuncionBase Variable { get; set; }
+		public virtual ModeloVariableBase Variable { get; set; }
 	}
 
 	/// <summary>

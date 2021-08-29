@@ -15,7 +15,10 @@
         #region Constructores
 
         public ControladorUtilizable(ModeloUtilizable _modeloUtilizable)
-            :base(_modeloUtilizable){}
+	        : base(_modeloUtilizable)
+        {
+            CargarVariablesYTiradas();
+        }
 
         #endregion
 

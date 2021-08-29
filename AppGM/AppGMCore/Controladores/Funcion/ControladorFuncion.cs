@@ -23,11 +23,6 @@ namespace AppGM.Core
 		//----------------------------------CAMPOS------------------------------------
 
 		/// <summary>
-		/// Contiene todas los <see cref="ControladorVariableFuncionBase"/> de las variables persistentes de esta funcion
-		/// </summary>
-		private Dictionary<int, ControladorVariableFuncionBase> mVariablesPersistenes;
-
-		/// <summary>
 		/// Lock para acceder a <see cref="Bloques"/>
 		/// </summary>
 		private object LockListaBloques = new object();
@@ -81,6 +76,11 @@ namespace AppGM.Core
 			}
 		}
 
+		/// <summary>
+		/// Obtiene el <see cref="ControladorBase"/> del modelo que contiene esta funcion
+		/// </summary>
+		public ControladorBase ContenedorFuncion => SistemaPrincipal.ObtenerControlador(modelo.ContenedorFuncion.Contenedor);
+
 		#endregion
 
 		#region Constructor
@@ -88,13 +88,7 @@ namespace AppGM.Core
 		public ControladorFuncionBase(ModeloFuncion _modelo)
 			: base(_modelo)
 		{
-			//Si no hay variables persistentes creamos una lista nueva
-			modelo.VariablesPersistentes ??= new List<TIFuncionVariable>();
-
-			mVariablesPersistenes = new Dictionary<int, ControladorVariableFuncionBase>(modelo.VariablesPersistentes.Select(var =>
-			{
-				return new KeyValuePair<int, ControladorVariableFuncionBase>(var.Variable.IDVariable, ControladorVariableFuncionBase.CrearControladorCorrespondiente(var.Variable));
-			}));
+			CargarVariablesYTiradas();
 		} 
 
 		#endregion
@@ -141,7 +135,7 @@ namespace AppGM.Core
 			Bloques.TrimExcess();
 
 			List<int> idsVariablesPersistentesExistentes =
-				modelo.VariablesPersistentes.Select(var => var.Variable.IDVariable).ToList();
+				modelo.Variables.Select(var => var.Variable.IDVariable).ToList();
 
 			foreach (var bloque in nuevosBloques)
 			{
@@ -151,19 +145,19 @@ namespace AppGM.Core
 					if (!idsVariablesPersistentesExistentes.Remove(var.IDBloque))
 					{
 						//Creamos un modelo para la variable
-						var modeloVariable = ControladorVariableFuncionBase.CrearModeloCorrespondiente(var.tipo, var.IDBloque, var.nombre);
+						var modeloVariable = ControladorVariableBase.CrearModeloCorrespondiente(var.tipo, var.IDBloque, var.nombre);
 
-						var nuevaVariablePersistente = new TIFuncionVariable
+						var nuevaVariablePersistente = new TIVarible
 						{
-							Variable = modeloVariable,
-							Funcion = modelo,
+							Variable            = modeloVariable,
+							ModeloContenedorVar = modelo,
 						};
 
 						//La añadimos al modelo
-						modelo.VariablesPersistentes.Add(nuevaVariablePersistente);
+						modelo.Variables.Add(nuevaVariablePersistente);
 
 						//Creamos el controlador y lo añadimos a la lista de variables persistenes
-						mVariablesPersistenes.Add(var.IDBloque, ControladorVariableFuncionBase.CrearControladorCorrespondiente(modeloVariable));
+						mVariablesPersistenes.Add(var.IDBloque, ControladorVariableBase.CrearControladorCorrespondiente(modeloVariable));
 					}
 					//Si existe solamente la actualizamos
 					else
@@ -177,7 +171,7 @@ namespace AppGM.Core
 			}
 
 			//Quitamos las relaciones del modelo con variables que ya no se encuentran en la funcion
-			modelo.VariablesPersistentes.RemoveAll(var =>
+			modelo.Variables.RemoveAll(var =>
 			{
 				for (int i = 0; i < idsVariablesPersistentesExistentes.Count; ++i)
 				{
@@ -268,7 +262,7 @@ namespace AppGM.Core
 			}
 
 			//Obtenemos las variables persistentes del nuevo modelo y las del modelo actual
-			var variablesPersistentesNuevoModelo = nuevoModelo.VariablesPersistentes.Select(ti => ti.Variable).ToList();
+			var variablesPersistentesNuevoModelo = nuevoModelo.Variables.Select(ti => ti.Variable).ToList();
 			var variablesPersistentesModeloActual = mVariablesPersistenes.Values.ToList();
 
 			//Quitamos de la lista de variables de ambos modelos las que se encuentren repetidas en ambos
@@ -292,7 +286,7 @@ namespace AppGM.Core
 			{
 				mVariablesPersistenes.Remove(var.IDVariable);
 
-				modelo.VariablesPersistentes.RemoveAll(ti => ti.IDVariable == var.modelo.Id);
+				modelo.Variables.RemoveAll(ti => ti.IdVariable == var.modelo.Id);
 
 				var.Eliminar();
 			});
@@ -300,13 +294,13 @@ namespace AppGM.Core
 			//Añadimos al modelo las variables que quedaron en el nuevo modelo
 			variablesPersistentesNuevoModelo.ForEach(var =>
 			{
-				modelo.VariablesPersistentes.Add(new TIFuncionVariable
+				modelo.Variables.Add(new TIVarible
 				{
-					Funcion = modelo,
-					Variable = var
+					ModeloContenedorVar = modelo,
+					Variable            = var
 				});
 
-				mVariablesPersistenes.Add(var.IDVariable, ControladorVariableFuncionBase.CrearControladorCorrespondiente(var));
+				mVariablesPersistenes.Add(var.IDVariable, ControladorVariableBase.CrearControladorCorrespondiente(var));
 			});
 
 			SistemaPrincipal.LoggerGlobal.Log($@"Actualizado modelo para {this}. 
@@ -320,27 +314,16 @@ namespace AppGM.Core
 		/// <returns><see cref="Task"/> de compilacion</returns>
 		public virtual async Task CompilarAsync() => await Task.FromResult(true);
 
-		[IndexerName("VariablesPersistentes")]
-		public object this[int idVariable]
+		public override ControladorVariableBase ObtenerControladorVariable(int idVariable)
 		{
-			get
-			{
-				if (mVariablesPersistenes.ContainsKey(idVariable))
-					return mVariablesPersistenes[idVariable].ObtenerValorVariable();
+			if (mVariablesPersistenes.ContainsKey(idVariable))
+				return mVariablesPersistenes[idVariable];
+			
+			//Si la variable no se encuentra en esta funcion entonces intentamos obtenerla a traves de su contenedor
+			if (ContenedorFuncion.ObtenerControladorVariable(idVariable) is { } controladorVar)
+				return controladorVar;
 
-				SistemaPrincipal.LoggerGlobal.Log($"Se intento obtener una variable con id: {idVariable}, pero no se encuentra en {nameof(mVariablesPersistenes)}", ESeveridad.Error);
-
-				return null;
-			}
-
-			set
-			{
-				if (mVariablesPersistenes.ContainsKey(idVariable))
-					mVariablesPersistenes[idVariable].GuardarValorVariable(value);
-
-				SistemaPrincipal.LoggerGlobal.Log($@"Se intento actualizar el valor de una variable con id {idVariable} pero no se hallo.
-														{Environment.NewLine}{this}");
-			}
+			return null;
 		}
 
 		public override void Eliminar()
@@ -542,7 +525,7 @@ namespace AppGM.Core
 	/// <summary>
 	/// Controlador para una funcion de una habilidad
 	/// </summary>
-	public class ControladorFuncion_Habilidad : ControladorFuncion<Action<ControladorHabilidad, ControladorPersonaje, ControladorPersonaje[], ControladorFuncionBase, object[]>>
+	public class ControladorFuncion_Habilidad : ControladorFuncion<Action<ControladorHabilidad, ControladorPersonaje, ControladorPersonaje, ControladorFuncionBase, object[]>>
 	{
 		public ControladorFuncion_Habilidad(ModeloFuncion _modelo)
 			: base(_modelo)
@@ -565,7 +548,7 @@ namespace AppGM.Core
 		public bool EjecutarFuncion(
 			ControladorHabilidad controladorHabilidad,
 			ControladorPersonaje instigador,
-			ControladorPersonaje[] objetivo,
+			ControladorPersonaje objetivo,
 			params object[] parametrosExtra)
 		{
 			try
@@ -673,6 +656,51 @@ namespace AppGM.Core
 
 			return (true, res);
 		}
-	} 
+	}
+
+	/// <summary>
+	/// Controlador para un predicado de un efecto
+	/// </summary>
+	public class ControladorFuncion_PredicadoHabilidad : ControladorFuncion<Func<ControladorHabilidad, ControladorPersonaje, ControladorPersonaje, ControladorFuncionBase, object[], bool>>
+	{
+		public ControladorFuncion_PredicadoHabilidad(ModeloFuncion _modelo)
+			: base(_modelo)
+		{ }
+
+		public override ViewModelCreacionDeFuncionBase CrearVMParaEditar(Action<ViewModelCreacionDeFuncionBase> accionSalir)
+		{
+			throw new NotImplementedException();
+		}
+
+		/// <summary>
+		/// Wrapper para llamar a la funcion subyacente de manera segura
+		/// </summary>
+		/// <param name="controladorHabilidad">Controlador de la habilidad que llama esta funcion</param>
+		/// <param name="instigador">Personaje que utilizo la habilidad</param>
+		/// <param name="objetivo">Personaje objetivo de la habilidad</param>
+		/// <param name="parametrosExtra">Parametros extra que toma la funcion</param>
+		/// <returns>Tupla con dos <see cref="bool"/>, el primero indica si se pudo ejecutar la funcion en su totalidad y el segundo contiene su resultado</returns>
+		public (bool funcionEjecutadaConExito, bool resultadoFuncion) EjecutarFuncion(
+			ControladorHabilidad controladorHabilidad,
+			ControladorPersonaje instigador,
+			ControladorPersonaje objetivo,
+			params object[] parametrosExtra)
+		{
+			bool res = false;
+
+			try
+			{
+				res = Funcion(controladorHabilidad, instigador, objetivo, this, parametrosExtra);
+			}
+			catch (Exception ex)
+			{
+				SistemaPrincipal.LoggerGlobal.Log($"Error al intentar ejecutar funcion {this}.{Environment.NewLine}{ex.Message}", ESeveridad.Error);
+
+				return (false, res);
+			}
+
+			return (true, res);
+		}
+	}
 	#endregion
 }

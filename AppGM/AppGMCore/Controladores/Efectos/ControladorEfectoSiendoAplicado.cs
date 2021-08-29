@@ -352,13 +352,13 @@ namespace AppGM.Core
 			};
 
 			//Si la nueva funcion tiene variables persistentes y la funcion actual no existe...
-			if (nuevaFuncion.VariablesPersistentes.Count > 0 && funcionActual == null)
+			if (nuevaFuncion.Variables.Count > 0 && funcionActual == null)
 			{
 				//Creamos el controlador para la nueva funcion y asignamos el valor a la propiedad
 				propertyFuncionActualizar.SetValue(this, new ControladorFuncion_Efecto(nuevaFuncion));
 			}
 			//Si la nueva funcion no tiene variables persistentes y la funcion actual no es null...
-			else if (nuevaFuncion.VariablesPersistentes.Count == 0 && funcionActual != null)
+			else if (nuevaFuncion.Variables.Count == 0 && funcionActual != null)
 			{
 				//Eliminamos la funcion actual
 				funcionActual.Eliminar();

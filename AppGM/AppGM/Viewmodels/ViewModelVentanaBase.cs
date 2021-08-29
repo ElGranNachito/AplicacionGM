@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -218,6 +219,8 @@ namespace AppGM
 
 		#region Implementacion Interfaz Ventana
 
+		public virtual Lazy<IVentanaMensaje> VentanaMensaje { get; set; } = null;
+
 		public virtual string TituloVentana
 		{
 			get => mTituloVentana;
@@ -232,8 +235,6 @@ namespace AppGM
 		public bool DebeEsperarCierreDeMensaje { get; set; }
 
 		public bool EsVentanaActual => SistemaPrincipal.Aplicacion.VentanaActual == this;
-
-		public Lazy<IVentanaMensaje> VentanaMensaje { get; set; }
 
 		public virtual object ObtenerInstanciaVentana() => mVentana;
 
@@ -282,6 +283,8 @@ namespace AppGM
 			OnTamañoModificado(this);
 		}
 
+		public IVentanaMensaje ObtenerVentanaMensaje() => VentanaMensaje.Value;
+
 		public virtual Vector2 ObtenerPosicionDelMouse()
 		{
 			Point v = Mouse.GetPosition(mVentana);
@@ -291,6 +294,11 @@ namespace AppGM
 
 		public virtual Vector2 ObtenerTamaño() => new Vector2(mVentana.Width, mVentana.Height);
 		public virtual bool EstaMaximizada() => mVentana.WindowState == WindowState.Maximized;
+
+		public virtual async Task<EResultadoViewModel> MostrarMensaje(ViewModelConResultadoBase vm, string titulo, bool esperarCierre, int alto, int ancho)
+		{ 
+			return await Task.FromResult(EResultadoViewModel.Cancelar);
+		}
 
 		//Eventos de la interfaz
 
@@ -306,6 +314,6 @@ namespace AppGM
 
 		public event DataContextContenidoCambioHandler OnDataContextContenidoModificado = delegate { };
 
-	#endregion
+		#endregion
 }
 }

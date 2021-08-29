@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace AppGM.Core
 {
@@ -33,5 +34,21 @@ namespace AppGM.Core
         //Id
         [Key]
         public int Id { get; set; }
+    }
+
+    /// <summary>
+    /// Clase base para todos los modelos que deban almacenar <see cref="ModeloVariableBase"/> y <see cref="ModeloTiradaBase"/>
+    /// </summary>
+    public class ModeloConVariablesYTiradas : ModeloBase
+    {
+        /// <summary>
+        /// Variables persistentes que contiene este modelo
+        /// </summary>
+        public virtual List<TIVarible> Variables { get; set; }
+
+        /// <summary>
+        /// Tiradas que contiene este modelo
+        /// </summary>
+        public virtual List<TITirada> Tiradas { get; set; } 
     }
 }
