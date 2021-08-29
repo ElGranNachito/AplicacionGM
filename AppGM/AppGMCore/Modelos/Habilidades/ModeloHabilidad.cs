@@ -6,7 +6,7 @@ namespace AppGM.Core
     /// <summary>
     /// Modelo de datos para habilidades de un <see cref="ModeloPersonaje"/>
     /// </summary>
-    public class ModeloHabilidad : ModeloConVariablesYTiradas
+    public class ModeloHabilidad : ModeloConVariablesYTiradas<TIVariableHabilidad, TITiradaHabilidad>
     {
         /// <summary>
         /// Controlador
@@ -65,22 +65,6 @@ namespace AppGM.Core
         /// </summary>
         public bool IgnoraAmbiente { get; set; }
 
-        //Caracteristicas de la habilidad:
-        /// <summary>
-        /// Total de usos que se le puede dar a la habilidad
-        /// </summary>
-        public virtual TIHabilidadLimitador       LimiteDeUsos    { get; set; }
-        /// <summary>
-        /// Cantidad de cargas aplicaples a la habilidad
-        /// </summary>
-        public virtual TIHabilidadCargasHabilidad CargasHabilidad { get; set; }
-        
-        /// <summary>
-        /// Tirada del daño que produce la habilidad
-        /// Solo si es una habilidad ofensiva
-        /// </summary>
-        public virtual TIHabilidadTiradaDeDaño    TiradaDeDaño    { get; set; }
-
         /// <summary>
         /// <see cref="ModeloPersonaje"/> que posee esta habilidad
         /// </summary>
@@ -108,6 +92,10 @@ namespace AppGM.Core
         /// </summary>
         public virtual List<TIHabilidadEfecto> EfectosSobreUsuarioEfectoSobreObjetivo { get; set; } = new List<TIHabilidadEfecto>();
 
+        /// <summary>
+        /// Funciones que requiere la habilidad para funcionar
+        /// </summary>
+        public virtual List<TIFuncionHabilidad> Funciones { get; set; } = new List<TIFuncionHabilidad>();
     }
 
     /// <summary>

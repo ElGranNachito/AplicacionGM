@@ -39,16 +39,18 @@ namespace AppGM.Core
     /// <summary>
     /// Clase base para todos los modelos que deban almacenar <see cref="ModeloVariableBase"/> y <see cref="ModeloTiradaBase"/>
     /// </summary>
-    public class ModeloConVariablesYTiradas : ModeloBase
+    public abstract class ModeloConVariablesYTiradas <TRelacionVariable, TRelacionTirada> : ModeloBase
+		where TRelacionVariable : TIVarible
+        where TRelacionTirada : TITirada
     {
-        /// <summary>
-        /// Variables persistentes que contiene este modelo
-        /// </summary>
-        public virtual List<TIVarible> Variables { get; set; }
+	    /// <summary>
+	    /// Variables persistentes que contiene este modelo
+	    /// </summary>
+	    public virtual List<TRelacionVariable> Variables { get; set; } = new List<TRelacionVariable>();
 
-        /// <summary>
-        /// Tiradas que contiene este modelo
-        /// </summary>
-        public virtual List<TITirada> Tiradas { get; set; } 
+	    /// <summary>
+	    /// Tiradas que contiene este modelo
+	    /// </summary>
+	    public virtual List<TRelacionTirada> Tiradas { get; set; } = new List<TRelacionTirada>();
     }
 }

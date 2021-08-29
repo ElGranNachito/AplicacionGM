@@ -44,7 +44,7 @@ namespace AppGM.Core
 	/// </summary>
 	/// <typeparam name="TipoModelo">Tipo del modelo que este controlador representa</typeparam>
     public class Controlador<TipoModelo> : ControladorBase
-        where TipoModelo: ModeloBaseSK, new()
+        where TipoModelo: ModeloBaseSK
     {
 		#region Eventos
 
@@ -166,9 +166,11 @@ namespace AppGM.Core
 		///		El modelo del controlador debe ser de tipo <see cref="ModeloConVariablesYTiradas"/>. De lo contrario esta funcion no tendra efecto alguno
 		///	</para>
 		/// </summary>
-		protected void CargarVariablesYTiradas()
+		protected void CargarVariablesYTiradas<TRelacionVariable, TRelacionTirada>()
+			where TRelacionVariable : TIVarible
+			where TRelacionTirada : TITirada
 		{
-			if (modelo is ModeloConVariablesYTiradas modeloConVariables)
+			if (modelo is ModeloConVariablesYTiradas<TRelacionVariable, TRelacionTirada> modeloConVariables)
 			{
 				mVariablesPersistenes = new Dictionary<int, ControladorVariableBase>(modeloConVariables.Variables.Select(var =>
 				{
@@ -182,7 +184,7 @@ namespace AppGM.Core
 			}
 			else
 			{
-				SistemaPrincipal.LoggerGlobal.Log($@"Se intentaron cargar variables persistentes desde un controlador cuyo modelo no es {nameof(ModeloConVariablesYTiradas)}
+				SistemaPrincipal.LoggerGlobal.Log($@"Se intentaron cargar variables persistentes desde un controlador cuyo modelo no es {nameof(ModeloConVariablesYTiradas<TRelacionVariable, TRelacionTirada>)}
 														Controlador: {this}", ESeveridad.Error);
 			}
 		}

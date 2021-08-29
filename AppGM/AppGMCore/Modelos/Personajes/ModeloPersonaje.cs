@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace AppGM.Core
@@ -7,7 +6,7 @@ namespace AppGM.Core
     /// <summary>
     /// Modelo de datos para el personaje
     /// </summary>
-    public class ModeloPersonaje : ModeloConVariablesYTiradas
+    public class ModeloPersonaje : ModeloConVariablesYTiradas<TIVariablePersonaje, TITiradaPersonaje>
     {
         public ControladorPersonaje controlador;
 

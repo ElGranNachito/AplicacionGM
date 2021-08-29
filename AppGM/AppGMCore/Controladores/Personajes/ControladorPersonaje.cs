@@ -279,7 +279,7 @@ namespace AppGM.Core
                 Alianzas.Add(new ControladorAlianza(modelo.Alianzas[i].Alianza));
             }
 
-            CargarVariablesYTiradas();
+            CargarVariablesYTiradas<TIVariablePersonaje, TITiradaPersonaje>();
         }
 
         #endregion

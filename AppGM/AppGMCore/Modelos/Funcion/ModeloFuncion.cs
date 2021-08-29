@@ -1,11 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AppGM.Core
 {
 	/// <summary>
 	/// Representa una funcion escrita en GuraScratch
 	/// </summary>
-	public class ModeloFuncion : ModeloConVariablesYTiradas
+	public class ModeloFuncion : ModeloConVariablesYTiradas<TIVariableFuncion, TITiradaFuncion>
 	{
 		/// <summary>
 		/// Padre de este modelo
@@ -13,10 +14,23 @@ namespace AppGM.Core
 		public virtual TIFuncionPadreFuncion Padre { get; set; }
 
 		/// <summary>
-		/// Modelo que contiene esta funcion
+		/// Funciones que dependen de este modelo
 		/// </summary>
-		public virtual TIFuncionContenedor ContenedorFuncion { get; set; }
+		public virtual List<TIFuncionPadreFuncion> Hijos { get; set; }
 
+		/// <summary>
+		/// Modelo del efecto que contiene esta funcion
+		/// </summary>
+		public virtual TIFuncionEfecto EfectoContenedor { get; set; }
+
+		/// <summary>
+		/// Modelo de la habilidad que contiene esta funcion
+		/// </summary>
+		public virtual TIFuncionHabilidad HabilidadContenedora { get; set; }
+
+		/// <summary>
+		/// Nombre de la funcions
+		/// </summary>
 		public string NombreFuncion { get; set; }
 
 		/// <summary>

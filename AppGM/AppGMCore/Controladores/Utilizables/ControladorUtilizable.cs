@@ -17,7 +17,7 @@
         public ControladorUtilizable(ModeloUtilizable _modeloUtilizable)
 	        : base(_modeloUtilizable)
         {
-            CargarVariablesYTiradas();
+            CargarVariablesYTiradas<TIVariableUtilizable, TITiradaUtilizable>();
         }
 
         #endregion

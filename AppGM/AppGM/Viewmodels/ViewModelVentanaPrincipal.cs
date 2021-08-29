@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Input;
+using System.Threading.Tasks;
 using AppGM.Core;
 
 namespace AppGM.Viewmodels
@@ -43,6 +44,16 @@ namespace AppGM.Viewmodels
             {
                 DispararPropertyChanged(e);
             };
+        }
+
+        public override async Task<EResultadoViewModel> MostrarMensaje(
+	        ViewModelConResultadoBase vm,
+	        string titulo,
+	        bool esperarCierre, 
+	        int alto, 
+	        int ancho)
+        {
+	        return await ObtenerVentanaMensaje().Mostrar(vm, titulo, esperarCierre, alto, ancho);
         }
     }
 }

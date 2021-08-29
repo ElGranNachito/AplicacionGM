@@ -43,7 +43,7 @@ namespace AppGM.Core
 		/// <summary>
 		/// Contiene las funciones requeridas para el funcionamiento de este efecto
 		/// </summary>
-		public virtual List<TIEfectoFuncion> Funciones { get; set; } = new List<TIEfectoFuncion>();
+		public virtual List<TIFuncionEfecto> Funciones { get; set; } = new List<TIFuncionEfecto>();
 
 		/// <summary>
 		/// Todas las aplicaciones de este efecto

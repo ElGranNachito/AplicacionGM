@@ -60,7 +60,7 @@ namespace AppGM.Core
         public ControladorHabilidad(ModeloHabilidad _modeloHabilidad)
 	        : base(_modeloHabilidad)
         {
-            CargarVariablesYTiradas();
+            CargarVariablesYTiradas<TIVariableHabilidad, TITiradaHabilidad>();
         }
 
         #endregion

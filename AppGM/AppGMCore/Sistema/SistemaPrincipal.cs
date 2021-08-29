@@ -269,7 +269,7 @@ namespace AppGM.Core
 		/// <param name="intenarCrearSiNoExiste">Indica si se debe intentar crear el controlador en caso de que no se encuentre en el diccionario</param>
 		/// <returns>El <see cref="TControlador"/> obtenido o null</returns>
 		public static TControlador ObtenerControlador<TControlador, TModelo>(TModelo modelo, bool intenarCrearSiNoExiste = false)
-            where TModelo : ModeloBaseSK, new()
+            where TModelo : ModeloBaseSK
             where TControlador : Controlador<TModelo>
         {
             if (mControladores.ContainsKey(modelo))
@@ -356,7 +356,7 @@ namespace AppGM.Core
         /// <param name="modelo"><see cref="ModeloBaseSK"/> del controlador</param>
         /// <param name="controlador"><see cref="ControladorBase"/>que sera añadido</param>
         public static void AñadirControlador<TModelo, TControlador>(TModelo modelo, TControlador controlador)
-            where TModelo : ModeloBaseSK, new()
+            where TModelo : ModeloBaseSK
             where TControlador : Controlador<TModelo>
         {
             try

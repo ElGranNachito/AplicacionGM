@@ -79,7 +79,13 @@ namespace AppGM.Core
 		/// <summary>
 		/// Obtiene el <see cref="ControladorBase"/> del modelo que contiene esta funcion
 		/// </summary>
-		public ControladorBase ContenedorFuncion => SistemaPrincipal.ObtenerControlador(modelo.ContenedorFuncion.Contenedor);
+		public ControladorBase ContenedorFuncion
+		{
+			get
+			{
+				return null;
+			}
+		}
 
 		#endregion
 
@@ -88,12 +94,12 @@ namespace AppGM.Core
 		public ControladorFuncionBase(ModeloFuncion _modelo)
 			: base(_modelo)
 		{
-			CargarVariablesYTiradas();
+			CargarVariablesYTiradas<TIVariableFuncion, TITiradaFuncion>();
 		} 
 
 		#endregion
 
-		#region Metodo
+		#region Metodos
 
 		/// <summary>
 		/// Carga los <see cref="Bloques"/>
@@ -147,10 +153,10 @@ namespace AppGM.Core
 						//Creamos un modelo para la variable
 						var modeloVariable = ControladorVariableBase.CrearModeloCorrespondiente(var.tipo, var.IDBloque, var.nombre);
 
-						var nuevaVariablePersistente = new TIVarible
+						var nuevaVariablePersistente = new TIVariableFuncion
 						{
-							Variable            = modeloVariable,
-							ModeloContenedorVar = modelo,
+							Variable = modeloVariable,
+							Funcion  = modelo,
 						};
 
 						//La añadimos al modelo
@@ -294,10 +300,10 @@ namespace AppGM.Core
 			//Añadimos al modelo las variables que quedaron en el nuevo modelo
 			variablesPersistentesNuevoModelo.ForEach(var =>
 			{
-				modelo.Variables.Add(new TIVarible
+				modelo.Variables.Add(new TIVariableFuncion
 				{
-					ModeloContenedorVar = modelo,
-					Variable            = var
+					Funcion  = modelo,
+					Variable = var
 				});
 
 				mVariablesPersistenes.Add(var.IDVariable, ControladorVariableBase.CrearControladorCorrespondiente(var));

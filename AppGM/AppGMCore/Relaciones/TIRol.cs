@@ -5,7 +5,7 @@ namespace AppGM.Core
     /// <summary>
     /// Representa una relacion con <see cref="ModeloRol"/>
     /// </summary>
-    public class TIRol : ModeloBase
+    public class TIRol : ModeloBaseSK
     {
         [ForeignKey(nameof(Rol))]
         public int IdRol { get; set; }

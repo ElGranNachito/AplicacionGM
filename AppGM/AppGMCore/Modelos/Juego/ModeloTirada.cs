@@ -3,12 +3,32 @@
     /// <summary>
     /// Modelo de una tirada que no especifica su tipo
     /// </summary>
-    public class ModeloTiradaBase : ModeloBase
+    public abstract class ModeloTiradaBase : ModeloBase
     {
         /// <summary>
         /// Controlador
         /// </summary>
         public IControladorTiradaBase controladorTiradaBase;
+
+        /// <summary>
+        /// Modelo del personaje que contiene la tirada
+        /// </summary>
+        public virtual TITiradaPersonaje PersonajeContenedor { get; set; }
+
+        /// <summary>
+        /// Modelo de la habilidad que contiene la tirada
+        /// </summary>
+        public virtual TITiradaHabilidad HabilidadContenedora { get; set; }
+
+        /// <summary>
+        /// Modelo del utilizable que contiene la tirada
+        /// </summary>
+        public virtual TITiradaUtilizable UtilizableContenedor { get; set; }
+
+        /// <summary>
+        /// Modelo del la funcion que contiene la tirada
+        /// </summary>
+        public virtual TITiradaFuncion FuncionContenedora { get; set; }
     }
 
     /// <summary>
