@@ -1,0 +1,19 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:AppGM">
+
+    <!--......................................IMAGENES..........................................-->
+
+    <Image x:Key="ImagenBotonRulesIdle" Source="../Media/Imagenes/Botones/MenuPrincipal/Rules_Idle.png"/>
+    <Image x:Key="ImagenBotonRulesMouse" Source="../Media/Imagenes/Botones/MenuPrincipal/Rules_Mouse.png"/>
+    <Image x:Key="ImagenBotonRulesClick" Source="../Media/Imagenes/Botones/MenuPrincipal/Rules_Click.png"/>
+    
+    <Image x:Key="ImagenBotonInfoIdle" Source="../Media/Imagenes/Botones/MenuPrincipal/Info_Idle.png"/>
+    <Image x:Key="ImagenBotonInfoMouse" Source="../Media/Imagenes/Botones/MenuPrincipal/Info_Mouse.png"/>
+    <Image x:Key="ImagenBotonInfoClick" Source="../Media/Imagenes/Botones/MenuPrincipal/Info_Click.png"/>
+
+    <Image x:Key="ImagenBotonItemsIdle" Source="../Media/Imagenes/Botones/MenuPrincipal/Item_Idle.png"/>
+    <Image x:Key="ImagenBotonItemsMouse" Source="../Media/Imagenes/Botones/MenuPrincipal/Item_Mouse.png"/>
+    <Image x:Key="ImagenBotonItemsClick" Source="../Media/Imagenes/Botones/MenuPrincipal/Item_Click.png"/>
+
+</ResourceDictionary>

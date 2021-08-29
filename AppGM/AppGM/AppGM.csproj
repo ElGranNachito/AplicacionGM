@@ -8,9 +8,13 @@
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Media\Imagenes\Botones\**" />
     <Compile Remove="tmp\**" />
+    <EmbeddedResource Remove="Media\Imagenes\Botones\**" />
     <EmbeddedResource Remove="tmp\**" />
+    <None Remove="Media\Imagenes\Botones\**" />
     <None Remove="tmp\**" />
+    <Page Remove="Media\Imagenes\Botones\**" />
     <Page Remove="tmp\**" />
   </ItemGroup>
   <ItemGroup>
@@ -177,6 +181,17 @@
     <Compile Remove="DesignModelRolItem.cs" />
     <Compile Remove="Viewmodels\BaseViewModel.cs" />
     <Page Remove="Estilos\Colores.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Media\Imagenes\Botones\MenuPrincipal\Info_Click.png" />
+    <Resource Include="Media\Imagenes\Botones\MenuPrincipal\Info_Idle.png" />
+    <Resource Include="Media\Imagenes\Botones\MenuPrincipal\Info_Mouse.png" />
+    <Resource Include="Media\Imagenes\Botones\MenuPrincipal\Item_Click.png" />
+    <Resource Include="Media\Imagenes\Botones\MenuPrincipal\Item_Idle.png" />
+    <Resource Include="Media\Imagenes\Botones\MenuPrincipal\Item_Mouse.png" />
+    <Resource Include="Media\Imagenes\Botones\MenuPrincipal\Rules_Click.png" />
+    <Resource Include="Media\Imagenes\Botones\MenuPrincipal\Rules_Idle.png" />
+    <Resource Include="Media\Imagenes\Botones\MenuPrincipal\Rules_Mouse.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="CoolLogs">

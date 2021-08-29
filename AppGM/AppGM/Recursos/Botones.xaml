@@ -248,6 +248,78 @@
 
     </Style>
 
+    <!-- Boton animado para la opcion de reglas en el menu princiapl -->
+    <Style x:Key="BotonReglas" TargetType="{x:Type Button}" BasedOn="{StaticResource BotonBase}">
+
+        <Style.Triggers>
+
+            <!-- Cuando vuelve a su estado default, cambia su imagen -->
+            <Trigger Property="IsDefault" Value="True">
+                <Setter Property="Content" Value="{StaticResource ImagenBotonRulesIdle}"/>
+            </Trigger>
+
+            <!-- Cuando el mouse pasa sobre el boton, cambia su imagen -->
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Content" Value="{StaticResource ImagenBotonRulesMouse}"/>
+            </Trigger>
+
+            <!-- Cuando se hace click sobre el boton, cambia su imagen -->
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Content" Value="{StaticResource ImagenBotonRulesClick}"/>
+            </Trigger>
+
+        </Style.Triggers>
+
+    </Style>
+
+    <!-- Boton animado para la opcion de informacion en el menu princiapl -->
+    <Style x:Key="BotonInfo" TargetType="{x:Type Button}" BasedOn="{StaticResource BotonBase}">
+
+        <Style.Triggers>
+
+            <!-- Cuando vuelve a su estado default, cambia su imagen -->
+            <Trigger Property="IsDefault" Value="True">
+                <Setter Property="Content" Value="{StaticResource ImagenBotonInfoIdle}"/>
+            </Trigger>
+
+            <!-- Cuando el mouse pasa sobre el boton, cambia su imagen -->
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Content" Value="{StaticResource ImagenBotonInfoMouse}"/>
+            </Trigger>
+
+            <!-- Cuando se hace click sobre el boton, cambia su imagen -->
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Content" Value="{StaticResource ImagenBotonInfoClick}"/>
+            </Trigger>
+
+        </Style.Triggers>
+
+    </Style>
+
+    <!-- Boton animado para la opcion de items en el menu princiapl -->
+    <Style x:Key="BotonItems" TargetType="{x:Type Button}" BasedOn="{StaticResource BotonBase}">
+
+        <Style.Triggers>
+
+            <!-- Cuando vuelve a su estado default, cambia su imagen -->
+            <Trigger Property="IsDefault" Value="True">
+                <Setter Property="Content" Value="{StaticResource ImagenBotonItemsIdle}"/>
+            </Trigger>
+
+            <!-- Cuando el mouse pasa sobre el boton, cambia su imagen -->
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Content" Value="{StaticResource ImagenBotonItemsMouse}"/>
+            </Trigger>
+
+            <!-- Cuando se hace click sobre el boton, cambia su imagen -->
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Content" Value="{StaticResource ImagenBotonItemsClick}"/>
+            </Trigger>
+
+        </Style.Triggers>
+
+    </Style>
+
     <!-- Estilo para checkboxes que cambia el tilde por una flecha -->
     <Style TargetType="{x:Type CheckBox}" x:Key="CheckBoxDropDown">
 
@@ -294,6 +366,7 @@
 
     </Style>
 
+    <!-- Estilo para los botones de solapas horizontales -->
     <Style TargetType="{x:Type CheckBox}" x:Key="CheckBoxSolapa">
 
         <Setter Property="Template">
@@ -340,6 +413,7 @@
 
     </Style>
 
+    <!-- Estilo para los botones de solapas horizontales -->
     <Style TargetType="{x:Type CheckBox}" x:Key="CheckBoxSolapaHorizontal">
 
         <Setter Property="Template">

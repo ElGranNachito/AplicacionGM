@@ -107,22 +107,26 @@
                     HorizontalAlignment="Center">
 
             <!-- Reglas -->
-            <Button Content="Reglas" 
+            <Button Content="{StaticResource ImagenBotonRulesIdle}"
+                    Style="{StaticResource BotonReglas}" 
                     Margin=" 0 50 0 20"
                     HorizontalAlignment="Center"
                     Width="100"/>
 
             <!-- Informacion -->
-            <Button Content="Informacion" 
+            <Button Content="{StaticResource ImagenBotonInfoIdle}"
+                    Style="{StaticResource BotonInfo}" 
                     Margin=" 0 10 0 20"
                     HorizontalAlignment="Center"
                     Width="100"/>
 
             <!-- Items -->
-            <Button Content="Items" 
+            <Button Content="{StaticResource ImagenBotonItemsIdle}"
+                    Style="{StaticResource BotonItems}" 
                     Margin=" 0 10 0 20"
                     HorizontalAlignment="Center"
-                    Width="100"/>
+                    Width="100">
+            </Button>
 
         </StackPanel>
 
