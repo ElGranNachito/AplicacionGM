@@ -130,10 +130,20 @@
     <Resource Include="Media\Imagenes\Posiciones\Trampa_Master_Saber.png" />
     <Resource Include="Media\Imagenes\Posiciones\Trampa_Rider.png" />
     <Resource Include="Media\Imagenes\Posiciones\Trampa_Saber.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Media\Imagenes\Posiciones\Cadaver_Master_Rider.png" />
     <Resource Include="Media\Imagenes\Posiciones\Cadaver_Rider.png" />
+    <Resource Include="Media\Imagenes\Posiciones\Cadaver_Master_Archer.png" />
+    <Resource Include="Media\Imagenes\Posiciones\Cadaver_Archer.png" />
+    <Resource Include="Media\Imagenes\Posiciones\Cadaver_Master_Assassin.png" />
+    <Resource Include="Media\Imagenes\Posiciones\Cadaver_Assassin.png" />
+    <Resource Include="Media\Imagenes\Posiciones\Cadaver_Master_Berserker.png" />
+    <Resource Include="Media\Imagenes\Posiciones\Cadaver_Berserker.png" />
+    <Resource Include="Media\Imagenes\Posiciones\Cadaver_Master_Caster.png" />
+    <Resource Include="Media\Imagenes\Posiciones\Cadaver_Caster.png" />
+    <Resource Include="Media\Imagenes\Posiciones\Cadaver_Master_Lancer.png" />
+    <Resource Include="Media\Imagenes\Posiciones\Cadaver_Lancer.png" />
+    <Resource Include="Media\Imagenes\Posiciones\Cadaver_Master_Saber.png" />
+    <Resource Include="Media\Imagenes\Posiciones\Cadaver_Saber.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Media\Imagenes\Animaciones\FondoMenuPrincipal\FondoMenuPrincipal_1.jpg" />
