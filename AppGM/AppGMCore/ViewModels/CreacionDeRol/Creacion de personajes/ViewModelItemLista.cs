@@ -21,6 +21,11 @@ namespace AppGM.Core
 		public ViewModelListaDeElementos<ViewModelCaracteristicaItem> CaracteristicasItem { get; set; } = new ViewModelListaDeElementos<ViewModelCaracteristicaItem>();
 
 		/// <summary>
+		/// Indica si se deben mostrar los botones
+		/// </summary>
+		public bool MostrarBotonesLaterales { get; set; }
+
+		/// <summary>
 		/// Indica si <see cref="PathImagen"/> es valido
 		/// </summary>
 		public bool TieneImagen => File.Exists(PathImagen);
@@ -69,10 +74,12 @@ namespace AppGM.Core
 		/// <summary>
 		/// Constructor por defecto
 		/// </summary>
-		public ViewModelItemLista()
+		public ViewModelItemLista(bool _mostrarBotonesLaterales = true)
 		{
 			ContenidoBotonSuperior = "Editar";
 			ContenidoBotonInferior = "Eliminar";
+
+			MostrarBotonesLaterales = _mostrarBotonesLaterales;
 		} 
 
 		#endregion
@@ -92,7 +99,8 @@ namespace AppGM.Core
 		/// Constructor
 		/// </summary>
 		/// <param name="_controlador">Controlador contenido en este item</param>
-		public ViewModelItemListaControlador(ControladorBase _controlador)
+		public ViewModelItemListaControlador(ControladorBase _controlador, bool _mostrarBotonesLaterales = true)
+			:base(_mostrarBotonesLaterales)
 		{
 			controlador = _controlador;
 		}

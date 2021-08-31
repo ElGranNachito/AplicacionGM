@@ -270,7 +270,7 @@ namespace AppGM.Core
 			var vmSeleccionControlador = new ViewModelSeleccionDeControlador(
 				SistemaPrincipal.ObtenerControladores(TipoVariable, TipoVariable == typeof(ControladorUtilizable)));
 
-			var resultado = await SistemaPrincipal.MostrarMensaje(vmSeleccionControlador, "Seleccionar entidad", true, 300, 200);
+			var resultado = await SistemaPrincipal.MostrarMensaje(vmSeleccionControlador, "Seleccionar entidad", true, 500, 450);
 
 			return resultado == EResultadoViewModel.Aceptar ? vmSeleccionControlador.ItemSeleccionado : null;
 		} 

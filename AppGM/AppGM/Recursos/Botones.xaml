@@ -45,6 +45,8 @@
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
 
                         <TextBlock 
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                             Text="{TemplateBinding Content}"
                             TextAlignment="Center"/>
                     </Border>

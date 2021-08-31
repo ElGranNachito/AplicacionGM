@@ -59,7 +59,7 @@ namespace AppGM.Core
 		/// Crea un viewmodel para representar a este controlador en una lista
 		/// </summary>
 		/// <returns>Instancia del viewmodel creado o null</returns>
-		public virtual ViewModelItemListaControlador CrearViewModelItem() => null;
+		public virtual ViewModelItemListaControlador CrearViewModelItem(bool _motrarBotones = true) => null;
 	}
 
 	/// <summary>

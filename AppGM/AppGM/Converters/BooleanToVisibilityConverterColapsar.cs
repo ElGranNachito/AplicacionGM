@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 
@@ -23,4 +24,25 @@ namespace AppGM
             return valor ? Visibility.Collapsed : Visibility.Visible;
         }
     }
+
+    /// <summary>
+    /// Convierte varios valores <see cref="bool"/> a un valor de <see cref="Visibility"/>
+    /// </summary>
+	public class BooleanToVisibilityConverterColapsarMultiple : ConvertidorDeValoresMultiples<BooleanToVisibilityConverterColapsarMultiple>
+	{
+		public override object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+		{
+			foreach (var valor in values)
+			{
+                //Si alguno de los valores es falso estonces devolvemos collapsed
+				if (valor is false)
+				{
+					return Visibility.Collapsed;
+				}
+			}
+
+            //Si llegamos hasta aqui es porque todos los valores son verdaderos
+			return Visibility.Visible;
+		}
+	}
 }

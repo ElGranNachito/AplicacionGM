@@ -57,7 +57,7 @@ namespace AppGM.Core
 		/// </summary>
 		public int IDVariable
 		{
-			get => modelo.IDVariable;
+			get => modelo.IDVariable != 0 ? modelo.IDVariable : modelo.Id;
 			set => modelo.IDVariable = value;
 		}
 

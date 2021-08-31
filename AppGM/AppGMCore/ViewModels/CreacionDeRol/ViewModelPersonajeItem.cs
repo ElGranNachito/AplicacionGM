@@ -16,8 +16,8 @@ namespace AppGM.Core
 		/// Constructor
 		/// </summary>
 		/// <param name="_controladorPersonaje">Controlador del personaje que sera representado por este vm</param>
-		public ViewModelPersonajeItem(ControladorPersonaje _controladorPersonaje)
-			:base(_controladorPersonaje)
+		public ViewModelPersonajeItem(ControladorPersonaje _controladorPersonaje, bool _mostrarBotonesLaterales = true)
+			:base(_controladorPersonaje, _mostrarBotonesLaterales)
 		{
 			ControladorPersonaje = _controladorPersonaje;
 

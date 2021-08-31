@@ -23,10 +23,12 @@
 
             Visibility="{Binding MostrarCampoTexto, Converter={local:BooleanToVisibilityConverterColapsar}}"
 
-            Text="{Binding TextoActual}"
+            Text="{Binding TextoActual, Mode=OneWayToSource}"
 
-            local:CampoDeTextoNumericoProperty.Value="{Binding EsNumerico}"
-            local:CampoDeTextoNumericoProperty.Tipo="{Binding TipoSeleccionado}"/>
+            MinHeight="20"
+
+            local:CampoDeTextoNumericoProperty.Value="{Binding EsNumerica}"
+            local:CampoDeTextoNumericoProperty.Tipo="{Binding TipoVariable}"/>
 
         <!-- Control para la seleccion de un controlador -->
         <StackPanel
@@ -38,13 +40,19 @@
             <local:UserControlItemLista
                 DataContext="{Binding ControladorSeleccionado}"/>
 
+            <!-- Boton seleccionar -->
             <Button
 
-                Margin="5 0 0 0"
+                Margin="20 0 0 0"
+
+                VerticalAlignment="Center"
 
                 Content="Seleccionar"
 
                 BorderBrush="Black"
+
+                MinHeight="25"
+                MinWidth="80"
 
                 Style="{StaticResource BotonFondoResaltable}"
 
