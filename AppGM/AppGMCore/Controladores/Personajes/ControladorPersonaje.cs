@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace AppGM.Core
 {
@@ -436,9 +437,19 @@ namespace AppGM.Core
             for(; nivelDelDirectorioActual > 0; --nivelDelDirectorioActual)
                 sb.Append("../");
 
-            sb.Append(modelo.PathImagen + Enum.GetName(typeof(EFormatoImagen), modelo.FormatoImagen));
+            sb.Append(modelo.PathImagenRelativo + Enum.GetName(typeof(EFormatoImagen), modelo.FormatoImagen));
 
             return sb.ToString();
+        }
+
+        public override bool CompararConCadena(string cadena)
+        {
+	        return Regex.IsMatch(modelo.Nombre, $"*{cadena}*");
+        }
+
+        public override ViewModelItemListaControlador CrearViewModelItem()
+        {
+	        return new ViewModelPersonajeItem(this);
         }
 
         #endregion

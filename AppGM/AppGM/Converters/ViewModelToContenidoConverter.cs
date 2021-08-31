@@ -34,6 +34,12 @@ namespace AppGM
 	            case ViewModelCreacionDeFuncionBase vm:
 		            return new UserControlCreacionFuncion { DataContext = vm };
 
+                case ViewModelCreacionDeVariable vm:
+	                return new UserControlCreacionVariable {DataContext = vm};
+
+                case ViewModelSeleccionDeControlador vm:
+	                return new UserControlSeleccionDeControlador {DataContext = vm};
+
                 //Globo para mostrar informacion de un rol
                 case ViewModelContenidoGloboInfoRol vm:
                     return new UserControlContenidoGloboInfoRol {DataContext = vm};

@@ -10,6 +10,16 @@ namespace AppGM.Core
 	/// </summary>
 	public abstract class ControladorBase
 	{
+		/// <summary>
+		/// <para>
+		///		Devuelve el modelo representado por este controlador
+		/// </para>
+		/// <para>
+		///		Solo utilizar para acceder al modelo desde un <see cref="ControladorBase"/>
+		///	</para>
+		/// </summary>
+		public abstract ModeloBase Modelo { get; protected set; }
+
 		public abstract ControladorVariableBase ObtenerControladorVariable(int idVariable);
 
 		/// <summary>
@@ -37,6 +47,19 @@ namespace AppGM.Core
 		/// <returns>Tirada hallada o null</returns>
 		[AccesibleEnGuraScratch(nameof(ObtenerTirada))]
 		public abstract IControladorTiradaBase ObtenerTirada(int idTirada);
+
+		/// <summary>
+		/// Compara este controlador con una <paramref name="cadena"/> y determina si la cadena lo representa
+		/// </summary>
+		/// <param name="cadena">Cadena con la que comparar</param>
+		/// <returns><see cref="bool"/> que indica si este controlador es representado por la cadena</returns>
+		public virtual bool CompararConCadena(string cadena) => false;
+
+		/// <summary>
+		/// Crea un viewmodel para representar a este controlador en una lista
+		/// </summary>
+		/// <returns>Instancia del viewmodel creado o null</returns>
+		public virtual ViewModelItemListaControlador CrearViewModelItem() => null;
 	}
 
 	/// <summary>
@@ -44,7 +67,7 @@ namespace AppGM.Core
 	/// </summary>
 	/// <typeparam name="TipoModelo">Tipo del modelo que este controlador representa</typeparam>
     public class Controlador<TipoModelo> : ControladorBase
-        where TipoModelo: ModeloBaseSK
+        where TipoModelo: ModeloBase
     {
 		#region Eventos
 
@@ -71,6 +94,12 @@ namespace AppGM.Core
 		/// Contiene todas las <see cref="IControladorTiradaBase"/> guardadas en el <see cref="modelo"/>
 		/// </summary>
 		protected Dictionary<int, IControladorTiradaBase> mTiradas;
+
+		public override ModeloBase Modelo
+		{
+			get => modelo;
+			protected set {}
+		}
 
 		#endregion
 

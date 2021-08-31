@@ -1,4 +1,6 @@
-﻿namespace AppGM.Core
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace AppGM.Core
 {
 	/// <summary>
 	/// Modelo que representa una variable persistente en una funcion
@@ -9,6 +11,12 @@
 		/// Nombre de la variable
 		/// </summary>
 		public string NombreVariable { get; set; }
+
+		/// <summary>
+		/// Descripcion de la variable
+		/// </summary>
+		[MaxLength(500)]
+		public string DescripcionVariable { get; set; }
 
 		/// <summary>
 		/// Tipo de la variable
@@ -64,4 +72,17 @@
 	/// Variable persistente de tipo <see cref="string"/>
 	/// </summary>
 	public class ModeloVariableString : ModeloVariable<string> { }
+
+	/// <summary>
+	/// Variable persistente de tipo <see cref="string"/>
+	/// </summary>
+	public class ModeloVariableControlador : ModeloVariable<int>
+	{
+		public string TipoModeloControlador { get; set; }
+	}
+
+	public class ModeloVariableLista : ModeloVariable<string>
+	{
+
+	}
 }

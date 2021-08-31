@@ -423,7 +423,7 @@
 
                     <local:UserControlListaItems.ItemTemplate>
                         <DataTemplate>
-                            <local:UserControlHabilidadItem/>
+                            <local:UserControlItemLista/>
                         </DataTemplate>
                     </local:UserControlListaItems.ItemTemplate>
 

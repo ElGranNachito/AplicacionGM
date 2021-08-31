@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AppGM.Core.Migrations
 {
     [DbContext(typeof(RolContext))]
-    [Migration("20210829203050_Inici")]
-    partial class Inici
+    [Migration("20210830000254_inicial")]
+    partial class inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -380,7 +380,10 @@ namespace AppGM.Core.Migrations
                     b.Property<int>("NumeroParty")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("PathImagen")
+                    b.Property<string>("PathImagenAbsoluto")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PathImagenRelativo")
                         .HasColumnType("TEXT");
 
                     b.Property<decimal>("PesoCargado")

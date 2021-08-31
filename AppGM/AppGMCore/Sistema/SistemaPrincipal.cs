@@ -22,6 +22,8 @@ namespace AppGM.Core
 
         private static Dictionary<ModeloBaseSK, ControladorBase> mControladores = new Dictionary<ModeloBaseSK, ControladorBase>();
 
+        private static Dictionary<Type, Dictionary<int, ModeloBase>> mModelos = new Dictionary<Type, Dictionary<int, ModeloBase>>();
+
         //------------------------------PROPIEDADES-------------------------------
 
         /// <summary>
@@ -96,6 +98,8 @@ namespace AppGM.Core
         /// <param name="controladorDeArchivos">Instancia de un <see cref="IControladorDeArchivos"/> para atar al IoC</param>
         public static void Inicializar(IControladorDeArchivos controladorDeArchivos)
         {
+	        ControladorVariableBase.CrearModeloCorrespondiente(typeof(ControladorPersonaje), 0, "nada");
+
             //Obtenemos el contexto del hilo que nos llamo
             ThreadUISyncContext = SynchronizationContext.Current;
 			
@@ -212,6 +216,9 @@ namespace AppGM.Core
                 return;
 
             DatosRolSeleccionado.EliminarModelo(modelo);
+
+            if (modelo is ModeloBase mb)
+	            QuitarModelo(mb);
         }
 
         /// <summary>
@@ -269,7 +276,7 @@ namespace AppGM.Core
 		/// <param name="intenarCrearSiNoExiste">Indica si se debe intentar crear el controlador en caso de que no se encuentre en el diccionario</param>
 		/// <returns>El <see cref="TControlador"/> obtenido o null</returns>
 		public static TControlador ObtenerControlador<TControlador, TModelo>(TModelo modelo, bool intenarCrearSiNoExiste = false)
-            where TModelo : ModeloBaseSK
+            where TModelo : ModeloBase
             where TControlador : Controlador<TModelo>
         {
             if (mControladores.ContainsKey(modelo))
@@ -325,11 +332,11 @@ namespace AppGM.Core
         }
 
         /// <summary>
-        /// Intenta obtener el <see cref="Controlador{TipoModelo}"/> para <paramref name="modelo"/>
+        /// Obtiene la lista con todos los controladores del <paramref name="tipoControladores"/>
         /// </summary>
-        /// <param name="modelo">Modelo del que se quiere obtener el controlador</param>
-        /// <param name="intenarCrearSiNoExiste">Indica si se debe intentar crear el controlador en caso de que no se encuentre en el diccionario</param>
-        /// <returns>El controlador encontrado o null</returns>
+        /// <param name="tipoControladores">Tipo de llos controladores</param>
+        /// <param name="incluirSubclases">Indica si deben incluir las subclases del <paramref name="tipoControladores"/></param>
+        /// <returns>Coleccion con los controladores encontrados</returns>
         public static List<ControladorBase> ObtenerControladores(Type tipoControladores, bool incluirSubclases)
         {
 	        var controladoresExistente = mControladores.Values.ToList();
@@ -349,6 +356,20 @@ namespace AppGM.Core
         }
 
         /// <summary>
+        /// Obtiene el modelo de tipo <paramref name="tipoDelModelo"/> con la <paramref name="id"/> especificada
+        /// </summary>
+        /// <param name="tipoDelModelo">Tipo del modelo que se quiere obtener</param>
+        /// <param name="id">Id del modelo</param>
+        /// <returns>Modelo hallado o null</returns>
+        public static ModeloBase ObtenerModelo(Type tipoDelModelo, int id)
+        {
+	        if (mModelos.ContainsKey(tipoDelModelo))
+		        return mModelos[tipoDelModelo][id];
+
+	        return null;
+        }
+
+        /// <summary>
         /// Añade el <paramref name="controlador"/> al diccionario
         /// </summary>
         /// <typeparam name="TControlador">Tipo del controlador</typeparam>
@@ -356,7 +377,7 @@ namespace AppGM.Core
         /// <param name="modelo"><see cref="ModeloBaseSK"/> del controlador</param>
         /// <param name="controlador"><see cref="ControladorBase"/>que sera añadido</param>
         public static void AñadirControlador<TModelo, TControlador>(TModelo modelo, TControlador controlador)
-            where TModelo : ModeloBaseSK
+            where TModelo : ModeloBase
             where TControlador : Controlador<TModelo>
         {
             try
@@ -376,6 +397,52 @@ namespace AppGM.Core
         /// <see cref="Controlador{TipoModelo}"/> que se queire quitar</param>
         public static void QuitarControlador(ModeloBaseSK modelo)
             => mControladores.Remove(modelo);
+
+        /// <summary>
+        /// Añade un <see cref="ModeloBase"/> al sistema
+        /// </summary>
+        /// <param name="modelo">Modelo que se añadira</param>
+        /// <returns><see cref="bool"/> indicando si se pudo añadir el modelo</returns>
+        public static bool AñadirModelo(ModeloBase modelo)
+        {
+	        if (modelo.Id == 0)
+	        {
+                SistemaPrincipal.LoggerGlobal.Log($"Se intento guardar un modelo que no esta guardado en la base de datos! {modelo}", ESeveridad.Error);
+
+                return false;
+	        }
+
+	        var tipoModelo = modelo.GetType();
+
+	        if (!mModelos.ContainsKey(tipoModelo))
+		        mModelos[tipoModelo] = new Dictionary<int, ModeloBase>();
+
+	        mModelos[tipoModelo][modelo.Id] = modelo;
+
+	        return true;
+        }
+
+        /// <summary>
+        /// Quita un <see cref="ModeloBase"/> del sistema
+        /// </summary>
+        /// <param name="modelo">Modelo que se quitara</param>
+        /// <returns><see cref="bool"/> indicando si se pudo quitar el modelo</returns>
+        public static bool QuitarModelo(ModeloBase modelo)
+        {
+	        if (modelo.Id == 0)
+	        {
+		        SistemaPrincipal.LoggerGlobal.Log($"Se intento quitar un modelo que no esta guardado en la base de datos! {modelo}", ESeveridad.Advertencia);
+
+		        return false;
+	        }
+
+	        var tipoModelo = modelo.GetType();
+
+	        if (!mModelos.ContainsKey(tipoModelo))
+		        return false;
+
+	        return mModelos[tipoModelo].Remove(modelo.Id);
+        }
 
         /// <summary>
         /// Muestra un mensaje sobre la ventana actualmente activa

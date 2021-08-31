@@ -1,0 +1,66 @@
+﻿<UserControl x:Class="AppGM.UserControlIngresoVariable"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AppGM"
+             mc:Ignorable="d" 
+             d:DesignHeight="100" d:DesignWidth="200">
+
+    <!-- ViewModel: ViewModelIngresoVariable -->
+
+    <StackPanel
+        Grid.Column="1"
+
+        Margin="10 0 0 0"
+        
+        Background="White">
+
+        <!-- Campo valor numerico, para el ingreso del valor de una variable de tipo numerico -->
+        <TextBox
+
+            HorizontalContentAlignment="Center"
+
+            Visibility="{Binding MostrarCampoTexto, Converter={local:BooleanToVisibilityConverterColapsar}}"
+
+            Text="{Binding TextoActual}"
+
+            local:CampoDeTextoNumericoProperty.Value="{Binding EsNumerico}"
+            local:CampoDeTextoNumericoProperty.Tipo="{Binding TipoSeleccionado}"/>
+
+        <!-- Control para la seleccion de un controlador -->
+        <StackPanel
+            Orientation="Horizontal"
+            
+            Visibility="{Binding DebeSeleccionarControlador, Converter={local:BooleanToVisibilityConverterColapsar}}">
+
+            <!-- Controlador actualmente seleccionado -->
+            <local:UserControlItemLista
+                DataContext="{Binding ControladorSeleccionado}"/>
+
+            <Button
+
+                Margin="5 0 0 0"
+
+                Content="Seleccionar"
+
+                BorderBrush="Black"
+
+                Style="{StaticResource BotonFondoResaltable}"
+
+                Command="{Binding ComandoSeleccionarControlador}"/>
+        </StackPanel>
+
+        <!-- Lista de valores en caso de que la variable sea una lista -->
+        <local:UserControlListaItems
+
+            Visibility="{Binding 
+            RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, 
+            Path=DataContext.DebeMostrarLista, 
+            Converter={local:BooleanToVisibilityConverterColapsar}}"
+
+            DataContext="{Binding ViewModelListaDeControladores}">
+
+        </local:UserControlListaItems>
+    </StackPanel>
+</UserControl>

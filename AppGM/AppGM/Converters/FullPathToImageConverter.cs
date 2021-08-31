@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Windows.Data;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using AppGM.Core;
 
@@ -29,9 +30,9 @@ namespace AppGM
 
             //Si no existe la creamos y luego la añadimos al diccionario
             BitmapImage bitmapImage = new BitmapImage(new Uri(tmp, UriKind.Absolute));
-
+            
             mImagenesCacheadas.Add(tmp, bitmapImage);
-
+            
             return bitmapImage;
         }
 

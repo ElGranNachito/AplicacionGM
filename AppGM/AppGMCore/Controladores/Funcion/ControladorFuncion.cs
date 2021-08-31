@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
@@ -83,6 +81,14 @@ namespace AppGM.Core
 		{
 			get
 			{
+				if (modelo.EfectoContenedor != null)
+					return SistemaPrincipal.ObtenerControlador<ControladorEfecto, ModeloEfecto>(modelo.EfectoContenedor.Efecto);
+
+				if (modelo.HabilidadContenedora != null)
+					return SistemaPrincipal.ObtenerControlador<ControladorHabilidad, ModeloHabilidad>(modelo.HabilidadContenedora.Habilidad);
+
+				SistemaPrincipal.LoggerGlobal.Log($"No se pudo hallar el contenedor de {this}", ESeveridad.Error);
+
 				return null;
 			}
 		}

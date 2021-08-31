@@ -57,9 +57,14 @@ namespace AppGM.Core
         public decimal PesoCargado { get; set; }
 
         /// <summary>
-        /// Imagencita del personaje
+        /// Ruta relativa a la imagen del personaje
         /// </summary>
-        public string PathImagen { get; set; }
+        public string PathImagenRelativo { get; set; }
+
+        /// <summary>
+        /// Ruta completa a la imagen del personaje
+        /// </summary>
+        public string PathImagenAbsoluto { get; set; }
 
         /// <summary>
         /// Estado del personaje (en combate o no en combate)

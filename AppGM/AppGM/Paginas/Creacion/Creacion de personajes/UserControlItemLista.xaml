@@ -14,11 +14,37 @@
         Background="White">
 
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
+        <!-- Imagen del item -->
+        <Border
+            Padding="5"
+
+            VerticalAlignment="Stretch"
+            Width="{Binding RelativeSource={RelativeSource Mode=Self}, Path=ActualHeight}"
+            
+            Visibility="{Binding TieneImagen,
+            Converter={local:BooleanToVisibilityConverterColapsar},
+            FallbackValue=Collapsed}">
+
+            <Border>
+
+                <Border.Background>
+                    <ImageBrush 
+                        ImageSource="{Binding PathImagen, 
+                        Converter={local:FullPathToImageConverter}}"/>
+                </Border.Background>
+
+            </Border>
+
+        </Border>
+
+        <!-- Datos del item -->
         <ItemsControl
+            Grid.Column="1"
             ItemsSource="{Binding CaracteristicasItem.Elementos}">
 
             <ItemsControl.ItemTemplate>
@@ -41,7 +67,7 @@
         </ItemsControl>
 
         <Grid
-            Grid.Column="1"
+            Grid.Column="2"
             HorizontalAlignment="Center"
 
             Visibility="{Binding 
@@ -60,9 +86,9 @@
                 Margin="0 5 0 0"
                 Style="{StaticResource BotonFondoResaltable}"
                 
-                Content="Editar"
+                Content="{Binding ContenidoBotonSuperior}"
                 
-                Command="{Binding ComandoEditar}"/>
+                Command="{Binding ComandoBotonSuperior}"/>
 
             <!-- Boton eliminar -->
             <Button
@@ -72,9 +98,9 @@
 
                 Style="{StaticResource BotonFondoResaltable}"
 
-                Content="Eliminar"
+                Content="{Binding ContenidoBotonInferior}"
                 
-                Command="{Binding ComandoEliminar}"/>
+                Command="{Binding ComandoBotonInferior}"/>
         </Grid>
 
     </Grid>
