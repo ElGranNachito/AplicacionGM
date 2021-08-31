@@ -46,6 +46,9 @@ namespace AppGM
                         {
                             DataContext = vmc
                         };
+
+                    case ViewModelSeleccionDeControlador vmc:
+	                    return new UserControlSeleccionDeControlador { DataContext = vmc };
                 }
             }
 

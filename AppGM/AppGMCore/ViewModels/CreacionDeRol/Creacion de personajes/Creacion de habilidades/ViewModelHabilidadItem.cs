@@ -1,9 +1,12 @@
-﻿using System.IO;
-using System.Windows.Input;
+﻿using System.Collections.ObjectModel;
+using System.IO;
 
 namespace AppGM.Core
 {
-    public class ViewModelHabilidadItem : ViewModel
+    /// <summary>
+    /// Representa una habilidad en una lista
+    /// </summary>
+    public class ViewModelHabilidadItem : ViewModelItemLista
     {
         #region Propiedades
 
@@ -15,15 +18,6 @@ namespace AppGM.Core
         public bool EsMagia    => Habilidad.TipoDeHabilidad == ETipoHabilidad.Hechizo;
         public bool EsNP       => Habilidad.TipoDeHabilidad == ETipoHabilidad.NoblePhantasm;
 
-        /// <summary>
-        /// Consiste del nombre y el nivel o rango
-        /// </summary>
-        public string TituloHabilidad     => Habilidad.Nombre + $".{(EsMagia ? (Habilidad as ModeloMagia)?.Nivel.ToString() : Habilidad.Rango.ToString())}";
-
-        public string PathImagenHabilidad => Path.Combine(Path.Combine(SistemaPrincipal.ControladorDeArchivos.DirectorioImagenes, "Habilidades" + Path.DirectorySeparatorChar), Habilidad.TipoDeHabilidad + ".png");
-
-
-        public ICommand ComandoEditar { get; private set; }
         #endregion
 
         #region Constructor
@@ -32,7 +26,29 @@ namespace AppGM.Core
         {
             Habilidad = _habilidad;
 
-            ComandoEditar = new Comando(() =>
+            PathImagen = Path.Combine(
+							Path.Combine(
+								SistemaPrincipal.ControladorDeArchivos.DirectorioImagenes, "Habilidades" + Path.DirectorySeparatorChar), 
+								Habilidad.TipoDeHabilidad + ".png");
+
+            CaracteristicasItem.Elementos = new ObservableCollection<ViewModelCaracteristicaItem>
+            {
+                //Nombre de la habilidad
+	            new ViewModelCaracteristicaItem
+	            {
+		            Titulo = "Nombre",
+		            Valor = Habilidad.Nombre + $".{(EsMagia ? (Habilidad as ModeloMagia)?.Nivel.ToString() : Habilidad.Rango.ToString())}"
+	            },
+
+                //Tipo de la habilidad
+                new ViewModelCaracteristicaItem
+                {
+                    Titulo = "Tipo Habilidad",
+                    Valor = Habilidad.TipoDeHabilidad.ToString()
+                }
+            };
+
+            ComandoBotonSuperior = new Comando(() =>
             {
 	            var vmActual = SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido;
 

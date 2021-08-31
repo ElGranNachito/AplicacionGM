@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AppGM.Core.Migrations
 {
-    public partial class Inici : Migration
+    public partial class inicial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -1252,7 +1252,8 @@ namespace AppGM.Core.Migrations
                     VentajaLck = table.Column<int>(type: "INTEGER", nullable: false),
                     PesoMaximoCargable = table.Column<decimal>(type: "TEXT", nullable: false),
                     PesoCargado = table.Column<decimal>(type: "TEXT", nullable: false),
-                    PathImagen = table.Column<string>(type: "TEXT", nullable: true),
+                    PathImagenRelativo = table.Column<string>(type: "TEXT", nullable: true),
+                    PathImagenAbsoluto = table.Column<string>(type: "TEXT", nullable: true),
                     EstaEnCombate = table.Column<bool>(type: "INTEGER", nullable: false),
                     FormatoImagen = table.Column<int>(type: "INTEGER", nullable: false),
                     PosicionId = table.Column<int>(type: "INTEGER", nullable: true),

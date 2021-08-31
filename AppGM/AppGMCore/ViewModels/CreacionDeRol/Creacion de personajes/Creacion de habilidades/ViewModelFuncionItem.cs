@@ -55,7 +55,7 @@ namespace AppGM.Core
 				}
 			});
 
-			ComandoEditar = new Comando(() =>
+			ComandoBotonSuperior = new Comando(() =>
 			{
 				//Obtenemos el vm actual de la ventana
 				var dataContextActual = SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido;
@@ -68,7 +68,7 @@ namespace AppGM.Core
 						});
 			});
 
-			ComandoEliminar = new Comando(() =>
+			ComandoBotonInferior = new Comando(() =>
 			{
 				//TODO: Mostrar mensaje de confirmacion
 				ControladorFuncion.Eliminar();

@@ -8,12 +8,21 @@ namespace AppGM.Core
 	/// </summary>
 	public abstract class ControladorVariableBase : Controlador<ModeloVariableBase>
 	{
+		#region Campos & Propiedades
+
+		//---------------------------------------CAMPOS-------------------------------------------
+
 		/// <summary>
 		/// Tipo de la variable.
 		/// </summary>
 		//Es un campo aparte porque el tipo de la variable guardada en el modelo es un string
 		private Type mTipoVariable;
 
+		//------------------------------------PROPIEDADES-------------------------------------
+
+		/// <summary>
+		/// Atajo para obtener/establecer el valor del nombre de la variable en el modelo
+		/// </summary>
 		public string NombreVariable
 		{
 			get => modelo.NombreVariable;
@@ -26,6 +35,9 @@ namespace AppGM.Core
 			}
 		}
 
+		/// <summary>
+		/// Tipo de la variable
+		/// </summary>
 		public Type TipoVariable
 		{
 			get => mTipoVariable;
@@ -40,18 +52,29 @@ namespace AppGM.Core
 			}
 		}
 
+		/// <summary>
+		/// Atajo para obtener/establecer el valor del id de la variable en el modelo
+		/// </summary>
 		public int IDVariable
 		{
 			get => modelo.IDVariable;
 			set => modelo.IDVariable = value;
 		}
 
+		#endregion
+
+		#region Constructor
+
 		public ControladorVariableBase(ModeloVariableBase _modelo)
 			: base(_modelo)
 		{
 			//No queremos disparar la propiedad asi que establecemos el valor del campo directamente
 			mTipoVariable = Type.GetType(modelo.TipoVariable);
-		}
+		} 
+
+		#endregion
+
+		#region Metodos
 
 		/// <summary>
 		/// Obtiene el valor de la variable almacenado
@@ -66,7 +89,11 @@ namespace AppGM.Core
 		public abstract void GuardarValorVariable(object nuevoValor);
 
 		public override string ToString() =>
-			$"ID: {modelo.Id} - Nombre: {modelo.NombreVariable} - IDVariable: {modelo.IDVariable}";
+			$"ID: {modelo.Id} - Nombre: {modelo.NombreVariable} - IDVariable: {modelo.IDVariable}"; 
+
+		#endregion
+
+		#region Metodos Estaticos
 
 		/// <summary>
 		/// Crea el <see cref="ControladorVariableBase"/> de tipo correspondiente para <paramref name="var"/>
@@ -83,6 +110,8 @@ namespace AppGM.Core
 					return new ControladorVariableFloat(f);
 				case ModeloVariableString s:
 					return new ControladorVariableString(s);
+				case ModeloVariableControlador c:
+					return new ControladorVariableControlador(var);
 				default:
 					SistemaPrincipal.LoggerGlobal.Log($"Tipo de {nameof(var)}({var.GetType()}) no soportado!", ESeveridad.Error);
 					return null;
@@ -106,13 +135,24 @@ namespace AppGM.Core
 				resultado = new ModeloVariableFloat();
 			else if (tipo == typeof(string))
 				resultado = new ModeloVariableString();
+			else if (tipo.IsSubclassOf(typeof(ControladorBase)))
+			{
+				var tipoModelo = tipo.GetField("modelo").FieldType;
 
-			resultado.TipoVariable   = tipo.AssemblyQualifiedName;
-			resultado.IDVariable     = id;
+				resultado = new ModeloVariableControlador
+				{
+					TipoModeloControlador = tipoModelo.AssemblyQualifiedName
+				};
+			}
+
+			resultado.TipoVariable = tipo.AssemblyQualifiedName;
+			resultado.IDVariable = id;
 			resultado.NombreVariable = nombre;
 
 			return resultado;
-		}
+		} 
+
+		#endregion
 	}
 
 	/// <summary>
@@ -121,8 +161,14 @@ namespace AppGM.Core
 	/// <typeparam name="TipoVariable">Tipo de la variable representada por el modelo</typeparam>
 	public class ControladorVariable<TipoVariable> : ControladorVariableBase
 	{
+		#region Constructor
+
 		public ControladorVariable(ModeloVariableBase _modelo)
-			: base(_modelo) { }
+			: base(_modelo) { } 
+
+		#endregion
+
+		#region Metodos
 
 		public override object ObtenerValorVariable()
 		{
@@ -140,31 +186,154 @@ namespace AppGM.Core
 		{
 			if (nuevoValor is TipoVariable n)
 			{
-				((ModeloVariable<TipoVariable>) modelo).ValorVariable = n;
+				((ModeloVariable<TipoVariable>)modelo).ValorVariable = n;
 
 				return;
 			}
 
 			SistemaPrincipal.LoggerGlobal.Log($@"Se intento guardar valor de tipo {nuevoValor.GetType()} pero el tipo de esta variable es {typeof(TipoVariable)}.
 				{Environment.NewLine}{this}");
-		}
+		} 
+
+		#endregion
 	}
 
+	#region Implementaciones especificas
+
+	/// <summary>
+	/// Controlador de un <see cref="ModeloVariable{TipoVariable}"/> que guarda un <see cref="int"/>
+	/// </summary>
 	public class ControladorVariableInt : ControladorVariable<int>
 	{
 		public ControladorVariableInt(ModeloVariableBase _modelo)
 			: base(_modelo) { }
 	}
 
+	/// <summary>
+	/// Controlador de un <see cref="ModeloVariable{TipoVariable}"/> que guarda un <see cref="float"/>
+	/// </summary>
 	public class ControladorVariableFloat : ControladorVariable<float>
 	{
 		public ControladorVariableFloat(ModeloVariableBase _modelo)
 			: base(_modelo) { }
 	}
 
+	/// <summary>
+	/// Controlador de un <see cref="ModeloVariable{TipoVariable}"/> que guarda un <see cref="string"/>
+	/// </summary>
 	public class ControladorVariableString : ControladorVariable<string>
 	{
 		public ControladorVariableString(ModeloVariableBase _modelo)
 			: base(_modelo) { }
 	}
+
+	/// <summary>
+	/// Controlador de un <see cref="ModeloVariable{TipoVariable}"/> que guarda un <see cref="Controlador{TipoModelo}"/>
+	/// </summary>
+	public sealed class ControladorVariableControlador : ControladorVariable<int>
+	{
+		#region Campos & Propiedades
+
+		/// <summary>
+		/// Contiene el valor de <see cref="ControladorGuardado"/>
+		/// </summary>
+		private ControladorBase mControlador;
+
+		/// <summary>
+		/// Referencia al modelo con el tipo correcto, para no tener que castearlo cada vez que queramos acceder a sus valores
+		/// </summary>
+		private ModeloVariableControlador mModeloVariableControlador;
+
+		/// <summary>
+		/// Obtiene o establece el controlador guardado por esta variable
+		/// </summary>
+		public ControladorBase ControladorGuardado
+		{
+			get
+			{
+				if (mControlador == null)
+					ObtenerValorVariable();
+
+				return mControlador;
+			}
+			private set
+			{
+				GuardarValorVariable(value);
+			}
+		}
+
+		#endregion
+
+		#region Constructor
+
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="_modelo"></param>
+		public ControladorVariableControlador(ModeloVariableBase _modelo)
+			: base(_modelo)
+		{
+			if (modelo is ModeloVariableControlador m)
+			{
+				//Verificamos que el tipo del modelo guardado sea valido 
+
+				try
+				{
+					Type.GetType(m.TipoModeloControlador);
+				}
+				catch (Exception ex)
+				{
+					SistemaPrincipal.LoggerGlobal.Log($"Nombre de tipo guardado ({m.TipoModeloControlador}) no es valido!", ESeveridad.Error);
+
+					return;
+				}
+
+				mModeloVariableControlador = m;
+			}
+			else
+			{
+				SistemaPrincipal.LoggerGlobal.Log($"{modelo} no es de tipo {nameof(ModeloVariableControlador)}!", ESeveridad.Error);
+
+				Eliminar();
+			}
+		}
+
+		#endregion
+
+		#region Metodos
+
+		public override object ObtenerValorVariable()
+		{
+			//Si ya tenemos el controlador cacheado entonces sencillamente lo devolvemos
+			if (mControlador != null)
+				return mControlador;
+
+			//Intentamos obtenerlo desde el sistema principal
+			mControlador = SistemaPrincipal.ObtenerControlador(SistemaPrincipal.ObtenerModelo(Type.GetType(mModeloVariableControlador.TipoModeloControlador), mModeloVariableControlador.ValorVariable));
+
+			return mControlador;
+		}
+
+		public override void GuardarValorVariable(object nuevoValor)
+		{
+			//Si el valor pasado es un controlador actualizamos los valores guardados en el modelo
+			if (nuevoValor is ControladorBase c)
+			{
+				modelo.TipoVariable = nuevoValor.GetType().AssemblyQualifiedName;
+
+				mModeloVariableControlador.ValorVariable = c.Modelo.Id;
+				mModeloVariableControlador.TipoModeloControlador = c.Modelo.GetType().AssemblyQualifiedName;
+
+				mControlador = c;
+
+				return;
+			}
+
+			SistemaPrincipal.LoggerGlobal.Log($"{nameof(nuevoValor)} no es un {nameof(ControladorBase)}!", ESeveridad.Error);
+		} 
+
+		#endregion
+	} 
+
+	#endregion
 }

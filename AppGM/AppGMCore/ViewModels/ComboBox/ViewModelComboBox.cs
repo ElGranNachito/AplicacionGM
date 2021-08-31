@@ -64,13 +64,25 @@ namespace AppGM.Core
 		#region Constructor
 
 		/// <summary>
-		/// Constructor
+		/// Constructor por defecto
 		/// </summary>
 		/// <param name="_valoresPosibles">Coleccion con los <see cref="ValoresPosibles"/></param>
 		/// <param name="_valorPorDefecto">Valor que se asignara por defecto a <see cref="ValorSeleccionado"/></param>
 		public ViewModelComboBox(List<TipoValor> _valoresPosibles = null, ViewModelItemComboBoxBase<TipoValor> _valorPorDefecto = null)
 		{
 			ActualizarValoresPosibles(_valoresPosibles);
+
+			ValorSeleccionado = _valorPorDefecto;
+		}
+
+		/// <summary>
+		/// Constructor que inicializa los <see cref="ValoresPosibles"/> utilizando una coleccion de <see cref="ViewModelItemComboBoxBase{TipoValor}"/>
+		/// </summary>
+		/// <param name="_valoresPosibles">Coleccion con los <see cref="ValoresPosibles"/></param>
+		/// <param name="_valorPorDefecto">Valor que se asignara por defecto a <see cref="ValorSeleccionado"/></param>
+		public ViewModelComboBox(List<ViewModelItemComboBoxBase<TipoValor>> _valoresPosibles = null, ViewModelItemComboBoxBase<TipoValor> _valorPorDefecto = null)
+		{
+			ValoresPosibles.Elementos = new ObservableCollection<ViewModelItemComboBoxBase<TipoValor>>(_valoresPosibles);
 
 			ValorSeleccionado = _valorPorDefecto;
 		}
