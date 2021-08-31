@@ -363,4 +363,48 @@
         <Setter Property="Template" Value="{StaticResource ComboBoxTemplate}"/>
     </Style>
 
+    <!-- Estilo para el contenedor de los items en una ListBox -->
+    <Style TargetType="{x:Type ListBoxItem}" x:Key="EstiloContenedorItemListBox">
+
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Background" Value="Transparent"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+
+                    <Border
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+
+                        Background="{TemplateBinding Background}"
+                                        
+                        Padding="5">
+
+                        <!-- Contenido -->
+                        <ContentPresenter/>
+                    </Border>
+
+                </ControlTemplate>
+
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+
+            <!-- Cuando el elemento es seleccionado... -->
+            <Trigger Property="IsSelected" Value="True">
+                <Trigger.Setters>
+                    <!-- Cambiamos el color de su borde -->
+                    <Setter Property="BorderBrush" Value="{StaticResource Color.ListBox.BordeItemSeleccionado}"/>
+
+                    <!-- Cambiamos el color de su fondo -->
+                    <Setter Property="Background" Value="{StaticResource Color.ListBox.FondoItemSeleccionado}"/>
+                </Trigger.Setters>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
 </ResourceDictionary>

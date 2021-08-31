@@ -50,7 +50,7 @@ namespace AppGM.Viewmodels
             mVentana.Width = ancho != -1 ? ancho : mVentana.Width;
 
             //Cuando se establezca el resultado del vm debemos cerrar la ventana
-            vm.OnResultadoEstablecido += vm => mVentana.Close();
+            vm.OnResultadoEstablecido += vm => mVentana.Hide();
 
             //Si debemos esperar al cierre de la ventana...
             if (esperarCierre)

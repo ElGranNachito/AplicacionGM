@@ -28,5 +28,10 @@
     <!-- Bloque condicional -->
     <system:SolidColorBrush x:Key="ColorBloqueCondicional" Color="DarkOrange"/>
     <system:SolidColorBrush x:Key="ColorRellenoBloqueCondicional" Color="Orange"/>
+
+    <!--......................................LIST_BOX...........................................-->
+
+    <system:SolidColorBrush x:Key="Color.ListBox.BordeItemSeleccionado" Color="DeepSkyBlue"/>
+    <system:SolidColorBrush x:Key="Color.ListBox.FondoItemSeleccionado" Color="LightSkyBlue"/>
     
 </ResourceDictionary>

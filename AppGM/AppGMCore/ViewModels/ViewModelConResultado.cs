@@ -32,13 +32,13 @@ namespace AppGM.Core
 	/// <summary>
 	/// Viewmodel que produce un resultado cuando el usuario sale del control que representa
 	/// </summary>
-	public abstract class ViewModelConResultado<T> : ViewModelConResultadoBase
-		where T: ViewModelConResultado<T>
+	public abstract class ViewModelConResultado<TViewModel> : ViewModelConResultadoBase
+		where TViewModel : ViewModelConResultado<TViewModel>
 	{
 		/// <summary>
 		/// Representa la accion a llevar a cabo cuando se sale de este vm
 		/// </summary>
-		protected Action<T> mAccionSalir;
+		protected readonly Action<TViewModel> mAccionSalir;
 
 		/// <summary>
 		/// Comando que se ejecuta al presionar 'Confirmar'
@@ -50,11 +50,52 @@ namespace AppGM.Core
 		/// </summary>
 		public ICommand ComandoCancelar { get; protected set; }
 
-		public ViewModelConResultado(Action<T> _accionSalir)
+		#region Constructores
+
+		/// <summary>
+		/// Constructor que inicializa este vm con una <paramref name="_accionSalir"/>
+		/// </summary>
+		/// <param name="_accionSalir">Accion que se ejecuta al salir de este vm</param>
+		/// <param name="crearComandosPorDefecto">Indica si debe crear los comandos <see cref="ComandoAceptar"/> y <see cref="ComandoCancelar"/></param>
+		public ViewModelConResultado(Action<TViewModel> _accionSalir, bool crearComandosPorDefecto = true)
 		{
 			mAccionSalir = _accionSalir;
+
+			if (crearComandosPorDefecto)
+				CrearComandos();
 		}
 
-		public ViewModelConResultado(){}
+		/// <summary>
+		/// Constructor por defecto
+		/// </summary>
+		/// <param name="crearComandosPorDefecto">Indica si debe crear los comandos <see cref="ComandoAceptar"/> y <see cref="ComandoCancelar"/></param>
+		public ViewModelConResultado(bool crearComandosPorDefecto = true)
+		{
+			if (crearComandosPorDefecto)
+				CrearComandos();
+		} 
+
+		#endregion
+
+		#region Metodos
+
+		private void CrearComandos()
+		{
+			ComandoAceptar = new Comando(() =>
+			{
+				Resultado = EResultadoViewModel.Aceptar;
+
+				mAccionSalir?.Invoke((TViewModel)this);
+			});
+
+			ComandoCancelar = new Comando(() =>
+			{
+				Resultado = EResultadoViewModel.Cancelar;
+
+				mAccionSalir?.Invoke((TViewModel)this);
+			});
+		} 
+
+		#endregion
 	}
 }

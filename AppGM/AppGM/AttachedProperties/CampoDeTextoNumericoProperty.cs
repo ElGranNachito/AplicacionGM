@@ -130,8 +130,12 @@ namespace AppGM
 					else
 					{
 						textBox.TextChanged -= mTextChangedHandler;
-						textBox.GotFocus -= mGotFocusHandler;
-						textBox.LostFocus -= mLostFocusHandler;
+						textBox.GotFocus    -= mGotFocusHandler;
+						textBox.LostFocus   -= mLostFocusHandler;
+
+						//Si el texto actual es un 0 entonces vaciamos la textbox
+						if (textBox.Text == "0")
+							textBox.Text = "";
 					}
 				}
 			}
@@ -150,7 +154,7 @@ namespace AppGM
 
 			Type tipoActual = (Type)args.NewValue;
 
-			if (tipoActual != typeof(int) || tipoActual != typeof(float) || tipoActual != typeof(double))
+			if (tipoActual == typeof(int) || tipoActual == typeof(float) || tipoActual == typeof(double))
 			{
 				if (d is TextBox t)
 				{

@@ -135,6 +135,21 @@ namespace AppGM.Core
             ContenedorListaTiradas   = new ViewModelListaItems<ViewModelTiradaItem>(()=>{}, true, "Tiradas");
             ContenedorListaVariables = new ViewModelListaItems<ViewModelVariableItem>(() =>
             {
+	            ModeloMaster pj = new ModeloMaster()
+	            {
+		            Nombre = "LePibe",
+
+                    TipoPersonaje = ETipoPersonaje.Master,
+
+                    EClaseDeSuServant = EClaseServant.Berserker,
+
+                    PathImagenAbsoluto = @"C:\Users\Nashito\Pictures\x2.jpg"
+	            };
+
+	            ControladorPersonaje cpj = new ControladorPersonaje(pj);
+
+                SistemaPrincipal.AñadirControlador<ModeloPersonaje, ControladorPersonaje>(pj, cpj);
+
 	            SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = new ViewModelCreacionDeVariable((vm) =>
 	            {
 		            if (vm.Resultado == EResultadoViewModel.Aceptar)
