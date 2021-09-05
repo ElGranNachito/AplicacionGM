@@ -24,6 +24,11 @@ namespace AppGM.Core
 		private bool mEsLista;
 
 		/// <summary>
+		/// Almacena el valor de <see cref="NombreVariable"/>
+		/// </summary>
+		private string mNombreVariable;
+
+		/// <summary>
 		/// Controlador de la variable que esta siendo editada
 		/// </summary>
 		public readonly ControladorVariableBase variableSiendoEditada;
@@ -43,7 +48,19 @@ namespace AppGM.Core
 		/// <summary>
 		/// Nombre de la variable
 		/// </summary>
-		public string NombreVarialbe { get; set; }
+		public string NombreVariable
+		{
+			get => mNombreVariable;
+			set
+			{
+				if (value == mNombreVariable)
+					return;
+
+				mNombreVariable = value;
+
+				ActualizarValidez();
+			}
+		}
 
 		/// <summary>
 		/// Descripcion de la variable
@@ -171,18 +188,59 @@ namespace AppGM.Core
 		/// Crea un <see cref="ModeloVariableBase"/> que representa a la variable creada
 		/// </summary>
 		/// <returns><see cref="ModeloVariableBase"/> que representa a la variable creada o null si <see cref="EsValido"/> es false</returns>
-		public ModeloVariableBase CrearVariable()
+		public ControladorVariableBase CrearVariable()
 		{
 			ActualizarValidez();
 
 			if (!EsValido)
 				return null;
 
-			var modeloCreado = ControladorVariableBase.CrearModeloCorrespondiente(TipoSeleccionado, -1, NombreVarialbe);
+			var modeloCreado = ControladorVariableBase.CrearModeloCorrespondiente(TipoSeleccionado, -1, NombreVariable);
 
 			modeloCreado.DescripcionVariable = DescripcionVariable;
 
-			return modeloCreado;
+			//Controlador que sera devuelto por la funcion
+			ControladorVariableBase controladorVariableFinal;
+
+			//Si no estamos editando una variable existente o el tipo de la variable fue modificado...
+			if (variableSiendoEditada == null || variableSiendoEditada.TipoVariable != TipoSeleccionado)
+			{
+				variableSiendoEditada?.Eliminar();
+
+				//Actualizamos la relacion de la variable con su contenedor y sustituimos la variable anterior por la nueva
+				if (modeloCreado.FuncionContenedora != null)
+				{
+					modeloCreado.FuncionContenedora.Variable = modeloCreado;
+				}
+				else if (modeloCreado.HabilidadContenedora != null)
+				{
+					modeloCreado.HabilidadContenedora.Variable = modeloCreado;
+				}
+				else if (modeloCreado.PersonajeContenedor != null)
+				{
+					modeloCreado.PersonajeContenedor.Variable = modeloCreado;
+				}
+				else if (modeloCreado.UtilizableContenedor != null)
+				{
+					modeloCreado.UtilizableContenedor.Variable = modeloCreado;
+				}
+
+				//Devolvemos un nuevo controlador con la variable creada
+				controladorVariableFinal = ControladorVariableBase.CrearControladorCorrespondiente(modeloCreado);
+			}
+			//Sino
+			else
+			{
+				//Actualizamos el modelo de la variable existente
+				variableSiendoEditada.ActulizarModelo(modeloCreado);
+
+				controladorVariableFinal = variableSiendoEditada;
+			}
+
+			//Guardamos el valor ingresado por el usuario
+			controladorVariableFinal.GuardarValorVariable(VMIngresoVariable.ObtenerValor());
+
+			return controladorVariableFinal;
 		}
 
 		/// <summary>
@@ -197,7 +255,7 @@ namespace AppGM.Core
 				return;
 			}
 
-			if (NombreVarialbe.IsNullOrWhiteSpace())
+			if (NombreVariable.IsNullOrWhiteSpace())
 			{
 				EsValido = false;
 

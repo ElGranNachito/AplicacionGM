@@ -53,6 +53,30 @@ namespace AppGM.Core
         /// </summary>
         public ControladorPersonaje DueñoHabilidad => SistemaPrincipal.ObtenerControlador<ControladorPersonaje, ModeloPersonaje>(modelo.Dueño.Personaje);
 
+        public ETipoHabilidad TipoHabilidad
+        {
+	        get => modelo.TipoDeHabilidad;
+	        set => modelo.TipoDeHabilidad = value;
+        }
+
+        public ERango Rango
+        {
+	        get => modelo.Rango;
+	        set => modelo.Rango = value;
+        }
+
+        public int CostoMana
+        {
+	        get => modelo.CostoDeMana;
+	        set => modelo.CostoDeMana = value;
+        }
+
+        public string Nombre
+        {
+	        get => modelo.Nombre;
+	        set => modelo.Nombre = value;
+        }
+
         #endregion
 
         #region Constructor
@@ -133,6 +157,11 @@ namespace AppGM.Core
 
     public class ControladorMagia : ControladorHabilidad
     {
+	    #region Campos & Propiedades
+
+        
+
+	    #endregion
         #region Constructor
 
         public ControladorMagia(ModeloMagia _modeloMagia)

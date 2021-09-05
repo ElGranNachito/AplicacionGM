@@ -447,7 +447,7 @@ namespace AppGM.Core
 	        return Regex.IsMatch(modelo.Nombre, $"*{cadena}*");
         }
 
-        public override ViewModelItemListaControlador CrearViewModelItem(bool _mostrarBotones = true)
+        public override ViewModelItemListaBase CrearViewModelItem(bool _mostrarBotones = true)
         {
 	        return new ViewModelPersonajeItem(this, _mostrarBotones);
         }
