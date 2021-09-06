@@ -187,7 +187,7 @@ namespace AppGM
 				string cadenaFinal = textBox.Text.Replace('.', ',');
 
 				//Quitamos todos los caracteres que no sean un numero o una coma
-				cadenaFinal = Regex.Replace(textBox.Text, "[^0-9,]", "");
+				cadenaFinal = Regex.Replace(textBox.Text, "[^0-9,.]", "");
 
 				//Si hay mas de un punto
 				if (cadenaFinal.Count(c => c == '.') > 1)

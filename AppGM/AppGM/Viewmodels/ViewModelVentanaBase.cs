@@ -142,6 +142,7 @@ namespace AppGM
 			mVentana.Loaded += (obj, e) => { OnVentanaAbierta(this); };
 			mVentana.MouseMove += (obj, e) => { OnMouseMovido(this); };
 			mVentana.MouseDown += (obj, e) => { OnMouseDown(this); };
+            mVentana.PreviewMouseDown += (obj, e) => { OnPreviewMouseDown(this); };
 			mVentana.MouseUp += (obj, e) => { OnMouseUp(this); };
 
 			ComandoCerrarVentana = new Comando(CerrarVentana);
@@ -309,8 +310,9 @@ namespace AppGM
 		public event EventoVentana OnVentanaAbierta = delegate { };
 		public event EventoVentana OnVentanaCerrada = delegate { };
 		public event EventoVentana OnMouseDown = delegate { };
+        public event EventoVentana OnPreviewMouseDown = delegate { };
 		public event EventoVentana OnMouseUp = delegate { };
-		public event EventoVentana OnFotogramaActualizado = delegate { };
+        public event EventoVentana OnFotogramaActualizado = delegate { };
 
 		public event DataContextContenidoCambioHandler OnDataContextContenidoModificado = delegate { };
 

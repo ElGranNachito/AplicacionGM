@@ -33,5 +33,11 @@
 
     <system:SolidColorBrush x:Key="Color.ListBox.BordeItemSeleccionado" Color="DeepSkyBlue"/>
     <system:SolidColorBrush x:Key="Color.ListBox.FondoItemSeleccionado" Color="LightSkyBlue"/>
-    
+
+    <!--......................................UNIDADES_INGRESO_POSICION...........................................-->
+
+    <system:SolidColorBrush x:Key="Color.UnidadMapa.BordeIngresoPosicion" Color="#363636"/>
+    <system:SolidColorBrush x:Key="Color.UnidadMapa.FondoIngresoPosicion" Color="#242424"/>
+
+
 </ResourceDictionary>

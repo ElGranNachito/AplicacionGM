@@ -5,10 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9c039c97-0a53-49a7-9d0c-42239bc25702" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/AppGM/Paginas/Rol/Mapas/UserControlMapa.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/AppGM/Paginas/Rol/Mapas/UserControlMapa.xaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AppGMCore/Datos/DatosRol.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AppGMCore/Datos/DatosRol.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AppGMCore/ViewModels/Rol/Mapas/ViewModelMapa.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AppGMCore/ViewModels/Rol/Mapas/ViewModelMapa.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AppGMCore/ViewModels/Rol/Mapas/ViewModelUnidadParty.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AppGMCore/ViewModels/Rol/Mapas/ViewModelUnidadParty.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.AppGM/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.AppGM/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AppGM/AttachedProperties/CampoDeTextoNumericoProperty.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AppGM/AttachedProperties/CampoDeTextoNumericoProperty.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AppGM/AttachedProperties/LlamarComandoOnMouseEnterProperty.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AppGM/AttachedProperties/LlamarComandoOnMouseEnterProperty.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AppGM/Paginas/Rol/Mapas/UserControlIngresoPosicion.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/AppGM/Paginas/Rol/Mapas/UserControlIngresoPosicion.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AppGM/Paginas/Rol/Mapas/UserControlIngresoPosicionParty.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/AppGM/Paginas/Rol/Mapas/UserControlIngresoPosicionParty.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AppGM/Recursos/Colores.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/AppGM/Recursos/Colores.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AppGM/Viewmodels/ViewModelVentanaBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AppGM/Viewmodels/ViewModelVentanaBase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AppGMCore/Interfaces/IVentana.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AppGMCore/Interfaces/IVentana.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,10 +62,12 @@
       <option name="presentableId" value="Default" />
       <updated>1629321224399</updated>
       <workItem from="1629321261738" duration="1817000" />
+      <workItem from="1630760396772" duration="71000" />
+      <workItem from="1630765191375" duration="283000" />
     </task>
     <servers />
   </component>
-  <component name="UnityProjectConfiguration" hasMinimizedUI="null" />
+  <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />

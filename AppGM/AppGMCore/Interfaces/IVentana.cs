@@ -123,6 +123,7 @@ namespace AppGM.Core
 		event EventoVentana OnTituloModificado;
 		event EventoVentana OnMouseMovido;
 		event EventoVentana OnMouseDown;
+        event EventoVentana OnPreviewMouseDown;
 		event EventoVentana OnMouseUp;
 		event EventoVentana OnVentanaCerrada;
 		event EventoVentana OnVentanaAbierta;
