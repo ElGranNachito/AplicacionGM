@@ -38,7 +38,7 @@
                             
                             <!-- Barra superior -->
 
-                            <Grid Background="#121212"
+                            <Grid Background="#030a06"
                                   Panel.ZIndex="12">
 
                                 <Grid.ColumnDefinitions>

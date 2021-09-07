@@ -970,39 +970,39 @@ namespace AppGM.Core
         Party_0 = 0,
 
         /// <summary>
-        /// Equipo numero 1
+        /// Equipo para masters y servants con la clase Saber
         /// </summary>
-        Party_1 = 1,
+        Party_Saber = 1,
 
         /// <summary>
-        /// Equipo numero 2
+        /// Equipo para masters y servants con la clase Lancer
         /// </summary>
-        Party_2 = 2,
+        Party_Lancer = 2,
 
         /// <summary>
-        /// Equipo numero 3
+        /// Equipo para masters y servants con la clase Archer
         /// </summary>
-        Party_3 = 3,
+        Party_Archer = 3,
 
         /// <summary>
-        /// Equipo numero 4
+        /// Equipo para masters y servants con la clase Rider
         /// </summary>
-        Party_4 = 4,
+        Party_Rider = 4,
 
         /// <summary>
-        /// Equipo numero 5
+        /// Equipo para masters y servants con la clase Berserker
         /// </summary>
-        Party_5 = 5,
+        Party_Berserker = 5,
 
         /// <summary>
-        /// Equipo numero 6
+        /// Equipo para masters y servants con la clase Assassin
         /// </summary>
-        Party_6 = 6,
+        Party_Assassin = 6,
 
         /// <summary>
-        /// Equipo numero 7
+        /// Equipo para masters y servants con la clase Caster
         /// </summary>
-        Party_7 = 7
+        Party_Caster = 7
     }
 
     /// <summary>

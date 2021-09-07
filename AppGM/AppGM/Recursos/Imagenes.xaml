@@ -16,4 +16,12 @@
     <Image x:Key="ImagenBotonItemsMouse" Source="../Media/Imagenes/Botones/MenuPrincipal/Item_Mouse.png"/>
     <Image x:Key="ImagenBotonItemsClick" Source="../Media/Imagenes/Botones/MenuPrincipal/Item_Click.png"/>
 
+    <Image x:Key="ImagenBotonFlechitaIzquierdaIdle" Source="../Media/Imagenes/Botones/MenuPrincipal/Flechita_Izquierda_Idle.png"/>
+    <Image x:Key="ImagenBotonFlechitaIzquierdaMouse" Source="../Media/Imagenes/Botones/MenuPrincipal/Flechita_Izquierda_Select.png"/>
+    <Image x:Key="ImagenBotonFlechitaIzquierdaClick" Source="../Media/Imagenes/Botones/MenuPrincipal/Flechita_Izquierda_Click.png"/>
+
+    <Image x:Key="ImagenBotonFlechitaDerechaIdle" Source="../Media/Imagenes/Botones/MenuPrincipal/Flechita_Derecha_Idle.png"/>
+    <Image x:Key="ImagenBotonFlechitaDerechaMouse" Source="../Media/Imagenes/Botones/MenuPrincipal/Flechita_Derecha_Select.png"/>
+    <Image x:Key="ImagenBotonFlechitaDerechaClick" Source="../Media/Imagenes/Botones/MenuPrincipal/Flechita_Derecha_Click.png"/>
+
 </ResourceDictionary>

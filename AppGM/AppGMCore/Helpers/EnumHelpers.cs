@@ -158,19 +158,19 @@ namespace AppGM.Core
             {
                 case ENumeroParty.Party_0: stringBuilder.Append("Party 0");
                     break;
-                case ENumeroParty.Party_1: stringBuilder.Append("Party 1");
+                case ENumeroParty.Party_Saber: stringBuilder.Append("Party Saber");
                     break;
-                case ENumeroParty.Party_2: stringBuilder.Append("Party 2");
+                case ENumeroParty.Party_Lancer: stringBuilder.Append("Party Lancer");
                     break;
-                case ENumeroParty.Party_3: stringBuilder.Append("Party 3");
+                case ENumeroParty.Party_Archer: stringBuilder.Append("Party Archer");
                     break;
-                case ENumeroParty.Party_4: stringBuilder.Append("Party 4");
+                case ENumeroParty.Party_Rider: stringBuilder.Append("Party Rider");
                     break;
-                case ENumeroParty.Party_5: stringBuilder.Append("Party 5");
+                case ENumeroParty.Party_Berserker: stringBuilder.Append("Party Berserker");
                     break;
-                case ENumeroParty.Party_6: stringBuilder.Append("Party 6");
+                case ENumeroParty.Party_Assassin: stringBuilder.Append("Party Assassin");
                     break;
-                case ENumeroParty.Party_7: stringBuilder.Append("Party 7");
+                case ENumeroParty.Party_Caster: stringBuilder.Append("Party Caster");
                     break;
             }
 

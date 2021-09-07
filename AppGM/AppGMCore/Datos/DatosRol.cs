@@ -89,7 +89,7 @@ namespace AppGM.Core
 
 						EClaseDeSuServant = EClaseServant.Berserker,
 						TipoPersonaje     = ETipoPersonaje.Master,
-						NumeroParty       = ENumeroParty.Party_1
+						NumeroParty       = ENumeroParty.Party_Berserker
                     };
 
 					ModeloServant servant1 = new ModeloServant
@@ -109,7 +109,7 @@ namespace AppGM.Core
 
 						EClaseServant = EClaseServant.Berserker,
 						TipoPersonaje = ETipoPersonaje.Servant,
-						NumeroParty   = ENumeroParty.Party_1
+						NumeroParty   = ENumeroParty.Party_Berserker
 					};
 
 					ModeloMaster master2 = new ModeloMaster
@@ -130,7 +130,7 @@ namespace AppGM.Core
 
 						EClaseDeSuServant = EClaseServant.Rider,
 						TipoPersonaje     = ETipoPersonaje.Master,
-                        NumeroParty       = ENumeroParty.Party_2
+                        NumeroParty       = ENumeroParty.Party_Rider
 					};
 
 					ModeloServant servant2 = new ModeloServant
@@ -150,7 +150,7 @@ namespace AppGM.Core
 
 						EClaseServant = EClaseServant.Rider,
 						TipoPersonaje = ETipoPersonaje.Servant,
-                        NumeroParty   = ENumeroParty.Party_2
+                        NumeroParty   = ENumeroParty.Party_Rider
 					};
 
 					ModeloContrato contratoPiola = new ModeloContrato

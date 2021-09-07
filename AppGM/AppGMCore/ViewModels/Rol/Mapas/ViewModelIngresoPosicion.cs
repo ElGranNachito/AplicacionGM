@@ -113,7 +113,9 @@ namespace AppGM.Core
                 modoPartyHabilitado = value;
 
                 if (modoPartyHabilitado)
-                    ImagenPosicionEsVisible = !value;
+                    ImagenPosicionEsVisible = false;
+                else
+                    ImagenPosicionEsVisible = true;
 
                 UnidadParty.ImagenPosicionEsVisible = !ImagenPosicionEsVisible;
 

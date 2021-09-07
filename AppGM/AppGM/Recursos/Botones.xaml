@@ -66,6 +66,25 @@
 
     </Style>
 
+    <!-- Estilo base para los botones de la aplicacion sin texto, por default no tienen fondo o borde -->
+    <Style TargetType="{x:Type ButtonBase}" x:Key="BotonConFondoTransparente">
+        
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid Background="{TemplateBinding Background}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+    </Style>
+
     <!-- Estilo para los botones de la barra superior de la ventana -->
     <Style TargetType="{x:Type ButtonBase}" x:Key="BotonVentanaPrincipal" BasedOn="{StaticResource BotonBase}">
 
@@ -251,14 +270,11 @@
     </Style>
 
     <!-- Boton animado para la opcion de reglas en el menu princiapl -->
-    <Style x:Key="BotonReglas" TargetType="{x:Type Button}" BasedOn="{StaticResource BotonBase}">
+    <Style x:Key="BotonReglas" TargetType="{x:Type Button}" BasedOn="{StaticResource BotonConFondoTransparente}">
+
+        <Setter Property="Content" Value="{StaticResource ImagenBotonRulesIdle}"/>
 
         <Style.Triggers>
-
-            <!-- Cuando vuelve a su estado default, cambia su imagen -->
-            <Trigger Property="IsDefault" Value="True">
-                <Setter Property="Content" Value="{StaticResource ImagenBotonRulesIdle}"/>
-            </Trigger>
 
             <!-- Cuando el mouse pasa sobre el boton, cambia su imagen -->
             <Trigger Property="IsMouseOver" Value="True">
@@ -275,14 +291,11 @@
     </Style>
 
     <!-- Boton animado para la opcion de informacion en el menu princiapl -->
-    <Style x:Key="BotonInfo" TargetType="{x:Type Button}" BasedOn="{StaticResource BotonBase}">
+    <Style x:Key="BotonInfo" TargetType="{x:Type Button}" BasedOn="{StaticResource BotonConFondoTransparente}">
+
+        <Setter Property="Content" Value="{StaticResource ImagenBotonInfoIdle}"/>
 
         <Style.Triggers>
-
-            <!-- Cuando vuelve a su estado default, cambia su imagen -->
-            <Trigger Property="IsDefault" Value="True">
-                <Setter Property="Content" Value="{StaticResource ImagenBotonInfoIdle}"/>
-            </Trigger>
 
             <!-- Cuando el mouse pasa sobre el boton, cambia su imagen -->
             <Trigger Property="IsMouseOver" Value="True">
@@ -299,14 +312,11 @@
     </Style>
 
     <!-- Boton animado para la opcion de items en el menu princiapl -->
-    <Style x:Key="BotonItems" TargetType="{x:Type Button}" BasedOn="{StaticResource BotonBase}">
+    <Style x:Key="BotonItems" TargetType="{x:Type Button}" BasedOn="{StaticResource BotonConFondoTransparente}">
+
+        <Setter Property="Content" Value="{StaticResource ImagenBotonItemsIdle}"/>
 
         <Style.Triggers>
-
-            <!-- Cuando vuelve a su estado default, cambia su imagen -->
-            <Trigger Property="IsDefault" Value="True">
-                <Setter Property="Content" Value="{StaticResource ImagenBotonItemsIdle}"/>
-            </Trigger>
 
             <!-- Cuando el mouse pasa sobre el boton, cambia su imagen -->
             <Trigger Property="IsMouseOver" Value="True">
@@ -316,6 +326,48 @@
             <!-- Cuando se hace click sobre el boton, cambia su imagen -->
             <Trigger Property="IsPressed" Value="True">
                 <Setter Property="Content" Value="{StaticResource ImagenBotonItemsClick}"/>
+            </Trigger>
+
+        </Style.Triggers>
+
+    </Style>
+
+    <!-- Boton animado para las flechas de rotacion de cartas roles en el menu princiapl -->
+    <Style x:Key="BotonFlechaIzquierdaMenuPrincipal" TargetType="{x:Type Button}" BasedOn="{StaticResource BotonConFondoTransparente}">
+
+        <Setter Property="Content" Value="{StaticResource ImagenBotonFlechitaIzquierdaIdle}"/>
+
+        <Style.Triggers>
+
+            <!-- Cuando el mouse pasa sobre el boton, cambia su imagen -->
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Content" Value="{StaticResource ImagenBotonFlechitaIzquierdaMouse}"/>
+            </Trigger>
+
+            <!-- Cuando se hace click sobre el boton, cambia su imagen -->
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Content" Value="{StaticResource ImagenBotonFlechitaIzquierdaClick}"/>
+            </Trigger>
+
+        </Style.Triggers>
+
+    </Style>
+
+    <!-- Boton animado para las flechas de rotacion de cartas roles en el menu princiapl -->
+    <Style x:Key="BotonFlechaDerechaMenuPrincipal" TargetType="{x:Type Button}" BasedOn="{StaticResource BotonConFondoTransparente}">
+
+        <Setter Property="Content" Value="{StaticResource ImagenBotonFlechitaDerechaIdle}"/>
+
+        <Style.Triggers>
+
+            <!-- Cuando el mouse pasa sobre el boton, cambia su imagen -->
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Content" Value="{StaticResource ImagenBotonFlechitaDerechaMouse}"/>
+            </Trigger>
+
+            <!-- Cuando se hace click sobre el boton, cambia su imagen -->
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Content" Value="{StaticResource ImagenBotonFlechitaDerechaClick}"/>
             </Trigger>
 
         </Style.Triggers>

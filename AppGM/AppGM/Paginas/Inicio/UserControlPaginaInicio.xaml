@@ -47,7 +47,7 @@
                 VerticalAlignment="Top"/>
 
             <!-- Cartas -->
-            <Grid Margin="20 0 0 0">
+            <Grid Margin="50 0 0 0">
 
                 <!-- Carta añadir rol -->
                 <local:UserControlCarta 
@@ -87,15 +87,14 @@
             <StackPanel Orientation="Horizontal">
                 <Button 
                     Command="{Binding ComandoRetrocederIndiceRol}"
-                    FontFamily="{StaticResource 'Font Awesome Regular'}"
-                    Content="{StaticResource Fa-FlechaIzquierda}" 
-                    Width="40"/>
+                    Style="{StaticResource BotonFlechaIzquierdaMenuPrincipal}"
+                    Width="100"
+                    Margin="0 0 0 25"/>
                 <Button 
                     Command="{Binding ComandoAvanzarIndiceRol}"
-                    FontFamily="{StaticResource 'Font Awesome Regular'}"
-                    Content="{StaticResource Fa-FlechaDerecha}" 
-                    Width="40" 
-                    Margin="75 0 0 0"/>
+                    Style="{StaticResource BotonFlechaDerechaMenuPrincipal}"
+                    Width="100" 
+                    Margin="75 0 0 25"/>
             </StackPanel>
 
         </StackPanel>
@@ -103,30 +102,26 @@
         <!-- Contenedor botones reglas, informacion e items -->
 
         <StackPanel Grid.Column="2"
-                    Margin="0 0 20 0"
-                    HorizontalAlignment="Center">
+                    Margin="0 0 25 0"
+                    >
 
             <!-- Reglas -->
-            <Button Content="{StaticResource ImagenBotonRulesIdle}"
-                    Style="{StaticResource BotonReglas}" 
-                    Margin=" 0 50 0 20"
-                    HorizontalAlignment="Center"
-                    Width="100"/>
+            <Button Style="{StaticResource BotonReglas}"
+                    Margin=" 0 50 5 20"
+                    HorizontalAlignment="Left"
+            />
 
             <!-- Informacion -->
-            <Button Content="{StaticResource ImagenBotonInfoIdle}"
-                    Style="{StaticResource BotonInfo}" 
-                    Margin=" 0 10 0 20"
-                    HorizontalAlignment="Center"
-                    Width="100"/>
-
+            <Button Style="{StaticResource BotonInfo}"
+                    Margin=" 0 10 5 20"
+                    HorizontalAlignment="Left"
+                    />
+            
             <!-- Items -->
-            <Button Content="{StaticResource ImagenBotonItemsIdle}"
-                    Style="{StaticResource BotonItems}" 
-                    Margin=" 0 10 0 20"
-                    HorizontalAlignment="Center"
-                    Width="100">
-            </Button>
+            <Button Style="{StaticResource BotonItems}"
+                    Margin=" 0 10 5 20"
+                    HorizontalAlignment="Left"
+                    />
 
         </StackPanel>
 

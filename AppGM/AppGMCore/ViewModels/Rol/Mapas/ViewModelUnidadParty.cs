@@ -44,25 +44,25 @@ namespace AppGM.Core
         {
             get
             {
-                StringBuilder stringBuilder = new StringBuilder("../../../../Media/Imagenes/Iconos/Parties/");
+                StringBuilder stringBuilder = new StringBuilder("../../../../Media/Imagenes/Posiciones/");
 
                 switch (NumeroParty)
                 {
                     case ENumeroParty.Party_0: stringBuilder.Append("Party_0");
                         break;
-                    case ENumeroParty.Party_1: stringBuilder.Append("Party_1");
+                    case ENumeroParty.Party_Saber: stringBuilder.Append("Party_Saber_Localization");
                         break;
-                    case ENumeroParty.Party_2: stringBuilder.Append("Party_2");
+                    case ENumeroParty.Party_Lancer: stringBuilder.Append("Party_Lancer_Localization");
                         break;
-                    case ENumeroParty.Party_3: stringBuilder.Append("Party_3");
+                    case ENumeroParty.Party_Archer: stringBuilder.Append("Party_Archer_Localization");
                         break;
-                    case ENumeroParty.Party_4: stringBuilder.Append("Party_4");
+                    case ENumeroParty.Party_Rider: stringBuilder.Append("Party_Rider_Localization");
                         break;
-                    case ENumeroParty.Party_5: stringBuilder.Append("Party_5");
+                    case ENumeroParty.Party_Berserker: stringBuilder.Append("Party_Berserker_Localization");
                         break;
-                    case ENumeroParty.Party_6: stringBuilder.Append("Party_6");
+                    case ENumeroParty.Party_Assassin: stringBuilder.Append("Party_Assassin_Localization");
                         break;
-                    case ENumeroParty.Party_7: stringBuilder.Append("Party_7");
+                    case ENumeroParty.Party_Caster: stringBuilder.Append("Party_Caster_Localization");
                         break;
                 }
 

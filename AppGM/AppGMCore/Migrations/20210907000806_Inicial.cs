@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AppGM.Core.Migrations
 {
-    public partial class inicial : Migration
+    public partial class Inicial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -300,6 +300,7 @@ namespace AppGM.Core.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     NombreVariable = table.Column<string>(type: "TEXT", nullable: true),
+                    DescripcionVariable = table.Column<string>(type: "TEXT", maxLength: 500, nullable: true),
                     TipoVariable = table.Column<string>(type: "TEXT", nullable: true),
                     IDVariable = table.Column<int>(type: "INTEGER", nullable: false),
                     Tipo = table.Column<int>(type: "INTEGER", nullable: false),
