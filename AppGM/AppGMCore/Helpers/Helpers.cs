@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
+using CoolLogs;
 using Ninject.Infrastructure.Language;
 
 namespace AppGM.Core
@@ -122,6 +123,48 @@ namespace AppGM.Core
 			}
 
 			return resultado;
+		}
+
+		public static class Juego
+		{
+			/// <summary>
+			/// Obtiene el modificador para un <paramref name="valorStat"/>
+			/// </summary>
+			/// <param name="valorStat">Valor de la stat para la cual obtener el modificador</param>
+			/// <returns>Modificador correspondiente el <paramref name="valorStat"/></returns>
+			public static int ObtenerModificadorStat(int valorStat)
+			{
+				//Si es diez devolvemos 0 directamente porque sino nos va a tirar una excepcion por dividir entre 0
+				if (valorStat == 10)
+					return 0;
+
+				return (int) Math.Floor((valorStat - 10.0f) / 2.0f);
+			}
+
+			/// <summary>
+			/// Obtiene el multiplicador para la <paramref name="mano"/> que utilizo un personaje
+			/// </summary>
+			/// <param name="mano">Mano que utilizo el personaje</param>
+			/// <returns>Multiplicador correspondiente a la mano utilizada</returns>
+			public static float ObtenerMultiplicadorManoUsada(EManoUtilizada mano)
+			{
+				switch(mano)
+				{
+					case EManoUtilizada.Dominante:
+						return 1;
+					case EManoUtilizada.NoDominante:
+						return 0.5f;
+					case EManoUtilizada.AmbasManos:
+						return 2.5f;
+
+					default:
+					{
+						SistemaPrincipal.LoggerGlobal.Log($"Valor de {nameof(mano)}({mano}) no soportado", ESeveridad.Error);
+
+						return 0;
+					}
+				}
+			}
 		}
 
 		/// <summary>

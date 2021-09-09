@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
+using CoolLogs;
 
 namespace AppGM.Core
 {
@@ -190,6 +191,77 @@ namespace AppGM.Core
         /// <returns></returns>
         public override string ToString() => $"Nombre={modelo.Nombre} Id={modelo.Id}";
 
+        public int Hp
+        {
+	        get => modelo.Hp;
+	        set => modelo.Hp = value;
+        }
+
+        public int MaxHp
+        {
+	        get => modelo.MaxHp;
+        }
+
+        public int Str
+        {
+	        get => modelo.Str;
+	        set => modelo.Str = value;
+        }
+
+        public int Agi
+        {
+	        get => modelo.Agi;
+	        set => modelo.Agi = value;
+        }
+
+        public int End
+        {
+	        get => modelo.End;
+	        set => modelo.End = value;
+        }
+
+        public int Int
+        {
+	        get => modelo.Agi;
+	        set => modelo.Agi = value;
+        }
+
+        public int Lck
+        {
+	        get => modelo.Lck;
+	        set => modelo.Lck = value;
+        }
+
+        public int VentajaStr
+        {
+	        get => modelo.VentajaStr;
+	        set => modelo.VentajaStr = value;
+        }
+
+        public int VentajaAgi
+        {
+	        get => modelo.VentajaAgi;
+	        set => modelo.VentajaAgi = value;
+        }
+
+        public int VentajaEnd
+        {
+	        get => modelo.VentajaEnd;
+	        set => modelo.VentajaEnd = value;
+        }
+
+        public int VentajaInt
+        {
+	        get => modelo.VentajaAgi;
+	        set => modelo.VentajaAgi = value;
+        }
+
+        public int VentajaLck
+        {
+	        get => modelo.VentajaLck;
+	        set => modelo.VentajaLck = value;
+        }
+
         #endregion
 
         #region Eventos
@@ -285,7 +357,7 @@ namespace AppGM.Core
 
         #endregion
 
-        #region Funciones
+        #region Metodos
 
         protected void ModificarVida(int cantidad)
         {
@@ -412,6 +484,84 @@ namespace AppGM.Core
             OnQuitarItem(item, this);
         }
 
+        public int ObtenerModificadorStat(EStat stat)
+        {
+	        switch (stat)
+	        {
+                case EStat.STR:
+	                return Helpers.Juego.ObtenerModificadorStat(Str) + VentajaStr;
+                case EStat.AGI:
+	                return Helpers.Juego.ObtenerModificadorStat(Agi) + VentajaAgi;
+                case EStat.END:
+	                return Helpers.Juego.ObtenerModificadorStat(End) + VentajaEnd;
+                case EStat.INT:
+	                return Helpers.Juego.ObtenerModificadorStat(Int) + VentajaInt;
+                case EStat.LCK:
+	                return Helpers.Juego.ObtenerModificadorStat(Lck) + VentajaLck;
+
+                default:
+                {
+	                SistemaPrincipal.LoggerGlobal.Log($"valor de {nameof(stat)}({stat}) no soportado", ESeveridad.Error);
+
+	                return 0;
+                }
+	        }
+        }
+
+        public void EstablecerValorStat(EStat stat, int valor)
+        {
+	        switch (stat)
+	        {
+                case EStat.STR:
+	                Str = valor;
+	                break;
+                case EStat.AGI:
+	                Agi = valor;
+                    break;
+                case EStat.END:
+	                End = valor;
+	                break;
+                case EStat.INT:
+	                Int = valor;
+                    break;
+                case EStat.LCK:
+	                Lck = valor;
+	                break;
+                default:
+
+                    SistemaPrincipal.LoggerGlobal.Log($"valor de {nameof(stat)}({stat}) no soportado", ESeveridad.Error);
+
+	                break;
+	        }
+        }
+
+        public void EstablecerValorBonoStat(EStat stat, int valor)
+        {
+	        switch (stat)
+	        {
+		        case EStat.STR:
+			        VentajaStr = valor;
+			        break;
+		        case EStat.AGI:
+			        VentajaAgi = valor;
+			        break;
+		        case EStat.END:
+			        VentajaEnd = valor;
+			        break;
+		        case EStat.INT:
+			        VentajaInt = valor;
+			        break;
+		        case EStat.LCK:
+			        VentajaLck = valor;
+			        break;
+		        default:
+
+			        SistemaPrincipal.LoggerGlobal.Log($"valor de {nameof(stat)}({stat}) no soportado");
+
+			        break;
+	        }
+        }
+
         public ControladorAmbiente ObtenerAmbienteGlobal()
         {
             return SistemaPrincipal.ModeloRolActual.AmbienteGlobal.Ambiente.controladorAmbiente;
@@ -447,7 +597,7 @@ namespace AppGM.Core
 	        return Regex.IsMatch(modelo.Nombre, $"*{cadena}*");
         }
 
-        public override ViewModelItemListaControlador CrearViewModelItem(bool _mostrarBotones = true)
+        public override ViewModelItemListaBase CrearViewModelItem(bool _mostrarBotones = true)
         {
 	        return new ViewModelPersonajeItem(this, _mostrarBotones);
         }
