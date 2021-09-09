@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using AppGM.Core;
 using AppGM.Viewmodels;
+using CoolLogs;
 
 namespace AppGM
 {
@@ -11,6 +12,8 @@ namespace AppGM
     {
         public MainWindow()
         {
+            SistemaPrincipal.LoggerGlobal.Log("Construyendo ventana principal...", ESeveridad.Info);
+
 	        //Creamos los view models para la ventana principal y los popups
             IVentana        ventanaPrincipal     = new ViewModelVentanaPrincipal(this);
 
@@ -22,6 +25,8 @@ namespace AppGM
             SistemaPrincipal.Aplicacion.PaginaActual = EPagina.PaginaPrincipal;
 
             InitializeComponent();
+
+            SistemaPrincipal.LoggerGlobal.Log("Ventana principal lista", ESeveridad.Info);
         }
     }
 }

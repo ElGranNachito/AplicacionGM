@@ -6,60 +6,67 @@ namespace AppGM.Core
     /// <summary>
     /// Representa una habilidad en una lista
     /// </summary>
-    public class ViewModelHabilidadItem : ViewModelItemLista
+    public class ViewModelHabilidadItem : ViewModelItemListaControlador<ViewModelHabilidadItem, ControladorHabilidad>
     {
         #region Propiedades
 
-        public ModeloHabilidad Habilidad { get; set; }
-
-        public bool CuestaMana => Habilidad.CostoDeMana != 0;
-        public bool EsPerk     => Habilidad.TipoDeHabilidad == ETipoHabilidad.Perk;
-        public bool EsSkill    => Habilidad.TipoDeHabilidad == ETipoHabilidad.Skill;
-        public bool EsMagia    => Habilidad.TipoDeHabilidad == ETipoHabilidad.Hechizo;
-        public bool EsNP       => Habilidad.TipoDeHabilidad == ETipoHabilidad.NoblePhantasm;
+        public bool CuestaMana => ControladorGenerico.CostoMana != 0;
+        public bool EsPerk     => ControladorGenerico.TipoHabilidad == ETipoHabilidad.Perk;
+        public bool EsSkill    => ControladorGenerico.TipoHabilidad == ETipoHabilidad.Skill;
+        public bool EsHechizo    => ControladorGenerico.TipoHabilidad == ETipoHabilidad.Hechizo;
+        public bool EsNP       => ControladorGenerico.TipoHabilidad == ETipoHabilidad.NoblePhantasm;
 
         #endregion
 
         #region Constructor
 
-        public ViewModelHabilidadItem(ModeloHabilidad _habilidad)
+        public ViewModelHabilidadItem(ControladorHabilidad _habilidad, bool _mostrarBotonesLaterales = true)
+
+			:base(_habilidad, _mostrarBotonesLaterales)
         {
-            Habilidad = _habilidad;
+	        ControladorGenerico = _habilidad;
 
             PathImagen = Path.Combine(
 							Path.Combine(
-								SistemaPrincipal.ControladorDeArchivos.DirectorioImagenes, "Habilidades" + Path.DirectorySeparatorChar), 
-								Habilidad.TipoDeHabilidad + ".png");
-
-            CaracteristicasItem.Elementos = new ObservableCollection<ViewModelCaracteristicaItem>
-            {
-                //Nombre de la habilidad
-	            new ViewModelCaracteristicaItem
-	            {
-		            Titulo = "Nombre",
-		            Valor = Habilidad.Nombre + $".{(EsMagia ? (Habilidad as ModeloMagia)?.Nivel.ToString() : Habilidad.Rango.ToString())}"
-	            },
-
-                //Tipo de la habilidad
-                new ViewModelCaracteristicaItem
-                {
-                    Titulo = "Tipo Habilidad",
-                    Valor = Habilidad.TipoDeHabilidad.ToString()
-                }
-            };
+								SistemaPrincipal.ControladorDeArchivos.DirectorioImagenes, "Habilidades" + Path.DirectorySeparatorChar),
+								ControladorGenerico.TipoHabilidad + ".png");
 
             ComandoBotonSuperior = new Comando(() =>
             {
 	            var vmActual = SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido;
 
-	            SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = new ViewModelCrearHabilidad(_habilidad.Dueño.Personaje,
+	            SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = new ViewModelCrearHabilidad(ControladorGenerico.modelo.Dueño.Personaje,
 		            vm =>
 		            {
 			            SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = vmActual;
-		            }, Habilidad);
+		            }, ControladorGenerico);
             });
+        }
+
+		#endregion
+
+		#region Metodos
+
+		protected override void ActualizarCaracteristicas()
+		{
+			CaracteristicasItem.Elementos = new ObservableCollection<ViewModelCaracteristicaItem>
+			{
+				//Nombre de la habilidad
+				new ViewModelCaracteristicaItem
+				{
+					Titulo = "Nombre",
+					Valor = ControladorGenerico.Nombre + $".{(EsHechizo ? (ControladorGenerico.modelo as ModeloMagia)?.Nivel.ToString() : ControladorGenerico.Rango.ToString())}"
+				},
+
+				//Tipo de la habilidad
+				new ViewModelCaracteristicaItem
+				{
+					Titulo = "Tipo Habilidad",
+					Valor = ControladorGenerico.TipoHabilidad.ToString()
+				}
+			};
         } 
 
-        #endregion
-    }
+		#endregion
+	}
 }

@@ -6,11 +6,26 @@
     public abstract class ModeloTiradaBase : ModeloBase
     {
         /// <summary>
-        /// Controlador
+        /// Nombre de la tirada
         /// </summary>
-        public IControladorTiradaBase controladorTiradaBase;
+        public string Nombre { get; set; }
 
         /// <summary>
+        /// Descripcion de la tirada
+        /// </summary>
+        public string Descripcion { get; set; }
+
+        /// <summary>
+        /// Indica si esta tirada es para alguna accion en la que se tenga especialidad
+        /// </summary>
+        public int MultiplicadorDeEspecialidad { get; set; }
+
+        /// <summary>
+        /// Tipo de esta tirada
+        /// </summary>
+        public ETipoTirada TipoTirada { get; set; }
+
+	    /// <summary>
         /// Modelo del personaje que contiene la tirada
         /// </summary>
         public virtual TITiradaPersonaje PersonajeContenedor { get; set; }

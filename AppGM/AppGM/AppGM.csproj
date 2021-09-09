@@ -6,6 +6,7 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <UseWPF>true</UseWPF>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
+    <ApplicationIcon>Media\Imagenes\Iconos\App\Icon_Desktop.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Media\Imagenes\Botones\**" />
@@ -101,15 +102,6 @@
     <Resource Include="Media\Imagenes\Posiciones\Invocacion_Master_Caster.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Media\Imagenes\Posiciones\Party_Saber_Localization.png" />
-    <Resource Include="Media\Imagenes\Posiciones\Party_Lancer_Localization.png" />
-    <Resource Include="Media\Imagenes\Posiciones\Party_Archer_Localization.png" />
-    <Resource Include="Media\Imagenes\Posiciones\Party_Rider_Localization.png" />
-    <Resource Include="Media\Imagenes\Posiciones\Party_Berserker_Localization.png" />
-    <Resource Include="Media\Imagenes\Posiciones\Party_Assassin_Localization.png" />
-    <Resource Include="Media\Imagenes\Posiciones\Party_Caster_Localization.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Media\Imagenes\Posiciones\Invocacion_Archer.png" />
     <Resource Include="Media\Imagenes\Posiciones\Invocacion_Assassin.png" />
     <Resource Include="Media\Imagenes\Posiciones\Invocacion_Berserker.png" />
@@ -181,6 +173,19 @@
     <Resource Include="Media\Imagenes\GuraScratch\GuraScratchLogo-v8.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Media\Imagenes\Iconos\Parties\Party_0.png" />
+    <Resource Include="Media\Imagenes\Iconos\Parties\Party_1.png" />
+    <Resource Include="Media\Imagenes\Iconos\Parties\Party_2.png" />
+    <Resource Include="Media\Imagenes\Iconos\Parties\Party_3.png" />
+    <Resource Include="Media\Imagenes\Iconos\Parties\Party_4.png" />
+    <Resource Include="Media\Imagenes\Iconos\Parties\Party_5.png" />
+    <Resource Include="Media\Imagenes\Iconos\Parties\Party_6.png" />
+    <Resource Include="Media\Imagenes\Iconos\Parties\Party_7.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Media\Imagenes\Iconos\App\Icon_Window.png"/>
+  </ItemGroup>
+  <ItemGroup>
     <Resource Include="Media\Imagenes\Iconos\Alianzas\Team_Default.png" />
     <Resource Include="Media\Imagenes\Iconos\Alianzas\Team_UwU.png" />
     <Resource Include="Media\Imagenes\Iconos\Alianzas\Team_Hetero.png" />
@@ -190,14 +195,6 @@
     <Compile Remove="DesignModelRolItem.cs" />
     <Compile Remove="Viewmodels\BaseViewModel.cs" />
     <Page Remove="Estilos\Colores.xaml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Media\Imagenes\Botones\MenuPrincipal\Flechita_Izquierda_Click.png" />
-    <Resource Include="Media\Imagenes\Botones\MenuPrincipal\Flechita_Izquierda_Idle.png" />
-    <Resource Include="Media\Imagenes\Botones\MenuPrincipal\Flechita_Izquierda_Select.png" />
-    <Resource Include="Media\Imagenes\Botones\MenuPrincipal\Flechita_Derecha_Click.png" />
-    <Resource Include="Media\Imagenes\Botones\MenuPrincipal\Flechita_Derecha_Idle.png" />
-    <Resource Include="Media\Imagenes\Botones\MenuPrincipal\Flechita_Derecha_Select.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Media\Imagenes\Botones\MenuPrincipal\Info_Click.png" />
@@ -227,8 +224,5 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Media\Imagenes\Iconos\Parties\" />
   </ItemGroup>
 </Project>

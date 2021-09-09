@@ -51,7 +51,7 @@
                     HorizontalContentAlignment="Center"
                     VerticalContentAlignment="Center"
                     
-                    Text="{Binding DescripcionVariable}"/>
+                    Text="{Binding DescripcionVariable, Mode=OneWayToSource}"/>
 
                 <!-- Combo box para la seleccion del tipo de la variable -->
                 <local:UserControlComboBoxConDescripcion
