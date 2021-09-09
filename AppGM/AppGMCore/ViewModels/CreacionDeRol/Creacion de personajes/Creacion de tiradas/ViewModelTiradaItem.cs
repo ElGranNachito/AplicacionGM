@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AppGM.Core
 {
-	public class ViewModelTiradaItem : ViewModelItemLista
+	/*public class ViewModelTiradaItem : ViewModelItemListaControlador<ViewModelTiradaItem, IControladorTiradaBase>
 	{
-	}
+	}*/
 }

@@ -21,11 +21,6 @@ namespace AppGM.Core
         [AccesibleEnGuraScratch(nameof(Resultado))]
         int Resultado { get; set; }
 
-        /// <summary>
-        /// Para una tirada con varios dados esta propiedad lista todos los numeros que salieron
-        /// </summary>
-        int[] Resultados { get; set; }
-
         #endregion
 
         #region Funciones
@@ -70,33 +65,19 @@ namespace AppGM.Core
         #endregion
     }
 
-    /// <summary>
-    /// Controlador de una tirada
-    /// </summary>
-    /// <typeparam name="TipoTirada"></typeparam>
-    public abstract class ControladorTirada<TipoTirada> : Controlador<TipoTirada>, IControladorTiradaBase
-        where TipoTirada : ModeloTiradaBase, new()
+    public abstract class ControladorTiradaBase : Controlador<ModeloTiradaBase>, IControladorTiradaBase
     {
-	    #region Implementacion Interfaz
+        public Func<ResultadoTirada> FuncionTirada { get; protected set; }
 
-        public int Resultado { get; set; }
-
-        public int[] Resultados { get; set; } = null;
-
-        public virtual void RealizarTirada()
+	    public ControladorTiradaBase(ModeloTiradaBase _modelo)  
+			:base(_modelo)
         {
-            SistemaPrincipal.LoggerGlobal.Log($@"Llamada funcion {nameof(RealizarTirada)} sin parametros pero no esta implementada. 
-													   Intentar llamar su sobrecarga con parametros");
-        }
-
-        public virtual void RealizarTirada(object parametro)
-        {
-            RealizarTirada();
+	        
         }
 
         public override string ToString()
         {
-	        if (Resultados != null)
+	        /*if (Resultados != null)
 	        {
 		        StringBuilder bld = new StringBuilder();
 
@@ -112,10 +93,42 @@ namespace AppGM.Core
 	        }
 
 
-	        return $"Resultado: {Resultado}";
+	        return $"Resultado: {Resultado}";*/
+	        return Resultado.ToString();
+        }
+
+        #region Implementacion Interfaz
+
+        public int Resultado { get; set; }
+
+        public virtual void RealizarTirada()
+        {
+	        SistemaPrincipal.LoggerGlobal.Log($@"Llamada funcion {nameof(RealizarTirada)} sin parametros pero no esta implementada. 
+													   Intentar llamar su sobrecarga con parametros");
+        }
+
+        public virtual void RealizarTirada(object parametro)
+        {
+	        RealizarTirada();
         }
 
         #endregion
+    }
+
+    /// <summary>
+    /// Controlador de una tirada
+    /// </summary>
+    /// <typeparam name="TipoTirada"></typeparam>
+    public abstract class ControladorTirada<TipoTirada> : ControladorTiradaBase
+        where TipoTirada : ModeloTiradaBase, new()
+    {
+	    public readonly TipoTirada modeloGenerico;
+
+	    public ControladorTirada(TipoTirada _modelo)
+			:base(_modelo)
+	    {
+		    modeloGenerico = _modelo;
+	    }
     }
 
     /// <summary>
@@ -123,22 +136,18 @@ namespace AppGM.Core
     /// </summary>
     public class ControladorTiradaVariable : ControladorTirada<ModeloTiradaVariable>
     {
-        #region Constructor
+		#region Constructor
 
-        public ControladorTiradaVariable(ModeloTiradaVariable _modelo)
+		public ControladorTiradaVariable(ModeloTiradaVariable _modeloTiradaPersonalizada)
+			:base(_modeloTiradaPersonalizada) {} 
+
+		#endregion
+
+		#region Funciones
+
+		public override void RealizarTirada()
         {
-            modelo = _modelo;
-
-            Resultados = new int[modelo.Dados];
-        }
-
-        #endregion
-
-        #region Funciones
-
-        public override void RealizarTirada()
-        {
-	        if (Resultados == null || Resultados.Length != modelo.Dados)
+	        /*if (Resultados == null || Resultados.Length != modelo.Dados)
 		        Resultados = new int[modelo.Dados];
 
 	        Resultado = 0;
@@ -148,7 +157,7 @@ namespace AppGM.Core
 		        Resultados[i] = RNGCryptoServiceProvider.GetInt32(1, modelo.Caras + 1);
 
 		        Resultado += Resultados[i];
-	        }
+	        }*/
         }
 
         #endregion
@@ -159,24 +168,18 @@ namespace AppGM.Core
     /// </summary>
     public class ControladorTiradaStat : ControladorTirada<ModeloTiradaStat>
     {
-        #region Constructor
+	    #region Constructor
 
-        public ControladorTiradaStat(ModeloTiradaStat _modeloTiradaStat)
+		public ControladorTiradaStat(ModeloTiradaStat _modeloTiradaStat)
+			:base(_modeloTiradaStat) {} 
+
+		#endregion
+
+		#region Funciones
+
+		public override void RealizarTirada(object p)
         {
-            modelo = _modeloTiradaStat;
-        }
-
-        #endregion
-
-        #region Funciones
-
-        public override void RealizarTirada(object p)
-        {
-            var personaje = (ControladorPersonaje) p;
             
-            personaje.SufrirDaño(500, ETipoDeDaño.Explosivo, null);
-
-            //TODO: Tirar 3d6
         }
 
         #endregion
@@ -190,9 +193,7 @@ namespace AppGM.Core
         #region Constructor
 
         public ControladorTiradaDaño(ModeloTiradaDeDaño _modeloTiradaStat)
-        {
-            modelo = _modeloTiradaStat;
-        }
+			:base(_modeloTiradaStat){}
 
         #endregion
 
@@ -200,11 +201,7 @@ namespace AppGM.Core
 
         public override void RealizarTirada(object p)
         {
-            var personaje = (ControladorPersonaje)p;
-
-            personaje.SufrirDaño(500, ETipoDeDaño.Explosivo, null);
-
-            //TODO: Tirar 3d6
+            
         }
 
         #endregion

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -96,15 +98,19 @@ namespace AppGM.Core
         /// de datos y creacion de view models
         /// </summary>
         /// <param name="controladorDeArchivos">Instancia de un <see cref="IControladorDeArchivos"/> para atar al IoC</param>
-        public static void Inicializar(IControladorDeArchivos controladorDeArchivos)
+        public static async void Inicializar(IControladorDeArchivos controladorDeArchivos)
         {
 	        ControladorVariableBase.CrearModeloCorrespondiente(typeof(ControladorPersonaje), 0, "nada");
 
             //Obtenemos el contexto del hilo que nos llamo
             ThreadUISyncContext = SynchronizationContext.Current;
-			
+
             CoolLogs.Globales.Inicializar<CoolFactory>(ESeveridad.TODOS, "%t-T [%a>%f:%l %s-u]: %m", "LoggerPrincipal", "log");
-            
+
+			#if DEBUG
+	        CoolLogs.Globales.InicializarProxyLoggerConsola("AppGM - LoggerGlobal", $"{Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "..", "Dependencias", "ProxyLoggerConsola.exe"))}", true, false, true);
+			#endif
+
             Kernel.Bind<Logger>().ToConstant(CoolLogs.Globales.LoggerGlobal);
             Kernel.Bind<LoggerFactory>().ToConstant(CoolLogs.Globales.Factory);
 
@@ -112,9 +118,14 @@ namespace AppGM.Core
 
             Kernel.Bind<IControladorDeArchivos>().ToConstant(controladorDeArchivos);
 
+            LoggerGlobal.Log("Controlador de archivos inicializado", ESeveridad.Info);
+
             //Atamos los view models basicos, es decir que necesitamos independientemente del rol que se seleccione
             Kernel.Bind<ViewModelAplicacion>().ToConstant(new ViewModelAplicacion());
             Kernel.Bind<ViewModelPaginaInicio>().ToConstant(new ViewModelPaginaInicio());
+
+            LoggerGlobal.Log("Creados VMs aplicacion y pagina inicio", ESeveridad.Info);
+
             Kernel.Bind<Drag>().ToConstant(new Drag());
 
             Aplicacion.OnPaginaActualCambio += PaginaActualCambioHandler;
@@ -126,9 +137,9 @@ namespace AppGM.Core
         /// <param name="codigoSalida">Codigo de salida de la aplicacion <para/> Para ver los posibles codigos y sus significados: <seealso cref="https://docs.microsoft.com/es-es/windows/win32/debug/system-error-codes?redirectedfrom=MSDN"/></param>
         public static void Apagar(int codigoSalida)
         {
-            LoggerGlobal.Log($"Saliendo de la app... Codigo de salida: ({codigoSalida})", ESeveridad.Info);
+	        LoggerGlobal.Log($"Saliendo de la app... Codigo de salida: ({codigoSalida})", ESeveridad.Info);
 
-            CoolLogs.Globales.Finalizar();
+	        CoolLogs.Globales.Finalizar();
         }
 
         /// <summary>
@@ -138,9 +149,11 @@ namespace AppGM.Core
         /// <returns></returns>
         public static async Task CargarRolAsincronicamente(ModeloRol modelo)
         {
-            //Atamos primero estos das clases al IoC porque son necesarias para la carga
+	        //Atamos primero estos das clases al IoC porque son necesarias para la carga
 	        Kernel.Bind<ModeloRol>().ToConstant(modelo);
             Kernel.Bind<ViewModelRol>().ToConstant(new ViewModelRol());
+
+            SistemaPrincipal.LoggerGlobal.Log($"Cargando datos rol resleccionado ({modelo.Nombre})", ESeveridad.Info);
 
             //Cargamos los datos
             await DatosRolSeleccionado.CargarDatos();

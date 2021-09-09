@@ -426,10 +426,6 @@
                             <local:UserControlItemLista/>
                         </DataTemplate>
                     </local:UserControlListaItems.ItemTemplate>
-
-                    <!--<local:UserControlListaHabilidades
-                        DataContext="{Binding ListaHabilidades}"/>-->
-
                 </local:UserControlListaItems>
 
                 <!-- NPs -->

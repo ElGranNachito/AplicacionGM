@@ -40,10 +40,10 @@ namespace AppGM.Core
 				ControladoresConcordantes.Elementos.Clear();
 
 				ControladoresConcordantes.AddRange(
-					(mFiltro.IsNullOrWhiteSpace() 
-					//Si el filtro es una cadena en vacia entonces añadimos todos los controladores disponibles
-						? mControladoresDisponibles 
-					//Si no lo es entonces añadimos todos los controladores que concuerden con la cadena
+					(mFiltro.IsNullOrWhiteSpace()
+						//Si el filtro es una cadena en vacia entonces añadimos todos los controladores disponibles
+						? mControladoresDisponibles
+						//Si no lo es entonces añadimos todos los controladores que concuerden con la cadena
 						: mControladoresDisponibles.FindAll(c => c.CompararConCadena(Filtro)))
 					.Select(c => c.CrearViewModelItem(false)));
 			}
@@ -52,17 +52,18 @@ namespace AppGM.Core
 		/// <summary>
 		/// Contiene los vms de los controladores que concuerdan con el <see cref="Filtro"/>
 		/// </summary>
-		public ViewModelListaDeElementos<ViewModelItemListaControlador> ControladoresConcordantes { get; set; } = new ViewModelListaDeElementos<ViewModelItemListaControlador>();
+		public ViewModelListaDeElementos<ViewModelItemListaBase> ControladoresConcordantes { get; set; } =
+			new ViewModelListaDeElementos<ViewModelItemListaBase>();
 
 		/// <summary>
 		/// Contiene el vm del controlador actualmente seleccionado
 		/// </summary>
-		public ViewModelItemListaControlador ItemSeleccionado { get; set; }
+		public ViewModelItemListaBase ItemSeleccionado { get; set; }
 
 		/// <summary>
 		/// Controlador seleccionado
 		/// </summary>
-		public ControladorBase ControladorSeleccionado => ItemSeleccionado.controlador;
+		public ControladorBase ControladorSeleccionado => ItemSeleccionado.Controlador;
 
 		#endregion
 
@@ -77,7 +78,7 @@ namespace AppGM.Core
 			mControladoresDisponibles = _controladoresDisponibles;
 
 			ControladoresConcordantes.AddRange(mControladoresDisponibles.Select(c => c.CrearViewModelItem(false)));
-		} 
+		}
 
 		#endregion
 	}

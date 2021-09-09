@@ -185,7 +185,13 @@ namespace AppGM.Core
 
             ContenedorListaItems       = new ViewModelListaItems<ViewModelItem>(mAccionAñadirItem, true, "Items");
 
-            ContenedorListaHabilidades.Items.Elementos.Add(new ViewModelHabilidadItem(new ModeloHabilidad{Nombre = "Nada interesante", TipoDeHabilidad = ETipoHabilidad.Skill, Dueño = new TIPersonajeHabilidad{Personaje = ModeloPersonaje}}));
+            var modeloHabilidad = new ModeloHabilidad
+            {
+	            Nombre = "Nada interesante", TipoDeHabilidad = ETipoHabilidad.Skill,
+	            Dueño = new TIPersonajeHabilidad {Personaje = ModeloPersonaje}
+            };
+
+            ContenedorListaHabilidades.Items.Elementos.Add(new ViewModelHabilidadItem(new ControladorHabilidad(modeloHabilidad)));
 
             ComboBoxTipoPersonaje.OnValorSeleccionadoCambio += (anterior, actual) =>
             {
