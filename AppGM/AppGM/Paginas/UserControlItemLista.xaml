@@ -14,122 +14,108 @@
 
             <Setter Property="Visibility">
                 <Setter.Value>
-                    <Binding
-                        ElementName="contendor" 
-                        Path="IsMouseOver"
-                        Converter="{local:BooleanToVisibilityConverterColapsar}">
-                    </Binding>
+                    <MultiBinding Converter="{local:BooleanToVisibilityConverterColapsarMultiple}">
+
+                        <Binding ElementName="contendor" Path="IsMouseOver"/>
+                        <Binding Path="MostrarBotonesLaterales"/>
+
+                    </MultiBinding>
                 </Setter.Value>
             </Setter>
 
         </Style>
     </UserControl.Resources>
 
-    <Border
-        Margin="0 0 0 10"
-        
-        BorderThickness="1"
-        BorderBrush="Black">
+    <Grid
+        x:Name="contendor"
+        Background="White">
 
-        <Grid
-            x:Name="contendor"
-            Background="White">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+        <!-- Imagen del item -->
+        <Border
+            Padding="5"
 
-            <!-- Imagen del item -->
-            <Border
-                Padding="5"
+            VerticalAlignment="Stretch"
+            Width="{Binding RelativeSource={RelativeSource Mode=Self}, Path=ActualHeight}"
+            
+            Visibility="{Binding TieneImagen,
+            Converter={local:BooleanToVisibilityConverterColapsar},
+            FallbackValue=Collapsed}">
 
-                VerticalAlignment="Stretch"
-                Width="{Binding RelativeSource={RelativeSource Mode=Self}, Path=ActualHeight}"
-                
-                Visibility="{Binding TieneImagen,
-                Converter={local:BooleanToVisibilityConverterColapsar},
-                FallbackValue=Collapsed}">
+            <Border>
 
-                <Border>
-
-                    <Border.Background>
-                        <ImageBrush 
-                            ImageSource="{Binding PathImagen, 
-                            Converter={local:FullPathToImageConverter}}"/>
-                    </Border.Background>
-
-                </Border>
+                <Border.Background>
+                    <ImageBrush 
+                        ImageSource="{Binding PathImagen, 
+                        Converter={local:FullPathToImageConverter}}"/>
+                </Border.Background>
 
             </Border>
 
-            <!-- Datos del item -->
-            <ItemsControl
-                Grid.Column="1"
-                ItemsSource="{Binding CaracteristicasItem.Elementos}">
+        </Border>
 
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
+        <!-- Datos del item -->
+        <ItemsControl
+            Grid.Column="1"
+            ItemsSource="{Binding CaracteristicasItem.Elementos}">
 
-                        <StackPanel
-                            Margin="0 0 0 5">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
 
-                            <TextBlock
-                                Text="{Binding Titulo, FallbackValue=Algo}"
-                                FontWeight="Bold"/>
+                    <StackPanel
+                        Margin="0 0 0 5">
 
-                            <TextBlock
-                                Margin="0 5 0 0"
-                                Text="{Binding Valor, FallbackValue=No existo}"/>
+                        <TextBlock
+                            Text="{Binding Titulo, FallbackValue=Algo}"
+                            FontWeight="Bold"/>
 
-                        </StackPanel>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+                        <TextBlock
+                            Margin="0 5 0 0"
+                            Text="{Binding Valor, FallbackValue=No existo}"/>
 
-            <!-- Botones -->
-            <Grid
-                Grid.Column="2"
-                HorizontalAlignment="Center"
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <Grid
+            Grid.Column="2"
+            HorizontalAlignment="Center"
+            
+            Style="{StaticResource EstiloContenedorBotones}">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!--Boton editar-->
+            <Button
+                VerticalAlignment="Top"
+                Margin="0 5 0 0"
+                Style="{StaticResource BotonFondoResaltable}"
                 
-                Style="{StaticResource EstiloContenedorBotones}">
+                Content="{Binding ContenidoBotonSuperior}"
+                
+                Command="{Binding ComandoBotonSuperior}"/>
 
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
+            <!-- Boton eliminar -->
+            <Button
+                Grid.Row="1"
+                Margin="0 0 0 5"
+                VerticalAlignment="Bottom"
 
-                <!--Boton editar-->
-                <Button
-                    VerticalAlignment="Top"
-                    Margin="0 5 0 0"
-                    Style="{StaticResource BotonFondoResaltable}"
-                    
-                    Content="{Binding ContenidoBotonSuperior}"
-                    
-                    Command="{Binding ComandoBotonSuperior}"
-                    
-                    Visibility="{Binding MostrarBotonSuperior, 
-                    Converter={local:BooleanToVisibilityConverterColapsar}}"/>
+                Style="{StaticResource BotonFondoResaltable}"
 
-                <!-- Boton eliminar -->
-                <Button
-                    Grid.Row="1"
-                    Margin="0 0 0 5"
-                    VerticalAlignment="Bottom"
-
-                    Style="{StaticResource BotonFondoResaltable}"
-
-                    Content="{Binding ContenidoBotonInferior}"
-                    
-                    Command="{Binding ComandoBotonInferior}"
-                    
-                    Visibility="{Binding MostrarBotonInferior,
-                    Converter={local:BooleanToVisibilityConverterColapsar}}"/>
-            </Grid>
-
+                Content="{Binding ContenidoBotonInferior}"
+                
+                Command="{Binding ComandoBotonInferior}"/>
         </Grid>
 
-    </Border>
+    </Grid>
 </UserControl>

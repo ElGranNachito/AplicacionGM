@@ -3,7 +3,6 @@ using System.Windows;
 using System.Windows.Input;
 using System.Threading.Tasks;
 using AppGM.Core;
-using CoolLogs;
 
 namespace AppGM.Viewmodels
 {

@@ -27,7 +27,5 @@ namespace AppGM.Core
         /// Valor constante para la propiedad MapaDelAmbiente de un <see cref="ModeloAmbiente"/>
         /// </summary>
         public const TIMapaAmbiente MapaDelAmbiente = null;
-
-        public const int BonoEspecialidad = 2;
     }
 }

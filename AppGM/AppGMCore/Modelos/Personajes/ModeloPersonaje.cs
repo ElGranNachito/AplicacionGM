@@ -95,7 +95,6 @@ namespace AppGM.Core
         /// Contratos realizados con tros personajes
         /// </summary>
         public virtual List<TIPersonajeContrato>      Contratos  { get; set; } = new List<TIPersonajeContrato>();
-
         /// <summary>
         /// Alianzas con otros personajes
         /// </summary>
@@ -117,9 +116,5 @@ namespace AppGM.Core
         /// </summary>
         public virtual List<TIParticipantePersonaje> ParticipacionEnCombates { get; set; } = new List<TIParticipantePersonaje>();
 
-        /// <summary>
-        /// Especialidades de este personaje
-        /// </summary>
-        public virtual List<TIEspecialidadPersonaje> Especialidades { get; set; } = new List<TIEspecialidadPersonaje>();
     }
 }

@@ -27,7 +27,7 @@ namespace AppGM.Core
 
         public ModeloHabilidad ModeloHabilidad { get; private set; }
 
-        public ControladorHabilidad HabilidadSiendoEditada { get; private set; }
+        public ModeloHabilidad ModeloHabilidadSiendoEditada { get; private set; }
 
         public string TextoNivelMagia => $"Lv.{ObtenerNivelDeMagia()}";
 
@@ -41,7 +41,7 @@ namespace AppGM.Core
         public bool UtilizaPrana => EsMagia && (mModeloPersonaje.TipoPersonaje & (ETipoPersonaje.Servant | ETipoPersonaje.Invocacion)) != 0;
         public bool UtilizaOd => EsMagia && (mModeloPersonaje.TipoPersonaje & (ETipoPersonaje.Servant | ETipoPersonaje.NPC)) != 0;
 
-        public bool EstaEditandoHabilidadExistente => HabilidadSiendoEditada != null;
+        public bool EstaEditandoHabilidadExistente => ModeloHabilidadSiendoEditada != null;
         
         public string CostoDeMana
         {
@@ -76,8 +76,8 @@ namespace AppGM.Core
             }
         }
 
-        public ViewModelListaItems<ViewModelItemLista> ContenedorListaEfectos { get; set; }
-        public ViewModelListaItems<ViewModelItemLista> ContenedorListaTiradas { get; set; }
+        public ViewModelListaItems<ViewModelEfectoItem> ContenedorListaEfectos { get; set; }
+        public ViewModelListaItems<ViewModelTiradaItem> ContenedorListaTiradas { get; set; }
 
         public ViewModelListaItems<ViewModelVariableItem> ContenedorListaVariables  { get; set; }
 
@@ -92,16 +92,16 @@ namespace AppGM.Core
 
         #region Constructor
 
-        public ViewModelCrearHabilidad(ModeloPersonaje _modeloPersonaje, Action<ViewModelCrearHabilidad> accionSalir, ControladorHabilidad _habilidad = null)    
+        public ViewModelCrearHabilidad(ModeloPersonaje _modeloPersonaje, Action<ViewModelCrearHabilidad> accionSalir, ModeloHabilidad _habilidad = null)    
 			:base(accionSalir)
         {
 	        mModeloPersonaje  = _modeloPersonaje;
 
             if (_habilidad != null)
             {
-                HabilidadSiendoEditada = _habilidad;
+                ModeloHabilidadSiendoEditada = _habilidad;
 
-                ModeloHabilidad = HabilidadSiendoEditada.modelo.Clonar() as ModeloHabilidad;
+                ModeloHabilidad = ModeloHabilidadSiendoEditada.Clonar() as ModeloHabilidad;
 
                 DispararPropertyChanged(nameof(EstaEditandoHabilidadExistente));
             }
@@ -131,8 +131,8 @@ namespace AppGM.Core
             FuncionUtilizar = new ViewModelFuncionItem<ControladorFuncion_Habilidad>(new ControladorFuncion_Habilidad(new ModeloFuncion{NombreFuncion = "CoolerFunc"}));
             //FuncionCondicion = new ViewModelFuncionItem<ControladorFuncion_Predicado>(null);
 
-            ContenedorListaEfectos   = new ViewModelListaItems<ViewModelItemLista>(()=>{}, true, "Efectos");
-            ContenedorListaTiradas   = new ViewModelListaItems<ViewModelItemLista>(()=>{}, true, "Tiradas");
+            ContenedorListaEfectos   = new ViewModelListaItems<ViewModelEfectoItem>(()=>{}, true, "Efectos");
+            ContenedorListaTiradas   = new ViewModelListaItems<ViewModelTiradaItem>(()=>{}, true, "Tiradas");
             ContenedorListaVariables = new ViewModelListaItems<ViewModelVariableItem>(() =>
             {
 	            ModeloMaster pj = new ModeloMaster()
@@ -148,13 +148,13 @@ namespace AppGM.Core
 
 	            ControladorPersonaje cpj = new ControladorPersonaje(pj);
 
-                var variable =
+                SistemaPrincipal.AñadirControlador<ModeloPersonaje, ControladorPersonaje>(pj, cpj);
 
 	            SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = new ViewModelCreacionDeVariable((vm) =>
 	            {
 		            if (vm.Resultado == EResultadoViewModel.Aceptar)
 		            {
-                        AñadirVariable((ViewModelVariableItem)vm.CrearVariable().CrearViewModelItem());
+			            ContenedorListaVariables.Items.Add(new ViewModelVariableItem(vm.VariableCreada));
 		            }
 
 		            SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = this;
@@ -234,16 +234,6 @@ namespace AppGM.Core
                 return 7;
 
             return 8;
-        }
-
-        private void AñadirVariable(ViewModelVariableItem nuevaVariable)
-        {
-	        nuevaVariable.OnBotonInferiorPresionado += item =>
-	        {
-		        ContenedorListaVariables.Items.Remove(item);
-	        };
-
-            ContenedorListaVariables.Items.Add(nuevaVariable);
         }
 
         #endregion

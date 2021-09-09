@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppGM", "AppGM\AppGM.csproj
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppGM.Core", "AppGMCore\AppGM.Core.csproj", "{DC35C1D2-76B4-4FA9-A13E-E08AD9B9A433}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppGM.Tests", "AppGM.Tests\AppGM.Tests.csproj", "{CF440F93-95F8-494A-9732-4EC50E296901}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{DC35C1D2-76B4-4FA9-A13E-E08AD9B9A433}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC35C1D2-76B4-4FA9-A13E-E08AD9B9A433}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC35C1D2-76B4-4FA9-A13E-E08AD9B9A433}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CF440F93-95F8-494A-9732-4EC50E296901}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CF440F93-95F8-494A-9732-4EC50E296901}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CF440F93-95F8-494A-9732-4EC50E296901}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CF440F93-95F8-494A-9732-4EC50E296901}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

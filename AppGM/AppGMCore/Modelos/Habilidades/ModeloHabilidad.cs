@@ -8,7 +8,12 @@ namespace AppGM.Core
     /// </summary>
     public class ModeloHabilidad : ModeloConVariablesYTiradas<TIVariableHabilidad, TITiradaHabilidad>
     {
-	    /// <summary>
+        /// <summary>
+        /// Controlador
+        /// </summary>
+        public ControladorHabilidad controladorHabilidad;
+
+        /// <summary>
         /// Indica si la habilidad esta actualmente activa
         /// </summary>
         private bool EstaActiva;
@@ -16,22 +21,22 @@ namespace AppGM.Core
         /// <summary>
         /// Costos de od o prana (tipos de energia magica) que tiene la habilidad para ser utilizada
         /// </summary>
-        public int CostoDeOdOPrana { get; set; }
+        public ushort CostoDeOdOPrana { get; set; }
 
         /// <summary>
         /// Costos de mana (energia magica concentrada) que tiene la habilidad para ser utilizada
         /// </summary>
-        public int CostoDeMana { get; set; }
+        public ushort CostoDeMana { get; set; }
         
         /// <summary>
         /// Turnos que dura la habilidad
         /// </summary>
-        public int TurnosDeDuracion { get; set; }
+        public ushort TurnosDeDuracion { get; set; }
 
         /// <summary>
         /// Turnos restantes de la habilidad
         /// </summary>
-        private int TurnosRestantes;
+        private ushort TurnosRestantes;
 
         /// <summary>
         /// Nombre de la habilidad
@@ -107,7 +112,9 @@ namespace AppGM.Core
     /// </summary>
     public class ModeloMagia : ModeloHabilidad
     {
-	    /// <summary>
+        public ControladorMagia controladorMagia;
+
+        /// <summary>
         /// Nivel que califica a la magia
         /// </summary>
         public byte Nivel { get; set; }

@@ -20,6 +20,7 @@
 
                 <Grid 
                     Background="White" 
+                    Height="450" 
                     VerticalAlignment="Top">
 
                     <Grid.RowDefinitions>
@@ -46,12 +47,11 @@
                         Content="{StaticResource Fa-BotonPlus}"
                         Style="{StaticResource BotonFondoResaltable}"
                         Command="{Binding ComandoAñadirItem}"/>
-                    
-                    <ScrollViewer
-                        Grid.Row="1"
 
+                    <ScrollViewer
                         VerticalScrollBarVisibility="Auto"
-                        HorizontalScrollBarVisibility="Auto">
+                        HorizontalScrollBarVisibility="Auto"
+                        Grid.Row="1">
 
                         <ItemsControl 
                             ItemsSource="{Binding Items.Elementos}"

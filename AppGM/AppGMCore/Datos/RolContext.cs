@@ -237,19 +237,6 @@ namespace AppGM.Core
 				.WithMany(p => p.Magias)
 				.HasForeignKey(ip => ip.IdPersonaje);
 
-			// - Personaje especialidades
-			modelBuilder.Entity<ModeloEspecialidad>().ToTable("ModeloEspecialidad");
-
-			modelBuilder.Entity<TIEspecialidadPersonaje>().HasKey(e => new {IDCompetencia = e.IDEspecialidad, e.IDPersonaje});
-
-			modelBuilder.Entity<TIEspecialidadPersonaje>()
-				.HasOne(e => e.Personaje)
-				.WithMany(p => p.Especialidades)
-				.HasForeignKey(e => e.IDPersonaje);
-
-			modelBuilder.Entity<TIEspecialidadPersonaje>()
-				.HasOne(e => e.Especialidad)
-				.WithOne(e => e.PersonajeContenedor);
 
 			// - Personaje modificador de defensa
 			modelBuilder.Entity<TIPersonajeModificadorDeDefensa>().HasKey(e => new { e.IdPersonaje, e.IdModificadorDefensa });

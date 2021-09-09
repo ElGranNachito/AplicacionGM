@@ -657,8 +657,6 @@ namespace AppGM.Core
 
 				tiCombateMapa.TrimExcess();
 
-				SistemaPrincipal.LoggerGlobal.Log("Creando controladores...", ESeveridad.Info);
-
 				Masters = new List<ControladorPersonaje>(masters.Count);
 
 				for (int i = 0; i < masters.Count; ++i)

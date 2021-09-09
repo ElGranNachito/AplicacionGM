@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using CoolLogs;
 
 namespace AppGM.Core
 {
@@ -31,8 +30,6 @@ namespace AppGM.Core
         /// </summary>
         public static void Inicializar()
         {
-            SistemaPrincipal.LoggerGlobal.Log("Inicializando controlador de animaciones", ESeveridad.Info);
-
             mThreadAnimaciones = new Thread(() =>
             {
                 bool lockObtenido = false;
@@ -70,8 +67,6 @@ namespace AppGM.Core
 
             //Iniciamos el hilo
             mThreadAnimaciones.Start();
-
-            SistemaPrincipal.LoggerGlobal.Log("Controlador de animaciones inicializado", ESeveridad.Info);
         }
 
         /// <summary>

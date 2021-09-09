@@ -6,13 +6,18 @@ namespace AppGM.Core
 	/// Representa a una funcion en un <see cref="ViewModelCrearHabilidad"/>
 	/// </summary>
 	/// <typeparam name="TControlador">Tipo del <see cref="ControladorFuncionBase"/></typeparam>
-	public class ViewModelFuncionItem<TControlador> : ViewModelItemListaControlador<ViewModelFuncionItem<TControlador>, ControladorFuncionBase> 
+	public class ViewModelFuncionItem<TControlador> : ViewModelItemLista
 		where TControlador: ControladorFuncionBase
 	{
 		/// <summary>
+		/// Controlador de la funcion
+		/// </summary>
+		public TControlador ControladorFuncion { get; private set; }
+
+		/// <summary>
 		/// Nombre de la funcion
 		/// </summary>
-		public string NombreFuncion => ControladorGenerico.NombreFuncion;
+		public string NombreFuncion => ControladorFuncion.NombreFuncion;
 
 		//TODO: Hacer que de verdad indique el tipo de la funcion
 		/// <summary>
@@ -24,13 +29,11 @@ namespace AppGM.Core
 		/// Constructor
 		/// </summary>
 		/// <param name="_controladorFuncion"></param>
-		public ViewModelFuncionItem(TControlador _controladorFuncion, bool _mostrarBotonesLaterales = true)
-
-			:base(_controladorFuncion, _mostrarBotonesLaterales)
+		public ViewModelFuncionItem(TControlador _controladorFuncion)
 		{
-			ControladorGenerico = _controladorFuncion;
+			ControladorFuncion = _controladorFuncion;
 
-			if (ControladorGenerico == null)
+			if (ControladorFuncion == null)
 			{
 				SistemaPrincipal.LoggerGlobal.Log($"{nameof(_controladorFuncion)} pasado es null!", ESeveridad.Error);
 
@@ -59,7 +62,7 @@ namespace AppGM.Core
 
 				//Creamos el vm para editar la funcion
 				SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido =
-					ControladorGenerico.CrearVMParaEditar(vm =>
+					ControladorFuncion.CrearVMParaEditar(vm =>
 						{
 							SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = dataContextActual;
 						});
@@ -68,7 +71,7 @@ namespace AppGM.Core
 			ComandoBotonInferior = new Comando(() =>
 			{
 				//TODO: Mostrar mensaje de confirmacion
-				ControladorGenerico.Eliminar();
+				ControladorFuncion.Eliminar();
 			});
 		}
 	}

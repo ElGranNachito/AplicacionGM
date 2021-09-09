@@ -26,16 +26,13 @@ namespace AppGM.Core
 		public string NombreVariable
 		{
 			get => modelo.NombreVariable;
-			set => modelo.NombreVariable = value;
-		}
+			set
+			{
+				if (value == NombreVariable)
+					return;
 
-		/// <summary>
-		/// Atajo para obtener/establecer el valor de la descripcion de la variable en el modelo
-		/// </summary>
-		public string DescripcionVariable
-		{
-			get => modelo.DescripcionVariable;
-			set => modelo.DescripcionVariable = value;
+				modelo.NombreVariable = value;
+			}
 		}
 
 		/// <summary>
@@ -92,10 +89,7 @@ namespace AppGM.Core
 		public abstract void GuardarValorVariable(object nuevoValor);
 
 		public override string ToString() =>
-			$"ID: {modelo.Id} - Nombre: {modelo.NombreVariable} - IDVariable: {modelo.IDVariable}";
-
-		public override ViewModelItemListaGenerico<ViewModelVariableItem> CrearViewModelItem(bool _motrarBotones = true) =>
-			new ViewModelVariableItem(this, _motrarBotones);
+			$"ID: {modelo.Id} - Nombre: {modelo.NombreVariable} - IDVariable: {modelo.IDVariable}"; 
 
 		#endregion
 
@@ -164,8 +158,8 @@ namespace AppGM.Core
 	/// <summary>
 	/// Controlador para un <see cref="ModeloVariable{TipoVariable}"/>
 	/// </summary>
-	/// <typeparam name="TVariable">Tipo de la variable representada por el modelo</typeparam>
-	public class ControladorVariable<TVariable> : ControladorVariableBase
+	/// <typeparam name="TipoVariable">Tipo de la variable representada por el modelo</typeparam>
+	public class ControladorVariable<TipoVariable> : ControladorVariableBase
 	{
 		#region Constructor
 
@@ -178,11 +172,11 @@ namespace AppGM.Core
 
 		public override object ObtenerValorVariable()
 		{
-			if (modelo is ModeloVariable<TVariable> m)
+			if (modelo is ModeloVariable<TipoVariable> m)
 				return m.ValorVariable;
 
 			SistemaPrincipal.LoggerGlobal.Log(
-				$"No se pudo obtener el valor de la variable {this}. Error al intentar castearla a ModeloVariable de tipo {typeof(TVariable)}",
+				$"No se pudo obtener el valor de la variable {this}. Error al intentar castearla a ModeloVariable de tipo {typeof(TipoVariable)}",
 				ESeveridad.Error);
 
 			return null;
@@ -190,28 +184,16 @@ namespace AppGM.Core
 
 		public override void GuardarValorVariable(object nuevoValor)
 		{
-			if (nuevoValor is TVariable n)
+			if (nuevoValor is TipoVariable n)
 			{
-				((ModeloVariable<TVariable>)modelo).ValorVariable = n;
+				((ModeloVariable<TipoVariable>)modelo).ValorVariable = n;
 
 				return;
 			}
 
-			SistemaPrincipal.LoggerGlobal.Log($@"Se intento guardar valor de tipo {nuevoValor.GetType()} pero el tipo de esta variable es {typeof(TVariable)}.
+			SistemaPrincipal.LoggerGlobal.Log($@"Se intento guardar valor de tipo {nuevoValor.GetType()} pero el tipo de esta variable es {typeof(TipoVariable)}.
 				{Environment.NewLine}{this}");
-		}
-
-		public override void ActulizarModelo(ModeloVariableBase nuevoModelo, bool eliminarSiNuevoModeloEsNull = false)
-		{
-			GuardarValorVariable(((ModeloVariable<TVariable>)nuevoModelo).ValorVariable);
-
-			IDVariable = nuevoModelo.IDVariable;
-
-			TipoVariable = Type.GetType(nuevoModelo.TipoVariable);
-
-			NombreVariable      = nuevoModelo.NombreVariable;
-			DescripcionVariable = nuevoModelo.DescripcionVariable;
-		}
+		} 
 
 		#endregion
 	}
@@ -348,24 +330,7 @@ namespace AppGM.Core
 			}
 
 			SistemaPrincipal.LoggerGlobal.Log($"{nameof(nuevoValor)} no es un {nameof(ControladorBase)}!", ESeveridad.Error);
-		}
-
-		public override void ActulizarModelo(ModeloVariableBase nuevoModelo, bool eliminarSiNuevoModeloEsNull = false)
-		{
-			if (nuevoModelo is ModeloVariableControlador m)
-			{
-				GuardarValorVariable(SistemaPrincipal.ObtenerControlador(m));
-
-				IDVariable = nuevoModelo.IDVariable;
-
-				mModeloVariableControlador.NombreVariable      = m.NombreVariable;
-				mModeloVariableControlador.DescripcionVariable = m.DescripcionVariable;
-
-				return;
-			}
-
-			SistemaPrincipal.LoggerGlobal.Log($"{nameof(nuevoModelo)} debe ser de tipo {typeof(ModeloVariableControlador)}", ESeveridad.Error);
-		}
+		} 
 
 		#endregion
 	} 

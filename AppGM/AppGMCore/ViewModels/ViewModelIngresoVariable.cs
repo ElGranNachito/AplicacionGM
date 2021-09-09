@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Net.Mime;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -114,12 +113,12 @@ namespace AppGM.Core
 		/// <summary>
 		/// Contiene el controlador actualmente seleccionado
 		/// </summary>
-		public ViewModelItemListaBase ControladorSeleccionado { get; set; }
+		public ViewModelItemListaControlador ControladorSeleccionado { get; set; }
 
 		/// <summary>
 		/// Lista con los controladores actualmente seleccionados
 		/// </summary>
-		public ViewModelListaItems<ViewModelItemListaBase> ViewModelListaDeControladores { get; set; }
+		public ViewModelListaItems<ViewModelItemListaControlador> ViewModelListaDeControladores { get; set; }
 
 		/// <summary>
 		/// Comando que se ejecuta cuando el usuario presiona el boton 'Seleccionar'
@@ -148,7 +147,7 @@ namespace AppGM.Core
 				ControladorSeleccionado = controladorSeleccionado;
 			});
 
-			ViewModelListaDeControladores = new ViewModelListaItems<ViewModelItemListaBase>(async () =>
+			ViewModelListaDeControladores = new ViewModelListaItems<ViewModelItemListaControlador>(async () =>
 			{
 				var controladorSeleccionado = await SeleccionarControlador();
 
@@ -187,10 +186,7 @@ namespace AppGM.Core
 				return null;
 
 			if (DebeSeleccionarControlador)
-				return ControladorSeleccionado.Controlador;
-
-			if (TextoActual.IsNullOrWhiteSpace() || TextoActual.Length == 0)
-				return null;
+				return ControladorSeleccionado.controlador;
 
 			//TODO: Lidiar con listas
 
@@ -239,7 +235,7 @@ namespace AppGM.Core
 			{
 				//Si el texto actual esta vacion la validez recae nuevamente en si puede
 				//quedar sin un valor establecido
-				if (TextoActual.IsNullOrWhiteSpace() || TextoActual.Length == 0)
+				if (TextoActual.IsNullOrWhiteSpace())
 				{
 					EsValido = mPuedeQuedarSinValor;
 				}
@@ -269,7 +265,7 @@ namespace AppGM.Core
 		/// Muestra un mensaje de seleccion de controlador sobre la ventana actual
 		/// </summary>
 		/// <returns>Controlador seleccionado por el usuario</returns>
-		private async Task<ViewModelItemListaBase> SeleccionarControlador()
+		private async Task<ViewModelItemListaControlador> SeleccionarControlador()
 		{
 			var vmSeleccionControlador = new ViewModelSeleccionDeControlador(
 				SistemaPrincipal.ObtenerControladores(TipoVariable, TipoVariable == typeof(ControladorUtilizable)));
