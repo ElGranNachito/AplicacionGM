@@ -6,6 +6,7 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <UseWPF>true</UseWPF>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
+    <ApplicationIcon>Media\Imagenes\Iconos\App\Icon_Desktop.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Media\Imagenes\Botones\**" />
@@ -180,6 +181,9 @@
     <Resource Include="Media\Imagenes\Iconos\Parties\Party_5.png" />
     <Resource Include="Media\Imagenes\Iconos\Parties\Party_6.png" />
     <Resource Include="Media\Imagenes\Iconos\Parties\Party_7.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Media\Imagenes\Iconos\App\Icon_Window.png"/>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Media\Imagenes\Iconos\Alianzas\Team_Default.png" />

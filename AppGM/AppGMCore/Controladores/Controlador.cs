@@ -22,6 +22,8 @@ namespace AppGM.Core
 
 		public abstract ControladorVariableBase ObtenerControladorVariable(int idVariable);
 
+		public abstract ControladorVariableBase ObtenerControladorVariable(string nombreVariable);
+
 		/// <summary>
 		/// Obtiene un <see cref="ControladorVariableBase"/> guardada en el modelo representado por este controlador
 		/// a partir de su <paramref name="idVariable"/>
@@ -30,6 +32,15 @@ namespace AppGM.Core
 		/// <returns>Controlador de la variable hallada o null si no se encontro la variable</returns>
 		[AccesibleEnGuraScratch(nameof(ObtenerValorVariable))]
 		public abstract object ObtenerValorVariable(int idVariable);
+
+		/// <summary>
+		/// Obtiene un <see cref="ControladorVariableBase"/> guardada en el modelo representado por este controlador
+		/// a partir de su <paramref name="nombreVariable"/>
+		/// </summary>
+		/// <param name="nombreVariable">Nombre de la variable que se quiere obtener</param>
+		/// <returns>Controlador de la variable hallada o null si no se encontro la variable</returns>
+		[AccesibleEnGuraScratch(nameof(ObtenerValorVariable))]
+		public abstract object ObtenerValorVariable(string nombreVariable);
 
 		/// <summary>
 		/// Asigna un <paramref name="valor"/> a la variable con la <paramref name="idVariable"/> especificada
@@ -169,9 +180,19 @@ namespace AppGM.Core
 			return null;
 		}
 
+		public override ControladorVariableBase ObtenerControladorVariable(string nombreVariable)
+		{
+			return null;
+		}
+
 		public override object ObtenerValorVariable(int idVariable)
 		{
 			return ObtenerControladorVariable(idVariable)?.ObtenerValorVariable();
+		}
+
+		public override object ObtenerValorVariable(string nombreVariable)
+		{
+			return null;
 		}
 
 		public override void AsignarAVariable(int idVariable, object valor)

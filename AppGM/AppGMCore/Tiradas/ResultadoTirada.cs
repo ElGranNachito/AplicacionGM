@@ -28,6 +28,18 @@ namespace AppGM.Core
 			cadena    = _cadena;
 		}
 
-		public override string ToString() => $"{cadena}{Environment.NewLine}Total: {resultado}";
+		public override string ToString() => cadena;
+
+		public string ToString(char modo)
+		{
+			switch (modo)
+			{
+				case 'c':
+					return $"{cadena}{Environment.NewLine}Total: {resultado}";
+
+				default:
+					return cadena;
+			}
+		}
 	}
 }

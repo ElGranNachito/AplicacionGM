@@ -38,50 +38,56 @@
                             
                             <!-- Barra superior -->
 
-                            <Grid Background="#121212"
-                                  Panel.ZIndex="12">
+                            <Border
+                                Background="#121212"
+                                Padding="0 10 0 0">
+                                <Grid 
+                                      Panel.ZIndex="12">
 
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
 
-                                <!-- Logo app -->
-                                <Button Content="-"/>
+                                    <!-- Logo app -->
+                                    <Image 
+                                        Grid.Column="0"
+                                        Source="../Media/Imagenes/Iconos/App/Icon_Window.png"/>
 
-                                <!-- Titulo ventana -->
-                                <TextBlock Grid.Column="1"
-                                           Grid.ColumnSpan="2"
-                                           Margin="8 0 0 0"
-                                           HorizontalAlignment="Left"
-                                           VerticalAlignment="Center"
-                                           Foreground="#96EDD2"
-                                           Text="{Binding TituloVentana}"/>
+                                    <!-- Titulo ventana -->
+                                    <TextBlock Grid.Column="1"
+                                               Grid.ColumnSpan="1"
+                                               Margin="8 0 0 0"
+                                               HorizontalAlignment="Left"
+                                               VerticalAlignment="Center"
+                                               Foreground="#96EDD2"
+                                               Text="{Binding TituloVentana}"/>
 
-                                <!-- Botones visibilidad ventana -->
-                                <StackPanel Grid.Column="2" 
-                                            Orientation="Horizontal">
+                                    <!-- Botones visibilidad ventana -->
+                                    <StackPanel Grid.Column="2" 
+                                                Orientation="Horizontal">
 
-                                    <Button Content="{StaticResource Fa-Minimizar}"  
-                                            FontFamily="{StaticResource 'Font Awesome Regular'}"
-                                            Command="{Binding ComandoMinimizarVentana}" 
-                                            Style="{StaticResource BotonVentanaPrincipal}"
-                                            Margin="5 0 5 0"/>
-                                    <Button Content="{StaticResource Fa-Maximizar}" 
-                                            FontFamily="{StaticResource 'Font Awesome Regular'}"
-                                            Command="{Binding ComandoMaximizarVentana}" 
-                                            Style="{StaticResource BotonVentanaPrincipal}"
-                                            Margin="5 0 5 0"/>
-                                    <Button Content="{StaticResource Fa-Cruz}"  
-                                            FontFamily="{StaticResource 'Font Awesome Regular'}"
-                                            Command="{Binding ComandoCerrarVentana}" 
-                                            Style="{StaticResource BotonCerrarVentanaPrincipal}"
-                                            Margin="5 0 10 0"/>
+                                        <Button Content="{StaticResource Fa-Minimizar}"  
+                                                FontFamily="{StaticResource 'Font Awesome Regular'}"
+                                                Command="{Binding ComandoMinimizarVentana}" 
+                                                Style="{StaticResource BotonVentanaPrincipal}"
+                                                Margin="5 0 5 0"/>
+                                        <Button Content="{StaticResource Fa-Maximizar}" 
+                                                FontFamily="{StaticResource 'Font Awesome Regular'}"
+                                                Command="{Binding ComandoMaximizarVentana}" 
+                                                Style="{StaticResource BotonVentanaPrincipal}"
+                                                Margin="5 0 5 0"/>
+                                        <Button Content="{StaticResource Fa-Cruz}"  
+                                                FontFamily="{StaticResource 'Font Awesome Regular'}"
+                                                Command="{Binding ComandoCerrarVentana}" 
+                                                Style="{StaticResource BotonCerrarVentanaPrincipal}"
+                                                Margin="5 0 10 0"/>
 
-                                </StackPanel>
+                                    </StackPanel>
 
-                            </Grid>
+                                </Grid>
+                            </Border>
 
                             <!-- Contenido -->
                             <Border Grid.Row="1" Margin="0 0 0 8">
