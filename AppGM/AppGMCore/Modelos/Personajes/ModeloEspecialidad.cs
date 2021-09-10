@@ -14,7 +14,7 @@
 		/// <summary>
 		/// Personaje que contiene esta competencia
 		/// </summary>
-		public TIEspecialidadPersonaje PersonajeContenedor { get; set; }
+		public virtual TIEspecialidadPersonaje PersonajeContenedor { get; set; }
 
 		/// <summary>
 		/// Tipo de esta especialidad

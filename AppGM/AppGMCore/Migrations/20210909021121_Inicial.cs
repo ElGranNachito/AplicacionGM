@@ -151,6 +151,19 @@ namespace AppGM.Core.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ModeloEspecialidad",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Nombre = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ModeloEspecialidad", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ModeloFuncion",
                 columns: table => new
                 {
@@ -169,9 +182,9 @@ namespace AppGM.Core.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    CostoDeOdOPrana = table.Column<ushort>(type: "INTEGER", nullable: false),
-                    CostoDeMana = table.Column<ushort>(type: "INTEGER", nullable: false),
-                    TurnosDeDuracion = table.Column<ushort>(type: "INTEGER", nullable: false),
+                    CostoDeOdOPrana = table.Column<int>(type: "INTEGER", nullable: false),
+                    CostoDeMana = table.Column<int>(type: "INTEGER", nullable: false),
+                    TurnosDeDuracion = table.Column<int>(type: "INTEGER", nullable: false),
                     Nombre = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
                     Descripcion = table.Column<string>(type: "TEXT", maxLength: 2000, nullable: true),
                     TipoDeHabilidad = table.Column<int>(type: "INTEGER", nullable: false),
@@ -319,6 +332,10 @@ namespace AppGM.Core.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
+                    Nombre = table.Column<string>(type: "TEXT", nullable: true),
+                    Descripcion = table.Column<string>(type: "TEXT", nullable: true),
+                    MultiplicadorDeEspecialidad = table.Column<int>(type: "INTEGER", nullable: false),
+                    TipoTirada = table.Column<int>(type: "INTEGER", nullable: false),
                     Tipo = table.Column<int>(type: "INTEGER", nullable: false),
                     StatDeLaQueDepende = table.Column<int>(type: "INTEGER", nullable: true),
                     Dados = table.Column<ushort>(type: "INTEGER", nullable: true),
@@ -1676,6 +1693,30 @@ namespace AppGM.Core.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TIEspecialidadPersonaje",
+                columns: table => new
+                {
+                    IDEspecialidad = table.Column<int>(type: "INTEGER", nullable: false),
+                    IDPersonaje = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TIEspecialidadPersonaje", x => new { x.IDEspecialidad, x.IDPersonaje });
+                    table.ForeignKey(
+                        name: "FK_TIEspecialidadPersonaje_ModeloEspecialidad_IDEspecialidad",
+                        column: x => x.IDEspecialidad,
+                        principalTable: "ModeloEspecialidad",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TIEspecialidadPersonaje_ModeloPersonaje_IDPersonaje",
+                        column: x => x.IDPersonaje,
+                        principalTable: "ModeloPersonaje",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TIHabilidadInvocacion",
                 columns: table => new
                 {
@@ -2091,6 +2132,17 @@ namespace AppGM.Core.Migrations
                 column: "IdPersonajeObjetivo");
 
             migrationBuilder.CreateIndex(
+                name: "IX_TIEspecialidadPersonaje_IDEspecialidad",
+                table: "TIEspecialidadPersonaje",
+                column: "IDEspecialidad",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TIEspecialidadPersonaje_IDPersonaje",
+                table: "TIEspecialidadPersonaje",
+                column: "IDPersonaje");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TIFuncionEfecto_IDEfecto",
                 table: "TIFuncionEfecto",
                 column: "IDEfecto");
@@ -2475,6 +2527,9 @@ namespace AppGM.Core.Migrations
                 name: "TIEfectoSiendoAplicadoPersonajeObjetivo");
 
             migrationBuilder.DropTable(
+                name: "TIEspecialidadPersonaje");
+
+            migrationBuilder.DropTable(
                 name: "TIFuncionEfecto");
 
             migrationBuilder.DropTable(
@@ -2587,6 +2642,9 @@ namespace AppGM.Core.Migrations
 
             migrationBuilder.DropTable(
                 name: "ModeloEfectoSiendoAplicado");
+
+            migrationBuilder.DropTable(
+                name: "ModeloEspecialidad");
 
             migrationBuilder.DropTable(
                 name: "ModeloDatosInvocacionBase");

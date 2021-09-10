@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AppGM.Core.Migrations
 {
     [DbContext(typeof(RolContext))]
-    [Migration("20210907000806_Inicial")]
+    [Migration("20210909021121_Inicial")]
     partial class Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -231,6 +231,20 @@ namespace AppGM.Core.Migrations
                     b.ToTable("ModeloEfectoSiendoAplicado");
                 });
 
+            modelBuilder.Entity("AppGM.Core.ModeloEspecialidad", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Nombre")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ModeloEspecialidad");
+                });
+
             modelBuilder.Entity("AppGM.Core.ModeloFuncion", b =>
                 {
                     b.Property<int>("Id")
@@ -251,10 +265,10 @@ namespace AppGM.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<ushort>("CostoDeMana")
+                    b.Property<int>("CostoDeMana")
                         .HasColumnType("INTEGER");
 
-                    b.Property<ushort>("CostoDeOdOPrana")
+                    b.Property<int>("CostoDeOdOPrana")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Descripcion")
@@ -277,7 +291,7 @@ namespace AppGM.Core.Migrations
                     b.Property<int>("TipoDeHabilidad")
                         .HasColumnType("INTEGER");
 
-                    b.Property<ushort>("TurnosDeDuracion")
+                    b.Property<int>("TurnosDeDuracion")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -485,7 +499,19 @@ namespace AppGM.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Descripcion")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("MultiplicadorDeEspecialidad")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Nombre")
+                        .HasColumnType("TEXT");
+
                     b.Property<int>("Tipo")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("TipoTirada")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -776,6 +802,24 @@ namespace AppGM.Core.Migrations
                     b.HasIndex("IdPersonajeObjetivo");
 
                     b.ToTable("TIEfectoSiendoAplicadoPersonajeObjetivo");
+                });
+
+            modelBuilder.Entity("AppGM.Core.TIEspecialidadPersonaje", b =>
+                {
+                    b.Property<int>("IDEspecialidad")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("IDPersonaje")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("IDEspecialidad", "IDPersonaje");
+
+                    b.HasIndex("IDEspecialidad")
+                        .IsUnique();
+
+                    b.HasIndex("IDPersonaje");
+
+                    b.ToTable("TIEspecialidadPersonaje");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIFuncionEfecto", b =>
@@ -2165,6 +2209,25 @@ namespace AppGM.Core.Migrations
                     b.Navigation("PersonajeObjetivo");
                 });
 
+            modelBuilder.Entity("AppGM.Core.TIEspecialidadPersonaje", b =>
+                {
+                    b.HasOne("AppGM.Core.ModeloEspecialidad", "Especialidad")
+                        .WithOne("PersonajeContenedor")
+                        .HasForeignKey("AppGM.Core.TIEspecialidadPersonaje", "IDEspecialidad")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AppGM.Core.ModeloPersonaje", "Personaje")
+                        .WithMany("Especialidades")
+                        .HasForeignKey("IDPersonaje")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Especialidad");
+
+                    b.Navigation("Personaje");
+                });
+
             modelBuilder.Entity("AppGM.Core.TIFuncionEfecto", b =>
                 {
                     b.HasOne("AppGM.Core.ModeloEfecto", "Efecto")
@@ -3159,6 +3222,11 @@ namespace AppGM.Core.Migrations
                     b.Navigation("Objetivo");
                 });
 
+            modelBuilder.Entity("AppGM.Core.ModeloEspecialidad", b =>
+                {
+                    b.Navigation("PersonajeContenedor");
+                });
+
             modelBuilder.Entity("AppGM.Core.ModeloFuncion", b =>
                 {
                     b.Navigation("EfectoContenedor");
@@ -3225,6 +3293,8 @@ namespace AppGM.Core.Migrations
                     b.Navigation("Contratos");
 
                     b.Navigation("EfectosAplicandose");
+
+                    b.Navigation("Especialidades");
 
                     b.Navigation("Inventario");
 
