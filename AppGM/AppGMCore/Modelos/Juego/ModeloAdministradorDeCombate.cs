@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace AppGM.Core
 {
@@ -32,6 +33,7 @@ namespace AppGM.Core
         /// <summary>
         /// Nombre del combate
         /// </summary>
+        [MaxLength(50)]
         public string Nombre { get; set; }
 
         /// <summary>

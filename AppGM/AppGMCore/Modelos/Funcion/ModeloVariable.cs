@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AppGM.Core
 {
@@ -10,6 +11,8 @@ namespace AppGM.Core
 		/// <summary>
 		/// Nombre de la variable
 		/// </summary>
+        
+        [Column(TypeName = "varchar(50)")]
 		public string NombreVariable { get; set; }
 
 		/// <summary>
@@ -21,7 +24,8 @@ namespace AppGM.Core
 		/// <summary>
 		/// Tipo de la variable
 		/// </summary>
-		public string TipoVariable { get; set; }
+        [Column(TypeName = "varchar(50)")]
+        public string TipoVariable { get; set; }
 
 		/// <summary>
 		/// Id de la variable
@@ -78,6 +82,7 @@ namespace AppGM.Core
 	/// </summary>
 	public class ModeloVariableControlador : ModeloVariable<int>
 	{
+        [Column(TypeName = "varchar(50)")]
 		public string TipoModeloControlador { get; set; }
 	}
 

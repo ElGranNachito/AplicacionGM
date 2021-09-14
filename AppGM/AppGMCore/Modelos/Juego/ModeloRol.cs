@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AppGM.Core
 {
@@ -36,17 +37,21 @@ namespace AppGM.Core
         /// Nombre del rol
         /// </summary>
         [StringLength(50)]
+        [MaxLength(50)]
         public string Nombre { get; set; }
 
         /// <summary>
         /// Descripcion del rol
         /// </summary>
-        [StringLength(2000)]
+        [StringLength(3500)]
+        [MaxLength(3500)]
         public string Descripcion { get; set; }
 
         /// <summary>
         /// Anotaciones realizadas por el GM
+        /// TODO: Cambiar una vez se implemente el sistema de registros
         /// </summary>
+        [MaxLength(4000)]
         public string Registros { get; set; }
 
         /// <summary>

@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AppGM.Core
 {
@@ -20,6 +22,7 @@ namespace AppGM.Core
         /// <summary>
         /// Nombre del mapa
         /// </summary>
+        [MaxLength(50)]
         public string NombreMapa { get; set; }
 
         /// <summary>

@@ -1,4 +1,6 @@
-﻿namespace AppGM.Core
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace AppGM.Core
 {
 	/// <summary>
 	/// Representa una especialidad de un <see cref="ModeloPersonaje"/>. Una especialidad es un area en la que
@@ -9,6 +11,7 @@
 		/// <summary>
 		/// Nombre de la competencia
 		/// </summary>
+		[MaxLength(50)]
 		public string Nombre { get; set; }
 
 		/// <summary>

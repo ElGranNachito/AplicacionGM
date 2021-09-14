@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AppGM.Core
 {
@@ -15,6 +16,7 @@ namespace AppGM.Core
         /// <summary>
         /// Nombre de la unidad
         /// </summary>
+        [Column(TypeName = "varchar(50)")]
         public string Nombre { get; set; }
 
         /// <summary>
@@ -50,6 +52,7 @@ namespace AppGM.Core
     public class ModeloUnidadMapaInvocacionTrampa : ModeloUnidadMapaMasterServant
     {
         [StringLength(1)]
+        [Column(TypeName = "varchar(1)")]
         public string Inicial { get; set; }
 
         /// <summary>

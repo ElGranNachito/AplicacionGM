@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AppGM.Core
@@ -31,6 +32,7 @@ namespace AppGM.Core
 		/// <summary>
 		/// Nombre de la funcions
 		/// </summary>
+        [Column(TypeName = "varchar(50)")]
 		public string NombreFuncion { get; set; }
 
 		/// <summary>

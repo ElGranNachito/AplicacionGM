@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AppGM.Core
 {
@@ -35,12 +36,14 @@ namespace AppGM.Core
         /// Breve descripcion de su contextura fisica
         /// </summary>
         [StringLength(100)]
+        [MaxLength(100)]
         public string Fisico { get; set; }
 
         /// <summary>
         /// Nacionalidad del personaje
         /// </summary>
         [StringLength(50)]
+        [MaxLength(100)]
         public string Nacionalidad { get; set; }
         
     }

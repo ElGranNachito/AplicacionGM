@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AppGM.Core
 {
@@ -12,13 +13,15 @@ namespace AppGM.Core
         /// Titulo del contrato
         /// </summary>
         [StringLength(50)]
+        [MaxLength(50)]
         public string Nombre { get; set; }
 
         /// <summary>
         /// Descripcion del contrato.
         /// Deberia contener clausulas y demas datos de importancia
         /// </summary>
-        [StringLength(500)]
+        [StringLength(1000)]
+        [MaxLength(1000)]
         public string Descripcion { get; set; }
 
         /// <summary>

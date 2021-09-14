@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AppGM.Core
 {
@@ -8,6 +9,7 @@ namespace AppGM.Core
     public class ModeloAccion : ModeloBase
     {
         [StringLength(2000)]
+        [MaxLength(2000)]
         public string Descripcion { get; set; }
     }
 }

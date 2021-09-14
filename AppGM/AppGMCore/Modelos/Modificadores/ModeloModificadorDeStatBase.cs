@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AppGM.Core
 {
@@ -28,6 +29,7 @@ namespace AppGM.Core
 
         //Nombre de la clase a modificar
         [StringLength(50)]
+        [Column(TypeName = "varchar(50)")]
         public string NombreClase { get; set; }
 
         //Id de la clase

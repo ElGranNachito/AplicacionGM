@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AppGM.Core
 {
@@ -22,13 +23,15 @@ namespace AppGM.Core
 		/// Nombre del efecto
 		/// </summary>
 		[StringLength(50)]
+		[MaxLength(50)]
 		public string Nombre { get; set; }
 
 		/// <summary>
 		/// Descripcion
 		/// </summary>
 		[StringLength(500)]
-		public string Descripcion { get; set; }
+        [MaxLength(500)]
+        public string Descripcion { get; set; }
 
 		/// <summary>
 		/// Tipo de este efecto

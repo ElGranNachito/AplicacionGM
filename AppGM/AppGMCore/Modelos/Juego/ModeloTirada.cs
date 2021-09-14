@@ -1,4 +1,7 @@
-﻿namespace AppGM.Core
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace AppGM.Core
 {
     /// <summary>
     /// Modelo de una tirada que no especifica su tipo
@@ -8,11 +11,13 @@
         /// <summary>
         /// Nombre de la tirada
         /// </summary>
+        [Column(TypeName = "varchar(50)")]
         public string Nombre { get; set; }
 
         /// <summary>
         /// Descripcion de la tirada
         /// </summary>
+        [MaxLength(500)]
         public string Descripcion { get; set; }
 
         /// <summary>

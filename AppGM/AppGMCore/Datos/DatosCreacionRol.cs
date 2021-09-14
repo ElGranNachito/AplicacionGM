@@ -24,7 +24,6 @@ namespace AppGM.Core
 		public List<ModeloPortable> portableOfensivo              = new List<ModeloPortable>();
 		public List<ModeloDefensivo> defensivos                   = new List<ModeloDefensivo>();
 		public List<ModeloDefensivoAbsoluto> defensivosAbsolutos  = new List<ModeloDefensivoAbsoluto>();
-		public List<ModeloCondicion> consumibles                  = new List<ModeloCondicion>();
 		public List<ModeloArmasDistancia> armasDistancia          = new List<ModeloArmasDistancia>();
 		public List<ModeloSlot> slots                             = new List<ModeloSlot>();
 		public List<ModeloPerk> perks                             = new List<ModeloPerk>();
@@ -32,7 +31,6 @@ namespace AppGM.Core
 		public List<ModeloHabilidad> noblePhantasms               = new List<ModeloHabilidad>();
 		public List<ModeloMagia> magias                           = new List<ModeloMagia>();
 		public List<ModeloEfecto> efectos                         = new List<ModeloEfecto>();
-		public List<ModeloCondicion> condiciones                  = new List<ModeloCondicion>();
 		public List<ModeloAdministradorDeCombate> combatesActivos = new List<ModeloAdministradorDeCombate>();
 		public List<ModeloLimitador> limitadores                  = new List<ModeloLimitador>();
 		public List<ModeloCargas> cargasHabilidades               = new List<ModeloCargas>();

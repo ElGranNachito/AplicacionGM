@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AppGM.Core
 {
@@ -19,6 +20,7 @@ namespace AppGM.Core
         /// Nombre del personaje
         /// </summary>
         [StringLength(50)]
+        [MaxLength(50)]
         public string Nombre { get; set; }
 
         /// <summary>
@@ -59,11 +61,13 @@ namespace AppGM.Core
         /// <summary>
         /// Ruta relativa a la imagen del personaje
         /// </summary>
+        [Column(TypeName = "varchar(260)")]
         public string PathImagenRelativo { get; set; }
 
         /// <summary>
         /// Ruta completa a la imagen del personaje
         /// </summary>
+        [Column(TypeName = "varchar(260)")]
         public string PathImagenAbsoluto { get; set; }
 
         /// <summary>

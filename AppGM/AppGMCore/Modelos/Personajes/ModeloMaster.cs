@@ -1,4 +1,6 @@
-﻿namespace AppGM.Core
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace AppGM.Core
 {
     public class ModeloMaster : ModeloPersonajeJugable
     {
@@ -36,14 +38,17 @@
         /// <summary>
         /// Lore del personaje
         /// </summary>
+        [MaxLength(5000)]
         public string Lore     { get; set; }
         /// <summary>
         /// Condicion relacionada al lore del personaje
         /// </summary>
+        [MaxLength(50)]
         public string Origen   { get; set; } 
         /// <summary>
         /// Conceptos dominados por el master
         /// </summary>
+        [MaxLength(50)]
         public string Afinidad { get; set; }
     }
 }

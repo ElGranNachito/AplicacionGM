@@ -37,11 +37,13 @@ namespace AppGM.Core
         /// Nombre de la habilidad
         /// </summary>
         [StringLength(50)]
+        [MaxLength(50)]
         public string Nombre { get; set; }
         /// <summary>
         /// Descripcion de la habilidad
         /// </summary>
         [StringLength(2000)]
+        [MaxLength(2000)]
         public string Descripcion { get; set; }
 
         /// <summary>
@@ -113,7 +115,8 @@ namespace AppGM.Core
         public byte Nivel { get; set; }
 
         /// <summary>
-        /// 
+        /// Indica si se trata de un hechizo unico por parte del personaje.
+        /// Al ser particular, no tiene un limite de niveles.
         /// </summary>
         public bool EsParticular { get; set; }
     }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AppGM.Core
 {
@@ -26,18 +27,21 @@ namespace AppGM.Core
         /// <summary>
         /// Imagen para el icono de la alianza.
         /// </summary>
+        [Column(TypeName = "varchar(260)")]
         public string PathImagenIcono { get; set; }
 
         /// <summary>
         /// Nombre de la alianza
         /// </summary>
         [StringLength(50)]
+        [MaxLength(50)]
         public string Nombre { get; set; }
 
         /// <summary>
         /// Descripcion de la alianza
         /// </summary>
         [StringLength(500)]
+        [MaxLength(500)]
         public string Descripcion { get; set; }
 
         /// <summary>

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace AppGM.Core
 {
@@ -15,6 +16,7 @@ namespace AppGM.Core
         /// <summary>
         /// Origenes de la leyenda del personaje
         /// </summary>
+        [MaxLength(50)]
         public string Fuente { get; set; }
 
         /// <summary>
