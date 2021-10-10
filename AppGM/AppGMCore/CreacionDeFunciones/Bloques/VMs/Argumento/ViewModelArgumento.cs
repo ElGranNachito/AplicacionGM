@@ -13,7 +13,7 @@ namespace AppGM.Core
 	/// <summary>
 	/// Representa un argumento para una funcion u operacion
 	/// </summary>
-	public class ViewModelArgumento: ViewModelBloqueFuncion<BloqueArgumento>, IAutocompletable
+	public class ViewModelArgumento : ViewModelBloqueFuncion<BloqueArgumento>, IAutocompletable
 	{
 		#region Eventos
 
@@ -30,7 +30,7 @@ namespace AppGM.Core
 		/// <summary>
 		/// Evento que se dispara cuando el bloque de texto representado por este <see cref="ViewModel"/> pierder el focus
 		/// </summary>
-		public event Action OnFocusPerdido = delegate { }; 
+		public event Action OnFocusPerdido = delegate { };
 
 		#endregion
 
@@ -70,11 +70,6 @@ namespace AppGM.Core
 		private Dictionary<MemberInfo, MetodoAccesibleEnGuraScratch> mMetodosConsecuentes = new Dictionary<MemberInfo, MetodoAccesibleEnGuraScratch>();
 
 		/// <summary>
-		/// Valor anterior del campo de texto
-		/// </summary>
-		private string mTextoAnterior = "";
-
-		/// <summary>
 		/// Indica el numero de secciones actuales
 		/// </summary>
 		private int mNumeroDeSecciones = 1;
@@ -105,7 +100,12 @@ namespace AppGM.Core
 		/// <see cref="bool"/> que indica si este argumento puede estar vacio
 		/// </summary>
 		public bool PuedeQuedarVacio { get; set; }
-			
+
+		/// <summary>
+		/// Valor anterior del campo de texto
+		/// </summary>
+		public string TextoAnterior { get; set; } = string.Empty;
+
 		/// <summary>
 		/// Valor que el usuario ingreso
 		/// </summary>
@@ -292,13 +292,12 @@ namespace AppGM.Core
 			if(nuevoTexto.Length > 0 && nuevoTexto.Last() == '.')
 				EncontrarMiembrosFaltantes();
 
-			TextoActual           = nuevoTexto;
 			PosSignoIntercalacion = nuevaPosSignoIntercalacion;
 
 			ActualizarCantidadDeSecciones();
 
 			//Si el usuario borro texto
-			if (TextoActual.Length < mTextoAnterior.Length)
+			if (TextoActual.Length < TextoAnterior.Length)
 			{
 				//Obtenemos en indice de la seccion donde se encuentra el cursor
 				int indiceSeccionAcutal = ObtenerIndiceSeccionActual();
@@ -346,8 +345,6 @@ namespace AppGM.Core
 
 			//Le pasamos al autocompletado el nuevo texto
 			Autocompletado.ActualizarTextoActual(ObtenerSeccionDelTexto());
-
-			mTextoAnterior = TextoActual;
 		}
 
 		public void ActualizarPosicionSignoDeIntercalacion(int nuevaPosicion)
@@ -851,7 +848,7 @@ namespace AppGM.Core
 			}
 
 			//Cambiamos el texto anterior aqui para evitar que tome como que el usuario borro caracteres
-			mTextoAnterior = TextoActual;
+			TextoAnterior = TextoActual;
 			ModificarTextoActual(TextoActual, true);
 
 			Type tipoDeRetorno = mNumeroDeSecciones == 1 ? mTipoBase : mMiembrosConsecuentes.Last().ObtenerTipoRetorno();
@@ -918,9 +915,9 @@ namespace AppGM.Core
 
 			ActualizarCantidadDeSecciones();
 
-			OnTextoActualModificado(mTextoAnterior, TextoActual);
+			OnTextoActualModificado(TextoAnterior, TextoActual);
 
-			mTextoAnterior = TextoActual;
+			TextoAnterior = TextoActual;
 		}
 
 		/// <summary>

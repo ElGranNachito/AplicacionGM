@@ -398,7 +398,8 @@ namespace AppGM.Core
 								multiplicadorEspecialidad,
 								parametroExtra,
 								resultadoActual,
-								cadenaActual
+								cadenaActual,
+								stat
 							});
 
 							argumentosDelTipoAdecuado = Expression.ConvertChecked(argumentos, typeof(ArgumentosTiradaPersonalizada));
@@ -614,7 +615,7 @@ namespace AppGM.Core
 					mExpresiones.Add(ConcatEnvolver(cadenaActual, Concat(ObtenerOperacionQueMostrar(modificador), Expression.Constant("Mod(")), ExpresionToString(modificador), Expression.Constant(")")));
 
 					//Si la tirada no incluia una zona no afectada por multiplicador...
-					if (!mZonaNoAfectadaPorMultiplicadorEncontrada)
+					if (!mZonaNoAfectadaPorMultiplicadorEncontrada && mTipoTirada == ETipoTirada.Daño)
 					{
 						//Multiplicamos el resultado actual por el multiplicador
 						mExpresiones.Add(Expression.Assign(resultadoActual, FloorToInt(MultiplyConTipo(resultadoActual, multiplicador, typeof(float)))));

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Threading;
 using CoolLogs;
 using Ninject.Infrastructure.Language;
@@ -55,33 +56,6 @@ namespace AppGM.Core
 				return t;
 			else
 				return typeof(object);
-		}
-
-		public static IEnumerable<T> RemoverRango<T>(this IEnumerable<T> coleccion, IEnumerable<T> elementosARemover)
-		{
-			var listaElementos = coleccion.ToList();
-			
-			foreach (var elemento in elementosARemover)
-				listaElementos.Remove(elemento);
-
-			return listaElementos;
-		}
-
-		public static IEnumerable<T> RemoverPrimero<T>(this IEnumerable<T> coleccion, Predicate<T> p)
-		{
-			var listaElementos = coleccion.ToList();
-
-			foreach (var elemento in listaElementos)
-			{
-				if (p(elemento))
-				{
-					listaElementos.Remove(elemento);
-
-					break;
-				}
-			}
-
-			return listaElementos;
 		}
 
 		public static bool EsAccesibleEnGuraScratch(this MemberInfo miembro) =>

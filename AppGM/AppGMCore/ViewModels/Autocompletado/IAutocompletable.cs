@@ -20,6 +20,11 @@ namespace AppGM.Core
 		public string TextoActual { get; set; }
 
 		/// <summary>
+		/// Texto anterior al ultimo cambio
+		/// </summary>
+		public string TextoAnterior { get; set; }
+
+		/// <summary>
 		/// Expresion regular que detecta caracteres no permitidos
 		/// </summary>
 		public Regex ExpresionRegularDetectarCaracteresNoPermitidos { get; set; }

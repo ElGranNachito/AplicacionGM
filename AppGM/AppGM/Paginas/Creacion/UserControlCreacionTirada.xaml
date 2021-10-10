@@ -7,115 +7,207 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
-    <Border
-        Padding="10"
-        Background="White">
+    <!--ViewModel: ViewModelCrearTirada-->
 
-        <Grid >
+    <Grid>
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
+        <Border
+            Padding="10"
+            Background="White">
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-                
-            <StackPanel>
-                
-                <!-- Nombre de la tirada -->
-                <TextBox
+            <Grid >
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
                     
-                    VerticalContentAlignment="Center"
-                    HorizontalContentAlignment="Center"
+                <StackPanel>
+                    
+                    <!-- Nombre de la tirada -->
+                    <TextBox
+                        
+                        VerticalContentAlignment="Center"
+                        HorizontalContentAlignment="Center"
 
-                    Tag="Nombre"
+                        Tag="Nombre"
 
-                    Style="{StaticResource TextoDescriptivo}"/>
+                        MinHeight="20"
 
-                <!-- Descripcion de la tirada -->
-                <TextBox
+                        Text="{Binding Nombre}"
 
-                    Margin="0 10 "
+                        Style="{StaticResource TextoDescriptivo}"/>
 
-                    Height="100"
+                    <!-- Descripcion de la tirada -->
+                    <TextBox
 
-                    VerticalContentAlignment="Center"
-                    HorizontalContentAlignment="Center"
+                        Margin="0 10 0 0 "
 
-                    Tag="Descripcion"
+                        Height="100"
 
-                    Style="{StaticResource TextoDescriptivo}"/>
+                        VerticalContentAlignment="Center"
+                        HorizontalContentAlignment="Center"
 
-                <!-- Tipo de la tirada -->
-                <local:UserControlComboBoxConDescripcion
-                    DataContext="{Binding ViewModelComboBoxTipoTirada}"/>
-            </StackPanel>
+                        Tag="Descripcion"
 
-            <StackPanel
-                Grid.Column="1"
-                
-                Margin="10 0 0 0">
+                        Text="{Binding Descripcion}"
 
-                <!-- Stat de la tirada -->
-                <local:UserControlComboBoxConDescripcion
-                    DataContext="{Binding ViewModelComboBoxStatTirada}"/>
+                        Style="{StaticResource TextoDescriptivo}"/>
 
-                <!-- Tipo de daño de la tirada -->
-                <local:UserControlComboBoxConDescripcion
-                    Margin="0 10 0 10"
+                    <!-- Descripcion de la variable extra de la tirada -->
+                    <TextBox
 
-                    DataContext="{Binding ViewModelComboBoxTipoDeDañoTirada}"/>
+                        Margin="0 10"
+
+                        Height="100"
+
+                        VerticalContentAlignment="Center"
+                        HorizontalContentAlignment="Center"
+
+                        Tag="Descripcion variable extra (opcional)"
+
+                        Text="{Binding DescripcionVariableExtra}"
+
+                        Style="{StaticResource TextoDescriptivo}"
+                        
+                        ToolTip="En caso de que esta tirada requiera una variable extra, 
+                        esta sera la descripcion que aparece sobre ella al realizar la tirada"/>
+
+                    <!-- Tipo de la tirada -->
+                    <local:UserControlComboBoxConDescripcion
+                        DataContext="{Binding ViewModelComboBoxTipoTirada}"/>
+
+                </StackPanel>
 
                 <StackPanel
-                    Margin="0 0 0 10"
+                    Grid.Column="1"
+                    
+                    Margin="10 0 0 0">
 
-                    Orientation="Horizontal">
+                    <!-- Stat de la tirada -->
+                    <local:UserControlComboBoxConDescripcion
+                        DataContext="{Binding ViewModelComboBoxStatTirada}"/>
 
-                    <!-- Multiplicador de especialidad -->
-                    <Label 
-                        Grid.Row ="2"
+                    <!-- Tipo de daño de la tirada -->
+                    <local:UserControlComboBoxConDescripcion
+                        Margin="0 10 0 10"
 
-                        Margin="0 0 0 0"
+                        Visibility="{Binding EsTiradaDeDaño, Converter={local:BooleanToVisibilityConverterColapsar}}"
 
-                        Content="Multiplicador de especialidad"/>
+                        DataContext="{Binding ViewModelComboBoxTipoDeDañoTirada}"/>
 
+                    <StackPanel
+                        Margin="0 0 0 10"
+
+                        Orientation="Horizontal">
+
+                        <!-- Label multiplicador de especialidad -->
+                        <Label 
+                            Grid.Row ="2"
+
+                            Margin="0 0 0 0"
+                            Padding="0 5 10 5"
+
+                            Content="Multiplicador de especialidad"/>
+
+                        <!-- Multiplicador de especialidad -->
+                        <TextBox
+                            Grid.Row="2"
+                            Grid.Column="1"
+
+                            Margin="35 0 0 0"
+
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+
+                            HorizontalAlignment="Left"
+
+                            MinWidth="30"
+
+                            local:CampoDeTextoNumericoProperty.Value="True"/>
+
+                    </StackPanel>
+
+                    <!-- Tirada -->
                     <TextBox
-                        Grid.Row="2"
                         Grid.Column="1"
-
-                        Margin="35 0 0 0"
 
                         HorizontalContentAlignment="Center"
                         VerticalContentAlignment="Center"
 
-                        HorizontalAlignment="Left"
+                        HorizontalAlignment="Stretch"
 
-                        MinWidth="30"
+                        Height="25"
 
-                        local:CampoDeTextoNumericoProperty.Value="True"/>
+                        Tag="Tirada"
+
+                        Text="{Binding Tirada}"
+
+                        Style="{StaticResource TextoDescriptivo}"
+                        
+                        local:AutocompletadoProperty.Value="true"/>
 
                 </StackPanel>
 
-                <TextBox
+                <!-- Boton cancelar -->
+                <Button
+                    Grid.Row="1"
+
+                    Content="Cancelar"
+                    
+                    HorizontalAlignment="Center"
+                    
+                    Padding="10 2"
+
+                    BorderBrush="Black"
+                    
+                    Style="{StaticResource BotonFondoResaltable}"
+                    Command="{Binding ComandoCancelar}"/>
+
+                <!-- Boton aceptar -->
+                <Button 
+                    Grid.Row="1"
                     Grid.Column="1"
 
-                    HorizontalContentAlignment="Center"
-                    VerticalContentAlignment="Center"
+                    Content="Aceptar"
+                    
+                    HorizontalAlignment="Center"
+                    
+                    Padding="10 2"
 
-                    HorizontalAlignment="Stretch"
+                    BorderBrush="Black"
+                    
+                    Style="{StaticResource BotonFondoResaltable}"
+                    Command="{Binding ComandoAceptar}"/>
 
-                    Height="25"
+                <!-- Boton instrucciones -->
+                <Button
+                    Grid.Row="1"
+                    Grid.Column="2"
 
-                    Tag="Tirada"
+                    Padding="2 "
 
-                    Style="{StaticResource TextoDescriptivo}"/>
+                    HorizontalAlignment="Right"
+                    
+                    FontFamily="{StaticResource 'Font Awesome Regular'}"
+                    Content="{StaticResource Fa-SignoInterrogacion}"
+                    Style="{StaticResource BotonFondoResaltable}"
+                    Command="{Binding ComandoAyuda}"/>
 
-            </StackPanel>
-        </Grid>
+            </Grid>
 
-    </Border>
+        </Border>
+
+        <!--Autocompletado-->
+        <Canvas IsHitTestVisible="False">
+            <local:VentanaAutocompletadoVariables
+                DataContext="{Binding Autocompletado}"/>
+        </Canvas>
+    </Grid>
 </UserControl>

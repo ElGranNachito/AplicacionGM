@@ -23,5 +23,6 @@
     <system:String x:Key="Fa-FlechaDerecha-Chevron">&#xf054;</system:String>
     <system:String x:Key="Fa-FlechaAbajo-Chevron">&#xf078;</system:String>
     <system:String x:Key="Fa-BotonPlus">&#xf0fe;</system:String>
+    <system:String x:Key="Fa-SignoInterrogacion">&#xf128;</system:String>
 
 </ResourceDictionary>

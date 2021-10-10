@@ -40,6 +40,9 @@ namespace AppGM
                 case ViewModelSeleccionDeControlador vm:
 	                return new UserControlSeleccionDeControlador {DataContext = vm};
 
+                case ViewModelCrearTirada vm:
+                    return new UserControlCreacionTirada { DataContext = vm };
+
                 //Globo para mostrar informacion de un rol
                 case ViewModelContenidoGloboInfoRol vm:
                     return new UserControlContenidoGloboInfoRol {DataContext = vm};

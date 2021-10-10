@@ -106,6 +106,8 @@ namespace AppGM.Core
 		/// </summary>
 		protected Dictionary<int, IControladorTiradaBase> mTiradas;
 
+		public IReadOnlyList<ControladorVariableBase> Variables => mVariablesPersistenes.Values.ToList();
+
 		public override ModeloBase Modelo
 		{
 			get => modelo;

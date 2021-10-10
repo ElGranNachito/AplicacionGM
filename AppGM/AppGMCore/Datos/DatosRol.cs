@@ -34,7 +34,6 @@ namespace AppGM.Core
 		public List<ControladorHabilidad> NoblePhantasms { get; set; }               = null;
 		public List<ControladorMagia> Magias { get; set; }                           = null;
 		public List<ControladorEfecto> Efectos { get; set; }                         = null;
-		public List<ControladorCondicion> Condiciones { get; set; }                  = null;
 		public List<ControladorAdministradorDeCombate> CombatesActivos { get; set; } = null;
         public List<ControladorLimitador> Limitadores { get; set; }                  = null;
 		public List<ControladorCargasHabilidad> CargasHabilidades { get; set; }      = null;

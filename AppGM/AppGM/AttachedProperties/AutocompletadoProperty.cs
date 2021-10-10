@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Text.RegularExpressions;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -106,11 +107,16 @@ namespace AppGM
 				if (sender is TextBox textBox
 				    && textBox.DataContext is IAutocompletable vm)
 				{
+					if (textBox.Text == vm.TextoAnterior)
+						return;
+
+					vm.TextoActual = textBox.Text;
+
 					//Si en el nuevo texto ingresado hay caracteres no permitidos...
 					if (vm.ExpresionRegularDetectarCaracteresNoPermitidos.IsMatch(textBox.Text))
 					{
 						//Vamo pa tra
-						textBox.Text = textBox.Text.Remove(textBox.Text.Length - 1);
+						textBox.Text = vm.TextoAnterior;
 						
 						return;
 					}
@@ -122,6 +128,8 @@ namespace AppGM
 
 					//Actualizamos el autocompletado
 					vm.ActualizarPosibilidadesAutocompletado(textBox.Text, textBox.CaretIndex);
+
+					vm.TextoAnterior = vm.TextoActual;
 				}
 			};
 

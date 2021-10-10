@@ -132,24 +132,19 @@ namespace AppGM.Core
             //FuncionCondicion = new ViewModelFuncionItem<ControladorFuncion_Predicado>(null);
 
             ContenedorListaEfectos   = new ViewModelListaItems<ViewModelItemLista>(()=>{}, true, "Efectos");
-            ContenedorListaTiradas   = new ViewModelListaItems<ViewModelItemLista>(()=>{}, true, "Tiradas");
+
+            ContenedorListaTiradas   = new ViewModelListaItems<ViewModelItemLista>(()=>
+            {            
+                SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = new ViewModelCrearTirada((vm) =>
+                {
+                    SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = this;
+
+                }, mModeloPersonaje, ContenedorListaVariables.Items.ToList(), null);
+
+            }, true, "Tiradas");
+
             ContenedorListaVariables = new ViewModelListaItems<ViewModelVariableItem>(() =>
-            {
-	            ModeloMaster pj = new ModeloMaster()
-	            {
-		            Nombre = "LePibe",
-
-                    TipoPersonaje = ETipoPersonaje.Master,
-
-                    EClaseDeSuServant = EClaseServant.Berserker,
-
-                    PathImagenAbsoluto = @"C:\Users\Nashito\Pictures\x2.jpg"
-	            };
-
-	            ControladorPersonaje cpj = new ControladorPersonaje(pj);
-
-                var variable =
-
+            {              
 	            SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = new ViewModelCreacionDeVariable((vm) =>
 	            {
 		            if (vm.Resultado == EResultadoViewModel.Aceptar)
@@ -245,6 +240,8 @@ namespace AppGM.Core
 
             ContenedorListaVariables.Items.Add(nuevaVariable);
         }
+
+        private void AñadirTirada() { }
 
         #endregion
     }
