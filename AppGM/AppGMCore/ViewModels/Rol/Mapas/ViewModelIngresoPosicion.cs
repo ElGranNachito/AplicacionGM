@@ -50,6 +50,11 @@ namespace AppGM.Core
         public ICommand ComandoEliminarUnidad { get; set; }
 
         /// <summary>
+        /// Comando que se ejecuta al presionar la combinacion de teclas Control + LeftClick
+        /// </summary>
+        public ICommand ComandoUnidadSeleccionada { get; set; }
+
+        /// <summary>
         /// Posicion de la unidad
         /// </summary>
         public ViewModelVector2 Posicion { get; set; }
@@ -263,6 +268,7 @@ namespace AppGM.Core
             Posicion = new ViewModelVector2(unidad.posicion);
 
             ComandoEliminarUnidad = new Comando(EliminarUnidad);
+            ComandoUnidadSeleccionada = new Comando(AgregarUnidadSeleccionada);
 
             AlianzasPersonaje.Elementos = new ObservableCollection<ViewModelPosicionAlianza>(unidad.personaje.Alianzas.Select(a => new ViewModelPosicionAlianza(a)));
         }
@@ -290,6 +296,14 @@ namespace AppGM.Core
             unidad.Eliminar();
 
             SistemaPrincipal.GuardarDatosRolAsincronicamente();
+        }
+
+        private void AgregarUnidadSeleccionada()
+        {
+            if (mapa.UnidadesSeleccionadas.Contains(this))
+                return;
+
+            mapa.UnidadesSeleccionadas.Add(this);
         }
 
         #endregion

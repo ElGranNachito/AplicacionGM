@@ -78,17 +78,22 @@ namespace AppGM.Core
         public ICommand ComandoAñadirParticipante { get; set; }
 
         /// <summary>
-        /// VM de para el ingreso y visualizacion de las posiciones de las diferentes entidades presentes en el mapa
+        /// VM para el almacenamiento de las unidades de posicion actualmente seleccionadas en el mapa
         /// </summary>
-        public ObservableCollection<ViewModelIngresoPosicion> Posiciones   { get; set; } = new ObservableCollection<ViewModelIngresoPosicion>();
+        public ObservableCollection<ViewModelIngresoPosicion> UnidadesSeleccionadas { get; set; } = new ObservableCollection<ViewModelIngresoPosicion>();
 
         /// <summary>
-        /// VM de para el ingreso y visualizacion de las posiciones de las diferentes entidades presentes en el mapa
+        /// VM para el ingreso y visualizacion de las posiciones de las diferentes entidades presentes en el mapa
+        /// </summary>
+        public ObservableCollection<ViewModelIngresoPosicion> Posiciones { get; set; } = new ObservableCollection<ViewModelIngresoPosicion>();
+
+        /// <summary>
+        /// VM para el ingreso y visualizacion de las posiciones de las diferentes entidades de parties presentes en el mapa
         /// </summary>
         public ObservableCollection<ViewModelUnidadParty> PosicionesParties { get; set; } = new ObservableCollection<ViewModelUnidadParty>();
 
         /// <summary>
-        /// VM de para el ingreso y visualizacion de las posiciones de las diferentes entidades presentes en el mapa
+        /// VM para el almacenamiento de las diferentes entidades parties visibles en el mapa
         /// </summary>
         public ObservableCollection<ViewModelUnidadParty> UnidadesPartiesVisibles { get; set; } = new ObservableCollection<ViewModelUnidadParty>();
 
