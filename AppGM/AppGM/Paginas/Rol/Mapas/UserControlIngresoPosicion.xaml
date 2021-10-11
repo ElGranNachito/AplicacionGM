@@ -10,9 +10,14 @@
              d:DesignHeight="100" d:DesignWidth="200">
     <!-- ViewModel: ViewModelIngresoPosicion -->
     <UserControl.Template>
+
         <ControlTemplate TargetType="{x:Type UserControl}">
 
             <Border Padding="3" Background="{StaticResource Color.UnidadMapa.BordeIngresoPosicion}">
+
+                <Border.InputBindings>
+                    <MouseBinding Gesture="Control+LeftClick" Command="{Binding ComandoUnidadSeleccionada}" />
+                </Border.InputBindings>
 
                 <StackPanel Background="{StaticResource Color.UnidadMapa.FondoIngresoPosicion}">
 
@@ -139,6 +144,7 @@
             </Border>
 
         </ControlTemplate>
+
     </UserControl.Template>
 
 </UserControl>
