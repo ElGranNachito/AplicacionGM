@@ -22,7 +22,7 @@
         <TextBlock
             x:Name="TextBox_Descripcion"
             Margin="0 0 5 0"
-            Text="Err"
+            Text="{Binding Descripcion}"
             Style="{StaticResource TextBlockBase}"
             />
     

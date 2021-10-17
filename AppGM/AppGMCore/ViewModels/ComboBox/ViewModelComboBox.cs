@@ -12,11 +12,26 @@ namespace AppGM.Core
 	/// <typeparam name="TipoValor"><see cref="Type"/> del valor que almacenan sus opciones</typeparam>
 	public class ViewModelComboBox<TipoValor> : ViewModel
 	{
+		#region Eventos
+
+		/// <summary>
+		/// Evento disparado cuando el <see cref="ValorSeleccionado"/> cambia
+		/// </summary>
+		public DVariableCambio<ViewModelItemComboBoxBase<TipoValor>> OnValorSeleccionadoCambio = delegate { }; 
+
+		#endregion
+
 		#region Campos & Propiedades
 
+		/// <summary>
+		/// Contiene el valor de <see cref="ValorSeleccionado"/>
+		/// </summary>
 		private ViewModelItemComboBoxBase<TipoValor> mValorSeleccionado;
 
-		public DVariableCambio<ViewModelItemComboBoxBase<TipoValor>> OnValorSeleccionadoCambio = delegate { };
+		/// <summary>
+		/// Descripcion de este combo box
+		/// </summary>
+		public string Descripcion { get; set; }
 
 		/// <summary>
 		/// <see cref="List{T}"/> de <see cref="ViewModelItemComboBoxBase{TipoValor}"/> que puede
@@ -61,6 +76,12 @@ namespace AppGM.Core
 
 		#region Constructor
 
+		public ViewModelComboBox(string descripcion, List<TipoValor> _valoresPosibles = null, ViewModelItemComboBoxBase<TipoValor> _valorPorDefecto = null)
+			:this(_valoresPosibles, _valorPorDefecto)
+		{
+			Descripcion = descripcion;
+		}
+
 		/// <summary>
 		/// Constructor por defecto
 		/// </summary>
@@ -95,8 +116,12 @@ namespace AppGM.Core
 		/// <param name="nuevosValoresPosibles">Coleccion con los nuevos <see cref="ValoresPosibles"/></param>
 		public void ActualizarValoresPosibles(List<TipoValor> nuevosValoresPosibles)
 		{
-			var nuevosItemsComboBox =
-				nuevosValoresPosibles.Select(valor => new ViewModelItemComboBoxBase<TipoValor> { Texto = valor.ToString(), valor = valor });
+			IEnumerable<ViewModelItemComboBoxBase<TipoValor>> nuevosItemsComboBox = null;
+
+			if (nuevosValoresPosibles is not null)
+			{
+				nuevosItemsComboBox = nuevosValoresPosibles.Select(valor => new ViewModelItemComboBoxBase<TipoValor> { Texto = valor.ToString(), valor = valor });
+			}
 
 			ValoresPosibles.Elementos = new ObservableCollection<ViewModelItemComboBoxBase<TipoValor>>(nuevosItemsComboBox);
 		} 

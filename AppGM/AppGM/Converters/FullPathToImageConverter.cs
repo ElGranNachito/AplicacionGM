@@ -4,7 +4,9 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+
 using AppGM.Core;
+using CoolLogs;
 
 namespace AppGM
 {
@@ -32,6 +34,15 @@ namespace AppGM
             BitmapImage bitmapImage = new BitmapImage(new Uri(tmp, UriKind.Absolute));
             
             mImagenesCacheadas.Add(tmp, bitmapImage);
+
+            if (bitmapImage.CanFreeze)
+            {
+                bitmapImage.Freeze();
+            }
+            else
+			{
+                SistemaPrincipal.LoggerGlobal.Log($"No se pudo congelar imagen {tmp}", ESeveridad.Advertencia);
+			}
             
             return bitmapImage;
         }

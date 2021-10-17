@@ -134,8 +134,10 @@
 
                     </StackPanel>
 
-                    <!-- Tirada -->
-                    <TextBox
+                    <StackPanel>
+
+                        <!-- Tirada -->
+                        <TextBox
                         Grid.Column="1"
 
                         HorizontalContentAlignment="Center"
@@ -147,11 +149,18 @@
 
                         Tag="Tirada"
 
-                        Text="{Binding Tirada}"
+                        Text="{Binding TextoTextbox}"
 
                         Style="{StaticResource TextoDescriptivo}"
                         
                         local:AutocompletadoProperty.Value="true"/>
+
+                        <!--Mensaje de error para la tirada ingresada-->
+                        <TextBlock     
+                            Foreground="Red"
+                            Text="{Binding MensajeErrorTirada}"                            />
+
+                    </StackPanel>
 
                 </StackPanel>
 
@@ -170,21 +179,47 @@
                     Style="{StaticResource BotonFondoResaltable}"
                     Command="{Binding ComandoCancelar}"/>
 
-                <!-- Boton aceptar -->
-                <Button 
+                <Grid
                     Grid.Row="1"
-                    Grid.Column="1"
+                    Grid.Column="1">
 
-                    Content="Aceptar"
-                    
-                    HorizontalAlignment="Center"
-                    
-                    Padding="10 2"
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
-                    BorderBrush="Black"
-                    
-                    Style="{StaticResource BotonFondoResaltable}"
-                    Command="{Binding ComandoAceptar}"/>
+                    <!-- Boton comprobar -->
+                    <Button                    
+                        Content="Comprobar"
+                        
+                        HorizontalAlignment="Center"
+                   
+                        Padding="10 2"
+
+                        BorderBrush="Black"
+                        
+                        Style="{StaticResource BotonFondoResaltable}"
+                        Command="{Binding ComandoComprobar}"/>
+
+                    <!-- Boton aceptar -->
+                    <Button                    
+                        Grid.Column="1"
+                        Content="Aceptar"
+                        
+                        HorizontalAlignment="Center"
+                        
+                        Padding="10 2"
+
+                        BorderBrush="Black"
+                        
+                        IsEnabled="{Binding EsValida}"
+                        
+                        Style="{StaticResource BotonFondoResaltable}"
+                        Command="{Binding ComandoAceptar}"/>
+
+                </Grid>
+
+                
 
                 <!-- Boton instrucciones -->
                 <Button
@@ -207,6 +242,7 @@
         <!--Autocompletado-->
         <Canvas IsHitTestVisible="False">
             <local:VentanaAutocompletadoVariables
+                MinWidth="300"
                 DataContext="{Binding Autocompletado}"/>
         </Canvas>
     </Grid>

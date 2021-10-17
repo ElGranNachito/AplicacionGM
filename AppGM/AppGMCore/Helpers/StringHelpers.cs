@@ -1,4 +1,6 @@
 ﻿using System.Text.RegularExpressions;
+using System.Linq;
+using System;
 
 namespace AppGM.Core
 {
@@ -36,5 +38,29 @@ namespace AppGM.Core
         {
 	        return string.IsNullOrWhiteSpace(cadena);
         }
+
+        public static int LookBehindFirstIndexOf(this string cadena, char [] caracteres, int indice)
+		{
+            for(int i = --indice; i >= 0; --i)
+			{
+                if (caracteres.Contains(cadena[i]))
+                    return i;
+			}
+
+            return -1;
+		}
+
+        public static bool SeEncuentraDentroDe(this char caracter, ReadOnlySpan<char> cadena)
+		{
+            foreach(var c in cadena)
+			{
+                if (c == caracter)
+                    return true;
+			}
+
+            return false;
+		}
+
+        public static string Remove(this string cadena, int indiceComienzo, int indiceFin) => cadena.Remove(indiceComienzo, indiceFin - indiceComienzo);
     }
 }

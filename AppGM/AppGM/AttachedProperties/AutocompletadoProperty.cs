@@ -65,9 +65,18 @@ namespace AppGM
 					Point posTextboxAbs = textBox.PointToScreen(new Point(0, 0));
 					Point posParentAbs = ((FrameworkElement)textBox.Parent).PointToScreen(new Point(0, 0));
 
+					var parentActual = (FrameworkElement)textBox.Parent;
+
+					while(!parentActual.GetType().IsSubclassOf(typeof(UserControl)))
+					{
+						parentActual = (FrameworkElement)parentActual.Parent;
+					}
+
+					posTextboxAbs = Mouse.GetPosition(parentActual);
+
 					//Actualizamos la posicion
-					vm.Autocompletado.PosicionX = posTextboxAbs.X;
-					vm.Autocompletado.PosicionY = posTextboxAbs.Y - textBox.RenderSize.Height;
+					vm.Autocompletado.PosicionX = posTextboxAbs.X - textBox.ActualWidth / 2;
+					vm.Autocompletado.PosicionY = posTextboxAbs.Y + textBox.ActualHeight;
 
 					//Llamamos la funcion FocusObtenido del vm
 					vm.FocusObtenido();

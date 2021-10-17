@@ -134,6 +134,7 @@ namespace AppGM.Core
 			modelBuilder.Entity<TIPersonajeUnidadMapa>()
 				.HasOne(i => i.Unidad)
 				.WithOne(p => p.Personaje)
+				.OnDelete(DeleteBehavior.Cascade)
 				.HasForeignKey<TIPersonajeUnidadMapa>(i => i.IdUnidadMapa);
 
 			// - Personaje efectos

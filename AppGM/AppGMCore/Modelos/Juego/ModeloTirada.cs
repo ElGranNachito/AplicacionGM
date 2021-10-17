@@ -56,14 +56,18 @@ namespace AppGM.Core
     /// </summary>
     public class ModeloTiradaVariable : ModeloTiradaBase
     {
-	    /// <summary>
-        /// Cantidad de dados
-        /// </summary>
-        public ushort Dados { get; set; }
         /// <summary>
-        /// Caras de los dados
+        /// Cadena que representa la tirada
         /// </summary>
-        public ushort Caras { get; set; }
+        [MaxLength(1000)]
+        [Required]
+	    public string Tirada { get; set; }
+
+        /// <summary>
+        /// Descripcion de la variable extra que requiere la tirada
+        /// </summary>
+        [MaxLength(500)]
+        public string DescripcionVariableExtra { get; set; }
     }
 
     /// <summary>

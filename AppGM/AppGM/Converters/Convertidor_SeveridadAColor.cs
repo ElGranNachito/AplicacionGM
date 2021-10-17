@@ -15,29 +15,42 @@ namespace AppGM
 	{
 		public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
+			SolidColorBrush colorResultante = null;
+
 			if (value is ESeveridad s)
 			{
 				switch (s)
 				{
 					case ESeveridad.Debug:
 					case ESeveridad.Info:
-						return new SolidColorBrush(Color.FromRgb(114, 201, 76));
+						colorResultante = new SolidColorBrush(Color.FromRgb(114, 201, 76));
+						break;
 					case ESeveridad.Advertencia:
-						return new SolidColorBrush(Color.FromRgb(255, 255, 0));
+						colorResultante = new SolidColorBrush(Color.FromRgb(255, 255, 0));
+						break;
 					case ESeveridad.Error:
-						return new SolidColorBrush(Color.FromRgb(255, 0, 0));
+						colorResultante = new SolidColorBrush(Color.FromRgb(255, 0, 0));
+						break;
 					default:
 					{
 						SistemaPrincipal.LoggerGlobal.Log($"Valor de {nameof(ESeveridad)} no soportado! {s}", ESeveridad.Error);
 
-						return new SolidColorBrush(Color.FromRgb(255, 255, 255));
+						colorResultante = new SolidColorBrush(Color.FromRgb(255, 255, 255));
+
+						break;
 					}
 				}
 			}
 
-			SistemaPrincipal.LoggerGlobal.Log($"{nameof(value)} fue de un tipo incorrecto! {value.GetType()}");
+			if(colorResultante is null)
+				SistemaPrincipal.LoggerGlobal.Log($"{nameof(value)} fue de un tipo incorrecto! {value.GetType()}");
 
-			return new SolidColorBrush(Color.FromRgb(255, 255, 255));
+			colorResultante ??= new SolidColorBrush(Color.FromRgb(255, 255, 255));
+
+			if (colorResultante.CanFreeze)
+				colorResultante.Freeze();
+
+			return colorResultante;
 		}
 	}
 }

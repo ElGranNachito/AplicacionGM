@@ -23,10 +23,10 @@ namespace AppGM
                 Duration = duracionAnimacion,
                 DecelerationRatio = 0.4f
             };
-
+            
             //Establece como propiedad objetivo "Angulo" que esta dentro de un RotateTransform
             Storyboard.SetTargetProperty(animacion, new PropertyPath("LayoutTransform.Angle"));
-
+           
             sb.Children.Add(animacion);
         }
 

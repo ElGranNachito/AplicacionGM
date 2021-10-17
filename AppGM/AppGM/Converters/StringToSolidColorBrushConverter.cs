@@ -13,7 +13,12 @@ namespace AppGM
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (SolidColorBrush) new BrushConverter().ConvertFrom($"#{value}");
+            var colorResultante = (SolidColorBrush) new BrushConverter().ConvertFrom($"#{value}");
+
+            if (colorResultante.CanFreeze)
+                colorResultante.Freeze();
+
+            return colorResultante;
         }
     }
 }

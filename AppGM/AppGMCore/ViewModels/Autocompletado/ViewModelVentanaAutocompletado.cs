@@ -90,7 +90,7 @@ namespace AppGM.Core
 			TextoActual = nuevoTexto;
 
 			//Si no hay texto...
-			if (TextoActual.Length <= 0 && EsVisible)
+			if (TextoActual.Length <= 0)
 			{
 				//Borramos los items posibles
 				Posibilidades.Items.Clear();

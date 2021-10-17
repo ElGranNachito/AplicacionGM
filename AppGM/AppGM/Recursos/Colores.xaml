@@ -1,43 +1,46 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:AppGM"
-                    xmlns:system="clr-namespace:System.Windows.Media;assembly=PresentationCore">
+                    xmlns:system="clr-namespace:System.Windows.Media;assembly=PresentationCore"
+                    xmlns:PresentationOptions="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    mc:Ignorable="PresentationOptions">
 
     <!--......................................COLORES..........................................-->
 
-    <system:SolidColorBrush x:Key="ColorVentanaAutocompletado" Color="White"/>
-    <system:SolidColorBrush x:Key="ColorBordeVentanaAutocompletado" Color="DimGray"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="ColorVentanaAutocompletado" Color="White"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="ColorBordeVentanaAutocompletado" Color="DimGray"/>
 
-    <system:SolidColorBrush x:Key="Color.CampoDeTexto.TextoDeshabilitado" Color="DarkGray"/>
-    <system:SolidColorBrush x:Key="Color.CampoDeTexto.BordeDeshabilitado" Color="Gray"/>
-    <system:SolidColorBrush x:Key="Color.CampoDeTexto.TextoAyuda" Color="DarkGray"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.CampoDeTexto.TextoDeshabilitado" Color="DarkGray"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.CampoDeTexto.BordeDeshabilitado" Color="Gray"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.CampoDeTexto.TextoAyuda" Color="DarkGray"/>
 
     <!--......................................BLOQUES...........................................-->
 
     <!-- Color error bloque -->
-    <system:SolidColorBrush x:Key="ColorBloqueIncorrecto" Color="Crimson"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="ColorBloqueIncorrecto" Color="Crimson"/>
 
     <!-- Bloque declaracion variable -->
-    <system:SolidColorBrush x:Key="ColorBloqueDeclaracionVariable" Color="Green"/>
-    <system:SolidColorBrush x:Key="ColorRellenoBloqueDeclaracionVariables" Color="ForestGreen"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="ColorBloqueDeclaracionVariable" Color="Green"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="ColorRellenoBloqueDeclaracionVariables" Color="ForestGreen"/>
 
     <!-- Bloque llamar funcion -->
-    <system:SolidColorBrush x:Key="ColorBloqueLlamarFuncion" Color="DarkViolet"/>
-    <system:SolidColorBrush x:Key="ColorRellenoBloqueLlamarFuncion" Color="BlueViolet"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="ColorBloqueLlamarFuncion" Color="DarkViolet"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="ColorRellenoBloqueLlamarFuncion" Color="BlueViolet"/>
 
     <!-- Bloque condicional -->
-    <system:SolidColorBrush x:Key="ColorBloqueCondicional" Color="DarkOrange"/>
-    <system:SolidColorBrush x:Key="ColorRellenoBloqueCondicional" Color="Orange"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="ColorBloqueCondicional" Color="DarkOrange"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="ColorRellenoBloqueCondicional" Color="Orange"/>
 
     <!--......................................LIST_BOX...........................................-->
 
-    <system:SolidColorBrush x:Key="Color.ListBox.BordeItemSeleccionado" Color="DeepSkyBlue"/>
-    <system:SolidColorBrush x:Key="Color.ListBox.FondoItemSeleccionado" Color="LightSkyBlue"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.ListBox.BordeItemSeleccionado" Color="DeepSkyBlue"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.ListBox.FondoItemSeleccionado" Color="LightSkyBlue"/>
 
     <!--......................................UNIDADES_INGRESO_POSICION...........................................-->
 
-    <system:SolidColorBrush x:Key="Color.UnidadMapa.BordeIngresoPosicion" Color="#363636"/>
-    <system:SolidColorBrush x:Key="Color.UnidadMapa.FondoIngresoPosicion" Color="#242424"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.UnidadMapa.BordeIngresoPosicion" Color="#363636"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.UnidadMapa.FondoIngresoPosicion" Color="#242424"/>
 
 
 </ResourceDictionary>

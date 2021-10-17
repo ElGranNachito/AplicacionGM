@@ -37,6 +37,53 @@ namespace AppGM.Core
 		private static Dictionary<string, Func<ArgumentosTiradaPersonalizada, ResultadoTirada>> mTiradasCacheadas =
 			new Dictionary<string, Func<ArgumentosTiradaPersonalizada, ResultadoTirada>>();
 
+		public static (bool esValida, string error, MatchCollection seccionesTirada) TiradaEsValida(
+			string tirada,
+			ModeloPersonaje usuario,
+			ETipoTirada tipoTirada,
+			EStat stat)
+		{
+			if (string.IsNullOrWhiteSpace(tirada))
+				return (false, $"{nameof(tirada)} no puede estar vacio", null);
+
+			if (!Regex.IsMatch(tirada, @"\d+d\d+"))
+				return (false, $"{nameof(tirada)} debe tener al menos una tirada", null);
+
+			if (usuario == null)
+				return (false, $"{nameof(usuario)} no puede ser null", null);
+
+			if (tipoTirada == ETipoTirada.Stat)
+				return (false, $"Para realizar una tirada de stat utilizar el metodo {nameof(RealizarTiradaStat)}", null);
+
+			//Revisamos que el valor de stat sea valido en caso de ser necesario
+			if (tipoTirada == ETipoTirada.Daño && stat == EStat.NINGUNA)
+				return (false, $"{nameof(stat)} no puede ser {EStat.NINGUNA}", null);
+
+			//Separamos las secciones de la tirada y las clasificamos
+			MatchCollection seccionesTirada = Regex.Matches(tirada, @"(?<Tirada>\d+d\d+)|(?<OperacionAritmetica>[\-+*/])|(?<Constante>\d+)|(?<Variable>@[^\d\-+*/]+)|(?<ZonaNoAfectadoPorMultiplicadores>n)", RegexOptions.IgnoreCase);
+
+			//En este bucle nos aseguramos de que todas las variables especificadas existan en el usuario
+			foreach (Match match in seccionesTirada)
+			{
+				//Si la seccion actual no es una tirada continuamos a la proxima seccion
+				if (string.IsNullOrWhiteSpace(match.Groups["Variable"].Value))
+					continue;
+
+				//Quitamos el '@'
+				string variable = match.Groups["Variable"].Value.Remove(0, 1);
+
+				//Si es una de las variables predeterminadas continuamos a la proxima seccion
+				if (variable == "ParametroExtra" || variable == "Multiplicador" || variable == "Modificador")
+					continue;
+
+				//Intentamos obtener el valor de la variable y nos aseguramos que no sea null
+				if (usuario.Variables.Any(var => var.Variable.NombreVariable == variable))
+					return (false, $"No se encontro una variable llamada {variable} en {usuario}", null);
+			}
+
+			return (true, string.Empty, seccionesTirada);
+		}
+
 		/// <summary>
 		/// Intenta parsear una <paramref name="tirada"/>
 		/// </summary>
@@ -64,50 +111,17 @@ namespace AppGM.Core
 			ETipoTirada tipoTirada,
 			EStat stat)
 		{
-			if (string.IsNullOrWhiteSpace(tirada))
-				return (false, null, $"{nameof(tirada)} no puede estar vacio");
-
-			if (!Regex.IsMatch(tirada, @"\d+d\d+"))
-				return (false, null, $"{nameof(tirada)} debe tener al menos una tirada");
-
 			//Si la tirada ya ha sido parseada entonces devolvemos la funcion existente
 			if (mTiradasCacheadas.ContainsKey(tirada))
 				return (true, mTiradasCacheadas[tirada], string.Empty);
 
-			if (usuario == null)
-				return (false, null, $"{nameof(usuario)} no puede ser null");
+			var resultadoComprobacion = ParserTiradas.TiradaEsValida(tirada, usuario.modelo, tipoTirada, stat);
 
-			if (tipoTirada == ETipoTirada.Stat)
-				return (false, null, $"Para realizar una tirada de stat utilizar el metodo {nameof(RealizarTiradaStat)}");
-
-			//Revisamos que el valor de stat sea valido en caso de ser necesario
-			if (tipoTirada == ETipoTirada.Daño && stat == EStat.NINGUNA)
-				return (false, null, $"{nameof(stat)} no puede ser {EStat.NINGUNA}");
-
-			//Separamos las secciones de la tirada y las clasificamos
-			MatchCollection seccionesTirada = Regex.Matches(tirada, @"(?<Tirada>\d+d\d+)|(?<OperacionAritmetica>[\-+*/])|(?<Constante>\d+)|(?<Variable>@[^\d\-+*/]+)|(?<ZonaNoAfectadoPorMultiplicadores>n)", RegexOptions.IgnoreCase);
-
-			//En este bucle nos aseguramos de que todas las variables especificadas existan en el usuario
-			foreach (Match match in seccionesTirada)
-			{
-				//Si la seccion actual no es una tirada continuamos a la proxima seccion
-				if (string.IsNullOrWhiteSpace(match.Groups["Variable"].Value))
-					continue;
-
-				//Quitamos el '@'
-				string variable = match.Groups["Variable"].Value.Remove(0, 1);
-
-				//Si es una de las variables predeterminadas continuamos a la proxima seccion
-				if (variable == "ParametroExtra" || variable == "Multiplicador" || variable == "Modificador")
-					continue;
-
-				//Intentamos obtener el valor de la variable y nos aseguramos que no sea null
-				if (usuario.ObtenerValorVariable(variable) == null)
-					return (false, null, $"No se encontro una variable llamada {variable} en {usuario}");
-			}
+			if (!resultadoComprobacion.esValida)
+				return (false, null, resultadoComprobacion.error);
 
 			//Creamos el parser
-			ParserTirada parser = new ParserTirada(seccionesTirada, tipoTirada);
+			ParserTirada parser = new ParserTirada(resultadoComprobacion.seccionesTirada, tipoTirada);
 
 			//Parseamos la tirada
 			var resultado = await parser.ParseAsync();
