@@ -8,15 +8,15 @@ namespace AppGM.Core
         /// <summary>
         /// Edad del personaje
         /// </summary>
-        public ushort Edad { get; set; }
+        public int Edad { get; set; }
         /// <summary>
         /// Estatura del personaje
         /// </summary>
-        public ushort Estatura { get; set; }
+        public int Estatura { get; set; }
         /// <summary>
         /// Peso del personaje
         /// </summary>
-        public ushort Peso { get; set; }
+        public int Peso { get; set; }
 
         //Datos relevantes
         /// <summary>

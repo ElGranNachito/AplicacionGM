@@ -130,7 +130,7 @@ namespace AppGM
 			{
 				SistemaPrincipal.Aplicacion.VentanaActual = (IVentana) ((Window) sender).DataContext;
 			};
-
+			
 			mVentana.MaxWidth = SystemParameters.MaximizedPrimaryScreenWidth;
 			mVentana.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
 

@@ -99,8 +99,6 @@ namespace AppGM.Core
         /// <param name="controladorDeArchivos">Instancia de un <see cref="IControladorDeArchivos"/> para atar al IoC</param>
         public static async void Inicializar(IControladorDeArchivos controladorDeArchivos)
         {
-	        ControladorVariableBase.CrearModeloCorrespondiente(typeof(ControladorPersonaje), 0, "nada");
-
             //Obtenemos el contexto del hilo que nos llamo
             ThreadUISyncContext = SynchronizationContext.Current;
 

@@ -24,7 +24,7 @@ namespace AppGM.Core
         /// <summary>
         /// Stat de carisma
         /// </summary>
-        public ushort Chr        { get; set; }
+        public int Chr        { get; set; }
         /// <summary>
         /// Ventaja en stat de carisma
         /// </summary>
