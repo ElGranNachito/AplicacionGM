@@ -188,7 +188,7 @@ namespace AppGM.Core
             var modeloHabilidad = new ModeloHabilidad
             {
 	            Nombre = "Nada interesante", TipoDeHabilidad = ETipoHabilidad.Skill,
-	            Dueño = new TIPersonajeHabilidad {Personaje = ModeloPersonaje}
+	            Dueño = ModeloPersonaje
             };
 
             ContenedorListaHabilidades.Items.Elementos.Add(new ViewModelHabilidadItem(new ControladorHabilidad(modeloHabilidad)));

@@ -10,16 +10,6 @@ namespace AppGM.Core
     public class ModeloMapa : ModeloBase
     {
         /// <summary>
-        /// Rol al que pertenece este mapa
-        /// </summary>
-        public virtual TIRolMapa RolMapa { get; set; }
-
-        /// <summary>
-        /// Controlador del mapa
-        /// </summary>
-        public ControladorMapa controladorMapa;
-
-        /// <summary>
         /// Nombre del mapa
         /// </summary>
         [MaxLength(50)]
@@ -33,6 +23,21 @@ namespace AppGM.Core
         /// <summary>
         /// Posiciones de las unidades dentro de este mapa
         /// </summary>
-        public virtual List<TIMapaUnidadMapa> PosicionesUnidades { get; set; }  = new List<TIMapaUnidadMapa>();
+        public virtual List<ModeloUnidadMapa> PosicionesUnidades { get; set; }  = new List<ModeloUnidadMapa>();
+
+        /// <summary>
+        /// Ambiente de este mapa
+        /// </summary>
+        public virtual ModeloAmbiente Ambiente { get; set; }
+
+        /// <summary>
+        /// Rol al que pertenece este mapa
+        /// </summary>
+        public virtual ModeloRol Rol { get; set; }
+
+        /// <summary>
+        /// Combate al que pertenece este mapa
+        /// </summary>
+        public virtual ModeloAdministradorDeCombate CombateAlQuePertenece { get; set; }
     }
 }

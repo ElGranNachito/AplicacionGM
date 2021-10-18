@@ -15,7 +15,7 @@ namespace AppGM.Core
             get
             {
                 if (modelo.CaracteristicasAmbiente == Constantes.CaracteristicasAmbiente)
-                    return SistemaPrincipal.ModeloRolActual.AmbienteGlobal.Ambiente.CaracteristicasAmbiente;
+                    return SistemaPrincipal.ModeloRolActual.AmbienteGlobal.CaracteristicasAmbiente;
 
                 return modelo.CaracteristicasAmbiente;
             }
@@ -29,8 +29,8 @@ namespace AppGM.Core
         {
             get
             {
-                if (modelo.CantidadCasillas == Constantes.CantidadCasillas)
-                    return SistemaPrincipal.ModeloRolActual.AmbienteGlobal.Ambiente.CantidadCasillas;
+                if (modelo.CantidadCasillas == Constantes.CasillasPorDefecto)
+                    return SistemaPrincipal.ModeloRolActual.AmbienteGlobal.CantidadCasillas;
 
                 return modelo.CantidadCasillas;
             }
@@ -40,12 +40,12 @@ namespace AppGM.Core
         /// Si el valor de Temperatura en el <see cref="ModeloAmbiente"/> es el default, devuelve el valor que tiene el ambiente global para Temperatura,
         /// de no ser default, devuelve el valor del ambiente local.
         /// </summary>
-        public int Temperatura
+        public float Temperatura
         {
             get
             {
-                if (modelo.TemperaturaActual == Constantes.TemperaturaActual)
-                    return SistemaPrincipal.ModeloRolActual.AmbienteGlobal.Ambiente.TemperaturaActual;
+                if (modelo.TemperaturaActual == Constantes.TemperaturaPorDefecto)
+                    return SistemaPrincipal.ModeloRolActual.AmbienteGlobal.TemperaturaActual;
 
                 return modelo.TemperaturaActual;
             }
@@ -55,12 +55,12 @@ namespace AppGM.Core
         /// Si el valor de Humedad en el <see cref="ModeloAmbiente"/> es el default, devuelve el valor que tiene el ambiente global para Humedad,
         /// de no ser default, devuelve el valor del ambiente local.
         /// </summary>
-        public int Humedad
+        public float Humedad
         {
             get
             {
-                if (modelo.HumedadActual == Constantes.HumedadActual)
-                    return SistemaPrincipal.ModeloRolActual.AmbienteGlobal.Ambiente.HumedadActual;
+                if (modelo.HumedadActual == Constantes.HumedadPorDefecto)
+                    return SistemaPrincipal.ModeloRolActual.AmbienteGlobal.HumedadActual;
 
                 return modelo.HumedadActual;
             }
@@ -70,12 +70,12 @@ namespace AppGM.Core
         /// Si el Mapa en el <see cref="ModeloAmbiente"/> es el default (null), devuelve el valor que tiene el ambiente global en Mapa,
         /// de no ser default, devuelve el valor del ambiente local.
         /// </summary>
-        public TIMapaAmbiente Mapa
+        public ModeloMapa Mapa
         {
             get
             {
-                if (modelo.MapaDelAmbiente == Constantes.MapaDelAmbiente)
-                    return SistemaPrincipal.ModeloRolActual.AmbienteGlobal.Ambiente.MapaDelAmbiente;
+                if (modelo.MapaDelAmbiente == null)
+                    return SistemaPrincipal.ModeloRolActual.AmbienteGlobal.MapaDelAmbiente;
 
                 return modelo.MapaDelAmbiente;
             }
@@ -100,7 +100,7 @@ namespace AppGM.Core
         /// Representa un metodo que lidie con eventos de modificacion de temperatura en el ambiente
         /// </summary>
         /// <param name="nuevoDia"></param>
-        public delegate void dModificarTemperatura(ref int nuevaTemperatura);
+        public delegate void dModificarTemperatura(ref float nuevaTemperatura);
 
         /// <summary>
         /// Evento que se dispara cuando la temperatura del ambiente cambia
@@ -111,7 +111,7 @@ namespace AppGM.Core
         /// Representa un metodo que lidie con eventos de modificacion de humedad en el ambiente
         /// </summary>
         /// <param name="nuevoDia"></param>
-        public delegate void dModificarHumedad(ref int nuevaTemperatura);
+        public delegate void dModificarHumedad(ref float nuevaTemperatura);
 
         /// <summary>
         /// Evento que se dispara cuando la humedad relativa del ambiente cambia
@@ -126,9 +126,9 @@ namespace AppGM.Core
         /// Modifica la temperatura del ambiente.
         /// </summary>
         /// <param name="_grados"></param>
-        public void ModificarTemperatura(int _grados)
+        public void ModificarTemperatura(float _grados)
         {
-            int temperatura;
+            float temperatura;
 
             temperatura = modelo.TemperaturaActual + _grados;
 
@@ -141,9 +141,9 @@ namespace AppGM.Core
         /// Modifica la humedad del ambiente.
         /// </summary>
         /// <param name="_humedadRelativa"></param>
-        public void ModificarHumedad(int _humedadRelativa)
+        public void ModificarHumedad(float _humedadRelativa)
         {
-            int humedad;
+            float humedad;
             
             humedad = modelo.HumedadActual + _humedadRelativa;
 

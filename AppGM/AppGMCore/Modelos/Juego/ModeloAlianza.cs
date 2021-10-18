@@ -10,11 +10,6 @@ namespace AppGM.Core
     public class ModeloAlianza : ModeloBase
     {
         /// <summary>
-        /// Controlador
-        /// </summary>
-        public ControladorAlianza controladorAlianza;
-
-        /// <summary>
         /// Tipo de icono que tendra la alianza como identificador de la misma.
         /// </summary>
         public EIconoAlianza EIconoAlianza { get; set; }
@@ -53,11 +48,11 @@ namespace AppGM.Core
         /// <see cref="ModeloContrato"/> de la alianza.
         /// Es opcional, puede no haberlo
         /// </summary>
-        public virtual TIAlianzaContrato ContratoDeAlianza { get; set; }
+        public virtual ModeloContrato ContratoDeAlianza { get; set; }
 
         /// <summary>
         /// <see cref="ModeloPersonajeJugable"/> que forman parte de esta alianza
         /// </summary>
-        public virtual List<TIPersonajeAlianza> PersonajesAfectados { get; set; } = new List<TIPersonajeAlianza>();
+        public virtual List<ModeloPersonaje> PersonajesAfectados { get; set; } = new List<ModeloPersonaje>();
     }
 }

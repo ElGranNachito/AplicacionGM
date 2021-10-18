@@ -9,11 +9,6 @@ namespace AppGM.Core
 	public class ModeloUnidadMapa : ModeloBase
     {
         /// <summary>
-        /// Controlador
-        /// </summary>
-        public ControladorUnidadMapa controladorUnidadMapa;
-
-        /// <summary>
         /// Nombre de la unidad
         /// </summary>
         [Column(TypeName = "varchar(50)")]
@@ -27,12 +22,17 @@ namespace AppGM.Core
         /// <summary>
         /// Posicion de la unidad sobre el mapa
         /// </summary>
-        public virtual TIUnidadMapaVector2   Posicion { get; set; }
+        public virtual ModeloVector2 Posicion { get; set; }
 
         /// <summary>
         /// Personaje que representa la unidad
         /// </summary>
-        public virtual TIPersonajeUnidadMapa Personaje { get; set; }
+        public virtual ModeloPersonaje Personaje { get; set; }
+
+        /// <summary>
+        /// Mapa al que pertenece esta unidad
+        /// </summary>
+        public virtual ModeloMapa Mapa { get; set; }
     }
 
     /// <summary>

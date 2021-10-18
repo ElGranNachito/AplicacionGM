@@ -51,7 +51,7 @@ namespace AppGM.Core
         /// <summary>
         /// Devuelve el controlador del personaja a quien pertenece esta habilidad
         /// </summary>
-        public ControladorPersonaje DueñoHabilidad => SistemaPrincipal.ObtenerControlador<ControladorPersonaje, ModeloPersonaje>(modelo.Dueño.Personaje);
+        public ControladorPersonaje DueñoHabilidad => SistemaPrincipal.ObtenerControlador<ControladorPersonaje, ModeloPersonaje>(modelo.Dueño);
 
         public ETipoHabilidad TipoHabilidad
         {
@@ -84,7 +84,7 @@ namespace AppGM.Core
         public ControladorHabilidad(ModeloHabilidad _modeloHabilidad)
 	        : base(_modeloHabilidad)
         {
-            CargarVariablesYTiradas<TIVariableHabilidad, TITiradaHabilidad>();
+            CargarVariablesYTiradas();
         }
 
         #endregion

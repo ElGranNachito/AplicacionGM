@@ -22,6 +22,6 @@ namespace AppGM.Core
         /// <summary>
         /// NoblePhantasms que posee el servant
         /// </summary>
-        public virtual List<TIServantNoblePhantasm> NoblePhantasms { get; set; } = new List<TIServantNoblePhantasm>();
+        public virtual List<ModeloNoblePhantasm> NoblePhantasms { get; set; } = new List<ModeloNoblePhantasm>();
     }
 }

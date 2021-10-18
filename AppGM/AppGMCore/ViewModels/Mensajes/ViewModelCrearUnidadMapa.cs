@@ -143,8 +143,6 @@ namespace AppGM.Core
         {
             ModeloUnidadMapa      modeloUnidad        = null;
             ModeloVector2         posicionUnidad      = new ModeloVector2();
-            TIPersonajeUnidadMapa tiPersonajeUnidadMapa = new TIPersonajeUnidadMapa();
-            TIUnidadMapaVector2   tiUnidadPosicion      = new TIUnidadMapaVector2();
 
             //Nos aseguramos que los valores ingresados queden dentro de los limites del mMapa
             double PosY = Math.Clamp(double.Parse(PosInicialX), 0, mMapa.TamañoCanvasX);
@@ -152,8 +150,6 @@ namespace AppGM.Core
 
             posicionUnidad.X = PosX;
             posicionUnidad.Y = PosY;
-
-            tiUnidadPosicion.Posicion = posicionUnidad;
 
             switch (TipoSeleccionado)
             {
@@ -175,9 +171,9 @@ namespace AppGM.Core
                     };
 
                     if (TipoSeleccionado == ETipoUnidad.Master)
-                        tiPersonajeUnidadMapa.Personaje = SistemaPrincipal.DatosRolSeleccionado.Masters.Find(m => m.ToString() == PersonajeSeleccionado).modelo;
+                        modeloUnidad.Personaje = SistemaPrincipal.DatosRolSeleccionado.Masters.Find(m => m.ToString() == PersonajeSeleccionado).modelo;
                     else
-                        tiPersonajeUnidadMapa.Personaje = SistemaPrincipal.DatosRolSeleccionado.Servants.Find(s => s.ToString() == PersonajeSeleccionado).modelo;
+                        modeloUnidad.Personaje = SistemaPrincipal.DatosRolSeleccionado.Servants.Find(s => s.ToString() == PersonajeSeleccionado).modelo;
 
                     break;
 
@@ -191,15 +187,11 @@ namespace AppGM.Core
                     };
 
                     if (TipoSeleccionado == ETipoUnidad.Invocacion)
-                        tiPersonajeUnidadMapa.Personaje = SistemaPrincipal.DatosRolSeleccionado.Invocaciones.Find(i => i.ToString() == PersonajeSeleccionado).modelo;
+                        modeloUnidad.Personaje = SistemaPrincipal.DatosRolSeleccionado.Invocaciones.Find(i => i.ToString() == PersonajeSeleccionado).modelo;
                     break;
             }
 
-            tiPersonajeUnidadMapa.Unidad = modeloUnidad;
-            tiUnidadPosicion.Unidad      = modeloUnidad;
-
-            modeloUnidad.Personaje = tiPersonajeUnidadMapa;
-            modeloUnidad.Posicion  = tiUnidadPosicion;
+            modeloUnidad.Posicion  = posicionUnidad;
 
             mMapa.controladorMapa.AñadirUnidad(modeloUnidad);
 
@@ -207,8 +199,6 @@ namespace AppGM.Core
             vmResultado = new ViewModelIngresoPosicion(mMapa, controlador);
 
             SistemaPrincipal.GuardarModelo(modeloUnidad);
-            SistemaPrincipal.GuardarModelo(tiPersonajeUnidadMapa);
-            SistemaPrincipal.GuardarModelo(tiUnidadPosicion);
             SistemaPrincipal.GuardarDatosRolAsincronicamente();
 
             Resultado = EResultadoViewModel.Aceptar;

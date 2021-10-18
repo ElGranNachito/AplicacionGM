@@ -218,25 +218,23 @@ namespace AppGM.Core
 		///		El modelo del controlador debe ser de tipo <see cref="ModeloConVariablesYTiradas"/>. De lo contrario esta funcion no tendra efecto alguno
 		///	</para>
 		/// </summary>
-		protected void CargarVariablesYTiradas<TRelacionVariable, TRelacionTirada>()
-			where TRelacionVariable : TIVarible
-			where TRelacionTirada : TITirada
+		protected void CargarVariablesYTiradas()
 		{
-			if (modelo is ModeloConVariablesYTiradas<TRelacionVariable, TRelacionTirada> modeloConVariables)
+			if (modelo is ModeloConVariablesYTiradas modeloConVariables)
 			{
 				mVariablesPersistenes = new Dictionary<int, ControladorVariableBase>(modeloConVariables.Variables.Select(var =>
 				{
-					return new KeyValuePair<int, ControladorVariableBase>(var.Variable.IDVariable, ControladorVariableBase.CrearControladorCorrespondiente(var.Variable));
+					return new KeyValuePair<int, ControladorVariableBase>(var.IDVariable, ControladorVariableBase.CrearControladorCorrespondiente(var));
 				}));
 
 				mTiradas = new Dictionary<int, IControladorTiradaBase>(modeloConVariables.Tiradas.Select(var =>
 				{
-					return new KeyValuePair<int, IControladorTiradaBase>(var.Tirada.Id, IControladorTiradaBase.CrearControladorDeTiradaCorrespondiente(var.Tirada));
+					return new KeyValuePair<int, IControladorTiradaBase>(var.Id, IControladorTiradaBase.CrearControladorDeTiradaCorrespondiente(var));
 				}));
 			}
 			else
 			{
-				SistemaPrincipal.LoggerGlobal.Log($@"Se intentaron cargar variables persistentes desde un controlador cuyo modelo no es {nameof(ModeloConVariablesYTiradas<TRelacionVariable, TRelacionTirada>)}
+				SistemaPrincipal.LoggerGlobal.Log($@"Se intentaron cargar variables persistentes desde un controlador cuyo modelo no es {nameof(ModeloConVariablesYTiradas)}
 														Controlador: {this}", ESeveridad.Error);
 			}
 		}

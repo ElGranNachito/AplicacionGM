@@ -22,8 +22,6 @@ namespace AppGM.Core
 		public List<ModeloUtilizable> items                       = new List<ModeloUtilizable>();
 		public List<ModeloPortable> portables                     = new List<ModeloPortable>();
 		public List<ModeloPortable> portableOfensivo              = new List<ModeloPortable>();
-		public List<ModeloDefensivo> defensivos                   = new List<ModeloDefensivo>();
-		public List<ModeloDefensivoAbsoluto> defensivosAbsolutos  = new List<ModeloDefensivoAbsoluto>();
 		public List<ModeloArmasDistancia> armasDistancia          = new List<ModeloArmasDistancia>();
 		public List<ModeloSlot> slots                             = new List<ModeloSlot>();
 		public List<ModeloPerk> perks                             = new List<ModeloPerk>();

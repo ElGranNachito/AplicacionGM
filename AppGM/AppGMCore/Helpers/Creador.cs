@@ -51,17 +51,6 @@ namespace AppGM.Core
             }
         }
 
-        public static TIPersonajeEfectoSiendoAplicado CrearTIPersonaje(
-	        this ControladorEfectoSiendoAplicado efecto,
-	        ControladorPersonaje personaje)
-        {
-	        return new TIPersonajeEfectoSiendoAplicado
-	        {
-		        EfectoSiendoAplicado = efecto.modelo,
-		        Personaje            = personaje.modelo
-	        };
-        }
-
         /// <summary>
         /// Inicializa una instancia de <see cref="ModeloEfectoSiendoAplicado"/>
         /// </summary>

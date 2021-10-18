@@ -7,14 +7,12 @@ namespace AppGM.Core
     /// <summary>
     /// Modelo de datos para el personaje
     /// </summary>
-    public class ModeloPersonaje : ModeloConVariablesYTiradas<TIVariablePersonaje, TITiradaPersonaje>
+    public class ModeloPersonaje : ModeloConVariablesYTiradas
     {
-        public ControladorPersonaje controlador;
-
         /// <summary>
         /// Relacion rol
         /// </summary>
-        public virtual TIRolPersonaje RolPersonaje { get; set; }
+        public virtual ModeloRol Rol { get; set; }
 
         /// <summary>
         /// Nombre del personaje
@@ -88,42 +86,62 @@ namespace AppGM.Core
         /// <summary>
         /// Efectos aplicados sobre el personaje
         /// </summary>
-        public virtual List<TIPersonajeEfectoSiendoAplicado> EfectosAplicandose { get; set; } = new List<TIPersonajeEfectoSiendoAplicado>();
+        public virtual List<ModeloEfectoSiendoAplicado> EfectosAplicandose { get; set; } = new List<ModeloEfectoSiendoAplicado>();
         
         //Equipamiento del personaje
-        public virtual List<TIPersonajeUtilizable>           Inventario { get; set; } = new List<TIPersonajeUtilizable>();
-        public virtual List<TIPersonajeDefensivo>            Armadura   { get; set; } = new List<TIPersonajeDefensivo>();
-        public virtual List<TIPersonajeArmaDistancia>        ArmasDistancia         { get; set; } = new List<TIPersonajeArmaDistancia>();
+        public virtual List<ModeloUtilizable> Inventario { get; set; } = new List<ModeloUtilizable>();
+        public virtual List<ModeloDefensivo> Armadura { get; set; } = new List<ModeloDefensivo>();
+        public virtual List<ModeloArmasDistancia> ArmasDistancia  { get; set; } = new List<ModeloArmasDistancia>();
 
         /// <summary>
         /// Contratos realizados con tros personajes
         /// </summary>
-        public virtual List<TIPersonajeContrato>      Contratos  { get; set; } = new List<TIPersonajeContrato>();
+        public virtual List<ModeloContrato> Contratos  { get; set; } = new List<ModeloContrato>();
 
         /// <summary>
         /// Alianzas con otros personajes
         /// </summary>
-        public virtual List<TIPersonajeAlianza>       Alianzas   { get; set; } = new List<TIPersonajeAlianza>();
-                                              
-        //Habilidades del personaje
-        public virtual List<TIPersonajePerk>          Perks      { get; set; } = new List<TIPersonajePerk>();
-        public virtual List<TIPersonajeHabilidad>     Skills     { get; set; } = new List<TIPersonajeHabilidad>();
-        public virtual List<TIPersonajeMagia>         Magias     { get; set; } = new List<TIPersonajeMagia>();
-        
+        public virtual List<ModeloAlianza> Alianzas   { get; set; } = new List<ModeloAlianza>();
+
         /// <summary>
-        /// Modificadores de defensa del personaje.
+        /// Habilidades de este personaje. Incluye todos los tipos de habilidad
         /// </summary>
-        public virtual List<TIPersonajeModificadorDeDefensa> ModificadoresDeDefensa { get; set; } = new List<TIPersonajeModificadorDeDefensa>();
-        
+        public virtual List<ModeloHabilidad> Habilidades { get; set; } = new List<ModeloHabilidad>();
+                                              
+        /// <summary>
+        /// Pasivas
+        /// </summary>
+        public virtual List<ModeloPerk> Perks { get; set; } = new List<ModeloPerk>();
+
+        /// <summary>
+        /// Habilidades
+        /// </summary>
+        public virtual List<ModeloHabilidad> Skills { get; set; } = new List<ModeloHabilidad>();
+
+        /// <summary>
+        /// Magias
+        /// </summary>
+        public virtual List<ModeloMagia> Magias { get; set; } = new List<ModeloMagia>();
+
         /// <summary>
         /// Es participante en algun combate.
         /// TODO: Solo puede participar de un combate activo a la vez.
         /// </summary>
-        public virtual List<TIParticipantePersonaje> ParticipacionEnCombates { get; set; } = new List<TIParticipantePersonaje>();
+        public virtual List<ModeloParticipante> ParticipacionEnCombates { get; set; } = new List<ModeloParticipante>();
 
         /// <summary>
         /// Especialidades de este personaje
         /// </summary>
-        public virtual List<TIEspecialidadPersonaje> Especialidades { get; set; } = new List<TIEspecialidadPersonaje>();
+        public virtual List<ModeloEspecialidad> Especialidades { get; set; } = new List<ModeloEspecialidad>();
+
+        /// <summary>
+        /// Unidades que representan a este personaje
+        /// </summary>
+        public virtual List<ModeloUnidadMapa> UnidadesEnMapa { get; set; } = new List<ModeloUnidadMapa>();
+
+        /// <summary>
+        /// Invocaciones creadas por este personaje
+        /// </summary>
+        public virtual List<ModeloInvocacion> Invocaciones { get; set; } = new List<ModeloInvocacion>();
     }
 }

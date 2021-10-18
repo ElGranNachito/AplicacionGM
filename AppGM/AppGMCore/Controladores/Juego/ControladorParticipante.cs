@@ -23,7 +23,7 @@
         public ControladorParticipante(ModeloParticipante _modeloParticipante)
 			:base(_modeloParticipante)
         {
-	        ControladorPersonaje = modelo.Personaje.Personaje.controlador;
+	        ControladorPersonaje = SistemaPrincipal.ObtenerControlador<ControladorPersonaje, ModeloPersonaje>(modelo.Personaje, true);
         }
 
         #endregion

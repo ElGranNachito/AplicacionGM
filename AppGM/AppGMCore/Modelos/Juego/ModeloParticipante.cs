@@ -25,16 +25,16 @@ namespace AppGM.Core
         /// <summary>
         /// Personaje participante del combate
         /// </summary>
-        public virtual TIParticipantePersonaje Personaje { get; set; }
+        public virtual ModeloPersonaje Personaje { get; set; }
 
         /// <summary>
         /// Acciones realizadas por el participante
         /// </summary>
-        public virtual List<TIParticipanteAccion> AccionesRealizadas { get; set; } = new List<TIParticipanteAccion>();
+        public virtual List<ModeloAccion> AccionesRealizadas { get; set; } = new List<ModeloAccion>();
 
         /// <summary>
         /// Combate en el que participa
         /// </summary>
-        public virtual TIAdministradorDeCombateParticipante CombateActual { get; set; }
+        public virtual ModeloAdministradorDeCombate CombateActual { get; set; }
     }
 }

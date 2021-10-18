@@ -163,12 +163,6 @@ namespace AppGM.Core
         public List<ControladorMagia> Magias { get; set; }
 
         /// <summary>
-        /// 
-        /// </summary>
-        //TODO: Revisar bien que era esto
-        public List<ControladorModificadorDeStat> ModificadoresDeDefensa { get; set; }
-
-        /// <summary>
         /// Invocaciones que ha generado el personaje
         /// </summary>
         public List<ControladorInvocacion> ControladorInvocaciones { get; set; }
@@ -349,10 +343,10 @@ namespace AppGM.Core
         {
             for (int i = 0; i < modelo.Alianzas.Count; ++i)
             {
-                Alianzas.Add(new ControladorAlianza(modelo.Alianzas[i].Alianza));
+                Alianzas.Add(SistemaPrincipal.ObtenerControlador<ControladorAlianza, ModeloAlianza>(modelo.Alianzas[i], true));
             }
 
-            CargarVariablesYTiradas<TIVariablePersonaje, TITiradaPersonaje>();
+            CargarVariablesYTiradas();
         }
 
         #endregion
@@ -564,15 +558,15 @@ namespace AppGM.Core
 
         public ControladorAmbiente ObtenerAmbienteGlobal()
         {
-            return SistemaPrincipal.ModeloRolActual.AmbienteGlobal.Ambiente.controladorAmbiente;
+            return SistemaPrincipal.ObtenerControlador<ControladorAmbiente, ModeloAmbiente>(SistemaPrincipal.ModeloRolActual.AmbienteGlobal);
         }
 
         public ControladorAmbiente ObtenerAmbienteCombateActual()
         {
-            var participante = from participacion in modelo.ParticipacionEnCombates
-                where participacion.Participante.CombateActual.AdministradorDeCombate.EstaActivo select participacion;
+            var participante = (from participacion in modelo.ParticipacionEnCombates
+                where participacion.CombateActual.EstaActivo select participacion).FirstOrDefault();
 
-            return participante.GetEnumerator().Current.Participante.CombateActual.AdministradorDeCombate.AmbienteDelCombate.Ambiente.controladorAmbiente;
+            return SistemaPrincipal.ObtenerControlador<ControladorAmbiente, ModeloAmbiente>(participante.CombateActual.AmbienteDelCombate);
         }
 
         /// <summary>

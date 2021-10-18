@@ -3,14 +3,16 @@ using System;
 using AppGM.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AppGM.Core.Migrations
 {
     [DbContext(typeof(RolContext))]
-    partial class RolContextModelSnapshot : ModelSnapshot
+    [Migration("20211018001733_inicial")]
+    partial class inicial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

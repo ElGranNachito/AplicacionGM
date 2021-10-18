@@ -6,7 +6,7 @@ namespace AppGM.Core
     /// <summary>
     /// Modelo de datos para habilidades de un <see cref="ModeloPersonaje"/>
     /// </summary>
-    public class ModeloHabilidad : ModeloConVariablesYTiradas<TIVariableHabilidad, TITiradaHabilidad>
+    public class ModeloHabilidad : ModeloConVariablesYTiradas
     {
 	    /// <summary>
         /// Indica si la habilidad esta actualmente activa
@@ -65,30 +65,18 @@ namespace AppGM.Core
         /// <summary>
         /// <see cref="ModeloPersonaje"/> que posee esta habilidad
         /// </summary>
-        public virtual TIPersonajeHabilidad Dueño { get; set; }
+        public virtual ModeloPersonaje Dueño { get; set; }
 
-        /// <summary>
-        /// Items utilizados para invocar otro item
-        /// Primer indice es el item que invoca, el resto de indices son los items que cuesta
-        /// </summary>
-        public virtual List<TIHabilidadItem>       ItemsQueCuestaItemInvocacion { get; set; } = new List<TIHabilidadItem>();
-
-        /// <summary>
-        /// Personaje de clase <see cref="ModeloInvocacion"/> que es invocado por la habilidad
-        /// </summary>
-        public virtual List<TIHabilidadInvocacion> Invocacion                   { get; set; } = new List<TIHabilidadInvocacion>();
-        
         /// <summary>
         /// Tiradas para utilizar la habilidad
         /// </summary>
-        public virtual List<TIHabilidadTiradaBase> TiradasDeUso                 { get; set; } = new List<TIHabilidadTiradaBase>();
-        
-        /// <summary>
-        /// Efectos que aplica la habilidad
-        /// Primer indice son los efectos sobre el usuario, segundo indice son los efectos sobre el objetivo
-        /// </summary>
-        public virtual List<TIHabilidadEfecto> EfectosSobreUsuarioEfectoSobreObjetivo { get; set; } = new List<TIHabilidadEfecto>();
+        public virtual List<ModeloTiradaBase> TiradasDeUso { get; set; } = new List<ModeloTiradaBase>();
 
+        /// <summary>
+        /// Efectos de la habilidad
+        /// </summary>
+        public virtual List<ModeloEfecto> Efectos { get; set; } = new List<ModeloEfecto>();
+        
         /// <summary>
         /// Funciones que requiere la habilidad para funcionar
         /// </summary>

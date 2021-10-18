@@ -32,6 +32,17 @@ namespace AppGM.Core
         /// <summary>
         /// Personajes atados por este contrato
         /// </summary>
-        public virtual List<TIPersonajeContrato> PersonajesAfectados { get; set; } = new List<TIPersonajeContrato>();
+        public virtual List<ModeloPersonaje> PersonajesAfectados { get; set; } = new List<ModeloPersonaje>();
+
+        /// <summary>
+        /// Clave foranea que referencia a la alianza a la que pertenece este contrato
+        /// </summary>
+        [ForeignKey(nameof(Alianza))]
+        public int? IdAlianza { get; set; }
+
+        /// <summary>
+        /// Alianza a la que pertenece este contrato
+        /// </summary>
+        public virtual ModeloAlianza Alianza { get; set; } 
     }
 }

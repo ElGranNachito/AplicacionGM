@@ -31,7 +31,7 @@ namespace AppGM.Core
 			:base(_modeloMapa)
         {
 	        for (int i = 0; i < modelo.PosicionesUnidades.Count; ++i)
-                controladoresUnidadesMapa.Add(new ControladorUnidadMapa(_modeloMapa.PosicionesUnidades[i].Unidad));
+                controladoresUnidadesMapa.Add(new ControladorUnidadMapa(_modeloMapa.PosicionesUnidades[i]));
         }
 
         #endregion
@@ -50,15 +50,9 @@ namespace AppGM.Core
         /// <param name="unidad">Unidad que añadir</param>
         public void AñadirUnidad(ModeloUnidadMapa unidad)
         {
-            TIMapaUnidadMapa mapaUnidad = new TIMapaUnidadMapa
-            {
-                Unidad = unidad,
-                Mapa   = modelo
-            };
+            modelo.PosicionesUnidades.Add(unidad);
 
-            modelo.PosicionesUnidades.Add(mapaUnidad);
-
-            SistemaPrincipal.GuardarModelo(mapaUnidad);
+            SistemaPrincipal.GuardarModelo(unidad);
         }
 
         #endregion

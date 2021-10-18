@@ -9,11 +9,6 @@ namespace AppGM.Core
     public class ModeloSlot : ModeloBase
     {
         /// <summary>
-        /// Controlador
-        /// </summary>
-        public ControladorSlot controladorSlot;
-
-        /// <summary>
         /// Espacio total que ofrece el slot
         /// </summary>
         public decimal EspacioTotal      { get; set; }
@@ -26,6 +21,11 @@ namespace AppGM.Core
         /// <summary>
         /// Items actualmente almacenados en el slot
         /// </summary>
-        public virtual List<TISlotItem> ItemsAlmacenados { get; set; } = new List<TISlotItem>();
+        public virtual List<ModeloItem> ItemsAlmacenados { get; set; } = new List<ModeloItem>();
+
+        /// <summary>
+        /// Portable al que pertenece este slot
+        /// </summary>
+        public virtual ModeloPortable Dueño { get; set; }
     }
 }

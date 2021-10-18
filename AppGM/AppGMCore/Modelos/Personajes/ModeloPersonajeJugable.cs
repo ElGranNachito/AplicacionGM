@@ -14,11 +14,11 @@ namespace AppGM.Core
         /// <summary>
         /// Caracteristicas del personaje
         /// </summary>
-        public virtual TIPersonajeJugableCaracteristicas Caracteristicas { get; set; }
+        public virtual ModeloCaracteristicas Caracteristicas { get; set; }
 
         /// <summary>
         /// Invocaciones activas
         /// </summary>
-        public virtual List<TIPersonajeJugableInvocacion> Invocaciones { get; set; } = new List<TIPersonajeJugableInvocacion>();
+        public virtual List<ModeloInvocacion> Invocaciones { get; set; } = new List<ModeloInvocacion>();
     }
 }

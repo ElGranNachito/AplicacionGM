@@ -77,7 +77,7 @@ namespace AppGM.Core
 					continue;
 
 				//Intentamos obtener el valor de la variable y nos aseguramos que no sea null
-				if (usuario.Variables.Any(var => var.Variable.NombreVariable == variable))
+				if (usuario.Variables.Any(var => var.NombreVariable == variable))
 					return (false, $"No se encontro una variable llamada {variable} en {usuario}", null);
 			}
 

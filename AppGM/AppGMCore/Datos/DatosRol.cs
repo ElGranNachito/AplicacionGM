@@ -24,8 +24,6 @@ namespace AppGM.Core
 		public List<ControladorUtilizable> Items { get; set; }                       = null;
 		public List<ControladorPortable> Portables { get; set; }                     = null;
 		public List<ControladorPortable> PortableOfensivo { get; set; }              = null;
-		public List<ControladorDefensivo> Defensivos { get; set; }                   = null;
-		public List<ControladorDefensivoAbsoluto> DefensivosAbsolutos { get; set; }  = null;
 		public List<ControladorConsumible> Consumibles { get; set; }                 = null;
 		public List<ControladorArmaDistancia> ArmasDistancia { get; set; }           = null;
 		public List<ControladorSlot> Slots { get; set; }                             = null;
@@ -160,20 +158,8 @@ namespace AppGM.Core
 						EsVigente = true
 					};
 
-					TIPersonajeContrato master1Contrato = new TIPersonajeContrato
-					{
-						Contrato = contratoPiola,
-						Personaje = master1
-					};
-
-					TIPersonajeContrato master2Contrato = new TIPersonajeContrato
-					{
-						Contrato = contratoPiola,
-						Personaje = master2
-					};
-
-					contratoPiola.PersonajesAfectados.Add(master1Contrato);
-					contratoPiola.PersonajesAfectados.Add(master2Contrato);
+					contratoPiola.PersonajesAfectados.Add(master1);
+					contratoPiola.PersonajesAfectados.Add(master2);
 
 					ModeloAlianza alianzaPiola = new ModeloAlianza
 					{
@@ -187,31 +173,13 @@ namespace AppGM.Core
 						EsVigente = true,
 					};
 
-					TIAlianzaContrato alianzaPiolaContrato = new TIAlianzaContrato
-					{
-						Contrato = contratoPiola,
-						Alianza = alianzaPiola
-					};
+					alianzaPiola.ContratoDeAlianza = contratoPiola;
 
-					alianzaPiola.ContratoDeAlianza = alianzaPiolaContrato;
+					alianzaPiola.PersonajesAfectados.Add(master1);
+					alianzaPiola.PersonajesAfectados.Add(master2);
 
-					TIPersonajeAlianza master1Alianza = new TIPersonajeAlianza
-					{
-						Personaje = master1,
-						Alianza = alianzaPiola
-					};
-
-					TIPersonajeAlianza master2Alianza = new TIPersonajeAlianza
-					{
-						Personaje = master2,
-						Alianza = alianzaPiola
-					};
-
-					alianzaPiola.PersonajesAfectados.Add(master1Alianza);
-					alianzaPiola.PersonajesAfectados.Add(master2Alianza);
-
-					master1.Alianzas.Add(master1Alianza);
-					master2.Alianzas.Add(master2Alianza);
+					master1.Alianzas.Add(alianzaPiola);
+					master2.Alianzas.Add(alianzaPiola);
 
 					ModeloMagia magia1 = new ModeloMagia
 					{
@@ -247,35 +215,11 @@ namespace AppGM.Core
 						CostoDeMana = 5
 					};
 
-					TIPersonajeMagia masterMagia1 = new TIPersonajeMagia
-					{
-						Personaje = master1,
-						Magia = magia1
-					};
+					master1.Magias.Add(magia1);
+					master2.Magias.Add(magia2);
 
-					TIPersonajeMagia masterMagia2 = new TIPersonajeMagia
-					{
-						Personaje = master2,
-						Magia = magia2
-					};
-
-					TIServantNoblePhantasm servantNoblePhantasm1 = new TIServantNoblePhantasm
-					{
-						Servant = servant1,
-						NoblePhantasm = noblePhantasm1
-					};
-
-					TIServantNoblePhantasm servantNoblePhantasm2 = new TIServantNoblePhantasm
-					{
-						Servant = servant2,
-						NoblePhantasm = noblePhantasm2
-					};
-
-					master1.Magias.Add(masterMagia1);
-					master2.Magias.Add(masterMagia2);
-
-					servant1.NoblePhantasms.Add(servantNoblePhantasm1);
-					servant2.NoblePhantasms.Add(servantNoblePhantasm2);
+					servant1.NoblePhantasms.Add(noblePhantasm1);
+					servant2.NoblePhantasms.Add(noblePhantasm2);
 
 					ModeloMapa mapa = new ModeloMapa
 					{
@@ -335,104 +279,35 @@ namespace AppGM.Core
 						Y = 40
 					};
 
-					TIUnidadMapaVector2 tiPosBerserker = new TIUnidadMapaVector2
-					{
-						Unidad = unidadServant1,
-						Posicion = posBerserker
-					};
+					unidadMaster1.Personaje = master1;
+					unidadMaster2.Personaje = master2;
+					unidadServant1.Personaje = servant1;
+					unidadServant2.Personaje = servant2;
 
-					TIUnidadMapaVector2 tiPosMasterBerserker = new TIUnidadMapaVector2
-					{
-						Unidad = unidadMaster1,
-						Posicion = posMasterBerserker
-					};
+					unidadServant1.Posicion = posBerserker;
+					unidadServant2.Posicion = posRider;
+					unidadMaster1.Posicion = posMasterBerserker;
+					unidadMaster2.Posicion = posMasterRider;
 
-					TIUnidadMapaVector2 tiPosRider = new TIUnidadMapaVector2
-					{
-						Unidad = unidadServant2,
-						Posicion = posRider
-					};
-
-					TIUnidadMapaVector2 tiPosMasterRider = new TIUnidadMapaVector2
-					{
-						Unidad = unidadMaster2,
-						Posicion = posMasterRider
-					};
-
-					TIPersonajeUnidadMapa tiServantUnidadMapa1 = new TIPersonajeUnidadMapa
-					{
-						Unidad = unidadServant1,
-						Personaje = servant1
-					};
-
-					TIPersonajeUnidadMapa tiMasterUnidadMapa1 = new TIPersonajeUnidadMapa
-					{
-						Unidad = unidadMaster1,
-						Personaje = master1
-					};
-
-					TIPersonajeUnidadMapa tiServantUnidadMapa2 = new TIPersonajeUnidadMapa
-					{
-						Unidad = unidadServant2,
-						Personaje = servant2
-					};
-
-					TIPersonajeUnidadMapa tiMasterUnidadMapa2 = new TIPersonajeUnidadMapa
-					{
-						Unidad = unidadMaster2,
-						Personaje = master2
-					};
-
-					unidadServant1.Posicion = tiPosBerserker;
-					unidadServant2.Posicion = tiPosRider;
-					unidadMaster1.Posicion = tiPosMasterBerserker;
-					unidadMaster2.Posicion = tiPosMasterRider;
-
-					TIMapaUnidadMapa tiMapaBerserker = new TIMapaUnidadMapa
-					{
-						Mapa = mapa,
-						Unidad = unidadServant1
-					};
-
-					TIMapaUnidadMapa tiMapaMasterBerserker = new TIMapaUnidadMapa
-					{
-						Mapa = mapa,
-						Unidad = unidadMaster1
-					};
-
-					TIMapaUnidadMapa tiMapaRider = new TIMapaUnidadMapa
-					{
-						Mapa = mapa,
-						Unidad = unidadServant2
-					};
-
-					TIMapaUnidadMapa tiMapaMasterRider = new TIMapaUnidadMapa
-					{
-						Mapa = mapa,
-						Unidad = unidadMaster2
-					};
-
-					mapa.PosicionesUnidades.Add(tiMapaBerserker);
-					mapa.PosicionesUnidades.Add(tiMapaMasterBerserker);
-					mapa.PosicionesUnidades.Add(tiMapaRider);
-					mapa.PosicionesUnidades.Add(tiMapaMasterRider);
+					mapa.PosicionesUnidades.Add(unidadMaster1);
+					mapa.PosicionesUnidades.Add(unidadMaster2);
+					mapa.PosicionesUnidades.Add(unidadServant1);
+					mapa.PosicionesUnidades.Add(unidadServant2);
 
 					mDBRol.Add(new ModeloAdministradorDeCombate
 					{
 						IndicePersonajeTurnoActual = 0,
 						Nombre = "SuperCombateFeroz",
-						TurnoActual = 0,
-						Participantes = new List<TIAdministradorDeCombateParticipante>()
+						TurnoActual = 0
 					});
 
 					mDBRol.Add(mapa);
 					mDBRol.Add(contratoPiola);
-					mDBRol.Add(master1Contrato);
-					mDBRol.Add(master2Contrato);
 					mDBRol.Add(alianzaPiola);
-					mDBRol.Add(alianzaPiolaContrato);
-					mDBRol.Add(master1Alianza);
-					mDBRol.Add(master2Alianza);
+					mDBRol.Add(servant1);
+					mDBRol.Add(master1);
+					mDBRol.Add(servant2);
+					mDBRol.Add(master2);
 					mDBRol.Add(unidadServant1);
 					mDBRol.Add(unidadMaster1);
 					mDBRol.Add(unidadServant2);
@@ -441,43 +316,14 @@ namespace AppGM.Core
 					mDBRol.Add(posMasterBerserker);
 					mDBRol.Add(posRider);
 					mDBRol.Add(posMasterRider);
-					mDBRol.Add(tiMapaBerserker);
-					mDBRol.Add(tiMapaMasterBerserker);
-					mDBRol.Add(tiMapaRider);
-					mDBRol.Add(tiMapaMasterRider);
-					mDBRol.Add(tiPosBerserker);
-					mDBRol.Add(tiPosMasterBerserker);
-					mDBRol.Add(tiPosRider);
-					mDBRol.Add(tiPosMasterRider);
-					mDBRol.Add(tiServantUnidadMapa1);
-					mDBRol.Add(tiMasterUnidadMapa2);
-					mDBRol.Add(tiServantUnidadMapa2);
-					mDBRol.Add(tiMasterUnidadMapa1);
-
-					mDBRol.Add(servant1);
-					mDBRol.Add(master1);
-					mDBRol.Add(servant2);
-					mDBRol.Add(master2);
 					mDBRol.Add(magia1);
 					mDBRol.Add(magia2);
-					mDBRol.Add(masterMagia1);
-					mDBRol.Add(masterMagia2);
-					mDBRol.Add(masterMagia1);
-					mDBRol.Add(masterMagia2);
-					mDBRol.Add(servantNoblePhantasm1);
-					mDBRol.Add(servantNoblePhantasm2);
 
 					ModeloAdministradorDeCombate combate = new ModeloAdministradorDeCombate
 					{
 						IndicePersonajeTurnoActual = 0,
 						TurnoActual = 0,
 						Nombre = "最後の戦い"
-					};
-
-					TIAdministradorDeCombateMapa mapaCombate = new TIAdministradorDeCombateMapa
-					{
-						AdministradorDeCombate = combate,
-						Mapa = mapa
 					};
 
 					ModeloParticipante participante1 = new ModeloParticipante
@@ -490,20 +336,8 @@ namespace AppGM.Core
 						EsSuTurno = false
 					};
 
-					TIParticipantePersonaje personajeParticipante1 = new TIParticipantePersonaje
-					{
-						Participante = participante1,
-						Personaje = master1
-					};
-
-					TIParticipantePersonaje personajeParticipante2 = new TIParticipantePersonaje
-					{
-						Participante = participante2,
-						Personaje = master2
-					};
-
-					participante1.Personaje = personajeParticipante1;
-					participante2.Personaje = personajeParticipante2;
+					participante1.Personaje = master1;
+					participante2.Personaje = master2;
 
 					ModeloAccion accion1 = new ModeloAccion
 					{
@@ -515,62 +349,23 @@ namespace AppGM.Core
 						Descripcion = "Visito un maid cafe y se ligo a una de las maids"
 					};
 
-					TIParticipanteAccion accionParticipante1 = new TIParticipanteAccion
-					{
-						Accion = accion1,
-						Participante = participante1
-					};
+					participante1.AccionesRealizadas.Add(accion1);
+					participante2.AccionesRealizadas.Add(accion2);
 
-					TIParticipanteAccion accionParticipante2 = new TIParticipanteAccion
-					{
-						Accion = accion2,
-						Participante = participante2
-					};
-
-					participante1.AccionesRealizadas.Add(accionParticipante1);
-					participante2.AccionesRealizadas.Add(accionParticipante2);
-
-					TIAdministradorDeCombateParticipante participante1Combate = new TIAdministradorDeCombateParticipante
-					{
-						AdministradorDeCombate = combate,
-						Participante = participante1
-					};
-
-					TIAdministradorDeCombateParticipante participante2Combate = new TIAdministradorDeCombateParticipante
-					{
-						AdministradorDeCombate = combate,
-						Participante = participante2
-					};
-
-					combate.Mapas.Add(mapaCombate);
-					combate.Participantes.Add(participante1Combate);
-					combate.Participantes.Add(participante2Combate);
+					combate.Mapas.Add(mapa);
+					combate.Participantes.Add(participante1);
+					combate.Participantes.Add(participante2);
 
 					mDBRol.Add(combate);
-					mDBRol.Add(mapaCombate);
 					mDBRol.Add(participante1);
 					mDBRol.Add(participante2);
-					mDBRol.Add(personajeParticipante1);
-					mDBRol.Add(personajeParticipante2);
 					mDBRol.Add(accion1);
 					mDBRol.Add(accion2);
-					mDBRol.Add(accionParticipante1);
-					mDBRol.Add(accionParticipante2);
-					mDBRol.Add(participante1Combate);
-					mDBRol.Add(participante2Combate);
 
 					mDBRol.SaveChanges();
 				}
 
 				//Cargamos los datos de una manera bastante primitiva :u
-
-				var personajeUnidadMapa =
-					(from m in mDBRol.PersonajesUnidadesMapa
-					 select m).ToList();
-
-				var personajeAlianzas =
-					(from m in mDBRol.PersonajesAlianzas
-					 select m).ToList();
 
 				var masters =
 					(from m in mDBRol.Masters
@@ -596,18 +391,6 @@ namespace AppGM.Core
 
 				unidadesmapa.TrimExcess();
 
-				var tiunidadesmapa =
-					(from u in mDBRol.MapasUnidadesMapa
-					 select u).ToList();
-
-				tiunidadesmapa.TrimExcess();
-
-				var tiunidadesposiciones =
-					(from u in mDBRol.UnidadesMapaVectores2
-					 select u).ToList();
-
-				tiunidadesposiciones.TrimExcess();
-
 				var posiciones =
 					(from p in mDBRol.Vectores2
 					 select p).ToList();
@@ -632,30 +415,6 @@ namespace AppGM.Core
 
 				acciones.TrimExcess();
 
-				var tiParticipanteAccion =
-					(from ti in mDBRol.ParticipanteAccion
-					 select ti).ToList();
-
-				tiParticipanteAccion.TrimExcess();
-
-				var tiParticipantePersonaje =
-					(from ti in mDBRol.ParticipantePersonaje
-					 select ti).ToList();
-
-				tiParticipantePersonaje.TrimExcess();
-
-				var tiParticipanteCombate =
-					(from ti in mDBRol.CombateParticipantes
-					 select ti).ToList();
-
-				tiParticipanteCombate.TrimExcess();
-
-				var tiCombateMapa =
-					(from ti in mDBRol.CombateMapas
-					 select ti).ToList();
-
-				tiCombateMapa.TrimExcess();
-
 				SistemaPrincipal.LoggerGlobal.Log("Creando controladores...", ESeveridad.Info);
 
 				Masters = new List<ControladorPersonaje>(masters.Count);
@@ -665,7 +424,6 @@ namespace AppGM.Core
 					ControladorPersonaje controladorActual = new ControladorPersonaje(masters[i]);
 
 					Masters.Add(controladorActual);
-					masters[i].controlador = controladorActual;
 				}
 
 				Servants = new List<ControladorPersonaje>(servants.Count);
@@ -675,7 +433,6 @@ namespace AppGM.Core
 					ControladorPersonaje controladorActual = new ControladorPersonaje(servants[i]);
 
 					Servants.Add(controladorActual);
-					servants[i].controlador = controladorActual;
 				}
 
 				Mapas = new List<ControladorMapa>(mapas.Count);
@@ -685,7 +442,6 @@ namespace AppGM.Core
 					ControladorMapa controladorActual = new ControladorMapa(mapas[i]);
 
 					Mapas.Add(controladorActual);
-					mapas[i].controladorMapa = controladorActual;
 				}
 
 				Participantes = new List<ControladorParticipante>(participantes.Count);
@@ -695,7 +451,6 @@ namespace AppGM.Core
 					ControladorParticipante controladorActual = new ControladorParticipante(participantes[i]);
 
 					Participantes.Add(controladorActual);
-					participantes[i].controladorParticipante = controladorActual;
 				}
 
 				CombatesActivos = new List<ControladorAdministradorDeCombate>(combates.Count);
@@ -705,7 +460,6 @@ namespace AppGM.Core
 					ControladorAdministradorDeCombate controladorActual = new ControladorAdministradorDeCombate(combates[i]);
 
 					CombatesActivos.Add(controladorActual);
-					combates[i].controladorAdministradorDeCombate = controladorActual;
 				}
 
 				//TODO: Continuar cargando datos

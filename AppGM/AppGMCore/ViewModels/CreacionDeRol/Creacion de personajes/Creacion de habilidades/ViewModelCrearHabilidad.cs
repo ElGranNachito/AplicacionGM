@@ -109,13 +109,7 @@ namespace AppGM.Core
             {
 	            ModeloHabilidad = new ModeloHabilidad();
 
-	            var personajeHabilidad = new TIPersonajeHabilidad
-	            {
-		            Personaje = mModeloPersonaje,
-		            Habilidad = ModeloHabilidad
-	            };
-
-	            ModeloHabilidad.Dueño = personajeHabilidad;
+	            ModeloHabilidad.Dueño = mModeloPersonaje;
             }
 
             ComboBoxTipoHabilidad = new ViewModelComboBox<ETipoHabilidad>(_modeloPersonaje.TipoPersonaje.ObtenerTiposDeHabilidadDisponibles());
@@ -196,7 +190,7 @@ namespace AppGM.Core
             if (!EsMagia || mModeloPersonaje.TipoPersonaje != ETipoPersonaje.Master)
                 return false;
 
-            if (mModeloPersonaje.Magias.Count(ti => ti.Magia.EsParticular) >= 2)
+            if (mModeloPersonaje.Magias.Count(m => m.EsParticular) >= 2)
                 return false;
 
             return true;

@@ -194,7 +194,7 @@ namespace AppGM.Core
 			Autocompletado.ActualizarValoresExistentes(mPersonaje.Variables.Select(var =>
 			{
 				return new ViewModelItemAutocompletadoVariablePersistente(
-					SistemaPrincipal.ObtenerControlador<ControladorVariableBase, ModeloVariableBase>(var.Variable, true));
+					SistemaPrincipal.ObtenerControlador<ControladorVariableBase, ModeloVariableBase>(var, true));
 
 			}).Cast<ViewModelItemAutocompletadoBase>().ToList());
 		}

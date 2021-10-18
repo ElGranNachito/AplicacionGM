@@ -33,22 +33,22 @@ namespace AppGM.Core
 	    /// <summary>
         /// Modelo del personaje que contiene la tirada
         /// </summary>
-        public virtual TITiradaPersonaje PersonajeContenedor { get; set; }
+        public virtual ModeloPersonaje PersonajeContenedor { get; set; }
 
         /// <summary>
         /// Modelo de la habilidad que contiene la tirada
         /// </summary>
-        public virtual TITiradaHabilidad HabilidadContenedora { get; set; }
+        public virtual ModeloHabilidad HabilidadContenedora { get; set; }
 
         /// <summary>
         /// Modelo del utilizable que contiene la tirada
         /// </summary>
-        public virtual TITiradaUtilizable UtilizableContenedor { get; set; }
+        public virtual ModeloUtilizable UtilizableContenedor { get; set; }
 
         /// <summary>
         /// Modelo del la funcion que contiene la tirada
         /// </summary>
-        public virtual TITiradaFuncion FuncionContenedora { get; set; }
+        public virtual ModeloFuncion FuncionContenedora { get; set; }
     }
 
     /// <summary>

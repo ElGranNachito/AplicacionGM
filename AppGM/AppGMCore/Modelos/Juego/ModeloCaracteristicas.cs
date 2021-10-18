@@ -22,11 +22,11 @@ namespace AppGM.Core
         /// <summary>
         /// Sexo del personaje
         /// </summary>
-        public ESexo          ESexo          { get; set; }
+        public ESexo ESexo { get; set; }
         /// <summary>
         /// Tipo de personalidad del personaje
         /// </summary>
-        public EArquetipo     EArquetipo     { get; set; }
+        public EArquetipo EArquetipo { get; set; }
         /// <summary>
         /// Mano dominante
         /// </summary>
@@ -46,5 +46,15 @@ namespace AppGM.Core
         [MaxLength(100)]
         public string Nacionalidad { get; set; }
         
+        /// <summary>
+        /// Clave foranea que referencia al <see cref="ModeloPersonajeJugable"/> al que pertenecen estas caracteristicas
+        /// </summary>
+        [ForeignKey(nameof(Personaje))]
+        public int IdPersonaje { get; set; }
+
+        /// <summary>
+        /// Personaje al que pertenecen estas caracteristicas
+        /// </summary>
+        public virtual ModeloPersonajeJugable Personaje { get; set; }
     }
 }

@@ -133,17 +133,14 @@ namespace AppGM
                     Lck = 14,
                     Chr = 8,
 
-                    Caracteristicas = new TIPersonajeJugableCaracteristicas
+                    Caracteristicas = new ModeloCaracteristicas
                     {
-                        Caracteristicas = new ModeloCaracteristicas
-                        {
-                            Fisico = "1.90, Mamadisimo",
-                            EArquetipo = EArquetipo.Mago,
-                            Edad = 32,
-                            EManoDominante = EManoDominante.Derecha,
-                            ESexo = ESexo.Masculino,
-                            Nacionalidad = "Britanico"
-                        }
+                       Fisico = "1.90, Mamadisimo",
+                       EArquetipo = EArquetipo.Mago,
+                       Edad = 32,
+                       EManoDominante = EManoDominante.Derecha,
+                       ESexo = ESexo.Masculino,
+                       Nacionalidad = "Britanico"
                     }
                 }
             };

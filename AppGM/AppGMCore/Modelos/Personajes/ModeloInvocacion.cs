@@ -2,8 +2,6 @@
 {
     public class ModeloInvocacion : ModeloPersonaje
     {
-        public ControladorInvocacion controladorInvocacion;
-
         /// <summary>
         /// La invocacion es automata
         /// </summary>
@@ -12,23 +10,16 @@
         /// <summary>
         /// Personaje que la invoca
         /// </summary>
-        public virtual TIInvocacionPersonaje Invocador { get; set; }
+        public virtual ModeloPersonaje Invocador { get; set; }
 
         /// <summary>
         /// Datos de la invocacion
         /// </summary>
-        public virtual TIInvocacionDatosInvocacion DatosInvocacion { get; set; }
-
-        /// <summary>
-        /// Efecto que la invocacion produce
-        /// </summary>
-        public virtual TIInvocacionEfecto Efecto { get; set; }
+        public virtual ModeloDatosInvocacionBase DatosInvocacion { get; set; }
     }
 
     public class ModeloInvocacionTemporal : ModeloInvocacion
     {
-        public ControladorInvocacionTemporal controladorInvocacionTemporal;
-
         /// <summary>
         /// Turnos que dura la invocacion
         /// </summary>

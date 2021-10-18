@@ -1,9 +1,23 @@
-﻿namespace AppGM.Core
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace AppGM.Core
 {
     /// <summary>
     /// Modelo que representa una invocacion sin dar datos de su tipo
     /// </summary>
-    public class ModeloDatosInvocacionBase : ModeloBase {}
+    public class ModeloDatosInvocacionBase : ModeloBase
+    {
+        /// <summary>
+        /// Clave foranea que referencia a la <see cref="Invocacion"/>
+        /// </summary>
+        [ForeignKey(nameof(Invocacion))]
+        public int IdInvocacion { get; set; }
+
+        /// <summary>
+        /// Invocacion cuyos datos contiene
+        /// </summary>
+        public virtual ModeloInvocacion Invocacion { get; set; }
+    }
 
     /// <summary>
     /// Modelo de invocacion espiritual

@@ -10,11 +10,6 @@ namespace AppGM.Core
 	public class ModeloEfecto : ModeloBase
 	{
 		/// <summary>
-		/// Controlador del efecto
-		/// </summary>
-		public ControladorEfecto controladorEfecto;
-
-		/// <summary>
 		/// Turnos que dura el efecto
 		/// </summary>
 		public int TurnosDeDuracion { get; set; }
@@ -51,6 +46,11 @@ namespace AppGM.Core
 		/// <summary>
 		/// Todas las aplicaciones de este efecto
 		/// </summary>
-		public virtual List<TIEfectoSiendoAplicadoEfecto> Aplicaciones { get; set; } = new List<TIEfectoSiendoAplicadoEfecto>();
+		public virtual List<ModeloEfectoSiendoAplicado> Aplicaciones { get; set; } = new List<ModeloEfectoSiendoAplicado>();
+
+		/// <summary>
+		/// Habilidad que contiene este efecto
+		/// </summary>
+		public virtual ModeloHabilidad HabilidadDueña { get; set; }
 	}
 }

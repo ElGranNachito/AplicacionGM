@@ -68,10 +68,10 @@ namespace AppGM.Core
 			:base(_modeloAdministradorCombate)
         {
             for (int i = 0; i < modelo.Participantes.Count; ++i) 
-                ControladoresParticipantes.Add(modelo.Participantes[i].Participante.controladorParticipante);
+                ControladoresParticipantes.Add(SistemaPrincipal.ObtenerControlador<ControladorParticipante, ModeloParticipante>(modelo.Participantes[i]));
 
             for (int i = 0; i < modelo.Mapas.Count; ++i)
-                ControladoresMapas.Add(modelo.Mapas[i].Mapa.controladorMapa);
+                ControladoresMapas.Add(SistemaPrincipal.ObtenerControlador<ControladorMapa, ModeloMapa>(modelo.Mapas[i]));
         }
 
         #endregion

@@ -15,7 +15,7 @@ namespace AppGM.Core
         // -------------------------CAMPOS----------------------------
 
 
-        public ControladorAlianza controladorAlianza;
+        public readonly ControladorAlianza controladorAlianza;
 
 
         // -----------------------PROPIEDADES----------------------------------
@@ -37,7 +37,7 @@ namespace AppGM.Core
         /// <param name="_unidad">Contralador de la unidad</param>
         public ViewModelPosicionAlianza(ControladorAlianza alianza)
         {
-            controladorAlianza = new ControladorAlianza(alianza.modelo);
+            controladorAlianza = alianza;
 
             DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PathImagenIcono)));
         }

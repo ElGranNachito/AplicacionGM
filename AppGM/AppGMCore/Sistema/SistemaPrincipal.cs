@@ -301,8 +301,6 @@ namespace AppGM.Core
             {
                 var nuevoControlador = Activator.CreateInstance(typeof(TControlador), modelo) as TControlador;
 
-                mControladores.Add(modelo, nuevoControlador);
-
                 return nuevoControlador;
             }
             catch (Exception ex)
@@ -392,6 +390,9 @@ namespace AppGM.Core
             where TModelo : ModeloBase
             where TControlador : Controlador<TModelo>
         {
+            if (mControladores.ContainsKey(modelo))
+                return;
+
             try
             {
                 mControladores.Add(modelo, controlador);

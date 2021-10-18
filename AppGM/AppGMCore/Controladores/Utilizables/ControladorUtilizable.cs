@@ -6,7 +6,6 @@
         #region Controladores
 
         private IControladorTiradaBase ControladorTiradaDeUso { get; set; }
-        public IControladorModificadorDeStatBase ControladorVentajaAlUtilizarlo { get; set; }
         public ControladorEfecto ControladorEfectoSobreElUsuario { get; set; }
         public ControladorEfecto ControladorEfectoSobreElObjetivo { get; set; }
 
@@ -17,7 +16,7 @@
         public ControladorUtilizable(ModeloUtilizable _modeloUtilizable)
 	        : base(_modeloUtilizable)
         {
-            CargarVariablesYTiradas<TIVariableUtilizable, TITiradaUtilizable>();
+            CargarVariablesYTiradas();
         }
 
         #endregion

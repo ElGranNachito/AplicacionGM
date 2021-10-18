@@ -32,21 +32,21 @@ namespace AppGM.Core
 		/// <summary>
 		/// Modelo del efecto
 		/// </summary>
-		public virtual TIEfectoSiendoAplicadoEfecto Efecto { get; set; }
+		public virtual ModeloEfecto Efecto { get; set; }
 
 		/// <summary>
 		/// <see cref="ModeloPersonaje"/> que causo o instigo el efecto
 		/// </summary>
-		public virtual TIEfectoSiendoAplicadoPersonajeInstigador Instigador { get; set; }
+		public virtual ModeloPersonaje Instigador { get; set; }
 
 		/// <summary>
 		/// <see cref="ModeloPersonaje"/> a los que se les esta aplicando el efecto
 		/// </summary>
-		public virtual TIEfectoSiendoAplicadoPersonajeObjetivo Objetivo { get; set; }
+		public virtual ModeloPersonaje Objetivo { get; set; }
 
 		/// <summary>
 		/// Contiene las funciones requeridas para el funcionamiento de este efecto
 		/// </summary>
-		public virtual List<TIEfectoSiendoAplicadoFuncion> Funciones { get; set; }
+		public virtual List<TIEfectoSiendoAplicadoFuncion> Funciones { get; set; } = new List<TIEfectoSiendoAplicadoFuncion>();
 	}
 }

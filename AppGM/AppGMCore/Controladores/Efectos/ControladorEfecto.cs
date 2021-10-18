@@ -160,13 +160,13 @@ namespace AppGM.Core
 	        {
 		        var instigador =
 			        SistemaPrincipal.ObtenerControlador<ControladorPersonaje, ModeloPersonaje>(
-				        aplicacion.EfectoAplicandose.Instigador.PersonajeInstigador, true);
+				        aplicacion.Instigador, true);
 
 		        var objetivo = 
 			        SistemaPrincipal.ObtenerControlador<ControladorPersonaje, ModeloPersonaje>(
-				        aplicacion.EfectoAplicandose.Instigador.PersonajeInstigador, true);
+				        aplicacion.Instigador, true);
 
-		        AplicarEfecto(instigador, objetivo, aplicacion.EfectoAplicandose.ComportamientoAcumulativo, aplicacion.EfectoAplicandose);
+		        AplicarEfecto(instigador, objetivo, aplicacion.ComportamientoAcumulativo, aplicacion);
 	        }
         }
 
@@ -241,7 +241,7 @@ namespace AppGM.Core
             if (nuevoEfectoSiendoAplicado != null)
             {
 				//Añadimos el modelo a la lista de aplicaciones
-	            modelo.Aplicaciones.Add(nuevoEfectoSiendoAplicado.modelo.Efecto);
+	            modelo.Aplicaciones.Add(nuevoEfectoSiendoAplicado.modelo);
 
 				//Nos subscribimos al eveto de quitar efecto
 	            nuevoEfectoSiendoAplicado.OnEfectoQuitado += QuitarEfecto;
@@ -469,7 +469,7 @@ namespace AppGM.Core
 	        FnQuitarEfecto.ActulizarModelo(nuevaFuncionQuitar?.Funcion);
 
 			//Obtenemos una copia de las aplicaciones del efecto del nuevo modelo
-			var aplicacionesNuevoModelo = new List<ModeloEfectoSiendoAplicado>(nuevoModelo.Aplicaciones.Select(a => a.EfectoAplicandose));
+			var aplicacionesNuevoModelo = nuevoModelo.Aplicaciones;
 
 	        //Por cada aplicacion en el efecto actual...
 			foreach (var aplicacion in AplicacionesEfectoGlobal)

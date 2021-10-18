@@ -207,24 +207,6 @@ namespace AppGM.Core
 			{
 				variableSiendoEditada?.Eliminar();
 
-				//Actualizamos la relacion de la variable con su contenedor y sustituimos la variable anterior por la nueva
-				if (modeloCreado.FuncionContenedora != null)
-				{
-					modeloCreado.FuncionContenedora.Variable = modeloCreado;
-				}
-				else if (modeloCreado.HabilidadContenedora != null)
-				{
-					modeloCreado.HabilidadContenedora.Variable = modeloCreado;
-				}
-				else if (modeloCreado.PersonajeContenedor != null)
-				{
-					modeloCreado.PersonajeContenedor.Variable = modeloCreado;
-				}
-				else if (modeloCreado.UtilizableContenedor != null)
-				{
-					modeloCreado.UtilizableContenedor.Variable = modeloCreado;
-				}
-
 				//Devolvemos un nuevo controlador con la variable creada
 				controladorVariableFinal = ControladorVariableBase.CrearControladorCorrespondiente(modeloCreado);
 			}

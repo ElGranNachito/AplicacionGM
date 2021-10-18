@@ -64,8 +64,6 @@ namespace AppGM.Core
         /// </summary>
         public ViewModelSolapaSeccionMapas()
         {
-            ControladorRol = new ControladorRol(SistemaPrincipal.ModeloRolActual);
-            
             ComandoBotonMapaPrincipal = new Comando(() => SistemaPrincipal.RolSeleccionado.SeccionMapaSeleccionada.ESeccionMapa = ESeccionMapa.MapaPrincipal);
             ComandoBotonOpcionesMapa  = new Comando(() => SistemaPrincipal.RolSeleccionado.SeccionMapaSeleccionada.ESeccionMapa = ESeccionMapa.OpcionesMapa);
         }

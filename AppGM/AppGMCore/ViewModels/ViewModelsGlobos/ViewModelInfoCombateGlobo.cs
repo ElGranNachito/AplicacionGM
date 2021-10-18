@@ -32,7 +32,7 @@ namespace AppGM.Core
 
             for (int i = 0; i < Combate.Participantes.Count; ++i)
             {
-                ModeloPersonaje pj = Combate.Participantes[i].Participante.Personaje.Personaje;
+                ModeloPersonaje pj = Combate.Participantes[i].Personaje;
 
                 listaPartcipantes.Append(i == Combate.Participantes.Count - 1 
 					//Si este es el ultimo personaje de la lista...

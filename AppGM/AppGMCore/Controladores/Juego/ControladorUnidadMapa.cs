@@ -58,8 +58,8 @@ namespace AppGM.Core
         public ControladorUnidadMapa(ModeloUnidadMapa _modelo)
 			:base(_modelo)
         {
-	        posicion  = new Vector2(modelo.Posicion.Posicion);
-            personaje = modelo.Personaje.Personaje.controlador;
+	        posicion  = new Vector2(modelo.Posicion);
+            personaje = SistemaPrincipal.ObtenerControlador<ControladorPersonaje, ModeloPersonaje>(modelo.Personaje);
         }
 
         #endregion
@@ -92,7 +92,8 @@ namespace AppGM.Core
 
                 case ModeloUnidadMapaMasterServant mms:
 
-                    if (modelo.Personaje != null && !modelo.Personaje.Personaje.controlador.EstaVivo)
+                    //TODO:Hacer esto bien
+                    if (modelo.Personaje != null && modelo.Personaje.Hp <= 0)
                         sb.Append("Cadaver_");
 
                     if (modelo.ETipoUnidad == ETipoUnidad.Master)

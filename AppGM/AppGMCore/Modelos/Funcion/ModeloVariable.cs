@@ -35,22 +35,22 @@ namespace AppGM.Core
 		/// <summary>
 		/// Modelo del personaje que contiene esta variables
 		/// </summary>
-		public virtual TIVariablePersonaje PersonajeContenedor { get; set; }
+		public virtual ModeloPersonaje PersonajeContenedor { get; set; }
 
 		/// <summary>
 		/// Modelo de la habilidad que contiene esta variables
 		/// </summary>
-		public virtual TIVariableHabilidad HabilidadContenedora { get; set; }
+		public virtual ModeloHabilidad HabilidadContenedora { get; set; }
 
 		/// <summary>
 		/// Modelo del utilizable que contiene esta variables
 		/// </summary>
-		public virtual TIVariableUtilizable UtilizableContenedor { get; set; }
+		public virtual ModeloUtilizable UtilizableContenedor { get; set; }
 
 		/// <summary>
 		/// Modelo de la funcion que contiene esta variables
 		/// </summary>
-		public virtual TIVariableFuncion FuncionContenedora { get; set; }
+		public virtual ModeloFuncion FuncionContenedora { get; set; }
 	}
 
 	/// <summary>

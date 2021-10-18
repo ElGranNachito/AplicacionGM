@@ -115,7 +115,7 @@ namespace AppGM.Core
 		/// Obtiene el valor de <see cref="ModeloEfecto.TurnosDeDuracion"/>
 		/// </summary>
 		[AccesibleEnGuraScratch(nameof(TurnosDeDuracion))]
-		public int TurnosDeDuracion => modelo.Efecto.Efecto.TurnosDeDuracion;
+		public int TurnosDeDuracion => modelo.Efecto.TurnosDeDuracion;
 
 		/// <summary>
 		/// Obtiene o establece el valor de <see cref="ModeloEfectoSiendoAplicado.TurnosRestantes"/>
@@ -167,23 +167,11 @@ namespace AppGM.Core
 			instigador        = _instigador;
 			objetivo          = _objetivo;
 
-			modelo.Efecto = new TIEfectoSiendoAplicadoEfecto
-			{
-				Efecto = controladorEfecto.modelo,
-				EfectoAplicandose = modelo
-			};
+			modelo.Efecto = controladorEfecto.modelo;
 
-			modelo.Instigador = new TIEfectoSiendoAplicadoPersonajeInstigador
-			{
-				EfectoAplicandose = modelo,
-				PersonajeInstigador = instigador.modelo
-			};
+			modelo.Instigador = instigador.modelo;
 
-			modelo.Objetivo = new TIEfectoSiendoAplicadoPersonajeObjetivo
-			{
-				EfectoAplicandose = modelo,
-				PersonajeObjetivo = objetivo.modelo
-			};
+			modelo.Objetivo = objetivo.modelo;
 
 			modelo.TurnosRestantes = controladorEfecto.modelo.TurnosDeDuracion;
 			modelo.EstaSiendoAplicado = false;
@@ -306,7 +294,7 @@ namespace AppGM.Core
 		{
 			base.ActulizarModelo(modelo, eliminarSiNuevoModeloEsNull);
 
-			var nuevoEfecto = nuevoModelo.Efecto.Efecto;
+			var nuevoEfecto = nuevoModelo.Efecto;
 
 			ActualizarFuncion(
 				GetType().GetProperty(nameof(FnPuedeAplicarEfecto), typeof(ControladorFuncion_PredicadoEfecto)), controladorEfecto.FnPuedeAplicarEfecto.modelo,

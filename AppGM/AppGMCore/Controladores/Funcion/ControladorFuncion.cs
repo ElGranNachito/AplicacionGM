@@ -100,7 +100,7 @@ namespace AppGM.Core
 		public ControladorFuncionBase(ModeloFuncion _modelo)
 			: base(_modelo)
 		{
-			CargarVariablesYTiradas<TIVariableFuncion, TITiradaFuncion>();
+			CargarVariablesYTiradas();
 		} 
 
 		#endregion
@@ -147,7 +147,7 @@ namespace AppGM.Core
 			Bloques.TrimExcess();
 
 			List<int> idsVariablesPersistentesExistentes =
-				modelo.Variables.Select(var => var.Variable.IDVariable).ToList();
+				modelo.Variables.Select(var => var.IDVariable).ToList();
 
 			foreach (var bloque in nuevosBloques)
 			{
@@ -159,14 +159,8 @@ namespace AppGM.Core
 						//Creamos un modelo para la variable
 						var modeloVariable = ControladorVariableBase.CrearModeloCorrespondiente(var.tipo, var.IDBloque, var.nombre);
 
-						var nuevaVariablePersistente = new TIVariableFuncion
-						{
-							Variable = modeloVariable,
-							Funcion  = modelo,
-						};
-
 						//La añadimos al modelo
-						modelo.Variables.Add(nuevaVariablePersistente);
+						modelo.Variables.Add(modeloVariable);
 
 						//Creamos el controlador y lo añadimos a la lista de variables persistenes
 						mVariablesPersistenes.Add(var.IDBloque, ControladorVariableBase.CrearControladorCorrespondiente(modeloVariable));
@@ -187,7 +181,7 @@ namespace AppGM.Core
 			{
 				for (int i = 0; i < idsVariablesPersistentesExistentes.Count; ++i)
 				{
-					if (var.Variable.IDVariable == idsVariablesPersistentesExistentes[i])
+					if (var.IDVariable == idsVariablesPersistentesExistentes[i])
 					{
 						idsVariablesPersistentesExistentes.RemoveAt(i);
 
@@ -274,7 +268,7 @@ namespace AppGM.Core
 			}
 
 			//Obtenemos las variables persistentes del nuevo modelo y las del modelo actual
-			var variablesPersistentesNuevoModelo = nuevoModelo.Variables.Select(ti => ti.Variable).ToList();
+			var variablesPersistentesNuevoModelo = nuevoModelo.Variables;
 			var variablesPersistentesModeloActual = mVariablesPersistenes.Values.ToList();
 
 			//Quitamos de la lista de variables de ambos modelos las que se encuentren repetidas en ambos
@@ -298,7 +292,7 @@ namespace AppGM.Core
 			{
 				mVariablesPersistenes.Remove(var.IDVariable);
 
-				modelo.Variables.RemoveAll(ti => ti.IdVariable == var.modelo.Id);
+				modelo.Variables.RemoveAll(v => v.Id == var.modelo.Id);
 
 				var.Eliminar();
 			});
@@ -306,11 +300,7 @@ namespace AppGM.Core
 			//Añadimos al modelo las variables que quedaron en el nuevo modelo
 			variablesPersistentesNuevoModelo.ForEach(var =>
 			{
-				modelo.Variables.Add(new TIVariableFuncion
-				{
-					Funcion  = modelo,
-					Variable = var
-				});
+				modelo.Variables.Add(var);
 
 				mVariablesPersistenes.Add(var.IDVariable, ControladorVariableBase.CrearControladorCorrespondiente(var));
 			});

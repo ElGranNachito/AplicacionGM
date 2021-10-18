@@ -5,7 +5,7 @@ namespace AppGM.Core
     /// <summary>
     /// Modelo de datos para el utilizable
     /// </summary>
-    public class ModeloUtilizable : ModeloConVariablesYTiradas<TIVariableUtilizable, TITiradaUtilizable>
+    public class ModeloUtilizable : ModeloConVariablesYTiradas
     {
 	    /// <summary>
         /// Peso del utilizable
@@ -13,27 +13,18 @@ namespace AppGM.Core
         public decimal Peso { get; set; }
 
         /// <summary>
-        /// Stats afectadas por el utilizable
+        /// Nombre del utilizable
         /// </summary>
-        public EStat EStatQueAfecta { get; set; }
-        /// <summary>
-        /// Stats de las que depende el utilizable
-        /// </summary>
-        public EStat EStatDeLaQueDepende { get; set; }
+        public string Nombre { get; set; }
 
         /// <summary>
-        /// Tirada requerida para poder se utilizado
+        /// Descripcion del utilizable
         /// </summary>
-        public virtual TIUtilizableTiradaBase TiradaDeUso { get; set; }
+        public string Descripcion { get; set; }
 
         /// <summary>
-        /// Modificador para la stat afectada por el utilizable
+        /// Personaje que porta este utilizable
         /// </summary>
-        public virtual TIUtilizableModificadorDeStatBase VentajaAlUtilizarlo { get; set; }
-
-        /// <summary>
-        /// Efectos al utilizarlo - Primer indice efecto sobre el usuario, Segundo indice efecto sobre el objetivo
-        /// </summary>
-        public virtual List<TIUtilizableEfecto> EfectoSobreUsuarioYObjetivo { get; set; } = new List<TIUtilizableEfecto>();
+        public virtual ModeloPersonaje PersonajePortador { get; set; }
     }
 }

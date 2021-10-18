@@ -17,7 +17,7 @@ namespace AppGM.Core
 		/// <summary>
 		/// Personaje que contiene esta competencia
 		/// </summary>
-		public virtual TIEspecialidadPersonaje PersonajeContenedor { get; set; }
+		public virtual ModeloPersonaje PersonajeContenedor { get; set; }
 
 		/// <summary>
 		/// Tipo de esta especialidad
