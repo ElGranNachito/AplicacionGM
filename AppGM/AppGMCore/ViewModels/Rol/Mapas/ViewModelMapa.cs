@@ -78,6 +78,11 @@ namespace AppGM.Core
         public ICommand ComandoAñadirParticipante { get; set; }
 
         /// <summary>
+        /// Comando que se ejecuta al presionar LeftClick sobre la superficie del mapa.
+        /// </summary>
+        public ICommand ComandoDeseleccionarUnidades { get; set; }
+
+        /// <summary>
         /// VM para el almacenamiento de las unidades de posicion actualmente seleccionadas en el mapa
         /// </summary>
         public ObservableCollection<ViewModelIngresoPosicion> UnidadesSeleccionadas { get; set; } = new ObservableCollection<ViewModelIngresoPosicion>();
@@ -98,11 +103,6 @@ namespace AppGM.Core
         public ObservableCollection<ViewModelUnidadParty> UnidadesPartiesVisibles { get; set; } = new ObservableCollection<ViewModelUnidadParty>();
 
         /// <summary>
-        /// Ruta completa a la imagen del mapa
-        /// </summary>
-        public string PathImagen { get; set; }
-
-        /// <summary>
         /// Tamaño del canvas que contiene la imagen del mapa
         /// </summary>
         public ViewModelVector2 TamañoCanvas { get; set; } = new ViewModelVector2();
@@ -111,6 +111,11 @@ namespace AppGM.Core
         /// Tamaño de las imagenes de las unidades
         /// </summary>
         public ViewModelVector2 TamañoImagenesPosicion { get; set; } = new ViewModelVector2(101.25, 138.75);
+
+        /// <summary>
+        /// Ruta completa a la imagen del mapa
+        /// </summary>
+        public string PathImagen { get; set; }
 
         /// <summary>
         /// Tamaño del canvas en el eje X
@@ -375,7 +380,8 @@ namespace AppGM.Core
 
             UnidadesPartiesVisibles.CollectionChanged += this.OnUnidadesPartiesCollectionChanged;
 
-            ComandoAñadirParticipante = new Comando(AñadirUnidad);
+            ComandoAñadirParticipante    = new Comando(AñadirUnidad);
+            ComandoDeseleccionarUnidades = new Comando(DeseleccionarUnidades);
         }
 
         /// <summary>
@@ -425,6 +431,15 @@ namespace AppGM.Core
 
                 Posiciones.Add(vmNuevaUndiad);
             }
+        }
+
+        /// <summary>
+        /// Funcion llamada para remover todas las unidades seleccionadas a la vez en el mapa.
+        /// </summary>
+        private void DeseleccionarUnidades()
+        {
+            for (int i = 0; i < UnidadesSeleccionadas.Count; ++i)
+                UnidadesSeleccionadas[i].RemoverUnidadSeleccionada();
         }
 
         /// <summary>

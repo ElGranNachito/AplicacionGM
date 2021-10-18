@@ -12,9 +12,13 @@
     <UserControl.Template>
         <ControlTemplate TargetType="{x:Type UserControl}">
 
-            <Border Padding="3" Background="{StaticResource Color.UnidadMapa.BordeIngresoPosicion}">
+            <Border Padding="3" Background="{Binding ColorBordeIngresoPosicion, Converter={local:StringToSolidColorBrushConverter}}">
 
-                <StackPanel Background="{StaticResource Color.UnidadMapa.FondoIngresoPosicion}">
+                <Border.InputBindings>
+                    <MouseBinding Gesture="Control+LeftClick" Command="{Binding ComandoUnidadSeleccionada}" />
+                </Border.InputBindings>
+
+                <StackPanel Background="{Binding ColorFondoIngresoPosicion, Converter={local:StringToSolidColorBrushConverter}}">
 
                     <Grid>
 

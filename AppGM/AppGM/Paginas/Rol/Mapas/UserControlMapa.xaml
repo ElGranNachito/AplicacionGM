@@ -10,6 +10,8 @@
     <!-- UserControl que hace uso del ViewModelMapa -->
     <Grid>
 
+        <!-- Implementar evento de click en ventana base -->
+
         <Grid.RowDefinitions>
             <RowDefinition Height="2*" MaxHeight="20"/>
             <RowDefinition Height="6*"/>
@@ -30,13 +32,16 @@
             
             <!-- Lista de entidades de personajes y objetos -->
             <Border Grid.Row="0" BorderBrush="Aqua" BorderThickness="0 0 0 2">
+
                 <local:UserControlListaIngresoPosicion Grid.Row="0" DataContext="{Binding Posiciones}"/>
 
             </Border>
 
             <!-- Lista de entidades parties -->
             <Border Grid.Row="1" BorderBrush="Aqua" BorderThickness="0 2 0 0">
+
                 <local:UserControlListaIngresoPosicionParty Grid.Row="1" DataContext="{Binding PosicionesParties}"/>
+
             </Border>
 
             
@@ -120,6 +125,6 @@
             </Grid>
 
         </Border>
-            
+
     </Grid>
 </local:BaseUserControl>

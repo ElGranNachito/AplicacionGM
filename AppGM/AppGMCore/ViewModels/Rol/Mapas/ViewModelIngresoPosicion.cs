@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Input;
 
@@ -68,6 +69,16 @@ namespace AppGM.Core
         /// Indica si las alianzas a las que pertenece el indicador del mapa deber ser visibles.
         /// </summary>
         public bool InsigneasAlianzasSonVisibles { get; set; } = false;
+
+        /// <summary>
+        /// Color del borde de la unidad.
+        /// </summary>
+        public string ColorBordeIngresoPosicion { get; set; } = "363636";
+
+        /// <summary>
+        /// Color del fondo de la unidad.
+        /// </summary>
+        public string ColorFondoIngresoPosicion { get; set; } = "242424";
 
         /// <summary>
         /// Ruta de la imagen de la unidad
@@ -267,7 +278,7 @@ namespace AppGM.Core
 
             Posicion = new ViewModelVector2(unidad.posicion);
 
-            ComandoEliminarUnidad = new Comando(EliminarUnidad);
+            ComandoEliminarUnidad     = new Comando(EliminarUnidad);
             ComandoUnidadSeleccionada = new Comando(AgregarUnidadSeleccionada);
 
             AlianzasPersonaje.Elementos = new ObservableCollection<ViewModelPosicionAlianza>(unidad.personaje.Alianzas.Select(a => new ViewModelPosicionAlianza(a)));
@@ -287,6 +298,50 @@ namespace AppGM.Core
         }
 
         /// <summary>
+        /// Dispara el evento property changed para las propiedades <see cref="ColorBordeIngresoPosicion" y <see cref="ColorFondoIngresoPosicion"/>/>
+        /// </summary>
+        public void DispararPropertyChangedColorBordeFondoUnidad()
+        {
+            DispararPropertyChanged(new PropertyChangedEventArgs(nameof(ColorBordeIngresoPosicion)));
+            DispararPropertyChanged(new PropertyChangedEventArgs(nameof(ColorFondoIngresoPosicion)));
+        }
+
+        /// <summary>
+        /// Agrega esta unidad a la ObservableCollection de unidades seleccionadas.
+        /// </summary>
+        public void AgregarUnidadSeleccionada()
+        {
+            if (mapa.UnidadesSeleccionadas.Contains(this))
+            {
+                RemoverUnidadSeleccionada();
+                return;
+            }
+
+            ColorBordeIngresoPosicion = "242424";
+            ColorFondoIngresoPosicion = "363636";
+
+            mapa.UnidadesSeleccionadas.Add(this);
+
+            DispararPropertyChangedColorBordeFondoUnidad();
+        }
+
+        /// <summary>
+        /// Remueve esta unidad de la ObservableCollection de unidades seleccionadas.
+        /// </summary>
+        public void RemoverUnidadSeleccionada()
+        {
+            if (!mapa.UnidadesSeleccionadas.Contains(this))
+                return;
+
+            ColorBordeIngresoPosicion = "363636";
+            ColorFondoIngresoPosicion = "242424";
+
+            mapa.UnidadesSeleccionadas.Remove(this);
+
+            DispararPropertyChangedColorBordeFondoUnidad();
+        }
+
+        /// <summary>
         /// Elimina esta unidad del mapa y de la base de datos
         /// </summary>
         private void EliminarUnidad()
@@ -296,14 +351,6 @@ namespace AppGM.Core
             unidad.Eliminar();
 
             SistemaPrincipal.GuardarDatosRolAsincronicamente();
-        }
-
-        private void AgregarUnidadSeleccionada()
-        {
-            if (mapa.UnidadesSeleccionadas.Contains(this))
-                return;
-
-            mapa.UnidadesSeleccionadas.Add(this);
         }
 
         #endregion
