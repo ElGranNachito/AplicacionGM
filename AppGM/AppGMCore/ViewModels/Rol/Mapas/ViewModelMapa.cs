@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
+using Castle.Core.Internal;
 
 namespace AppGM.Core
 {
@@ -76,11 +77,6 @@ namespace AppGM.Core
         /// Comando que se jecutara al presionar el boton 'AñadirParticipante'
         /// </summary>
         public ICommand ComandoAñadirParticipante { get; set; }
-
-        /// <summary>
-        /// Comando que se ejecuta al presionar LeftClick sobre la superficie del mapa.
-        /// </summary>
-        public ICommand ComandoDeseleccionarUnidades { get; set; }
 
         /// <summary>
         /// VM para el almacenamiento de las unidades de posicion actualmente seleccionadas en el mapa
@@ -162,7 +158,14 @@ namespace AppGM.Core
             -(TamañoImagenesPosicion.X / 2.0f).Round(1),
             -(TamañoImagenesPosicion.Y / 2.0f).Round(1));
 
+        
         // Propiedades de visibilidad de unidades en el mapa:
+
+
+        /// <summary>
+        /// Indica si se debe mostrar la unidad de ingreso de posicion general.
+        /// </summary>
+        public bool MuestraUnidadIngresoPosicion { get; set; } = false;
 
         /// <summary>
         /// Indica si se debe mostrar la unidad de iglesia
@@ -381,7 +384,8 @@ namespace AppGM.Core
             UnidadesPartiesVisibles.CollectionChanged += this.OnUnidadesPartiesCollectionChanged;
 
             ComandoAñadirParticipante    = new Comando(AñadirUnidad);
-            ComandoDeseleccionarUnidades = new Comando(DeseleccionarUnidades);
+
+            UnidadesSeleccionadas.CollectionChanged += UnidadesSeleccionadasOnCollectionChanged;
         }
 
         /// <summary>
@@ -392,6 +396,22 @@ namespace AppGM.Core
 		#endregion
 
 		#region Funciones
+
+        /// <summary>
+        /// Funcion llamada para remover todas las unidades seleccionadas a la vez en el mapa.
+        /// </summary>
+        public void DeseleccionarUnidades()
+        {
+            for (int i = 0; i < UnidadesSeleccionadas.Count; ++i)
+            {
+                UnidadesSeleccionadas[i].ColorBordeIngresoPosicion = "363636";
+                UnidadesSeleccionadas[i].ColorFondoIngresoPosicion = "242424";
+
+                UnidadesSeleccionadas[i].DispararPropertyChangedColorBordeFondoUnidad();
+            }
+
+            UnidadesSeleccionadas.Clear();
+        }
 
         /// <summary>
         /// Funcion llamada para añadir una nueva entidad al mapa
@@ -434,15 +454,6 @@ namespace AppGM.Core
         }
 
         /// <summary>
-        /// Funcion llamada para remover todas las unidades seleccionadas a la vez en el mapa.
-        /// </summary>
-        private void DeseleccionarUnidades()
-        {
-            for (int i = 0; i < UnidadesSeleccionadas.Count; ++i)
-                UnidadesSeleccionadas[i].RemoverUnidadSeleccionada();
-        }
-
-        /// <summary>
         /// Funcion llamada cuando <see cref="UnidadesPartiesVisibles"/> dispara el envento CollectionChanged/>
         /// </summary>
         /// <param name="sender"></param>
@@ -459,6 +470,21 @@ namespace AppGM.Core
                 actualizaMostrarPartiesCheckbox = true;
                 MuestraUnidadesParties = true;
             }
+        }
+
+        /// <summary>
+        /// Funcion llamada cuando <see cref="UnidadesSeleccionadas"/> dispara el envento CollectionChanged/>
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UnidadesSeleccionadasOnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (UnidadesSeleccionadas.IsNullOrEmpty())
+                MuestraUnidadIngresoPosicion = false;
+            else
+                MuestraUnidadIngresoPosicion = true;
+
+            DispararPropertyChanged(new PropertyChangedEventArgs(nameof(MuestraUnidadIngresoPosicion)));
         }
 
         #endregion
