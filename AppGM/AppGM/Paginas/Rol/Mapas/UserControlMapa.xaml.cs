@@ -1,4 +1,6 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 using AppGM.Core;
 
 namespace AppGM
@@ -19,6 +21,8 @@ namespace AppGM
                 if (ViewModel == null)
                     ViewModel = (ViewModelMapa) DataContext;
             };
+
+            Gridsito.MouseLeftButtonDown += OnPreviewMouseLeftButtonDown;
         }
 
         private void OnMapaSizeXChanged(object sender, SizeChangedEventArgs e)
@@ -27,5 +31,14 @@ namespace AppGM
             ViewModel.TamañoCanvasY = (float)e.NewSize.Height;
         }
 
+        private void OnPreviewMouseLeftButtonDown(object sender, RoutedEventArgs e)
+        {
+            if (!Keyboard.IsKeyDown(Key.LeftCtrl) && 
+                e.OriginalSource is not UserControlIngresoPosicion && 
+                e.OriginalSource is not UserControlIngresoPosicionParty && 
+                e.OriginalSource is not UserControlIngresoPosicionGeneral)
+                if (e.OriginalSource is not TextBox && e.OriginalSource is not TextBlock)
+                    ViewModel.DeseleccionarUnidades();
+        }
     }
 }

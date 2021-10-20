@@ -5,10 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AppGM"
              xmlns:core="clr-namespace:AppGM.Core;assembly=AppGM.Core"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+
+
     <!-- UserControl que hace uso del ViewModelMapa -->
-    <Grid>
+    <Grid Name="Gridsito"
+          PreviewMouseLeftButtonDown="OnPreviewMouseLeftButtonDown">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="2*" MaxHeight="20"/>
@@ -23,26 +27,33 @@
         <!-- Columna izquierda -->
         <Grid Column="0" Row="1">
             <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="40"/>
             </Grid.RowDefinitions>
-            
+
+            <local:UserControlIngresoPosicionGeneral 
+                Grid.Row="0"
+                Visibility="{Binding MuestraUnidadIngresoPosicion, Converter={local:BooleanToVisibilityConverterColapsar}}"
+                />
+
             <!-- Lista de entidades de personajes y objetos -->
-            <Border Grid.Row="0" BorderBrush="Aqua" BorderThickness="0 0 0 2">
+            <Border Grid.Row="1" BorderBrush="Aqua" BorderThickness="0 2 0 2">
+
                 <local:UserControlListaIngresoPosicion Grid.Row="0" DataContext="{Binding Posiciones}"/>
 
             </Border>
 
             <!-- Lista de entidades parties -->
-            <Border Grid.Row="1" BorderBrush="Aqua" BorderThickness="0 2 0 0">
+            <Border Grid.Row="2" BorderBrush="Aqua" BorderThickness="0 2 0 2">
+
                 <local:UserControlListaIngresoPosicionParty Grid.Row="1" DataContext="{Binding PosicionesParties}"/>
+
             </Border>
 
-            
-
             <!-- Boton añadir participante -->
-            <Button  Grid.Row="2"
+            <Button  Grid.Row="3"
                 Content="Añadir Participante"
                 Command="{Binding ComandoAñadirParticipante}"/>
 
@@ -107,8 +118,8 @@
 
                                 <!-- Imagenes de las entidades -->
                                 <local:UserControlListaImagenPosicion DataContext="{Binding Posiciones}"/>
-                                
-                                <!-- Imagenes de las entidades parties-->                                
+
+                                <!-- Imagenes de las entidades parties-->
                                 <local:UserControlListaImagenPosicion DataContext="{Binding PosicionesParties}"/>
                             </Canvas>
                         </ScrollViewer>
@@ -120,6 +131,6 @@
             </Grid>
 
         </Border>
-            
+
     </Grid>
 </local:BaseUserControl>

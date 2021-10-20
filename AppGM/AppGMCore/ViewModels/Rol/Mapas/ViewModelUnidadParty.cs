@@ -109,7 +109,8 @@ namespace AppGM.Core
         public ViewModelUnidadParty(ViewModelMapa _mapa, ControladorUnidadMapa _unidad) : 
             base(_mapa, _unidad)
         {
-            ComandoEliminarUnidad = new Comando(EliminarUnidad);
+            ComandoEliminarUnidad     = new Comando(EliminarUnidad);
+            ComandoUnidadSeleccionada = new Comando(AgregarUnidadSeleccionada);
         }
 
         #endregion

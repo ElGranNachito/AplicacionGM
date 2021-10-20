@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
+using Castle.Core.Internal;
 
 namespace AppGM.Core
 {
@@ -98,11 +99,6 @@ namespace AppGM.Core
         public ObservableCollection<ViewModelUnidadParty> UnidadesPartiesVisibles { get; set; } = new ObservableCollection<ViewModelUnidadParty>();
 
         /// <summary>
-        /// Ruta completa a la imagen del mapa
-        /// </summary>
-        public string PathImagen { get; set; }
-
-        /// <summary>
         /// Tamaño del canvas que contiene la imagen del mapa
         /// </summary>
         public ViewModelVector2 TamañoCanvas { get; set; } = new ViewModelVector2();
@@ -111,6 +107,11 @@ namespace AppGM.Core
         /// Tamaño de las imagenes de las unidades
         /// </summary>
         public ViewModelVector2 TamañoImagenesPosicion { get; set; } = new ViewModelVector2(101.25, 138.75);
+
+        /// <summary>
+        /// Ruta completa a la imagen del mapa
+        /// </summary>
+        public string PathImagen { get; set; }
 
         /// <summary>
         /// Tamaño del canvas en el eje X
@@ -157,7 +158,14 @@ namespace AppGM.Core
             -(TamañoImagenesPosicion.X / 2.0f).Round(1),
             -(TamañoImagenesPosicion.Y / 2.0f).Round(1));
 
+        
         // Propiedades de visibilidad de unidades en el mapa:
+
+
+        /// <summary>
+        /// Indica si se debe mostrar la unidad de ingreso de posicion general.
+        /// </summary>
+        public bool MuestraUnidadIngresoPosicion { get; set; } = false;
 
         /// <summary>
         /// Indica si se debe mostrar la unidad de iglesia
@@ -375,7 +383,9 @@ namespace AppGM.Core
 
             UnidadesPartiesVisibles.CollectionChanged += this.OnUnidadesPartiesCollectionChanged;
 
-            ComandoAñadirParticipante = new Comando(AñadirUnidad);
+            ComandoAñadirParticipante    = new Comando(AñadirUnidad);
+
+            UnidadesSeleccionadas.CollectionChanged += UnidadesSeleccionadasOnCollectionChanged;
         }
 
         /// <summary>
@@ -386,6 +396,22 @@ namespace AppGM.Core
 		#endregion
 
 		#region Funciones
+
+        /// <summary>
+        /// Funcion llamada para remover todas las unidades seleccionadas a la vez en el mapa.
+        /// </summary>
+        public void DeseleccionarUnidades()
+        {
+            for (int i = 0; i < UnidadesSeleccionadas.Count; ++i)
+            {
+                UnidadesSeleccionadas[i].ColorBordeIngresoPosicion = "363636";
+                UnidadesSeleccionadas[i].ColorFondoIngresoPosicion = "242424";
+
+                UnidadesSeleccionadas[i].DispararPropertyChangedColorBordeFondoUnidad();
+            }
+
+            UnidadesSeleccionadas.Clear();
+        }
 
         /// <summary>
         /// Funcion llamada para añadir una nueva entidad al mapa
@@ -444,6 +470,21 @@ namespace AppGM.Core
                 actualizaMostrarPartiesCheckbox = true;
                 MuestraUnidadesParties = true;
             }
+        }
+
+        /// <summary>
+        /// Funcion llamada cuando <see cref="UnidadesSeleccionadas"/> dispara el envento CollectionChanged/>
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UnidadesSeleccionadasOnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (UnidadesSeleccionadas.IsNullOrEmpty())
+                MuestraUnidadIngresoPosicion = false;
+            else
+                MuestraUnidadIngresoPosicion = true;
+
+            DispararPropertyChanged(new PropertyChangedEventArgs(nameof(MuestraUnidadIngresoPosicion)));
         }
 
         #endregion
