@@ -448,6 +448,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
                 <!-- Boton cancelar -->
@@ -460,16 +461,27 @@
                     Style="{StaticResource BotonFondoResaltable}"
                     Command="{Binding ComandoCancelar}"/>
 
-                <!-- Boton confirmar -->
+                <!-- Boton guardar -->
                 <Button
                     Grid.Column="1"
-                    Content="Confirmar"
+                    Content="Guardar"
                     VerticalAlignment="Bottom"
                     HorizontalAlignment="Center"
                     Width="90"
                     BorderBrush="Black"
                     Style="{StaticResource BotonFondoResaltable}"
-                    Command="{Binding ComandoConfirmar}"/>
+                    Command="{Binding ComandoGuardar}"/>
+
+                <!-- Boton finalizar -->
+                <Button
+                    Grid.Column="2"
+                    Content="Finalizar"
+                    VerticalAlignment="Bottom"
+                    HorizontalAlignment="Center"
+                    Width="90"
+                    BorderBrush="Black"
+                    Style="{StaticResource BotonFondoResaltable}"
+                    Command="{Binding ComandoFinalizar}"/>
 
             </Grid>
 

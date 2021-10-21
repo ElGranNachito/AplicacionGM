@@ -9,13 +9,13 @@ namespace AppGM.Core
 	public class ModeloEspecialidad : ModeloBase
 	{
 		/// <summary>
-		/// Nombre de la competencia
+		/// Nombre de la especialidad
 		/// </summary>
 		[MaxLength(50)]
 		public string Nombre { get; set; }
 
 		/// <summary>
-		/// Personaje que contiene esta competencia
+		/// Personaje que contiene esta especialidad
 		/// </summary>
 		public virtual ModeloPersonaje PersonajeContenedor { get; set; }
 

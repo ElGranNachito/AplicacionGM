@@ -33,6 +33,8 @@ namespace AppGM.Core
         private Action mAccionAñadirItem      = delegate{};
         private Action mAccionAñadirNP        = delegate{};
 
+        private ModeloPersonaje mModeloPersonaje;
+
         private ERango mNP  { get; set; } = ERango.F;
 
         private BitVector32 mValoresSolapas = new BitVector32(1);
@@ -49,7 +51,17 @@ namespace AppGM.Core
         /// <summary>
         /// Modelo del personaje creado
         /// </summary>
-        public ModeloPersonaje ModeloPersonaje { get; private set; }
+        public ModeloPersonaje ModeloPersonaje
+		{
+            get => mModeloPersonaje;
+			set
+			{
+                if (ModeloPersonajeSiendoEditado != null)
+                    ModeloPersonajeSiendoEditado = value;
+
+                mModeloPersonaje = value;
+			}
+		}
 
         public ModeloPersonaje ModeloPersonajeSiendoEditado { get; private set; }
             
@@ -141,8 +153,9 @@ namespace AppGM.Core
 
         public List<EClaseServant>  ClasesDeServantDisponibles => ObtenerClasesDeServantDisponibles();
 
-        public ICommand ComandoConfirmar { get; set; }
         public ICommand ComandoCancelar  { get; set; }
+        public ICommand ComandoGuardar { get; set; }
+        public ICommand ComandoFinalizar { get; set; }
 
         public ICommand ComandoSeleccionarImagen { get; set; }
 
@@ -193,8 +206,10 @@ namespace AppGM.Core
 
             ContenedorListaHabilidades.Items.Elementos.Add(new ViewModelHabilidadItem(new ControladorHabilidad(modeloHabilidad)));
 
-            ComboBoxTipoPersonaje.OnValorSeleccionadoCambio += (anterior, actual) =>
+            ComboBoxTipoPersonaje.OnValorSeleccionadoCambio += async (anterior, actual) =>
             {
+                ModeloPersonaje = await ModeloPersonaje.CrearCopiaProfundaEnSubtipoAsync(actual.valor.ObtenerTipoPersonaje()) as ModeloPersonaje;
+
                 DispararPropertyChanged(new PropertyChangedEventArgs(nameof(ClasesDeServantDisponibles)));
                 DispararPropertyChanged(new PropertyChangedEventArgs(nameof(EsMasterOServant)));
                 DispararPropertyChanged(new PropertyChangedEventArgs(nameof(EsServant)));
@@ -211,7 +226,7 @@ namespace AppGM.Core
 
             ComandoActualizarStats = new Comando(ActualizarStatsPersonaje);
 
-            ComandoConfirmar = new Comando(() =>
+            ComandoFinalizar = new Comando(() =>
             {
                 CrearPersonaje();
 
@@ -300,6 +315,11 @@ namespace AppGM.Core
 
             //DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PuedeAñadirHabilidades)));
         }
+
+        private void Guardar()
+		{
+           
+		}
 
         private void CrearPersonaje()
         {
