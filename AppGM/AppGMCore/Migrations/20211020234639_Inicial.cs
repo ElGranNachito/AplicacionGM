@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AppGM.Core.Migrations
 {
-    public partial class inicial : Migration
+    public partial class Inicial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -177,19 +177,20 @@ namespace AppGM.Core.Migrations
                     TurnosDeDuracion = table.Column<byte>(type: "INTEGER", nullable: true),
                     EClaseServant = table.Column<int>(type: "INTEGER", nullable: true),
                     RangoHechiceria = table.Column<ushort>(type: "INTEGER", nullable: true),
+                    NombreReal = table.Column<string>(type: "TEXT", maxLength: 100, nullable: true),
                     EClaseDeSuServant = table.Column<int>(type: "INTEGER", nullable: true),
                     EBienestar = table.Column<int>(type: "INTEGER", nullable: true),
                     Od = table.Column<int>(type: "INTEGER", nullable: true),
                     OdActual = table.Column<int>(type: "INTEGER", nullable: true),
                     Mana = table.Column<int>(type: "INTEGER", nullable: true),
                     ManaActual = table.Column<int>(type: "INTEGER", nullable: true),
-                    Chr = table.Column<ushort>(type: "INTEGER", nullable: true),
+                    Chr = table.Column<int>(type: "INTEGER", nullable: true),
                     VentajaChr = table.Column<ushort>(type: "INTEGER", nullable: true),
                     CommandSpells = table.Column<ushort>(type: "INTEGER", nullable: true),
                     Lore = table.Column<string>(type: "TEXT", maxLength: 5000, nullable: true),
                     Origen = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
                     Afinidad = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
-                    mERangoNP = table.Column<int>(type: "INTEGER", nullable: true),
+                    ERangoNP = table.Column<int>(type: "INTEGER", nullable: true),
                     Prana = table.Column<int>(type: "INTEGER", nullable: true),
                     PranaActual = table.Column<int>(type: "INTEGER", nullable: true),
                     Fuente = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true)
@@ -274,9 +275,9 @@ namespace AppGM.Core.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false),
-                    Edad = table.Column<ushort>(type: "INTEGER", nullable: false),
-                    Estatura = table.Column<ushort>(type: "INTEGER", nullable: false),
-                    Peso = table.Column<ushort>(type: "INTEGER", nullable: false),
+                    Edad = table.Column<int>(type: "INTEGER", nullable: false),
+                    Estatura = table.Column<int>(type: "INTEGER", nullable: false),
+                    Peso = table.Column<int>(type: "INTEGER", nullable: false),
                     ESexo = table.Column<int>(type: "INTEGER", nullable: false),
                     EArquetipo = table.Column<int>(type: "INTEGER", nullable: false),
                     EManoDominante = table.Column<int>(type: "INTEGER", nullable: false),

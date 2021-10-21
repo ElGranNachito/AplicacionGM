@@ -151,10 +151,10 @@ namespace AppGM.Core.Migrations
                     b.Property<int>("ESexo")
                         .HasColumnType("INTEGER");
 
-                    b.Property<ushort>("Edad")
+                    b.Property<int>("Edad")
                         .HasColumnType("INTEGER");
 
-                    b.Property<ushort>("Estatura")
+                    b.Property<int>("Estatura")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Fisico")
@@ -171,7 +171,7 @@ namespace AppGM.Core.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
-                    b.Property<ushort>("Peso")
+                    b.Property<int>("Peso")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -948,6 +948,10 @@ namespace AppGM.Core.Migrations
                     b.Property<int>("EClaseServant")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("NombreReal")
+                        .HasMaxLength(100)
+                        .HasColumnType("TEXT");
+
                     b.Property<ushort>("RangoHechiceria")
                         .HasColumnType("INTEGER");
 
@@ -1072,7 +1076,7 @@ namespace AppGM.Core.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
-                    b.Property<ushort>("Chr")
+                    b.Property<int>("Chr")
                         .HasColumnType("INTEGER");
 
                     b.Property<ushort>("CommandSpells")
@@ -1114,6 +1118,9 @@ namespace AppGM.Core.Migrations
                 {
                     b.HasBaseType("AppGM.Core.ModeloPersonajeJugable");
 
+                    b.Property<int>("ERangoNP")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Fuente")
                         .HasMaxLength(50)
                         .HasColumnType("TEXT");
@@ -1122,9 +1129,6 @@ namespace AppGM.Core.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("PranaActual")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("mERangoNP")
                         .HasColumnType("INTEGER");
 
                     b.HasDiscriminator().HasValue(7);

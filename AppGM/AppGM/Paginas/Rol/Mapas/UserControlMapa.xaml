@@ -15,7 +15,6 @@
           PreviewMouseLeftButtonDown="OnPreviewMouseLeftButtonDown">
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="2*" MaxHeight="20"/>
             <RowDefinition Height="6*"/>
         </Grid.RowDefinitions>
 
@@ -25,7 +24,7 @@
         </Grid.ColumnDefinitions>
 
         <!-- Columna izquierda -->
-        <Grid Column="0" Row="1">
+        <Grid Column="0" Row="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
@@ -59,7 +58,7 @@
 
         </Grid>
 
-        <Border Padding="5" Grid.Column="1" Grid.Row="1" Background="Gray">
+        <Border Padding="5" Grid.Column="1" Grid.Row="0" Background="Gray">
 
             <Grid>
 

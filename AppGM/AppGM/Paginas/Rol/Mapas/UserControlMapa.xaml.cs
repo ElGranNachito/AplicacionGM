@@ -36,9 +36,9 @@ namespace AppGM
             if (!Keyboard.IsKeyDown(Key.LeftCtrl) && 
                 e.OriginalSource is not UserControlIngresoPosicion && 
                 e.OriginalSource is not UserControlIngresoPosicionParty && 
-                e.OriginalSource is not UserControlIngresoPosicionGeneral)
-                if (e.OriginalSource is not TextBox && e.OriginalSource is not TextBlock)
-                    ViewModel.DeseleccionarUnidades();
+                e.OriginalSource is not UserControlIngresoPosicionGeneral &&
+                e.OriginalSource is not TextBox)
+                ViewModel.DeseleccionarUnidades();
         }
     }
 }
