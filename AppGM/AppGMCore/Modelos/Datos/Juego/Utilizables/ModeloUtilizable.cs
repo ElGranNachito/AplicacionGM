@@ -5,7 +5,7 @@ namespace AppGM.Core
     /// <summary>
     /// Modelo de datos para el utilizable
     /// </summary>
-    public class ModeloUtilizable : ModeloConVariablesYTiradas
+    public partial class ModeloUtilizable : ModeloConVariablesYTiradas
     {
 	    /// <summary>
         /// Peso del utilizable

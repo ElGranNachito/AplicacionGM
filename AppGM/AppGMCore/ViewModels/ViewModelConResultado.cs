@@ -50,6 +50,11 @@ namespace AppGM.Core
 		/// </summary>
 		public ICommand ComandoCancelar { get; protected set; }
 
+		/// <summary>
+		/// Comando que se ejecuta al presionar 'Finalizar'
+		/// </summary>
+		public ICommand ComandoFinalizar { get; protected set; }
+
 		#region Constructores
 
 		/// <summary>
@@ -91,6 +96,13 @@ namespace AppGM.Core
 			ComandoCancelar = new Comando(() =>
 			{
 				Resultado = EResultadoViewModel.Cancelar;
+
+				mAccionSalir?.Invoke((TViewModel)this);
+			});
+
+			ComandoFinalizar = new Comando(() =>
+			{
+				Resultado = EResultadoViewModel.Finalizar;
 
 				mAccionSalir?.Invoke((TViewModel)this);
 			});

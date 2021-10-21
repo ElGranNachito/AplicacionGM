@@ -1,66 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Threading.Tasks;
-using System.Linq;
 using System.Collections;
-using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 
 using CoolLogs;
 
 namespace AppGM.Core
 {
 	/// <summary>
-	/// Clase base de todos los modelos, el sufijo SK indica que no tiene Key
+	/// Clase que contiene la logica del <see cref="ModeloBase"/>
 	/// </summary>
-	public abstract class ModeloBaseSK
+	public abstract partial class ModeloBase
 	{
-        /// <summary>
-        /// Guarda el modelo a la base de datos
-        /// </summary>
-		public virtual void Guardar() => SistemaPrincipal.GuardarModelo(this);
-
-        /// <summary>
-        /// Elimina el modelo de la base de datos
-        /// </summary>
-		public virtual void Eliminar() => SistemaPrincipal.EliminarModelo(this);
-
-        /// <summary>
-        /// Crea una copia superficial de este modelo
-        /// </summary>
-        /// <returns></returns>
-        public ModeloBase Clonar() => (ModeloBase)MemberwiseClone();
-	}
-
-    /// <summary>
-    /// Clase base de todos los modelos con una key
-    /// </summary>
-    public class ModeloBase : ModeloBaseSK
-    {
-        /// <summary>
-        /// Contiene el valor de <see cref="Id"/>
-        /// </summary>
-	    private int mId;
-
-        //Id
-        [Key]
-        public int Id
-        {
-	        get => mId;
-            set
-            {
-                //Si cambia la id y la anterior no es cero entonces intentamos quitar el modelo ya existente del sistema principal
-	            if (value != 0 && mId != 0)
-		            SistemaPrincipal.QuitarModelo(this);
-
-				mId = value;
-
-                //Añadimos el modelo al sistema principal
-	            SistemaPrincipal.AñadirModelo(this);
-            }
-        }
-
 		#region Copiado profundo
 
 		/// <summary>
@@ -81,16 +34,8 @@ namespace AppGM.Core
 		{
 			modeloQueCopiar ??= this;
 
-			//Nos aseguramos que el tipo del modelo al que se copiaran los datos sea del mismo tipo o subtipo del modelo que se copiara
-			if (!modeloQueCopiar.GetType().IsAssignableFrom(tipoAlQueCopiarLosDatos))
-			{
-				SistemaPrincipal.LoggerGlobal.LogCrash($"no se puede asignar a {modeloQueCopiar.GetType().Name} desde {tipoAlQueCopiarLosDatos.Name} ");
-
-				return null;
-			}
-
 			//No aseguramos que en caso de que se este copiando a un modelo existente este sea igual al tipo al que se copiaran los datos
-			if(modeloAlQueCopiarLosDatos != null && !tipoAlQueCopiarLosDatos.IsAssignableFrom(modeloAlQueCopiarLosDatos.GetType()))
+			if (modeloAlQueCopiarLosDatos != null && !tipoAlQueCopiarLosDatos.IsAssignableFrom(modeloAlQueCopiarLosDatos.GetType()))
 			{
 				SistemaPrincipal.LoggerGlobal.LogCrash($"no se puede asignar a {tipoAlQueCopiarLosDatos.Name} desde {modeloAlQueCopiarLosDatos.GetType().Name} ");
 
@@ -120,7 +65,7 @@ namespace AppGM.Core
 			List<ModeloBase> outModelosAñadidos = null)
 
 			where TModeloOrigen : ModeloBase, new()
-			where TResultado    : TModeloOrigen, new()
+			where TResultado : ModeloBase, new()
 		{
 			return CrearCopiaProfundaEnSubtipo_Interno<TResultado>(modeloAlQueCopiarLosDatos, modeloQueCopiar, outModelosEliminados, outModelosAñadidos, null);
 		}
@@ -164,8 +109,8 @@ namespace AppGM.Core
 			List<ModeloBase> outModelosEliminados = null,
 			List<ModeloBase> outModelosAñadidos = null)
 
-			where TModeloOrigen : ModeloBase, new()
-			where TResultado    : TModeloOrigen, new()
+			where TModeloOrigen : TResultado, new()
+			where TResultado : ModeloBase, new()
 		{
 			return await Task.Run(() =>
 			{
@@ -213,10 +158,38 @@ namespace AppGM.Core
 			modelosYaCopiados.Add(modeloQueCopiar, modeloDestino);
 
 			//Obtenemos las propiedades a las que podemos escribir
-			var propiedades = GetType().GetProperties().Where(p => p.CanWrite).ToList();
+			var propiedades = typeof(TResultado).GetProperties().Where(p => p.CanWrite).ToList();
 
 			//Obtenemos los campos
-			var campos = GetType().GetFields().ToList();
+			var campos = typeof(TResultado).GetFields().ToList();
+
+			var tipoModeloOrigen = modeloQueCopiar.GetType();
+
+			if (outModelosEliminados != null && tipoModeloOrigen.IsSubclassOf(typeof(TResultado)))
+			{
+				var propiedadesModeloOrigen = tipoModeloOrigen.GetProperties().Where(p => !propiedades.Contains(p) && typeof(ModeloBase).IsAssignableFrom(p.PropertyType)).ToList();
+
+				foreach (var propiedad in propiedadesModeloOrigen)
+				{
+					if (typeof(IList).IsAssignableFrom(propiedad.PropertyType))
+					{
+						var valorPropiedad = propiedad.ObtenerValorComoLista<ModeloBase>(modeloQueCopiar);
+
+						foreach (var modelo in valorPropiedad)
+						{
+							if (!outModelosEliminados.Contains(modelo))
+								outModelosEliminados.Add(modelo);
+						}
+					}
+					else
+					{
+						var valorPropiedad = propiedad.GetValue(modeloQueCopiar) as ModeloBase;
+
+						if (!outModelosEliminados.Contains(valorPropiedad))
+							outModelosEliminados.Add(valorPropiedad);
+					}
+				}
+			}
 
 			var metodoClonar = typeof(ModeloBase).GetMethod(nameof(CrearCopiaProfundaEnSubtipo_Interno), BindingFlags.Instance | BindingFlags.NonPublic);
 
@@ -237,8 +210,8 @@ namespace AppGM.Core
 							if (copiandoAUnModeloExistente)
 							{
 								//Creamos listas con los modelos existente en el destino y el modelo origen
-								var modelosRestantesDestino      = (Activator.CreateInstance(propiedadActual.PropertyType, propiedadActual.GetValue(modeloDestino)) as IList).Cast<ModeloBase>().ToList();
-								var modelosRestantesModeloActual = (Activator.CreateInstance(propiedadActual.PropertyType, propiedadActual.GetValue(modeloQueCopiar)) as IList).Cast<ModeloBase>().ToList();				
+								var modelosRestantesDestino = (Activator.CreateInstance(propiedadActual.PropertyType, propiedadActual.GetValue(modeloDestino)) as IList).Cast<ModeloBase>().ToList();
+								var modelosRestantesModeloActual = (Activator.CreateInstance(propiedadActual.PropertyType, propiedadActual.GetValue(modeloQueCopiar)) as IList).Cast<ModeloBase>().ToList();
 								var listaModeloDestino = propiedadActual.GetValue(modeloDestino) as IList;
 								var listaModeloDestinoCasteada = listaModeloDestino.Cast<ModeloBase>().ToList();
 
@@ -248,7 +221,7 @@ namespace AppGM.Core
 									ModeloBase elementoActualListaOrigen = listaModeloOrigen[i];
 
 									var equivalenteEnDestino = listaModeloDestinoCasteada.FirstOrDefault(m => m.Id == elementoActualListaOrigen.Id);
-									
+
 									//Si no hemos copiado este modelo aun, lo copiamos a su par en el destino
 									if (!modelosYaCopiados.ContainsKey(elementoActualListaOrigen))
 									{
@@ -330,7 +303,7 @@ namespace AppGM.Core
 						//Si ya se ha copiado este modelo entonces simplemente asignamos el valor de la propiedad al modelo copiado
 						if (modelosYaCopiados.ContainsKey(valorPropiedadOrigen))
 						{
-							propiedadActual.SetValue(modeloDestino, modelosYaCopiados[valorPropiedadOrigen]);						
+							propiedadActual.SetValue(modeloDestino, modelosYaCopiados[valorPropiedadOrigen]);
 						}
 						//Si no...
 						else
@@ -354,7 +327,7 @@ namespace AppGM.Core
 							{
 								outModelosAñadidos?.Add(modelosYaCopiados[valorPropiedadOrigen]);
 							}
-						}					
+						}
 					}
 					//Si no lo es simplemente copiamos el valor
 					else
@@ -376,24 +349,7 @@ namespace AppGM.Core
 			}
 
 			return modeloDestino;
-		} 
-
+		}
 		#endregion
 	}
-
-    /// <summary>
-    /// Clase base para todos los modelos que deban almacenar <see cref="ModeloVariableBase"/> y <see cref="ModeloTiradaBase"/>
-    /// </summary>
-    public abstract class ModeloConVariablesYTiradas : ModeloBase
-    {
-	    /// <summary>
-	    /// Variables persistentes que contiene este modelo
-	    /// </summary>
-	    public virtual List<ModeloVariableBase> Variables { get; set; } = new List<ModeloVariableBase>();
-
-	    /// <summary>
-	    /// Tiradas que contiene este modelo
-	    /// </summary>
-	    public virtual List<ModeloTiradaBase> Tiradas { get; set; } = new List<ModeloTiradaBase>();
-    }
 }

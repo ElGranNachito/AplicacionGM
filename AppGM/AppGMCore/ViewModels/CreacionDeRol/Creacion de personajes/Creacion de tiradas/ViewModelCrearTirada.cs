@@ -25,7 +25,7 @@ namespace AppGM.Core
 		/// <summary>
 		/// Personaje para el que se esta creando la tirada
 		/// </summary>
-		private readonly ModeloPersonaje mPersonaje;
+		private readonly ModeloConVariablesYTiradas mModeloContenedor;
 
 		/// <summary>
 		/// Modelo de la tirada que se creo
@@ -75,22 +75,38 @@ namespace AppGM.Core
 		/// <summary>
 		/// Nombre de la tirada
 		/// </summary>
-		public string Nombre { get; set; }
+		public string Nombre
+		{
+			get => mModeloTirada.Nombre;
+			set => mModeloTirada.Nombre = value;
+		}
 
 		/// <summary>
 		/// Descripcion de la tirada
 		/// </summary>
-		public string Descripcion { get; set; }
+		public string Descripcion
+		{
+			get => mModeloTirada.Descripcion;
+			set => mModeloTirada.Descripcion = value;
+		}
 
 		/// <summary>
 		/// Descripcion de la variable extra de la tirada
 		/// </summary>
-		public string DescripcionVariableExtra { get; set; }
+		public string DescripcionVariableExtra 
+		{
+			get => mModeloTirada.DescripcionVariableExtra;
+			set => mModeloTirada.DescripcionVariableExtra = value;
+		}
 
 		/// <summary>
 		/// Multiplicador especialidad
 		/// </summary>
-		public string MultiplicadorEspecialidad { get; set; }
+		public string MultiplicadorEspecialidad
+		{
+			get => mModeloTirada.MultiplicadorDeEspecialidad.ToString();
+			set => mModeloTirada.MultiplicadorDeEspecialidad = int.Parse(value);
+		}
 
 		/// <summary>
 		/// Mensaje de error para la tirada ingresada
@@ -167,31 +183,41 @@ namespace AppGM.Core
 		#region Constructores
 
 		/// <summary>
-		/// Constructor utilizado dentro de la creacion de personajes
+		/// Constructor base de esta clase
 		/// </summary>
 		/// <param name="_accionSalir">Delegado que se ejecuta al salir del control representado por este vm</param>
-		/// <param name="_personaje"><see cref="ModeloPersonaje"/> para el que se esta creando la tirada</param>
-		/// <param name="_variablesDisponibles"><see cref="List{T}"/> de <see cref="ViewModelVariableItem"/> con las variables disponibles en este personaje</param>
+		/// <param name="_personaje"><see cref="ModeloConVariablesYTiradas"/> para el que se esta creando la tirada</param>
 		/// <param name="_controladorTiradaSiendoEditada">Controlador de la tirada que esta siendo editada</param>
-		public ViewModelCrearTirada(Action<ViewModelCrearTirada> _accionSalir, ModeloPersonaje _personaje, List<ViewModelVariableItem> _variablesDisponibles, ControladorTiradaVariable _controladorTiradaSiendoEditada = null)
-			: this(_accionSalir, _personaje, _controladorTiradaSiendoEditada, false)
+		public ViewModelCrearTirada(Action<ViewModelCrearTirada> _accionSalir, ModeloConVariablesYTiradas _contenedorTirada, ControladorTiradaVariable _controladorTiradaSiendoEditada)
+			: base(_accionSalir)
 		{
-			Autocompletado.ActualizarValoresExistentes(_variablesDisponibles.Select(var =>
-			{
-				return new ViewModelItemAutocompletadoVariablePersistente(var.ControladorGenerico);
-			}).Cast<ViewModelItemAutocompletadoBase>().ToList());
-		}
+			mModeloContenedor = _contenedorTirada;
+			TiradaSiendoEditada = _controladorTiradaSiendoEditada;
 
-		/// <summary>
-		/// Constructor utilizado fuera de la creacion de personajes
-		/// </summary>
-		/// <param name="_accionSalir">Delegado que se ejecuta al salir del control representado por este vm</param>
-		/// <param name="_personaje"><see cref="ModeloPersonaje"/> para el que se esta creando la tirada</param>
-		/// <param name="_controladorTiradaSiendoEditada">Controlador de la tirada que esta siendo editada</param>
-		public ViewModelCrearTirada(Action<ViewModelCrearTirada> _accionSalir, ModeloPersonaje _personaje, ControladorTiradaVariable _controladorTiradaSiendoEditada = null)
-			: this(_accionSalir, _personaje, _controladorTiradaSiendoEditada, false)
-		{
-			Autocompletado.ActualizarValoresExistentes(mPersonaje.Variables.Select(var =>
+			if(TiradaSiendoEditada != null)
+			{
+				mModeloTirada = TiradaSiendoEditada.modelo.CrearCopiaProfundaEnSubtipo(TiradaSiendoEditada.modelo.GetType()) as ModeloTiradaVariable;
+			}
+			else
+			{
+				mModeloTirada = new ModeloTiradaVariable();
+			}
+
+			ViewModelComboBoxTipoTirada.OnValorSeleccionadoCambio += async (ViewModelItemComboBoxBase<ETipoTirada> anterior, ViewModelItemComboBoxBase<ETipoTirada> actual) =>
+			{
+				if (actual.valor == ETipoTirada.Daño)
+					mModeloTirada = mModeloTirada.CrearCopiaProfundaEnSubtipo<ModeloTiradaDeDaño, ModeloTiradaVariable>();
+				else
+					mModeloTirada = mModeloTirada.CrearCopiaProfundaEnSubtipo<ModeloTiradaVariable, ModeloTiradaDeDaño>();
+
+				DispararPropertyChanged(nameof(EsTiradaDeDaño));
+			};
+
+			Autocompletado.OnValorSeleccionado += HandlerValorSeleccionado;
+
+			ComandoComprobar = new Comando(ActualizarValidez);
+
+			Autocompletado.ActualizarValoresExistentes(mModeloContenedor.ObtenerVariablesDisponibles().Select(var =>
 			{
 				return new ViewModelItemAutocompletadoVariablePersistente(
 					SistemaPrincipal.ObtenerControlador<ControladorVariableBase, ModeloVariableBase>(var, true));
@@ -199,62 +225,33 @@ namespace AppGM.Core
 			}).Cast<ViewModelItemAutocompletadoBase>().ToList());
 		}
 
-		/// <summary>
-		/// Constructor base de esta clase
-		/// </summary>
-		/// <param name="_accionSalir">Delegado que se ejecuta al salir del control representado por este vm</param>
-		/// <param name="_personaje"><see cref="ModeloPersonaje"/> para el que se esta creando la tirada</param>
-		/// <param name="_controladorTiradaSiendoEditada">Controlador de la tirada que esta siendo editada</param>
-		/// <param name="nada">Literalmente nada, solo lo uso para diferenciar este constructor del otro con los mismos parametros</param>
-		private ViewModelCrearTirada(Action<ViewModelCrearTirada> _accionSalir, ModeloPersonaje _personaje, ControladorTiradaVariable _controladorTiradaSiendoEditada, bool nada)
-			: base(_accionSalir)
-		{
-			mPersonaje = _personaje;
-			TiradaSiendoEditada = _controladorTiradaSiendoEditada;
-
-			if(TiradaSiendoEditada != null)
-			{
-				mModeloTirada = TiradaSiendoEditada.modelo.Clonar() as ModeloTiradaVariable;
-			}
-
-			ViewModelComboBoxTipoTirada.OnValorSeleccionadoCambio += (ViewModelItemComboBoxBase<ETipoTirada> anterior, ViewModelItemComboBoxBase<ETipoTirada> actual) =>
-			{
-				DispararPropertyChanged(nameof(EsTiradaDeDaño));
-			};
-
-			Autocompletado.OnValorSeleccionado += HandlerValorSeleccionado;
-
-			ComandoComprobar = new Comando(ActualizarValidez);
-		}
-
 		#endregion
 
 		#region Metodos
 
-		public ControladorTiradaVariable CrearTirada()
+		public ModeloTiradaVariable CrearModeloTirada()
 		{
 			ActualizarValidez();
 
 			if (!EsValida)
 				return null;
 
-			ModeloTiradaVariable nuevaTirada = null;
-
-			if(ViewModelComboBoxTipoTirada.ValorSeleccionado.valor == ETipoTirada.Daño)
+			if (ViewModelComboBoxTipoTirada.ValorSeleccionado.valor == ETipoTirada.Daño && mModeloTirada is ModeloTiradaDeDaño m)
 			{
-				nuevaTirada = new ModeloTiradaDeDaño
-				{
-					TipoDeDaño = ViewModelComboBoxTipoDeDañoTirada.ValorSeleccionado.valor
-				};
+				m.TipoDeDaño = ViewModelComboBoxTipoDeDañoTirada.Valor;
 			}
 
-			nuevaTirada ??= new ModeloTiradaVariable();
+			mModeloTirada.Tirada = TextoActual;
 
-			nuevaTirada.Tirada					 = TextoActual;
-			nuevaTirada.Nombre					 = Nombre;
-			nuevaTirada.Descripcion				 = Descripcion;
-			nuevaTirada.DescripcionVariableExtra = DescripcionVariableExtra;
-			nuevaTirada.MultiplicadorDeEspecialidad = int.Parse(MultiplicadorEspecialidad);
+			return mModeloTirada;
+		}
+
+		public ControladorTiradaVariable CrearControladorTirada()
+		{
+			var nuevaTirada = CrearModeloTirada();
+
+			if (nuevaTirada == null)
+				return null;
 
 			return IControladorTiradaBase.CrearControladorDeTiradaCorrespondiente(nuevaTirada) as ControladorTiradaVariable;
 		}
@@ -399,7 +396,7 @@ namespace AppGM.Core
 			}
 
 			//Comprobamos la validez de la tirada
-			var resultadoComprobacion = ParserTiradas.TiradaEsValida(TextoActual, mPersonaje, tipoTiradaSeleccionada.valor, ViewModelComboBoxStatTirada.ValorSeleccionado.valor);
+			var resultadoComprobacion = ParserTiradas.TiradaEsValida(TextoActual, mModeloContenedor.ObtenerVariablesDisponibles(), tipoTiradaSeleccionada.valor, tipoTiradaSeleccionada.valor == ETipoTirada.Daño ? ViewModelComboBoxStatTirada.ValorSeleccionado.valor : EStat.NINGUNA);
 
 			//Si la tirada no es valida...
 			if (!resultadoComprobacion.esValida)

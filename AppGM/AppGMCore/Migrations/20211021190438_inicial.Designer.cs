@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AppGM.Core.Migrations
 {
     [DbContext(typeof(RolContext))]
-    [Migration("20211020234639_Inicial")]
-    partial class Inicial
+    [Migration("20211021190438_inicial")]
+    partial class inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,6 +28,9 @@ namespace AppGM.Core.Migrations
                         .HasMaxLength(2000)
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("EsValido")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int?>("ParticipanteId")
                         .HasColumnType("INTEGER");
 
@@ -42,6 +45,9 @@ namespace AppGM.Core.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("EsValido")
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("EstaActivo")
@@ -80,6 +86,9 @@ namespace AppGM.Core.Migrations
                     b.Property<int>("EIconoAlianza")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("EsValido")
+                        .HasColumnType("INTEGER");
+
                     b.Property<bool>("EsVigente")
                         .HasColumnType("INTEGER");
 
@@ -108,6 +117,9 @@ namespace AppGM.Core.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("CaracteristicasAmbiente")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("EsValido")
                         .HasColumnType("INTEGER");
 
                     b.Property<float>("HumedadActual")
@@ -156,6 +168,9 @@ namespace AppGM.Core.Migrations
                     b.Property<int>("Edad")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("EsValido")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("Estatura")
                         .HasColumnType("INTEGER");
 
@@ -193,6 +208,9 @@ namespace AppGM.Core.Migrations
                         .HasMaxLength(1000)
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("EsValido")
+                        .HasColumnType("INTEGER");
+
                     b.Property<bool>("EsVigente")
                         .HasColumnType("INTEGER");
 
@@ -215,6 +233,9 @@ namespace AppGM.Core.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("EsValido")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("IdInvocacion")
@@ -240,6 +261,9 @@ namespace AppGM.Core.Migrations
                     b.Property<string>("Descripcion")
                         .HasMaxLength(500)
                         .HasColumnType("TEXT");
+
+                    b.Property<bool>("EsValido")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int?>("HabilidadDueñaId")
                         .HasColumnType("INTEGER");
@@ -276,6 +300,9 @@ namespace AppGM.Core.Migrations
                     b.Property<int?>("EfectoId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("EsValido")
+                        .HasColumnType("INTEGER");
+
                     b.Property<bool>("EstaSiendoAplicado")
                         .HasColumnType("INTEGER");
 
@@ -305,6 +332,9 @@ namespace AppGM.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("EsValido")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Nombre")
                         .HasMaxLength(50)
                         .HasColumnType("TEXT");
@@ -323,6 +353,9 @@ namespace AppGM.Core.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("EsValido")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("NombreFuncion")
@@ -350,6 +383,9 @@ namespace AppGM.Core.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<int?>("DueñoId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("EsValido")
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("IgnoraAmbiente")
@@ -397,6 +433,9 @@ namespace AppGM.Core.Migrations
                     b.Property<int>("EFormatoImagen")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("EsValido")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("NombreMapa")
                         .HasMaxLength(50)
                         .HasColumnType("TEXT");
@@ -423,6 +462,9 @@ namespace AppGM.Core.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("EsSuTurno")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("EsValido")
                         .HasColumnType("INTEGER");
 
                     b.Property<int?>("PersonajeId")
@@ -453,6 +495,9 @@ namespace AppGM.Core.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("End")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("EsValido")
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("EstaEnCombate")
@@ -546,6 +591,9 @@ namespace AppGM.Core.Migrations
                     b.Property<ushort>("Dia")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("EsValido")
+                        .HasColumnType("INTEGER");
+
                     b.Property<DateTime>("FechaUltimaSesion")
                         .HasColumnType("TEXT");
 
@@ -577,6 +625,9 @@ namespace AppGM.Core.Migrations
                     b.Property<int?>("DueñoId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("EsValido")
+                        .HasColumnType("INTEGER");
+
                     b.Property<decimal>("EspacioDisponible")
                         .HasColumnType("TEXT");
 
@@ -599,6 +650,9 @@ namespace AppGM.Core.Migrations
                     b.Property<string>("Descripcion")
                         .HasMaxLength(500)
                         .HasColumnType("TEXT");
+
+                    b.Property<bool>("EsValido")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int?>("FuncionContenedoraId")
                         .HasColumnType("INTEGER");
@@ -653,6 +707,9 @@ namespace AppGM.Core.Migrations
                     b.Property<int>("ETipoUnidad")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("EsValido")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int?>("MapaId")
                         .HasColumnType("INTEGER");
 
@@ -690,6 +747,9 @@ namespace AppGM.Core.Migrations
                     b.Property<string>("Descripcion")
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("EsValido")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Nombre")
                         .HasColumnType("TEXT");
 
@@ -720,6 +780,9 @@ namespace AppGM.Core.Migrations
                     b.Property<string>("DescripcionVariable")
                         .HasMaxLength(500)
                         .HasColumnType("TEXT");
+
+                    b.Property<bool>("EsValido")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int?>("FuncionContenedoraId")
                         .HasColumnType("INTEGER");
@@ -764,6 +827,9 @@ namespace AppGM.Core.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("EsValido")
                         .HasColumnType("INTEGER");
 
                     b.Property<double>("X")

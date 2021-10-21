@@ -97,9 +97,9 @@ namespace AppGM.Core
 	        return Resultado.ToString();
         }
 
-        #region Implementacion Interfaz
+		#region Implementacion Interfaz
 
-        public int Resultado { get; set; }
+		public int Resultado { get; set; }
 
         public virtual void RealizarTirada()
         {
@@ -129,6 +129,16 @@ namespace AppGM.Core
 	    {
 		    modeloGenerico = _modelo;
 	    }
+
+        public override ViewModelItemListaBase CrearViewModelItem(bool _motrarBotones = true)
+        {
+            if(this is ControladorTiradaVariable tiradaVariable)
+                return new ViewModelTiradaItem(tiradaVariable, _motrarBotones);
+
+            SistemaPrincipal.LoggerGlobal.Log($"Se intento crear un {nameof(ViewModelTiradaItem)} para una tirada de stat", ESeveridad.Error);
+
+            return null;
+        }
     }
 
     /// <summary>

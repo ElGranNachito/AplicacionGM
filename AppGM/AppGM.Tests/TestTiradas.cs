@@ -84,7 +84,7 @@ namespace AppGM.Tests
 
 			int resultadoEsperado = (int) Math.Floor((resultadoTiradas + int.Parse(parametroExtra) + mod + especialidad * Core.Constantes.BonoEspecialidad + Math.Floor(controlador.ObtenerModificadorStat(stat) * Helpers.Juego.ObtenerMultiplicadorManoUsada(manoUtilizada))) * multiplicador);
 
-			var resultado = await ParserTiradas.TryParseAsync(tirada, controlador, ETipoTirada.Daño, stat);
+			var resultado = await ParserTiradas.TryParseAsync(tirada, controlador.modelo, ETipoTirada.Daño, stat);
 
 			ArgumentosTiradaDaño args = new ArgumentosTiradaDaño
 			{

@@ -75,7 +75,7 @@ namespace AppGM
 					posTextboxAbs = Mouse.GetPosition(parentActual);
 
 					//Actualizamos la posicion
-					vm.Autocompletado.PosicionX = posTextboxAbs.X - textBox.ActualWidth / 2;
+					vm.Autocompletado.PosicionX = posTextboxAbs.X;
 					vm.Autocompletado.PosicionY = posTextboxAbs.Y + textBox.ActualHeight;
 
 					//Llamamos la funcion FocusObtenido del vm

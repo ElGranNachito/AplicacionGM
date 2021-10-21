@@ -35,6 +35,12 @@ namespace AppGM.Core
 		/// </summary>
 		private bool mBotonInferiorEstaHabilitado = true;
 
+		/// <summary>
+		/// Delegado que representa a un metodo encargado de lidiar con el evento de que el modelo
+		/// representado por este item sea eliminado
+		/// </summary>
+		protected Action<ModeloBase> mModeloEliminadoHandler;
+
 
 		//-----------------------------------------------------PROPIEDADES------------------------------------------------------------
 
@@ -179,6 +185,9 @@ namespace AppGM.Core
 
 		#region Metodos
 
+		/// <summary>
+		/// Actualiza las <see cref="CaracteristicasItem"/>
+		/// </summary>
 		protected virtual void ActualizarCaracteristicas() { } 
 
 		#endregion
@@ -198,6 +207,15 @@ namespace AppGM.Core
 		/// Evento que se dispara cuando el usuario presiona el boton inferior, normalmente boton para eliminar
 		/// </summary>
 		public event Action<TViewModel> OnBotonInferiorPresionado = delegate {};
+
+		#region Eventos
+
+		/// <summary>
+		/// Evento que se dispara cuando este elemento es eliminado
+		/// </summary>
+		public event Action<TViewModel> OnItemEliminado = delegate { };
+
+		#endregion
 
 		#endregion
 
@@ -253,6 +271,34 @@ namespace AppGM.Core
 
 				OnBotonInferiorPresionado((TViewModel)this);
 			});
+		}
+
+		#endregion
+
+		#region Metodos
+
+		/// <summary>
+		/// Configura el evento <see cref="OnItemEliminado"/> para que se dispare cuando el <see cref="Controlador"/> es eliminado
+		/// </summary>
+		/// <param name="controlador">Controlador que utilizar para configurar el evento. Si se deja en null se defaultea al controlador de este item</param>
+		protected void ConfigurarEventoItemEliminado(ControladorBase controlador = null)
+		{
+			controlador ??= Controlador;
+
+			if(controlador == null)
+			{
+				SistemaPrincipal.LoggerGlobal.LogCrash($"{nameof(controlador)} fue null");
+			}
+
+			mModeloEliminadoHandler = m =>
+			{
+				OnItemEliminado((TViewModel)this);
+
+				controlador.Modelo.OnModeloEliminado -= mModeloEliminadoHandler;
+				mModeloEliminadoHandler = null;
+			};
+
+			controlador.Modelo.OnModeloEliminado += mModeloEliminadoHandler;
 		}
 
 		#endregion
@@ -312,6 +358,13 @@ namespace AppGM.Core
 			get => mControladorGenerico;
 			set
 			{
+				if(value != Controlador)
+				{
+					Controlador.Modelo.OnModeloEliminado -= mModeloEliminadoHandler;
+
+					ConfigurarEventoItemEliminado(value);
+				}
+
 				//No revisamos que el nuevo valor sea distinto porque aun si es el mismo nos intresa
 				//llamar a ActualizarCaracteristicas en caso de que alguno de los campos/propiedades
 				//de el controlador haya sido modificado
@@ -339,6 +392,8 @@ namespace AppGM.Core
 			: base(_mostrarBotonesLaterales, _contenidoBotonSuperior, _contenidoBotonInferior)
 		{
 			Controlador = _controlador;
+
+			ConfigurarEventoItemEliminado();
 		}
 
 		/// <summary>
@@ -359,6 +414,8 @@ namespace AppGM.Core
 			: base(_accionBotonSuperior, _accionBotonInferior, _contenidoBotonSuperior, _contenidoBotonInferior)
 		{
 			Controlador = _controlador;
+
+			ConfigurarEventoItemEliminado();
 		}
 	}
 

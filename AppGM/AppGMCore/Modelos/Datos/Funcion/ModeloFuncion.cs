@@ -7,7 +7,7 @@ namespace AppGM.Core
 	/// <summary>
 	/// Representa una funcion escrita en GuraScratch
 	/// </summary>
-	public class ModeloFuncion : ModeloConVariablesYTiradas
+	public partial class ModeloFuncion : ModeloConVariablesYTiradas
 	{
 		/// <summary>
 		/// Padre de este modelo

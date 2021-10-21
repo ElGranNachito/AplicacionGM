@@ -6,7 +6,7 @@ namespace AppGM.Core
     /// <summary>
     /// Modelo de una tirada que no especifica su tipo
     /// </summary>
-    public abstract class ModeloTiradaBase : ModeloBase
+    public abstract partial class ModeloTiradaBase : ModeloBase
     {
         /// <summary>
         /// Nombre de la tirada

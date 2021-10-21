@@ -39,7 +39,7 @@ namespace AppGM.Core
 
 		public static (bool esValida, string error, MatchCollection seccionesTirada) TiradaEsValida(
 			string tirada,
-			ModeloPersonaje usuario,
+			IReadOnlyList<ModeloVariableBase> variablesDisponibles,
 			ETipoTirada tipoTirada,
 			EStat stat)
 		{
@@ -49,8 +49,8 @@ namespace AppGM.Core
 			if (!Regex.IsMatch(tirada, @"\d+d\d+"))
 				return (false, $"{nameof(tirada)} debe tener al menos una tirada", null);
 
-			if (usuario == null)
-				return (false, $"{nameof(usuario)} no puede ser null", null);
+			if (variablesDisponibles == null)
+				return (false, $"{nameof(variablesDisponibles)} no puede ser null", null);
 
 			if (tipoTirada == ETipoTirada.Stat)
 				return (false, $"Para realizar una tirada de stat utilizar el metodo {nameof(RealizarTiradaStat)}", null);
@@ -77,8 +77,8 @@ namespace AppGM.Core
 					continue;
 
 				//Intentamos obtener el valor de la variable y nos aseguramos que no sea null
-				if (usuario.Variables.Any(var => var.NombreVariable == variable))
-					return (false, $"No se encontro una variable llamada {variable} en {usuario}", null);
+				if (!variablesDisponibles.Any(var => string.Compare(var.NombreVariable, variable, StringComparison.OrdinalIgnoreCase) == 0))
+					return (false, $"No se encontro una variable llamada {variable}", null);
 			}
 
 			return (true, string.Empty, seccionesTirada);
@@ -107,7 +107,7 @@ namespace AppGM.Core
 		/// </returns>
 		public static async Task<(bool exito, Func<ArgumentosTiradaPersonalizada, ResultadoTirada> funcion, string error)> TryParseAsync(
 			string tirada,
-			ControladorPersonaje usuario,
+			ModeloConVariablesYTiradas usuario,
 			ETipoTirada tipoTirada,
 			EStat stat)
 		{
@@ -115,7 +115,7 @@ namespace AppGM.Core
 			if (mTiradasCacheadas.ContainsKey(tirada))
 				return (true, mTiradasCacheadas[tirada], string.Empty);
 
-			var resultadoComprobacion = ParserTiradas.TiradaEsValida(tirada, usuario.modelo, tipoTirada, stat);
+			var resultadoComprobacion = ParserTiradas.TiradaEsValida(tirada, usuario.ObtenerVariablesDisponibles(), tipoTirada, stat);
 
 			if (!resultadoComprobacion.esValida)
 				return (false, null, resultadoComprobacion.error);

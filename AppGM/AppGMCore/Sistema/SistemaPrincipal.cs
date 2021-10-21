@@ -217,6 +217,18 @@ namespace AppGM.Core
         }
 
         /// <summary>
+        /// Guarda un modelo en la base de datos asincronicamente
+        /// </summary>
+        /// <param name="modelo">Modelo a guardar</param>
+        public static async Task GuardarModeloAsync(ModeloBaseSK modelo)
+        {
+            if (modelo == null)
+                return;
+
+            await DatosRolSeleccionado.GuardarModeloAsync(modelo);
+        }
+
+        /// <summary>
         /// Elimina un modelo de la base de datos
         /// </summary>
         /// <param name="modelo">Modelo a eliminar</param>
@@ -418,7 +430,7 @@ namespace AppGM.Core
         {
 	        if (modelo.Id == 0)
 	        {
-                SistemaPrincipal.LoggerGlobal.Log($"Se intento guardar un modelo que no esta guardado en la base de datos! {modelo}", ESeveridad.Error);
+                SistemaPrincipal.LoggerGlobal.Log($"Se intento añadir un modelo que no esta guardado en la base de datos! {modelo}", ESeveridad.Error);
 
                 return false;
 	        }

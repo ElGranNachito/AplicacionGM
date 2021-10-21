@@ -17,10 +17,6 @@ namespace AppGM.Core
         /// </summary>
         private ModeloPersonaje         mModeloPersonaje;
 
-        private string mCostoDeMana  = "0";
-        private string mCostoDeOd    = "0";
-        private string mCostoDePrana = "0";
-
         #endregion
 
         #region Propiedades
@@ -41,43 +37,72 @@ namespace AppGM.Core
         public bool UtilizaPrana => EsMagia && (mModeloPersonaje.TipoPersonaje & (ETipoPersonaje.Servant | ETipoPersonaje.Invocacion)) != 0;
         public bool UtilizaOd => EsMagia && (mModeloPersonaje.TipoPersonaje & (ETipoPersonaje.Servant | ETipoPersonaje.NPC)) != 0;
 
-        public bool EstaEditandoHabilidadExistente => HabilidadSiendoEditada != null;
-        
+        public bool EstaEditando => HabilidadSiendoEditada != null;
+
+        public bool ModeloGuardado { get; private set; } = false;
+
         public string CostoDeMana
         {
-            get => mCostoDeMana;
+            get
+			{
+                if (ModeloHabilidad is ModeloMagia m)
+                    return m.CostoDeMana.ToString();
+
+                return string.Empty;
+            }
             set
             {
-                mCostoDeMana = value;
+                if(ModeloHabilidad is ModeloMagia m)
+				{
+                    m.CostoDeMana = int.Parse(value);
 
-                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(TextoNivelMagia)));
+                    DispararPropertyChanged(new PropertyChangedEventArgs(nameof(TextoNivelMagia)));
+                }       
             }
         }
 
         public string CostoDeOd
         {
-	        get => mCostoDeOd;
+	        get
+			{
+                if (ModeloHabilidad is ModeloMagia m)
+                    return m.CostoDeOdOPrana.ToString();
+
+                return string.Empty;
+            }
             set
             {
-                mCostoDeOd = value;
+                if (ModeloHabilidad is ModeloMagia m)
+                {
+                    m.CostoDeOdOPrana = int.Parse(value);
 
-                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(TextoNivelMagia)));
+                    DispararPropertyChanged(new PropertyChangedEventArgs(nameof(TextoNivelMagia)));
+                }                
             }
         }
 
         public string CostoDePrana
         {
-	        get => mCostoDePrana;
+	        get
+			{
+                if (ModeloHabilidad is ModeloMagia m)
+                    return m.CostoDeOdOPrana.ToString();
+
+                return string.Empty;
+            }
 	        set
 	        {
-		        mCostoDeOd = value;
+                if (ModeloHabilidad is ModeloMagia m)
+                {
+                    m.CostoDeOdOPrana = int.Parse(value);
 
-		        DispararPropertyChanged(new PropertyChangedEventArgs(nameof(TextoNivelMagia)));
+                    DispararPropertyChanged(new PropertyChangedEventArgs(nameof(TextoNivelMagia)));
+                }
             }
         }
 
         public ViewModelListaItems<ViewModelItemLista> ContenedorListaEfectos { get; set; }
-        public ViewModelListaItems<ViewModelItemLista> ContenedorListaTiradas { get; set; }
+        public ViewModelListaItems<ViewModelTiradaItem> ContenedorListaTiradas { get; set; }
 
         public ViewModelListaItems<ViewModelVariableItem> ContenedorListaVariables  { get; set; }
 
@@ -88,6 +113,8 @@ namespace AppGM.Core
         public ViewModelFuncionItem<ControladorFuncion_Habilidad> FuncionUtilizar { get; set; }
         public ViewModelFuncionItem<ControladorFuncion_PredicadoEfecto> FuncionCondicion { get; set; }
 
+        public ICommand ComandoGuardar { get; set; }
+
         #endregion
 
         #region Constructor
@@ -96,20 +123,24 @@ namespace AppGM.Core
 			:base(accionSalir)
         {
 	        mModeloPersonaje  = _modeloPersonaje;
+            HabilidadSiendoEditada = _habilidad;
 
-            if (_habilidad != null)
+            if (EstaEditando)
             {
-                HabilidadSiendoEditada = _habilidad;
+                ModeloHabilidad = HabilidadSiendoEditada.modelo.CrearCopiaProfundaEnSubtipo(HabilidadSiendoEditada.modelo.GetType()) as ModeloHabilidad;
 
-                ModeloHabilidad = HabilidadSiendoEditada.modelo.Clonar() as ModeloHabilidad;
+                ModeloGuardado = true;
 
-                DispararPropertyChanged(nameof(EstaEditandoHabilidadExistente));
+                DispararPropertyChanged(nameof(EstaEditando));
             }
             else
             {
-	            ModeloHabilidad = new ModeloHabilidad();
+	            ModeloHabilidad = new ModeloHabilidad();             
 
 	            ModeloHabilidad.Dueño = mModeloPersonaje;
+                mModeloPersonaje.Habilidades.Add(ModeloHabilidad);
+
+                SistemaPrincipal.GuardarModelo(ModeloHabilidad);
             }
 
             ComboBoxTipoHabilidad = new ViewModelComboBox<ETipoHabilidad>(_modeloPersonaje.TipoPersonaje.ObtenerTiposDeHabilidadDisponibles());
@@ -127,13 +158,27 @@ namespace AppGM.Core
 
             ContenedorListaEfectos   = new ViewModelListaItems<ViewModelItemLista>(()=>{}, true, "Efectos");
 
-            ContenedorListaTiradas   = new ViewModelListaItems<ViewModelItemLista>(()=>
+            ContenedorListaTiradas   = new ViewModelListaItems<ViewModelTiradaItem>(()=>
             {            
-                SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = new ViewModelCrearTirada((vm) =>
+                SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = new ViewModelCrearTirada(async (vm) =>
                 {
                     SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = this;
 
-                }, mModeloPersonaje, ContenedorListaVariables.Items.ToList(), null);
+                    if (vm.Resultado.EsAceptarOFinalizar())
+                    {
+                        var nuevaTirada = vm.CrearControladorTirada();
+
+                        nuevaTirada.modelo.HabilidadContenedora = ModeloHabilidad;
+
+                        if (vm.Resultado.EsAceptarOFinalizar())
+                            ModeloHabilidad.Tiradas.Add(nuevaTirada.modelo);
+
+                        await nuevaTirada.GuardarAsync();
+
+                        AñadirTirada((ViewModelTiradaItem)nuevaTirada.CrearViewModelItem());
+                    }
+
+                }, ModeloHabilidad, null);
 
             }, true, "Tiradas");
 
@@ -143,6 +188,10 @@ namespace AppGM.Core
 	            {
 		            if (vm.Resultado == EResultadoViewModel.Aceptar)
 		            {
+                        var nuevaVariable = vm.CrearVariable();
+
+                        ModeloHabilidad.Variables.Add(nuevaVariable.modelo);
+
                         AñadirVariable((ViewModelVariableItem)vm.CrearVariable().CrearViewModelItem());
 		            }
 
@@ -150,16 +199,26 @@ namespace AppGM.Core
 	            });
             }, true, "Variables");
 
+            ComandoGuardar = new Comando(async () =>
+            {
+                await SistemaPrincipal.GuardarDatosRolAsincronicamente();
+
+                ModeloGuardado = true;
+            });
+
             ComandoCancelar = new Comando(() =>
             {
-	            Resultado = EResultadoViewModel.Aceptar;
+	            Resultado = EResultadoViewModel.Cancelar;
+
+                if (!EstaEditando && !ModeloGuardado)
+                    SistemaPrincipal.EliminarModelo(ModeloHabilidad);
 
                 accionSalir(this);
             });
 
             ComandoAceptar = new Comando(() =>
             {
-	            Resultado = EResultadoViewModel.Cancelar;
+	            Resultado = EResultadoViewModel.Aceptar;
 
 	            accionSalir(this);
             });
@@ -198,36 +257,36 @@ namespace AppGM.Core
 
         private byte ObtenerNivelDeMagia()
         {
-	        int costo = 0;
+	        if(ModeloHabilidad is ModeloMagia magia)
+			{
+                int costo = magia.CostoDeOdOPrana;
 
-            if((mModeloPersonaje.TipoPersonaje & (ETipoPersonaje.Servant | ETipoPersonaje.Invocacion)) != 0)
-                costo = int.Parse(CostoDePrana);
-            else if ((mModeloPersonaje.TipoPersonaje & (ETipoPersonaje.Master | ETipoPersonaje.NPC)) != 0)
-	            costo = int.Parse(CostoDeOd);
+                if (costo < 10)
+                    return 0;
+                if (costo < 20)
+                    return 1;
+                if (costo < 40)
+                    return 2;
+                if (costo < 50)
+                    return 3;
+                if (costo < 100)
+                    return 4;
+                if (costo < 150)
+                    return 5;
+                if (costo < 200)
+                    return 6;
+                if (costo < 250)
+                    return 7;
 
-            if (costo < 10)
-                return 0;
-            if (costo < 20)
-                return 1;
-            if (costo < 40)
-                return 2;
-            if (costo < 50)
-                return 3;
-            if (costo < 100)
-                return 4;
-            if (costo < 150)
-                return 5;
-            if (costo < 200)
-                return 6;
-            if (costo < 250)
-                return 7;
+                return 8;
+            }
 
-            return 8;
+            return 0;
         }
 
         private void AñadirVariable(ViewModelVariableItem nuevaVariable)
         {
-	        nuevaVariable.OnBotonInferiorPresionado += item =>
+	        nuevaVariable.OnItemEliminado += item =>
 	        {
 		        ContenedorListaVariables.Items.Remove(item);
 	        };
@@ -235,7 +294,15 @@ namespace AppGM.Core
             ContenedorListaVariables.Items.Add(nuevaVariable);
         }
 
-        private void AñadirTirada() { }
+        private void AñadirTirada(ViewModelTiradaItem nuevaTirada) 
+        {
+            nuevaTirada.OnItemEliminado += item =>
+            {
+                ContenedorListaTiradas.Items.Remove(item);
+            };
+
+            ContenedorListaTiradas.Items.Add(nuevaTirada);
+        }
 
         #endregion
     }

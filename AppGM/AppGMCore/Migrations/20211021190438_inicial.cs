@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AppGM.Core.Migrations
 {
-    public partial class Inicial : Migration
+    public partial class inicial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -18,7 +18,8 @@ namespace AppGM.Core.Migrations
                     PathImagenIcono = table.Column<string>(type: "varchar(260)", nullable: true),
                     Nombre = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
                     Descripcion = table.Column<string>(type: "TEXT", maxLength: 500, nullable: true),
-                    EsVigente = table.Column<bool>(type: "INTEGER", nullable: false)
+                    EsVigente = table.Column<bool>(type: "INTEGER", nullable: false),
+                    EsValido = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -31,7 +32,8 @@ namespace AppGM.Core.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    NombreFuncion = table.Column<string>(type: "varchar(50)", nullable: true)
+                    NombreFuncion = table.Column<string>(type: "varchar(50)", nullable: true),
+                    EsValido = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -51,7 +53,8 @@ namespace AppGM.Core.Migrations
                     Nombre = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
                     Descripcion = table.Column<string>(type: "TEXT", maxLength: 3500, nullable: true),
                     Registros = table.Column<string>(type: "TEXT", maxLength: 4000, nullable: true),
-                    FechaUltimaSesion = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    FechaUltimaSesion = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    EsValido = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -65,7 +68,8 @@ namespace AppGM.Core.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     X = table.Column<double>(type: "REAL", nullable: false),
-                    Y = table.Column<double>(type: "REAL", nullable: false)
+                    Y = table.Column<double>(type: "REAL", nullable: false),
+                    EsValido = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -81,7 +85,8 @@ namespace AppGM.Core.Migrations
                     Nombre = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
                     Descripcion = table.Column<string>(type: "TEXT", maxLength: 1000, nullable: true),
                     EsVigente = table.Column<bool>(type: "INTEGER", nullable: false),
-                    IdAlianza = table.Column<int>(type: "INTEGER", nullable: true)
+                    IdAlianza = table.Column<int>(type: "INTEGER", nullable: true),
+                    EsValido = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -129,7 +134,8 @@ namespace AppGM.Core.Migrations
                     IndicePersonajeTurnoActual = table.Column<int>(type: "INTEGER", nullable: false),
                     TurnoActual = table.Column<uint>(type: "INTEGER", nullable: false),
                     EstaActivo = table.Column<bool>(type: "INTEGER", nullable: false),
-                    Nombre = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true)
+                    Nombre = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
+                    EsValido = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -193,7 +199,8 @@ namespace AppGM.Core.Migrations
                     ERangoNP = table.Column<int>(type: "INTEGER", nullable: true),
                     Prana = table.Column<int>(type: "INTEGER", nullable: true),
                     PranaActual = table.Column<int>(type: "INTEGER", nullable: true),
-                    Fuente = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true)
+                    Fuente = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
+                    EsValido = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -227,7 +234,8 @@ namespace AppGM.Core.Migrations
                     NombreMapa = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
                     EFormatoImagen = table.Column<int>(type: "INTEGER", nullable: false),
                     RolId = table.Column<int>(type: "INTEGER", nullable: true),
-                    CombateAlQuePerteneceId = table.Column<int>(type: "INTEGER", nullable: true)
+                    CombateAlQuePerteneceId = table.Column<int>(type: "INTEGER", nullable: true),
+                    EsValido = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -284,7 +292,8 @@ namespace AppGM.Core.Migrations
                     Fisico = table.Column<string>(type: "TEXT", maxLength: 100, nullable: true),
                     Nacionalidad = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
                     IdPersonaje = table.Column<int>(type: "INTEGER", nullable: false),
-                    ModeloPersonajeJugableId = table.Column<int>(type: "INTEGER", nullable: false)
+                    ModeloPersonajeJugableId = table.Column<int>(type: "INTEGER", nullable: false),
+                    EsValido = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -333,7 +342,8 @@ namespace AppGM.Core.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    IdInvocacion = table.Column<int>(type: "INTEGER", nullable: false)
+                    IdInvocacion = table.Column<int>(type: "INTEGER", nullable: false),
+                    EsValido = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -353,7 +363,8 @@ namespace AppGM.Core.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Nombre = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
-                    PersonajeContenedorId = table.Column<int>(type: "INTEGER", nullable: true)
+                    PersonajeContenedorId = table.Column<int>(type: "INTEGER", nullable: true),
+                    EsValido = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -387,7 +398,8 @@ namespace AppGM.Core.Migrations
                     EsParticular = table.Column<bool>(type: "INTEGER", nullable: true),
                     ModeloPersonajeId1 = table.Column<int>(type: "INTEGER", nullable: true),
                     ModeloServantId = table.Column<int>(type: "INTEGER", nullable: true),
-                    ModeloPerk_ModeloPersonajeId1 = table.Column<int>(type: "INTEGER", nullable: true)
+                    ModeloPerk_ModeloPersonajeId1 = table.Column<int>(type: "INTEGER", nullable: true),
+                    EsValido = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -433,7 +445,8 @@ namespace AppGM.Core.Migrations
                     TiradaIniciativa = table.Column<int>(type: "INTEGER", nullable: false),
                     EsSuTurno = table.Column<bool>(type: "INTEGER", nullable: false),
                     PersonajeId = table.Column<int>(type: "INTEGER", nullable: true),
-                    CombateActualId = table.Column<int>(type: "INTEGER", nullable: true)
+                    CombateActualId = table.Column<int>(type: "INTEGER", nullable: true),
+                    EsValido = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -464,7 +477,8 @@ namespace AppGM.Core.Migrations
                     HumedadActual = table.Column<float>(type: "REAL", nullable: false),
                     IdMapa = table.Column<int>(type: "INTEGER", nullable: false),
                     IdRol = table.Column<int>(type: "INTEGER", nullable: true),
-                    IdCombateAlQuePertenece = table.Column<int>(type: "INTEGER", nullable: true)
+                    IdCombateAlQuePertenece = table.Column<int>(type: "INTEGER", nullable: true),
+                    EsValido = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -504,7 +518,8 @@ namespace AppGM.Core.Migrations
                     EClaseServant = table.Column<int>(type: "INTEGER", nullable: true),
                     Inicial = table.Column<string>(type: "varchar(1)", maxLength: 1, nullable: true),
                     Cantidad = table.Column<int>(type: "INTEGER", nullable: true),
-                    EsDeMaster = table.Column<bool>(type: "INTEGER", nullable: true)
+                    EsDeMaster = table.Column<bool>(type: "INTEGER", nullable: true),
+                    EsValido = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -540,7 +555,8 @@ namespace AppGM.Core.Migrations
                     Descripcion = table.Column<string>(type: "TEXT", maxLength: 500, nullable: true),
                     Tipo = table.Column<int>(type: "INTEGER", nullable: false),
                     ComportamientoAcumulativo = table.Column<int>(type: "INTEGER", nullable: false),
-                    HabilidadDueñaId = table.Column<int>(type: "INTEGER", nullable: true)
+                    HabilidadDueñaId = table.Column<int>(type: "INTEGER", nullable: true),
+                    EsValido = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -584,7 +600,8 @@ namespace AppGM.Core.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Descripcion = table.Column<string>(type: "TEXT", maxLength: 2000, nullable: true),
-                    ParticipanteId = table.Column<int>(type: "INTEGER", nullable: true)
+                    ParticipanteId = table.Column<int>(type: "INTEGER", nullable: true),
+                    EsValido = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -609,7 +626,8 @@ namespace AppGM.Core.Migrations
                     ComportamientoAcumulativo = table.Column<int>(type: "INTEGER", nullable: false),
                     EfectoId = table.Column<int>(type: "INTEGER", nullable: true),
                     InstigadorId = table.Column<int>(type: "INTEGER", nullable: true),
-                    ObjetivoId = table.Column<int>(type: "INTEGER", nullable: true)
+                    ObjetivoId = table.Column<int>(type: "INTEGER", nullable: true),
+                    EsValido = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -701,7 +719,8 @@ namespace AppGM.Core.Migrations
                     Tipo = table.Column<int>(type: "INTEGER", nullable: false),
                     ValorVariable = table.Column<float>(type: "REAL", nullable: true),
                     ModeloVariableInt_ValorVariable = table.Column<int>(type: "INTEGER", nullable: true),
-                    ModeloVariableString_ValorVariable = table.Column<string>(type: "TEXT", nullable: true)
+                    ModeloVariableString_ValorVariable = table.Column<string>(type: "TEXT", nullable: true),
+                    EsValido = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -745,7 +764,8 @@ namespace AppGM.Core.Migrations
                     StatDeLaQueDepende = table.Column<int>(type: "INTEGER", nullable: true),
                     Tirada = table.Column<string>(type: "TEXT", maxLength: 1000, nullable: true),
                     DescripcionVariableExtra = table.Column<string>(type: "TEXT", maxLength: 500, nullable: true),
-                    TipoDeDaño = table.Column<int>(type: "INTEGER", nullable: true)
+                    TipoDeDaño = table.Column<int>(type: "INTEGER", nullable: true),
+                    EsValido = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -793,7 +813,8 @@ namespace AppGM.Core.Migrations
                     UsosRestantes = table.Column<ushort>(type: "INTEGER", nullable: true),
                     ModeloArmasDistancia_ModeloPersonajeId = table.Column<int>(type: "INTEGER", nullable: true),
                     Estado = table.Column<int>(type: "INTEGER", nullable: true),
-                    ModeloPersonajeId = table.Column<int>(type: "INTEGER", nullable: true)
+                    ModeloPersonajeId = table.Column<int>(type: "INTEGER", nullable: true),
+                    EsValido = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -826,7 +847,8 @@ namespace AppGM.Core.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     EspacioTotal = table.Column<decimal>(type: "TEXT", nullable: false),
                     EspacioDisponible = table.Column<decimal>(type: "TEXT", nullable: false),
-                    DueñoId = table.Column<int>(type: "INTEGER", nullable: true)
+                    DueñoId = table.Column<int>(type: "INTEGER", nullable: true),
+                    EsValido = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {

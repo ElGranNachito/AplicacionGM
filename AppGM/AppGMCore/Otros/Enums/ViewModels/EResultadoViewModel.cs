@@ -5,8 +5,9 @@
 	/// </summary>
 	public enum EResultadoViewModel
 	{
-		Cancelar = 1,
-		Aceptar  = 2,
+		Cancelar  = 1,
+		Aceptar   = 2,
+		Finalizar = 4,
 
 		NoEstablecido = 0
 	}

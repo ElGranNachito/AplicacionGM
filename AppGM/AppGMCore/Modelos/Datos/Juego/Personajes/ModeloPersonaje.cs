@@ -7,7 +7,7 @@ namespace AppGM.Core
     /// <summary>
     /// Modelo de datos para el personaje
     /// </summary>
-    public class ModeloPersonaje : ModeloConVariablesYTiradas
+    public partial class ModeloPersonaje : ModeloConVariablesYTiradas
     {
         /// <summary>
         /// Relacion rol

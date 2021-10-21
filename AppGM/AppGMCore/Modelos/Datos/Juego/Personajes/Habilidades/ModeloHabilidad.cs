@@ -6,7 +6,7 @@ namespace AppGM.Core
     /// <summary>
     /// Modelo de datos para habilidades de un <see cref="ModeloPersonaje"/>
     /// </summary>
-    public class ModeloHabilidad : ModeloConVariablesYTiradas
+    public partial class ModeloHabilidad : ModeloConVariablesYTiradas
     {
 	    /// <summary>
         /// Indica si la habilidad esta actualmente activa
@@ -81,7 +81,16 @@ namespace AppGM.Core
         /// Funciones que requiere la habilidad para funcionar
         /// </summary>
         public virtual List<TIFuncionHabilidad> Funciones { get; set; } = new List<TIFuncionHabilidad>();
-    }
+
+		public override IReadOnlyList<ModeloVariableBase> ObtenerVariablesDisponibles()
+		{
+            var variablesDisponibles = new List<ModeloVariableBase>(Variables);
+
+            variablesDisponibles.AddRange(Dueño.Variables);
+
+            return variablesDisponibles.AsReadOnly();
+		}
+	}
 
     /// <summary>
     /// Modelo para las perks de un <see cref="ModeloPersonaje"/>

@@ -23,16 +23,12 @@ namespace AppGM.Core
 				var vmEdicion = new ViewModelCreacionDeVariable(vm =>
 				{
 					SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = dataContextActual;
+
+					if(vm.Resultado.EsAceptarOFinalizar())
+						ActualizarCaracteristicas();
 				}, ControladorGenerico);
 
 				SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = vmEdicion;
-
-				vmEdicion.OnResultadoEstablecido += resultadoEdicion =>
-				{
-					ControladorGenerico = vmEdicion.CrearVariable();
-
-					Controlador = ControladorGenerico;
-				};
 			};
 
 			mAccionBotonInferior = () =>
@@ -46,6 +42,8 @@ namespace AppGM.Core
 
 		protected override void ActualizarCaracteristicas()
 		{
+			CaracteristicasItem.Elementos.Clear();
+
 			CaracteristicasItem.Elementos = new ObservableCollection<ViewModelCaracteristicaItem>(new[]
 			{
 				new ViewModelCaracteristicaItem

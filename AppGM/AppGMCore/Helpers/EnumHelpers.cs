@@ -177,5 +177,7 @@ namespace AppGM.Core
 
             return stringBuilder.ToString();
         }
+
+        public static bool EsAceptarOFinalizar(this EResultadoViewModel resultado) => resultado is EResultadoViewModel.Aceptar or EResultadoViewModel.Finalizar;
     }
 }

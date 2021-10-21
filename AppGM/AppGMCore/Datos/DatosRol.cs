@@ -496,16 +496,25 @@ namespace AppGM.Core
 		/// <summary>
 		/// Guarda un nuevo modelo en la base de datos
 		/// </summary>
-		/// <param name="modelo"></param>
+		/// <param name="modelo">Modelo que guardar</param>
 		public void GuardarModelo(ModeloBaseSK modelo)
 		{
 			mDBRol.Add(modelo);
 		}
 
 		/// <summary>
+		/// Guarda un nuevo modelo en la base de datos de manera asincronica
+		/// </summary>
+		/// <param name="modelo">Modelo que guardar</param>
+		public async Task GuardarModeloAsync(ModeloBaseSK modelo)
+		{
+			await mDBRol.AddAsync(modelo);
+		}
+
+		/// <summary>
 		/// Elimina un modelo de la base de datos
 		/// </summary>
-		/// <param name="modelo"></param>
+		/// <param name="modelo">Modelo que eliminar</param>
 		public void EliminarModelo(ModeloBaseSK modelo)
 		{
 			mDBRol.Remove(modelo);

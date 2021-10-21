@@ -14,19 +14,9 @@ namespace AppGM.Core
 		//----------------------------------------CAMPOS---------------------------------------------
 
 		/// <summary>
-		/// Contiene el valor de <see cref="TipoSeleccionado"/>
-		/// </summary>
-		private Type mTipoSeleccionado;
-
-		/// <summary>
 		/// Contiene el valor de <see cref="EsLista"/>
 		/// </summary>
 		private bool mEsLista;
-
-		/// <summary>
-		/// Almacena el valor de <see cref="NombreVariable"/>
-		/// </summary>
-		private string mNombreVariable;
 
 		/// <summary>
 		/// Controlador de la variable que esta siendo editada
@@ -38,7 +28,7 @@ namespace AppGM.Core
 		/// <summary>
 		/// Modelo de variable creado
 		/// </summary>
-		public ModeloVariableBase VariableCreada { get; private set; }
+		public ModeloVariableBase ModeloVariable { get; private set; }
 
 		/// <summary>
 		/// Indica si la variable ya puede ser creada
@@ -46,17 +36,22 @@ namespace AppGM.Core
 		public bool EsValido { get; private set; }
 
 		/// <summary>
+		/// Indica si se esta editando un <see cref="ModeloVariable"/> existente
+		/// </summary>
+		public bool EstaEditando => variableSiendoEditada != null;
+
+		/// <summary>
 		/// Nombre de la variable
 		/// </summary>
 		public string NombreVariable
 		{
-			get => mNombreVariable;
+			get => ModeloVariable.NombreVariable;
 			set
 			{
-				if (value == mNombreVariable)
+				if (value == ModeloVariable.NombreVariable)
 					return;
 
-				mNombreVariable = value;
+				ModeloVariable.NombreVariable = value;
 
 				ActualizarValidez();
 			}
@@ -65,7 +60,11 @@ namespace AppGM.Core
 		/// <summary>
 		/// Descripcion de la variable
 		/// </summary>
-		public string DescripcionVariable { get; set; }
+		public string DescripcionVariable
+		{
+			get => ModeloVariable.DescripcionVariable;
+			set => ModeloVariable.DescripcionVariable = value;
+		}
 
 		/// <summary>
 		/// Indica si esta variable es una lista
@@ -108,18 +107,18 @@ namespace AppGM.Core
 		/// </summary>
 		public Type TipoSeleccionado
 		{
-			get => mTipoSeleccionado;
+			get => ModeloVariable.TipoVariable;
 			set
 			{
-				if(value == mTipoSeleccionado)
+				if(value == ModeloVariable.TipoVariable)
 					return;
 
-				mTipoSeleccionado = value;
+				ModeloVariable.TipoVariableString = value.AssemblyQualifiedName;
 
 				if (VMIngresoVariable != null)
 					VMIngresoVariable.OnEsValidoCambio -= ActualizarValidez;
 
-				VMIngresoVariable = new ViewModelIngresoVariable(mTipoSeleccionado, EsLista, true);
+				VMIngresoVariable = new ViewModelIngresoVariable(ModeloVariable.TipoVariable, EsLista, true);
 
 				VMIngresoVariable.OnEsValidoCambio += ActualizarValidez;
 
@@ -149,16 +148,18 @@ namespace AppGM.Core
 				TipoSeleccionado = actual.valor;
 			};
 
-			//Colocamos como valor por defecto el primer elemento de los tipos posibles
-			ComboBoxTiposDisponibles.ValorSeleccionado = ComboBoxTiposDisponibles.ValoresPosibles.First();
-
-			if (variableSiendoEditada != null)
+			if (EstaEditando)
 			{
-				VariableCreada = variableSiendoEditada.modelo.Clonar() as ModeloVariableBase;
-
-				var nada = variableSiendoEditada.modelo.CrearCopiaProfundaEnSubtipo(variableSiendoEditada.modelo.GetType());
+				ModeloVariable = variableSiendoEditada.modelo.CrearCopiaProfundaEnSubtipo(variableSiendoEditada.modelo.GetType()) as ModeloVariableBase;
 
 				TipoSeleccionado = variableSiendoEditada.TipoVariable;
+			}
+			else
+			{
+				ModeloVariable = new ModeloVariableInt();
+
+				//Colocamos como valor por defecto el primer elemento de los tipos posibles
+				ComboBoxTiposDisponibles.ValorSeleccionado = ComboBoxTiposDisponibles.ValoresPosibles.First();
 			}
 
 			PropertyChanged += (sender, args) =>
@@ -197,28 +198,24 @@ namespace AppGM.Core
 			if (!EsValido)
 				return null;
 
-			var modeloCreado = ControladorVariableBase.CrearModeloCorrespondiente(TipoSeleccionado, -1, NombreVariable);
-
-			modeloCreado.DescripcionVariable = DescripcionVariable;
-
 			//Controlador que sera devuelto por la funcion
 			ControladorVariableBase controladorVariableFinal;
 
-			//Si no estamos editando una variable existente o el tipo de la variable fue modificado...
-			if (variableSiendoEditada == null || variableSiendoEditada.TipoVariable != TipoSeleccionado)
+			//Si estamos editando...
+			if (EstaEditando)
 			{
-				variableSiendoEditada?.Eliminar();
+				ModeloVariable.CrearCopiaProfundaEnSubtipo(ModeloVariable.GetType(), variableSiendoEditada.modelo);
 
-				//Devolvemos un nuevo controlador con la variable creada
-				controladorVariableFinal = ControladorVariableBase.CrearControladorCorrespondiente(modeloCreado);
+				controladorVariableFinal = variableSiendoEditada;
 			}
 			//Sino
 			else
 			{
-				//Actualizamos el modelo de la variable existente
-				variableSiendoEditada.ActulizarModelo(modeloCreado);
+				var modeloCreado = ControladorVariableBase.CrearModeloCorrespondiente(TipoSeleccionado, -1, NombreVariable);
 
-				controladorVariableFinal = variableSiendoEditada;
+				modeloCreado.DescripcionVariable = DescripcionVariable;
+
+				controladorVariableFinal = ControladorVariableBase.CrearControladorCorrespondiente(modeloCreado);
 			}
 
 			//Guardamos el valor ingresado por el usuario

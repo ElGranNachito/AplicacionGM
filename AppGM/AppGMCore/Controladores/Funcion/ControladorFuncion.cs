@@ -81,11 +81,10 @@ namespace AppGM.Core
 		{
 			get
 			{
-				if (modelo.EfectoContenedor != null)
-					return SistemaPrincipal.ObtenerControlador<ControladorEfecto, ModeloEfecto>(modelo.EfectoContenedor.Efecto);
+				var controladorHallado = SistemaPrincipal.ObtenerControlador(modelo.ObtenerModeloContenedor());
 
-				if (modelo.HabilidadContenedora != null)
-					return SistemaPrincipal.ObtenerControlador<ControladorHabilidad, ModeloHabilidad>(modelo.HabilidadContenedora.Habilidad);
+				if (controladorHallado != null)
+					return controladorHallado;
 
 				SistemaPrincipal.LoggerGlobal.Log($"No se pudo hallar el contenedor de {this}", ESeveridad.Error);
 

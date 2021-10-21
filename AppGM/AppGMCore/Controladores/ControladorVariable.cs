@@ -50,7 +50,7 @@ namespace AppGM.Core
 					return;
 
 				//Actualizamos los datos del modelo
-				modelo.TipoVariable = value.AssemblyQualifiedName;
+				modelo.TipoVariableString = value.AssemblyQualifiedName;
 				mTipoVariable = value;
 			}
 		}
@@ -72,7 +72,7 @@ namespace AppGM.Core
 			: base(_modelo)
 		{
 			//No queremos disparar la propiedad asi que establecemos el valor del campo directamente
-			mTipoVariable = Type.GetType(modelo.TipoVariable);
+			mTipoVariable = Type.GetType(modelo.TipoVariableString);
 		} 
 
 		#endregion
@@ -151,7 +151,7 @@ namespace AppGM.Core
 				};
 			}
 
-			resultado.TipoVariable = tipo.AssemblyQualifiedName;
+			resultado.TipoVariableString = tipo.AssemblyQualifiedName;
 			resultado.IDVariable = id;
 			resultado.NombreVariable = nombre;
 
@@ -199,18 +199,6 @@ namespace AppGM.Core
 
 			SistemaPrincipal.LoggerGlobal.Log($@"Se intento guardar valor de tipo {nuevoValor.GetType()} pero el tipo de esta variable es {typeof(TVariable)}.
 				{Environment.NewLine}{this}");
-		}
-
-		public override void ActulizarModelo(ModeloVariableBase nuevoModelo, bool eliminarSiNuevoModeloEsNull = false)
-		{
-			GuardarValorVariable(((ModeloVariable<TVariable>)nuevoModelo).ValorVariable);
-
-			IDVariable = nuevoModelo.IDVariable;
-
-			TipoVariable = Type.GetType(nuevoModelo.TipoVariable);
-
-			NombreVariable      = nuevoModelo.NombreVariable;
-			DescripcionVariable = nuevoModelo.DescripcionVariable;
 		}
 
 		#endregion
@@ -337,7 +325,7 @@ namespace AppGM.Core
 			//Si el valor pasado es un controlador actualizamos los valores guardados en el modelo
 			if (nuevoValor is ControladorBase c)
 			{
-				modelo.TipoVariable = nuevoValor.GetType().AssemblyQualifiedName;
+				modelo.TipoVariableString = nuevoValor.GetType().AssemblyQualifiedName;
 
 				mModeloVariableControlador.ValorVariable = c.Modelo.Id;
 				mModeloVariableControlador.TipoModeloControlador = c.Modelo.GetType().AssemblyQualifiedName;
@@ -348,23 +336,6 @@ namespace AppGM.Core
 			}
 
 			SistemaPrincipal.LoggerGlobal.Log($"{nameof(nuevoValor)} no es un {nameof(ControladorBase)}!", ESeveridad.Error);
-		}
-
-		public override void ActulizarModelo(ModeloVariableBase nuevoModelo, bool eliminarSiNuevoModeloEsNull = false)
-		{
-			if (nuevoModelo is ModeloVariableControlador m)
-			{
-				GuardarValorVariable(SistemaPrincipal.ObtenerControlador(m));
-
-				IDVariable = nuevoModelo.IDVariable;
-
-				mModeloVariableControlador.NombreVariable      = m.NombreVariable;
-				mModeloVariableControlador.DescripcionVariable = m.DescripcionVariable;
-
-				return;
-			}
-
-			SistemaPrincipal.LoggerGlobal.Log($"{nameof(nuevoModelo)} debe ser de tipo {typeof(ModeloVariableControlador)}", ESeveridad.Error);
 		}
 
 		#endregion

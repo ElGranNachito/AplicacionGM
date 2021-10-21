@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System;
 
 namespace AppGM.Core
 {
@@ -9,9 +10,20 @@ namespace AppGM.Core
 	public abstract class ModeloVariableBase : ModeloBase
 	{
 		/// <summary>
+		/// Contiene el valor de <see cref="TipoVariableString"/>
+		/// </summary>
+		[NotMapped]
+		private string mTipoVariable;
+
+		/// <summary>
+		/// Tipo de esta variable
+		/// </summary>
+		[NotMapped]
+		public Type TipoVariable { get; private set; }
+
+		/// <summary>
 		/// Nombre de la variable
 		/// </summary>
-        
         [Column(TypeName = "varchar(50)")]
 		public string NombreVariable { get; set; }
 
@@ -25,7 +37,23 @@ namespace AppGM.Core
 		/// Tipo de la variable
 		/// </summary>
         [Column(TypeName = "varchar(50)")]
-        public string TipoVariable { get; set; }
+        public string TipoVariableString
+		{
+			get => mTipoVariable;
+			set
+			{
+				try
+				{
+					TipoVariable = Type.GetType(value);
+				}
+				catch(Exception ex)
+				{
+					SistemaPrincipal.LoggerGlobal.LogCrash($"{value} no es un {nameof(Type)} valido{Environment.NewLine}{ex.Message}");
+				}
+
+				mTipoVariable = value;			
+			}
+		}
 
 		/// <summary>
 		/// Id de la variable
