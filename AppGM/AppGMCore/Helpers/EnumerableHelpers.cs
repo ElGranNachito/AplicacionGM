@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
+using System.Reflection;
 
 namespace AppGM.Core
 {
@@ -66,6 +69,13 @@ namespace AppGM.Core
 			}
 
 			return listaElementos;
+		}
+
+		public static IList Cast<T>(this IEnumerable<T> coleccion, Type tipoAlQueCastear)
+		{
+			var metodoCastGenerico = typeof(Enumerable).GetMethod(nameof(Enumerable.Cast), BindingFlags.Static | BindingFlags.Public, null, new[] { typeof(IEnumerable) }, null).MakeGenericMethod(tipoAlQueCastear);
+
+			return metodoCastGenerico.Invoke(coleccion, new[] { coleccion }) as IList;
 		}
 	}
 }

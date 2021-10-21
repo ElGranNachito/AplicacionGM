@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Tasks;
 using CoolLogs;
 using Ninject.Infrastructure.Language;
 
@@ -99,6 +100,96 @@ namespace AppGM.Core
 			return resultado;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <typeparam name="TElementos"></typeparam>
+		/// <param name="propiedad"></param>
+		/// <param name="instancia"></param>
+		/// <param name="resultado"></param>
+		/// <param name="incluirSubtipos"></param>
+		/// <returns></returns>
+		public static bool EsListaDe<TElementos>(this PropertyInfo propiedad, object instancia, out IList<TElementos> resultado, bool incluirSubtipos = true)
+		{
+			resultado = null;
+
+			if (incluirSubtipos)
+			{
+				var argumentosGenericos = propiedad.PropertyType.GetGenericArguments();
+
+				if (argumentosGenericos.Length > 0 && 
+					typeof(IList).IsAssignableFrom(propiedad.PropertyType) &&
+					typeof(TElementos).IsAssignableFrom(argumentosGenericos[0]))
+				{
+					resultado = propiedad.ObtenerValorComoLista<TElementos>(instancia);
+
+					return true;
+				}			
+
+				return false;
+			}
+
+			if(typeof(IList<TElementos>).IsAssignableFrom(propiedad.PropertyType))
+			{
+				resultado = propiedad.ObtenerValorComoLista<TElementos>(instancia);
+
+				return true;
+			}
+
+			return false;
+		}
+
+		/// <summary>
+		/// Obtiene el valor de <paramref name="propiedad"/> para una determinada <paramref name="instancia"/> y lo devuelve como una <see cref="IList"/> de <typeparamref name="TElementos"/>
+		/// </summary>
+		/// <typeparam name="TElementos">Tipo de elementos que contiene la lista</typeparam>
+		/// <param name="propiedad">Propiedad de la cual se obtendra el valor</param>
+		/// <param name="instancia">Instancia de la cual se obtendra el valor de la <paramref name="propiedad"/></param>
+		/// <returns><see cref="IList"/> de <typeparamref name="TElementos"/></returns>
+		public static IList<TElementos> ObtenerValorComoLista<TElementos>(this PropertyInfo propiedad, object instancia)
+		{
+			if(!typeof(IList).IsAssignableFrom(propiedad.PropertyType))
+			{
+				SistemaPrincipal.LoggerGlobal.LogCrash($"{nameof(propiedad)}({propiedad}) no es de tipo {typeof(IList)}");
+
+				return null;
+			}
+
+			try
+			{
+				return (propiedad.GetValue(instancia) as IList).Cast<TElementos>().ToList();
+			}
+			catch(Exception ex)
+			{
+				SistemaPrincipal.LoggerGlobal.LogCrash($"No se pudo obtener el valor de {nameof(propiedad)} o castearlo a una {nameof(IList)} de {typeof(TElementos)}{Environment.NewLine}{ex.Message}");
+
+				return null;
+			}
+		}
+
+		/// <summary>
+		/// Obtiene el <see cref="Type"/> de un <see cref="ModeloPersonaje"/> representado por <paramref name="tipoPersonaje"/>
+		/// </summary>
+		/// <param name="tipoPersonaje"></param>
+		/// <returns></returns>
+		public static Type ObtenerTipoPersonaje (this ETipoPersonaje tipoPersonaje)
+		{
+			switch(tipoPersonaje)
+			{
+				case ETipoPersonaje.Master:
+					return typeof(ModeloMaster);
+				case ETipoPersonaje.Servant:
+					return typeof(ModeloServant);
+				case ETipoPersonaje.Invocacion:
+					return typeof(ModeloInvocacion);
+				case ETipoPersonaje.NPC:
+					return typeof(ModeloPersonaje);
+				default:
+					SistemaPrincipal.LoggerGlobal.Log($"{nameof(tipoPersonaje)}({tipoPersonaje}) no soportado", ESeveridad.Error);
+					return null;
+			}
+		}
+
 		public static class Juego
 		{
 			/// <summary>
@@ -112,7 +203,7 @@ namespace AppGM.Core
 				if (valorStat == 10)
 					return 0;
 
-				return (int) Math.Floor((valorStat - 10.0f) / 2.0f);
+				return (int)Math.Floor((valorStat - 10.0f) / 2.0f);
 			}
 
 			/// <summary>
@@ -122,7 +213,7 @@ namespace AppGM.Core
 			/// <returns>Multiplicador correspondiente a la mano utilizada</returns>
 			public static float ObtenerMultiplicadorManoUsada(EManoUtilizada mano)
 			{
-				switch(mano)
+				switch (mano)
 				{
 					case EManoUtilizada.Dominante:
 						return 1;
@@ -132,11 +223,11 @@ namespace AppGM.Core
 						return 2.5f;
 
 					default:
-					{
-						SistemaPrincipal.LoggerGlobal.Log($"Valor de {nameof(mano)}({mano}) no soportado", ESeveridad.Error);
+						{
+							SistemaPrincipal.LoggerGlobal.Log($"Valor de {nameof(mano)}({mano}) no soportado", ESeveridad.Error);
 
-						return 0;
-					}
+							return 0;
+						}
 				}
 			}
 		}

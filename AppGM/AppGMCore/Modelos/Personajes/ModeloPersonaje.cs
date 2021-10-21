@@ -33,24 +33,24 @@ namespace AppGM.Core
 
         //Stats del personaje
         public int MaxHp { get; set; }
-        public int Hp    { get; set; }
-        public int Str   { get; set; }
-        public int End   { get; set; }
-        public int Agi   { get; set; }
-        public int Int   { get; set; }
-        public int Lck   { get; set; }
-               
+        public int Hp { get; set; }
+        public int Str { get; set; }
+        public int End { get; set; }
+        public int Agi { get; set; }
+        public int Int { get; set; }
+        public int Lck { get; set; }
+
         //Ventajas stats del personaje
-        public int VentajaStr   { get; set; }
-        public int VentajaEnd   { get; set; }
-        public int VentajaAgi   { get; set; }
-        public int VentajaInt   { get; set; }
-        public int VentajaLck   { get; set; }
+        public int VentajaStr { get; set; }
+        public int VentajaEnd { get; set; }
+        public int VentajaAgi { get; set; }
+        public int VentajaInt { get; set; }
+        public int VentajaLck { get; set; }
 
         /// <summary>
         /// Maxima cantidad de pesos que puede cargar el personaje
         /// </summary>
-        public decimal PesoMaximoCargable   { get; set; }
+        public decimal PesoMaximoCargable { get; set; }
         /// <summary>
         /// Cantidad de peso siendo cargado actualmente
         /// </summary>
@@ -87,27 +87,27 @@ namespace AppGM.Core
         /// Efectos aplicados sobre el personaje
         /// </summary>
         public virtual List<ModeloEfectoSiendoAplicado> EfectosAplicandose { get; set; } = new List<ModeloEfectoSiendoAplicado>();
-        
+
         //Equipamiento del personaje
         public virtual List<ModeloUtilizable> Inventario { get; set; } = new List<ModeloUtilizable>();
         public virtual List<ModeloDefensivo> Armadura { get; set; } = new List<ModeloDefensivo>();
-        public virtual List<ModeloArmasDistancia> ArmasDistancia  { get; set; } = new List<ModeloArmasDistancia>();
+        public virtual List<ModeloArmasDistancia> ArmasDistancia { get; set; } = new List<ModeloArmasDistancia>();
 
         /// <summary>
         /// Contratos realizados con tros personajes
         /// </summary>
-        public virtual List<ModeloContrato> Contratos  { get; set; } = new List<ModeloContrato>();
+        public virtual List<ModeloContrato> Contratos { get; set; } = new List<ModeloContrato>();
 
         /// <summary>
         /// Alianzas con otros personajes
         /// </summary>
-        public virtual List<ModeloAlianza> Alianzas   { get; set; } = new List<ModeloAlianza>();
+        public virtual List<ModeloAlianza> Alianzas { get; set; } = new List<ModeloAlianza>();
 
         /// <summary>
         /// Habilidades de este personaje. Incluye todos los tipos de habilidad
         /// </summary>
         public virtual List<ModeloHabilidad> Habilidades { get; set; } = new List<ModeloHabilidad>();
-                                              
+
         /// <summary>
         /// Pasivas
         /// </summary>

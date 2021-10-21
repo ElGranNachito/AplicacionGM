@@ -156,6 +156,8 @@ namespace AppGM.Core
 			{
 				VariableCreada = variableSiendoEditada.modelo.Clonar() as ModeloVariableBase;
 
+				var nada = variableSiendoEditada.modelo.CrearCopiaProfundaEnSubtipo(variableSiendoEditada.modelo.GetType());
+
 				TipoSeleccionado = variableSiendoEditada.TipoVariable;
 			}
 
