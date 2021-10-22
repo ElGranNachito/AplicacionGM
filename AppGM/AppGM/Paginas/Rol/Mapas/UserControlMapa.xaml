@@ -201,17 +201,6 @@
             
                         <!-- Mapa -->
                         <Grid Grid.Row="1">
-            
-                            <!--<ScrollViewer
-                                VerticalScrollBarVisibility="Auto"
-                                HorizontalScrollBarVisibility="Auto">
-                                
-
-
-                            </ScrollViewer>-->
-            
-                            <!--Tablero de casillas-->
-                            <local:UserControlFilaCasillas HorizontalAlignment="Left" DataContext="{Binding Posiciones}"/>
 
                             <local:ZoomBorder x:Name="border" ClipToBounds="True" Background="Gray">
                                     
@@ -232,6 +221,13 @@
                                 </Canvas>
 
                             </local:ZoomBorder>
+
+                            <!--Tablero de casillas-->
+                            <Grid>
+                                <!-- Fila de casillas -->
+                                <local:UserControlFilaCasillas DataContext="{Binding CasillasTablero}"/>
+
+                            </Grid>
 
                         </Grid>
             

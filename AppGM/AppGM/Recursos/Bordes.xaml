@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:AppGM">
 
-    <!--..................................ESTILOS PARA BOTONES...........................................-->
+    <!--..................................ESTILOS PARA BORDES...........................................-->
 
     <!-- Estilo para el borde de una casilla en el tablero del mapa-->
     <Style TargetType="{x:Type Border}" x:Key="BordeCasillaTablero">
@@ -15,6 +15,7 @@
             <!-- Cuando el mouse pasa sobre la casilla, cambia el color del borde -->
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="BorderBrush" Value="Aqua"/>
+                <Setter Property="BorderThickness" Value="2"/>
             </Trigger>
 
         </Style.Triggers>

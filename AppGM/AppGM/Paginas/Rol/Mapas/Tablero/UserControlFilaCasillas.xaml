@@ -12,7 +12,7 @@
 
         <ItemsControl ItemsSource="{Binding}">
 
-            <!-- Hacemos que el panel sea un grid para que puedan solapar -->
+            <!-- Hacemos que el panel sea un stackpanel para que puedan solapar -->
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Orientation="Horizontal"/>

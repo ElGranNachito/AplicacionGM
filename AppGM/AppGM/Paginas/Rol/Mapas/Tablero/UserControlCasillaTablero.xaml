@@ -5,14 +5,22 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AppGM"
              mc:Ignorable="d" 
-             d:DesignHeight="100" d:DesignWidth="100">
+             d:DesignHeight="50" d:DesignWidth="50">
     
-    <!-- UserControl que hace uso del ViewModelMapa -->
-    <Border Style="{StaticResource BordeCasillaTablero}"
-            Height="100"
-            Width="100">
+    <Grid Name="Gridsito"
+          MouseEnter="OnMouseEnter"
+          MouseLeave="OnMouseLeave">
+
+        <!-- UserControl que hace uso del ViewModelMapa -->
+        <Border Background="{Binding ColorFondoCasilla, Converter={local:StringToSolidColorBrushConverter}}"
+                BorderBrush="{Binding ColorBordeCasilla, Converter={local:StringToSolidColorBrushConverter}}"
+                BorderThickness="1"
+                Height="50"
+                Width="50">
 
         
 
-    </Border>
+        </Border>
+
+    </Grid>
 </UserControl>
