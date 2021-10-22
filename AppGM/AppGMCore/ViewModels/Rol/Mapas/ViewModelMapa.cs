@@ -20,30 +20,33 @@ namespace AppGM.Core
         /// <summary>
         /// Indica si el indicador de iglesia en el mapa debe ser visible o no.
         /// </summary>
-        private bool mostrarIglesia           = true;
+        private bool mostrarIglesia = true;
 
         /// <summary>
         /// Indica si los indicadores de masters en el mapa deben ser visibles o no.
         /// </summary>
-        private bool mostrarMasters           = true;
+        private bool mostrarMasters = true;
+
         /// <summary>
         /// Indica si los indicadores de masters en el mapa deben ser visibles o no.
         /// </summary>
-        private bool mostrarServants          = true;
+        private bool mostrarServants = true;
 
         /// <summary>
         /// Indica si los indicadores de invocaciones en el mapa deben ser visibles o no.
         /// </summary>
-        private bool mostrarInvocaciones      = true;
+        private bool mostrarInvocaciones = true;
+
         /// <summary>
         /// Indica si los indicadores de trampas en el mapa deben ser visibles o no.
         /// </summary>
-        private bool mostrarTrampas           = true;
+        private bool mostrarTrampas = false;
 
         /// <summary>
         /// Indica si los indicadores de cadaveres de masters en el mapa deben ser visibles o no.
         /// </summary>
-        private bool mostrarCadaveresMasters  = false;
+        private bool mostrarCadaveresMasters = false;
+
         /// <summary>
         /// Indica si los indicadores de cadaveres de servants en el mapa deben ser visibles o no.
         /// </summary>
@@ -52,12 +55,12 @@ namespace AppGM.Core
         /// <summary>
         /// Indica si las insignia de alianzas de personajes deben ser visibles sobre los indicadores de los mismos.
         /// </summary>
-        private bool mostrarAlianzas          = false;
+        private bool mostrarAlianzas = false;
 
         /// <summary>
         /// Indica si solo los indicadores de servants y masters (parties) deben ser visibles o no.
         /// </summary>
-        private bool mostrarParties           = false;
+        private bool mostrarParties = false;
 
         /// <summary>
         /// Indica si el valor de <see cref="MuestraUnidadesParties"/> cambia para actualizar el valor de
@@ -159,8 +162,12 @@ namespace AppGM.Core
             -(TamañoImagenesPosicion.Y / 2.0f).Round(1));
 
         
-        // Propiedades de visibilidad de unidades en el mapa:
+        // Propiedades de visibilidad de elementos en el mapa:
 
+        /// <summary>
+        /// Indica si se debe mostrar el tablero de casillas sobre el mapa.
+        /// </summary>
+        public bool MuestraTableroDeCasillas { get; set; } = false;
 
         /// <summary>
         /// Indica si se debe mostrar la unidad de ingreso de posicion general.
@@ -355,8 +362,7 @@ namespace AppGM.Core
         {
             controladorMapa = _controlador;
 
-            PathImagen = "../../../Media/Imagenes/Mapas/" +
-                          controladorMapa.NombreMapa + controladorMapa.ObtenerExtension();
+            PathImagen = $"../../../Media/Imagenes/Mapas/{controladorMapa.NombreMapa}{controladorMapa.ObtenerExtension()}";
 
             Dictionary<ENumeroParty, ViewModelUnidadParty> posicionesParty = new Dictionary<ENumeroParty, ViewModelUnidadParty>();
 

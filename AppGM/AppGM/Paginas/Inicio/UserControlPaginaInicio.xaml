@@ -28,7 +28,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="310"/>
         </Grid.ColumnDefinitions>
 
         <!-- Contenedor de la lista de roles y boton de agregar rol -->
@@ -101,29 +101,31 @@
 
         <!-- Contenedor botones reglas, informacion e items -->
 
-        <StackPanel Grid.Column="2"
-                    Margin="0 0 25 0"
-                    >
+        <Viewbox Grid.Column="2">
 
-            <!-- Reglas -->
-            <Button Style="{StaticResource BotonReglas}"
-                    Margin=" 0 50 5 20"
-                    HorizontalAlignment="Left"
-            />
+            <StackPanel>
+                
+                <!-- Reglas -->
+                <Button Style="{StaticResource BotonReglas}"
+                        Margin="50, 0, 100, 150"
+                        HorizontalAlignment="Left"
+                />
 
-            <!-- Informacion -->
-            <Button Style="{StaticResource BotonInfo}"
-                    Margin=" 0 10 5 20"
-                    HorizontalAlignment="Left"
-                    />
+                <!-- Informacion -->
+                <Button Style="{StaticResource BotonInfo}"
+                        Margin="50, 0, 50, 150"
+                        HorizontalAlignment="Left"
+                />
             
-            <!-- Items -->
-            <Button Style="{StaticResource BotonItems}"
-                    Margin=" 0 10 5 20"
-                    HorizontalAlignment="Left"
-                    />
+                <!-- Items -->
+                <Button Style="{StaticResource BotonItems}"
+                        Margin="50, 0, 50, 250"
+                        HorizontalAlignment="Left"
+                />
 
-        </StackPanel>
+            </StackPanel>
+
+        </Viewbox>
 
 
     </Grid>

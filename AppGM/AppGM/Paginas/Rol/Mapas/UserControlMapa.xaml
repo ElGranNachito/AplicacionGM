@@ -9,127 +9,240 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
-
     <!-- UserControl que hace uso del ViewModelMapa -->
-    <Grid Name="Gridsito"
-          PreviewMouseLeftButtonDown="OnPreviewMouseLeftButtonDown">
+    <Grid Background="Black">
 
         <Grid.RowDefinitions>
+            <RowDefinition Height="*" MaxHeight="20"/>
             <RowDefinition Height="6*"/>
         </Grid.RowDefinitions>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*" MaxWidth="200"/>
-            <ColumnDefinition Width="6*"/>
-        </Grid.ColumnDefinitions>
-
-        <!-- Columna izquierda -->
-        <Grid Column="0" Row="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="40"/>
-            </Grid.RowDefinitions>
-
-            <local:UserControlIngresoPosicionGeneral 
-                Grid.Row="0"
-                Visibility="{Binding MuestraUnidadIngresoPosicion, Converter={local:BooleanToVisibilityConverterColapsar}}"
-                />
-
-            <!-- Lista de entidades de personajes y objetos -->
-            <Border Grid.Row="1" BorderBrush="Aqua" BorderThickness="0 2 0 2">
-
-                <local:UserControlListaIngresoPosicion Grid.Row="0" DataContext="{Binding Posiciones}"/>
-
-            </Border>
-
-            <!-- Lista de entidades parties -->
-            <Border Grid.Row="2" BorderBrush="Aqua" BorderThickness="0 2 0 2">
-
-                <local:UserControlListaIngresoPosicionParty Grid.Row="1" DataContext="{Binding PosicionesParties}"/>
-
-            </Border>
-
-            <!-- Boton añadir participante -->
-            <Button  Grid.Row="3"
-                Content="Añadir Participante"
-                Command="{Binding ComandoAñadirParticipante}"/>
-
-        </Grid>
-
-        <Border Padding="5" Grid.Column="1" Grid.Row="0" Background="Gray">
-
+        <!--Seccion de solapas-->
+        <Border
+            Grid.Row="0"
+            BorderBrush="Aqua"
+            BorderThickness="0 0 0 2">
+            
             <Grid>
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*" MaxWidth="100"/>
+                    <ColumnDefinition Width="*" MaxWidth="100"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- Textos posicion Y -->
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
+                <!-- Solapa mapa -->
+                <Grid Grid.Row="0" Grid.Column="0">
+                    
+                    <Menu Style="{StaticResource MenuSolapaBase}">
+                        <MenuItem Header="Mapa" Style="{StaticResource MenuOpcionesMapa}" ItemContainerStyle="{DynamicResource MenuItemOpcionesMapa1}" Template="{DynamicResource MenuItemOpcionesMapaControlTemplate2}">  
+                        </MenuItem>
+                    </Menu>
 
-                    <TextBlock Text="0" FontFamily="{StaticResource 'Font Canon'}" FontSize="{StaticResource TamañoFontMediano}"/>
-                    <TextBlock Text="{Binding MitadTamañoCanvasY, Mode=OneWay}" Grid.Row="1" Grid.RowSpan="2" VerticalAlignment="Center" FontFamily="{StaticResource 'Font Canon'}" FontSize="{StaticResource TamañoFontMediano}"/>
-                    <TextBlock Text="{Binding TamañoCanvasY, Mode=OneWay}" Grid.Row="2" FontFamily="{StaticResource 'Font Canon'}" FontSize="{StaticResource TamañoFontMediano}"/>
                 </Grid>
 
-                <Grid Grid.Column="1">
-
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-
-                    <!-- Textos posicion X -->
-                    <Grid>
-
-                        <TextBlock FontFamily="{StaticResource 'Font Canon'}"
-                                   FontSize="{StaticResource TamañoFontMediano}"
-                                   Text="{Binding MitadTamañoCanvasX}" 
-                                   HorizontalAlignment="Center"/>
-                        <TextBlock FontFamily="{StaticResource 'Font Canon'}"
-                                   FontSize="{StaticResource TamañoFontMediano}"
-                                   Text="{Binding TamañoCanvasX}"
-                                   HorizontalAlignment="Right"/>
-
-                    </Grid>
-
-                    <!-- Mapa -->
-                    <Grid Grid.Row="1">
-
-                        <ScrollViewer
-                            VerticalScrollBarVisibility="Auto"
-                            HorizontalScrollBarVisibility="Auto">
-                            <Canvas
-                                SizeChanged="OnMapaSizeXChanged"
-                                Width="{Binding ElementName=mapa, Path=ActualWidth}"
-                                Height="{Binding ElementName=mapa, Path=ActualHeight}">
-
-                                <!-- Fondo mapa -->
-                                <Image x:Name="mapa" Source="{Binding PathImagen}"/>
-
-                                <!-- Imagenes de las entidades -->
-                                <local:UserControlListaImagenPosicion DataContext="{Binding Posiciones}"/>
-
-                                <!-- Imagenes de las entidades parties-->
-                                <local:UserControlListaImagenPosicion DataContext="{Binding PosicionesParties}"/>
-                            </Canvas>
-                        </ScrollViewer>
-
-                    </Grid>
+                <!-- Solapa opciones mapa-->
+                <Grid Grid.Row="0" Grid.Column="1">
+                    
+                    <Menu Style="{StaticResource MenuSolapaBase}">
+                        <MenuItem Header="Opciones" Style="{StaticResource MenuOpcionesMapa}" ItemContainerStyle="{DynamicResource MenuItemOpcionesMapa1}" Template="{DynamicResource MenuItemOpcionesMapaControlTemplate2}">  
+                            <MenuItem Header="Unidades" Style="{StaticResource MenuOpcionesMapa}" ItemContainerStyle="{DynamicResource MenuItemOpcionesMapa1}" Template="{DynamicResource MenuItemOpcionesMapaControlTemplate2}">
+                                <MenuItem Header="Iglesia" 
+                                          IsCheckable="true" 
+                                          IsChecked="{Binding MuestraUnidadIglesia, Mode=TwoWay}"
+                                          ToolTip="Mostrar la unidad de la Iglesia en el mapa."
+                                          />  
+                                <MenuItem Header="Masters" 
+                                          IsCheckable="true" 
+                                          IsChecked="{Binding MuestraUnidadesMasters, Mode=TwoWay}"
+                                          ToolTip="Mostrar las unidades de masters en el mapa."
+                                          />
+                                <MenuItem Header="Servants" 
+                                          IsCheckable="true" 
+                                          IsChecked="{Binding MuestraUnidadesServants, Mode=TwoWay}"
+                                          ToolTip="Mostrar las unidades de servants en el mapa."
+                                          />
+                                <MenuItem Header="Cadaveres de masters" 
+                                          IsCheckable="true" 
+                                          IsChecked="{Binding MuestraUnidadesCadaveresMasters, Mode=TwoWay}"
+                                          ToolTip="Mostrar las unidades de cadaveres de masters en el mapa."
+                                          />
+                                <MenuItem Header="Cadaveres de servants" 
+                                          IsCheckable="true" 
+                                          IsChecked="{Binding MuestraUnidadesCadaveresServants, Mode=TwoWay}"
+                                          ToolTip="Mostrar las unidades de cadaveres de servants en el mapa."
+                                          />
+                                <MenuItem Header="Parties" 
+                                          IsCheckable="true" 
+                                          IsChecked="{Binding MuestraUnidadesParties, Mode=TwoWay}"
+                                          ToolTip="Mostrar las parties en las unidades de personajes sobre el mapa."
+                                          />
+                                <MenuItem Header="Alianzas" 
+                                          IsCheckable="true"
+                                          IsChecked="{Binding MuestraUnidadesAlianzas, Mode=TwoWay}"
+                                          ToolTip="Mostrar las alianzas en las unidades de personajes sobre el mapa."
+                                          />
+                                <MenuItem Header="Invocaciones" 
+                                          IsCheckable="true" 
+                                          IsChecked="{Binding MuestraUnidadesInvocaciones, Mode=TwoWay}"
+                                          ToolTip="Mostrar las unidades de invocaciones en el mapa."
+                                          />
+                                <MenuItem Header="Trampas" 
+                                          IsCheckable="true" 
+                                          IsChecked="{Binding MuestraUnidadesTrampas, Mode=TwoWay}"
+                                          ToolTip="Mostrar las unidades de trampas en el mapa."
+                                          />
+                            </MenuItem>
+                            <Separator/>
+                            <MenuItem Header="Tablero" Style="{StaticResource MenuOpcionesMapa}" ItemContainerStyle="{DynamicResource MenuItemOpcionesMapa1}" Template="{DynamicResource MenuItemOpcionesMapaControlTemplate2}">
+                                <MenuItem Header="Casillas" 
+                                          IsCheckable="true"
+                                          IsChecked="{Binding MuestraTableroDeCasillas, Mode=TwoWay}"
+                                          ToolTip="Habilitar tablero por casillas."
+                                          />  
+                            </MenuItem>
+                        </MenuItem>
+                    </Menu>
 
                 </Grid>
 
             </Grid>
 
         </Border>
+    
+        <!--Seccion del mapa-->
+        <Grid 
+            Grid.Row="1"
+            Name="Gridsito"
+            PreviewMouseLeftButtonDown="OnPreviewMouseLeftButtonDown">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" MaxWidth="200"/>
+                <ColumnDefinition Width="6*"/>
+            </Grid.ColumnDefinitions>
+        
+            <!-- Columna izquierda -->
+            <Grid Column="0" Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+            
+                <local:UserControlIngresoPosicionGeneral 
+                    Grid.Row="0"
+                    Visibility="{Binding MuestraUnidadIngresoPosicion, Converter={local:BooleanToVisibilityConverterColapsar}}"
+                    />
+            
+                <!-- Lista de entidades de personajes y objetos -->
+                <Border Grid.Row="1" BorderBrush="Aqua" BorderThickness="0 2 0 2">
+            
+                    <local:UserControlListaIngresoPosicion Grid.Row="0" DataContext="{Binding Posiciones}"/>
+            
+                </Border>
+            
+                <!-- Lista de entidades parties -->
+                <Border Grid.Row="2" BorderBrush="Aqua" BorderThickness="0 2 0 2">
+            
+                    <local:UserControlListaIngresoPosicionParty Grid.Row="1" DataContext="{Binding PosicionesParties}"/>
+            
+                </Border>
+            
+                <!-- Boton añadir participante -->
+                <Button  Grid.Row="3"
+                    Content="Añadir Participante"
+                    Command="{Binding ComandoAñadirParticipante}"/>
+            
+            </Grid>
+        
+            <Border Padding="5" Grid.Column="1" Grid.Row="0" Background="Gray">
+            
+                <Grid>
+            
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+            
+                    <!-- Textos posicion Y -->
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+            
+                        <TextBlock Text="0" FontFamily="{StaticResource 'Font Canon'}" FontSize="{StaticResource TamañoFontMediano}"/>
+                        <TextBlock Text="{Binding MitadTamañoCanvasY, Mode=OneWay}" Grid.Row="1" Grid.RowSpan="2" VerticalAlignment="Center" FontFamily="{StaticResource 'Font Canon'}" FontSize="{StaticResource TamañoFontMediano}"/>
+                        <TextBlock Text="{Binding TamañoCanvasY, Mode=OneWay}" Grid.Row="2" FontFamily="{StaticResource 'Font Canon'}" FontSize="{StaticResource TamañoFontMediano}"/>
+                    </Grid>
+            
+                    <Grid Grid.Column="1">
+            
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+            
+                        <!-- Textos posicion X -->
+                        <Grid>
+            
+                            <TextBlock FontFamily="{StaticResource 'Font Canon'}"
+                                       FontSize="{StaticResource TamañoFontMediano}"
+                                       Text="{Binding MitadTamañoCanvasX}" 
+                                       HorizontalAlignment="Center"/>
+                            <TextBlock FontFamily="{StaticResource 'Font Canon'}"
+                                       FontSize="{StaticResource TamañoFontMediano}"
+                                       Text="{Binding TamañoCanvasX}"
+                                       HorizontalAlignment="Right"/>
+            
+                        </Grid>
+            
+                        <!-- Mapa -->
+                        <Grid Grid.Row="1">
+            
+                            <!--<ScrollViewer
+                                VerticalScrollBarVisibility="Auto"
+                                HorizontalScrollBarVisibility="Auto">
+                                
+
+
+                            </ScrollViewer>-->
+            
+                            <!--Tablero de casillas-->
+                            <local:UserControlFilaCasillas HorizontalAlignment="Left" DataContext="{Binding Posiciones}"/>
+
+                            <local:ZoomBorder x:Name="border" ClipToBounds="True" Background="Gray">
+                                    
+                                <Canvas
+                                    SizeChanged="OnMapaSizeXChanged"
+                                    Width="{Binding ElementName=mapa, Path=ActualWidth}"
+                                    Height="{Binding ElementName=mapa, Path=ActualHeight}">
+            
+                                    <!-- Fondo mapa -->
+                                    <Image x:Name="mapa" Source="{Binding PathImagen}"/>
+
+                                    <!-- Imagenes de las entidades -->
+                                    <local:UserControlListaImagenPosicion DataContext="{Binding Posiciones}"/>
+            
+                                    <!-- Imagenes de las entidades parties-->
+                                    <local:UserControlListaImagenPosicion DataContext="{Binding PosicionesParties}"/>
+
+                                </Canvas>
+
+                            </local:ZoomBorder>
+
+                        </Grid>
+            
+                    </Grid>
+            
+                </Grid>
+            
+            </Border>
+
+        </Grid>
 
     </Grid>
+
 </local:BaseUserControl>
