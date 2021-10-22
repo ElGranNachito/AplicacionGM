@@ -12,6 +12,8 @@
                 <ResourceDictionary Source="Recursos/Imagenes.xaml"/>
                 <ResourceDictionary Source="Recursos/Fonts.xaml"/>
                 <ResourceDictionary Source="Recursos/Botones.xaml"/>
+                <ResourceDictionary Source="Recursos/Menues.xaml"/>
+                <ResourceDictionary Source="Recursos/Bordes.xaml"/>
                 <ResourceDictionary Source="Recursos/CamposDeTexto.xaml"/>
                 <ResourceDictionary Source="Recursos/Controles.xaml"/>
                 <ResourceDictionary Source="Recursos/Ventanas.xaml"/>

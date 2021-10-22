@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Media\Imagenes\Mapas\Seoul.png" />
+    <Resource Include="Media\Imagenes\Mapas\Tokyo.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Media\Imagenes\Posiciones\Berserker.png" />
