@@ -12,7 +12,7 @@ namespace AppGM.Core
 		{
 			ControladorGenerico = _controladorTirada;
 
-			ComandoBotonSuperior = new Comando(() =>
+			mAccionBotonSuperior = () =>
 			{
 				var dataContextActual = SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido;
 
@@ -21,12 +21,12 @@ namespace AppGM.Core
 				}, ControladorGenerico.modelo.ObtenerModeloContenedor(), ControladorGenerico);
 
 				SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = vmEdicion;
-			});
+			};
 
-			ComandoBotonInferior = new Comando(() =>
+			mAccionBotonInferior = () =>
 			{
 				ControladorGenerico?.Eliminar();
-			});
+			};
 		}
 
 		protected override void ActualizarCaracteristicas()

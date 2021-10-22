@@ -184,13 +184,15 @@ namespace AppGM.Core
 
             ContenedorListaVariables = new ViewModelListaItems<ViewModelVariableItem>(() =>
             {              
-	            SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = new ViewModelCreacionDeVariable((vm) =>
+	            SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = new ViewModelCreacionDeVariable(async (vm) =>
 	            {
-		            if (vm.Resultado == EResultadoViewModel.Aceptar)
+		            if (vm.Resultado.EsAceptarOFinalizar())
 		            {
                         var nuevaVariable = vm.CrearVariable();
 
                         ModeloHabilidad.Variables.Add(nuevaVariable.modelo);
+
+                        await nuevaVariable.GuardarAsync();
 
                         AñadirVariable((ViewModelVariableItem)vm.CrearVariable().CrearViewModelItem());
 		            }
