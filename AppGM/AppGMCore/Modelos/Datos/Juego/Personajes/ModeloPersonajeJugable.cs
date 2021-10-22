@@ -5,7 +5,7 @@ namespace AppGM.Core
 {
     public abstract class ModeloPersonajeJugable : ModeloPersonaje
     {
-        public EClaseServant EClaseServant { get; set; }
+        public EClaseServant ClaseServant { get; set; }
 
         /// <summary>
         /// Rango en el que el personaje puede realizar hechiceria

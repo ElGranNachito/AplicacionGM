@@ -104,7 +104,7 @@ namespace AppGM.Core
 						Int = 13,
 						Lck = 13,
 
-						EClaseServant = EClaseServant.Berserker,
+						ClaseServant = EClaseServant.Berserker,
 						TipoPersonaje = ETipoPersonaje.Servant,
 						NumeroParty   = ENumeroParty.Party_Berserker
 					};
@@ -145,7 +145,7 @@ namespace AppGM.Core
 						Int = 13,
 						Lck = 13,
 
-						EClaseServant = EClaseServant.Rider,
+						ClaseServant = EClaseServant.Rider,
 						TipoPersonaje = ETipoPersonaje.Servant,
                         NumeroParty   = ENumeroParty.Party_Rider
 					};

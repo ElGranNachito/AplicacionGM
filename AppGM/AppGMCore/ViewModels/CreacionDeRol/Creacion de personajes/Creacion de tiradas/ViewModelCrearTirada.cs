@@ -2,7 +2,6 @@
 using System;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Collections.Generic;
 using System.Windows.Input;
 
 namespace AppGM.Core
@@ -10,7 +9,7 @@ namespace AppGM.Core
 	/// <summary>
 	/// Representa un control para la creacion de una tirada
 	/// </summary>
-	public class ViewModelCrearTirada : ViewModelConResultado<ViewModelCrearTirada>, IAutocompletable
+	public class ViewModelCrearTirada : ViewModelCreacionEdicionDeModelo<ModeloTiradaVariable, ControladorTiradaVariable, ViewModelCrearTirada>, IAutocompletable
 	{
 		#region Eventos
 
@@ -43,11 +42,6 @@ namespace AppGM.Core
 		private string mSeccionActual;
 
 		//------------------------------------------PROPIEDADES---------------------------------------------
-
-		/// <summary>
-		/// Tirada siendo editada actualmente
-		/// </summary>
-		public ControladorTiradaVariable TiradaSiendoEditada { get; init; }
 
 		/// <summary>
 		/// Seccion en la que el usuario se encuentra actualmente posicionado
@@ -123,7 +117,7 @@ namespace AppGM.Core
 
 				mTextoActual = value;
 
-				EsValida = false;
+				EsValido = false;
 			}
 		}
 
@@ -138,16 +132,6 @@ namespace AppGM.Core
 		/// Indica si el tipo de la tirada siendo creada es <see cref="ETipoTirada.Daño"/>
 		/// </summary>
 		public bool EsTiradaDeDaño => ViewModelComboBoxTipoTirada.Valor == ETipoTirada.Daño;
-
-		/// <summary>
-		/// Indica si se esta editando una tirada existente
-		/// </summary>
-		public bool EstaEditando => TiradaSiendoEditada != null;
-
-		/// <summary>
-		/// Indica si la tirada siendo creada es valida
-		/// </summary>
-		public bool EsValida { get; set; }
 
 		/// <summary>
 		/// VM para el combobox de seleccion de tipo de tirada
@@ -189,19 +173,9 @@ namespace AppGM.Core
 		/// <param name="_personaje"><see cref="ModeloConVariablesYTiradas"/> para el que se esta creando la tirada</param>
 		/// <param name="_controladorTiradaSiendoEditada">Controlador de la tirada que esta siendo editada</param>
 		public ViewModelCrearTirada(Action<ViewModelCrearTirada> _accionSalir, ModeloConVariablesYTiradas _contenedorTirada, ControladorTiradaVariable _controladorTiradaSiendoEditada)
-			: base(_accionSalir)
+			: base(_accionSalir, _controladorTiradaSiendoEditada)
 		{
 			mModeloContenedor = _contenedorTirada;
-			TiradaSiendoEditada = _controladorTiradaSiendoEditada;
-
-			if(TiradaSiendoEditada != null)
-			{
-				mModeloTirada = TiradaSiendoEditada.modelo.CrearCopiaProfundaEnSubtipo(TiradaSiendoEditada.modelo.GetType()) as ModeloTiradaVariable;
-			}
-			else
-			{
-				mModeloTirada = new ModeloTiradaVariable();
-			}
 
 			ViewModelComboBoxTipoTirada.OnValorSeleccionadoCambio += async (ViewModelItemComboBoxBase<ETipoTirada> anterior, ViewModelItemComboBoxBase<ETipoTirada> actual) =>
 			{
@@ -229,11 +203,11 @@ namespace AppGM.Core
 
 		#region Metodos
 
-		public ModeloTiradaVariable CrearModeloTirada()
+		public override ModeloTiradaVariable CrearModelo()
 		{
 			ActualizarValidez();
 
-			if (!EsValida)
+			if (!EsValido)
 				return null;
 
 			if (ViewModelComboBoxTipoTirada.ValorSeleccionado.valor == ETipoTirada.Daño && mModeloTirada is ModeloTiradaDeDaño m)
@@ -246,9 +220,9 @@ namespace AppGM.Core
 			return mModeloTirada;
 		}
 
-		public ControladorTiradaVariable CrearControladorTirada()
+		public override ControladorTiradaVariable CrearControlador()
 		{
-			var nuevaTirada = CrearModeloTirada();
+			var nuevaTirada = CrearModelo();
 
 			if (nuevaTirada == null)
 				return null;
@@ -359,12 +333,12 @@ namespace AppGM.Core
 		/// <summary>
 		/// Comprueba la validez de la tirada siendo creada
 		/// </summary>
-		private void ActualizarValidez()
+		protected override void ActualizarValidez()
 		{
 			//Comprobamos que el nombre no este vacio
 			if (Nombre.IsNullOrWhiteSpace())
 			{
-				EsValida = false;
+				EsValido = false;
 
 				return;
 			}
@@ -375,7 +349,7 @@ namespace AppGM.Core
 			//Nos aseguramos de que no sea null
 			if (tipoTiradaSeleccionada == null)
 			{
-				EsValida = false;
+				EsValido = false;
 
 				return;
 			}
@@ -383,14 +357,14 @@ namespace AppGM.Core
 			//Si el tipo de tirada es de daño nos aseguramos de que se haya seleccionado una stat
 			if (tipoTiradaSeleccionada.valor == ETipoTirada.Daño && ViewModelComboBoxStatTirada.ValorSeleccionado == null)
 			{
-				EsValida = false;
+				EsValido = false;
 
 				return;
 			}
 
 			if(!MultiplicadorEspecialidad.EsUnNumero())
 			{
-				EsValida = false;
+				EsValido = false;
 
 				return;
 			}
@@ -401,7 +375,7 @@ namespace AppGM.Core
 			//Si la tirada no es valida...
 			if (!resultadoComprobacion.esValida)
 			{
-				EsValida = false;
+				EsValido = false;
 
 				MensajeErrorTirada = resultadoComprobacion.error;
 
@@ -410,7 +384,7 @@ namespace AppGM.Core
 
 			MensajeErrorTirada = string.Empty;
 
-			EsValida = true;
+			EsValido = true;
 		} 
 
 		#endregion

@@ -7,7 +7,7 @@ namespace AppGM.Core
 	/// <summary>
 	/// Representa un control para la creacion/edicion de un <see cref="ControladorVariable{TipoVariable}"/>
 	/// </summary>
-	public class ViewModelCreacionDeVariable : ViewModelConResultado<ViewModelCreacionDeVariable>
+	public class ViewModelCreacionDeVariable : ViewModelCreacionEdicionDeModelo<ModeloVariableBase, ControladorVariableBase, ViewModelCreacionDeVariable> 
 	{
 		#region Campos & Propiedades
 
@@ -18,40 +18,20 @@ namespace AppGM.Core
 		/// </summary>
 		private bool mEsLista;
 
-		/// <summary>
-		/// Controlador de la variable que esta siendo editada
-		/// </summary>
-		public readonly ControladorVariableBase variableSiendoEditada;
-
 		//-------------------------------------PROPIEDADES-------------------------------------
-
-		/// <summary>
-		/// Modelo de variable creado
-		/// </summary>
-		public ModeloVariableBase ModeloVariable { get; private set; }
-
-		/// <summary>
-		/// Indica si la variable ya puede ser creada
-		/// </summary>
-		public bool EsValido { get; private set; }
-
-		/// <summary>
-		/// Indica si se esta editando un <see cref="ModeloVariable"/> existente
-		/// </summary>
-		public bool EstaEditando => variableSiendoEditada != null;
 
 		/// <summary>
 		/// Nombre de la variable
 		/// </summary>
 		public string NombreVariable
 		{
-			get => ModeloVariable.NombreVariable;
+			get => ModeloCreado.NombreVariable;
 			set
 			{
-				if (value == ModeloVariable.NombreVariable)
+				if (value == ModeloCreado.NombreVariable)
 					return;
 
-				ModeloVariable.NombreVariable = value;
+				ModeloCreado.NombreVariable = value;
 
 				ActualizarValidez();
 			}
@@ -62,8 +42,8 @@ namespace AppGM.Core
 		/// </summary>
 		public string DescripcionVariable
 		{
-			get => ModeloVariable.DescripcionVariable;
-			set => ModeloVariable.DescripcionVariable = value;
+			get => ModeloCreado.DescripcionVariable;
+			set => ModeloCreado.DescripcionVariable = value;
 		}
 
 		/// <summary>
@@ -107,18 +87,18 @@ namespace AppGM.Core
 		/// </summary>
 		public Type TipoSeleccionado
 		{
-			get => ModeloVariable.TipoVariable;
+			get => ModeloCreado.TipoVariable;
 			set
 			{
-				if(value == ModeloVariable.TipoVariable)
+				if(value == ModeloCreado.TipoVariable)
 					return;
 
-				ModeloVariable.TipoVariableString = value.AssemblyQualifiedName;
+				ModeloCreado.TipoVariableString = value.AssemblyQualifiedName;
 
 				if (VMIngresoVariable != null)
 					VMIngresoVariable.OnEsValidoCambio -= ActualizarValidez;
 
-				VMIngresoVariable = new ViewModelIngresoVariable(ModeloVariable.TipoVariable, EsLista, true);
+				VMIngresoVariable = new ViewModelIngresoVariable(ModeloCreado.TipoVariable, EsLista, true);
 
 				VMIngresoVariable.OnEsValidoCambio += ActualizarValidez;
 
@@ -139,10 +119,8 @@ namespace AppGM.Core
 		/// <param name="_accionSalir">Accion que se ejecutara al salir del control representado por este view model</param>
 		/// <param name="_variableEditar">Controlador de la variable que estamos editando</param>
 		public ViewModelCreacionDeVariable(Action<ViewModelCreacionDeVariable> _accionSalir, ControladorVariableBase _variableEditar = null)
-			:base(_accionSalir)
+			:base(_accionSalir, _variableEditar, typeof(ModeloVariableInt))
 		{
-			variableSiendoEditada = _variableEditar;
-
 			ComboBoxTiposDisponibles.OnValorSeleccionadoCambio += (anterior, actual) =>
 			{
 				TipoSeleccionado = actual.valor;
@@ -150,14 +128,10 @@ namespace AppGM.Core
 
 			if (EstaEditando)
 			{
-				ModeloVariable = variableSiendoEditada.modelo.CrearCopiaProfundaEnSubtipo(variableSiendoEditada.modelo.GetType()) as ModeloVariableBase;
-
-				TipoSeleccionado = variableSiendoEditada.TipoVariable;
+				TipoSeleccionado = ModeloSiendoEditado.TipoVariable;
 			}
 			else
 			{
-				ModeloVariable = new ModeloVariableInt();
-
 				//Colocamos como valor por defecto el primer elemento de los tipos posibles
 				ComboBoxTiposDisponibles.ValorSeleccionado = ComboBoxTiposDisponibles.ValoresPosibles.First();
 			}
@@ -187,11 +161,18 @@ namespace AppGM.Core
 
 		#region Metodos
 
+		public override ModeloVariableBase CrearModelo()
+		{
+			var controlador = CrearControlador();
+
+			return controlador.modelo;
+		}
+
 		/// <summary>
 		/// Crea un <see cref="ModeloVariableBase"/> que representa a la variable creada
 		/// </summary>
 		/// <returns><see cref="ModeloVariableBase"/> que representa a la variable creada o null si <see cref="EsValido"/> es false</returns>
-		public ControladorVariableBase CrearVariable()
+		public override ControladorVariableBase CrearControlador()
 		{
 			ActualizarValidez();
 
@@ -204,9 +185,9 @@ namespace AppGM.Core
 			//Si estamos editando...
 			if (EstaEditando)
 			{
-				ModeloVariable.CrearCopiaProfundaEnSubtipo(ModeloVariable.GetType(), variableSiendoEditada.modelo);
+				ModeloCreado.CrearCopiaProfundaEnSubtipo(ModeloCreado.GetType(), ControladorSiendoEditado.modelo);
 
-				controladorVariableFinal = variableSiendoEditada;
+				controladorVariableFinal = ControladorSiendoEditado;
 			}
 			//Sino
 			else
@@ -227,7 +208,7 @@ namespace AppGM.Core
 		/// <summary>
 		/// Actualiza el valor de <see cref="EsValido"/>
 		/// </summary>
-		private void ActualizarValidez()
+		protected override void ActualizarValidez()
 		{
 			if (VMIngresoVariable is null or { EsValido: false })
 			{

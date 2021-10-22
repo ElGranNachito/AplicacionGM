@@ -39,7 +39,7 @@ namespace AppGM.Core
 				CaracteristicasItem.Elementos.Add(new ViewModelCaracteristicaItem
 				{
 					Titulo = "Clase Servant",
-					Valor = p.EClaseServant.ToString()
+					Valor = p.ClaseServant.ToString()
 				});
 			}
 		}

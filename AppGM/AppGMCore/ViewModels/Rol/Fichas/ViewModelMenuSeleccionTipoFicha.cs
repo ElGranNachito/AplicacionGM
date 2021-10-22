@@ -109,7 +109,7 @@ namespace AppGM
                 new ModeloServant
                 {
                     Nombre = "King Pellinore",
-                    EClaseServant = EClaseServant.Saber,
+                    ClaseServant = EClaseServant.Saber,
                     Str = ERango.A.AValorNumerico(),
                     End = ERango.A.AValorNumerico(),
                     Agi = ERango.C.AValorNumerico(),
@@ -136,10 +136,10 @@ namespace AppGM
                     Caracteristicas = new ModeloCaracteristicas
                     {
                        Fisico = "1.90, Mamadisimo",
-                       EArquetipo = EArquetipo.Mago,
+                       Arquetipo = EArquetipo.Mago,
                        Edad = 32,
-                       EManoDominante = EManoDominante.Derecha,
-                       ESexo = ESexo.Masculino,
+                       ManoDominante = EManoDominante.Derecha,
+                       Sexo = ESexo.Masculino,
                        Nacionalidad = "Britanico"
                     }
                 }

@@ -22,15 +22,15 @@ namespace AppGM.Core
         /// <summary>
         /// Sexo del personaje
         /// </summary>
-        public ESexo ESexo { get; set; }
+        public ESexo Sexo { get; set; }
         /// <summary>
         /// Tipo de personalidad del personaje
         /// </summary>
-        public EArquetipo EArquetipo { get; set; }
+        public EArquetipo Arquetipo { get; set; }
         /// <summary>
         /// Mano dominante
         /// </summary>
-        public EManoDominante EManoDominante { get; set; }
+        public EManoDominante ManoDominante { get; set; }
 
         /// <summary>
         /// Breve descripcion de su contextura fisica

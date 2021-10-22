@@ -8,7 +8,7 @@ namespace AppGM.Core
     /// <summary>
     /// Representa una habilidad en un <see cref="ViewModelCrearPersonaje"/>
     /// </summary>
-    public class ViewModelCrearHabilidad : ViewModelConResultado<ViewModelCrearHabilidad>
+    public class ViewModelCrearHabilidad : ViewModelCreacionEdicionDeModelo<ModeloHabilidad, ControladorHabilidad, ViewModelCrearHabilidad>
     {
         #region Miembros
 
@@ -21,13 +21,9 @@ namespace AppGM.Core
 
         #region Propiedades
 
-        public ModeloHabilidad ModeloHabilidad { get; private set; }
-
-        public ControladorHabilidad HabilidadSiendoEditada { get; private set; }
-
         public string TextoNivelMagia => $"Lv.{ObtenerNivelDeMagia()}";
 
-        public bool PuedeFinalizar => PuedeFinalizarCreacion();
+        public bool PuedeFinalizar => EsValido;
         public bool EsMagia        => ComboBoxTipoHabilidad.Valor == ETipoHabilidad.Hechizo;
         public bool PuedeElegirSiEsMagiaParticular => PuedeAñadirMagiasParticulares();
         public bool PuedeElegirSiTieneRango => !EsMagia && !RequiereRango;
@@ -37,22 +33,20 @@ namespace AppGM.Core
         public bool UtilizaPrana => EsMagia && (mModeloPersonaje.TipoPersonaje & (ETipoPersonaje.Servant | ETipoPersonaje.Invocacion)) != 0;
         public bool UtilizaOd => EsMagia && (mModeloPersonaje.TipoPersonaje & (ETipoPersonaje.Servant | ETipoPersonaje.NPC)) != 0;
 
-        public bool EstaEditando => HabilidadSiendoEditada != null;
-
         public bool ModeloGuardado { get; private set; } = false;
 
         public string CostoDeMana
         {
             get
 			{
-                if (ModeloHabilidad is ModeloMagia m)
+                if (ModeloCreado is ModeloMagia m)
                     return m.CostoDeMana.ToString();
 
                 return string.Empty;
             }
             set
             {
-                if(ModeloHabilidad is ModeloMagia m)
+                if(ModeloCreado is ModeloMagia m)
 				{
                     m.CostoDeMana = int.Parse(value);
 
@@ -65,14 +59,14 @@ namespace AppGM.Core
         {
 	        get
 			{
-                if (ModeloHabilidad is ModeloMagia m)
+                if (ModeloCreado is ModeloMagia m)
                     return m.CostoDeOdOPrana.ToString();
 
                 return string.Empty;
             }
             set
             {
-                if (ModeloHabilidad is ModeloMagia m)
+                if (ModeloCreado is ModeloMagia m)
                 {
                     m.CostoDeOdOPrana = int.Parse(value);
 
@@ -85,14 +79,14 @@ namespace AppGM.Core
         {
 	        get
 			{
-                if (ModeloHabilidad is ModeloMagia m)
+                if (ModeloCreado is ModeloMagia m)
                     return m.CostoDeOdOPrana.ToString();
 
                 return string.Empty;
             }
 	        set
 	        {
-                if (ModeloHabilidad is ModeloMagia m)
+                if (ModeloCreado is ModeloMagia m)
                 {
                     m.CostoDeOdOPrana = int.Parse(value);
 
@@ -120,27 +114,23 @@ namespace AppGM.Core
         #region Constructor
 
         public ViewModelCrearHabilidad(ModeloPersonaje _modeloPersonaje, Action<ViewModelCrearHabilidad> accionSalir, ControladorHabilidad _habilidad = null)    
-			:base(accionSalir)
+			:base(accionSalir, _habilidad)
         {
 	        mModeloPersonaje  = _modeloPersonaje;
-            HabilidadSiendoEditada = _habilidad;
+            ControladorSiendoEditado = _habilidad;
 
             if (EstaEditando)
             {
-                ModeloHabilidad = HabilidadSiendoEditada.modelo.CrearCopiaProfundaEnSubtipo(HabilidadSiendoEditada.modelo.GetType()) as ModeloHabilidad;
-
                 ModeloGuardado = true;
 
                 DispararPropertyChanged(nameof(EstaEditando));
             }
             else
             {
-	            ModeloHabilidad = new ModeloHabilidad();             
+	            ModeloCreado.Dueño = mModeloPersonaje;
+                mModeloPersonaje.Habilidades.Add(ModeloCreado);
 
-	            ModeloHabilidad.Dueño = mModeloPersonaje;
-                mModeloPersonaje.Habilidades.Add(ModeloHabilidad);
-
-                SistemaPrincipal.GuardarModelo(ModeloHabilidad);
+                SistemaPrincipal.GuardarModelo(ModeloCreado);
             }
 
             ComboBoxTipoHabilidad = new ViewModelComboBox<ETipoHabilidad>(_modeloPersonaje.TipoPersonaje.ObtenerTiposDeHabilidadDisponibles());
@@ -166,19 +156,19 @@ namespace AppGM.Core
 
                     if (vm.Resultado.EsAceptarOFinalizar())
                     {
-                        var nuevaTirada = vm.CrearControladorTirada();
+                        var nuevaTirada = vm.CrearControlador();
 
-                        nuevaTirada.modelo.HabilidadContenedora = ModeloHabilidad;
+                        nuevaTirada.modelo.HabilidadContenedora = ModeloCreado;
 
                         if (vm.Resultado.EsAceptarOFinalizar())
-                            ModeloHabilidad.Tiradas.Add(nuevaTirada.modelo);
+                            ModeloCreado.Tiradas.Add(nuevaTirada.modelo);
 
                         await nuevaTirada.GuardarAsync();
 
                         AñadirTirada((ViewModelTiradaItem)nuevaTirada.CrearViewModelItem());
                     }
 
-                }, ModeloHabilidad, null);
+                }, ModeloCreado, null);
 
             }, true, "Tiradas");
 
@@ -188,13 +178,13 @@ namespace AppGM.Core
 	            {
 		            if (vm.Resultado.EsAceptarOFinalizar())
 		            {
-                        var nuevaVariable = vm.CrearVariable();
+                        var nuevaVariable = vm.CrearControlador();
 
-                        ModeloHabilidad.Variables.Add(nuevaVariable.modelo);
+                        ModeloCreado.Variables.Add(nuevaVariable.modelo);
 
                         await nuevaVariable.GuardarAsync();
 
-                        AñadirVariable((ViewModelVariableItem)vm.CrearVariable().CrearViewModelItem());
+                        AñadirVariable((ViewModelVariableItem)vm.CrearControlador().CrearViewModelItem());
 		            }
 
 		            SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = this;
@@ -213,7 +203,7 @@ namespace AppGM.Core
 	            Resultado = EResultadoViewModel.Cancelar;
 
                 if (!EstaEditando && !ModeloGuardado)
-                    SistemaPrincipal.EliminarModelo(ModeloHabilidad);
+                    SistemaPrincipal.EliminarModelo(ModeloCreado);
 
                 accionSalir(this);
             });
@@ -232,18 +222,23 @@ namespace AppGM.Core
             };
         }
 
-        #endregion
+		#endregion
 
-        #region Funciones
+		#region Metodos
 
-        private void FinalizarCreacion()
+		public override ModeloHabilidad CrearModelo()
+		{
+			throw new NotImplementedException();
+		}
+
+		public override ControladorHabilidad CrearControlador()
+		{
+			throw new NotImplementedException();
+		}
+
+		private void FinalizarCreacion()
         {
             
-        }
-
-        private bool PuedeFinalizarCreacion()
-        {
-            return false;
         }
 
         private bool PuedeAñadirMagiasParticulares()
@@ -259,7 +254,7 @@ namespace AppGM.Core
 
         private byte ObtenerNivelDeMagia()
         {
-	        if(ModeloHabilidad is ModeloMagia magia)
+	        if(ModeloCreado is ModeloMagia magia)
 			{
                 int costo = magia.CostoDeOdOPrana;
 
@@ -306,6 +301,11 @@ namespace AppGM.Core
             ContenedorListaTiradas.Items.Add(nuevaTirada);
         }
 
-        #endregion
-    }
+		protected override void ActualizarValidez()
+		{
+			base.ActualizarValidez();
+		}
+
+		#endregion
+	}
 }

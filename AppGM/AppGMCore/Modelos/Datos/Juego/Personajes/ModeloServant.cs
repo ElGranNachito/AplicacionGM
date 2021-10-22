@@ -5,7 +5,7 @@ namespace AppGM.Core
 {
     public class ModeloServant : ModeloPersonajeJugable
     {
-        public ERango ERangoNP { get; set; }
+        public ERango RangoNP { get; set; }
 
         /// <summary>
         /// Energia magica del servant
