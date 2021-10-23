@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AppGM.Core.Migrations
 {
-    public partial class Inicial : Migration
+    public partial class inicial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -32,7 +32,8 @@ namespace AppGM.Core.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    NombreFuncion = table.Column<string>(type: "varchar(50)", nullable: true),
+                    NombreFuncion = table.Column<string>(type: "TEXT", maxLength: 100, nullable: true),
+                    TipoEventoQueManejaString = table.Column<string>(type: "TEXT", maxLength: 255, nullable: true),
                     EsValido = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
@@ -181,7 +182,7 @@ namespace AppGM.Core.Migrations
                     EsAutomata = table.Column<bool>(type: "INTEGER", nullable: true),
                     InvocadorId = table.Column<int>(type: "INTEGER", nullable: true),
                     TurnosDeDuracion = table.Column<byte>(type: "INTEGER", nullable: true),
-                    EClaseServant = table.Column<int>(type: "INTEGER", nullable: true),
+                    ClaseServant = table.Column<int>(type: "INTEGER", nullable: true),
                     RangoHechiceria = table.Column<ushort>(type: "INTEGER", nullable: true),
                     NombreReal = table.Column<string>(type: "TEXT", maxLength: 100, nullable: true),
                     EClaseDeSuServant = table.Column<int>(type: "INTEGER", nullable: true),
@@ -196,7 +197,7 @@ namespace AppGM.Core.Migrations
                     Lore = table.Column<string>(type: "TEXT", maxLength: 5000, nullable: true),
                     Origen = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
                     Afinidad = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
-                    ERangoNP = table.Column<int>(type: "INTEGER", nullable: true),
+                    RangoNP = table.Column<int>(type: "INTEGER", nullable: true),
                     Prana = table.Column<int>(type: "INTEGER", nullable: true),
                     PranaActual = table.Column<int>(type: "INTEGER", nullable: true),
                     Fuente = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
@@ -286,9 +287,9 @@ namespace AppGM.Core.Migrations
                     Edad = table.Column<int>(type: "INTEGER", nullable: false),
                     Estatura = table.Column<int>(type: "INTEGER", nullable: false),
                     Peso = table.Column<int>(type: "INTEGER", nullable: false),
-                    ESexo = table.Column<int>(type: "INTEGER", nullable: false),
-                    EArquetipo = table.Column<int>(type: "INTEGER", nullable: false),
-                    EManoDominante = table.Column<int>(type: "INTEGER", nullable: false),
+                    Sexo = table.Column<int>(type: "INTEGER", nullable: false),
+                    Arquetipo = table.Column<int>(type: "INTEGER", nullable: false),
+                    ManoDominante = table.Column<int>(type: "INTEGER", nullable: false),
                     Fisico = table.Column<string>(type: "TEXT", maxLength: 100, nullable: true),
                     Nacionalidad = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
                     IdPersonaje = table.Column<int>(type: "INTEGER", nullable: false),
@@ -574,7 +575,8 @@ namespace AppGM.Core.Migrations
                 columns: table => new
                 {
                     IDFuncion = table.Column<int>(type: "INTEGER", nullable: false),
-                    IDHabilidad = table.Column<int>(type: "INTEGER", nullable: false)
+                    IDHabilidad = table.Column<int>(type: "INTEGER", nullable: false),
+                    NombreEvento = table.Column<string>(type: "TEXT", maxLength: 100, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -658,7 +660,8 @@ namespace AppGM.Core.Migrations
                 {
                     IDFuncion = table.Column<int>(type: "INTEGER", nullable: false),
                     IDEfecto = table.Column<int>(type: "INTEGER", nullable: false),
-                    TipoFuncion = table.Column<int>(type: "INTEGER", nullable: false)
+                    TipoFuncion = table.Column<int>(type: "INTEGER", nullable: false),
+                    NombreEvento = table.Column<string>(type: "TEXT", maxLength: 100, nullable: true)
                 },
                 constraints: table =>
                 {

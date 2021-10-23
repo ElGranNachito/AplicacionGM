@@ -204,16 +204,15 @@
 
                             <local:ZoomBorder x:Name="border" ClipToBounds="True" Background="Gray">
                                     
-                                <Canvas
-                                    SizeChanged="OnMapaSizeXChanged"
-                                    >
+                                <Grid
+                                    SizeChanged="OnMapaSizeXChanged">
 
-                                    <Canvas.Background>
+                                    <Grid.Background>
                                         <!-- Fondo mapa -->
                                         <ImageBrush
                                             ImageSource="{Binding PathImagen}">
                                         </ImageBrush>
-                                    </Canvas.Background>
+                                    </Grid.Background>
 
 
                                     <Grid Visibility="{Binding MuestraTableroDeCasillas, Converter={local:BooleanToVisibilityConverterOcultar}}">
@@ -222,23 +221,13 @@
 
                                     </Grid>
 
-                                    <!--Tablero de casillas-->
-                                    <!--<Grid HorizontalAlignment="Stretch"
-                                          VerticalAlignment="Stretch" 
-                                          IsHitTestVisible="False">
-
-
-
-                                        
-                                    </Grid>-->
-
                                     <!-- Imagenes de las entidades -->
                                     <local:UserControlListaImagenPosicion DataContext="{Binding Posiciones}"/>
             
                                     <!-- Imagenes de las entidades parties-->
                                     <local:UserControlListaImagenPosicion DataContext="{Binding PosicionesParties}"/>
 
-                                </Canvas>
+                                </Grid>
 
                             </local:ZoomBorder>
 

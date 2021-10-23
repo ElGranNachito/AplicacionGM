@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AppGM.Core.Migrations
 {
     [DbContext(typeof(RolContext))]
-    [Migration("20211022135658_Inicial")]
-    partial class Inicial
+    [Migration("20211023160850_inicial")]
+    partial class inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -156,13 +156,7 @@ namespace AppGM.Core.Migrations
                     b.Property<int>("Id")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("EArquetipo")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("EManoDominante")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("ESexo")
+                    b.Property<int>("Arquetipo")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("Edad")
@@ -181,6 +175,9 @@ namespace AppGM.Core.Migrations
                     b.Property<int>("IdPersonaje")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("ManoDominante")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("ModeloPersonajeJugableId")
                         .HasColumnType("INTEGER");
 
@@ -189,6 +186,9 @@ namespace AppGM.Core.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<int>("Peso")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Sexo")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -359,7 +359,12 @@ namespace AppGM.Core.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("NombreFuncion")
-                        .HasColumnType("varchar(50)");
+                        .HasMaxLength(100)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("TipoEventoQueManejaString")
+                        .HasMaxLength(255)
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -869,6 +874,10 @@ namespace AppGM.Core.Migrations
                     b.Property<int>("IDEfecto")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("NombreEvento")
+                        .HasMaxLength(100)
+                        .HasColumnType("TEXT");
+
                     b.Property<int>("TipoFuncion")
                         .HasColumnType("INTEGER");
 
@@ -889,6 +898,10 @@ namespace AppGM.Core.Migrations
 
                     b.Property<int>("IDHabilidad")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("NombreEvento")
+                        .HasMaxLength(100)
+                        .HasColumnType("TEXT");
 
                     b.HasKey("IDFuncion", "IDHabilidad");
 
@@ -1013,7 +1026,7 @@ namespace AppGM.Core.Migrations
                 {
                     b.HasBaseType("AppGM.Core.ModeloPersonaje");
 
-                    b.Property<int>("EClaseServant")
+                    b.Property<int>("ClaseServant")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("NombreReal")
@@ -1186,9 +1199,6 @@ namespace AppGM.Core.Migrations
                 {
                     b.HasBaseType("AppGM.Core.ModeloPersonajeJugable");
 
-                    b.Property<int>("ERangoNP")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("Fuente")
                         .HasMaxLength(50)
                         .HasColumnType("TEXT");
@@ -1197,6 +1207,9 @@ namespace AppGM.Core.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("PranaActual")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("RangoNP")
                         .HasColumnType("INTEGER");
 
                     b.HasDiscriminator().HasValue(7);

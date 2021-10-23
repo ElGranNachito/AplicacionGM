@@ -172,7 +172,7 @@ namespace AppGM.Core
         /// <summary>
         /// Mitad del tamaño de la imagen
         /// </summary>
-        public ViewModelVector2 MitadTamañoImagenesPosicion => mapa.MitadTamañoImagenesPosicion;
+        public ViewModelVector2 OffsetImagenesPosicion => mapa.OffsetImagenesPosicion;
 
         /// <summary>
         /// Posicion de la imagen en el mapa

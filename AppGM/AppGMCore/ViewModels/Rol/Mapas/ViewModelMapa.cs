@@ -162,13 +162,9 @@ namespace AppGM.Core
         /// <summary>
         /// Mitad del tamaño de las imagenes de las unidades
         /// </summary>
-        public ViewModelVector2 MitadTamañoImagenesPosicion => new ViewModelVector2(
-            -(TamañoImagenesPosicion.X / 2.0f).Round(1),
-            -(TamañoImagenesPosicion.Y / 2.0f).Round(1));
-
-        
-        // Propiedades de visibilidad de elementos en el mapa:
-
+        public ViewModelVector2 OffsetImagenesPosicion => new ViewModelVector2(
+            -(TamañoImagenesPosicion.X/2.0f).Round(1),
+            -TamañoImagenesPosicion.Y);
 
         /// <summary>
         /// Indica si se debe mostrar el tablero de casillas sobre el mapa.

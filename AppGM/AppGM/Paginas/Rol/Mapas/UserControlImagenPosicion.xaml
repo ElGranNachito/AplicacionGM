@@ -27,8 +27,8 @@
 
                 <Image.RenderTransform>
                     <TranslateTransform 
-                        X="{Binding MitadTamañoImagenesPosicion.X}"
-                        Y="{Binding MitadTamañoImagenesPosicion.Y}"/>
+                        X="{Binding OffsetImagenesPosicion.X}"
+                        Y="{Binding OffsetImagenesPosicion.Y}"/>
                 </Image.RenderTransform>
 
             </Image>

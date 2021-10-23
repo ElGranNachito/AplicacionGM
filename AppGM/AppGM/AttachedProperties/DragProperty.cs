@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -48,11 +49,11 @@ namespace AppGM
                     //Revisamos que la nueva posicion este dentro de los limites del canvas
                     if (nuevaPosicion.X <= vm.mapa.TamañoCanvasX
                         && nuevaPosicion.X >= 0)
-                        vm.Posicion.X = nuevaPosicion.X;
+                        vm.Posicion.X = Math.Clamp(nuevaPosicion.X, 0, vm.mapa.TamañoCanvasX);
 
                     if (nuevaPosicion.Y <= vm.mapa.TamañoCanvasY
                         && nuevaPosicion.Y >= 0)
-                        vm.Posicion.Y = nuevaPosicion.Y;
+                        vm.Posicion.Y = Math.Clamp(nuevaPosicion.Y, 0, vm.mapa.TamañoCanvasY);
 
                     SistemaPrincipal.LoggerGlobal.Log($"X: {vm.Posicion.X}, Y: {vm.Posicion.Y} ");
 
