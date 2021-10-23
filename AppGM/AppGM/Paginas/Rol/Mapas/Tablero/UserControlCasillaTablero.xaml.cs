@@ -25,29 +25,6 @@ namespace AppGM
         public UserControlCasillaTablero()
         {
             InitializeComponent();
-
-            Gridsito.MouseEnter += OnMouseEnter;
-            Gridsito.MouseLeave += OnMouseLeave;
-        }
-
-        private void OnMouseEnter(object sender, MouseEventArgs e)
-        {
-            if (DataContext is ViewModelCasillaTablero vm)
-                if (e.OriginalSource is Grid)
-                {
-                    vm.ColorBordeCasilla = "00ffff";
-                    vm.DispararPropertyChanged(new PropertyChangedEventArgs(nameof(vm.ColorBordeCasilla)));
-                }
-        }
-
-        private void OnMouseLeave(object sender, MouseEventArgs e)
-        {
-            if (DataContext is ViewModelCasillaTablero vm)
-                if (e.OriginalSource is Grid)
-                {
-                    vm.ColorBordeCasilla = "000000";
-                    vm.DispararPropertyChanged(new PropertyChangedEventArgs(nameof(vm.ColorBordeCasilla)));
-                }
         }
     }
 }

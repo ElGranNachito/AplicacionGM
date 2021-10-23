@@ -1,28 +1,31 @@
-﻿<UserControl x:Class="AppGM.UserControlFilaCasillas"
+﻿<UserControl x:Class="AppGM.UserControlColumnaFilaCasilla"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AppGM"
              mc:Ignorable="d" 
-             d:DesignHeight="100" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800">
 
-    <!-- Lista horizontal de casillas-->
+    <!-- UserControl que hace uso del ViewModelFilaCasillas -->
+
+    <!-- Lista vertical de filas de casillas-->
     <Grid>
 
         <ItemsControl ItemsSource="{Binding}">
 
-            <!-- Hacemos que el panel sea un stackpanel para que puedan solapar -->
+            <!-- Hacemos que el panel sea un grid para que puedan solapar -->
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <StackPanel Orientation="Horizontal"/>
+                    <StackPanel Orientation="Vertical"/>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
 
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
 
-                    <local:UserControlCasillaTablero/>
+                    <!-- Fila de casillas -->
+                    <local:UserControlFilaCasillas DataContext="{Binding CasillasTablero}"/>
 
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
@@ -30,5 +33,4 @@
         </ItemsControl>
 
     </Grid>
-
 </UserControl>

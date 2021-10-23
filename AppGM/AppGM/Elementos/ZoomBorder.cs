@@ -60,10 +60,10 @@ namespace AppGM
                 element.RenderTransform       = grupo;
                 element.RenderTransformOrigin = new Point(0.0, 0.0);
                 
-                this.MouseWheel                  += OnMouseWheel;
-                this.MouseLeftButtonDown         += OnMouseLeftButtonDown;
-                this.MouseLeftButtonUp           += OnMouseLeftButtonUp;
-                this.MouseMove                   += OnMouseMove;
+                this.PreviewMouseWheel                  += OnPreviewMouseWheel;
+                this.PreviewMouseLeftButtonDown         += OnPreviewMouseLeftButtonDown;
+                this.PreviewMouseLeftButtonUp           += OnPreviewMouseLeftButtonUp;
+                this.PreviewMouseMove                   += OnPreviewMouseMove;
                 this.PreviewMouseRightButtonDown += new MouseButtonEventHandler(OnPreviewMouseRightButtonDown);
             }
         }
@@ -84,7 +84,7 @@ namespace AppGM
             }
         }
 
-        private void OnMouseWheel(object sender, MouseWheelEventArgs e)
+        private void OnPreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
             if (e != null)
             {
@@ -112,7 +112,7 @@ namespace AppGM
             }
         }
 
-        private void OnMouseLeftButtonDown(object sender, RoutedEventArgs e)
+        private void OnPreviewMouseLeftButtonDown(object sender, RoutedEventArgs e)
         {
             if (_elemento != null && Keyboard.IsKeyDown(Key.LeftCtrl))
             {
@@ -127,7 +127,7 @@ namespace AppGM
             }
         }
 
-        private void OnMouseLeftButtonUp(object sender, RoutedEventArgs e)
+        private void OnPreviewMouseLeftButtonUp(object sender, RoutedEventArgs e)
         {
             if (_elemento != null)
             {
@@ -143,7 +143,7 @@ namespace AppGM
                 this.Reset();
         }
 
-        private void OnMouseMove(object sender, RoutedEventArgs e)
+        private void OnPreviewMouseMove(object sender, RoutedEventArgs e)
         {
             if (_elemento != null && Keyboard.IsKeyDown(Key.LeftCtrl))
             {

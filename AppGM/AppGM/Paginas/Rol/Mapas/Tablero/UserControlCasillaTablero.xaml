@@ -7,16 +7,17 @@
              mc:Ignorable="d" 
              d:DesignHeight="50" d:DesignWidth="50">
     
-    <Grid Name="Gridsito"
-          MouseEnter="OnMouseEnter"
-          MouseLeave="OnMouseLeave">
+    <Grid>
 
         <!-- UserControl que hace uso del ViewModelMapa -->
         <Border Background="{Binding ColorFondoCasilla, Converter={local:StringToSolidColorBrushConverter}}"
                 BorderBrush="{Binding ColorBordeCasilla, Converter={local:StringToSolidColorBrushConverter}}"
                 BorderThickness="1"
-                Height="50"
-                Width="50">
+                SnapsToDevicePixels="True"
+                MinHeight="50"
+                MaxHeight="50"
+                MinWidth="50"
+                MaxWidth="50">
 
         
 

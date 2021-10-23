@@ -800,7 +800,7 @@ namespace AppGM.Core.Migrations
                     b.Property<int>("Tipo")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("TipoVariable")
+                    b.Property<string>("TipoVariableString")
                         .HasColumnType("varchar(50)");
 
                     b.Property<int?>("UtilizableContenedorId")

@@ -102,10 +102,10 @@ namespace AppGM.Core
         public ObservableCollection<ViewModelUnidadParty> UnidadesPartiesVisibles { get; set; } = new ObservableCollection<ViewModelUnidadParty>();
 
         /// <summary>
-        /// Fila de casillas de tableros.
+        /// Columnas de casillas del tablero.
         /// </summary>
-        public ObservableCollection<ViewModelCasillaTablero> CasillasTablero { get; set; } = new ObservableCollection<ViewModelCasillaTablero>();
-
+        public ObservableCollection<ViewModelFilaCasillas> FilasCasillasTablero { get; set; } = new ObservableCollection<ViewModelFilaCasillas>();
+        
         /// <summary>
         /// Tamaño del canvas que contiene la imagen del mapa
         /// </summary>
@@ -168,6 +168,7 @@ namespace AppGM.Core
 
         
         // Propiedades de visibilidad de elementos en el mapa:
+
 
         /// <summary>
         /// Indica si se debe mostrar el tablero de casillas sobre el mapa.
@@ -369,8 +370,9 @@ namespace AppGM.Core
 
             PathImagen = $"../../../Media/Imagenes/Mapas/{controladorMapa.NombreMapa}{controladorMapa.ObtenerExtension()}";
 
-            for (int i = 0; i < 30; ++i)
-                CasillasTablero.Add(new ViewModelCasillaTablero());
+            for (int i = 0; i < 50; ++i)
+                FilasCasillasTablero.Add(new ViewModelFilaCasillas());
+
 
             Dictionary<ENumeroParty, ViewModelUnidadParty> posicionesParty = new Dictionary<ENumeroParty, ViewModelUnidadParty>();
 

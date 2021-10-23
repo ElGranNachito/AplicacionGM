@@ -207,10 +207,23 @@
                                 <Canvas
                                     SizeChanged="OnMapaSizeXChanged"
                                     Width="{Binding ElementName=mapa, Path=ActualWidth}"
-                                    Height="{Binding ElementName=mapa, Path=ActualHeight}">
-            
-                                    <!-- Fondo mapa -->
-                                    <Image x:Name="mapa" Source="{Binding PathImagen}"/>
+                                    Height="{Binding ElementName=mapa, Path=ActualHeight}"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center">
+
+                                    <!--Tablero de casillas-->
+                                    <Grid VerticalAlignment="Top" IsHitTestVisible="False">
+
+                                        <!-- Fondo mapa -->
+                                        <Image x:Name="mapa" 
+                                               Source="{Binding PathImagen}"
+                                               HorizontalAlignment="Center"/>
+
+                                        <local:UserControlColumnaFilaCasilla 
+                                            DataContext="{Binding FilasCasillasTablero}"
+                                            Visibility="{Binding MuestraTableroDeCasillas, Converter={local:BooleanToVisibilityConverterOcultar}}"/>
+                                
+                                    </Grid>
 
                                     <!-- Imagenes de las entidades -->
                                     <local:UserControlListaImagenPosicion DataContext="{Binding Posiciones}"/>
@@ -221,13 +234,6 @@
                                 </Canvas>
 
                             </local:ZoomBorder>
-
-                            <!--Tablero de casillas-->
-                            <Grid>
-                                <!-- Fila de casillas -->
-                                <local:UserControlFilaCasillas DataContext="{Binding CasillasTablero}"/>
-
-                            </Grid>
 
                         </Grid>
             
