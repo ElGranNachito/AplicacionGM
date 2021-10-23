@@ -114,7 +114,7 @@ namespace AppGM.Core
         /// <summary>
         /// Tamaño de las imagenes de las unidades
         /// </summary>
-        public ViewModelVector2 TamañoImagenesPosicion { get; set; } = new ViewModelVector2(101.25, 138.75);
+        public ViewModelVector2 TamañoImagenesPosicion { get; set; } = new ViewModelVector2(150.00, 200.00);
 
         /// <summary>
         /// Ruta completa a la imagen del mapa

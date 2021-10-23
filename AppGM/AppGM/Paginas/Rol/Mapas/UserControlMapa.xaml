@@ -206,24 +206,31 @@
                                     
                                 <Canvas
                                     SizeChanged="OnMapaSizeXChanged"
-                                    Width="{Binding ElementName=mapa, Path=ActualWidth}"
-                                    Height="{Binding ElementName=mapa, Path=ActualHeight}"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center">
+                                    >
+
+                                    <Canvas.Background>
+                                        <!-- Fondo mapa -->
+                                        <ImageBrush
+                                            ImageSource="{Binding PathImagen}">
+                                        </ImageBrush>
+                                    </Canvas.Background>
+
+
+                                    <Grid Visibility="{Binding MuestraTableroDeCasillas, Converter={local:BooleanToVisibilityConverterOcultar}}">
+                                            
+                                        <local:UserControlColumnaFilaCasilla DataContext="{Binding FilasCasillasTablero}"/>
+
+                                    </Grid>
 
                                     <!--Tablero de casillas-->
-                                    <Grid VerticalAlignment="Top" IsHitTestVisible="False">
+                                    <!--<Grid HorizontalAlignment="Stretch"
+                                          VerticalAlignment="Stretch" 
+                                          IsHitTestVisible="False">
 
-                                        <!-- Fondo mapa -->
-                                        <Image x:Name="mapa" 
-                                               Source="{Binding PathImagen}"
-                                               HorizontalAlignment="Center"/>
 
-                                        <local:UserControlColumnaFilaCasilla 
-                                            DataContext="{Binding FilasCasillasTablero}"
-                                            Visibility="{Binding MuestraTableroDeCasillas, Converter={local:BooleanToVisibilityConverterOcultar}}"/>
-                                
-                                    </Grid>
+
+                                        
+                                    </Grid>-->
 
                                     <!-- Imagenes de las entidades -->
                                     <local:UserControlListaImagenPosicion DataContext="{Binding Posiciones}"/>

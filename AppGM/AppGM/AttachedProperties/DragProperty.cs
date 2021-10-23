@@ -1,6 +1,8 @@
 ﻿using System.ComponentModel;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using AppGM.Core;
 
 namespace AppGM
@@ -33,8 +35,15 @@ namespace AppGM
                 //Evento que se llama cuando el mouse se mueve
                 EventoVentana mouseMovedHandler = ventana =>
                 {
+                    var padreActual = VisualTreeHelper.GetParent(d);
+
+                    while (padreActual is not Canvas)
+                    {
+                        padreActual = VisualTreeHelper.GetParent(padreActual);
+                    }
+
                     //Obtenemos la posicion del mouse con respecto al padre de este elemento
-                    Point nuevaPosicion = Mouse.GetPosition((IInputElement)fe.Parent);
+                    Point nuevaPosicion = Mouse.GetPosition((IInputElement)padreActual);
 
                     //Revisamos que la nueva posicion este dentro de los limites del canvas
                     if (nuevaPosicion.X <= vm.mapa.TamañoCanvasX
@@ -44,6 +53,8 @@ namespace AppGM
                     if (nuevaPosicion.Y <= vm.mapa.TamañoCanvasY
                         && nuevaPosicion.Y >= 0)
                         vm.Posicion.Y = nuevaPosicion.Y;
+
+                    SistemaPrincipal.LoggerGlobal.Log($"X: {vm.Posicion.X}, Y: {vm.Posicion.Y} ");
 
                     //Disparamos los eventos de property changed para que se actualice el texto de las textbox y la posicion de la imagen
                     vm.DispararPropertyChanged(new PropertyChangedEventArgs(nameof(vm.TextoPosicionX)));
