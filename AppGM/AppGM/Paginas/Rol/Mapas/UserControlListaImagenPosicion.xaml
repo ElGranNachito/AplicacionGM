@@ -8,25 +8,22 @@
              d:DesignHeight="450" d:DesignWidth="800">
 
     <!-- Lista de las imagenes de las entidades -->
-    <Grid>
+    <ItemsControl ItemsSource="{Binding}">
 
-        <ItemsControl ItemsSource="{Binding}">
+        <!-- Hacemos que el panel sea un grid para que puedan solapar -->
+        <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+                <Canvas/>
+            </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
 
-            <!-- Hacemos que el panel sea un grid para que puedan solapar -->
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <Grid/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
+        <ItemsControl.ItemTemplate>
+            <DataTemplate>
 
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
+                <local:UserControlImagenPosicion/>
 
-                    <local:UserControlImagenPosicion/>
+            </DataTemplate>
+        </ItemsControl.ItemTemplate>
 
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-
-        </ItemsControl>
-    </Grid>
+    </ItemsControl>
 </UserControl>

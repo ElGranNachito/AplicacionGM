@@ -224,7 +224,7 @@ namespace AppGM.Core
 					ModeloMapa mapa = new ModeloMapa
 					{
 						EFormatoImagen = EFormatoImagen.Png,
-						NombreMapa = "Seoul"
+						NombreMapa = "Tokyo"
 					};
 
 					ModeloUnidadMapa unidadServant1 = new ModeloUnidadMapaMasterServant

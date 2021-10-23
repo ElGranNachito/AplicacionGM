@@ -78,10 +78,9 @@ namespace AppGM
                         case EMenuRol.VistaFichas:
                             return new UserControlListaFichasViewFichas();
                         case EMenuRol.Mapas:
-                            return new UserControlSolapasMapa()
+                            return new UserControlMapa
                             {
-                                DataContext = SistemaPrincipal.ObtenerInstancia<ViewModelRol>()
-                                    .SeccionMapaSeleccionada
+                                ViewModel = SistemaPrincipal.ObtenerInstancia<ViewModelMapaPrincipal>()
                             };
                         case EMenuRol.AdministrarCombates:
                             return new UserControlMenuSeleccionCombate();
