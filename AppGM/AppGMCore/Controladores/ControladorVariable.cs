@@ -94,8 +94,8 @@ namespace AppGM.Core
 		public override string ToString() =>
 			$"ID: {modelo.Id} - Nombre: {modelo.NombreVariable} - IDVariable: {modelo.IDVariable}";
 
-		public override ViewModelItemListaGenerico<ViewModelVariableItem> CrearViewModelItem(bool _motrarBotones = true) =>
-			new ViewModelVariableItem(this, _motrarBotones);
+		public override ViewModelItemListaGenerico<ViewModelVariableItem> CrearViewModelItem() =>
+			new ViewModelVariableItem(this);
 
 		#endregion
 

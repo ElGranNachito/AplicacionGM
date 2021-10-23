@@ -45,7 +45,14 @@ namespace AppGM.Core
 						? mControladoresDisponibles
 						//Si no lo es entonces añadimos todos los controladores que concuerden con la cadena
 						: mControladoresDisponibles.FindAll(c => c.CompararConCadena(Filtro)))
-					.Select(c => c.CrearViewModelItem(false)));
+					.Select(c =>
+					{
+						var vmNuevoItem = c.CrearViewModelItem();
+
+						vmNuevoItem.IndiceGrupoDeBotonesActivo = -1;
+
+						return vmNuevoItem;
+					}));
 			}
 		}
 
@@ -77,7 +84,14 @@ namespace AppGM.Core
 		{
 			mControladoresDisponibles = _controladoresDisponibles;
 
-			ControladoresConcordantes.AddRange(mControladoresDisponibles.Select(c => c.CrearViewModelItem(false)));
+			ControladoresConcordantes.AddRange(mControladoresDisponibles.Select(c =>
+			{
+				var nuevoVm = c.CrearViewModelItem();
+
+				nuevoVm.IndiceGrupoDeBotonesActivo = -1;
+
+				return nuevoVm;
+			}));
 		}
 
 		#endregion

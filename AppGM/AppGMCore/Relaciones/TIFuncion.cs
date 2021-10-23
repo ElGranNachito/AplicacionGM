@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AppGM.Core
 {
@@ -23,23 +24,35 @@ namespace AppGM.Core
 		public virtual ModeloFuncion Padre { get; set; }
 	}
 
+	public abstract class TIFuncionContenedor : TIFuncion
+	{
+		/// <summary>
+		/// Nombre del evento que maneja la funcion
+		/// </summary>
+		[StringLength(100)]
+		public string NombreEvento { get; set; }
+	}
+
 	/// <summary>
 	/// Representa la relacion de un <see cref="ModeloFuncion"/> con un <see cref="ModeloEfecto"/>
 	/// </summary>
-	public class TIFuncionEfecto : TIFuncion
+	public class TIFuncionEfecto : TIFuncionContenedor
 	{
 		[ForeignKey(nameof(Efecto))]
 		public int IDEfecto { get; set; }
 
 		public virtual ModeloEfecto Efecto { get; set; }
 
+		/// <summary>
+		/// Tipo de la funcion
+		/// </summary>
 		public ETipoFuncionEfecto TipoFuncion { get; set; }
 	}
 
 	/// <summary>
 	/// Representa la relacion de un <see cref="ModeloFuncion"/> con un <see cref="ModeloHabilidad"/>
 	/// </summary>
-	public class TIFuncionHabilidad : TIFuncion
+	public class TIFuncionHabilidad : TIFuncionContenedor
 	{
 		[ForeignKey(nameof(Habilidad))]
 		public int IDHabilidad { get; set; }

@@ -130,10 +130,10 @@ namespace AppGM.Core
 		    modeloGenerico = _modelo;
 	    }
 
-        public override ViewModelItemListaBase CrearViewModelItem(bool _motrarBotones = true)
+        public override ViewModelItemListaBase CrearViewModelItem()
         {
             if(this is ControladorTiradaVariable tiradaVariable)
-                return new ViewModelTiradaItem(tiradaVariable, _motrarBotones);
+                return new ViewModelTiradaItem(tiradaVariable);
 
             SistemaPrincipal.LoggerGlobal.Log($"Se intento crear un {nameof(ViewModelTiradaItem)} para una tirada de stat", ESeveridad.Error);
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 
 namespace AppGM.Core
 {
@@ -11,32 +12,8 @@ namespace AppGM.Core
 		/// Constructor
 		/// </summary>
 		/// <param name="_variable">Controlador de la variable que sera representada por este vm</param>
-		public ViewModelVariableItem(ControladorVariableBase _variable, bool _mostrarBotones = true)
-			:base(_variable, _mostrarBotones)
-		{
-			ControladorGenerico = _variable;
-
-			mAccionBotonSuperior = () =>
-			{
-				var dataContextActual = SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido;
-
-				var vmEdicion = new ViewModelCreacionDeVariable(vm =>
-				{
-					SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = dataContextActual;
-
-					if(vm.Resultado.EsAceptarOFinalizar())
-						ActualizarCaracteristicas();
-				}, ControladorGenerico);
-
-				SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = vmEdicion;
-			};
-
-			mAccionBotonInferior = () =>
-			{
-				//TODO: Añadir ventanita de confirmacion
-				ControladorGenerico.Eliminar();
-			};
-		}
+		public ViewModelVariableItem(ControladorVariableBase _variable)
+			:base(_variable){}
 
 		#region Metodos
 
@@ -64,7 +41,33 @@ namespace AppGM.Core
 					Valor = ControladorGenerico.ObtenerValorVariable()?.ToString() ?? "No disponible"
 				}
 			});
-		} 
+		}
+
+		protected override void ActualizarGruposDeBotones()
+		{
+			Action accionBotonEditar = () =>
+			{
+				var dataContextActual = SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido;
+
+				var vmEdicion = new ViewModelCreacionDeVariable(vm =>
+				{
+					SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = dataContextActual;
+
+					if (vm.Resultado.EsAceptarOFinalizar())
+						ActualizarCaracteristicas();
+				}, ControladorGenerico);
+
+				SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = vmEdicion;
+			};
+
+			Action accionBotonEliminar = () =>
+			{
+				//TODO: Añadir ventanita de confirmacion
+				ControladorGenerico.Eliminar();
+			};
+
+			CrearBotonesParaEditarYEliminar(accionBotonEditar, accionBotonEliminar);
+		}
 
 		#endregion
 	}

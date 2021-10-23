@@ -14,17 +14,9 @@ namespace AppGM.Core
 		/// </summary>
 		/// <param name="_controladorEfecto">Controlador del efecto que representara esta instancia</param>
 		public ViewModelEfectoItem(ControladorEfecto _controladorEfecto, bool _mostrarBotonesLaterales = true)
-
-			: base(_controladorEfecto, _mostrarBotonesLaterales)
+			: base(_controladorEfecto)
 		{
 			ControladorGenerico = _controladorEfecto;
-
-			if (ControladorGenerico == null)
-			{
-				SistemaPrincipal.LoggerGlobal.Log($"{nameof(_controladorEfecto)} pasado es null!", ESeveridad.Error);
-
-				return;
-			}
 		} 
 
 		#endregion

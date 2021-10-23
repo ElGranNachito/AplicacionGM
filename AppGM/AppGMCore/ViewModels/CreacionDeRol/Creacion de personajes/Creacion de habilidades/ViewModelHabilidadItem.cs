@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.IO;
 
 namespace AppGM.Core
@@ -20,27 +21,13 @@ namespace AppGM.Core
 
         #region Constructor
 
-        public ViewModelHabilidadItem(ControladorHabilidad _habilidad, bool _mostrarBotonesLaterales = true)
-
-			:base(_habilidad, _mostrarBotonesLaterales)
+        public ViewModelHabilidadItem(ControladorHabilidad _habilidad)
+	        :base(_habilidad)
         {
-	        ControladorGenerico = _habilidad;
-
-            PathImagen = Path.Combine(
+	        PathImagen = Path.Combine(
 							Path.Combine(
 								SistemaPrincipal.ControladorDeArchivos.DirectorioImagenes, "Habilidades" + Path.DirectorySeparatorChar),
 								ControladorGenerico.TipoHabilidad + ".png");
-
-            ComandoBotonSuperior = new Comando(() =>
-            {
-	            var vmActual = SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido;
-
-	            SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = new ViewModelCrearHabilidad(ControladorGenerico.modelo.Dueño,
-		            vm =>
-		            {
-			            SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = vmActual;
-		            }, ControladorGenerico);
-            });
         }
 
 		#endregion
@@ -65,7 +52,23 @@ namespace AppGM.Core
 					Valor = ControladorGenerico.TipoHabilidad.ToString()
 				}
 			};
-        } 
+        }
+
+		protected override void ActualizarGruposDeBotones()
+		{
+			Action accionEditar = () =>
+			{
+				var vmActual = SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido;
+
+				SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = new ViewModelCrearHabilidad(ControladorGenerico.modelo.Dueño,
+					vm =>
+					{
+						SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = vmActual;
+					}, ControladorGenerico);
+			};
+
+			CrearBotonesParaEditarYEliminar(accionEditar, ()=>{});
+		}
 
 		#endregion
 	}

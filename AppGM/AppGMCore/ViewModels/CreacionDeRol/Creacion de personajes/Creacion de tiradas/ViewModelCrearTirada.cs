@@ -27,11 +27,6 @@ namespace AppGM.Core
 		private readonly ModeloConVariablesYTiradas mModeloContenedor;
 
 		/// <summary>
-		/// Modelo de la tirada que se creo
-		/// </summary>
-		private ModeloTiradaVariable mModeloTirada;
-
-		/// <summary>
 		/// Contiene el valor de <see cref="TextoActual"/>
 		/// </summary>
 		private string mTextoActual;
@@ -71,8 +66,8 @@ namespace AppGM.Core
 		/// </summary>
 		public string Nombre
 		{
-			get => mModeloTirada.Nombre;
-			set => mModeloTirada.Nombre = value;
+			get => ModeloCreado.Nombre;
+			set => ModeloCreado.Nombre = value;
 		}
 
 		/// <summary>
@@ -80,8 +75,8 @@ namespace AppGM.Core
 		/// </summary>
 		public string Descripcion
 		{
-			get => mModeloTirada.Descripcion;
-			set => mModeloTirada.Descripcion = value;
+			get => ModeloCreado.Descripcion;
+			set => ModeloCreado.Descripcion = value;
 		}
 
 		/// <summary>
@@ -89,8 +84,8 @@ namespace AppGM.Core
 		/// </summary>
 		public string DescripcionVariableExtra 
 		{
-			get => mModeloTirada.DescripcionVariableExtra;
-			set => mModeloTirada.DescripcionVariableExtra = value;
+			get => ModeloCreado.DescripcionVariableExtra;
+			set => ModeloCreado.DescripcionVariableExtra = value;
 		}
 
 		/// <summary>
@@ -98,8 +93,8 @@ namespace AppGM.Core
 		/// </summary>
 		public string MultiplicadorEspecialidad
 		{
-			get => mModeloTirada.MultiplicadorDeEspecialidad.ToString();
-			set => mModeloTirada.MultiplicadorDeEspecialidad = int.Parse(value);
+			get => ModeloCreado.MultiplicadorDeEspecialidad.ToString();
+			set => ModeloCreado.MultiplicadorDeEspecialidad = int.Parse(value);
 		}
 
 		/// <summary>
@@ -177,12 +172,19 @@ namespace AppGM.Core
 		{
 			mModeloContenedor = _contenedorTirada;
 
+			if (EstaEditando)
+			{
+				TextoTextbox = ModeloCreado.Tirada;
+
+				ViewModelComboBoxTipoTirada.SeleccionarValor(ModeloCreado.TipoTirada);
+			}
+
 			ViewModelComboBoxTipoTirada.OnValorSeleccionadoCambio += async (ViewModelItemComboBoxBase<ETipoTirada> anterior, ViewModelItemComboBoxBase<ETipoTirada> actual) =>
 			{
 				if (actual.valor == ETipoTirada.Daño)
-					mModeloTirada = mModeloTirada.CrearCopiaProfundaEnSubtipo<ModeloTiradaDeDaño, ModeloTiradaVariable>();
+					ModeloCreado = ModeloCreado.CrearCopiaProfundaEnSubtipo<ModeloTiradaDeDaño, ModeloTiradaVariable>();
 				else
-					mModeloTirada = mModeloTirada.CrearCopiaProfundaEnSubtipo<ModeloTiradaVariable, ModeloTiradaDeDaño>();
+					ModeloCreado = ModeloCreado.CrearCopiaProfundaEnSubtipo<ModeloTiradaVariable, ModeloTiradaDeDaño>();
 
 				DispararPropertyChanged(nameof(EsTiradaDeDaño));
 			};
@@ -210,14 +212,14 @@ namespace AppGM.Core
 			if (!EsValido)
 				return null;
 
-			if (ViewModelComboBoxTipoTirada.ValorSeleccionado.valor == ETipoTirada.Daño && mModeloTirada is ModeloTiradaDeDaño m)
+			if (ViewModelComboBoxTipoTirada.ValorSeleccionado.valor == ETipoTirada.Daño && ModeloCreado is ModeloTiradaDeDaño m)
 			{
 				m.TipoDeDaño = ViewModelComboBoxTipoDeDañoTirada.Valor;
 			}
 
-			mModeloTirada.Tirada = TextoActual;
+			ModeloCreado.Tirada = TextoActual;
 
-			return mModeloTirada;
+			return ModeloCreado;
 		}
 
 		public override ControladorTiradaVariable CrearControlador()

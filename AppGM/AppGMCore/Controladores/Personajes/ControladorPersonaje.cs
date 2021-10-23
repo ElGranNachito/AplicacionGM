@@ -345,7 +345,7 @@ namespace AppGM.Core
             {
                 Alianzas.Add(SistemaPrincipal.ObtenerControlador<ControladorAlianza, ModeloAlianza>(modelo.Alianzas[i], true));
             }
-
+            
             CargarVariablesYTiradas();
         }
 
@@ -591,9 +591,9 @@ namespace AppGM.Core
 	        return Regex.IsMatch(modelo.Nombre, $"*{cadena}*");
         }
 
-        public override ViewModelItemListaBase CrearViewModelItem(bool _mostrarBotones = true)
+        public override ViewModelItemListaBase CrearViewModelItem()
         {
-	        return new ViewModelPersonajeItem(this, _mostrarBotones);
+	        return new ViewModelPersonajeItem(this);
         }
 
         #endregion

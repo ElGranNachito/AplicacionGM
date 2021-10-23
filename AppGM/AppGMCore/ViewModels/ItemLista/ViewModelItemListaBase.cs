@@ -36,29 +36,48 @@ namespace AppGM.Core
 		private bool mBotonInferiorEstaHabilitado = true;
 
 		/// <summary>
+		/// Contiene el valor de <see cref="IndiceGrupoDeBotonesActivo"/>
+		/// </summary>
+		private int mIndiceGrupoDeBotonesActivo = 0;
+
+		/// <summary>
 		/// Delegado que representa a un metodo encargado de lidiar con el evento de que el modelo
 		/// representado por este item sea eliminado
 		/// </summary>
 		protected Action<ModeloBase> mModeloEliminadoHandler;
 
-
 		//-----------------------------------------------------PROPIEDADES------------------------------------------------------------
 
+		/// <summary>
+		/// Obtiene o establece el indice del grupo de botones actualmente activo
+		/// </summary>
+		public int IndiceGrupoDeBotonesActivo
+		{
+			get => mIndiceGrupoDeBotonesActivo;
+			set
+			{
+				if (mIndiceGrupoDeBotonesActivo >= GruposDeBotones.Count)
+					return;
+
+				if(mIndiceGrupoDeBotonesActivo != -1)
+					GruposDeBotones[mIndiceGrupoDeBotonesActivo].EsVisible = false;
+
+				mIndiceGrupoDeBotonesActivo = value;
+
+				if (mIndiceGrupoDeBotonesActivo != -1)
+					GruposDeBotones[mIndiceGrupoDeBotonesActivo].EsVisible = true;
+			}
+		}
+
+		/// <summary>
+		/// Grupos de botones que hay en cada item
+		/// </summary>
+		public ViewModelListaDeElementos<ViewModelGrupoBotones> GruposDeBotones { get; set; } = new ViewModelListaDeElementos<ViewModelGrupoBotones>();
 
 		/// <summary>
 		/// Lista de todas las caracteristicas de este item
 		/// </summary>
 		public ViewModelListaDeElementos<ViewModelCaracteristicaItem> CaracteristicasItem { get; set; } = new ViewModelListaDeElementos<ViewModelCaracteristicaItem>();
-
-		/// <summary>
-		/// Indica si se debe mostrar el boton superior
-		/// </summary>
-		public bool MostrarBotonSuperior => mBotonSuperiorEstaHabilitado && !ContenidoBotonSuperior.IsNullOrWhiteSpace();
-
-		/// <summary>
-		/// Indica si se debe mostrar el boton inferior
-		/// </summary>
-		public bool MostrarBotonInferior => mBotonInferiorEstaHabilitado && !ContenidoBotonInferior.IsNullOrWhiteSpace();
 
 		/// <summary>
 		/// Indica si <see cref="PathImagen"/> es valido
@@ -71,73 +90,14 @@ namespace AppGM.Core
 		public bool TieneControlador => Controlador != null;
 
 		/// <summary>
-		/// Indica si el boton superior del control esta habilitado
+		/// Indica si el titulo de este item es visible
 		/// </summary>
-		public bool BotonSuperiorEstaHabilitado
-		{
-			get => mBotonSuperiorEstaHabilitado;
-			set
-			{
-				if (value == mBotonSuperiorEstaHabilitado)
-					return;
-
-				mBotonSuperiorEstaHabilitado = value;
-
-				DispararPropertyChanged(nameof(MostrarBotonSuperior));
-			}
-		}
+		public bool TituloEsVisible => Titulo.IsNullOrWhiteSpace();
 
 		/// <summary>
-		/// Indica si el boton inferior del control esta habilitado
+		/// Titulo de este item
 		/// </summary>
-		public bool BotonInferiorEstaHabilitado
-		{
-			get => mBotonInferiorEstaHabilitado;
-			set
-			{
-				if (value == mBotonInferiorEstaHabilitado)
-					return;
-
-				mBotonInferiorEstaHabilitado = value;
-
-				DispararPropertyChanged(nameof(MostrarBotonInferior));
-			}
-		}
-
-		/// <summary>
-		/// Texto que se muestra en el boton superior
-		/// </summary>
-		public string ContenidoBotonSuperior
-		{
-			get => mContenidoBotonSuperior;
-
-			set
-			{
-				if (value == mContenidoBotonSuperior)
-					return;
-
-				mContenidoBotonSuperior = value;
-
-				DispararPropertyChanged(nameof(MostrarBotonSuperior));
-			}
-		}
-
-		/// <summary>
-		/// Texto que se muestra en el boton inferior
-		/// </summary>
-		public string ContenidoBotonInferior
-		{
-			get => mContenidoBotonInferior;
-			set
-			{
-				if (value == mContenidoBotonInferior)
-					return;
-
-				mContenidoBotonInferior = value;
-
-				DispararPropertyChanged(nameof(MostrarBotonInferior));
-			}
-		}
+		public string Titulo { get; set; }
 
 		/// <summary>
 		/// Ruta completa a la imagen de este item
@@ -161,34 +121,53 @@ namespace AppGM.Core
 		/// </summary>
 		public ControladorBase Controlador { get; set; }
 
-		/// <summary>
-		/// Comando que se ejecuta al presionar el boton editar
-		/// </summary>
-		public ICommand ComandoBotonSuperior { get; protected set; }
-
-		/// <summary>
-		/// Comando que se ejecuta al presionar el boton eliminar
-		/// </summary>
-		public ICommand ComandoBotonInferior { get; protected set; }
-
-		/// <summary>
-		/// Delegado que se ejecuta al invocar <see cref="ComandoBotonSuperior"/>
-		/// </summary>
-		protected Action mAccionBotonSuperior;
-
-		/// <summary>
-		/// Delegado que se ejecuta al invocar <see cref="ComandoBotonInferior"/>
-		/// </summary>
-		protected Action mAccionBotonInferior;
-
 		#endregion
 
 		#region Metodos
 
 		/// <summary>
+		/// Añade un <paramref name="handler"/> al evento <see cref="ViewModelBoton.OnClick"/> de un <see cref="ViewModelBoton"/>
+		/// </summary>
+		/// <param name="nombreBoton">Nombre del boton al que añadir el <paramref name="handler"/></param>
+		/// <param name="handler">Handler que añadir al evento</param>
+		/// <returns><see cref="bool"/> indicando si se pudo añadir el handler</returns>
+		public bool AñadirHandlerClick(string nombreBoton, Action<ViewModelBoton> handler)
+		{
+			foreach (var grupo in GruposDeBotones)
+			{
+				if (grupo.AñadirHandlerClick(nombreBoton, handler))
+					return true;
+			}
+
+			return false;
+		}
+
+		/// <summary>
+		/// Quita un <paramref name="handler"/> del evento <see cref="ViewModelBoton.OnClick"/> de un <see cref="ViewModelBoton"/>
+		/// </summary>
+		/// <param name="nombreBoton">Nombre del boton al que quitar el <paramref name="handler"/></param>
+		/// <param name="handler">Handler que quitar del evento</param>
+		/// <returns><see cref="bool"/> indicando si se pudo quitar el handler</returns>
+		public bool QuitarHandlerClick(string nombreBoton, Action<ViewModelBoton> handler)
+		{
+			foreach (var grupo in GruposDeBotones)
+			{
+				if (grupo.QuitarHandlerClick(nombreBoton, handler))
+					return true;
+			}
+
+			return false;
+		}
+
+		/// <summary>
 		/// Actualiza las <see cref="CaracteristicasItem"/>
 		/// </summary>
-		protected virtual void ActualizarCaracteristicas() { }
+		protected virtual void ActualizarCaracteristicas(){}
+
+		/// <summary>
+		/// Actualiza los <see cref="GruposDeBotones"/>
+		/// </summary>
+		protected virtual void ActualizarGruposDeBotones(){}
 
 		#endregion
 	}

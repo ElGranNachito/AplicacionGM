@@ -15,18 +15,6 @@ namespace AppGM.Core
     {
         #region Campos & Propiedades
 
-        private int    mHP  { get; set; } = 20;
-        private ushort mSTR { get; set; } = 10;
-        private ushort mEND { get; set; } = 10;
-        private ushort mAGI { get; set; } = 10;
-        private ushort mINT { get; set; } = 10;
-        private ushort mLCK { get; set; } = 10;
-        private ushort mCHR { get; set; } = 10;
-
-        private ushort mEdad     { get; set; }
-        private ushort mEstatura { get; set; }
-        private ushort mPeso     { get; set; }
-
         private bool mCheckUsarRangos = false;
 
         private Action mAccionAñadirHabilidad = delegate{};
@@ -81,7 +69,18 @@ namespace AppGM.Core
 
         public string TextoPuntosDeHabilidadRestantes => $"Puntos de habilidad restantes: {PuntosHabilidadRestantes}";
 
-        public int PuntosHabilidadRestantes => 75 - mSTR - mEND - mAGI - mINT - mLCK - mCHR;
+        public int PuntosHabilidadRestantes
+		{
+			get
+			{
+                var puntosRestantes = 75 - ModeloCreado.Str - ModeloCreado.End - ModeloCreado.Agi - ModeloCreado.Int - ModeloCreado.Lck;
+
+                if (ModeloCreado is ModeloMaster master)
+                    puntosRestantes -= master.Chr;
+
+                return puntosRestantes;
+            }
+        } 
 
         public ETipoPersonaje TipoPersonajeSeleccionado => ComboBoxTipoPersonaje.Valor;
         public EClaseServant  ClaseServantSeleccionada  => ComboBoxClaseServant.Valor;

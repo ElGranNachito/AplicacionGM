@@ -3,21 +3,22 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using AppGM.Core.Delegados;
+using CoolLogs;
 
 namespace AppGM.Core
 {
 	/// <summary>
 	/// <see cref="ViewModel"/> para representar un control de tipo ComboBox
 	/// </summary>
-	/// <typeparam name="TipoValor"><see cref="Type"/> del valor que almacenan sus opciones</typeparam>
-	public class ViewModelComboBox<TipoValor> : ViewModel
+	/// <typeparam name="TValor"><see cref="Type"/> del valor que almacenan sus opciones</typeparam>
+	public class ViewModelComboBox<TValor> : ViewModel
 	{
 		#region Eventos
 
 		/// <summary>
 		/// Evento disparado cuando el <see cref="ValorSeleccionado"/> cambia
 		/// </summary>
-		public DVariableCambio<ViewModelItemComboBoxBase<TipoValor>> OnValorSeleccionadoCambio = delegate { }; 
+		public DVariableCambio<ViewModelItemComboBoxBase<TValor>> OnValorSeleccionadoCambio = delegate { }; 
 
 		#endregion
 
@@ -26,7 +27,7 @@ namespace AppGM.Core
 		/// <summary>
 		/// Contiene el valor de <see cref="ValorSeleccionado"/>
 		/// </summary>
-		private ViewModelItemComboBoxBase<TipoValor> mValorSeleccionado;
+		private ViewModelItemComboBoxBase<TValor> mValorSeleccionado;
 
 		/// <summary>
 		/// Descripcion de este combo box
@@ -37,12 +38,12 @@ namespace AppGM.Core
 		/// <see cref="List{T}"/> de <see cref="ViewModelItemComboBoxBase{TipoValor}"/> que puede
 		/// seleccionar el usuario
 		/// </summary>
-		public ViewModelListaDeElementos<ViewModelItemComboBoxBase<TipoValor>> ValoresPosibles { get; set; } = new ViewModelListaDeElementos<ViewModelItemComboBoxBase<TipoValor>>();
+		public ViewModelListaDeElementos<ViewModelItemComboBoxBase<TValor>> ValoresPosibles { get; set; } = new ViewModelListaDeElementos<ViewModelItemComboBoxBase<TValor>>();
 
 		/// <summary>
 		/// <see cref="ViewModelItemComboBoxBase{TipoValor}"/> seleccionado
 		/// </summary>
-		public ViewModelItemComboBoxBase<TipoValor> ValorSeleccionado
+		public ViewModelItemComboBoxBase<TValor> ValorSeleccionado
 		{
 			get => mValorSeleccionado;
 			set
@@ -59,9 +60,9 @@ namespace AppGM.Core
 		}
 
 		/// <summary>
-		/// <see cref="TipoValor"/> seleccionado por el usuario
+		/// <see cref="TValor"/> seleccionado por el usuario
 		/// </summary>
-		public TipoValor Valor
+		public TValor Valor
 		{
 			get
 			{
@@ -76,7 +77,7 @@ namespace AppGM.Core
 
 		#region Constructor
 
-		public ViewModelComboBox(string descripcion, List<TipoValor> _valoresPosibles = null, ViewModelItemComboBoxBase<TipoValor> _valorPorDefecto = null)
+		public ViewModelComboBox(string descripcion, List<TValor> _valoresPosibles = null, ViewModelItemComboBoxBase<TValor> _valorPorDefecto = null)
 			:this(_valoresPosibles, _valorPorDefecto)
 		{
 			Descripcion = descripcion;
@@ -87,7 +88,7 @@ namespace AppGM.Core
 		/// </summary>
 		/// <param name="_valoresPosibles">Coleccion con los <see cref="ValoresPosibles"/></param>
 		/// <param name="_valorPorDefecto">Valor que se asignara por defecto a <see cref="ValorSeleccionado"/></param>
-		public ViewModelComboBox(List<TipoValor> _valoresPosibles = null, ViewModelItemComboBoxBase<TipoValor> _valorPorDefecto = null)
+		public ViewModelComboBox(List<TValor> _valoresPosibles = null, ViewModelItemComboBoxBase<TValor> _valorPorDefecto = null)
 		{
 			ActualizarValoresPosibles(_valoresPosibles);
 
@@ -99,9 +100,9 @@ namespace AppGM.Core
 		/// </summary>
 		/// <param name="_valoresPosibles">Coleccion con los <see cref="ValoresPosibles"/></param>
 		/// <param name="_valorPorDefecto">Valor que se asignara por defecto a <see cref="ValorSeleccionado"/></param>
-		public ViewModelComboBox(List<ViewModelItemComboBoxBase<TipoValor>> _valoresPosibles = null, ViewModelItemComboBoxBase<TipoValor> _valorPorDefecto = null)
+		public ViewModelComboBox(List<ViewModelItemComboBoxBase<TValor>> _valoresPosibles = null, ViewModelItemComboBoxBase<TValor> _valorPorDefecto = null)
 		{
-			ValoresPosibles.Elementos = new ObservableCollection<ViewModelItemComboBoxBase<TipoValor>>(_valoresPosibles);
+			ValoresPosibles.Elementos = new ObservableCollection<ViewModelItemComboBoxBase<TValor>>(_valoresPosibles);
 
 			ValorSeleccionado = _valorPorDefecto;
 		}
@@ -114,17 +115,31 @@ namespace AppGM.Core
 		/// Actualiza los valores en <see cref="ValoresPosibles"/>
 		/// </summary>
 		/// <param name="nuevosValoresPosibles">Coleccion con los nuevos <see cref="ValoresPosibles"/></param>
-		public void ActualizarValoresPosibles(List<TipoValor> nuevosValoresPosibles)
+		public void ActualizarValoresPosibles(List<TValor> nuevosValoresPosibles)
 		{
-			IEnumerable<ViewModelItemComboBoxBase<TipoValor>> nuevosItemsComboBox = null;
+			IEnumerable<ViewModelItemComboBoxBase<TValor>> nuevosItemsComboBox = null;
 
 			if (nuevosValoresPosibles is not null)
 			{
-				nuevosItemsComboBox = nuevosValoresPosibles.Select(valor => new ViewModelItemComboBoxBase<TipoValor> { Texto = valor.ToString(), valor = valor });
+				nuevosItemsComboBox = nuevosValoresPosibles.Select(valor => new ViewModelItemComboBoxBase<TValor> { Texto = valor.ToString(), valor = valor });
 			}
 
-			ValoresPosibles.Elementos = new ObservableCollection<ViewModelItemComboBoxBase<TipoValor>>(nuevosItemsComboBox);
-		} 
+			ValoresPosibles.Elementos = new ObservableCollection<ViewModelItemComboBoxBase<TValor>>(nuevosItemsComboBox);
+		}
+
+		/// <summary>
+		/// Cambia el valor seleccionado
+		/// </summary>
+		/// <param name="nuevoValor">Valor que seleccionar</param>
+		public void SeleccionarValor(TValor nuevoValor)
+		{
+			var vmNuevoValor = ValoresPosibles.FirstOrDefault(vm => EqualityComparer<TValor>.Default.Equals(vm.valor, nuevoValor));
+
+			if(vmNuevoValor == null)
+				SistemaPrincipal.LoggerGlobal.Log($"No se encontro una opcion con el {nameof(nuevoValor)}({nuevoValor})", ESeveridad.Error);
+
+			ValorSeleccionado = vmNuevoValor;
+		}
 
 		#endregion
 	}

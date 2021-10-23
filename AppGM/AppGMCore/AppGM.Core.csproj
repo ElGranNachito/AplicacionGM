@@ -52,4 +52,7 @@
       <HintPath>..\Dependencias\CoolLogs.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="CreacionDeFunciones\Bloques\VMs\" />
+  </ItemGroup>
 </Project>

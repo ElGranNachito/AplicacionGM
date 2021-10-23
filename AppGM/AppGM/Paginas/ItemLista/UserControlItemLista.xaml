@@ -41,8 +41,18 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock
+                Grid.ColumnSpan="3"
+                Text="{Binding Titulo}"/>
+
             <!-- Imagen del item -->
             <Border
+                Grid.Row="1"
                 Padding="5"
 
                 VerticalAlignment="Stretch"
@@ -56,16 +66,17 @@
 
                     <Border.Background>
                         <ImageBrush 
+                            Stretch="Uniform"
                             ImageSource="{Binding PathImagen, 
-                            Converter={local:FullPathToImageConverter}}"/>
+                        Converter={local:FullPathToImageConverter}}"/>
                     </Border.Background>
 
                 </Border>
-
             </Border>
 
             <!-- Datos del item -->
             <ItemsControl
+                Grid.Row="1"
                 Grid.Column="1"
                 ItemsSource="{Binding CaracteristicasItem.Elementos}">
 
@@ -88,46 +99,25 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
 
-            <!-- Botones -->
-            <Grid
+            <ScrollViewer
+                Grid.Row="1"
                 Grid.Column="2"
+
                 HorizontalAlignment="Center"
                 
-                Style="{StaticResource EstiloContenedorBotones}">
+                VerticalScrollBarVisibility="Auto">
 
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
+                <ItemsControl ItemsSource="{Binding GruposDeBotones}">
 
-                <!--Boton editar-->
-                <Button
-                    VerticalAlignment="Top"
-                    Margin="0 5 0 0"
-                    Style="{StaticResource BotonFondoResaltable}"
-                    
-                    Content="{Binding ContenidoBotonSuperior}"
-                    
-                    Command="{Binding ComandoBotonSuperior}"
-                    
-                    Visibility="{Binding MostrarBotonSuperior, 
-                    Converter={local:BooleanToVisibilityConverterColapsar}}"/>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <local:UserControlGrupoBotones/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
 
-                <!-- Boton eliminar -->
-                <Button
-                    Grid.Row="1"
-                    Margin="0 0 0 5"
-                    VerticalAlignment="Bottom"
+                </ItemsControl>
 
-                    Style="{StaticResource BotonFondoResaltable}"
-
-                    Content="{Binding ContenidoBotonInferior}"
-                    
-                    Command="{Binding ComandoBotonInferior}"
-                    
-                    Visibility="{Binding MostrarBotonInferior,
-                    Converter={local:BooleanToVisibilityConverterColapsar}}"/>
-            </Grid>
+            </ScrollViewer>
 
         </Grid>
 

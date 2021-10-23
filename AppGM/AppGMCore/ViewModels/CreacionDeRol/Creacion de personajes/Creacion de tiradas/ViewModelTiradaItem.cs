@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 
 namespace AppGM.Core
 {
@@ -7,27 +8,8 @@ namespace AppGM.Core
 	/// </summary>
 	public class ViewModelTiradaItem : ViewModelItemListaControlador<ViewModelTiradaItem, ControladorTiradaVariable>
 	{
-		public ViewModelTiradaItem(ControladorTiradaVariable _controladorTirada, bool _mostrarBotones = true)
-			:base(_controladorTirada, _mostrarBotones) 
-		{
-			ControladorGenerico = _controladorTirada;
-
-			mAccionBotonSuperior = () =>
-			{
-				var dataContextActual = SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido;
-
-				var vmEdicion = new ViewModelCrearTirada(vm =>
-				{
-				}, ControladorGenerico.modelo.ObtenerModeloContenedor(), ControladorGenerico);
-
-				SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = vmEdicion;
-			};
-
-			mAccionBotonInferior = () =>
-			{
-				ControladorGenerico?.Eliminar();
-			};
-		}
+		public ViewModelTiradaItem(ControladorTiradaVariable _controladorTirada)
+			:base(_controladorTirada) {}
 
 		protected override void ActualizarCaracteristicas()
 		{
@@ -51,6 +33,27 @@ namespace AppGM.Core
 					Valor = ControladorGenerico.modelo.TipoTirada.ToString()
 				}
 			};
+		}
+
+		protected override void ActualizarGruposDeBotones()
+		{
+			Action accionEditar = () =>
+			{
+				var dataContextActual = SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido;
+
+				var vmEdicion = new ViewModelCrearTirada(vm =>
+				{
+				}, ControladorGenerico.modelo.ObtenerModeloContenedor(), ControladorGenerico);
+
+				SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = vmEdicion;
+			};
+
+			Action accionEliminar = () =>
+			{
+				ControladorGenerico?.Eliminar();
+			};
+
+			CrearBotonesParaEditarYEliminar(accionEditar, accionEliminar);
 		}
 	}
 }

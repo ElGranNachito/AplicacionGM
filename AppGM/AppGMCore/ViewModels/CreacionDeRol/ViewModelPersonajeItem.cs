@@ -12,12 +12,10 @@ namespace AppGM.Core
 		/// </summary>
 		/// <param name="_controladorPersonaje">Controlador del personaje que sera representado por este vm</param>
 		public ViewModelPersonajeItem(ControladorPersonaje _controladorPersonaje, bool _mostrarBotonesLaterales = true)
-			:base(_controladorPersonaje, _mostrarBotonesLaterales)
+			:base(_controladorPersonaje) {}
+
+		protected override void ActualizarCaracteristicas()
 		{
-			ControladorGenerico = _controladorPersonaje;
-
-			PathImagen = ControladorGenerico.modelo.PathImagenAbsoluto;
-
 			CaracteristicasItem.Elementos = new ObservableCollection<ViewModelCaracteristicaItem>
 			{
 				new ViewModelCaracteristicaItem
@@ -42,6 +40,8 @@ namespace AppGM.Core
 					Valor = p.ClaseServant.ToString()
 				});
 			}
+
+			PathImagen = ControladorGenerico.modelo.PathImagenAbsoluto;
 		}
 	}
 }

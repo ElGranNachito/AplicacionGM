@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="AppGM.UserControlBoton"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AppGM"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <!--ViewModel: ViewModelBoton-->
+
+    <Button
+        VerticalAlignment="Top"
+        Margin="0 5 0 0"
+        Style="{StaticResource BotonFondoResaltable}"
+                    
+        Content="{Binding Contenido}"
+                    
+        Command="{Binding Comando}"
+
+        IsEnabled="{Binding EstaHabilitado}"
+                    
+        Visibility="{Binding EsVisible, 
+                    Converter={local:BooleanToVisibilityConverterColapsar}}"/>
+</UserControl>

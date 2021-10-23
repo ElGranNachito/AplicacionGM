@@ -1137,6 +1137,11 @@ namespace AppGM.Core
         /// </summary>
         PredicadoEfecto = 3,
 
+        /// <summary>
+        /// Funciona destinada a lidiar con eventos
+        /// </summary>
+        HandlerEvento = 4,
+
         NINGUNO = 0
     }
 }

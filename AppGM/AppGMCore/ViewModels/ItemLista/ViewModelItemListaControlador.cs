@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using CoolLogs;
 
 namespace AppGM.Core
 {
@@ -22,7 +24,7 @@ namespace AppGM.Core
 			get => mControladorGenerico;
 			set
 			{
-				if (value != Controlador)
+				if (Controlador is not null && value != Controlador)
 				{
 					Controlador.Modelo.OnModeloEliminado -= mModeloEliminadoHandler;
 
@@ -33,53 +35,53 @@ namespace AppGM.Core
 				//llamar a ActualizarCaracteristicas en caso de que alguno de los campos/propiedades
 				//de el controlador haya sido modificado
 
+				bool valorAnteriorEraNull = mControladorGenerico == null;
+
 				mControladorGenerico = value;
 				Controlador = value;
+
+				if(valorAnteriorEraNull)
+					ActualizarGruposDeBotones();
 
 				ActualizarCaracteristicas();
 			}
 		}
 
 		/// <summary>
+		/// Constructor por defecto
+		/// </summary>
+		public ViewModelItemListaControlador(){}
+
+		/// <summary>
 		/// Constructor
 		/// </summary>
 		/// <param name="_controlador">Controlador contenido en este item</param>
-		/// <param name="_mostrarBotonesLaterales">Indica si los botones deben ser visibles</param>
-		/// <param name="_contenidoBotonSuperior">Contenido del boton superior</param>
-		/// <param name="_contenidoBotonInferior">Contenido del boton inferior</param>
-		public ViewModelItemListaControlador(
-			ControladorBase _controlador,
-			bool _mostrarBotonesLaterales = true,
-			string _contenidoBotonSuperior = "Editar",
-			string _contenidoBotonInferior = "Eliminar")
-
-			: base(_mostrarBotonesLaterales, _contenidoBotonSuperior, _contenidoBotonInferior)
+		public ViewModelItemListaControlador(TControlador _controlador)
 		{
-			Controlador = _controlador;
+			if (_controlador == null)
+			{
+				SistemaPrincipal.LoggerGlobal.Log($"{nameof(_controlador)} pasado es null!", ESeveridad.Error);
+
+				return;
+			}
+
+			ControladorGenerico = _controlador;
 
 			ConfigurarEventoItemEliminado();
 		}
 
 		/// <summary>
-		/// Constructor que permite proveer lambdas que se ejecutaran al presionar cada boton
+		/// Crea botones con los contenidos "Editar" y "Eliminar"
 		/// </summary>
-		/// <param name="_controlador">Controlador contenido en este item</param>
-		/// <param name="_accionBotonSuperior">Lambda que se ejecutara al presionar el boton superior</param>
-		/// <param name="_accionBotonInferior">Lambda que se ejecutara al presionar el boton inferior</param>
-		/// <param name="_contenidoBotonSuperior">Contenido del boton superior</param>
-		/// <param name="_contenidoBotonInferior">Contenido del boton inferior</param>
-		public ViewModelItemListaControlador(
-			ControladorBase _controlador,
-			Action _accionBotonSuperior,
-			Action _accionBotonInferior,
-			string _contenidoBotonSuperior = "Editar",
-			string _contenidoBotonInferior = "Eliminar")
-
-			: base(_accionBotonSuperior, _accionBotonInferior, _contenidoBotonSuperior, _contenidoBotonInferior)
+		/// <param name="_accionBotonEditar">Delegado que se ejecutara cuando el boton editar sea presionado</param>
+		/// <param name="_accionBotonEliminar">Delegado que se ejecutara cuando el boton eliminar sea presionado</param>
+		protected void CrearBotonesParaEditarYEliminar(Action _accionBotonEditar, Action _accionBotonEliminar)
 		{
-			Controlador = _controlador;
-
-			ConfigurarEventoItemEliminado();
+			GruposDeBotones.Add(new ViewModelGrupoBotones(new List<ViewModelBoton>
+			{
+				new ViewModelBoton(_accionBotonEditar, ViewModelBoton.NombresComunes.Editar, ViewModelBoton.NombresComunes.Editar, this),
+				new ViewModelBoton(_accionBotonEliminar, ViewModelBoton.NombresComunes.Eliminar, ViewModelBoton.NombresComunes.Eliminar, this)
+			}));
 		}
 	}
 }
