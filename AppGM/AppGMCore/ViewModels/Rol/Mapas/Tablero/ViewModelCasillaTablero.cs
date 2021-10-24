@@ -26,6 +26,16 @@ namespace AppGM.Core
         /// </summary>
         public string ColorFondoCasilla { get; set; } = "0000ffff";
 
+        /// <summary>
+        /// Indica si la casilla esta siendo seleccionada por el usuario.
+        /// </summary>
+        public bool EstaSeleccionada { get; set; } = false;
+
+        /// <summary>
+        /// Indica si la casilla puede ser ocupada por una unidad dentro del mapa donde se encuentre.
+        /// </summary>
+        public bool PuedeOcuparse { get; set; } = true;
+
         #endregion
 
         #region Constructores

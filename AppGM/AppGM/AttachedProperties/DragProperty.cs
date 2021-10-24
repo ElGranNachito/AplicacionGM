@@ -55,8 +55,6 @@ namespace AppGM
                         && nuevaPosicion.Y >= 0)
                         vm.Posicion.Y = Math.Clamp(nuevaPosicion.Y, 0, vm.mapa.TamañoCanvasY);
 
-                    SistemaPrincipal.LoggerGlobal.Log($"X: {vm.Posicion.X}, Y: {vm.Posicion.Y} ");
-
                     //Disparamos los eventos de property changed para que se actualice el texto de las textbox y la posicion de la imagen
                     vm.DispararPropertyChanged(new PropertyChangedEventArgs(nameof(vm.TextoPosicionX)));
                     vm.DispararPropertyChanged(new PropertyChangedEventArgs(nameof(vm.TextoPosicionY)));

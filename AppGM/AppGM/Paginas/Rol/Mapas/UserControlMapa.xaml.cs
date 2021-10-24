@@ -1,6 +1,9 @@
-﻿using System.Windows;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using AppGM.Core;
 
 namespace AppGM
@@ -22,7 +25,7 @@ namespace AppGM
                     ViewModel = (ViewModelMapa) DataContext;
             };
 
-            Gridsito.MouseLeftButtonDown += OnPreviewMouseLeftButtonDown;
+            Gridsito.PreviewMouseLeftButtonDown += OnPreviewMouseLeftButtonDown;
         }
 
         private void OnMapaSizeXChanged(object sender, SizeChangedEventArgs e)
