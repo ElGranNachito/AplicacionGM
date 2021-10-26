@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+
 using CoolLogs;
 
 namespace AppGM.Core
@@ -14,7 +15,7 @@ namespace AppGM.Core
 		/// <summary>
 		/// Nombre de la funcion
 		/// </summary>
-		public string NombreFuncion => ControladorGenerico.NombreFuncion;
+		public string NombreFuncion => ControladorGenerico?.NombreFuncion;
 
 		//TODO: Hacer que de verdad indique el tipo de la funcion
 		/// <summary>
@@ -22,19 +23,21 @@ namespace AppGM.Core
 		/// </summary>
 		public EPropositoFuncion TipoFuncion => EPropositoFuncion.NINGUNO;
 
+		/// <summary>
+		/// Constructor por defecto
+		/// </summary>
 		public ViewModelFuncionItem()
 		{
-			ActualizarCaracteristicas();
 			ActualizarGruposDeBotones();
 		}
 
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		/// <param name="_controladorFuncion"></param>
-		public ViewModelFuncionItem(TControlador _controladorFuncion)
-
-			:base(_controladorFuncion) {}
+		/// <param name="_controladorFuncion">Controlador de la funcion representada por este item</param>
+		/// <param name="_titulo">Titulo que tendra este item</param>
+		public ViewModelFuncionItem(TControlador _controladorFuncion, string _titulo = "")
+			:base(_controladorFuncion, _titulo) {}
 
 		protected override void ActualizarCaracteristicas()
 		{
@@ -86,9 +89,26 @@ namespace AppGM.Core
 				IndiceGrupoDeBotonesActivo = 1;
 		}
 
+		/// <summary>
+		/// Obtiene un <see cref="Action"/> que ejecuta la logica necesaria para crear una nueva funcion
+		/// </summary>
+		/// <returns><see cref="Action"/> que ejecuta la logica necesaria para crear una nueva funcion</returns>
 		protected virtual Action ObtenerAccionCrear()
 		{
-			return () => { };
+			return () =>
+			{
+				var dataContextActual = SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido;
+
+				var nuevoVmCreacionFuncion = ControladorFuncionBase.CrearVMParaCrear(typeof(TControlador), vm =>
+				{
+					if (vm.Resultado.EsAceptarOFinalizar())
+						ControladorGenerico = vm.CrearControlador();
+
+					SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = dataContextActual;
+				});
+
+				SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = nuevoVmCreacionFuncion;
+			};
 		}
 	}
 }

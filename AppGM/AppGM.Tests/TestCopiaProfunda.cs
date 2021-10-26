@@ -182,6 +182,39 @@ namespace AppGM.Tests
 			Assert.Contains(modelosCreados, m => m is ModeloAlianza && m.Id == nuevaAlianza.Id);
 			Assert.True(modelosCreados.Count == 2);
 		}
-	}
 
+		public void PruebaReemplazoDeReferencias()
+		{
+			var pj = CrearPersonajeDePrueba();
+			var copiaPj = pj.CrearCopiaProfundaEnSubtipo<ModeloPersonaje, ModeloPersonaje>();
+
+			var nuevoContrato = new ModeloContrato
+			{
+				Id = 1,
+
+				PersonajesAfectados = new List<ModeloPersonaje>{copiaPj},
+
+				Nombre = "Contrato piola",
+				Descripcion = "Contrato entre pibes piola"
+			};
+
+			var nuevaAlianza = new ModeloAlianza
+			{
+				ContratoDeAlianza = nuevoContrato,
+				Id = 1,
+				
+				PersonajesAfectados = new List<ModeloPersonaje>{copiaPj},
+
+				Nombre = "Cooler alianza",
+				Descripcion = "Cooler"
+			};
+
+			copiaPj.Alianzas.Add(nuevaAlianza);
+			copiaPj.Contratos.Add(nuevoContrato);
+
+			copiaPj.CrearCopiaProfundaEnSubtipo<ModeloPersonaje, ModeloPersonaje>(pj, null, null, null, null);
+
+			Assert.True(pj.Contratos[0].PersonajesAfectados[0] == pj, "No se reemplazo la referencia del personaje");
+		}
+	}
 }

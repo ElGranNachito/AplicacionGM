@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
@@ -95,7 +96,7 @@ namespace AppGM.Core
             }
         }
 
-        public ViewModelListaItems<ViewModelItemLista> ContenedorListaEfectos { get; set; }
+        public ViewModelListaItems<ViewModelEfectoItem> ContenedorListaEfectos { get; set; }
         public ViewModelListaItems<ViewModelTiradaItem> ContenedorListaTiradas { get; set; }
 
         public ViewModelListaItems<ViewModelVariableItem> ContenedorListaVariables  { get; set; }
@@ -104,7 +105,7 @@ namespace AppGM.Core
 
         public ViewModelComboBox<ERango> ComboBoxRangoHabilidad { get; set; } = new ViewModelComboBox<ERango>(EnumHelpers.RangosDisponibles);
 
-        public ViewModelFuncionItem<ControladorFuncion_Habilidad> FuncionUtilizar { get; set; }
+        public ViewModelListaItems<ViewModelFuncionItem<ControladorFuncion_Habilidad>> FuncionUtilizar { get; set; }
         public ViewModelFuncionItem<ControladorFuncion_PredicadoEfecto> FuncionCondicion { get; set; }
 
         public ICommand ComandoGuardar { get; set; }
@@ -113,7 +114,7 @@ namespace AppGM.Core
 
         #region Constructor
 
-        public ViewModelCrearHabilidad(ModeloPersonaje _modeloPersonaje, Action<ViewModelCrearHabilidad> accionSalir, ControladorHabilidad _habilidad = null)    
+        public ViewModelCrearHabilidad(Action<ViewModelCrearHabilidad> accionSalir, ModeloPersonaje _modeloPersonaje, ControladorHabilidad _habilidad = null)    
 			:base(accionSalir, _habilidad)
         {
 	        mModeloPersonaje  = _modeloPersonaje;
@@ -143,10 +144,46 @@ namespace AppGM.Core
                 DispararPropertyChanged(nameof(PuedeElegirSiTieneRango));
             };
 
-            FuncionUtilizar = new ViewModelFuncionItem<ControladorFuncion_Habilidad>(new ControladorFuncion_Habilidad(new ModeloFuncion{NombreFuncion = "CoolerFunc"}));
+            FuncionUtilizar = new ViewModelListaItems<ViewModelFuncionItem<ControladorFuncion_Habilidad>>(() =>
+            {
+                var vmCreacion = new ViewModelCreacionDeFuncionHabilidad(vm =>
+                {
+	                if (vm.Resultado.EsAceptarOFinalizar())
+	                {
+		                var nuevaFuncion = ((ViewModelCreacionDeFuncionHabilidad) vm).ControladorFuncion;
+
+		                var nuevaRelacion = new TIFuncionHabilidad
+		                {
+			                Funcion = nuevaFuncion.modelo,
+			                Habilidad = ModeloCreado
+		                };
+
+		                AñadirFuncionDesdeListaItems<TIFuncionHabilidad, ViewModelFuncionItem<ControladorFuncion_Habilidad>>((ViewModelFuncionItem<ControladorFuncion_Habilidad>)nuevaFuncion.CrearViewModelItem(), nuevaRelacion, ModeloCreado.Funciones, FuncionUtilizar);
+	                }
+                });
+            }, true, "Funcion Utilizar", 1);
+
             //FuncionCondicion = new ViewModelFuncionItem<ControladorFuncion_Predicado>(null);
 
-            ContenedorListaEfectos   = new ViewModelListaItems<ViewModelItemLista>(()=>{}, true, "Efectos");
+            ContenedorListaEfectos   = new ViewModelListaItems<ViewModelEfectoItem>(() =>
+            {
+	            SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = new ViewModelCreacionEfecto(async vm =>
+	            {
+		            SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = this;
+
+		            if (vm.Resultado.EsAceptarOFinalizar())
+		            {
+			            var nuevoEfecto = vm.CrearControlador();
+
+			            nuevoEfecto.modelo.HabilidadContenedora = ModeloCreado;
+
+			            await nuevoEfecto.GuardarAsync();
+
+                        //AñadirFuncionDesdeListaItems<ModeloEfecto, ViewModelEfectoItem>((ViewModelEfectoItem)nuevoEfecto.CrearViewModelItem(), ModeloCreado.Efectos, ContenedorListaEfectos);
+		            }
+
+                }, mModeloPersonaje, typeof(ControladorHabilidad), null);
+            }, true, "Efectos");
 
             ContenedorListaTiradas   = new ViewModelListaItems<ViewModelTiradaItem>(()=>
             {            
@@ -160,12 +197,9 @@ namespace AppGM.Core
 
                         nuevaTirada.modelo.HabilidadContenedora = ModeloCreado;
 
-                        if (vm.Resultado.EsAceptarOFinalizar())
-                            ModeloCreado.Tiradas.Add(nuevaTirada.modelo);
-
                         await nuevaTirada.GuardarAsync();
 
-                        AñadirTirada((ViewModelTiradaItem)nuevaTirada.CrearViewModelItem());
+                        AñadirModeloDesdeListaItems<ModeloTiradaBase, ViewModelTiradaItem>((ViewModelTiradaItem)nuevaTirada.CrearViewModelItem(), ModeloCreado.Tiradas, ContenedorListaTiradas);
                     }
 
                 }, ModeloCreado, null);
@@ -184,7 +218,7 @@ namespace AppGM.Core
 
                         await nuevaVariable.GuardarAsync();
 
-                        AñadirVariable((ViewModelVariableItem)vm.CrearControlador().CrearViewModelItem());
+                        AñadirModeloDesdeListaItems<ModeloVariableBase, ViewModelVariableItem>((ViewModelVariableItem)vm.CrearControlador().CrearViewModelItem(), ModeloCreado.Variables, ContenedorListaVariables);
 		            }
 
 		            SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = this;
@@ -281,27 +315,9 @@ namespace AppGM.Core
             return 0;
         }
 
-        private void AñadirVariable(ViewModelVariableItem nuevaVariable)
-        {
-	        nuevaVariable.OnItemEliminado += item =>
-	        {
-		        ContenedorListaVariables.Items.Remove(item);
-	        };
+        
 
-            ContenedorListaVariables.Items.Add(nuevaVariable);
-        }
-
-        private void AñadirTirada(ViewModelTiradaItem nuevaTirada) 
-        {
-            nuevaTirada.OnItemEliminado += item =>
-            {
-                ContenedorListaTiradas.Items.Remove(item);
-            };
-
-            ContenedorListaTiradas.Items.Add(nuevaTirada);
-        }
-
-		protected override void ActualizarValidez()
+        protected override void ActualizarValidez()
 		{
 			base.ActualizarValidez();
 		}

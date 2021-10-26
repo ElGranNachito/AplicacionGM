@@ -33,7 +33,8 @@ namespace AppGM.Core.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     NombreFuncion = table.Column<string>(type: "TEXT", maxLength: 100, nullable: true),
-                    TipoEventoQueManejaString = table.Column<string>(type: "TEXT", maxLength: 255, nullable: true),
+                    Discriminator = table.Column<string>(type: "TEXT", nullable: false),
+                    TipoHandlerString = table.Column<string>(type: "TEXT", maxLength: 255, nullable: true),
                     EsValido = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
@@ -467,6 +468,31 @@ namespace AppGM.Core.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TIFuncionHandlerEvento<ModeloPersonaje>",
+                columns: table => new
+                {
+                    IdFuncion = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdOtro = table.Column<int>(type: "INTEGER", nullable: false),
+                    NombresEventosVinculados = table.Column<string>(type: "TEXT", maxLength: 1000, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TIFuncionHandlerEvento<ModeloPersonaje>", x => new { x.IdFuncion, x.IdOtro });
+                    table.ForeignKey(
+                        name: "FK_TIFuncionHandlerEvento<ModeloPersonaje>_ModeloFuncion_IdFuncion",
+                        column: x => x.IdFuncion,
+                        principalTable: "ModeloFuncion",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TIFuncionHandlerEvento<ModeloPersonaje>_ModeloPersonaje_IdOtro",
+                        column: x => x.IdOtro,
+                        principalTable: "ModeloPersonaje",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ModeloAmbiente",
                 columns: table => new
                 {
@@ -556,15 +582,15 @@ namespace AppGM.Core.Migrations
                     Descripcion = table.Column<string>(type: "TEXT", maxLength: 500, nullable: true),
                     Tipo = table.Column<int>(type: "INTEGER", nullable: false),
                     ComportamientoAcumulativo = table.Column<int>(type: "INTEGER", nullable: false),
-                    HabilidadDueñaId = table.Column<int>(type: "INTEGER", nullable: true),
+                    HabilidadContenedoraId = table.Column<int>(type: "INTEGER", nullable: true),
                     EsValido = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ModeloEfecto", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ModeloEfecto_ModeloHabilidad_HabilidadDueñaId",
-                        column: x => x.HabilidadDueñaId,
+                        name: "FK_ModeloEfecto_ModeloHabilidad_HabilidadContenedoraId",
+                        column: x => x.HabilidadContenedoraId,
                         principalTable: "ModeloHabilidad",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -575,8 +601,7 @@ namespace AppGM.Core.Migrations
                 columns: table => new
                 {
                     IDFuncion = table.Column<int>(type: "INTEGER", nullable: false),
-                    IDHabilidad = table.Column<int>(type: "INTEGER", nullable: false),
-                    NombreEvento = table.Column<string>(type: "TEXT", maxLength: 100, nullable: true)
+                    IDHabilidad = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -590,6 +615,31 @@ namespace AppGM.Core.Migrations
                     table.ForeignKey(
                         name: "FK_TIFuncionHabilidad_ModeloHabilidad_IDHabilidad",
                         column: x => x.IDHabilidad,
+                        principalTable: "ModeloHabilidad",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TIFuncionHandlerEvento<ModeloHabilidad>",
+                columns: table => new
+                {
+                    IdFuncion = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdOtro = table.Column<int>(type: "INTEGER", nullable: false),
+                    NombresEventosVinculados = table.Column<string>(type: "TEXT", maxLength: 1000, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TIFuncionHandlerEvento<ModeloHabilidad>", x => new { x.IdFuncion, x.IdOtro });
+                    table.ForeignKey(
+                        name: "FK_TIFuncionHandlerEvento<ModeloHabilidad>_ModeloFuncion_IdFuncion",
+                        column: x => x.IdFuncion,
+                        principalTable: "ModeloFuncion",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TIFuncionHandlerEvento<ModeloHabilidad>_ModeloHabilidad_IdOtro",
+                        column: x => x.IdOtro,
                         principalTable: "ModeloHabilidad",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -660,8 +710,7 @@ namespace AppGM.Core.Migrations
                 {
                     IDFuncion = table.Column<int>(type: "INTEGER", nullable: false),
                     IDEfecto = table.Column<int>(type: "INTEGER", nullable: false),
-                    TipoFuncion = table.Column<int>(type: "INTEGER", nullable: false),
-                    NombreEvento = table.Column<string>(type: "TEXT", maxLength: 100, nullable: true)
+                    TipoFuncion = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -675,6 +724,31 @@ namespace AppGM.Core.Migrations
                     table.ForeignKey(
                         name: "FK_TIFuncionEfecto_ModeloFuncion_IDFuncion",
                         column: x => x.IDFuncion,
+                        principalTable: "ModeloFuncion",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TIFuncionHandlerEvento<ModeloEfecto>",
+                columns: table => new
+                {
+                    IdFuncion = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdOtro = table.Column<int>(type: "INTEGER", nullable: false),
+                    NombresEventosVinculados = table.Column<string>(type: "TEXT", maxLength: 1000, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TIFuncionHandlerEvento<ModeloEfecto>", x => new { x.IdFuncion, x.IdOtro });
+                    table.ForeignKey(
+                        name: "FK_TIFuncionHandlerEvento<ModeloEfecto>_ModeloEfecto_IdOtro",
+                        column: x => x.IdOtro,
+                        principalTable: "ModeloEfecto",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TIFuncionHandlerEvento<ModeloEfecto>_ModeloFuncion_IdFuncion",
+                        column: x => x.IdFuncion,
                         principalTable: "ModeloFuncion",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -744,6 +818,25 @@ namespace AppGM.Core.Migrations
                         name: "FK_ModeloVariable_ModeloPersonaje_PersonajeContenedorId",
                         column: x => x.PersonajeContenedorId,
                         principalTable: "ModeloPersonaje",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TIFuncionHandlerEvento<ModeloUtilizable>",
+                columns: table => new
+                {
+                    IdFuncion = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdOtro = table.Column<int>(type: "INTEGER", nullable: false),
+                    NombresEventosVinculados = table.Column<string>(type: "TEXT", maxLength: 1000, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TIFuncionHandlerEvento<ModeloUtilizable>", x => new { x.IdFuncion, x.IdOtro });
+                    table.ForeignKey(
+                        name: "FK_TIFuncionHandlerEvento<ModeloUtilizable>_ModeloFuncion_IdFuncion",
+                        column: x => x.IdFuncion,
+                        principalTable: "ModeloFuncion",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -920,9 +1013,9 @@ namespace AppGM.Core.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_ModeloEfecto_HabilidadDueñaId",
+                name: "IX_ModeloEfecto_HabilidadContenedoraId",
                 table: "ModeloEfecto",
-                column: "HabilidadDueñaId");
+                column: "HabilidadContenedoraId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ModeloEfectoSiendoAplicado_EfectoId",
@@ -1077,6 +1170,26 @@ namespace AppGM.Core.Migrations
                 column: "IDHabilidad");
 
             migrationBuilder.CreateIndex(
+                name: "IX_TIFuncionHandlerEvento<ModeloEfecto>_IdOtro",
+                table: "TIFuncionHandlerEvento<ModeloEfecto>",
+                column: "IdOtro");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TIFuncionHandlerEvento<ModeloHabilidad>_IdOtro",
+                table: "TIFuncionHandlerEvento<ModeloHabilidad>",
+                column: "IdOtro");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TIFuncionHandlerEvento<ModeloPersonaje>_IdOtro",
+                table: "TIFuncionHandlerEvento<ModeloPersonaje>",
+                column: "IdOtro");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TIFuncionHandlerEvento<ModeloUtilizable>_IdOtro",
+                table: "TIFuncionHandlerEvento<ModeloUtilizable>",
+                column: "IdOtro");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TIFuncionPadreFuncion_IDFuncion",
                 table: "TIFuncionPadreFuncion",
                 column: "IDFuncion",
@@ -1131,6 +1244,14 @@ namespace AppGM.Core.Migrations
                 name: "FK_ModeloVariable_ModeloUtilizable_UtilizableContenedorId",
                 table: "ModeloVariable",
                 column: "UtilizableContenedorId",
+                principalTable: "ModeloUtilizable",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_TIFuncionHandlerEvento<ModeloUtilizable>_ModeloUtilizable_IdOtro",
+                table: "TIFuncionHandlerEvento<ModeloUtilizable>",
+                column: "IdOtro",
                 principalTable: "ModeloUtilizable",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
@@ -1206,6 +1327,18 @@ namespace AppGM.Core.Migrations
 
             migrationBuilder.DropTable(
                 name: "TIFuncionHabilidad");
+
+            migrationBuilder.DropTable(
+                name: "TIFuncionHandlerEvento<ModeloEfecto>");
+
+            migrationBuilder.DropTable(
+                name: "TIFuncionHandlerEvento<ModeloHabilidad>");
+
+            migrationBuilder.DropTable(
+                name: "TIFuncionHandlerEvento<ModeloPersonaje>");
+
+            migrationBuilder.DropTable(
+                name: "TIFuncionHandlerEvento<ModeloUtilizable>");
 
             migrationBuilder.DropTable(
                 name: "TIFuncionPadreFuncion");

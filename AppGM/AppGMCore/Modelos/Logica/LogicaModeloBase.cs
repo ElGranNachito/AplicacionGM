@@ -30,7 +30,8 @@ namespace AppGM.Core
 			ModeloBase modeloAlQueCopiarLosDatos = null,
 			ModeloBase modeloQueCopiar = null,
 			List<ModeloBase> outModelosEliminados = null,
-			List<ModeloBase> outModelosAñadidos = null)
+			List<ModeloBase> outModelosAñadidos = null,
+			Dictionary<ModeloBase, ModeloBase> referenciasQueReemplazar = null)
 		{
 			modeloQueCopiar ??= this;
 
@@ -44,7 +45,7 @@ namespace AppGM.Core
 
 			var metodoGenerico = typeof(ModeloBase).GetMethod(nameof(CrearCopiaProfundaEnSubtipo_Interno), BindingFlags.Instance | BindingFlags.NonPublic).MakeGenericMethod(tipoAlQueCopiarLosDatos);
 
-			return (ModeloBase)metodoGenerico.Invoke(this, new object[] { modeloAlQueCopiarLosDatos, modeloQueCopiar, outModelosEliminados, outModelosAñadidos, null });
+			return (ModeloBase)metodoGenerico.Invoke(this, new object[] { modeloAlQueCopiarLosDatos, modeloQueCopiar, outModelosEliminados, outModelosAñadidos, referenciasQueReemplazar, null });
 		}
 
 		/// <summary>
@@ -62,12 +63,13 @@ namespace AppGM.Core
 			TResultado modeloAlQueCopiarLosDatos = null,
 			TModeloOrigen modeloQueCopiar = null,
 			List<ModeloBase> outModelosEliminados = null,
-			List<ModeloBase> outModelosAñadidos = null)
+			List<ModeloBase> outModelosAñadidos = null,
+			Dictionary<ModeloBase, ModeloBase> referenciasQueReemplazar = null)
 
 			where TModeloOrigen : ModeloBase, new()
 			where TResultado : ModeloBase, new()
 		{
-			return CrearCopiaProfundaEnSubtipo_Interno<TResultado>(modeloAlQueCopiarLosDatos, modeloQueCopiar, outModelosEliminados, outModelosAñadidos, null);
+			return CrearCopiaProfundaEnSubtipo_Interno<TResultado>(modeloAlQueCopiarLosDatos, modeloQueCopiar, outModelosEliminados, outModelosAñadidos, referenciasQueReemplazar,null);
 		}
 
 		/// <summary>
@@ -84,11 +86,12 @@ namespace AppGM.Core
 			ModeloBase modeloAlQueCopiarLosDatos = null,
 			ModeloBase modeloQueCopiar = null,
 			List<ModeloBase> outModelosEliminados = null,
-			List<ModeloBase> outModelosAñadidos = null)
+			List<ModeloBase> outModelosAñadidos = null,
+			Dictionary<ModeloBase, ModeloBase> referenciasQueReemplazar = null)
 		{
 			return await Task.Run(() =>
 			{
-				return CrearCopiaProfundaEnSubtipo(tipoAlQueCopiarLosDatos, modeloAlQueCopiarLosDatos, modeloQueCopiar, outModelosEliminados, outModelosAñadidos);
+				return CrearCopiaProfundaEnSubtipo(tipoAlQueCopiarLosDatos, modeloAlQueCopiarLosDatos, modeloQueCopiar, outModelosEliminados, outModelosAñadidos, referenciasQueReemplazar);
 			});
 		}
 
@@ -107,14 +110,15 @@ namespace AppGM.Core
 			TResultado modeloAlQueCopiarLosDatos = null,
 			TModeloOrigen modeloQueCopiar = null,
 			List<ModeloBase> outModelosEliminados = null,
-			List<ModeloBase> outModelosAñadidos = null)
+			List<ModeloBase> outModelosAñadidos = null,
+			Dictionary<ModeloBase, ModeloBase> referenciasQueReemplazar = null)
 
 			where TModeloOrigen : TResultado, new()
 			where TResultado : ModeloBase, new()
 		{
 			return await Task.Run(() =>
 			{
-				return CrearCopiaProfundaEnSubtipo_Interno<TResultado>(modeloAlQueCopiarLosDatos, modeloQueCopiar, outModelosEliminados, outModelosAñadidos, null);
+				return CrearCopiaProfundaEnSubtipo_Interno<TResultado>(modeloAlQueCopiarLosDatos, modeloQueCopiar, outModelosEliminados, outModelosAñadidos, referenciasQueReemplazar, null);
 			});
 		}
 
@@ -133,6 +137,7 @@ namespace AppGM.Core
 			ModeloBase modeloQueCopiar,
 			List<ModeloBase> outModelosEliminados,
 			List<ModeloBase> outModelosAñadidos,
+			Dictionary<ModeloBase, ModeloBase> referenciasQueReemplazar,
 			Dictionary<ModeloBase, ModeloBase> modelosYaCopiados)
 
 			where TResultado : ModeloBase, new()
@@ -145,6 +150,8 @@ namespace AppGM.Core
 			modeloQueCopiar ??= this;
 
 			modelosYaCopiados ??= new Dictionary<ModeloBase, ModeloBase>();
+
+			referenciasQueReemplazar ??= new Dictionary<ModeloBase, ModeloBase>();
 
 			//Si ya existe una copia del modelo que se pretende copiar entonces la retornamos
 			if (modelosYaCopiados.ContainsKey(modeloQueCopiar))
@@ -225,7 +232,7 @@ namespace AppGM.Core
 									//Si no hemos copiado este modelo aun, lo copiamos a su par en el destino
 									if (!modelosYaCopiados.ContainsKey(elementoActualListaOrigen))
 									{
-										var resultadoCopia = metodoClonar.MakeGenericMethod(elementoActualListaOrigen.GetType()).Invoke(elementoActualListaOrigen, new object[] { equivalenteEnDestino, null, outModelosEliminados, outModelosAñadidos, modelosYaCopiados });
+										var resultadoCopia = metodoClonar.MakeGenericMethod(elementoActualListaOrigen.GetType()).Invoke(elementoActualListaOrigen, new object[] { equivalenteEnDestino, null, outModelosEliminados, outModelosAñadidos, referenciasQueReemplazar, modelosYaCopiados });
 
 										if (equivalenteEnDestino == null)
 										{
@@ -263,8 +270,13 @@ namespace AppGM.Core
 								//Por cada elemento en la lista del modelo origen...
 								for (int i = 0; i < listaModeloOrigen.Count; ++i)
 								{
+									//Si el set de referencias que reemplazar contiene un valor para el modelo actual añadimos la referencia a la lista
+									if(referenciasQueReemplazar.TryGetValue(listaModeloOrigen[i], out var referencia))
+									{
+										nuevaLista.Add(referencia);
+									}
 									//Si ya existe una copia del modelo que queremos copiar entonces añadimos a la lista del destino el modelo ya copiado
-									if (modelosYaCopiados.ContainsKey(listaModeloOrigen[i]))
+									else if (modelosYaCopiados.ContainsKey(listaModeloOrigen[i]))
 									{
 										nuevaLista.Add(modelosYaCopiados[listaModeloOrigen[i]]);
 									}
@@ -273,7 +285,7 @@ namespace AppGM.Core
 									{
 										var metodoGenerico = metodoClonar.MakeGenericMethod(listaModeloOrigen[i].GetType());
 
-										var copia = metodoGenerico.Invoke(listaModeloOrigen[i], new object[] { null, null, outModelosEliminados, outModelosAñadidos, modelosYaCopiados }) as ModeloBase;
+										var copia = metodoGenerico.Invoke(listaModeloOrigen[i], new object[] { null, null, outModelosEliminados, outModelosAñadidos, referenciasQueReemplazar, modelosYaCopiados }) as ModeloBase;
 
 										nuevaLista.Add(copia);
 									}
@@ -284,7 +296,7 @@ namespace AppGM.Core
 					//Si la propiedad actual es un modelo
 					else if (typeof(ModeloBase).IsAssignableFrom(propiedadActual.PropertyType))
 					{
-						var valorPropiedadOrigen = propiedadActual.GetValue(modeloQueCopiar) as ModeloBase;
+						var valorPropiedadOrigen  = propiedadActual.GetValue(modeloQueCopiar) as ModeloBase;
 						var valorPropiedadDestino = propiedadActual.GetValue(modeloDestino) as ModeloBase;
 
 						//Si la propiedad de origen es null entonces continuamos a la siguiente iteracion
@@ -300,8 +312,13 @@ namespace AppGM.Core
 							continue;
 						}
 
+						//Si el set de referencias que reemplazar contiene un valor para el modelo de origen colocamos su
+						if (!copiandoAUnModeloExistente && referenciasQueReemplazar.TryGetValue(valorPropiedadOrigen, out var referencia))
+						{
+							propiedadActual.SetValue(modeloDestino, referencia);
+						}
 						//Si ya se ha copiado este modelo entonces simplemente asignamos el valor de la propiedad al modelo copiado
-						if (modelosYaCopiados.ContainsKey(valorPropiedadOrigen))
+						else if (modelosYaCopiados.ContainsKey(valorPropiedadOrigen))
 						{
 							propiedadActual.SetValue(modeloDestino, modelosYaCopiados[valorPropiedadOrigen]);
 						}
@@ -313,19 +330,19 @@ namespace AppGM.Core
 							//Si estamos copiando a un modelo existente entonces copiamos el valor de la propiedad de origen al modelo existente en la propiedad de destino
 							if (copiandoAUnModeloExistente)
 							{
-								metodoClonarGenerico.Invoke(valorPropiedadOrigen, new object[] { propiedadActual.GetValue(modeloDestino), null, null, null, modelosYaCopiados });
+								metodoClonarGenerico.Invoke(valorPropiedadOrigen, new object[] { propiedadActual.GetValue(modeloDestino), null, outModelosEliminados, outModelosAñadidos, referenciasQueReemplazar, modelosYaCopiados });
+
+								if (valorPropiedadDestino == null)
+								{
+									outModelosAñadidos?.Add(modelosYaCopiados[valorPropiedadOrigen]);
+								}
 							}
 							//Sino simplemente creamos una copia del modelo actual.
 							else
 							{
-								var copiaModelo = metodoClonarGenerico.Invoke(valorPropiedadOrigen, new object[] { null, null, null, null, modelosYaCopiados });
+								var copiaModelo = metodoClonarGenerico.Invoke(valorPropiedadOrigen, new object[] { null, null, outModelosEliminados, outModelosAñadidos, referenciasQueReemplazar, modelosYaCopiados });
 
 								propiedadActual.SetValue(modeloDestino, copiaModelo);
-							}
-
-							if (valorPropiedadDestino == null)
-							{
-								outModelosAñadidos?.Add(modelosYaCopiados[valorPropiedadOrigen]);
 							}
 						}
 					}
@@ -337,7 +354,7 @@ namespace AppGM.Core
 				}
 				catch (Exception ex)
 				{
-					SistemaPrincipal.LoggerGlobal.Log($"Ocurrio un error durante la copia. Propiedad: {propiedadActual}{Environment.NewLine}Excepcion: {ex.Message}", ESeveridad.Error);
+					//SistemaPrincipal.LoggerGlobal.Log($"Ocurrio un error durante la copia. Propiedad: {propiedadActual}{Environment.NewLine}Excepcion: {ex.Message}", ESeveridad.Error);
 				}
 			}
 

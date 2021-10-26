@@ -9,6 +9,11 @@ namespace AppGM.Core
 	public class ViewModelCreacionEfecto : ViewModelCreacionEdicionDeModelo<ModeloEfecto, ControladorEfecto, ViewModelCreacionEfecto>
 	{
 		/// <summary>
+		/// 
+		/// </summary>
+		private ModeloPersonaje mModeloPersonaje;
+
+		/// <summary>
 		/// Nombre del efecto
 		/// </summary>
 		public string Nombre
@@ -50,26 +55,43 @@ namespace AppGM.Core
 		/// </summary>
 		public ViewModelComboBox<EComportamientoAcumulativo> ViewModelComboBoxComportamientoAcumulativo { get; set; } = new ViewModelComboBox<EComportamientoAcumulativo>(EnumHelpers.ComportamientosAcumulativosDisponibles);
 
-		public ViewModelFuncionItem<ControladorFuncion_Efecto> FuncionAplicarEfecto { get; set; }
+		/// <summary>
+		/// Viewmodel del item que representa a la funcion aplicar
+		/// </summary>
+		public ViewModelListaItems<ViewModelFuncionItem<ControladorFuncion_Efecto>> ViewModelFuncionAplicarItem { get; set; }
 
-		public ViewModelFuncionItem<ControladorFuncion_PredicadoEfecto> PredicadoPuedeAplicarEfecto { get; set; }
+		/// <summary>
+		/// Viewmodel del item que representa al predicado puede aplicar
+		/// </summary>
+		public ViewModelListaItems<ViewModelFuncionItem<ControladorFuncion_PredicadoEfecto>> ViewModelPredicadoPuedeAplicarItem { get; set; }
 
-		public ViewModelListaItems<ViewModelFuncionHandlerEventoItem> FuncionesHandlerEventos { get; set; }
+		/// <summary>
+		/// Lista de items con los eventos disponibles y sus handlers
+		/// </summary>
+		public ViewModelListaDeElementos<ViewModelCreacionHandlersEvento<TIFuncionHandlerEvento<ModeloEfecto>, ModeloEfecto>> FuncionesHandlerEventos { get; set; }
 
 		/// <summary>
 		/// Constructor
 		/// </summary>
 		/// <param name="_accionSalir">Lambda llamada al salir del control representado por este vm</param>
 		/// <param name="_efectoParaEditar">Controlador del efecto que sera editado</param>
-		public ViewModelCreacionEfecto(Action<ViewModelCreacionEfecto> _accionSalir, ControladorEfecto _efectoParaEditar = null)
+		public ViewModelCreacionEfecto(
+			Action<ViewModelCreacionEfecto> _accionSalir,
+			ModeloPersonaje _modeloPersonaje, 
+			Type tipoControlador,
+			ControladorEfecto _efectoParaEditar = null)
+
 			:base(_accionSalir, _efectoParaEditar)
 		{
+			mModeloPersonaje = _modeloPersonaje;
+
 			ViewModelComboBoxTipoEfecto.OnValorSeleccionadoCambio += (anterior, actual) =>
 			{
 				DispararPropertyChanged(nameof(EsEfectoConDuracion));
 			};
 
 			ViewModelComboBoxComportamientoAcumulativo.SeleccionarValor(EComportamientoAcumulativo.Solapar);
+			ViewModelComboBoxTipoEfecto.SeleccionarValor(ETipoEfecto.Normal);
 
 			ComandoAceptar = new Comando(() =>
 			{
@@ -87,13 +109,59 @@ namespace AppGM.Core
 				mAccionSalir(this);
 			});
 
-			FuncionAplicarEfecto = new ViewModelFuncionItem<ControladorFuncion_Efecto>();
-			PredicadoPuedeAplicarEfecto = new ViewModelFuncionItem<ControladorFuncion_PredicadoEfecto>();
+			ViewModelFuncionAplicarItem = new ViewModelListaItems<ViewModelFuncionItem<ControladorFuncion_Efecto>>(() =>
+			{
+				SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido =
+					new ViewModelCreacionDeFuncionEfecto(
+						vm =>
+						{
+							if (vm.Resultado.EsAceptarOFinalizar())
+							{
+								var controladorNuevaFuncion = vm.CrearControlador();
 
-			//AñadirHandlersModificacionModelo<ViewModelFuncionItem<ControladorFuncion_Efecto>, TIFuncio>();
+								var nuevaFuncion = new TIFuncionEfecto
+								{
+									Funcion = controladorNuevaFuncion.modelo,
+									Efecto = ModeloCreado,
 
+									TipoFuncion = ETipoFuncionEfecto.FuncionAplicar
+								};
 
-			FuncionesHandlerEventos = new ViewModelListaItems<ViewModelFuncionHandlerEventoItem>(() => { }, false, "Eventos");
+								AñadirFuncionDesdeListaItems<TIFuncionEfecto, ViewModelFuncionItem<ControladorFuncion_Efecto>>((ViewModelFuncionItem<ControladorFuncion_Efecto>)controladorNuevaFuncion.CrearViewModelItem(), nuevaFuncion, ModeloCreado.Funciones, ViewModelFuncionAplicarItem);
+							}
+						}, null);
+			}, true, "Funcion aplicar", 1);
+
+			ViewModelPredicadoPuedeAplicarItem = new ViewModelListaItems<ViewModelFuncionItem<ControladorFuncion_PredicadoEfecto>>(() =>
+			{
+
+			}, true, "Predicado", 1);
+
+			//Obtenemos los eventos disponibles
+			var eventosDisponibles = TypeHelpers.ObtenerEventosDisponibles(typeof(ControladorEfecto), new Type[] {tipoControlador, typeof(ControladorPersonaje)});
+
+			FuncionesHandlerEventos = new ViewModelListaDeElementos<ViewModelCreacionHandlersEvento<TIFuncionHandlerEvento<ModeloEfecto>, ModeloEfecto>>();
+
+			//Por cada evento...
+			foreach (var evento in eventosDisponibles)
+			{
+				//Harcodeamos un poco
+				var nuevoHandlerEvento = new TIFuncionHandlerEvento<ModeloEfecto>
+				{
+					Otro = ModeloCreado,
+					Funcion = new ModeloFuncion_HandlerEvento
+					{
+						NombreFuncion = "Funcioncita",
+						TipoHandlerString = evento.EventHandlerType.AssemblyQualifiedName
+					},
+					NombresEventosVinculados = string.Empty
+				};
+
+				ModeloCreado.HandlersEventos.Add(nuevoHandlerEvento);
+
+				//Añadimos un nuevo item a la lista de eventos y handlers
+				FuncionesHandlerEventos.Add(new ViewModelCreacionHandlersEvento<TIFuncionHandlerEvento<ModeloEfecto>, ModeloEfecto>(ModeloCreado.HandlersEventos, evento));
+			}
 		}
 
 		public override ModeloEfecto CrearModelo() => ModeloCreado;
@@ -112,29 +180,23 @@ namespace AppGM.Core
 
 		protected override void ActualizarValidez()
 		{
-			base.ActualizarValidez();
+			if (ModeloCreado.Nombre.IsNullOrWhiteSpace())
+			{
+				EsValido = false;
+
+				return;
+			}
+
+			if (EsEfectoConDuracion && ModeloCreado.TurnosDeDuracion <= 0)
+			{
+				EsValido = false;
+
+				return;
+			}
+
+			//TODO: Validar funciones
+
+			EsValido = true;
 		}
-
-		//private void AñadirHandlersModificacionModelo<TItem, TModelo>(TItem item, List<TModelo> coleccion)
-
-		//	where TItem   : ViewModelItemLista
-		//	where TModelo : ModeloBaseSK
-		//{
-		//	item.AñadirHandlerClick(ViewModelBoton.NombresComunes.Crear, b =>
-		//	{
-		//		coleccion.Add((TModelo)((ViewModelItemListaBase)b.ViewModelElementoContenedor).Controlador.Modelo);
-		//	});
-		//}
-
-		//private void AñadirHandlersModificacionModelo<TItem, TModelo, TModeloResultadoModificacion>(TItem item, List<TModelo> coleccion, Func<TModeloResultadoModificacion, TModelo> convertidor)
-
-		//	where TItem : ViewModelItemLista
-		//	where TModelo : ModeloBaseSK
-		//{
-		//	item.AñadirHandlerClick(ViewModelBoton.NombresComunes.Crear, b =>
-		//	{
-		//		coleccion.Add();
-		//	});
-		//}
 	}
 }

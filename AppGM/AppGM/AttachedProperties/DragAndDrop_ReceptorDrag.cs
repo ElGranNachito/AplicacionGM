@@ -11,7 +11,7 @@ namespace AppGM
 	/// Propiedad para la que implementen <see cref="FrameworkElement"/> que deseen lidiar con eventos de <see cref="Drag"/>.
 	/// Su <see cref="ViewModel"/> debe implementar <see cref="IReceptorDeDrag"/>
 	/// </summary>
-	public class ReceptorDeDragProperty : BaseAttachedProperty<bool, ReceptorDeDragProperty>
+	public class DragAndDrop_ReceptorDrag : BaseAttachedProperty<bool, DragAndDrop_ReceptorDrag>
 	{
 		public override void OnValueChanged_Impl(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
@@ -36,9 +36,6 @@ namespace AppGM
 							fe.MouseLeave += mouseLeaveHandler;
 
 							SistemaPrincipal.Drag.OnFinDrag += dragFinalizadoHandler;
-
-							//if (vm is ViewModelSeccionReceptoraDeDrag)
-							//	Debugger.Break();
 
 							SistemaPrincipal.Drag.AñadirReceptorDrag(vm);
 						}

@@ -9,8 +9,8 @@
 
              Margin="0 0 0 10"
              
-             local:ReceptorDeDragProperty.Value="True"
-             local:ComenzarDragProperty.Value="True">
+             local:DragAndDrop_ReceptorDrag.Value="True"
+             local:DragAndDrop_Drageable.Value="True">
 
     <!-- ViewModel: ViewModelCreacionDeFuncionBase -->
 

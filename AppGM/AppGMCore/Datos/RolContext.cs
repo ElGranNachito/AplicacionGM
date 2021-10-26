@@ -326,7 +326,7 @@ namespace AppGM.Core
 			// - Habilidad efectos
 			modelBuilder.Entity<ModeloHabilidad>()
 				.HasMany(h => h.Efectos)
-				.WithOne(e => e.HabilidadDueña)
+				.WithOne(e => e.HabilidadContenedora)
 				.OnDelete(DeleteBehavior.Cascade);
 
 			#endregion
@@ -478,6 +478,62 @@ namespace AppGM.Core
 			modelBuilder.Entity<TIFuncionEfecto>()
 				.HasOne(e => e.Efecto)
 				.WithMany(e => e.Funciones);
+
+
+			//Funcion handler evento
+			modelBuilder.Entity<ModeloFuncion_HandlerEvento>();
+
+			//Funcion handler evento - Personaje
+			modelBuilder.Entity<TIFuncionHandlerEvento<ModeloPersonaje>>().HasKey(e => new { e.IdFuncion, e.IdOtro });
+
+			modelBuilder.Entity<TIFuncionHandlerEvento<ModeloPersonaje>>()
+				.HasOne(e => e.Otro)
+				.WithMany(p => p.HandlersEventos)
+				.HasForeignKey(e => e.IdOtro);
+
+			modelBuilder.Entity<TIFuncionHandlerEvento<ModeloPersonaje>>()
+				.HasOne(e => e.Funcion)
+				.WithMany(f => f.EventosEnPersonaje)
+				.HasForeignKey(e => e.IdFuncion);
+
+			//Funcion handler evento - Habilidad
+			modelBuilder.Entity<TIFuncionHandlerEvento<ModeloHabilidad>>().HasKey(e => new { e.IdFuncion, e.IdOtro });
+
+			modelBuilder.Entity<TIFuncionHandlerEvento<ModeloHabilidad>>()
+				.HasOne(e => e.Otro)
+				.WithMany(h => h.HandlersEventos)
+				.HasForeignKey(e => e.IdOtro);
+
+			modelBuilder.Entity<TIFuncionHandlerEvento<ModeloHabilidad>>()
+				.HasOne(e => e.Funcion)
+				.WithMany(f => f.EventosEnHabilidad)
+				.HasForeignKey(e => e.IdFuncion);
+
+			//Funcion handler evento - Efecto
+			modelBuilder.Entity<TIFuncionHandlerEvento<ModeloEfecto>>().HasKey(e => new { e.IdFuncion, e.IdOtro });
+
+			modelBuilder.Entity<TIFuncionHandlerEvento<ModeloEfecto>>()
+				.HasOne(e => e.Otro)
+				.WithMany(e => e.HandlersEventos)
+				.HasForeignKey(e => e.IdOtro);
+
+			modelBuilder.Entity<TIFuncionHandlerEvento<ModeloEfecto>>()
+				.HasOne(e => e.Funcion)
+				.WithMany(f => f.EventosEnEfecto)
+				.HasForeignKey(e => e.IdFuncion);
+
+			//Funcion handler evento - Utilizable
+			modelBuilder.Entity<TIFuncionHandlerEvento<ModeloUtilizable>>().HasKey(e => new { e.IdFuncion, e.IdOtro });
+
+			modelBuilder.Entity<TIFuncionHandlerEvento<ModeloUtilizable>>()
+				.HasOne(e => e.Otro)
+				.WithMany(u => u.HandlersEventos)
+				.HasForeignKey(e => e.IdOtro);
+
+			modelBuilder.Entity<TIFuncionHandlerEvento<ModeloUtilizable>>()
+				.HasOne(e => e.Funcion)
+				.WithMany(f => f.EventosEnUtilizable)
+				.HasForeignKey(e => e.IdFuncion);
 
 			#endregion
 

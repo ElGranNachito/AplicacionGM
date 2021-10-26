@@ -144,7 +144,7 @@
                     BorderBrush="Black"
                     BorderThickness="{Binding GrosorBordesGridBloquesColocados, Converter={local:GrosorToThicknessConverter}}"
                     Padding="5"
-                    local:ReceptorDeDragProperty.Value="True">
+                    local:DragAndDrop_ReceptorDrag.Value="True">
 
                     <ScrollViewer
                         HorizontalScrollBarVisibility="Disabled"

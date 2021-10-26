@@ -14,8 +14,8 @@
 
     <Grid
         Background="Transparent"
-        local:ComenzarDragProperty.Value="True"
-        local:ComenzarDragProperty.ParametroDrag="{StaticResource True}">
+        local:DragAndDrop_Drageable.Value="True"
+        local:DragAndDrop_Drageable.ParametroDrag="{StaticResource True}">
 
         <ContentPresenter
             IsHitTestVisible="False">

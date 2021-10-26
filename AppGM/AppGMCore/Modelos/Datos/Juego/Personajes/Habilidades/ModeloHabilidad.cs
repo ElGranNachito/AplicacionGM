@@ -82,6 +82,11 @@ namespace AppGM.Core
         /// </summary>
         public virtual List<TIFuncionHabilidad> Funciones { get; set; } = new List<TIFuncionHabilidad>();
 
+        /// <summary>
+        /// Handlers vinculados a eventos del controlador de esta habilidad
+        /// </summary>
+        public virtual List<TIFuncionHandlerEvento<ModeloHabilidad>> HandlersEventos { get; set; } = new List<TIFuncionHandlerEvento<ModeloHabilidad>>();
+
 		public override IReadOnlyList<ModeloVariableBase> ObtenerVariablesDisponibles()
 		{
             var variablesDisponibles = new List<ModeloVariableBase>(Variables);

@@ -7,7 +7,7 @@ using CoolLogs;
 namespace AppGM.Core
 {
 	
-	public abstract class ViewModelBloqueFuncionBase : ViewModel, IReceptorDeDrag, IDrageable
+	public abstract class ViewModelBloqueFuncionBase : ViewModel, IReceptorDeDragUnico, IDrageable
 	{
 		/// <summary>
 		/// Evento que dispara cuando el estado de validez cambio
@@ -248,12 +248,12 @@ namespace AppGM.Core
 			return true;
 		}
 
-		public void OnComienzoDrag()
+		public void OnComienzoDrag(ArgumentosDragAndDropBase args)
 		{
 
 		}
 
-		public virtual void Soltado(List<IReceptorDeDrag> receptores) => OnSoltado(this, receptores);
+		public virtual void Soltado(List<IReceptorDeDrag> receptores, ArgumentosDragAndDropBase args) => OnSoltado(this, receptores);
 
 		protected virtual void EstablecerIndiceZ(int nuevoIndice) => mIndiceZ = nuevoIndice;
 

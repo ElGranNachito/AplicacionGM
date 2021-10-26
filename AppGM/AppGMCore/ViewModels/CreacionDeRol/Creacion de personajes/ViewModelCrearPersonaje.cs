@@ -180,11 +180,11 @@ namespace AppGM.Core
         {
 	        mAccionAñadirHabilidad = () =>
 	        {
-		        SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = new ViewModelCrearHabilidad(ModeloCreado, 
+		        SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = new ViewModelCrearHabilidad( 
 			        vm =>
 			        {
 				        SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = this;
-			        });
+			        }, ModeloCreado);
 	        };
 
             ContenedorListaHabilidades = new ViewModelListaItems<ViewModelHabilidadItem>(mAccionAñadirHabilidad, true, "Habilidades");

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -97,5 +98,10 @@ namespace AppGM.Core
 		/// Funcion encargada de eliminar el modelo de la base de datos
 		/// </summary>
 		public virtual void Eliminar() => Modelo.Eliminar();
+
+		public virtual (ControladorBase controlador, List<EventInfo> eventos) ObtenerEventosDisponibles()
+		{
+			return (this, GetType().GetEvents().ToList());
+		}
 	}
 }

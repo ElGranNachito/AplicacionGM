@@ -2,45 +2,51 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AppGM.Core
 {
-	public class ViewModelCreacionDeFuncionHandlerEvento : ViewModelCreacionDeFuncion<Action<object[]>>
+	public class ViewModelCreacionDeFuncionHandlerEvento : ViewModelCreacionDeFuncion<Action<ControladorFuncionBase, object[]>>
 	{
-		public EventInfo Evento { get; init; }
+		public Type TipoHandler { get; init; }
 
 		public ViewModelCreacionDeFuncionHandlerEvento(
 			Action<ViewModelCreacionDeFuncionBase> _accionSalir,
-			ControladorFuncion<Action<object[]>> _controladorFuncion,
-			EventInfo _evento) 
+			Type _tipoHandler,
+			ControladorFuncion<Action<ControladorFuncionBase, object[]>> _controladorFuncion = null) 
 
 			: base(_accionSalir,
 				_controladorFuncion,
 				EPropositoFuncion.HandlerEvento)
 		{
-			Evento = _evento;
-
-			if (Evento == null)
+			TipoHandler = _tipoHandler;
+			
+			if (TipoHandler == null)
 			{
-				SistemaPrincipal.LoggerGlobal.LogCrash($"{nameof(Evento)} fue null");
+				SistemaPrincipal.LoggerGlobal.LogCrash($"{nameof(TipoHandler)} fue null");
+			}
 
-				return;
+			if (!TipoHandler.IsSubclassOf(typeof(MulticastDelegate)))
+			{
+				SistemaPrincipal.LoggerGlobal.LogCrash($"{nameof(TipoHandler)} debe ser un subtipo de {nameof(MulticastDelegate)}");
 			}
 		}
 
 		protected override void AsignarListaDeBloques()
 		{
-			throw new NotImplementedException();
+			BloquesDisponibles = new ViewModelListaDeElementos<ViewModelBloqueMuestra>(new[]
+			{
+				new ViewModelBloqueMuestra(this, typeof(ViewModelBloqueDeclaracionVariable)),
+				new ViewModelBloqueMuestra(this, typeof(ViewModelBloqueLlamarFuncion)),
+				new ViewModelBloqueMuestra(this, typeof(ViewModelBloqueCondicionalCompleto))
+			});
 		}
 
 		protected override void AsignarVariablesBase()
 		{
-			VariablesBase = new List<BloqueVariable>(Evento.AddMethod.GetParameters().Select(p =>
-			{
-				return new BloqueVariable(ObtenerID(), p.Name, p.ParameterType, ETipoVariable.Parametro);
-			}));
+			var parametrosMetodoInvoke =  TipoHandler.GetMethod("Invoke").GetParameters();
+
+			VariablesBase = parametrosMetodoInvoke.Select(p =>
+					new BloqueVariable(ObtenerID(), p.Name, p.ParameterType, ETipoVariable.ParametroCreadoPorElUsuario)).ToList();
 		}
 	}
 }

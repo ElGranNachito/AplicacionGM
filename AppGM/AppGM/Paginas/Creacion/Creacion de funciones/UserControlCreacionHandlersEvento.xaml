@@ -1,0 +1,58 @@
+﻿<UserControl x:Class="AppGM.UserControlCreacionHandlersEvento"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AppGM"
+             mc:Ignorable="d" 
+             d:DesignHeight="100" d:DesignWidth="600">
+
+    <!--ViewModel: ViewModelCreacionHandlersEvento-->
+
+    <Border
+        Padding="5"
+        Background="White">
+
+        <Grid>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!--Datos funcion actualmente seleccionada-->
+            <local:UserControlItemLista
+                
+                BorderBrush="Transparent"
+                DataContext="{Binding ViewModelHandlerActual}"/>
+
+            <Grid
+                Grid.Column="1"
+                
+                Margin="5 0">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- Combobox para la seleccion de handler -->
+                <local:UserControlComboBoxConDescripcion
+                    Grid.Row="0"
+                    Descripcion="Handler seleccionado:"
+                    
+                    DataContext="{Binding ViewModelComboBoxHandlersDisponibles}">
+
+                </local:UserControlComboBoxConDescripcion>
+
+                <!-- Boton para vincular handler seleccionado con el evento -->
+                <local:UserControlBoton
+                    Grid.Row="1"
+                    Margin="0 5 0 0"
+                    DataContext="{Binding ViewModelBotonVincular}"/>
+
+            </Grid>
+        </Grid>
+    </Border>
+
+</UserControl>

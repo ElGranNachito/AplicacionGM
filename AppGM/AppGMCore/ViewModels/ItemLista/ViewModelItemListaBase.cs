@@ -123,6 +123,19 @@ namespace AppGM.Core
 
 		#endregion
 
+		#region Constructores
+
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="_titulo">Titulo del elemento</param>
+		public ViewModelItemListaBase(string _titulo)
+		{
+			Titulo = _titulo;
+		}
+		
+		#endregion
+
 		#region Metodos
 
 		/// <summary>

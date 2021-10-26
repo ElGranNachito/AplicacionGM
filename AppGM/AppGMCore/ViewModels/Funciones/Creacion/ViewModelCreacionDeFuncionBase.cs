@@ -19,7 +19,7 @@ namespace AppGM.Core
 	/// <summary>
 	/// <see cref="ViewModel"/> que representa un control para la creacion de una funcion
 	/// </summary>
-	public abstract class ViewModelCreacionDeFuncionBase: ViewModelConResultado<ViewModelCreacionDeFuncionBase>, IReceptorDeDrag, IContenedorDeBloques
+	public abstract class ViewModelCreacionDeFuncionBase: ViewModelCreacionEdicionDeModelo<ModeloFuncion, ControladorFuncionBase, ViewModelCreacionDeFuncionBase>, IReceptorDeDrag, IContenedorDeBloques
 	{
 		/// <summary>
 		/// Evento que se dispara cuando un bloque es removido
@@ -245,7 +245,8 @@ namespace AppGM.Core
 		/// <summary>
 		/// Constructor base
 		/// </summary>
-		public ViewModelCreacionDeFuncionBase()
+		public ViewModelCreacionDeFuncionBase(Action<ViewModelCreacionDeFuncionBase> _accionSalir)
+			:base(_accionSalir)
 		{
 			//Añadimos este vm al sistema principal para que se pueda acceder a el globalmente
 			SistemaPrincipal.Atar<ViewModelCreacionDeFuncionBase>(this);

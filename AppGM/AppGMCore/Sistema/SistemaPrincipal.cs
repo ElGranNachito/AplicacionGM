@@ -126,6 +126,67 @@ namespace AppGM.Core
             Kernel.Bind<Drag>().ToConstant(new Drag());
 
             Aplicacion.OnPaginaActualCambio += PaginaActualCambioHandler;
+
+            var pj = new ModeloPersonaje
+            {
+	            Nombre = "Nachito",
+
+	            MaxHp = 20,
+	            Hp = 20,
+	            Str = 15,
+	            Agi = 10,
+	            End = 15,
+	            Int = 10,
+	            Lck = 15,
+
+	            Alianzas = new List<ModeloAlianza>
+	            {
+		            new ModeloAlianza
+		            {
+			            Descripcion = "Descripcion",
+			            Nombre = "Alianza de choripaneros",
+			            EIconoAlianza = EIconoAlianza.Team_Hetero
+		            }
+	            },
+	            Especialidades = new List<ModeloEspecialidad>
+	            {
+		            new ModeloEspecialidad
+		            {
+			            Nombre = "nada"
+		            }
+	            }
+            };
+
+            pj.Alianzas[0].PersonajesAfectados.Add(pj);
+
+            var copiaPj = pj.CrearCopiaProfundaEnSubtipo<ModeloPersonaje, ModeloPersonaje>();
+
+            var nuevoContrato = new ModeloContrato
+            {
+	            Id = 1,
+
+	            PersonajesAfectados = new List<ModeloPersonaje> { copiaPj },
+
+	            Nombre = "Contrato piola",
+	            Descripcion = "Contrato entre pibes piola"
+            };
+
+            var nuevaAlianza = new ModeloAlianza
+            {
+	            ContratoDeAlianza = nuevoContrato,
+	            Id = 1,
+
+	            PersonajesAfectados = new List<ModeloPersonaje> { copiaPj },
+
+	            Nombre = "Cooler alianza",
+	            Descripcion = "Cooler"
+            };
+
+            copiaPj.Alianzas.Add(nuevaAlianza);
+            copiaPj.Contratos.Add(nuevoContrato);
+
+            var referenciasQueReemplazar = new Dictionary<ModeloBase, ModeloBase> { { copiaPj, pj } };
+            copiaPj.CrearCopiaProfundaEnSubtipo<ModeloPersonaje, ModeloPersonaje>(pj, null, null, null, referenciasQueReemplazar);
         }
 
         /// <summary>

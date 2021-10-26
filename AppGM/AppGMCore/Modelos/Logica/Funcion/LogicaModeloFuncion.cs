@@ -22,7 +22,7 @@
 		{
 			if(EfectoContenedor != null)
 			{
-				return EfectoContenedor.Efecto.HabilidadDueña.ObtenerPersonajeContenedor();
+				return EfectoContenedor.Efecto.HabilidadContenedora.ObtenerPersonajeContenedor();
 			}
 			else
 			{
