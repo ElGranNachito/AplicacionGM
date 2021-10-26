@@ -23,20 +23,27 @@
                     VerticalAlignment="Top">
 
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto" MaxHeight="25"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
                     <!-- Titulo -->
-                    <TextBlock
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        FontSize="{Binding 
-                        RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl},
-                        Path=TamañoFontTitulo}"
-                        Text="{Binding Titulo, FallbackValue=Err}"
-                        Style="{StaticResource TextBlockBase}"
-                        />
+                    <Viewbox
+                        MaxHeight="25">
+                        <Border
+                            Padding="5">
+
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                FontSize="{Binding 
+                            RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl},
+                            Path=TamañoFontTitulo}"
+                                Text="{Binding Titulo, FallbackValue=Err}"
+                                Style="{StaticResource TextBlockBase}"
+                            />
+                        </Border>
+                    </Viewbox>
 
                     <!-- Boton agregar item -->
                     <Button

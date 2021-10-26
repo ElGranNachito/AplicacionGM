@@ -21,20 +21,20 @@ namespace AppGM.Core
 		/// <summary>
 		/// Wrapper para llamar a la funcion subyacente de manera segura
 		/// </summary>
-		/// <param name="controladorHabilidad">Controlador de la habilidad que llama a esta funcion</param>
+		/// <param name="controladorEfecto">Controlador del efecto</param>
 		/// <param name="instigador">Personaje responsable de aplicar el efecto</param>
 		/// <param name="objetivo">Personaje al que se le aplica el efecto</param>
 		/// <param name="parametrosExtra">Parametros extra que toma la funcion</param>
 		/// <returns><see cref="bool"/> indicando si se la funcion se ejecuto con extio</returns>
 		public bool EjecutarFuncion(
-			ControladorHabilidad controladorHabilidad,
+			ControladorHabilidad controladorhabilidad,
 			ControladorPersonaje instigador,
 			ControladorPersonaje objetivo,
 			params object[] parametrosExtra)
 		{
 			try
 			{
-				Funcion(controladorHabilidad, instigador, objetivo, this, parametrosExtra);
+				Funcion(controladorhabilidad, instigador, objetivo, this, parametrosExtra);
 			}
 			catch (Exception ex)
 			{

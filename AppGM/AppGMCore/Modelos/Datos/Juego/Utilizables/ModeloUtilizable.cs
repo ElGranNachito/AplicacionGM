@@ -26,5 +26,10 @@ namespace AppGM.Core
         /// Personaje que porta este utilizable
         /// </summary>
         public virtual ModeloPersonaje PersonajePortador { get; set; }
+
+        /// <summary>
+        /// Handlers vinculados a eventos del controlador de este utilizable
+        /// </summary>
+        public virtual List<TIFuncionHandlerEvento<ModeloUtilizable>> HandlersEventos { get; set; } = new List<TIFuncionHandlerEvento<ModeloUtilizable>>();
     }
 }

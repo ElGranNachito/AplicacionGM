@@ -44,6 +44,11 @@ namespace AppGM.Core
 		public virtual List<TIFuncionEfecto> Funciones { get; set; } = new List<TIFuncionEfecto>();
 
 		/// <summary>
+		/// Handlers vinculados a eventos del controlador de este efecto
+		/// </summary>
+		public virtual List<TIFuncionHandlerEvento<ModeloEfecto>> HandlersEventos { get; set; } = new List<TIFuncionHandlerEvento<ModeloEfecto>>();
+
+		/// <summary>
 		/// Todas las aplicaciones de este efecto
 		/// </summary>
 		public virtual List<ModeloEfectoSiendoAplicado> Aplicaciones { get; set; } = new List<ModeloEfectoSiendoAplicado>();
@@ -51,6 +56,6 @@ namespace AppGM.Core
 		/// <summary>
 		/// Habilidad que contiene este efecto
 		/// </summary>
-		public virtual ModeloHabilidad HabilidadDueña { get; set; }
+		public virtual ModeloHabilidad HabilidadContenedora { get; set; }
 	}
 }

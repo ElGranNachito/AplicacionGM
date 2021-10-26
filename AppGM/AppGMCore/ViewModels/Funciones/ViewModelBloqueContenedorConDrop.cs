@@ -12,7 +12,7 @@ namespace AppGM.Core
 		/// <see cref="ViewModelSeccionReceptoraDeDrag"/> encargado de recibir eventos de Drag & Drop
 		/// para añadir bloques a este <see cref="ViewModelBloqueContenedorConDropConDrop{TipoBloque}"/>
 		/// </summary>
-		public ViewModelSeccionReceptoraDeDrag ReceptorAñadirBloque { get; set; }
+		public ViewModelSeccionReceptoraDeDrag<ArgumentosDragAndDropUnico> ReceptorAñadirBloque { get; set; }
 
 		/// <summary>
 		/// Margen izquierdo del contenido
@@ -27,9 +27,9 @@ namespace AppGM.Core
 			:base(_padre, _idBloque)
 		{
 			//Handler para cuando el usuario suelta un elemento sobre el ReceptorAñadirBloque
-			DDragHandlerElementoSoltado handlerElementoSoltado = contenido =>
+			DDragHandlerElementoSoltado<ArgumentosDragAndDropUnico> handlerElementoSoltado = args =>
 			{
-				if (contenido is ViewModelBloqueFuncionBase bloque)
+				if (args.contenido is ViewModelBloqueFuncionBase bloque)
 				{
 					AñadirBloque(bloque.Copiar(this), -1);
 
@@ -42,7 +42,7 @@ namespace AppGM.Core
 				return false;
 			};
 
-			ReceptorAñadirBloque = new ViewModelSeccionReceptoraDeDrag(handlerElementoSoltado, null, null);
+			ReceptorAñadirBloque = new ViewModelSeccionReceptoraDeDrag<ArgumentosDragAndDropUnico>(handlerElementoSoltado, null, null);
 		}
 
 		#region Metodos

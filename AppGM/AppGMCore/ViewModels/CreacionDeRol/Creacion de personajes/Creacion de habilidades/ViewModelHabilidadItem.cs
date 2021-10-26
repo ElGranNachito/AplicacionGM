@@ -60,11 +60,11 @@ namespace AppGM.Core
 			{
 				var vmActual = SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido;
 
-				SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = new ViewModelCrearHabilidad(ControladorGenerico.modelo.Dueño,
+				SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = new ViewModelCrearHabilidad(
 					vm =>
 					{
 						SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = vmActual;
-					}, ControladorGenerico);
+					}, ControladorGenerico.modelo.Dueño, ControladorGenerico);
 			};
 
 			CrearBotonesParaEditarYEliminar(accionEditar, ()=>{});

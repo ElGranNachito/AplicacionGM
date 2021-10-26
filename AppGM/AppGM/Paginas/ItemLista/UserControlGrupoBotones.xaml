@@ -10,7 +10,9 @@
     <!--ViewModel: ViewModelGrupoBotones-->
 
     <ScrollViewer
-        VerticalScrollBarVisibility="Auto">
+        VerticalScrollBarVisibility="Auto"
+        Visibility="{Binding EsVisible, Converter={local:BooleanToVisibilityConverterColapsar}}">
+
         <ItemsControl ItemsSource="{Binding Botones}">
 
             <ItemsControl.ItemsPanel>

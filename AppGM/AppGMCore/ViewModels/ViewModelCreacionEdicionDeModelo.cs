@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace AppGM.Core
 {
@@ -35,17 +36,17 @@ namespace AppGM.Core
 		/// <summary>
 		/// Modelo creado
 		/// </summary>
-		public TModelo ModeloCreado { get; protected set; }
+		public virtual TModelo ModeloCreado { get; protected set; }
 
 		/// <summary>
 		/// Modelo que esta siendo editado
 		/// </summary>
-		public TModelo ModeloSiendoEditado { get; init; }
+		public virtual TModelo ModeloSiendoEditado { get; init; }
 
 		/// <summary>
 		/// Controlador del <see cref="ModeloSiendoEditado"/>
 		/// </summary>
-		public TControlador ControladorSiendoEditado
+		public virtual TControlador ControladorSiendoEditado
 		{
 			get => mControladorSiendoEditado;
 			init
@@ -80,6 +81,20 @@ namespace AppGM.Core
 			}
 		}
 
+		/// <summary>
+		/// Constructor por defecto
+		/// </summary>
+		/// <param name="_accionSalir">Accion que se ejecuta al salir de este vm</param>
+		public ViewModelCreacionEdicionDeModelo(Action<TViewModel> _accionSalir)
+			:base(_accionSalir) {}
+
+		/// <summary>
+		/// Constructor que trae una implemetacion por defecto de copia de modelos al editar
+		/// </summary>
+		/// <param name="_accionSalir">Accion que se ejecuta al salir de este vm</param>
+		/// <param name="_controladorParaEditar">Controlador del modelo que sera editado</param>
+		/// <param name="tipoValorPorDefectoModelo">Tipo del modelo que se creara por defecto cuando no se esta editando. Se utiliza cuando
+		/// el tipo por defecto del modelo es una clase abstracta o no instanciable por cualquier motivo</param>
 		public ViewModelCreacionEdicionDeModelo(Action<TViewModel> _accionSalir, TControlador _controladorParaEditar, Type tipoValorPorDefectoModelo = null)
 			:base(_accionSalir)
 		{
@@ -127,5 +142,61 @@ namespace AppGM.Core
 		/// </summary>
 		/// <returns><typeparamref name="TControlador"/> para el nuevo modelo</returns>
 		public abstract TControlador CrearControlador();
+
+		/// <summary>
+		/// Añade un modelo a un <see cref="ViewModelListaItems{TItem}"/>
+		/// </summary>
+		/// <typeparam name="TModeloAñadir">Tipo del modelo que se quiere añadir</typeparam>
+		/// <typeparam name="TItemLista">Tipo del viewmodel de lista del modelo</typeparam>
+		/// <param name="nuevoElemento"><typeparamref name="TItemLista"/> que se quiere añadir</param>
+		/// <param name="listaModelo">Lista con los <typeparamref name="TModeloAñadir"/> de este <typeparamref name="TModelo"/></param>
+		/// <param name="listaItems"><see cref="ViewModelListaItems{TItem}"/> que contiene los <typeparamref name="TItemLista"/></param>
+		protected void AñadirModeloDesdeListaItems<TModeloAñadir, TItemLista>(
+			
+			TItemLista nuevoElemento, 
+			List<TModeloAñadir> listaModelo,
+			ViewModelListaItems<TItemLista> listaItems)
+
+			where TModeloAñadir : ModeloBase
+			where TItemLista : ViewModelItemListaGenerico<TItemLista>
+		{
+			nuevoElemento.OnItemEliminado += item =>
+			{
+				listaItems.Items.Remove(item);
+			};
+
+			listaItems.Items.Add(nuevoElemento);
+
+			listaModelo.Add((TModeloAñadir)nuevoElemento.Controlador.Modelo);
+		}
+
+		/// <summary>
+		/// Añade una funcion a un <see cref="ViewModelListaItems{TItem}"/>
+		/// </summary>
+		/// <typeparam name="TModeloAñadir">Tipo del modelo que se quiere añadir</typeparam>
+		/// <typeparam name="TRelacion">Tipo de la relacion entre la funcion y el <typeparamref name="TModeloAñadir"/></typeparam>
+		/// <typeparam name="TItemLista">Tipo del viewmodel de lista del modelo</typeparam>
+		/// <param name="nuevoElemento">Nuevo <see cref="ViewModelItemListaGenerico{TViewModel}"/> que se añadira</param>
+		/// <param name="nuevaRelacion">Nueva <typeparamref name="TRelacion"/> entre el <see cref="ModeloFuncion"/> creado y el <typeparamref name="TModeloAñadir"/><</param>
+		/// <param name="listaModelo">Lista de <typeparamref name="TRelacion"/> del <typeparamref name="TModeloAñadir"/></param>
+		/// <param name="listaItems"><see cref="ViewModelListaItems{TItem}"/> al que añadir el <paramref name="nuevoElemento"/></param>
+		protected void AñadirFuncionDesdeListaItems<TRelacion, TItemLista>(
+
+			TItemLista nuevoElemento,
+			TRelacion nuevaRelacion,
+			List<TRelacion> listaModelo,
+			ViewModelListaItems<TItemLista> listaItems)
+
+			where TRelacion : TIFuncion
+			where TItemLista : ViewModelItemListaGenerico<TItemLista>
+		{
+			nuevoElemento.OnItemEliminado += item =>
+			{
+				listaItems.Items.Remove(item);
+			};
+
+			listaItems.Items.Add(nuevoElemento);
+			listaModelo.Add(nuevaRelacion);
+		}
 	}
 }

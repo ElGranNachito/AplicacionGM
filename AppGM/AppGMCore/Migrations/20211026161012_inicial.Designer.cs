@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AppGM.Core.Migrations
 {
     [DbContext(typeof(RolContext))]
-    [Migration("20211023160850_inicial")]
+    [Migration("20211026161012_inicial")]
     partial class inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -265,7 +265,7 @@ namespace AppGM.Core.Migrations
                     b.Property<bool>("EsValido")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("HabilidadDueñaId")
+                    b.Property<int?>("HabilidadContenedoraId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Nombre")
@@ -280,7 +280,7 @@ namespace AppGM.Core.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("HabilidadDueñaId");
+                    b.HasIndex("HabilidadContenedoraId");
 
                     b.ToTable("ModeloEfecto");
                 });
@@ -355,6 +355,10 @@ namespace AppGM.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<bool>("EsValido")
                         .HasColumnType("INTEGER");
 
@@ -362,13 +366,11 @@ namespace AppGM.Core.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("TipoEventoQueManejaString")
-                        .HasMaxLength(255)
-                        .HasColumnType("TEXT");
-
                     b.HasKey("Id");
 
                     b.ToTable("ModeloFuncion");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("ModeloFuncion");
                 });
 
             modelBuilder.Entity("AppGM.Core.ModeloHabilidad", b =>
@@ -874,10 +876,6 @@ namespace AppGM.Core.Migrations
                     b.Property<int>("IDEfecto")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("NombreEvento")
-                        .HasMaxLength(100)
-                        .HasColumnType("TEXT");
-
                     b.Property<int>("TipoFuncion")
                         .HasColumnType("INTEGER");
 
@@ -899,10 +897,6 @@ namespace AppGM.Core.Migrations
                     b.Property<int>("IDHabilidad")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("NombreEvento")
-                        .HasMaxLength(100)
-                        .HasColumnType("TEXT");
-
                     b.HasKey("IDFuncion", "IDHabilidad");
 
                     b.HasIndex("IDFuncion")
@@ -911,6 +905,82 @@ namespace AppGM.Core.Migrations
                     b.HasIndex("IDHabilidad");
 
                     b.ToTable("TIFuncionHabilidad");
+                });
+
+            modelBuilder.Entity("AppGM.Core.TIFuncionHandlerEvento<AppGM.Core.ModeloEfecto>", b =>
+                {
+                    b.Property<int>("IdFuncion")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("IdOtro")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("NombresEventosVinculados")
+                        .HasMaxLength(1000)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("IdFuncion", "IdOtro");
+
+                    b.HasIndex("IdOtro");
+
+                    b.ToTable("TIFuncionHandlerEvento<ModeloEfecto>");
+                });
+
+            modelBuilder.Entity("AppGM.Core.TIFuncionHandlerEvento<AppGM.Core.ModeloHabilidad>", b =>
+                {
+                    b.Property<int>("IdFuncion")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("IdOtro")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("NombresEventosVinculados")
+                        .HasMaxLength(1000)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("IdFuncion", "IdOtro");
+
+                    b.HasIndex("IdOtro");
+
+                    b.ToTable("TIFuncionHandlerEvento<ModeloHabilidad>");
+                });
+
+            modelBuilder.Entity("AppGM.Core.TIFuncionHandlerEvento<AppGM.Core.ModeloPersonaje>", b =>
+                {
+                    b.Property<int>("IdFuncion")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("IdOtro")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("NombresEventosVinculados")
+                        .HasMaxLength(1000)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("IdFuncion", "IdOtro");
+
+                    b.HasIndex("IdOtro");
+
+                    b.ToTable("TIFuncionHandlerEvento<ModeloPersonaje>");
+                });
+
+            modelBuilder.Entity("AppGM.Core.TIFuncionHandlerEvento<AppGM.Core.ModeloUtilizable>", b =>
+                {
+                    b.Property<int>("IdFuncion")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("IdOtro")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("NombresEventosVinculados")
+                        .HasMaxLength(1000)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("IdFuncion", "IdOtro");
+
+                    b.HasIndex("IdOtro");
+
+                    b.ToTable("TIFuncionHandlerEvento<ModeloUtilizable>");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIFuncionPadreFuncion", b =>
@@ -962,6 +1032,17 @@ namespace AppGM.Core.Migrations
                     b.HasIndex("PersonajesAfectadosId");
 
                     b.ToTable("ModeloContratoModeloPersonaje");
+                });
+
+            modelBuilder.Entity("AppGM.Core.ModeloFuncion_HandlerEvento", b =>
+                {
+                    b.HasBaseType("AppGM.Core.ModeloFuncion");
+
+                    b.Property<string>("TipoHandlerString")
+                        .HasMaxLength(255)
+                        .HasColumnType("TEXT");
+
+                    b.HasDiscriminator().HasValue("ModeloFuncion_HandlerEvento");
                 });
 
             modelBuilder.Entity("AppGM.Core.ModeloMagia", b =>
@@ -1365,12 +1446,12 @@ namespace AppGM.Core.Migrations
 
             modelBuilder.Entity("AppGM.Core.ModeloEfecto", b =>
                 {
-                    b.HasOne("AppGM.Core.ModeloHabilidad", "HabilidadDueña")
+                    b.HasOne("AppGM.Core.ModeloHabilidad", "HabilidadContenedora")
                         .WithMany("Efectos")
-                        .HasForeignKey("HabilidadDueñaId")
+                        .HasForeignKey("HabilidadContenedoraId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.Navigation("HabilidadDueña");
+                    b.Navigation("HabilidadContenedora");
                 });
 
             modelBuilder.Entity("AppGM.Core.ModeloEfectoSiendoAplicado", b =>
@@ -1636,6 +1717,82 @@ namespace AppGM.Core.Migrations
                     b.Navigation("Habilidad");
                 });
 
+            modelBuilder.Entity("AppGM.Core.TIFuncionHandlerEvento<AppGM.Core.ModeloEfecto>", b =>
+                {
+                    b.HasOne("AppGM.Core.ModeloFuncion_HandlerEvento", "Funcion")
+                        .WithMany("EventosEnEfecto")
+                        .HasForeignKey("IdFuncion")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AppGM.Core.ModeloEfecto", "Otro")
+                        .WithMany("HandlersEventos")
+                        .HasForeignKey("IdOtro")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Funcion");
+
+                    b.Navigation("Otro");
+                });
+
+            modelBuilder.Entity("AppGM.Core.TIFuncionHandlerEvento<AppGM.Core.ModeloHabilidad>", b =>
+                {
+                    b.HasOne("AppGM.Core.ModeloFuncion_HandlerEvento", "Funcion")
+                        .WithMany("EventosEnHabilidad")
+                        .HasForeignKey("IdFuncion")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AppGM.Core.ModeloHabilidad", "Otro")
+                        .WithMany("HandlersEventos")
+                        .HasForeignKey("IdOtro")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Funcion");
+
+                    b.Navigation("Otro");
+                });
+
+            modelBuilder.Entity("AppGM.Core.TIFuncionHandlerEvento<AppGM.Core.ModeloPersonaje>", b =>
+                {
+                    b.HasOne("AppGM.Core.ModeloFuncion_HandlerEvento", "Funcion")
+                        .WithMany("EventosEnPersonaje")
+                        .HasForeignKey("IdFuncion")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AppGM.Core.ModeloPersonaje", "Otro")
+                        .WithMany("HandlersEventos")
+                        .HasForeignKey("IdOtro")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Funcion");
+
+                    b.Navigation("Otro");
+                });
+
+            modelBuilder.Entity("AppGM.Core.TIFuncionHandlerEvento<AppGM.Core.ModeloUtilizable>", b =>
+                {
+                    b.HasOne("AppGM.Core.ModeloFuncion_HandlerEvento", "Funcion")
+                        .WithMany("EventosEnUtilizable")
+                        .HasForeignKey("IdFuncion")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AppGM.Core.ModeloUtilizable", "Otro")
+                        .WithMany("HandlersEventos")
+                        .HasForeignKey("IdOtro")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Funcion");
+
+                    b.Navigation("Otro");
+                });
+
             modelBuilder.Entity("AppGM.Core.TIFuncionPadreFuncion", b =>
                 {
                     b.HasOne("AppGM.Core.ModeloFuncion", "Funcion")
@@ -1754,6 +1911,8 @@ namespace AppGM.Core.Migrations
                     b.Navigation("Aplicaciones");
 
                     b.Navigation("Funciones");
+
+                    b.Navigation("HandlersEventos");
                 });
 
             modelBuilder.Entity("AppGM.Core.ModeloEfectoSiendoAplicado", b =>
@@ -1781,6 +1940,8 @@ namespace AppGM.Core.Migrations
                     b.Navigation("Efectos");
 
                     b.Navigation("Funciones");
+
+                    b.Navigation("HandlersEventos");
 
                     b.Navigation("Tiradas");
 
@@ -1812,6 +1973,8 @@ namespace AppGM.Core.Migrations
                     b.Navigation("Especialidades");
 
                     b.Navigation("Habilidades");
+
+                    b.Navigation("HandlersEventos");
 
                     b.Navigation("Inventario");
 
@@ -1850,9 +2013,22 @@ namespace AppGM.Core.Migrations
 
             modelBuilder.Entity("AppGM.Core.ModeloUtilizable", b =>
                 {
+                    b.Navigation("HandlersEventos");
+
                     b.Navigation("Tiradas");
 
                     b.Navigation("Variables");
+                });
+
+            modelBuilder.Entity("AppGM.Core.ModeloFuncion_HandlerEvento", b =>
+                {
+                    b.Navigation("EventosEnEfecto");
+
+                    b.Navigation("EventosEnHabilidad");
+
+                    b.Navigation("EventosEnPersonaje");
+
+                    b.Navigation("EventosEnUtilizable");
                 });
 
             modelBuilder.Entity("AppGM.Core.ModeloInvocacion", b =>

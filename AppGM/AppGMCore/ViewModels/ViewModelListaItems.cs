@@ -22,6 +22,11 @@ namespace AppGM.Core
         public bool PuedeAñadirItems { get; set; }
 
         /// <summary>
+        /// Cantidad maxima de items que puede contener esta lista
+        /// </summary>
+        public int CantidadMaximaDeItems { get; init; }
+
+        /// <summary>
         /// Delegado que se ejecutara cuando se presione el boton añadir
         /// </summary>
         public Action DelegadoAñadirItem { get; set; }
@@ -46,7 +51,7 @@ namespace AppGM.Core
         /// <param name="_delegadoAñadirItem">Delegado que se ejecuta al presionar el boton añadir item</param>
         /// <param name="_puedeAñadirItems">¿Puede el usuarui agregar mas items?</param>
         /// <param name="_titulo">Titulo de la lista</param>
-        public ViewModelListaItems(Action _delegadoAñadirItem, bool _puedeAñadirItems, string _titulo)
+        public ViewModelListaItems(Action _delegadoAñadirItem, bool _puedeAñadirItems, string _titulo, int _cantidadMaximaDeItems = -1)
         {
 	        DelegadoAñadirItem = _delegadoAñadirItem;
 
@@ -54,12 +59,22 @@ namespace AppGM.Core
 
 	        Titulo = _titulo;
 
+	        CantidadMaximaDeItems = _cantidadMaximaDeItems;
+
             ComandoAñadirItem = new Comando(() =>
             {
                 //Solo ejecutamos el delegado si se pueden añadir mas items
 	            if (PuedeAñadirItems)
 		            DelegadoAñadirItem();
             });
+
+            if (_cantidadMaximaDeItems > 0)
+            {
+	            Items.Elementos.CollectionChanged += (sender, args) =>
+	            {
+		            PuedeAñadirItems = Items.Count < CantidadMaximaDeItems;
+	            };
+            }
         }
 
         #endregion

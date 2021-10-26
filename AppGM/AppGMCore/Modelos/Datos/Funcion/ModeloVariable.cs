@@ -116,6 +116,6 @@ namespace AppGM.Core
 
 	public class ModeloVariableLista : ModeloVariable<string>
 	{
-
+		
 	}
 }

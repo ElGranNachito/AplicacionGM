@@ -18,7 +18,7 @@ namespace AppGM.Core
 		/// <summary>
 		/// Evento disparado cuando el <see cref="ValorSeleccionado"/> cambia
 		/// </summary>
-		public DVariableCambio<ViewModelItemComboBoxBase<TValor>> OnValorSeleccionadoCambio = delegate { }; 
+		public event DVariableCambio<ViewModelItemComboBoxBase<TValor>> OnValorSeleccionadoCambio = delegate { }; 
 
 		#endregion
 

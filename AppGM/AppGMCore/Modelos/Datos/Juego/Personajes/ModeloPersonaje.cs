@@ -143,5 +143,10 @@ namespace AppGM.Core
         /// Invocaciones creadas por este personaje
         /// </summary>
         public virtual List<ModeloInvocacion> Invocaciones { get; set; } = new List<ModeloInvocacion>();
+
+        /// <summary>
+        /// Handlers vinculados a eventos del controlador de este persoanje
+        /// </summary>
+        public virtual List<TIFuncionHandlerEvento<ModeloPersonaje>> HandlersEventos { get; set; } = new List<TIFuncionHandlerEvento<ModeloPersonaje>>();
     }
 }

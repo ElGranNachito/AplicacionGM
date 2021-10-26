@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace AppGM.Core
+﻿namespace AppGM.Core
 {
 	/// <summary>
 	/// Interfaz que deben implementar los <see cref="ViewModel"/> que necesiten ser capaces de responder a un
@@ -15,25 +13,11 @@ namespace AppGM.Core
 		/// </summary>
 		public int IndiceZ { get; set; }
 
-		public virtual void OnDragEntro(IDrageable vm) => OnDragEntro_Impl(vm);
+		public virtual void OnDragEntro(ArgumentosDragAndDropBase args) {}
 
-		public virtual void OnDragSalio(IDrageable vm) => OnDragSalio_Impl(vm);
+		public virtual void OnDragSalio(ArgumentosDragAndDropBase args) {}
 
-		public virtual bool OnDrop(IDrageable vm) => OnDrop_Impl(vm);
+		public virtual bool OnDrop(ArgumentosDragAndDropBase args) => false;
 
-		/// <summary>
-		/// Funcion que se llamara cuando el cursor entre con un <see cref="Drag"/>
-		/// </summary>
-		public void OnDragEntro_Impl(IDrageable vm);
-
-		/// <summary>
-		/// Funcion que se llamara cuando el cursor salga con un <see cref="Drag"/>
-		/// </summary>
-		public void OnDragSalio_Impl(IDrageable vm);
-
-		/// <summary>
-		/// Funcion que se llamara cuando el usuario suelte el <see cref="Drag"/> sobre este <see cref="IReceptorDeDrag"/>
-		/// </summary>
-		public bool OnDrop_Impl(IDrageable vm);
 	}
 }

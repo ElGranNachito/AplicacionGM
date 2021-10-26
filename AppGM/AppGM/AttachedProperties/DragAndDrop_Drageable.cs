@@ -8,13 +8,13 @@ namespace AppGM
 	/// <summary>
 	/// <see cref="DependencyProperty"/> para los <see cref="FrameworkElement"/> que puedan ser arrastrados
 	/// </summary>
-	public class ComenzarDragProperty : BaseAttachedProperty<bool, ComenzarDragProperty>
+	public class DragAndDrop_Drageable : BaseAttachedProperty<bool, DragAndDrop_Drageable>
 	{
 		/// <summary>
 		/// Parametro extra que se pasara al drag
 		/// </summary>
 		public static readonly DependencyProperty ParametroDragProperty = 
-			DependencyProperty.RegisterAttached("ParametroDrag", typeof(object), typeof(ComenzarDragProperty));
+			DependencyProperty.RegisterAttached("ParametroDrag", typeof(object), typeof(DragAndDrop_Drageable));
 
 		public static object GetParametroDrag(DependencyObject d) => d.GetValue(ParametroDragProperty);
 
@@ -57,7 +57,7 @@ namespace AppGM
 			}
 		}
 
-		private void ActualizarPosMouse(FrameworkElement fe)
+		protected void ActualizarPosMouse(FrameworkElement fe)
 		{
 			//Obtenemos la posicion del mouse con respecto al padre del elemento
 			Point posMouse = Mouse.GetPosition((IInputElement)SistemaPrincipal.Aplicacion.VentanaActual.ObtenerInstanciaVentana());

@@ -363,6 +363,44 @@ namespace AppGM.Core
 		/// <returns>Instancia de <see cref="ViewModelCreacionDeFuncionBase"/></returns>
 		public abstract ViewModelCreacionDeFuncionBase CrearVMParaEditar(Action<ViewModelCreacionDeFuncionBase> accionSalir);
 
+		/// <summary>
+		/// Inicializa un <see cref="ViewModelCreacionDeFuncionBase"/> del tipo correcto para crear una funcion del <see cref="tipoFuncion"/>
+		/// </summary>
+		/// <param name="tipoFuncion">Tipo del controlador de funcion para el que crear el vm</param>
+		/// <param name="accionSalir">Contiene el delegado que se ejecutara al salir de la edicion</param>
+		/// <param name="tipoDelegado">En caso de que la funcion sea un handler, este debera ser el tipo del delegado para el que se queire crear</param>
+		/// <returns>Instancia de <see cref="ViewModelCreacionDeFuncionBase"/></returns>
+		public static ViewModelCreacionDeFuncionBase CrearVMParaCrear(
+			Type tipoFuncion,
+			Action<ViewModelCreacionDeFuncionBase> accionSalir,
+			Type tipoDelegado = null)
+		{
+			//TODO: Terminar
+
+			if (tipoFuncion == typeof(ControladorFuncion_Habilidad))
+			{
+				return new ViewModelCreacionDeFuncionHabilidad(accionSalir);
+			}
+			else if (tipoFuncion == typeof(ControladorFuncion_Efecto))
+			{
+				return null;
+			}
+			else if (tipoFuncion == typeof(ControladorFuncion_PredicadoHabilidad))
+			{
+				return null;
+			}
+			else if (tipoFuncion == typeof(ControladorFuncion_PredicadoEfecto))
+			{
+				return null;
+			}
+			else if (tipoFuncion == typeof(ControladorFuncion_HandlerEvento))
+			{
+				return new ViewModelCreacionDeFuncionHandlerEvento(accionSalir, tipoDelegado);
+			}
+
+			return null;
+		}
+
 		#endregion
 
 		#region Metodos Estaticos

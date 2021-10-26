@@ -25,101 +25,107 @@
         </Style>
     </UserControl.Resources>
 
-    <Border
-        Margin="0 0 0 10"
-        
-        BorderThickness="1"
-        BorderBrush="Black">
+    <UserControl.Template>
+        <ControlTemplate TargetType="{x:Type UserControl}">
 
-        <Grid
-            x:Name="contendor"
-            Background="White">
-
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-
-            <TextBlock
-                Grid.ColumnSpan="3"
-                Text="{Binding Titulo}"/>
-
-            <!-- Imagen del item -->
             <Border
-                Grid.Row="1"
-                Padding="5"
+                Margin="0 0 0 10"
+        
+                BorderThickness="{TemplateBinding BorderThickness}"
+                BorderBrush="{TemplateBinding BorderBrush}">
 
-                VerticalAlignment="Stretch"
-                Width="{Binding RelativeSource={RelativeSource Mode=Self}, Path=ActualHeight}"
+                <Grid
+                    x:Name="contendor"
+                    Background="White">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock
+                        Grid.ColumnSpan="3"
+                        Text="{Binding Titulo}"/>
+
+                    <!-- Imagen del item -->
+                    <Border
+                        Grid.Row="1"
+                        Padding="5"
+
+                        VerticalAlignment="Stretch"
+                        Width="{Binding RelativeSource={RelativeSource Mode=Self}, Path=ActualHeight}"
+                        
+                        Visibility="{Binding TieneImagen,
+                        Converter={local:BooleanToVisibilityConverterColapsar},
+                        FallbackValue=Collapsed}">
+
+                        <Border>
+
+                            <Border.Background>
+                                <ImageBrush 
+                                    Stretch="Uniform"
+                                    ImageSource="{Binding PathImagen, 
+                                    Converter={local:FullPathToImageConverter}}"/>
+                            </Border.Background>
+
+                        </Border>
+                    </Border>
+
+                    <!-- Datos del item -->
+                    <ItemsControl
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        ItemsSource="{Binding CaracteristicasItem.Elementos}">
+
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+
+                                <StackPanel
+                                    Margin="0 0 0 5">
+
+                                    <TextBlock
+                                        Text="{Binding Titulo, FallbackValue=Algo}"
+                                        FontWeight="Bold"/>
+
+                                    <TextBlock
+                                        Margin="0 5 0 0"
+                                        Text="{Binding Valor, FallbackValue=No existo}"/>
+
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                    <ScrollViewer
+                        Grid.Row="1"
+                        Grid.Column="2"
+
+                        HorizontalAlignment="Center"
                 
-                Visibility="{Binding TieneImagen,
-                Converter={local:BooleanToVisibilityConverterColapsar},
-                FallbackValue=Collapsed}">
+                        VerticalScrollBarVisibility="Auto">
 
-                <Border>
+                        <ItemsControl ItemsSource="{Binding GruposDeBotones}">
 
-                    <Border.Background>
-                        <ImageBrush 
-                            Stretch="Uniform"
-                            ImageSource="{Binding PathImagen, 
-                        Converter={local:FullPathToImageConverter}}"/>
-                    </Border.Background>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <local:UserControlGrupoBotones/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
 
-                </Border>
+                        </ItemsControl>
+
+                    </ScrollViewer>
+
+                </Grid>
+
             </Border>
 
-            <!-- Datos del item -->
-            <ItemsControl
-                Grid.Row="1"
-                Grid.Column="1"
-                ItemsSource="{Binding CaracteristicasItem.Elementos}">
-
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-
-                        <StackPanel
-                            Margin="0 0 0 5">
-
-                            <TextBlock
-                                Text="{Binding Titulo, FallbackValue=Algo}"
-                                FontWeight="Bold"/>
-
-                            <TextBlock
-                                Margin="0 5 0 0"
-                                Text="{Binding Valor, FallbackValue=No existo}"/>
-
-                        </StackPanel>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-
-            <ScrollViewer
-                Grid.Row="1"
-                Grid.Column="2"
-
-                HorizontalAlignment="Center"
-                
-                VerticalScrollBarVisibility="Auto">
-
-                <ItemsControl ItemsSource="{Binding GruposDeBotones}">
-
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <local:UserControlGrupoBotones/>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-
-                </ItemsControl>
-
-            </ScrollViewer>
-
-        </Grid>
-
-    </Border>
+        </ControlTemplate>
+    </UserControl.Template>
 </UserControl>

@@ -37,6 +37,20 @@
     <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.ListBox.BordeItemSeleccionado" Color="DeepSkyBlue"/>
     <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.ListBox.FondoItemSeleccionado" Color="LightSkyBlue"/>
 
+    <!--......................................COMBO_BOX...........................................-->
+
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.ComboBoxSeleccionMultiple.FondoItem.MouseOver" Color="DeepSkyBlue"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.ComboBoxSeleccionMultiple.FondoItem.MouseDown" Color="LightSkyBlue"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.ComboBoxSeleccionMultiple.FondoItem.Seleccionado" Color="LightSkyBlue"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.ComboBoxSeleccionMultiple.FondoItem.Deshabilitado" Color="DarkGray"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.ComboBoxSeleccionMultiple.FondoItem.Estatico" Color="White"/>
+
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.ComboBoxSeleccionMultiple.BordeItem.MouseOver" Color="Transparent"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.ComboBoxSeleccionMultiple.BordeItem.MouseDown" Color="Transparent"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.ComboBoxSeleccionMultiple.BordeItem.Seleccionado" Color="Transparent"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.ComboBoxSeleccionMultiple.BordeItem.Deshabilitado" Color="Transparent"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.ComboBoxSeleccionMultiple.BordeItem.Estatico" Color="Transparent"/>
+
     <!--......................................UNIDADES_INGRESO_POSICION...........................................-->
 
     <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.UnidadMapa.BordeIngresoPosicion" Color="#363636"/>

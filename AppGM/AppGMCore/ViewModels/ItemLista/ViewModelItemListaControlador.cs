@@ -40,8 +40,14 @@ namespace AppGM.Core
 				mControladorGenerico = value;
 				Controlador = value;
 
-				if(valorAnteriorEraNull)
+				if (valorAnteriorEraNull)
+				{
+					GruposDeBotones.Elementos.Clear();
+
 					ActualizarGruposDeBotones();
+				}
+
+				CaracteristicasItem.Elementos.Clear();
 
 				ActualizarCaracteristicas();
 			}
@@ -50,13 +56,15 @@ namespace AppGM.Core
 		/// <summary>
 		/// Constructor por defecto
 		/// </summary>
-		public ViewModelItemListaControlador(){}
+		public ViewModelItemListaControlador(string _titulo = "")
+			:base(_titulo) {}
 
 		/// <summary>
 		/// Constructor
 		/// </summary>
 		/// <param name="_controlador">Controlador contenido en este item</param>
-		public ViewModelItemListaControlador(TControlador _controlador)
+		public ViewModelItemListaControlador(TControlador _controlador, string _titulo = "")
+			:base(_titulo)
 		{
 			if (_controlador == null)
 			{

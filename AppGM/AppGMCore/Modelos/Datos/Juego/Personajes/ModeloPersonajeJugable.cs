@@ -22,10 +22,5 @@ namespace AppGM.Core
         /// Caracteristicas del personaje
         /// </summary>
         public virtual ModeloCaracteristicas Caracteristicas { get; set; }
-
-        /// <summary>
-        /// Invocaciones activas
-        /// </summary>
-        public virtual List<ModeloInvocacion> Invocaciones { get; set; } = new List<ModeloInvocacion>();
     }
 }

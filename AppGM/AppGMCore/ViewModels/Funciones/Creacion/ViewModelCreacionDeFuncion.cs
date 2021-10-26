@@ -54,16 +54,13 @@ namespace AppGM.Core
 
 		public ICommand ComandoGuardar { get; set; }
 
-		public ICommand ComandoCancelar { get; set; }
-
-		public ICommand ComandoAceptar { get; set; }
-
 		#endregion
 
 		#region Constructor
 
-		protected ViewModelCreacionDeFuncion(Action<ViewModelCreacionDeFuncionBase> accionSalir, ControladorFuncion<TFuncion> _controladorFuncion, EPropositoFuncion _propositoDeFuncion)
-			:base()
+		protected ViewModelCreacionDeFuncion(Action<ViewModelCreacionDeFuncionBase> _accionSalir, ControladorFuncion<TFuncion> _controladorFuncion, EPropositoFuncion _propositoDeFuncion)
+
+			:base(vm => { SistemaPrincipal.Desatar<ViewModelCreacionDeFuncionBase>(); _accionSalir(vm); })
 		{
 			PropositoFuncion = _propositoDeFuncion;
 
@@ -90,25 +87,7 @@ namespace AppGM.Core
 				PuedeGuardar  = true;
 				PuedeCompilar = true;
 			});
-
-			ComandoCancelar = new Comando(() =>
-			{
-				SistemaPrincipal.Desatar<ViewModelCreacionDeFuncionBase>();
-
-				Resultado = EResultadoViewModel.Cancelar;
-
-				accionSalir(this);
-			});
-
-			ComandoAceptar = new Comando(() =>
-			{
-				SistemaPrincipal.Desatar<ViewModelCreacionDeFuncionBase>();
-
-				Resultado = EResultadoViewModel.Aceptar;
-
-				accionSalir(this);
-			});
-
+			
 			//No queremos disparar la propiedad si el controlador es null asi que hacemos este if
 			if (_controladorFuncion != null)
 			{
@@ -200,9 +179,13 @@ namespace AppGM.Core
 			}
 			else
 				Logs.Add(new ViewModelLog($"Compilacion fallo! {ResultadoCompilacion.Mensaje}", ESeveridad.Error));
-
+			
 			return ResultadoCompilacion.FueExitosa;
 		}
+
+		public override ModeloFuncion CrearModelo() => ControladorFuncion.modelo;
+
+		public override ControladorFuncionBase CrearControlador() => ControladorFuncion;
 
 		#endregion
 	}

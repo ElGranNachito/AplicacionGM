@@ -14,6 +14,17 @@ namespace AppGM.Core
 
 		#endregion
 
+		#region Constructor
+
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="_titulo">Titulo del item</param>
+		public ViewModelItemListaGenerico(string _titulo)
+			:base(_titulo) {} 
+
+		#endregion
+
 		#region Metodos
 
 		/// <summary>

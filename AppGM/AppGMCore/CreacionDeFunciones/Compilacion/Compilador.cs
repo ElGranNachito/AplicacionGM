@@ -101,7 +101,7 @@ namespace AppGM.Core
 
 			try
 			{
-				//Inicialzamos las variables
+				//Inicializamos las variables
 				foreach (var var in mBloquesVariables)
 				{
 					if (var.ObtenerExpresionInicializacion(this) is { } exp)
@@ -190,14 +190,14 @@ namespace AppGM.Core
 			{
 				if (bloque is BloqueVariable var)
 				{
-					var expresionVaraibleActual = (ParameterExpression) var.ObtenerExpresion(this);
+					var expresionVariableActual = (ParameterExpression) var.ObtenerExpresion(this);
 
-					mVariables.Add(var.IDBloque, expresionVaraibleActual);
+					mVariables.Add(var.IDBloque, expresionVariableActual);
 
 					if(var.tipoVariable != ETipoVariable.Parametro)
 						mBloquesVariables.Add(var);
 					else
-						mParametros.Add(expresionVaraibleActual);
+						mParametros.Add(expresionVariableActual);
 					/*if (var.tipoVariable == ETipoVariable.Parametro)
 					{
 						

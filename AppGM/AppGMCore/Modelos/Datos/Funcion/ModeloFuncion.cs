@@ -11,18 +11,6 @@ namespace AppGM.Core
 	public partial class ModeloFuncion : ModeloConVariablesYTiradas
 	{
 		/// <summary>
-		/// Contiene el valor de <see cref="TipoEventoQueManejaString"/>
-		/// </summary>
-		[NotMapped]
-		private string mTipoEventoQueManejaString;
-
-		/// <summary>
-		/// Tipo del evento que maneja esta funcion
-		/// </summary>
-		[NotMapped]
-		public Type TipoEventoQueManeja { get; private set; }
-
-		/// <summary>
 		/// Padre de este modelo. Se trata de la funcion en la que se basa
 		/// </summary>
 		public virtual TIFuncionPadreFuncion Padre { get; set; }
@@ -47,37 +35,6 @@ namespace AppGM.Core
 		/// </summary>
         [StringLength(100)]
 		public string NombreFuncion { get; set; }
-
-		/// <summary>
-		/// Tipo del evento que maneja esta funcion, representado como un string
-		/// </summary>
-		[StringLength(255)]
-		public string TipoEventoQueManejaString
-		{
-			get => mTipoEventoQueManejaString;
-			set
-			{
-				if(value == mTipoEventoQueManejaString)
-					return;
-
-				mTipoEventoQueManejaString = value;
-
-				if(mTipoEventoQueManejaString.IsNullOrWhiteSpace())
-					return;
-
-				try
-				{
-					TipoEventoQueManeja = Type.GetType(value);
-				}
-				catch (Exception ex)
-				{
-					SistemaPrincipal.LoggerGlobal.LogCrash($"No se pudo parsear {value} a un {nameof(Type)}{Environment.NewLine}{ex.Message}");
-				}
-				
-				if(!typeof(MulticastDelegate).IsAssignableFrom(TipoEventoQueManeja))
-					SistemaPrincipal.LoggerGlobal.LogCrash($"{nameof(TipoEventoQueManeja)}({TipoEventoQueManeja}) debe ser un delegado");
-			}
-		}
 
 		/// <summary>
 		/// Devuelve la id de la funcion utilizada para identificar al archivo XML
