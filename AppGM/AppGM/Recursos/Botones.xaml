@@ -5,7 +5,7 @@
     <!--..................................ESTILOS PARA BOTONES...........................................-->
 
     <Style TargetType="{x:Type ButtonBase}" x:Key="Prueba">
-        <Setter Property="FontFamily" Value="{StaticResource 'Font Piola'}"/>
+        <Setter Property="FontFamily" Value="{StaticResource 'Font Canon'}"/>
 
         <Setter Property="Template">
             <Setter.Value>
@@ -26,7 +26,7 @@
         </Setter>
     </Style>
 
-    <!-- Estilo base para los botones de la aplicacion, por default no tienen fondo o borde -->
+    <!-- Estilo base para los botones de la aplicacion, por defecto no tienen fondo o borde -->
     <Style TargetType="{x:Type ButtonBase}" x:Key="BotonBase">
 
         <Setter Property="Background" Value="Transparent"/>
@@ -368,6 +368,43 @@
             <!-- Cuando se hace click sobre el boton, cambia su imagen -->
             <Trigger Property="IsPressed" Value="True">
                 <Setter Property="Content" Value="{StaticResource ImagenBotonFlechitaDerechaClick}"/>
+            </Trigger>
+
+        </Style.Triggers>
+
+    </Style>
+
+    <!-- Estilo para togglebutton de plegar y desplegar contenido -->
+    <Style TargetType="{x:Type ToggleButton}" x:Key="BotonPlegarDesplegar">
+
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+
+        <Setter Property="Background" Value="#121212" />
+        <Setter Property="Foreground" Value="Aqua" />
+
+        <Setter Property="Content" Value="{StaticResource Fa-FlechaDerecha-Chevron}"/>
+
+        <Setter Property="FontFamily" Value="{StaticResource 'Font Awesome Regular'}" />
+
+        <Style.Triggers>
+
+            <!-- Cuando el cursor este sobre el control el fondo cambia de color -->
+            <Trigger Property="IsMouseOver" Value="True">
+                <Trigger.Setters>
+                    <Setter Property="Background" Value="#1f1f1f"></Setter>
+                </Trigger.Setters>
+            </Trigger>
+
+            <!-- Cuando el usuario presiona la flecha esta pasa a apuntar hacia la derecha -->
+            <Trigger Property="IsChecked" Value="True">
+                <Trigger.Setters>
+                    <Setter Property="Content" Value="{StaticResource Fa-FlechaIzquierda-Chevron}" />
+                </Trigger.Setters>
+            </Trigger>
+
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="{StaticResource Color.CampoDeTexto.TextoDeshabilitado}"/>
             </Trigger>
 
         </Style.Triggers>

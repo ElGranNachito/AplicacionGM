@@ -22,7 +22,7 @@
             Grid.Row="0"
             BorderBrush="Aqua"
             BorderThickness="0 0 0 2">
-            
+
             <Grid>
 
                 <Grid.ColumnDefinitions>
@@ -33,9 +33,9 @@
 
                 <!-- Solapa mapa -->
                 <Grid Grid.Row="0" Grid.Column="0">
-                    
+
                     <Menu Style="{StaticResource MenuSolapaBase}">
-                        <MenuItem Header="Mapa" Style="{StaticResource MenuOpcionesMapa}" ItemContainerStyle="{DynamicResource MenuItemOpcionesMapa1}" Template="{DynamicResource MenuItemOpcionesMapaControlTemplate2}">  
+                        <MenuItem Header="Mapa" Style="{StaticResource MenuOpcionesMapa}" ItemContainerStyle="{DynamicResource MenuItemOpcionesMapa1}" Template="{DynamicResource MenuItemOpcionesMapaControlTemplate2}">
                         </MenuItem>
                     </Menu>
 
@@ -43,15 +43,15 @@
 
                 <!-- Solapa opciones mapa-->
                 <Grid Grid.Row="0" Grid.Column="1">
-                    
+
                     <Menu Style="{StaticResource MenuSolapaBase}">
-                        <MenuItem Header="Opciones" Style="{StaticResource MenuOpcionesMapa}" ItemContainerStyle="{DynamicResource MenuItemOpcionesMapa1}" Template="{DynamicResource MenuItemOpcionesMapaControlTemplate2}">  
+                        <MenuItem Header="Opciones" Style="{StaticResource MenuOpcionesMapa}" ItemContainerStyle="{DynamicResource MenuItemOpcionesMapa1}" Template="{DynamicResource MenuItemOpcionesMapaControlTemplate2}">
                             <MenuItem Header="Unidades" Style="{StaticResource MenuOpcionesMapa}" ItemContainerStyle="{DynamicResource MenuItemOpcionesMapa1}" Template="{DynamicResource MenuItemOpcionesMapaControlTemplate2}">
                                 <MenuItem Header="Iglesia" 
                                           IsCheckable="true" 
                                           IsChecked="{Binding MuestraUnidadIglesia, Mode=TwoWay}"
                                           ToolTip="Mostrar la unidad de la Iglesia en el mapa."
-                                          />  
+                                          />
                                 <MenuItem Header="Masters" 
                                           IsCheckable="true" 
                                           IsChecked="{Binding MuestraUnidadesMasters, Mode=TwoWay}"
@@ -99,7 +99,7 @@
                                           IsCheckable="true"
                                           IsChecked="{Binding MuestraTableroDeCasillas, Mode=TwoWay}"
                                           ToolTip="Habilitar tablero por casillas."
-                                          />  
+                                          />
                             </MenuItem>
                         </MenuItem>
                     </Menu>
@@ -109,7 +109,7 @@
             </Grid>
 
         </Border>
-    
+
         <!--Seccion del mapa-->
         <Grid 
             Grid.Row="1"
@@ -117,54 +117,69 @@
             PreviewMouseLeftButtonDown="OnPreviewMouseLeftButtonDown">
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*" MaxWidth="200"/>
+                <ColumnDefinition Width="Auto" MaxWidth="200"/>
+                <ColumnDefinition Width="*" MaxWidth="16"/>
                 <ColumnDefinition Width="6*"/>
+                <ColumnDefinition Width="Auto" MaxWidth="200"/>
             </Grid.ColumnDefinitions>
-        
+
             <!-- Columna izquierda -->
-            <Grid Column="0" Row="0">
+            <Grid Column="0" 
+                  Width="200"
+                  Visibility="{Binding DebeMostrarMenuUnidades, Converter={local:BooleanToVisibilityConverterColapsar}}"
+                  >
+
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="40"/>
                 </Grid.RowDefinitions>
-            
+
                 <local:UserControlIngresoPosicionGeneral 
                     Grid.Row="0"
                     Visibility="{Binding MuestraUnidadIngresoPosicion, Converter={local:BooleanToVisibilityConverterColapsar}}"
                     />
-            
+
                 <!-- Lista de entidades de personajes y objetos -->
                 <Border Grid.Row="1" BorderBrush="Aqua" BorderThickness="0 2 0 2">
-            
+
                     <local:UserControlListaIngresoPosicion Grid.Row="0" DataContext="{Binding Posiciones}"/>
-            
+
                 </Border>
-            
+
                 <!-- Lista de entidades parties -->
                 <Border Grid.Row="2" BorderBrush="Aqua" BorderThickness="0 2 0 2">
-            
+
                     <local:UserControlListaIngresoPosicionParty Grid.Row="1" DataContext="{Binding PosicionesParties}"/>
-            
+
                 </Border>
-            
+
                 <!-- Boton añadir participante -->
                 <Button  Grid.Row="3"
                     Content="Añadir Participante"
                     Command="{Binding ComandoAñadirParticipante}"/>
-            
+
             </Grid>
-        
-            <Border Padding="5" Grid.Column="1" Grid.Row="0" Background="Gray">
-            
+
+            <!-- Boton plegar / desplegar menu de unidades -->
+            <ToggleButton 
+                Grid.Column="1"
+                Style="{StaticResource BotonPlegarDesplegar}"
+                IsChecked="{Binding DebeMostrarMenuUnidades}"
+                ToolTip="Pliega / Despliega la seccion de gestion de unidades.">
+            </ToggleButton>
+
+            <!--Columna media contenedora del mapa-->
+            <Border Padding="5" Grid.Column="2" Grid.Row="0" Background="Gray">
+
                 <Grid>
-            
+
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-            
+
                     <!-- Textos posicion Y -->
                     <Grid>
                         <Grid.RowDefinitions>
@@ -172,22 +187,22 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-            
+
                         <TextBlock Text="0" FontFamily="{StaticResource 'Font Canon'}" FontSize="{StaticResource TamañoFontMediano}"/>
                         <TextBlock Text="{Binding MitadTamañoCanvasY, Mode=OneWay}" Grid.Row="1" Grid.RowSpan="2" VerticalAlignment="Center" FontFamily="{StaticResource 'Font Canon'}" FontSize="{StaticResource TamañoFontMediano}"/>
                         <TextBlock Text="{Binding TamañoCanvasY, Mode=OneWay}" Grid.Row="2" FontFamily="{StaticResource 'Font Canon'}" FontSize="{StaticResource TamañoFontMediano}"/>
                     </Grid>
-            
+
                     <Grid Grid.Column="1">
-            
+
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-            
+
                         <!-- Textos posicion X -->
                         <Grid>
-            
+
                             <TextBlock FontFamily="{StaticResource 'Font Canon'}"
                                        FontSize="{StaticResource TamañoFontMediano}"
                                        Text="{Binding MitadTamañoCanvasX}" 
@@ -196,14 +211,14 @@
                                        FontSize="{StaticResource TamañoFontMediano}"
                                        Text="{Binding TamañoCanvasX}"
                                        HorizontalAlignment="Right"/>
-            
+
                         </Grid>
-            
+
                         <!-- Mapa -->
                         <Grid Grid.Row="1">
 
                             <local:ZoomBorder x:Name="border" ClipToBounds="True" Background="Gray">
-                                    
+
                                 <Grid SizeChanged="OnMapaSizeXChanged">
 
                                     <Grid.Background>
@@ -215,14 +230,14 @@
 
 
                                     <Grid Visibility="{Binding MuestraTableroDeCasillas, Converter={local:BooleanToVisibilityConverterOcultar}}">
-                                            
+
                                         <local:UserControlColumnaFilaCasilla DataContext="{Binding FilasCasillasTablero}"/>
 
                                     </Grid>
 
                                     <!-- Imagenes de las entidades -->
                                     <local:UserControlListaImagenPosicion DataContext="{Binding Posiciones}"/>
-            
+
                                     <!-- Imagenes de las entidades parties-->
                                     <local:UserControlListaImagenPosicion DataContext="{Binding PosicionesParties}"/>
 
@@ -231,12 +246,74 @@
                             </local:ZoomBorder>
 
                         </Grid>
-            
+
                     </Grid>
-            
+
                 </Grid>
-            
+
             </Border>
+
+            <!-- Columna derecha -->
+            <Grid Column="3" 
+                  Width="200"
+                  Visibility="{Binding DebeMostrarMenuCasilla, Converter={local:BooleanToVisibilityConverterColapsar}}"
+                  >
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="Casilla:" 
+                           Foreground="White"
+                           FontSize="15"
+                           Margin="10, 10, 0, 0"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Top"/>
+
+                <Grid Row="1">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="10*" MaxWidth="50"/>
+                        <ColumnDefinition Width="2*" MaxWidth="160"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Checkbox disponibilidad de la casilla -->
+                    <CheckBox
+                        Grid.Row="0" Grid.Column="0"
+                        IsChecked="{Binding CasillaSeleccionada.PuedeOcuparse}"
+                        ToolTip="Indica si la casilla puede ser ocupada."
+                        Margin="10"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"/>
+
+                    <!-- Puede ocuparse -->
+                    <TextBlock
+                        Grid.Row="0" Grid.Column="1"
+                        Text="Puede ocuparse" 
+                        FontSize="13"
+                        Foreground="White"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Left"/>
+
+                </Grid>
+
+                <!-- Boton plegar / desplegar menu de unidades -->
+                <ToggleButton 
+                    Grid.Row="2"
+                    Style="{StaticResource BotonPlegarDesplegar}"
+                    IsChecked="{Binding DebeMostrarMenuCasilla}"
+                    ToolTip="Pliega / Despliega el menu de opciones de casilla."
+                    Width="50"
+                    HorizontalAlignment="Left">
+                </ToggleButton>
+
+            </Grid>
 
         </Grid>
 

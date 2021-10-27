@@ -48,6 +48,11 @@ namespace AppGM.Core
         public static ViewModelRol        RolSeleccionado         => ObtenerInstancia<ViewModelRol>();
 
         /// <summary>
+        /// Viewm model del menu principal del rol.
+        /// </summary>
+        public static ViewModelMapaPrincipal MenuPrincipal => ObtenerInstancia<ViewModelMapaPrincipal>();
+
+        /// <summary>
         /// View model del menu de seleccion de combate
         /// </summary>
         public static ViewModelMenuSeleccionCombate MenuSeleccionCombate    => ObtenerInstancia<ViewModelMenuSeleccionCombate>();
