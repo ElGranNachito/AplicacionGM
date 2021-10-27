@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Windows.Input;
 using Castle.Core.Internal;
 
@@ -105,7 +106,12 @@ namespace AppGM.Core
         /// Columnas de casillas del tablero.
         /// </summary>
         public ObservableCollection<ViewModelFilaCasillas> FilasCasillasTablero { get; set; } = new ObservableCollection<ViewModelFilaCasillas>();
-        
+
+        /// <summary>
+        /// Casilla del tablero que el usuario tiene actualmente seleccionada.
+        /// </summary>
+        public ViewModelCasillaTablero CasillaSeleccionada { get; set; }
+
         /// <summary>
         /// Tamaño del canvas que contiene la imagen del mapa
         /// </summary>
@@ -165,6 +171,16 @@ namespace AppGM.Core
         public ViewModelVector2 OffsetImagenesPosicion => new ViewModelVector2(
             -(TamañoImagenesPosicion.X/2.0f).Round(1),
             -TamañoImagenesPosicion.Y);
+
+        /// <summary>
+        /// Indica si el menu de gestion de unidades debe estar plegado o desplegado.
+        /// </summary>
+        public bool DebeMostrarMenuUnidades { get; set; } = true;
+
+        /// <summary>
+        /// Indica si el menu de gestion de una casilla debe estar plegado o desplegado.
+        /// </summary>
+        public bool DebeMostrarMenuCasilla { get; set; } = false;
 
         /// <summary>
         /// Indica si se debe mostrar el tablero de casillas sobre el mapa.

@@ -25,7 +25,6 @@ namespace AppGM.Core
         /// </summary>
         public ObservableCollection<ViewModelCasillaTablero> CasillasTablero { get; set; } = new ObservableCollection<ViewModelCasillaTablero>();
 
-
         #endregion
 
         #region Constructores

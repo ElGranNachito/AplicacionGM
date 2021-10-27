@@ -13,6 +13,12 @@ namespace AppGM.Core
         // Campos ---
 
 
+        /// <summary>
+        /// Indica si la casilla puede ser ocupada por una unidad o no.
+        /// </summary>
+        private bool puedeOcuparse = true;
+
+
         // Propiedades ---
 
 
@@ -27,14 +33,29 @@ namespace AppGM.Core
         public string ColorFondoCasilla { get; set; } = "0000ffff";
 
         /// <summary>
-        /// Indica si la casilla esta siendo seleccionada por el usuario.
-        /// </summary>
-        public bool EstaSeleccionada { get; set; } = false;
-
-        /// <summary>
         /// Indica si la casilla puede ser ocupada por una unidad dentro del mapa donde se encuentre.
         /// </summary>
-        public bool PuedeOcuparse { get; set; } = true;
+        public bool PuedeOcuparse
+        {
+            get => puedeOcuparse;
+            set
+            {
+                if (!value)
+                {
+                    puedeOcuparse = value;
+
+                    ColorFondoCasilla = "7fe64e64";
+                    DispararPropertyChanged(new PropertyChangedEventArgs(nameof(ColorFondoCasilla)));
+                }
+                else
+                {
+                    puedeOcuparse = value;
+
+                    ColorFondoCasilla = "0000ffff";
+                    DispararPropertyChanged(new PropertyChangedEventArgs(nameof(ColorFondoCasilla)));
+                }
+            }
+        }
 
         #endregion
 

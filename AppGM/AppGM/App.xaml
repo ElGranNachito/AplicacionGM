@@ -7,10 +7,10 @@
         <!-- Recursos globales de la aplicacion -->
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Recursos/Fonts.xaml"/>
                 <ResourceDictionary Source="Recursos/Constantes.xaml"/>
                 <ResourceDictionary Source="Recursos/Colores.xaml"/>
                 <ResourceDictionary Source="Recursos/Imagenes.xaml"/>
-                <ResourceDictionary Source="Recursos/Fonts.xaml"/>
                 <ResourceDictionary Source="Recursos/Botones.xaml"/>
                 <ResourceDictionary Source="Recursos/Menues.xaml"/>
                 <ResourceDictionary Source="Recursos/Bordes.xaml"/>

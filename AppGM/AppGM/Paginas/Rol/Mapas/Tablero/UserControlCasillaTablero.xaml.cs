@@ -36,10 +36,10 @@ namespace AppGM
         private void OnMouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (DataContext is ViewModelCasillaTablero vm)
-                if (e.OriginalSource is Grid)
-                {
-                    vm.EstaSeleccionada = true;
-                }
+            {
+                SistemaPrincipal.MenuPrincipal.CasillaSeleccionada = vm;
+                SistemaPrincipal.MenuPrincipal.DebeMostrarMenuCasilla = true;
+            }
         }
 
         private void OnMouseEnter(object sender, MouseEventArgs e)
