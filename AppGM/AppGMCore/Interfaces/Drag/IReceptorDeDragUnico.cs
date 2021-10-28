@@ -5,24 +5,6 @@
 	/// </summary>
 	public interface IReceptorDeDragUnico : IReceptorDeDrag
 	{
-		public new virtual void OnDragEntro(ArgumentosDragAndDropBase args)
-		{
-			if(args is ArgumentosDragAndDropUnico argsTipoEspecifico)
-				OnDragEntro_Impl(argsTipoEspecifico);
-		}
-
-		public new virtual void OnDragSalio(ArgumentosDragAndDropBase args)
-		{
-			if (args is ArgumentosDragAndDropUnico argsTipoEspecifico)
-				OnDragSalio_Impl(argsTipoEspecifico);
-		}
-
-		public new virtual void OnDrop(ArgumentosDragAndDropBase args)
-		{
-			if (args is ArgumentosDragAndDropUnico argsTipoEspecifico)
-				OnDrop_Impl(argsTipoEspecifico);
-		}
-
 		/// <summary>
 		/// Metodo que se llamara cuando el cursor entre con un <see cref="Drag"/>
 		/// </summary>

@@ -257,6 +257,8 @@ namespace AppGM.Core
 
 		protected virtual void EstablecerIndiceZ(int nuevoIndice) => mIndiceZ = nuevoIndice;
 
+		public virtual bool PuedeSerDragueado() => true;
+
 		#endregion
 	}
 }

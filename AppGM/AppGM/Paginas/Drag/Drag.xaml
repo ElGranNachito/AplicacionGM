@@ -19,7 +19,7 @@
         <ContentPresenter 
             Content="{Binding  
             Source={x:Static core:SistemaPrincipal.Drag},
-            Path=DatosDrag,
+            Path=TipoDragActivo,
             Converter={local:ViewModelToDragConverter}}"/>
     </Grid>
 </UserControl>

@@ -426,6 +426,45 @@ namespace AppGM.Core.Migrations
                     b.HasDiscriminator<int>("Tipo").HasValue(1);
                 });
 
+            modelBuilder.Entity("AppGM.Core.ModeloItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Descripcion")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("EsValido")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<decimal>("EspacioQueOcupa")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Estado")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Nombre")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("PersonajePortadorId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<decimal>("Peso")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Tipo")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PersonajePortadorId");
+
+                    b.ToTable("ModeloItem");
+
+                    b.HasDiscriminator<int>("Tipo").HasValue(1);
+                });
+
             modelBuilder.Entity("AppGM.Core.ModeloMapa", b =>
                 {
                     b.Property<int>("Id")
@@ -455,6 +494,38 @@ namespace AppGM.Core.Migrations
                     b.HasIndex("RolId");
 
                     b.ToTable("ModeloMapa");
+                });
+
+            modelBuilder.Entity("AppGM.Core.ModeloParteDelCuerpo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("EsValido")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("IdSlotDueño")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<float>("MultiplicadorDeEstaParte")
+                        .HasColumnType("REAL");
+
+                    b.Property<string>("Nombre")
+                        .HasMaxLength(100)
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("PersonajeDueñoId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdSlotDueño")
+                        .IsUnique();
+
+                    b.HasIndex("PersonajeDueñoId");
+
+                    b.ToTable("ParteDelCuerpo");
                 });
 
             modelBuilder.Entity("AppGM.Core.ModeloParticipante", b =>
@@ -627,21 +698,32 @@ namespace AppGM.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("DueñoId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<bool>("EsValido")
                         .HasColumnType("INTEGER");
-
-                    b.Property<decimal>("EspacioDisponible")
-                        .HasColumnType("TEXT");
 
                     b.Property<decimal>("EspacioTotal")
                         .HasColumnType("TEXT");
 
+                    b.Property<int?>("ItemDueñoId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("NombreSlot")
+                        .HasMaxLength(100)
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("ParteDelCuerpoDueñaId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("PersonajeDueñoId")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("DueñoId");
+                    b.HasIndex("ItemDueñoId");
+
+                    b.HasIndex("ParteDelCuerpoDueñaId");
+
+                    b.HasIndex("PersonajeDueñoId");
 
                     b.ToTable("ModeloSlot");
                 });
@@ -665,6 +747,9 @@ namespace AppGM.Core.Migrations
                     b.Property<int?>("HabilidadContenedoraId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int?>("ItemContenedorId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int?>("ModeloHabilidadId")
                         .HasColumnType("INTEGER");
 
@@ -683,20 +768,17 @@ namespace AppGM.Core.Migrations
                     b.Property<int>("TipoTirada")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("UtilizableContenedorId")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("Id");
 
                     b.HasIndex("FuncionContenedoraId");
 
                     b.HasIndex("HabilidadContenedoraId");
 
+                    b.HasIndex("ItemContenedorId");
+
                     b.HasIndex("ModeloHabilidadId");
 
                     b.HasIndex("PersonajeContenedorId");
-
-                    b.HasIndex("UtilizableContenedorId");
 
                     b.ToTable("Tirada");
 
@@ -743,39 +825,6 @@ namespace AppGM.Core.Migrations
                     b.HasDiscriminator<int>("Tipo").HasValue(1);
                 });
 
-            modelBuilder.Entity("AppGM.Core.ModeloUtilizable", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Descripcion")
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("EsValido")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Nombre")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int?>("PersonajePortadorId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<decimal>("Peso")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("Tipo")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PersonajePortadorId");
-
-                    b.ToTable("ModeloUtilizable");
-
-                    b.HasDiscriminator<int>("Tipo").HasValue(1);
-                });
-
             modelBuilder.Entity("AppGM.Core.ModeloVariableBase", b =>
                 {
                     b.Property<int>("Id")
@@ -798,6 +847,9 @@ namespace AppGM.Core.Migrations
                     b.Property<int>("IDVariable")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int?>("ItemContenedorId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("NombreVariable")
                         .HasColumnType("varchar(50)");
 
@@ -810,18 +862,15 @@ namespace AppGM.Core.Migrations
                     b.Property<string>("TipoVariableString")
                         .HasColumnType("varchar(50)");
 
-                    b.Property<int?>("UtilizableContenedorId")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("Id");
 
                     b.HasIndex("FuncionContenedoraId");
 
                     b.HasIndex("HabilidadContenedoraId");
 
-                    b.HasIndex("PersonajeContenedorId");
+                    b.HasIndex("ItemContenedorId");
 
-                    b.HasIndex("UtilizableContenedorId");
+                    b.HasIndex("PersonajeContenedorId");
 
                     b.ToTable("ModeloVariable");
 
@@ -943,6 +992,25 @@ namespace AppGM.Core.Migrations
                     b.ToTable("TIFuncionHandlerEvento<ModeloHabilidad>");
                 });
 
+            modelBuilder.Entity("AppGM.Core.TIFuncionHandlerEvento<AppGM.Core.ModeloItem>", b =>
+                {
+                    b.Property<int>("IdFuncion")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("IdOtro")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("NombresEventosVinculados")
+                        .HasMaxLength(1000)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("IdFuncion", "IdOtro");
+
+                    b.HasIndex("IdOtro");
+
+                    b.ToTable("TIFuncionHandlerEvento<ModeloItem>");
+                });
+
             modelBuilder.Entity("AppGM.Core.TIFuncionHandlerEvento<AppGM.Core.ModeloPersonaje>", b =>
                 {
                     b.Property<int>("IdFuncion")
@@ -962,23 +1030,22 @@ namespace AppGM.Core.Migrations
                     b.ToTable("TIFuncionHandlerEvento<ModeloPersonaje>");
                 });
 
-            modelBuilder.Entity("AppGM.Core.TIFuncionHandlerEvento<AppGM.Core.ModeloUtilizable>", b =>
+            modelBuilder.Entity("AppGM.Core.TIFuncionItem", b =>
                 {
-                    b.Property<int>("IdFuncion")
+                    b.Property<int>("IDFuncion")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("IdOtro")
+                    b.Property<int>("IDItem")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("NombresEventosVinculados")
-                        .HasMaxLength(1000)
-                        .HasColumnType("TEXT");
+                    b.HasKey("IDFuncion", "IDItem");
 
-                    b.HasKey("IdFuncion", "IdOtro");
+                    b.HasIndex("IDFuncion")
+                        .IsUnique();
 
-                    b.HasIndex("IdOtro");
+                    b.HasIndex("IDItem");
 
-                    b.ToTable("TIFuncionHandlerEvento<ModeloUtilizable>");
+                    b.ToTable("TIFuncionItem");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIFuncionPadreFuncion", b =>
@@ -1030,6 +1097,21 @@ namespace AppGM.Core.Migrations
                     b.HasIndex("PersonajesAfectadosId");
 
                     b.ToTable("ModeloContratoModeloPersonaje");
+                });
+
+            modelBuilder.Entity("ModeloItemModeloSlot", b =>
+                {
+                    b.Property<int>("ItemsAlmacenadosId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("SlotsQueOcupaId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("ItemsAlmacenadosId", "SlotsQueOcupaId");
+
+                    b.HasIndex("SlotsQueOcupaId");
+
+                    b.ToTable("ModeloItemModeloSlot");
                 });
 
             modelBuilder.Entity("AppGM.Core.ModeloFuncion_HandlerEvento", b =>
@@ -1084,6 +1166,32 @@ namespace AppGM.Core.Migrations
                     b.HasIndex("ModeloPersonajeId1");
 
                     b.HasDiscriminator().HasValue(2);
+                });
+
+            modelBuilder.Entity("AppGM.Core.ModeloConsumible", b =>
+                {
+                    b.HasBaseType("AppGM.Core.ModeloItem");
+
+                    b.Property<ushort>("Usos")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<ushort>("UsosRestantes")
+                        .HasColumnType("INTEGER");
+
+                    b.HasDiscriminator().HasValue(2);
+                });
+
+            modelBuilder.Entity("AppGM.Core.ModeloItemDefensivo", b =>
+                {
+                    b.HasBaseType("AppGM.Core.ModeloItem");
+
+                    b.Property<int?>("ModeloPersonajeId")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("ModeloItemDefensivo_ModeloPersonajeId");
+
+                    b.HasIndex("ModeloPersonajeId");
+
+                    b.HasDiscriminator().HasValue(4);
                 });
 
             modelBuilder.Entity("AppGM.Core.ModeloInvocacion", b =>
@@ -1154,31 +1262,6 @@ namespace AppGM.Core.Migrations
                     b.HasDiscriminator().HasValue(2);
                 });
 
-            modelBuilder.Entity("AppGM.Core.ModeloItem", b =>
-                {
-                    b.HasBaseType("AppGM.Core.ModeloUtilizable");
-
-                    b.Property<int?>("ModeloSlotId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<decimal>("SlotsQueOcupa")
-                        .HasColumnType("TEXT");
-
-                    b.HasIndex("ModeloSlotId");
-
-                    b.HasDiscriminator().HasValue(3);
-                });
-
-            modelBuilder.Entity("AppGM.Core.ModeloPortable", b =>
-                {
-                    b.HasBaseType("AppGM.Core.ModeloUtilizable");
-
-                    b.Property<int>("Estado")
-                        .HasColumnType("INTEGER");
-
-                    b.HasDiscriminator().HasValue(2);
-                });
-
             modelBuilder.Entity("AppGM.Core.ModeloVariableFloat", b =>
                 {
                     b.HasBaseType("AppGM.Core.ModeloVariableBase");
@@ -1207,6 +1290,18 @@ namespace AppGM.Core.Migrations
                     b.Property<string>("ValorVariable")
                         .HasColumnType("TEXT")
                         .HasColumnName("ModeloVariableString_ValorVariable");
+
+                    b.HasDiscriminator().HasValue(3);
+                });
+
+            modelBuilder.Entity("AppGM.Core.ModeloArmaDistancia", b =>
+                {
+                    b.HasBaseType("AppGM.Core.ModeloConsumible");
+
+                    b.Property<int?>("ModeloPersonajeId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasIndex("ModeloPersonajeId");
 
                     b.HasDiscriminator().HasValue(3);
                 });
@@ -1319,44 +1414,6 @@ namespace AppGM.Core.Migrations
                         .HasColumnType("varchar(1)");
 
                     b.HasDiscriminator().HasValue(3);
-                });
-
-            modelBuilder.Entity("AppGM.Core.ModeloConsumible", b =>
-                {
-                    b.HasBaseType("AppGM.Core.ModeloItem");
-
-                    b.Property<ushort>("Usos")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<ushort>("UsosRestantes")
-                        .HasColumnType("INTEGER");
-
-                    b.HasDiscriminator().HasValue(4);
-                });
-
-            modelBuilder.Entity("AppGM.Core.ModeloDefensivo", b =>
-                {
-                    b.HasBaseType("AppGM.Core.ModeloPortable");
-
-                    b.Property<int?>("ModeloPersonajeId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasIndex("ModeloPersonajeId");
-
-                    b.HasDiscriminator().HasValue(6);
-                });
-
-            modelBuilder.Entity("AppGM.Core.ModeloArmasDistancia", b =>
-                {
-                    b.HasBaseType("AppGM.Core.ModeloConsumible");
-
-                    b.Property<int?>("ModeloPersonajeId")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("ModeloArmasDistancia_ModeloPersonajeId");
-
-                    b.HasIndex("ModeloPersonajeId");
-
-                    b.HasDiscriminator().HasValue(5);
                 });
 
             modelBuilder.Entity("AppGM.Core.ModeloAccion", b =>
@@ -1499,6 +1556,16 @@ namespace AppGM.Core.Migrations
                     b.Navigation("Dueño");
                 });
 
+            modelBuilder.Entity("AppGM.Core.ModeloItem", b =>
+                {
+                    b.HasOne("AppGM.Core.ModeloPersonaje", "PersonajePortador")
+                        .WithMany("Inventario")
+                        .HasForeignKey("PersonajePortadorId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("PersonajePortador");
+                });
+
             modelBuilder.Entity("AppGM.Core.ModeloMapa", b =>
                 {
                     b.HasOne("AppGM.Core.ModeloAdministradorDeCombate", "CombateAlQuePertenece")
@@ -1514,6 +1581,24 @@ namespace AppGM.Core.Migrations
                     b.Navigation("CombateAlQuePertenece");
 
                     b.Navigation("Rol");
+                });
+
+            modelBuilder.Entity("AppGM.Core.ModeloParteDelCuerpo", b =>
+                {
+                    b.HasOne("AppGM.Core.ModeloSlot", "SlotDueño")
+                        .WithOne("ParteDelCuerpoAlmacenada")
+                        .HasForeignKey("AppGM.Core.ModeloParteDelCuerpo", "IdSlotDueño")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AppGM.Core.ModeloPersonaje", "PersonajeDueño")
+                        .WithMany("PartesDelCuerpo")
+                        .HasForeignKey("PersonajeDueñoId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("PersonajeDueño");
+
+                    b.Navigation("SlotDueño");
                 });
 
             modelBuilder.Entity("AppGM.Core.ModeloParticipante", b =>
@@ -1551,12 +1636,26 @@ namespace AppGM.Core.Migrations
 
             modelBuilder.Entity("AppGM.Core.ModeloSlot", b =>
                 {
-                    b.HasOne("AppGM.Core.ModeloPortable", "Dueño")
+                    b.HasOne("AppGM.Core.ModeloItem", "ItemDueño")
                         .WithMany("Slots")
-                        .HasForeignKey("DueñoId")
+                        .HasForeignKey("ItemDueñoId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.Navigation("Dueño");
+                    b.HasOne("AppGM.Core.ModeloParteDelCuerpo", "ParteDelCuerpoDueña")
+                        .WithMany("Slots")
+                        .HasForeignKey("ParteDelCuerpoDueñaId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("AppGM.Core.ModeloPersonaje", "PersonajeDueño")
+                        .WithMany("SlotsBase")
+                        .HasForeignKey("PersonajeDueñoId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("ItemDueño");
+
+                    b.Navigation("ParteDelCuerpoDueña");
+
+                    b.Navigation("PersonajeDueño");
                 });
 
             modelBuilder.Entity("AppGM.Core.ModeloTiradaBase", b =>
@@ -1571,6 +1670,11 @@ namespace AppGM.Core.Migrations
                         .HasForeignKey("HabilidadContenedoraId")
                         .OnDelete(DeleteBehavior.Cascade);
 
+                    b.HasOne("AppGM.Core.ModeloItem", "ItemContenedor")
+                        .WithMany("Tiradas")
+                        .HasForeignKey("ItemContenedorId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("AppGM.Core.ModeloHabilidad", null)
                         .WithMany("TiradasDeUso")
                         .HasForeignKey("ModeloHabilidadId");
@@ -1580,18 +1684,13 @@ namespace AppGM.Core.Migrations
                         .HasForeignKey("PersonajeContenedorId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("AppGM.Core.ModeloUtilizable", "UtilizableContenedor")
-                        .WithMany("Tiradas")
-                        .HasForeignKey("UtilizableContenedorId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.Navigation("FuncionContenedora");
 
                     b.Navigation("HabilidadContenedora");
 
-                    b.Navigation("PersonajeContenedor");
+                    b.Navigation("ItemContenedor");
 
-                    b.Navigation("UtilizableContenedor");
+                    b.Navigation("PersonajeContenedor");
                 });
 
             modelBuilder.Entity("AppGM.Core.ModeloUnidadMapa", b =>
@@ -1617,16 +1716,6 @@ namespace AppGM.Core.Migrations
                     b.Navigation("Posicion");
                 });
 
-            modelBuilder.Entity("AppGM.Core.ModeloUtilizable", b =>
-                {
-                    b.HasOne("AppGM.Core.ModeloPersonaje", "PersonajePortador")
-                        .WithMany("Inventario")
-                        .HasForeignKey("PersonajePortadorId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.Navigation("PersonajePortador");
-                });
-
             modelBuilder.Entity("AppGM.Core.ModeloVariableBase", b =>
                 {
                     b.HasOne("AppGM.Core.ModeloFuncion", "FuncionContenedora")
@@ -1639,23 +1728,23 @@ namespace AppGM.Core.Migrations
                         .HasForeignKey("HabilidadContenedoraId")
                         .OnDelete(DeleteBehavior.Cascade);
 
+                    b.HasOne("AppGM.Core.ModeloItem", "ItemContenedor")
+                        .WithMany("Variables")
+                        .HasForeignKey("ItemContenedorId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("AppGM.Core.ModeloPersonaje", "PersonajeContenedor")
                         .WithMany("Variables")
                         .HasForeignKey("PersonajeContenedorId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("AppGM.Core.ModeloUtilizable", "UtilizableContenedor")
-                        .WithMany("Variables")
-                        .HasForeignKey("UtilizableContenedorId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("FuncionContenedora");
 
                     b.Navigation("HabilidadContenedora");
 
-                    b.Navigation("PersonajeContenedor");
+                    b.Navigation("ItemContenedor");
 
-                    b.Navigation("UtilizableContenedor");
+                    b.Navigation("PersonajeContenedor");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIEfectoSiendoAplicadoFuncion", b =>
@@ -1753,6 +1842,25 @@ namespace AppGM.Core.Migrations
                     b.Navigation("Otro");
                 });
 
+            modelBuilder.Entity("AppGM.Core.TIFuncionHandlerEvento<AppGM.Core.ModeloItem>", b =>
+                {
+                    b.HasOne("AppGM.Core.ModeloFuncion_HandlerEvento", "Funcion")
+                        .WithMany("EventosEnUtilizable")
+                        .HasForeignKey("IdFuncion")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AppGM.Core.ModeloItem", "Otro")
+                        .WithMany("HandlersEventos")
+                        .HasForeignKey("IdOtro")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Funcion");
+
+                    b.Navigation("Otro");
+                });
+
             modelBuilder.Entity("AppGM.Core.TIFuncionHandlerEvento<AppGM.Core.ModeloPersonaje>", b =>
                 {
                     b.HasOne("AppGM.Core.ModeloFuncion_HandlerEvento", "Funcion")
@@ -1772,23 +1880,23 @@ namespace AppGM.Core.Migrations
                     b.Navigation("Otro");
                 });
 
-            modelBuilder.Entity("AppGM.Core.TIFuncionHandlerEvento<AppGM.Core.ModeloUtilizable>", b =>
+            modelBuilder.Entity("AppGM.Core.TIFuncionItem", b =>
                 {
-                    b.HasOne("AppGM.Core.ModeloFuncion_HandlerEvento", "Funcion")
-                        .WithMany("EventosEnUtilizable")
-                        .HasForeignKey("IdFuncion")
+                    b.HasOne("AppGM.Core.ModeloFuncion", "Funcion")
+                        .WithOne("ItemContenedor")
+                        .HasForeignKey("AppGM.Core.TIFuncionItem", "IDFuncion")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AppGM.Core.ModeloUtilizable", "Otro")
-                        .WithMany("HandlersEventos")
-                        .HasForeignKey("IdOtro")
+                    b.HasOne("AppGM.Core.ModeloItem", "Item")
+                        .WithMany("Funciones")
+                        .HasForeignKey("IDItem")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Funcion");
 
-                    b.Navigation("Otro");
+                    b.Navigation("Item");
                 });
 
             modelBuilder.Entity("AppGM.Core.TIFuncionPadreFuncion", b =>
@@ -1838,6 +1946,21 @@ namespace AppGM.Core.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("ModeloItemModeloSlot", b =>
+                {
+                    b.HasOne("AppGM.Core.ModeloItem", null)
+                        .WithMany()
+                        .HasForeignKey("ItemsAlmacenadosId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AppGM.Core.ModeloSlot", null)
+                        .WithMany()
+                        .HasForeignKey("SlotsQueOcupaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("AppGM.Core.ModeloMagia", b =>
                 {
                     b.HasOne("AppGM.Core.ModeloPersonaje", null)
@@ -1859,6 +1982,13 @@ namespace AppGM.Core.Migrations
                         .HasForeignKey("ModeloPersonajeId1");
                 });
 
+            modelBuilder.Entity("AppGM.Core.ModeloItemDefensivo", b =>
+                {
+                    b.HasOne("AppGM.Core.ModeloPersonaje", null)
+                        .WithMany("Armadura")
+                        .HasForeignKey("ModeloPersonajeId");
+                });
+
             modelBuilder.Entity("AppGM.Core.ModeloInvocacion", b =>
                 {
                     b.HasOne("AppGM.Core.ModeloPersonaje", "Invocador")
@@ -1869,21 +1999,7 @@ namespace AppGM.Core.Migrations
                     b.Navigation("Invocador");
                 });
 
-            modelBuilder.Entity("AppGM.Core.ModeloItem", b =>
-                {
-                    b.HasOne("AppGM.Core.ModeloSlot", null)
-                        .WithMany("ItemsAlmacenados")
-                        .HasForeignKey("ModeloSlotId");
-                });
-
-            modelBuilder.Entity("AppGM.Core.ModeloDefensivo", b =>
-                {
-                    b.HasOne("AppGM.Core.ModeloPersonaje", null)
-                        .WithMany("Armadura")
-                        .HasForeignKey("ModeloPersonajeId");
-                });
-
-            modelBuilder.Entity("AppGM.Core.ModeloArmasDistancia", b =>
+            modelBuilder.Entity("AppGM.Core.ModeloArmaDistancia", b =>
                 {
                     b.HasOne("AppGM.Core.ModeloPersonaje", null)
                         .WithMany("ArmasDistancia")
@@ -1926,6 +2042,8 @@ namespace AppGM.Core.Migrations
 
                     b.Navigation("Hijos");
 
+                    b.Navigation("ItemContenedor");
+
                     b.Navigation("Padre");
 
                     b.Navigation("Tiradas");
@@ -1948,11 +2066,29 @@ namespace AppGM.Core.Migrations
                     b.Navigation("Variables");
                 });
 
+            modelBuilder.Entity("AppGM.Core.ModeloItem", b =>
+                {
+                    b.Navigation("Funciones");
+
+                    b.Navigation("HandlersEventos");
+
+                    b.Navigation("Slots");
+
+                    b.Navigation("Tiradas");
+
+                    b.Navigation("Variables");
+                });
+
             modelBuilder.Entity("AppGM.Core.ModeloMapa", b =>
                 {
                     b.Navigation("Ambiente");
 
                     b.Navigation("PosicionesUnidades");
+                });
+
+            modelBuilder.Entity("AppGM.Core.ModeloParteDelCuerpo", b =>
+                {
+                    b.Navigation("Slots");
                 });
 
             modelBuilder.Entity("AppGM.Core.ModeloParticipante", b =>
@@ -1980,11 +2116,15 @@ namespace AppGM.Core.Migrations
 
                     b.Navigation("Magias");
 
+                    b.Navigation("PartesDelCuerpo");
+
                     b.Navigation("ParticipacionEnCombates");
 
                     b.Navigation("Perks");
 
                     b.Navigation("Skills");
+
+                    b.Navigation("SlotsBase");
 
                     b.Navigation("Tiradas");
 
@@ -2006,16 +2146,7 @@ namespace AppGM.Core.Migrations
 
             modelBuilder.Entity("AppGM.Core.ModeloSlot", b =>
                 {
-                    b.Navigation("ItemsAlmacenados");
-                });
-
-            modelBuilder.Entity("AppGM.Core.ModeloUtilizable", b =>
-                {
-                    b.Navigation("HandlersEventos");
-
-                    b.Navigation("Tiradas");
-
-                    b.Navigation("Variables");
+                    b.Navigation("ParteDelCuerpoAlmacenada");
                 });
 
             modelBuilder.Entity("AppGM.Core.ModeloFuncion_HandlerEvento", b =>
@@ -2037,11 +2168,6 @@ namespace AppGM.Core.Migrations
             modelBuilder.Entity("AppGM.Core.ModeloPersonajeJugable", b =>
                 {
                     b.Navigation("Caracteristicas");
-                });
-
-            modelBuilder.Entity("AppGM.Core.ModeloPortable", b =>
-                {
-                    b.Navigation("Slots");
                 });
 
             modelBuilder.Entity("AppGM.Core.ModeloServant", b =>

@@ -4,7 +4,7 @@ using CoolLogs;
 
 namespace AppGM.Core
 {
-    public class ControladorHabilidad : Controlador<ModeloHabilidad>, IUtilizable
+    public class ControladorHabilidad : Controlador<ModeloHabilidad>
     {
         #region Campos & Propiedades
 

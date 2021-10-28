@@ -73,7 +73,7 @@ namespace AppGM.Core
 		/// <summary>
 		/// Modelo del utilizable que contiene esta variables
 		/// </summary>
-		public virtual ModeloUtilizable UtilizableContenedor { get; set; }
+		public virtual ModeloItem ItemContenedor { get; set; }
 
 		/// <summary>
 		/// Modelo de la funcion que contiene esta variables

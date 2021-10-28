@@ -18,7 +18,7 @@ namespace AppGM.Core
 		/// <param name="_contenido">Contenido del drag and drop</param>
 		/// <param name="_args">Diccionario con los argumentos del drag</param>
 		public ArgumentosDragAndDropMultiple(List<IDrageable> _contenido, Dictionary<int, object> _args)
-			: base(_args)
+			: base(_args, ETipoDrag.Multiple)
 		{
 			contenido = _contenido;
 		}

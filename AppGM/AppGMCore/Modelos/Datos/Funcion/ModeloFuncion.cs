@@ -31,9 +31,14 @@ namespace AppGM.Core
 		public virtual TIFuncionHabilidad HabilidadContenedora { get; set; }
 
 		/// <summary>
+		/// Modelo del item que contiene esta funcion
+		/// </summary>
+		public virtual TIFuncionItem ItemContenedor { get; set; }
+
+		/// <summary>
 		/// Nombre de la funcions
 		/// </summary>
-        [StringLength(100)]
+		[StringLength(100)]
 		public string NombreFuncion { get; set; }
 
 		/// <summary>

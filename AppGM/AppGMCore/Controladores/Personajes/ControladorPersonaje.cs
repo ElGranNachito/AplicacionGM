@@ -101,12 +101,12 @@ namespace AppGM.Core
     /// <param name="valor">Cantidad de puntos de vida que se curo</param>
     /// <param name="personaje"><see cref="ControladorPersonaje"/> que recibe la curacion</param>
     /// <param name="fuenteP"><see cref="ControladorPersonaje"/> que realizo la curacion</param>
-    /// <param name="fuenteI"><see cref="ControladorUtilizable"/> que realizo la curacion</param>
+    /// <param name="fuenteI"><see cref="ControladorItem"/> que realizo la curacion</param>
     public delegate void dCurarse(
         ref int valor, 
         ControladorPersonaje personaje,
         ControladorPersonaje fuenteP,
-        ControladorUtilizable fuenteI);
+        ControladorItem fuenteI);
     
     #endregion
 
@@ -135,7 +135,7 @@ namespace AppGM.Core
         /// <summary>
         /// Items que el personaje tiene en su inventario
         /// </summary>
-        public List<ControladorUtilizable> Inventario { get; set; }
+        public List<ControladorItem> Inventario { get; set; }
 
         /// <summary>
         /// Items defensivos que el personaje tiene equipados
@@ -365,7 +365,7 @@ namespace AppGM.Core
         /// <param name="cantidad">Valor de la curacion</param>
         /// <param name="fuenteP">Personaje que realizo la curacion</param>
         /// <param name="fuenteI">Item que realizo la curacion</param>
-        public void Curar(int cantidad, ControladorPersonaje fuenteP, ControladorUtilizable fuenteI)
+        public void Curar(int cantidad, ControladorPersonaje fuenteP, ControladorItem fuenteI)
         {
             //Llamamos al evento antes de realizar la curacion por si algunos de los metodos subscritos modifica el valor de curacion
             OnRecibirCuracion(ref cantidad, this, fuenteP, fuenteI);

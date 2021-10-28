@@ -1,7 +1,7 @@
 ﻿namespace AppGM.Core
 {
     /// <summary>
-    /// Modelo que representa un limitador de usos de una <see cref="ModeloHabilidad"/> o <see cref="ModeloUtilizable"/>
+    /// Modelo que representa un limitador de usos de una <see cref="ModeloHabilidad"/> o <see cref="ModeloItem"/>
     /// </summary>
     public class ModeloLimitador : ModeloBase
     {
@@ -33,7 +33,7 @@
     }
 
     /// <summary>
-    /// Modelo que representa un modelo de cargas de usos de una <see cref="ModeloHabilidad"/> o <see cref="ModeloUtilizable"/>
+    /// Modelo que representa un modelo de cargas de usos de una <see cref="ModeloHabilidad"/> o <see cref="ModeloItem"/>
     /// </summary>
     public class ModeloCargas : ModeloBase
     {

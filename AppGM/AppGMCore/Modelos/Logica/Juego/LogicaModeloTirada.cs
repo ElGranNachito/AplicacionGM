@@ -23,8 +23,8 @@ namespace AppGM.Core
 			if (HabilidadContenedora != null)
 				return HabilidadContenedora;
 
-			if (UtilizableContenedor != null)
-				return UtilizableContenedor;
+			if (ItemContenedor != null)
+				return ItemContenedor;
 
 			if (FuncionContenedora != null)
 				return FuncionContenedora;
