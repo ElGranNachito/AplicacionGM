@@ -89,9 +89,9 @@ namespace AppGM.Core
         public virtual List<ModeloEfectoSiendoAplicado> EfectosAplicandose { get; set; } = new List<ModeloEfectoSiendoAplicado>();
 
         //Equipamiento del personaje
-        public virtual List<ModeloUtilizable> Inventario { get; set; } = new List<ModeloUtilizable>();
-        public virtual List<ModeloDefensivo> Armadura { get; set; } = new List<ModeloDefensivo>();
-        public virtual List<ModeloArmasDistancia> ArmasDistancia { get; set; } = new List<ModeloArmasDistancia>();
+        public virtual List<ModeloItem> Inventario { get; set; } = new List<ModeloItem>();
+        public virtual List<ModeloItemDefensivo> Armadura { get; set; } = new List<ModeloItemDefensivo>();
+        public virtual List<ModeloArmaDistancia> ArmasDistancia { get; set; } = new List<ModeloArmaDistancia>();
 
         /// <summary>
         /// Contratos realizados con tros personajes
@@ -143,6 +143,16 @@ namespace AppGM.Core
         /// Invocaciones creadas por este personaje
         /// </summary>
         public virtual List<ModeloInvocacion> Invocaciones { get; set; } = new List<ModeloInvocacion>();
+
+        /// <summary>
+        /// Partes del cuerpo de este personaje
+        /// </summary>
+        public virtual List<ModeloParteDelCuerpo> PartesDelCuerpo { get; set; } = new List<ModeloParteDelCuerpo>();
+
+        /// <summary>
+        /// Slots base del personaje
+        /// </summary>
+        public virtual List<ModeloSlot> SlotsBase { get; set; } = new List<ModeloSlot>();
 
         /// <summary>
         /// Handlers vinculados a eventos del controlador de este persoanje

@@ -19,10 +19,8 @@ namespace AppGM.Core
         public List<ModeloPersonaje> npcs                         = new List<ModeloPersonaje>();
 		public List<ModeloMapa> mapas                             = new List<ModeloMapa>();
         public List<ModeloAmbiente> ambientes                     = new List<ModeloAmbiente>();
-		public List<ModeloUtilizable> items                       = new List<ModeloUtilizable>();
-		public List<ModeloPortable> portables                     = new List<ModeloPortable>();
-		public List<ModeloPortable> portableOfensivo              = new List<ModeloPortable>();
-		public List<ModeloArmasDistancia> armasDistancia          = new List<ModeloArmasDistancia>();
+		public List<ModeloItem> items                       = new List<ModeloItem>();
+		public List<ModeloArmaDistancia> armasDistancia          = new List<ModeloArmaDistancia>();
 		public List<ModeloSlot> slots                             = new List<ModeloSlot>();
 		public List<ModeloPerk> perks                             = new List<ModeloPerk>();
 		public List<ModeloHabilidad> skills                       = new List<ModeloHabilidad>();

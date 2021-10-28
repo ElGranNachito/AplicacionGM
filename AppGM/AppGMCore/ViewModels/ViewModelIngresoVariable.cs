@@ -272,7 +272,7 @@ namespace AppGM.Core
 		private async Task<ViewModelItemListaBase> SeleccionarControlador()
 		{
 			var vmSeleccionControlador = new ViewModelSeleccionDeControlador(
-				SistemaPrincipal.ObtenerControladores(TipoVariable, TipoVariable == typeof(ControladorUtilizable)));
+				SistemaPrincipal.ObtenerControladores(TipoVariable, TipoVariable == typeof(ControladorItem)));
 
 			var resultado = await SistemaPrincipal.MostrarMensaje(vmSeleccionControlador, "Seleccionar entidad", true, 500, 450);
 

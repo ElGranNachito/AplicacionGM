@@ -179,6 +179,12 @@ namespace AppGM.Core
 				.WithOne(d => d.Invocacion)
 				.OnDelete(DeleteBehavior.Cascade);
 
+			//-- Personaje - Slots
+			modelBuilder.Entity<ModeloPersonaje>()
+				.HasMany(p => p.SlotsBase)
+				.WithOne(s => s.PersonajeDueño)
+				.OnDelete(DeleteBehavior.Cascade);
+
 			#endregion
 
 			#region Participante combate
@@ -271,33 +277,50 @@ namespace AppGM.Core
 
 			#region Slot
 
-			// Slot item: 
-
 			modelBuilder.Entity<ModeloSlot>().ToTable("ModeloSlot").HasNoDiscriminator();
+
+			modelBuilder.Entity<ModeloSlot>()
+				.HasOne(s => s.ItemDueño)
+				.WithMany(i => i.Slots)
+				.OnDelete(DeleteBehavior.Cascade);
 
 			// - Slot item
 			modelBuilder.Entity<ModeloSlot>()
-				.HasMany(s => s.ItemsAlmacenados);
+				.HasMany(s => s.ItemsAlmacenados)
+				.WithMany(i => i.SlotsQueOcupa);
+
+			// - Slot parte del cuerpo
+			modelBuilder.Entity<ModeloSlot>()
+				.HasOne(s => s.ParteDelCuerpoDueña)
+				.WithMany(p => p.Slots)
+				.OnDelete(DeleteBehavior.Cascade);
+
+			modelBuilder.Entity<ModeloSlot>()
+				.HasOne(s => s.ParteDelCuerpoAlmacenada);
 
 			#endregion
 
-			#region Utilizables
+			#region Items
 
-			// Utilizables:
-			modelBuilder.Entity<ModeloUtilizable>().ToTable("ModeloUtilizable")
+			// Items:
+			modelBuilder.Entity<ModeloItem>().ToTable("ModeloItem")
 				.HasDiscriminator<int>("Tipo")
-				.HasValue<ModeloUtilizable>(1)
-				.HasValue<ModeloPortable>(2)
-				.HasValue<ModeloItem>(3)
-				.HasValue<ModeloConsumible>(4)
-				.HasValue<ModeloArmasDistancia>(5)
-				.HasValue<ModeloDefensivo>(6);
+				.HasValue<ModeloItem>(1)
+				.HasValue<ModeloConsumible>(2)
+				.HasValue<ModeloArmaDistancia>(3)
+				.HasValue<ModeloItemDefensivo>(4);
 
-			// - Portable slots
-			modelBuilder.Entity<ModeloPortable>()
-				.HasMany(p => p.Slots)
-				.WithOne(s => s.Dueño)
-				.OnDelete(DeleteBehavior.Cascade);
+
+
+			modelBuilder.Entity<ModeloItem>()
+				.HasMany(i => i.Funciones)
+				.WithOne(f => f.Item);
+
+			modelBuilder.Entity<ModeloArmaDistancia>()
+				.HasMany(a => a.Slots);
+
+			modelBuilder.Entity<ModeloItemDefensivo>()
+				.HasMany(a => a.Slots);
 
 			#endregion
 
@@ -479,6 +502,19 @@ namespace AppGM.Core
 				.HasOne(e => e.Efecto)
 				.WithMany(e => e.Funciones);
 
+			//Funcion - Item
+			modelBuilder.Entity<TIFuncionItem>()
+				.HasKey(e => new { e.IDFuncion, e.IDItem });
+
+			modelBuilder.Entity<TIFuncionItem>()
+				.HasOne(e => e.Funcion)
+				.WithOne(e => e.ItemContenedor)
+				.HasForeignKey<TIFuncionItem>(e => e.IDFuncion);
+
+			modelBuilder.Entity<TIFuncionItem>()
+				.HasOne(e => e.Item)
+				.WithMany(e => e.Funciones);
+
 
 			//Funcion handler evento
 			modelBuilder.Entity<ModeloFuncion_HandlerEvento>();
@@ -522,15 +558,15 @@ namespace AppGM.Core
 				.WithMany(f => f.EventosEnEfecto)
 				.HasForeignKey(e => e.IdFuncion);
 
-			//Funcion handler evento - Utilizable
-			modelBuilder.Entity<TIFuncionHandlerEvento<ModeloUtilizable>>().HasKey(e => new { e.IdFuncion, e.IdOtro });
+			//Funcion handler evento - Item
+			modelBuilder.Entity<TIFuncionHandlerEvento<ModeloItem>>().HasKey(e => new { e.IdFuncion, e.IdOtro });
 
-			modelBuilder.Entity<TIFuncionHandlerEvento<ModeloUtilizable>>()
+			modelBuilder.Entity<TIFuncionHandlerEvento<ModeloItem>>()
 				.HasOne(e => e.Otro)
 				.WithMany(u => u.HandlersEventos)
 				.HasForeignKey(e => e.IdOtro);
 
-			modelBuilder.Entity<TIFuncionHandlerEvento<ModeloUtilizable>>()
+			modelBuilder.Entity<TIFuncionHandlerEvento<ModeloItem>>()
 				.HasOne(e => e.Funcion)
 				.WithMany(f => f.EventosEnUtilizable)
 				.HasForeignKey(e => e.IdFuncion);
@@ -559,7 +595,7 @@ namespace AppGM.Core
 
 			//Tirada - Utilizable
 			modelBuilder.Entity<ModeloTiradaBase>()
-				.HasOne(t => t.UtilizableContenedor)
+				.HasOne(t => t.ItemContenedor)
 				.WithMany(p => p.Tiradas)
 				.OnDelete(DeleteBehavior.Cascade);
 
@@ -593,7 +629,7 @@ namespace AppGM.Core
 
 			//Variable - Utilizable
 			modelBuilder.Entity<ModeloVariableBase>()
-				.HasOne(v => v.UtilizableContenedor)
+				.HasOne(v => v.ItemContenedor)
 				.WithMany(p => p.Variables)
 				.OnDelete(DeleteBehavior.Cascade);
 
@@ -604,7 +640,32 @@ namespace AppGM.Core
 				.OnDelete(DeleteBehavior.Cascade);
 
 			#endregion
-		}
+
+			#region Parte del cuerpo
+
+			//--Parte del cuerpo
+			modelBuilder.Entity<ModeloParteDelCuerpo>().ToTable("ParteDelCuerpo");
+
+			//--Parte del cuerpo - slots
+			modelBuilder.Entity<ModeloParteDelCuerpo>()
+				.HasMany(p => p.Slots)
+				.WithOne(s => s.ParteDelCuerpoDueña);
+
+			//--Parte del cuerpo - slot dueño
+			modelBuilder.Entity<ModeloParteDelCuerpo>()
+				.HasOne(p => p.SlotDueño)
+				.WithOne(s => s.ParteDelCuerpoAlmacenada)
+				.OnDelete(DeleteBehavior.Cascade);
+
+			//--Parte del cuerpo - personaje
+			modelBuilder.Entity<ModeloParteDelCuerpo>()
+				.HasOne(p => p.PersonajeDueño)
+				.WithMany(p => p.PartesDelCuerpo)
+				.OnDelete(DeleteBehavior.Cascade);
+
+			#endregion
+
+        }
         #endregion
     }
 }

@@ -43,6 +43,17 @@ namespace AppGM.Core
 	/// <summary>
 	/// Representa la relacion de un <see cref="ModeloFuncion"/> con un <see cref="ModeloHabilidad"/>
 	/// </summary>
+	public class TIFuncionItem : TIFuncion
+	{
+		[ForeignKey(nameof(Item))]
+		public int IDItem { get; set; }
+
+		public virtual ModeloItem Item { get; set; }
+	}
+
+	/// <summary>
+	/// Representa la relacion de un <see cref="ModeloFuncion"/> con un <see cref="ModeloHabilidad"/>
+	/// </summary>
 	public class TIFuncionHabilidad : TIFuncion
 	{
 		[ForeignKey(nameof(Habilidad))]

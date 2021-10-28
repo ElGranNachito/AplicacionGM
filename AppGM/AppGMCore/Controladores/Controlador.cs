@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-
+using System.Threading.Tasks;
 using CoolLogs;
 
 namespace AppGM.Core
@@ -118,6 +118,11 @@ namespace AppGM.Core
 			return null;
 		}
 
+		public override IControladorTiradaBase ObtenerTirada(string nombreTirada)
+		{
+			throw new System.NotImplementedException();
+		}
+
 		/// <summary>
 		/// <para>
 		///		Carga las variables persistentes guardadas en el <see cref="modelo"/> a <see cref="mVariablesPersistenes"/>
@@ -144,6 +149,63 @@ namespace AppGM.Core
 			{
 				SistemaPrincipal.LoggerGlobal.Log($@"Se intentaron cargar variables persistentes desde un controlador cuyo modelo no es {nameof(ModeloConVariablesYTiradas)}
 														Controlador: {this}", ESeveridad.Error);
+			}
+		}
+
+		public override async Task Recargar()
+		{
+			if (modelo is ModeloConVariablesYTiradas modeloConVariables)
+			{
+				//Obtenemos todas las variables del modelo
+				var variablesNuevas = new List<ModeloVariableBase>(modeloConVariables.Variables);
+
+				//Recargamos las variables previamente cargadas o las quitamos si ya no se encuentran en el modelo
+				foreach (var var in mVariablesPersistenes)
+				{
+					if (!variablesNuevas.Contains(var.Value.modelo))
+					{
+						mVariablesPersistenes.Remove(var.Key);
+
+						continue;
+					}
+
+					await var.Value.Recargar();
+
+					variablesNuevas.Remove(var.Value.modelo);
+				}
+
+				//Creamos un controlador para las nuevas
+				foreach (var var in variablesNuevas)
+				{
+					mVariablesPersistenes.Add(var.IDVariable,
+						ControladorVariableBase.CrearControladorCorrespondiente(var));
+				}
+
+				//Obtenemos todas las tiradas del modelo
+				var tiradasNuevas = new List<ModeloTiradaBase>(modeloConVariables.Tiradas);
+
+				//Recargamos las tiradas previamente cargadas o las quitamos si ya no se encuentran en el modelo
+				foreach (var var in mTiradas)
+				{
+					var controladorTirada = (ControladorTiradaBase) var.Value;
+
+					if (!tiradasNuevas.Contains(controladorTirada.modelo))
+					{
+						mVariablesPersistenes.Remove(var.Key);
+
+						continue;
+					}
+
+					await controladorTirada.Recargar();
+
+					tiradasNuevas.Remove(controladorTirada.modelo);
+				}
+
+				//Creamos un controlador para las nuevas tiradas
+				foreach (var var in tiradasNuevas)
+				{
+					mTiradas.Add(var.Id, IControladorTiradaBase.CrearControladorDeTiradaCorrespondiente(var));
+				}
 			}
 		}
 

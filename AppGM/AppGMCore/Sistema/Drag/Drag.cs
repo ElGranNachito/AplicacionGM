@@ -19,7 +19,7 @@ namespace AppGM.Core
 		/// <summary>
 		/// Indica si el usuario esta actualmente arrastrando algun elemento
 		/// </summary>
-		public bool HayUnDragActivo => DatosDrag != null;
+		public bool HayUnDragActivo => TipoDragActivo != ETipoDrag.Ninguno;
 
 		/// <summary>
 		/// Pos del control del drag con respecto a su contenedor en el eje X
@@ -30,6 +30,11 @@ namespace AppGM.Core
 		/// Pos del control del drag con respecto a su contenedor en el eje Y
 		/// </summary>
 		public double PosY { get; set; }
+
+		/// <summary>
+		/// Tipo del drag actualmente activo
+		/// </summary>
+		public ETipoDrag TipoDragActivo { get; private set; }
 
 		/// <summary>
 		/// Offset del widget de drag
@@ -89,6 +94,8 @@ namespace AppGM.Core
 			mArgumentosEventoActual = new ArgumentosDragAndDropUnico(DatosDrag[0], ArgumentosExtraDrag);
 
 			ComenzarDrag_Interno();
+
+			TipoDragActivo = ETipoDrag.Unico;
 		}
 
 		/// <summary>
@@ -100,12 +107,16 @@ namespace AppGM.Core
 		{
 			DatosDrag.AddRange(contenido);
 
+			ArgumentosExtraDrag.Clear();
+
 			foreach (var parametro in argumentosExtra)
 				ArgumentosExtraDrag.Add(parametro.Key, parametro.Value);
 
 			mArgumentosEventoActual = new ArgumentosDragAndDropMultiple(DatosDrag, ArgumentosExtraDrag);
 
 			ComenzarDrag_Interno();
+
+			TipoDragActivo = ETipoDrag.Multiple;
 		}
 
 		/// <summary>
@@ -226,10 +237,14 @@ namespace AppGM.Core
 
 				mArgumentosEventoActual = null;
 
+				TipoDragActivo = ETipoDrag.Ninguno;
+
 				SistemaPrincipal.Aplicacion.VentanaActual.OnMouseUp -= eventoMouseSoltado;
 			};
 
 			SistemaPrincipal.Aplicacion.VentanaActual.OnMouseUp += eventoMouseSoltado;
+
+			DispararPropertyChanged(nameof(DatosDrag));
 		} 
 
 		#endregion

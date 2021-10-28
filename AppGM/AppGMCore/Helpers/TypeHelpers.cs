@@ -169,7 +169,7 @@ namespace AppGM.Core
 				}
 				//Si es una habilidad o un utilizable vamos a necesitar que la lista de tipos extra contenga al menos un elemento
 				else if (tipoControlador == typeof(ControladorHabilidad) ||
-						 tipoControlador == typeof(ControladorUtilizable))
+						 tipoControlador == typeof(ControladorItem))
 				{
 					if (listaTiposExtra.Count < 1)
 					{

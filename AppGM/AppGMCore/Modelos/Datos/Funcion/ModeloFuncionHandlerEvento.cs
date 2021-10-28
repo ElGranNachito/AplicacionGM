@@ -66,10 +66,10 @@ namespace AppGM.Core
 			new List<TIFuncionHandlerEvento<ModeloHabilidad>>();
 
 		/// <summary>
-		/// Eventos de <see cref="ControladorUtilizable"/> a los que esta subscrito
+		/// Eventos de <see cref="ControladorItem"/> a los que esta subscrito
 		/// </summary>
-		public virtual List<TIFuncionHandlerEvento<ModeloUtilizable>> EventosEnUtilizable { get; set; } =
-			new List<TIFuncionHandlerEvento<ModeloUtilizable>>();
+		public virtual List<TIFuncionHandlerEvento<ModeloItem>> EventosEnUtilizable { get; set; } =
+			new List<TIFuncionHandlerEvento<ModeloItem>>();
 
 		/// <summary>
 		/// Eventos de <see cref="ControladorEfecto"/> a los que esta subscrito

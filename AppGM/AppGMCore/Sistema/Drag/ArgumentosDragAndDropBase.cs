@@ -8,6 +8,11 @@ namespace AppGM.Core
 	public abstract record ArgumentosDragAndDropBase
 	{
 		/// <summary>
+		/// Tipo del drag
+		/// </summary>
+		public ETipoDrag tipoDrag;
+
+		/// <summary>
 		/// Argumentos pasados al realizar el drag
 		/// </summary>
 		public Dictionary<int, object> args = new Dictionary<int, object>();
@@ -16,12 +21,14 @@ namespace AppGM.Core
 		/// Constructor base
 		/// </summary>
 		/// <param name="_args">Diccionario con los argumentos del drag</param>
-		public ArgumentosDragAndDropBase(Dictionary<int, object> _args)
+		public ArgumentosDragAndDropBase(Dictionary<int, object> _args, ETipoDrag _tipoDrag)
 		{
 			foreach (var arg in args)
 			{
 				args.Add(arg.Key, arg.Value);
 			}
+
+			tipoDrag = _tipoDrag;
 		}
 	}
 }

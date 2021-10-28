@@ -43,7 +43,7 @@ namespace AppGM.Core
         /// <summary>
         /// Modelo del utilizable que contiene la tirada
         /// </summary>
-        public virtual ModeloUtilizable UtilizableContenedor { get; set; }
+        public virtual ModeloItem ItemContenedor { get; set; }
 
         /// <summary>
         /// Modelo del la funcion que contiene la tirada
