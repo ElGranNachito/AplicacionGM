@@ -43,6 +43,9 @@ namespace AppGM.Core
         //El primer mapa siempre es el principal
 		public List<ControladorMapa> Mapas { get; set; } = null;
 
+		//Unico clima general del rol.
+        public ControladorClimaHorario Clima { get; set; } = null;
+
         #endregion
 
 		/// <summary>
@@ -221,6 +224,16 @@ namespace AppGM.Core
 					servant1.NoblePhantasms.Add(noblePhantasm1);
 					servant2.NoblePhantasms.Add(noblePhantasm2);
 
+                    ModeloClimaHorario climaHorario = new ModeloClimaHorario
+                    {
+						Clima = EClima.Soleado,
+						Viento = EViento.Brisa,
+						Humedad = EHumedad.Humedad,
+						Temperatura = ETemperatura.Frio,
+
+						DiaSemana = EDiaSemana.Viernes
+                    };
+
 					ModeloMapa mapa = new ModeloMapa
 					{
 						EFormatoImagen = EFormatoImagen.Png,
@@ -308,7 +321,8 @@ namespace AppGM.Core
 					mDBRol.Add(master1);
 					mDBRol.Add(servant2);
 					mDBRol.Add(master2);
-					mDBRol.Add(unidadServant1);
+                    mDBRol.Add(climaHorario);
+                    mDBRol.Add(unidadServant1);
 					mDBRol.Add(unidadMaster1);
 					mDBRol.Add(unidadServant2);
 					mDBRol.Add(unidadMaster2);
@@ -363,11 +377,13 @@ namespace AppGM.Core
 					mDBRol.Add(accion2);
 
 					mDBRol.SaveChanges();
-				}
+
+                    Clima = new ControladorClimaHorario(climaHorario);
+                }
 
 				//Cargamos los datos de una manera bastante primitiva :u
 
-				var masters =
+                var masters =
 					(from m in mDBRol.Masters
 					 select m).ToList();
 
@@ -383,7 +399,7 @@ namespace AppGM.Core
 					(from m in mDBRol.Mapas
 					 select m).ToList();
 
-				mapas.TrimExcess();
+                mapas.TrimExcess();
 
 				var unidadesmapa =
 					(from u in mDBRol.UnidadesMapa
@@ -462,7 +478,7 @@ namespace AppGM.Core
 					CombatesActivos.Add(controladorActual);
 				}
 
-				//TODO: Continuar cargando datos
+                //TODO: Continuar cargando datos
 			});
 
 			GCSettings.LatencyMode = modoOriginal;

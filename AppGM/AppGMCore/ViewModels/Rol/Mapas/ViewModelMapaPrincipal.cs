@@ -18,7 +18,7 @@
 
 		#region Constructor
 
-		public ViewModelMapaPrincipal(ControladorMapa _controlador) : base(_controlador) { } 
+		public ViewModelMapaPrincipal(ControladorMapa _controlador, ControladorClimaHorario _controladorClimaHorario) : base(_controlador, _controladorClimaHorario) { } 
 
 		#endregion
 	}

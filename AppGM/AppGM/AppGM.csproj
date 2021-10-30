@@ -189,6 +189,33 @@
     <Resource Include="Media\Imagenes\Iconos\Alianzas\Team_Hetero.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Media\Imagenes\Clima\Marco.png" />
+    <Resource Include="Media\Imagenes\Clima\Horarios_Dia-Clima.png" />
+    <Resource Include="Media\Imagenes\Clima\Horarios_Hora.png" />
+    <Resource Include="Media\Imagenes\Clima\Granizo.png" />
+    <Resource Include="Media\Imagenes\Clima\Lluvia.png" />
+    <Resource Include="Media\Imagenes\Clima\Neblina.png" />
+    <Resource Include="Media\Imagenes\Clima\Nieve.png" />
+    <Resource Include="Media\Imagenes\Clima\Nublado.png" />
+    <Resource Include="Media\Imagenes\Clima\Soleado.png" />
+    <Resource Include="Media\Imagenes\Clima\Tormenta.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Media\Imagenes\Clima\Viento\Brisa.png" />
+    <Resource Include="Media\Imagenes\Clima\Viento\Rafagas.png" />
+    <Resource Include="Media\Imagenes\Clima\Viento\Viento.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Media\Imagenes\Clima\Temperatura\Calor.png" />
+    <Resource Include="Media\Imagenes\Clima\Temperatura\Frio.png" />
+    <Resource Include="Media\Imagenes\Clima\Temperatura\Templado.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Media\Imagenes\Clima\Humedad\Humedad.png" />
+    <Resource Include="Media\Imagenes\Clima\Humedad\MuchaHumedad.png" />
+    <Resource Include="Media\Imagenes\Clima\Humedad\Seco.png" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Remove="BaseDesignModel.cs" />
     <Compile Remove="DesignModelRolItem.cs" />
     <Compile Remove="Viewmodels\BaseViewModel.cs" />

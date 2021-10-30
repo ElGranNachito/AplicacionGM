@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AppGM.Core.Migrations
 {
-    public partial class inicial : Migration
+    public partial class Inicial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -148,6 +148,31 @@ namespace AppGM.Core.Migrations
                         principalTable: "ModeloRol",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ModeloClimaHorario",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Clima = table.Column<int>(type: "INTEGER", nullable: false),
+                    Viento = table.Column<int>(type: "INTEGER", nullable: false),
+                    Temperatura = table.Column<int>(type: "INTEGER", nullable: false),
+                    Humedad = table.Column<int>(type: "INTEGER", nullable: false),
+                    DiaSemana = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdRol = table.Column<int>(type: "INTEGER", nullable: true),
+                    EsValido = table.Column<bool>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ModeloClimaHorario", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ModeloClimaHorario_ModeloRol_IdRol",
+                        column: x => x.IdRol,
+                        principalTable: "ModeloRol",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
@@ -996,6 +1021,12 @@ namespace AppGM.Core.Migrations
                 column: "IdPersonaje");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ModeloClimaHorario_IdRol",
+                table: "ModeloClimaHorario",
+                column: "IdRol",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ModeloContrato_IdAlianza",
                 table: "ModeloContrato",
                 column: "IdAlianza",
@@ -1306,6 +1337,9 @@ namespace AppGM.Core.Migrations
 
             migrationBuilder.DropTable(
                 name: "ModeloCaracteristicas");
+
+            migrationBuilder.DropTable(
+                name: "ModeloClimaHorario");
 
             migrationBuilder.DropTable(
                 name: "ModeloContratoModeloPersonaje");

@@ -94,12 +94,17 @@
                                           />
                             </MenuItem>
                             <Separator/>
-                            <MenuItem Header="Tablero" Style="{StaticResource MenuOpcionesMapa}" ItemContainerStyle="{DynamicResource MenuItemOpcionesMapa1}" Template="{DynamicResource MenuItemOpcionesMapaControlTemplate2}">
-                                <MenuItem Header="Casillas" 
+                            <MenuItem Header="Utilidad" Style="{StaticResource MenuOpcionesMapa}" ItemContainerStyle="{DynamicResource MenuItemOpcionesMapa1}" Template="{DynamicResource MenuItemOpcionesMapaControlTemplate2}">
+                                <MenuItem Header="Tablero" 
                                           IsCheckable="true"
                                           IsChecked="{Binding MuestraTableroDeCasillas, Mode=TwoWay}"
                                           ToolTip="Habilitar tablero por casillas."
                                           />
+                                <MenuItem Header="Clima" 
+                                          IsCheckable="true"
+                                          IsChecked="{Binding MuestraPanelClima, Mode=TwoWay}"
+                                          ToolTip="Habilitar panel de clima."
+                                />
                             </MenuItem>
                         </MenuItem>
                     </Menu>
@@ -244,6 +249,8 @@
                                 </Grid>
 
                             </local:ZoomBorder>
+
+                            <local:UserControlClimaHorario DataContext="{Binding ClimaHorario}"/>
 
                         </Grid>
 
