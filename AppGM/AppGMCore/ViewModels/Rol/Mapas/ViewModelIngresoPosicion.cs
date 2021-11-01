@@ -350,7 +350,7 @@ namespace AppGM.Core
 
             unidad.Eliminar();
 
-            SistemaPrincipal.GuardarDatosRolAsincronicamente();
+            SistemaPrincipal.GuardarDatosAsync();
         }
 
         #endregion

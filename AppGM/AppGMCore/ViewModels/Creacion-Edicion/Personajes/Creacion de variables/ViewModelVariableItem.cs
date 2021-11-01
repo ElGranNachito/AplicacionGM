@@ -45,25 +45,25 @@ namespace AppGM.Core
 
 		protected override void ActualizarGruposDeBotones()
 		{
-			Action accionBotonEditar = () =>
+			Action accionBotonEditar = async () =>
 			{
 				var dataContextActual = SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido;
 
-				var vmEdicion = new ViewModelCreacionDeVariable(vm =>
+				var vmEdicion = await new ViewModelCreacionDeVariable(vm =>
 				{
 					SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = dataContextActual;
 
 					if (vm.Resultado.EsAceptarOFinalizar())
 						ActualizarCaracteristicas();
-				}, ControladorGenerico);
+
+				}, ControladorGenerico).Inicializar(typeof(ModeloVariableInt));
 
 				SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = vmEdicion;
 			};
 
 			Action accionBotonEliminar = () =>
 			{
-				//TODO: Añadir ventanita de confirmacion
-				ControladorGenerico.Eliminar();
+				ControladorGenerico.Eliminar(true);
 			};
 
 			CrearBotonesParaEditarYEliminar(accionBotonEditar, accionBotonEliminar);

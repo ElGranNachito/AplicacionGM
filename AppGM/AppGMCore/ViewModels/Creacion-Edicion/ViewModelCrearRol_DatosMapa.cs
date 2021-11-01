@@ -60,6 +60,9 @@ namespace AppGM.Core
 					"Formatos imagen (*.jpg *.png)|*.jpg;*.png",
 					SistemaPrincipal.Aplicacion.VentanaActual);
 
+                if(mArchivoMapa == null)
+                    return;
+
 				PathImagenMapa = mArchivoMapa.Ruta;
 			});
 		}

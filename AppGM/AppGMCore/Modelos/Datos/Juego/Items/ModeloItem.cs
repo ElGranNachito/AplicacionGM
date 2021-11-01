@@ -33,6 +33,16 @@ namespace AppGM.Core
         public int Estado { get; set; }
 
         /// <summary>
+        /// Estado de portancion del item
+        /// </summary>
+        public EEstadoPortacion EstadoPortacion { get; set; }
+
+        /// <summary>
+        /// Tipo del item
+        /// </summary>
+        public ETipoItem TipoItem { get; set; }
+
+        /// <summary>
         /// Personaje que porta este utilizable
         /// </summary>
         public virtual ModeloPersonaje PersonajePortador { get; set; }

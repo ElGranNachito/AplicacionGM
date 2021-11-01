@@ -21,9 +21,20 @@ namespace AppGM.Core
 
         //---------------------------------CAMPOS---------------------------------
 
+        /// <summary>
+        /// Contiene a todos los controladores creados
+        /// </summary>
         private static Dictionary<ModeloBaseSK, ControladorBase> mControladores = new Dictionary<ModeloBaseSK, ControladorBase>();
 
+        /// <summary>
+        /// Contiene los modelos que han sido guardados en la base de datos
+        /// </summary>
         private static Dictionary<Type, Dictionary<int, ModeloBase>> mModelos = new Dictionary<Type, Dictionary<int, ModeloBase>>();
+
+        /// <summary>
+        /// Contiene a los <see cref="ModeloBase"/> que aun no han sido guardados en la base de datos
+        /// </summary>
+        private static HashSet<ModeloBase> mModelosNoGuardados = new HashSet<ModeloBase>();
 
         //------------------------------PROPIEDADES-------------------------------
 
@@ -131,67 +142,6 @@ namespace AppGM.Core
             Kernel.Bind<Drag>().ToConstant(new Drag());
 
             Aplicacion.OnPaginaActualCambio += PaginaActualCambioHandler;
-
-            var pj = new ModeloPersonaje
-            {
-	            Nombre = "Nachito",
-
-	            MaxHp = 20,
-	            Hp = 20,
-	            Str = 15,
-	            Agi = 10,
-	            End = 15,
-	            Int = 10,
-	            Lck = 15,
-
-	            Alianzas = new List<ModeloAlianza>
-	            {
-		            new ModeloAlianza
-		            {
-			            Descripcion = "Descripcion",
-			            Nombre = "Alianza de choripaneros",
-			            EIconoAlianza = EIconoAlianza.Team_Hetero
-		            }
-	            },
-	            Especialidades = new List<ModeloEspecialidad>
-	            {
-		            new ModeloEspecialidad
-		            {
-			            Nombre = "nada"
-		            }
-	            }
-            };
-
-            pj.Alianzas[0].PersonajesAfectados.Add(pj);
-
-            var copiaPj = pj.CrearCopiaProfundaEnSubtipo<ModeloPersonaje, ModeloPersonaje>();
-
-            var nuevoContrato = new ModeloContrato
-            {
-	            Id = 1,
-
-	            PersonajesAfectados = new List<ModeloPersonaje> { copiaPj },
-
-	            Nombre = "Contrato piola",
-	            Descripcion = "Contrato entre pibes piola"
-            };
-
-            var nuevaAlianza = new ModeloAlianza
-            {
-	            ContratoDeAlianza = nuevoContrato,
-	            Id = 1,
-
-	            PersonajesAfectados = new List<ModeloPersonaje> { copiaPj },
-
-	            Nombre = "Cooler alianza",
-	            Descripcion = "Cooler"
-            };
-
-            copiaPj.Alianzas.Add(nuevaAlianza);
-            copiaPj.Contratos.Add(nuevoContrato);
-
-            var referenciasQueReemplazar = new Dictionary<ModeloBase, ModeloBase> { { copiaPj, pj } };
-            copiaPj.CrearCopiaProfundaEnSubtipo<ModeloPersonaje, ModeloPersonaje>(pj, null, null, null, referenciasQueReemplazar);
         }
 
         /// <summary>
@@ -257,7 +207,7 @@ namespace AppGM.Core
         /// Guarda todos los cambios realizados a los modelos asincronicamente
         /// </summary>
         /// <returns></returns>
-        public static async Task GuardarDatosRolAsincronicamente()
+        public static async Task GuardarDatosAsync()
         {
             await DatosRolSeleccionado.GuardarDatosAsync();
         }
@@ -292,6 +242,20 @@ namespace AppGM.Core
                 return;
 
             await DatosRolSeleccionado.GuardarModeloAsync(modelo);
+        }
+
+        /// <summary>
+        /// Guarda varios modelos a la base de datos asincronicamente
+        /// </summary>
+        /// <param name="modelos">Modelos que guardar</param>
+        public static async Task GuardarModelosAsync(IEnumerable<ModeloBaseSK> modelos)
+        {
+	        var listaModelos = modelos.ToList();
+
+	        foreach (var modelo in listaModelos)
+	        {
+		        await GuardarModeloAsync(modelo);
+	        }
         }
 
         /// <summary>
@@ -442,20 +406,6 @@ namespace AppGM.Core
         }
 
         /// <summary>
-        /// Obtiene el modelo de tipo <paramref name="tipoDelModelo"/> con la <paramref name="id"/> especificada
-        /// </summary>
-        /// <param name="tipoDelModelo">Tipo del modelo que se quiere obtener</param>
-        /// <param name="id">Id del modelo</param>
-        /// <returns>Modelo hallado o null</returns>
-        public static ModeloBase ObtenerModelo(Type tipoDelModelo, int id)
-        {
-	        if (mModelos.ContainsKey(tipoDelModelo))
-		        return mModelos[tipoDelModelo][id];
-
-	        return null;
-        }
-
-        /// <summary>
         /// Añade el <paramref name="controlador"/> al diccionario
         /// </summary>
         /// <typeparam name="TControlador">Tipo del controlador</typeparam>
@@ -472,6 +422,8 @@ namespace AppGM.Core
             try
             {
                 mControladores.Add(modelo, controlador);
+
+                modelo.DispararControladorCreado(controlador);
             }
             catch (Exception ex)
             {
@@ -496,9 +448,12 @@ namespace AppGM.Core
         {
 	        if (modelo.Id == 0)
 	        {
-                SistemaPrincipal.LoggerGlobal.Log($"Se intento añadir un modelo que no esta guardado en la base de datos! {modelo}", ESeveridad.Error);
+		        if (mModelosNoGuardados.Contains(modelo))
+			        return true;
 
-                return false;
+		        mModelosNoGuardados.Add(modelo);
+
+		        return true;
 	        }
 
 	        var tipoModelo = modelo.GetType();
@@ -520,7 +475,12 @@ namespace AppGM.Core
         {
 	        if (modelo.Id == 0)
 	        {
-		        SistemaPrincipal.LoggerGlobal.Log($"Se intento quitar un modelo que no esta guardado en la base de datos! {modelo}", ESeveridad.Advertencia);
+		        if (mModelosNoGuardados.Contains(modelo))
+		        {
+			        mModelosNoGuardados.Remove(modelo);
+
+			        return true;
+		        }
 
 		        return false;
 	        }
@@ -534,6 +494,20 @@ namespace AppGM.Core
         }
 
         /// <summary>
+        /// Obtiene el modelo de tipo <paramref name="tipoDelModelo"/> con la <paramref name="id"/> especificada
+        /// </summary>
+        /// <param name="tipoDelModelo">Tipo del modelo que se quiere obtener</param>
+        /// <param name="id">Id del modelo</param>
+        /// <returns>Modelo hallado o null</returns>
+        public static ModeloBase ObtenerModelo(Type tipoDelModelo, int id)
+        {
+	        if (mModelos.ContainsKey(tipoDelModelo))
+		        return mModelos[tipoDelModelo][id];
+
+	        return null;
+        }
+
+        /// <summary>
         /// Muestra un mensaje sobre la ventana actualmente activa
         /// </summary>
         /// <param name="vm">View model que se le pasara a la ventana del mensaje</param>
@@ -542,7 +516,7 @@ namespace AppGM.Core
         /// <param name="alto">Alto de la ventana del mensaje</param>
         /// <param name="ancho">Ancho de la ventana del mensaje</param>
         /// <returns></returns>
-        public static async Task<EResultadoViewModel> MostrarMensaje(
+        public static async Task<EResultadoViewModel> MostrarMensajeAsync(
 	        ViewModelConResultadoBase vm, 
 	        string titulo,
 	        bool esperarCierre, 

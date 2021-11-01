@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace AppGM.Core
 {
@@ -14,11 +13,13 @@ namespace AppGM.Core
 
 		public ViewModelVistaArbol<ViewModelElementoArbol<ControladorSlot>, ControladorSlot> ViewModelVistaInventario { get; set; }
 
+		public ViewModelCreacionEdicionDeSlot ViewModelEdicionSlotActual { get; set; }
+
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		/// <param name="modeloPersonaje">Modelo del personaje a quein pertenece este inventario</param>
-		/// <param name="controladorPersonaje">Controlador del personaje a quien pertenece este incentario</param>
+		/// <param name="_modeloPersonaje">Modelo del personaje a quein pertenece este inventario</param>
+		/// <param name="_controladorPersonaje">Controlador del personaje a quien pertenece este incentario</param>
 		public ViewModelInventario(ModeloPersonaje _modeloPersonaje, ControladorPersonaje _controladorPersonaje)
 		{
 			ModeloPersonaje      = _modeloPersonaje;
@@ -35,9 +36,35 @@ namespace AppGM.Core
 			
 			ViewModelVistaInventario.Hijos.AddRange(elementosBaseArbol);
 
-			ViewModelVistaInventario.OnElementoSeleccionadoCambio += (arbol, item) =>
+			ViewModelVistaInventario.OnElementoSeleccionadoCambio += async (arbol, item) =>
 			{
-				
+				if(arbol.ElementosSeleccionados.Count > 1)
+					return;
+
+				var vmAnterior = ViewModelEdicionSlotActual;
+
+				ViewModelEdicionSlotActual = await new ViewModelCreacionEdicionDeSlot(vm =>
+				{
+					if(vm.Resultado.EsAceptarOFinalizar())
+						item.Actualizar();
+
+				}, item.Contenido).Inicializar();
+
+				ViewModelEdicionSlotActual.OnSlotModificado += slot =>
+				{
+					item.Actualizar();
+				};
+
+				if (vmAnterior == null)
+					return;
+
+				if(vmAnterior.MostrarSlot)
+					ViewModelEdicionSlotActual.ComandoVerSlot.Execute(null);
+
+				if(vmAnterior.MostrarContenido)
+					ViewModelEdicionSlotActual.ComandoVerContenidoSlot.Execute(null);
+
+				vmAnterior = null;
 			};
 		}
 	}

@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows.Input;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace AppGM.Core
 {
 	/// <summary>
 	/// <see cref="ViewModel"/> que representa el control de creacion de <see cref="ModeloParteDelCuerpo"/>
 	/// </summary>
-	public class ViewModelCreacionPartesDelCuerpo : ViewModel
+	public class ViewModelCreacionPartesDelCuerpo : ViewModelConResultado<ViewModelCreacionPartesDelCuerpo>
 	{
 		/// <summary>
 		/// Personaje para el que se estan creando las partes
@@ -43,7 +43,9 @@ namespace AppGM.Core
 		/// Constructor
 		/// </summary>
 		/// <param name="_personaje"></param>
-		public ViewModelCreacionPartesDelCuerpo(ModeloPersonaje _personaje)
+		public ViewModelCreacionPartesDelCuerpo(Action<ViewModelCreacionPartesDelCuerpo> _accionSalir, ModeloPersonaje _personaje)
+
+			:base(_accionSalir)
 		{
 			Personaje = _personaje;
 
@@ -59,6 +61,10 @@ namespace AppGM.Core
 			{
 				DebeMostrarVentanaEleccionPlantilla = true;
 			}
+			else
+			{
+				CrearVMInventario();
+			}
 		}
 
 		private void CrearVMInventario()
@@ -68,7 +74,7 @@ namespace AppGM.Core
 			ViewModelInventario = new ViewModelInventario(Personaje, null);
 		}
 
-		private void AplicarPlantillaHumanoide()
+		private async void AplicarPlantillaHumanoide()
 		{
 			var slotInicial = new ModeloSlot
 			{
@@ -80,8 +86,8 @@ namespace AppGM.Core
 			{
 				Nombre = "Torso",
 				MultiplicadorDeEstaParte = 1,
-				PersonajeDueño = Personaje,
-				SlotDueño = slotInicial
+				PersonajeContenedor = Personaje,
+				SlotContenedor = slotInicial
 			};
 
 			slotInicial.ParteDelCuerpoAlmacenada = torso;
@@ -95,35 +101,35 @@ namespace AppGM.Core
 				{
 					Nombre = "Brazo derecho",
 					MultiplicadorDeEstaParte = 1,
-					PersonajeDueño = Personaje
+					PersonajeContenedor = Personaje
 				},
 
 				new ModeloParteDelCuerpo
 				{
 					Nombre = "Brazo izquierdo",
 					MultiplicadorDeEstaParte = 1,
-					PersonajeDueño = Personaje
+					PersonajeContenedor = Personaje
 				},
 
 				new ModeloParteDelCuerpo
 				{
 					Nombre = "Pierna derecha",
 					MultiplicadorDeEstaParte = 1,
-					PersonajeDueño = Personaje
+					PersonajeContenedor = Personaje
 				},
 
 				new ModeloParteDelCuerpo
 				{
 					Nombre = "Pierna izquierda",
 					MultiplicadorDeEstaParte = 1,
-					PersonajeDueño = Personaje
+					PersonajeContenedor = Personaje
 				},
 
 				new ModeloParteDelCuerpo
 				{
 					Nombre = "Cuello",
 					MultiplicadorDeEstaParte = 2,
-					PersonajeDueño = Personaje
+					PersonajeContenedor = Personaje
 				},
 			};
 
@@ -162,9 +168,16 @@ namespace AppGM.Core
 
 			for (int i = 0; i < partesDelCuerpoTorso.Count; ++i)
 			{
-				partesDelCuerpoTorso[i].SlotDueño = torso.Slots[i];
+				partesDelCuerpoTorso[i].SlotContenedor = torso.Slots[i];
 				torso.Slots[i].ParteDelCuerpoAlmacenada = partesDelCuerpoTorso[i];
 			}
+
+			await SistemaPrincipal.GuardarModelosAsync(Personaje.SlotsBase);
+			await SistemaPrincipal.GuardarModelosAsync(Personaje.PartesDelCuerpo);
+			await SistemaPrincipal.GuardarModelosAsync(torso.Slots);
+			await SistemaPrincipal.GuardarModelosAsync(partesDelCuerpoTorso);
+
+			await SistemaPrincipal.GuardarDatosAsync();
 
 			CrearVMInventario();
 		}

@@ -9,7 +9,9 @@ namespace AppGM.Core
     /// </summary>
     public partial class ModeloSlot : ModeloBase
     {
-	    /// <summary>
+	    public override bool EsValido { get; set; } = true;
+
+        /// <summary>
         /// Nombre del slot
         /// </summary>
         [StringLength(100)]

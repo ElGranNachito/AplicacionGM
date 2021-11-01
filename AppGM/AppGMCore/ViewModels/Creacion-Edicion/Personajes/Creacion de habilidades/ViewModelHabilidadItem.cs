@@ -56,15 +56,15 @@ namespace AppGM.Core
 
 		protected override void ActualizarGruposDeBotones()
 		{
-			Action accionEditar = () =>
+			Action accionEditar = async () =>
 			{
 				var vmActual = SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido;
 
-				SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = new ViewModelCrearHabilidad(
+				SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = await new ViewModelCrearHabilidad(
 					vm =>
 					{
 						SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = vmActual;
-					}, ControladorGenerico.modelo.Dueño, ControladorGenerico);
+					}, ControladorGenerico.modelo.Dueño, ControladorGenerico).Inicializar();
 			};
 
 			CrearBotonesParaEditarYEliminar(accionEditar, ()=>{});

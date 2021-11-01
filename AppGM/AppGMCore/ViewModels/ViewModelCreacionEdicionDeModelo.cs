@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace AppGM.Core
 {
@@ -19,7 +21,12 @@ namespace AppGM.Core
 		/// <summary>
 		/// Evento que se dispara cuando el valor de <see cref="EsValido"/> cambia
 		/// </summary>
-		public Action<TViewModel> OnEsValidoCambio = delegate { }; 
+		public event Action<TViewModel> OnEsValidoCambio = delegate { };
+
+		/// <summary>
+		/// Evento que se dispara cuando el valor de <see cref="PuedeEditar"/> cambio
+		/// </summary>
+		public event Action<TViewModel> OnPuedeEditarCambio = delegate { };
 
 		#endregion
 
@@ -27,6 +34,11 @@ namespace AppGM.Core
 		/// Contiene el valor de <see cref="EsValido"/>
 		/// </summary>
 		private bool mEsValido;
+
+		/// <summary>
+		/// Contiene el valor de <see cref="PuedeEditar"/>
+		/// </summary>
+		private bool mPuedeEditar;
 
 		/// <summary>
 		/// Contiene el valor de <see cref="ControladorSiendoEditado"/>
@@ -60,6 +72,23 @@ namespace AppGM.Core
 		}
 
 		/// <summary>
+		/// Si esta editando, indica si puede realizar cambios al modelo siendo editado
+		/// </summary>
+		public bool PuedeEditar
+		{
+			get => mPuedeEditar;
+			set
+			{
+				if(value == mPuedeEditar)
+					return;
+
+				mPuedeEditar = value;
+
+				OnPuedeEditarCambio((TViewModel)this);
+			}
+		}
+
+		/// <summary>
 		/// Indica si se esta editando un modelo existente
 		/// </summary>
 		public bool EstaEditando => ControladorSiendoEditado != null;
@@ -82,37 +111,59 @@ namespace AppGM.Core
 		}
 
 		/// <summary>
+		/// Comando que se ejecuta cuando el usuario presiona el boton 'Eliminar'
+		/// </summary>
+		public ICommand ComandoEliminar { get; private set; }
+
+		/// <summary>
 		/// Constructor por defecto
 		/// </summary>
 		/// <param name="_accionSalir">Accion que se ejecuta al salir de este vm</param>
-		public ViewModelCreacionEdicionDeModelo(Action<TViewModel> _accionSalir)
-			:base(_accionSalir) {}
+		public ViewModelCreacionEdicionDeModelo(Action<TViewModel> _accionSalir, bool _actualizarValidezOnPropertyChanged = false)
+			: base(_accionSalir)
+		{
+			if(!_actualizarValidezOnPropertyChanged)
+				return;
+
+			PropertyChanged += (sender, args) =>
+			{
+				if (args.PropertyName != nameof(EsValido) && ModeloCreado != null)
+					ActualizarValidez();
+			};
+		}
 
 		/// <summary>
 		/// Constructor que trae una implemetacion por defecto de copia de modelos al editar
 		/// </summary>
 		/// <param name="_accionSalir">Accion que se ejecuta al salir de este vm</param>
 		/// <param name="_controladorParaEditar">Controlador del modelo que sera editado</param>
-		/// <param name="tipoValorPorDefectoModelo">Tipo del modelo que se creara por defecto cuando no se esta editando. Se utiliza cuando
 		/// el tipo por defecto del modelo es una clase abstracta o no instanciable por cualquier motivo</param>
-		public ViewModelCreacionEdicionDeModelo(Action<TViewModel> _accionSalir, TControlador _controladorParaEditar, Type tipoValorPorDefectoModelo = null)
-			:base(_accionSalir)
+		public ViewModelCreacionEdicionDeModelo(Action<TViewModel> _accionSalir, TControlador _controladorParaEditar, bool _puedeEditar = true, bool _actualizarValidezOnPropertyChanged = false)
+			:this(_accionSalir, _actualizarValidezOnPropertyChanged)
 		{
 			ControladorSiendoEditado = _controladorParaEditar;
+			PuedeEditar = _puedeEditar;
+		}
 
+		/// <summary>
+		/// Inicializa este <see cref="ViewModelCreacionEdicionDeModelo{TModelo,TControlador,TViewModel}"/>
+		/// </summary>
+		/// <param name="tipoValorPorDefectoModelo">Tipo del modelo que se creara por defecto cuando no se esta editando. Se utiliza cuando
+		public virtual async Task<TViewModel> Inicializar(Type tipoValorPorDefectoModelo = null)
+		{
 			if (EstaEditando)
 			{
-				ModeloCreado = ModeloSiendoEditado.CrearCopiaProfundaEnSubtipo(ModeloSiendoEditado.GetType()) as TModelo;
+				ModeloCreado = (await ModeloSiendoEditado.CrearCopiaProfundaEnSubtipoAsync(ModeloSiendoEditado.GetType())).resultado as TModelo;
 			}
 			else
 			{
 				Type tipoModelo = typeof(TModelo);
-				
-				if(!tipoModelo.IsAbstract)
+
+				if (!tipoModelo.IsAbstract)
 				{
 					ModeloCreado = Activator.CreateInstance(tipoModelo) as TModelo;
-				}		
-				else if(tipoModelo != null)
+				}
+				else if (tipoModelo != null)
 				{
 					ModeloCreado = Activator.CreateInstance(tipoValorPorDefectoModelo) as TModelo;
 				}
@@ -121,6 +172,8 @@ namespace AppGM.Core
 					SistemaPrincipal.LoggerGlobal.LogCrash("El modelo es de tipo abstracto pero no se especifico un tipo para el valor por defecto");
 				}
 			}
+
+			return (TViewModel)this;
 		}
 
 		/// <summary>
@@ -197,6 +250,37 @@ namespace AppGM.Core
 
 			listaItems.Items.Add(nuevoElemento);
 			listaModelo.Add(nuevaRelacion);
+		}
+
+		/// <summary>
+		/// Inicializar el <see cref="ComandoEliminar"/>
+		/// </summary>
+		protected void CrearComandoFinalizar()
+		{
+			ComandoEliminar = new Comando(async () =>
+			{
+				if(!EstaEditando)
+					return;
+
+				await ControladorSiendoEditado.EliminarAsync();
+
+				Resultado = EResultadoViewModel.Eliminar;
+
+				mAccionSalir?.Invoke((TViewModel)this);
+			});
+		}
+
+		protected string ObtenerPrefijoTituloVentana()
+		{
+			if (EstaEditando)
+			{
+				if (PuedeEditar)
+					return "Editando";
+
+				return "Viendo";
+			}
+
+			return "Creando";
 		}
 	}
 }

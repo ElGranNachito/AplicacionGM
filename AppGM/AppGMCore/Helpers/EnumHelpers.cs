@@ -155,29 +155,46 @@ namespace AppGM.Core
 
         public static string ToStringNumeroParty(this ENumeroParty numeroParty)
         {
-            StringBuilder stringBuilder = new StringBuilder();
-
-            switch (numeroParty)
+	        switch (numeroParty)
             {
-                case ENumeroParty.Party_0: stringBuilder.Append("Party 0");
-                    break;
-                case ENumeroParty.Party_Saber: stringBuilder.Append("Party Saber");
-                    break;
-                case ENumeroParty.Party_Lancer: stringBuilder.Append("Party Lancer");
-                    break;
-                case ENumeroParty.Party_Archer: stringBuilder.Append("Party Archer");
-                    break;
-                case ENumeroParty.Party_Rider: stringBuilder.Append("Party Rider");
-                    break;
-                case ENumeroParty.Party_Berserker: stringBuilder.Append("Party Berserker");
-                    break;
-                case ENumeroParty.Party_Assassin: stringBuilder.Append("Party Assassin");
-                    break;
-                case ENumeroParty.Party_Caster: stringBuilder.Append("Party Caster");
-                    break;
+                case ENumeroParty.Party_0:
+	                return string.Intern("Party 0");
+                case ENumeroParty.Party_Saber: 
+	                return string.Intern("Party Saber");
+                case ENumeroParty.Party_Lancer:
+	                return string.Intern("Party Lancer");
+                case ENumeroParty.Party_Archer:
+	                return string.Intern("Party Archer");
+                case ENumeroParty.Party_Rider:
+	                return string.Intern("Party Rider");
+                case ENumeroParty.Party_Berserker:
+	                return string.Intern("Party Berserker");
+                case ENumeroParty.Party_Assassin:
+	                return string.Intern("Party Assassin");
+                case ENumeroParty.Party_Caster:
+	                return string.Intern("Party Caster");
+                default:
+	                return string.Empty;
             }
+        }
 
-            return stringBuilder.ToString();
+        public static string ToStringTipoItem(this ETipoItem tipoItem)
+        {
+	        switch (tipoItem)
+	        {
+                case ETipoItem.ArmaDistancia:
+	                return string.Intern("Arma a distancia");
+                case ETipoItem.Defensivo:
+	                return string.Intern("Defensivo");
+                case ETipoItem.Item:
+					return string.Intern("Item");
+                case ETipoItem.MysticCode:
+	                return string.Intern("Mystic Code");
+                case ETipoItem.Ropa:
+	                return string.Intern("Ropita");
+                default:
+	                return string.Empty;
+	        }
         }
 
         public static bool EsAceptarOFinalizar(this EResultadoViewModel resultado) => resultado is EResultadoViewModel.Aceptar or EResultadoViewModel.Finalizar;

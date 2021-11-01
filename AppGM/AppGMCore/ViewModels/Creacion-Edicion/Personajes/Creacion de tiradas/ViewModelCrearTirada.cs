@@ -182,9 +182,9 @@ namespace AppGM.Core
 			ViewModelComboBoxTipoTirada.OnValorSeleccionadoCambio += async (ViewModelItemComboBoxBase<ETipoTirada> anterior, ViewModelItemComboBoxBase<ETipoTirada> actual) =>
 			{
 				if (actual.valor == ETipoTirada.Daño)
-					ModeloCreado = ModeloCreado.CrearCopiaProfundaEnSubtipo<ModeloTiradaDeDaño, ModeloTiradaVariable>();
+					ModeloCreado = (await ModeloCreado.CrearCopiaProfundaEnSubtipoAsync<ModeloTiradaDeDaño, ModeloTiradaVariable>()).resultado;
 				else
-					ModeloCreado = ModeloCreado.CrearCopiaProfundaEnSubtipo<ModeloTiradaVariable, ModeloTiradaDeDaño>();
+					ModeloCreado = (await ModeloCreado.CrearCopiaProfundaEnSubtipoAsync<ModeloTiradaVariable, ModeloTiradaDeDaño>()).resultado;
 
 				DispararPropertyChanged(nameof(EsTiradaDeDaño));
 			};

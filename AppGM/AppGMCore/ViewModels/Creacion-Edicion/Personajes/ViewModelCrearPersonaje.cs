@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace AppGM.Core
@@ -163,14 +164,21 @@ namespace AppGM.Core
 			        MostrarInventario = false;
 			        MostrarHabilidades = false;
 
-			        SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = new ViewModelCreacionPartesDelCuerpo(ModeloCreado);
+			        SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = new ViewModelCreacionPartesDelCuerpo(
+				        vm =>
+				        {
+					        SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = this;
+
+					        MostrarCaracteristicasGenerales = true;
+
+				        }, ModeloCreado);
 		        }
 
 		        mValoresSolapas[8] = value;
 	        }
         }
 
-        public ViewModelListaItems<ViewModelItem> ContenedorListaItems                { get; set; }
+        public ViewModelListaItems<ViewModelItemListaItems> ContenedorListaItems                { get; set; }
         public ViewModelListaItems<ViewModelHabilidadItem> ContenedorListaHabilidades { get; set; }
         public ViewModelListaItems<ViewModelHabilidadItem> ContendorListaNPs          { get; set; }
 
@@ -200,19 +208,19 @@ namespace AppGM.Core
         public ViewModelCrearPersonaje(Action<ViewModelCrearPersonaje> _accionSalir, ControladorPersonaje _personajeEditar = null)
 			:base(_accionSalir, _personajeEditar)
         {
-	        mAccionAñadirHabilidad = () =>
+	        mAccionAñadirHabilidad = async () =>
 	        {
-		        SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = new ViewModelCrearHabilidad( 
+		        SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = await new ViewModelCrearHabilidad( 
 			        vm =>
 			        {
 				        SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = this;
-			        }, ModeloCreado);
+			        }, ModeloCreado).Inicializar();
 	        };
 
             ContenedorListaHabilidades = new ViewModelListaItems<ViewModelHabilidadItem>(mAccionAñadirHabilidad, true, "Habilidades");
             ContendorListaNPs          = new ViewModelListaItems<ViewModelHabilidadItem>(mAccionAñadirNP, true, "NPs");
 
-            ContenedorListaItems       = new ViewModelListaItems<ViewModelItem>(mAccionAñadirItem, true, "Items");
+            ContenedorListaItems       = new ViewModelListaItems<ViewModelItemListaItems>(mAccionAñadirItem, true, "Items");
 
             var modeloHabilidad = new ModeloHabilidad
             {
@@ -224,7 +232,7 @@ namespace AppGM.Core
 
             ComboBoxTipoPersonaje.OnValorSeleccionadoCambio += async (anterior, actual) =>
             {
-                ModeloCreado = await ModeloCreado.CrearCopiaProfundaEnSubtipoAsync(actual.valor.ObtenerTipoPersonaje()) as ModeloPersonaje;
+                ModeloCreado = (await ModeloCreado.CrearCopiaProfundaEnSubtipoAsync(actual.valor.ObtenerTipoPersonaje())).resultado as ModeloPersonaje;
 
                 ModeloCreado.TipoPersonaje = actual.valor;
 
@@ -260,12 +268,6 @@ namespace AppGM.Core
                     pJugable.Caracteristicas.Sexo = actual.valor;
             };
 
-            PropertyChanged += (sender, args) =>
-            {
-                if (args.PropertyName != nameof(EsValido))
-                    ActualizarValidez();
-            };
-
             ComandoActualizarStats = new Comando(ActualizarStatsPersonaje);
 
             ComandoFinalizar = new Comando(() =>
@@ -276,11 +278,31 @@ namespace AppGM.Core
             });
 
             ComandoCancelar = new Comando(()=>mAccionSalir(this));
+
+            PropertyChanged += (sender, args) =>
+            {
+	            if (args.PropertyName != nameof(EsValido))
+		            ActualizarValidez();
+            };
         }
 
 		#endregion
 
 		#region Metodos
+
+		public override async Task<ViewModelCrearPersonaje> Inicializar(Type tipoValorPorDefectoModelo = null)
+		{
+			await base.Inicializar(tipoValorPorDefectoModelo);
+
+			if (!EstaEditando)
+			{
+				await SistemaPrincipal.GuardarModeloAsync(ModeloCreado);
+
+				await SistemaPrincipal.GuardarDatosAsync();
+			}
+
+			return this;
+		}
 
 		public override ModeloPersonaje CrearModelo()
 		{

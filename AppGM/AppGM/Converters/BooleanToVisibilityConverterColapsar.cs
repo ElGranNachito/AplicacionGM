@@ -34,8 +34,8 @@ namespace AppGM
 		{
 			foreach (var valor in values)
 			{
-                //Si alguno de los valores es falso estonces devolvemos collapsed
-				if (valor is false)
+				//Si alguno de los valores es falso estonces devolvemos collapsed
+				if (valor is false || valor is not bool)
 				{
 					return Visibility.Collapsed;
 				}

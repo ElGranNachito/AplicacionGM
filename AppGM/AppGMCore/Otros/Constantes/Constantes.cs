@@ -29,5 +29,10 @@ namespace AppGM.Core
         /// Bono
         /// </summary>
         public const int BonoEspecialidad = 2;
+
+        /// <summary>
+        /// Espacio por defecto que tiene un slot al crearse
+        /// </summary>
+        public const decimal EspacioPorDefectoNuevoSlot = 1;
     }
 }

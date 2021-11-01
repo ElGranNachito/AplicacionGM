@@ -1,0 +1,88 @@
+﻿<UserControl x:Class="AppGM.UserControlCreacionParteDelCuerpo"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:local="clr-namespace:AppGM"
+             mc:Ignorable="d" 
+             d:DesignHeight="200" d:DesignWidth="200"
+             
+             Background="White"
+
+             Padding="10">
+
+    <!--ViewModel: ViewModelCreacionEdicionParteDelCuerpo-->
+
+    <Grid>
+
+        <StackPanel 
+            HorizontalAlignment="Center">
+
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextoDescriptivo}">
+                    <Setter Property="Padding" Value="5 2 "/>
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                </Style>
+
+                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BotonFondoResaltable}">
+                    <Setter Property="Margin" Value="0 10 0 0"/>
+                </Style>
+            </StackPanel.Resources>
+
+            <!-- Textbox nombre parte del cuerpo -->
+            <TextBox
+                Tag="Nombre"
+            
+                Text="{Binding Nombre}"/>
+
+            <!-- Textbox multiplicador daño -->
+            <TextBox
+
+                Margin="0 10 0 0"
+
+                Text="{Binding Multiplicador}"
+
+                Tag="Multiplicador"
+                
+                local:CampoDeTextoNumericoProperty.Tipo="sys:Decimal"/>
+
+
+            <!-- Textbox cantidad de slots -->
+            <TextBox
+
+                Margin="0 10 0 0"
+
+                Text="{Binding CantidadDeSlots}"
+
+                Tag="Cantidad de slots"
+                
+                local:CampoDeTextoNumericoProperty.Tipo="sys:Int32"/>
+
+            <!-- Boton aceptar -->
+            <Button
+                Content="Aceptar"
+                
+                Command="{Binding ComandoAceptar}"
+                
+                IsEnabled="{Binding EsValido}"/>
+
+            <!-- Boton cancelar -->
+            <Button
+                Content="Cancelar"
+                
+                Command="{Binding ComandoCancelar}"/>
+
+            <!-- Boton cancelar -->
+            <Button
+                Content="Eliminar"
+                
+                Command="{Binding ComandoEliminar}"
+                
+                IsEnabled="{Binding EstaEditando}"/>
+
+        </StackPanel>
+    </Grid>
+    
+
+</UserControl>

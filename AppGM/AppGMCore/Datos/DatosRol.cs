@@ -49,9 +49,7 @@ namespace AppGM.Core
 		/// <param name="_modeloRol"></param>
 		public DatosRol(ModeloRol _rolSeleccionado)
         {
-            mRolSeleccionado = _rolSeleccionado;
-
-			mDBRol = new RolContext();
+	        mDBRol = new RolContext();
         }
 
 		#region Metodos

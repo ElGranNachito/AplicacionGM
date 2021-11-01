@@ -20,7 +20,7 @@ namespace AppGM.Core
 		/// <summary>
 		/// Indica si este modelo es valido
 		/// </summary>
-		public bool EsValido { get; set; }
+		public virtual bool EsValido { get; set; }
 
         //Id
         [Key]
@@ -29,9 +29,11 @@ namespace AppGM.Core
 	        get => mId;
             set
             {
-                //Si cambia la id y la anterior no es cero entonces intentamos quitar el modelo ya existente del sistema principal
-	            if (value != 0 && mId != 0)
-		            SistemaPrincipal.QuitarModelo(this);
+                if(value == 0)
+                    return;
+
+                //Intentamos quitar el modelo del sistema principal en caso de que ya existiera
+                SistemaPrincipal.QuitarModelo(this);
 
 				mId = value;
 

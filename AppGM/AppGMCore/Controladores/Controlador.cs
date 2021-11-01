@@ -124,6 +124,16 @@ namespace AppGM.Core
 		}
 
 		/// <summary>
+		/// Metodo destinado a lidia con el evento de que se cree el <see cref="ControladorBase"/> que necesitamos
+		/// </summary>
+		/// <param name="modelo"><see cref="ModeloBase"/> para el que se creo el <paramref name="controlador"/></param>
+		/// <param name="controlador"><see cref="ControladorBase"/> que se creo para el <paramref name="modelo"/></param>
+		protected virtual void ControladorParaModeloCreadoHandler(ModeloBase modelo, ControladorBase controlador)
+		{
+			modelo.OnControladorCreado -= ControladorParaModeloCreadoHandler;
+		}
+
+		/// <summary>
 		/// <para>
 		///		Carga las variables persistentes guardadas en el <see cref="modelo"/> a <see cref="mVariablesPersistenes"/>
 		/// </para>

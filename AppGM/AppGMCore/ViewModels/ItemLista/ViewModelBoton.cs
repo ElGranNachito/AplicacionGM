@@ -90,6 +90,7 @@ namespace AppGM.Core
 			public const string Editar = "Editar";
 			public const string Eliminar = "Elimar";
 			public const string Crear = "Crear";
+			public const string Ver = "Ver";
 		}
 	}
 }

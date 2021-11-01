@@ -449,6 +449,8 @@ namespace AppGM.Core.Migrations
                     Nombre = table.Column<string>(type: "TEXT", nullable: true),
                     Descripcion = table.Column<string>(type: "TEXT", nullable: true),
                     Estado = table.Column<int>(type: "INTEGER", nullable: false),
+                    EstadoPortacion = table.Column<int>(type: "INTEGER", nullable: false),
+                    TipoItem = table.Column<int>(type: "INTEGER", nullable: false),
                     PersonajePortadorId = table.Column<int>(type: "INTEGER", nullable: true),
                     Tipo = table.Column<int>(type: "INTEGER", nullable: false),
                     Usos = table.Column<ushort>(type: "INTEGER", nullable: true),
@@ -1000,12 +1002,12 @@ namespace AppGM.Core.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
+                    EsValido = table.Column<bool>(type: "INTEGER", nullable: false),
                     NombreSlot = table.Column<string>(type: "TEXT", maxLength: 100, nullable: true),
                     EspacioTotal = table.Column<decimal>(type: "TEXT", nullable: false),
                     PersonajeDueñoId = table.Column<int>(type: "INTEGER", nullable: true),
                     ParteDelCuerpoDueñaId = table.Column<int>(type: "INTEGER", nullable: true),
-                    ItemDueñoId = table.Column<int>(type: "INTEGER", nullable: true),
-                    EsValido = table.Column<bool>(type: "INTEGER", nullable: false)
+                    ItemDueñoId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -1033,15 +1035,15 @@ namespace AppGM.Core.Migrations
                     Nombre = table.Column<string>(type: "TEXT", maxLength: 100, nullable: true),
                     MultiplicadorDeEstaParte = table.Column<float>(type: "REAL", nullable: false),
                     IdSlotDueño = table.Column<int>(type: "INTEGER", nullable: false),
-                    PersonajeDueñoId = table.Column<int>(type: "INTEGER", nullable: true),
+                    PersonajeContenedorId = table.Column<int>(type: "INTEGER", nullable: true),
                     EsValido = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ParteDelCuerpo", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ParteDelCuerpo_ModeloPersonaje_PersonajeDueñoId",
-                        column: x => x.PersonajeDueñoId,
+                        name: "FK_ParteDelCuerpo_ModeloPersonaje_PersonajeContenedorId",
+                        column: x => x.PersonajeContenedorId,
                         principalTable: "ModeloPersonaje",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -1255,9 +1257,9 @@ namespace AppGM.Core.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_ParteDelCuerpo_PersonajeDueñoId",
+                name: "IX_ParteDelCuerpo_PersonajeContenedorId",
                 table: "ParteDelCuerpo",
-                column: "PersonajeDueñoId");
+                column: "PersonajeContenedorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TIEfectoSiendoAplicadoFuncion_IdEfectoSiendoAplicado",
@@ -1408,7 +1410,7 @@ namespace AppGM.Core.Migrations
                 table: "ModeloSlot");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_ParteDelCuerpo_ModeloPersonaje_PersonajeDueñoId",
+                name: "FK_ParteDelCuerpo_ModeloPersonaje_PersonajeContenedorId",
                 table: "ParteDelCuerpo");
 
             migrationBuilder.DropForeignKey(

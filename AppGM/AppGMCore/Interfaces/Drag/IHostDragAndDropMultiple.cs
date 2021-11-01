@@ -11,5 +11,17 @@ namespace AppGM.Core
 		/// Elementos actualmente seleccionados
 		/// </summary>
 		public List<IDrageableMultiple> ElementosSeleccionados { get; set; }
+
+		/// <summary>
+		/// Seleccionar un <paramref name="elemento"/>
+		/// </summary>
+		/// <param name="elemento">Elemento que seleccionar</param>
+		public void SeleccionarElemento(IDrageableMultiple elemento);
+
+		/// <summary>
+		/// Seleccionar un <paramref name="elemento"/>
+		/// </summary>
+		/// <param name="elemento">Elemento que seleccionar</param>
+		public void DeseleccionarElemento(IDrageableMultiple elemento);
 	}
 }

@@ -299,8 +299,6 @@ namespace AppGM.Core
 			else
 			{
 				SistemaPrincipal.LoggerGlobal.Log($"{modelo} no es de tipo {nameof(ModeloVariableControlador)}!", ESeveridad.Error);
-
-				Eliminar();
 			}
 		}
 

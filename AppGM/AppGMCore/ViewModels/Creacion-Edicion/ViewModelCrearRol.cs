@@ -15,6 +15,9 @@
         /// </summary>
         public ViewModelCrearRol()
         {
+	        SistemaPrincipal.Atar(datosRol.modeloRol);
+            SistemaPrincipal.Atar(new ViewModelRol());
+
 	        MostrarBotonSalir = true;
 
             ModeloMapa mapaPrincipal = new ModeloMapa();

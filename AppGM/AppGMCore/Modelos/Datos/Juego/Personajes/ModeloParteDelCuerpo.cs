@@ -23,18 +23,18 @@ namespace AppGM.Core
 		/// <summary>
 		/// Id del slor que contiene este modelo
 		/// </summary>
-		[ForeignKey(nameof(SlotDueño))]
+		[ForeignKey(nameof(SlotContenedor))]
 		public int IdSlotDueño { get; set; }
 
 		/// <summary>
 		/// Slot que contiene esta parte
 		/// </summary>
-		public virtual ModeloSlot SlotDueño { get; set; }
+		public virtual ModeloSlot SlotContenedor { get; set; }
 
 		/// <summary>
-		/// PersonajeDueño de esta parte del cuerpo
+		/// PersonajeContenedor de esta parte del cuerpo
 		/// </summary>
-		public virtual ModeloPersonaje PersonajeDueño { get; set; }
+		public virtual ModeloPersonaje PersonajeContenedor { get; set; }
 
 		/// <summary>
 		/// Slots de esta parte del cuerpo

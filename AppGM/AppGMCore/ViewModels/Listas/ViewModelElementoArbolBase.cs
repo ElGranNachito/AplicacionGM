@@ -30,6 +30,8 @@
 
 		public virtual int IndiceZ { get; set; }
 
+		public abstract void RemoverDePadre();
+
 
 		public virtual void OnComienzoDrag_Impl(ArgumentosDragAndDropMultiple args)
 		{
@@ -61,6 +63,11 @@
 		/// Actualiza los <see cref="Hijos"/> de este elemento
 		/// </summary>
 		public virtual void ActualizarHijos() { }
+
+		/// <summary>
+		/// Realiza una actualizacion general del elemento
+		/// </summary>
+		public virtual void Actualizar() => ActualizarHijos();
 
 		public virtual bool PuedeSerDragueado() => EstaSeleccionado;
 	}

@@ -27,7 +27,7 @@ namespace AppGM.Core
 
         #region Funciones
 
-        public override void Eliminar()
+        public override void Eliminar(bool mostrarMensajeConfirmacion = false)
         {
             SistemaPrincipal.EliminarModelo(modelo);
         } 

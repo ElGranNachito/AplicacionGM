@@ -47,8 +47,16 @@ namespace AppGM.Core
 		/// <summary>
 		/// Elimina el modelo de la base de datos
 		/// </summary>
-		public virtual void Eliminar()
+		public virtual async Task Eliminar(bool mostrarMensajeDeConfirmacion = false)
 		{
+			if (mostrarMensajeDeConfirmacion)
+			{
+				var resultado = await MensajeHelpers.MostrarMensajeConfirmacionAsync("Accion requiere confirmacion", "¿Esta seguro de querer eliminar este modelo?");
+
+				if (resultado != EResultadoViewModel.Aceptar)
+					return;
+			}
+
 			if (this is ModeloBase mb)
 			{
 				if (mb.Id != 0)
@@ -62,6 +70,24 @@ namespace AppGM.Core
 			}
 
 			OnModeloEliminado((ModeloBase)this);
+		}
+
+		/// <summary>
+		/// Añade un handler a <see cref="OnModeloEliminado"/> que se desubscribe despues de un uso
+		/// </summary>
+		/// <param name="handler">Handler que añadie</param>
+		public void AñadirHandlerSoloUsoModeloEliminado(Action<ModeloBase> handler)
+		{
+			Action<ModeloBase> nuevoHandler = null;
+
+			nuevoHandler = m =>
+			{
+				handler(m);
+
+				OnModeloEliminado -= nuevoHandler;
+			};
+
+			OnModeloEliminado += nuevoHandler;
 		}
 
         /// <summary>

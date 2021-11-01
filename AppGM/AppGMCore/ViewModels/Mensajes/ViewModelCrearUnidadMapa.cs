@@ -199,7 +199,7 @@ namespace AppGM.Core
             vmResultado = new ViewModelIngresoPosicion(mMapa, controlador);
 
             SistemaPrincipal.GuardarModelo(modeloUnidad);
-            SistemaPrincipal.GuardarDatosRolAsincronicamente();
+            SistemaPrincipal.GuardarDatosAsync();
 
             Resultado = EResultadoViewModel.Aceptar;
         }

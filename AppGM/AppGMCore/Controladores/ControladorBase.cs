@@ -103,9 +103,14 @@ namespace AppGM.Core
 		public virtual async Task GuardarAsync() => await Modelo.GuardarAsync();
 
 		/// <summary>
-		/// Funcion encargada de eliminar el modelo de la base de datos
+		/// Metodo encargado de eliminar el modelo de la base de datos
 		/// </summary>
-		public virtual void Eliminar() => Modelo.Eliminar();
+		public virtual async void Eliminar(bool mostrarMensajeConfirmacion = false) => await Modelo.Eliminar(mostrarMensajeConfirmacion);
+
+		/// <summary>
+		/// Metodo encargado de eliminar el modelo de la base de datos
+		/// </summary>
+		public virtual async Task EliminarAsync(bool mostrarMensajeConfirmacion = true) => await Modelo.Eliminar(mostrarMensajeConfirmacion);
 
 		public virtual (ControladorBase controlador, List<EventInfo> eventos) ObtenerEventosDisponibles()
 		{

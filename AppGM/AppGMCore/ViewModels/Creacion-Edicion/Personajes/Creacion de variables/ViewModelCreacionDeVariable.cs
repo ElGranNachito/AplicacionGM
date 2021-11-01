@@ -119,7 +119,7 @@ namespace AppGM.Core
 		/// <param name="_accionSalir">Accion que se ejecutara al salir del control representado por este view model</param>
 		/// <param name="_variableEditar">Controlador de la variable que estamos editando</param>
 		public ViewModelCreacionDeVariable(Action<ViewModelCreacionDeVariable> _accionSalir, ControladorVariableBase _variableEditar = null)
-			:base(_accionSalir, _variableEditar, typeof(ModeloVariableInt))
+			:base(_accionSalir, _variableEditar)
 		{
 			ComboBoxTiposDisponibles.OnValorSeleccionadoCambio += (anterior, actual) =>
 			{

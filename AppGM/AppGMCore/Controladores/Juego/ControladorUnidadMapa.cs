@@ -117,7 +117,7 @@ namespace AppGM.Core
         /// <summary>
         /// Elimina el modelo de la base de datos
         /// </summary>
-        public override void Eliminar()
+        public override void Eliminar(bool mostrarMensajeConfirmacion = false)
         {
             base.Eliminar();
 

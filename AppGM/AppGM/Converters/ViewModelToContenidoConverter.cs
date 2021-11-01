@@ -49,6 +49,15 @@ namespace AppGM
                 case ViewModelCreacionPartesDelCuerpo vm:
 	                return new UserControlCreacionPartesDelCuerpo {DataContext = vm};
 
+                case ViewModelCreacionEdicionDeSlot vm:
+	                return new UserControlCreacionSlot {DataContext = vm};
+
+                case ViewModelMensajeConfirmacionAccion vm:
+	                return new UserControlMensajeConfirmacion {DataContext = vm};
+
+                case ViewModelInventario vm:
+	                return new UserControlCreacionSlot {DataContext = vm};
+
 	            //Globo para mostrar informacion de un rol
                 case ViewModelContenidoGloboInfoRol vm:
                     return new UserControlContenidoGloboInfoRol {DataContext = vm};
@@ -57,7 +66,11 @@ namespace AppGM
                 case ViewModelInfoCombateGlobo vm:
                     return new UserControlInfoCombateGlobo {DataContext = vm};
 
-	            default:
+	            case ViewModelCrearUnidadMapa vm:
+		            return new UserControlMensajeCrearUnidadMapa {DataContext = vm};
+
+
+                default:
                     return null;
             }
         }

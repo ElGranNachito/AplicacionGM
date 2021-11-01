@@ -78,7 +78,7 @@
 
     <!-- Contenido -->
     <Grid>
-        <ContentControl Content="{Binding  Path=ViewModelContenidoVentana, Converter={local:ViewModelToContenidoMensajeConverter}}"/>
+        <ContentControl Content="{Binding  Path=ViewModelContenidoVentana, Converter={local:ViewModelToContenidoConverter}}"/>
 
         <Canvas>
             <!-- Drag de la ventana -->

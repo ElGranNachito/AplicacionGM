@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AppGM.Core.Migrations
 {
     [DbContext(typeof(RolContext))]
-    [Migration("20211027014647_inicial")]
+    [Migration("20211101020759_inicial")]
     partial class inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -446,6 +446,9 @@ namespace AppGM.Core.Migrations
                     b.Property<int>("Estado")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("EstadoPortacion")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Nombre")
                         .HasColumnType("TEXT");
 
@@ -456,6 +459,9 @@ namespace AppGM.Core.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<int>("Tipo")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("TipoItem")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -517,7 +523,7 @@ namespace AppGM.Core.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("PersonajeDueñoId")
+                    b.Property<int?>("PersonajeContenedorId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -525,7 +531,7 @@ namespace AppGM.Core.Migrations
                     b.HasIndex("IdSlotDueño")
                         .IsUnique();
 
-                    b.HasIndex("PersonajeDueñoId");
+                    b.HasIndex("PersonajeContenedorId");
 
                     b.ToTable("ParteDelCuerpo");
                 });
@@ -1587,20 +1593,20 @@ namespace AppGM.Core.Migrations
 
             modelBuilder.Entity("AppGM.Core.ModeloParteDelCuerpo", b =>
                 {
-                    b.HasOne("AppGM.Core.ModeloSlot", "SlotDueño")
+                    b.HasOne("AppGM.Core.ModeloSlot", "SlotContenedor")
                         .WithOne("ParteDelCuerpoAlmacenada")
                         .HasForeignKey("AppGM.Core.ModeloParteDelCuerpo", "IdSlotDueño")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AppGM.Core.ModeloPersonaje", "PersonajeDueño")
+                    b.HasOne("AppGM.Core.ModeloPersonaje", "PersonajeContenedor")
                         .WithMany("PartesDelCuerpo")
-                        .HasForeignKey("PersonajeDueñoId")
+                        .HasForeignKey("PersonajeContenedorId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.Navigation("PersonajeDueño");
+                    b.Navigation("PersonajeContenedor");
 
-                    b.Navigation("SlotDueño");
+                    b.Navigation("SlotContenedor");
                 });
 
             modelBuilder.Entity("AppGM.Core.ModeloParticipante", b =>

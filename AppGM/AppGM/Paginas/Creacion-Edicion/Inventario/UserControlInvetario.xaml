@@ -17,7 +17,20 @@
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
             
+        <!--Arbol del inventario-->
         <local:UserControlVistaArbolInventario
             DataContext="{Binding ViewModelVistaInventario}"/>
+
+        <!--Edicion slotactualmente seleccionado-->
+        <local:UserControlCreacionSlot
+            Grid.Column="1"
+            
+            DataContext="{Binding ViewModelEdicionSlotActual, Mode=OneWay}">
+
+            <local:UserControlCreacionSlot.Effect>
+                <DropShadowEffect Direction="60"/>
+            </local:UserControlCreacionSlot.Effect>
+
+        </local:UserControlCreacionSlot>
     </Grid>
 </UserControl>

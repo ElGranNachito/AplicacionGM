@@ -144,9 +144,9 @@ namespace AppGM.Core
                 DispararPropertyChanged(nameof(PuedeElegirSiTieneRango));
             };
 
-            FuncionUtilizar = new ViewModelListaItems<ViewModelFuncionItem<ControladorFuncion_Habilidad>>(() =>
+            FuncionUtilizar = new ViewModelListaItems<ViewModelFuncionItem<ControladorFuncion_Habilidad>>(async () =>
             {
-                var vmCreacion = new ViewModelCreacionDeFuncionHabilidad(vm =>
+                var vmCreacion = await new ViewModelCreacionDeFuncionHabilidad(vm =>
                 {
 	                if (vm.Resultado.EsAceptarOFinalizar())
 	                {
@@ -160,14 +160,15 @@ namespace AppGM.Core
 
 		                AñadirFuncionDesdeListaItems<TIFuncionHabilidad, ViewModelFuncionItem<ControladorFuncion_Habilidad>>((ViewModelFuncionItem<ControladorFuncion_Habilidad>)nuevaFuncion.CrearViewModelItem(), nuevaRelacion, ModeloCreado.Funciones, FuncionUtilizar);
 	                }
-                });
+                }).Inicializar();
+
             }, true, "Funcion Utilizar", 1);
 
             //FuncionCondicion = new ViewModelFuncionItem<ControladorFuncion_Predicado>(null);
 
-            ContenedorListaEfectos   = new ViewModelListaItems<ViewModelEfectoItem>(() =>
+            ContenedorListaEfectos   = new ViewModelListaItems<ViewModelEfectoItem>(async () =>
             {
-	            SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = new ViewModelCreacionEfecto(async vm =>
+	            SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = await new ViewModelCreacionEfecto(async vm =>
 	            {
 		            SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = this;
 
@@ -182,12 +183,13 @@ namespace AppGM.Core
                         //AñadirFuncionDesdeListaItems<ModeloEfecto, ViewModelEfectoItem>((ViewModelEfectoItem)nuevoEfecto.CrearViewModelItem(), ModeloCreado.Efectos, ContenedorListaEfectos);
 		            }
 
-                }, mModeloPersonaje, typeof(ControladorHabilidad), null);
+                }, mModeloPersonaje, typeof(ControladorHabilidad), null).Inicializar();
+
             }, true, "Efectos");
 
-            ContenedorListaTiradas   = new ViewModelListaItems<ViewModelTiradaItem>(()=>
+            ContenedorListaTiradas   = new ViewModelListaItems<ViewModelTiradaItem>(async ()=>
             {            
-                SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = new ViewModelCrearTirada(async (vm) =>
+                SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = await new ViewModelCrearTirada(async (vm) =>
                 {
                     SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = this;
 
@@ -202,13 +204,13 @@ namespace AppGM.Core
                         AñadirModeloDesdeListaItems<ModeloTiradaBase, ViewModelTiradaItem>((ViewModelTiradaItem)nuevaTirada.CrearViewModelItem(), ModeloCreado.Tiradas, ContenedorListaTiradas);
                     }
 
-                }, ModeloCreado, null);
+                }, ModeloCreado, null).Inicializar();
 
             }, true, "Tiradas");
 
-            ContenedorListaVariables = new ViewModelListaItems<ViewModelVariableItem>(() =>
+            ContenedorListaVariables = new ViewModelListaItems<ViewModelVariableItem>(async () =>
             {              
-	            SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = new ViewModelCreacionDeVariable(async (vm) =>
+	            SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = await new ViewModelCreacionDeVariable(async (vm) =>
 	            {
 		            if (vm.Resultado.EsAceptarOFinalizar())
 		            {
@@ -222,12 +224,12 @@ namespace AppGM.Core
 		            }
 
 		            SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = this;
-	            });
+	            }).Inicializar();
             }, true, "Variables");
 
             ComandoGuardar = new Comando(async () =>
             {
-                await SistemaPrincipal.GuardarDatosRolAsincronicamente();
+                await SistemaPrincipal.GuardarDatosAsync();
 
                 ModeloGuardado = true;
             });

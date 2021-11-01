@@ -12,51 +12,61 @@
     <Grid
         Background="White">
 
-        <!--Inventario-->
+        <Grid.Resources>
+            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BotonFondoResaltable}"></Style>
+        </Grid.Resources>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto" MaxHeight="50"/>
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <!--Inventario-->
             <local:UserControlInvetario
                 DataContext="{Binding ViewModelInventario}"/>
 
-        <!--Seleccion de plantilla-->
-        <Border
+            <!--Seleccion de plantilla-->
+            <Border
             Padding="10"
             Background="White"
             Visibility="{Binding DebeMostrarVentanaEleccionPlantilla, Converter={local:BooleanToVisibilityConverterColapsar}}">
 
-            <Grid>
+                <Grid>
 
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="4*"/>
-                </Grid.RowDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="4*"/>
+                    </Grid.RowDefinitions>
 
-                <!--Titulo-->
-                <Viewbox
+                    <!--Titulo-->
+                    <Viewbox
                     MaxWidth="500"
                     
                     VerticalAlignment="Top">
 
-                    <TextBox
+                        <TextBox
                         Text="Selecciona una plantilla"
 
                         BorderThickness="0"
 
                         HorizontalAlignment="Center"/>
 
-                </Viewbox>
+                    </Viewbox>
 
-                <!--Opciones-->
-                <Viewbox
+                    <!--Opciones-->
+                    <Viewbox
                     Grid.Row="1"
                     
                     MaxWidth="200"
                     
                     VerticalAlignment="Top">
 
-                    <!--Botones-->
-                    <StackPanel>
+                        <!--Botones-->
+                        <StackPanel>
 
-                        <!--Plantilla humanoide-->
-                        <Button
+                            <!--Plantilla humanoide-->
+                            <Button
                             Content="Humanoide"
 
                             Margin="0 0 0 0"
@@ -65,8 +75,8 @@
                             
                             Command="{Binding ComandoCrearPlantillaHumanoide}"/>
 
-                        <!--Plantilla cuadrupedo-->
-                        <Button
+                            <!--Plantilla cuadrupedo-->
+                            <Button
                             Content="Cuadrupedo"
 
                             Margin="0 10 0 0"
@@ -75,8 +85,8 @@
                             
                             Command="{Binding ComandoCrearPlantillaCuadrupedo}"/>
 
-                        <!--Plantilla vacia-->
-                        <Button
+                            <!--Plantilla vacia-->
+                            <Button
                             Content="Vacio"
 
                             Margin="0 10 0 0"
@@ -84,14 +94,30 @@
                             Style="{StaticResource BotonFondoResaltable}"
                             
                             Command="{Binding ComandoCrearVacio}"/>
-                    </StackPanel>
+                        </StackPanel>
 
-                </Viewbox>
+                    </Viewbox>
 
-            </Grid>
-            
-        </Border>
-            
+                </Grid>
+
+            </Border>
+        </Grid>
+
+        <Viewbox
+            Grid.Row="1"
+
+            MaxHeight="30"
+
+            HorizontalAlignment="Stretch">
+
+            <Button
+                Content="Salir"
+                    
+                Padding="10 0"
+
+                Command="{Binding ComandoAceptar}"/>
+        </Viewbox>
+
     </Grid>
 
 </UserControl>

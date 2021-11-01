@@ -65,10 +65,10 @@ namespace AppGM.Tests
 
 			var copia = pj.CrearCopiaProfundaEnSubtipo<ModeloPersonaje, ModeloPersonaje>();
 
-			Assert.True(pj.Nombre == copia.Nombre, "Nombre de los personajes no coinciden");
-			Assert.True(copia.Alianzas.Count > 0, "No se copiaron alianzas");
-			Assert.True(pj.Alianzas.First().Nombre == copia.Alianzas.First().Nombre, "Nombres de las alianzas no coinciden");
-			Assert.True(pj.Especialidades.First().Nombre == copia.Especialidades.First().Nombre, "Nombres de las especialidades no coinciden");
+			Assert.True(pj.Nombre == copia.resultado.Nombre, "Nombre de los personajes no coinciden");
+			Assert.True(copia.resultado.Alianzas.Count > 0, "No se copiaron alianzas");
+			Assert.True(pj.Alianzas.First().Nombre == copia.resultado.Alianzas.First().Nombre, "Nombres de las alianzas no coinciden");
+			Assert.True(pj.Especialidades.First().Nombre == copia.resultado.Especialidades.First().Nombre, "Nombres de las especialidades no coinciden");
 		}
 
 		/// <summary>
@@ -81,11 +81,11 @@ namespace AppGM.Tests
 
 			var copia = pj.CrearCopiaProfundaEnSubtipo<ModeloPersonaje, ModeloPersonaje>();
 
-			Assert.True(pj.Especialidades != copia.Especialidades, "Las listas de especialidades no son referencias distintas");
+			Assert.True(pj.Especialidades != copia.resultado.Especialidades, "Las listas de especialidades no son referencias distintas");
 
-			copia.Alianzas.First().Nombre = "Alianza poronga";
+			copia.resultado.Alianzas.First().Nombre = "Alianza poronga";
 
-			Assert.True(pj.Alianzas.First().Nombre != copia.Alianzas.First().Nombre, "Nombre de la alianza original fue modificado junto con el de la copia");
+			Assert.True(pj.Alianzas.First().Nombre != copia.resultado.Alianzas.First().Nombre, "Nombre de la alianza original fue modificado junto con el de la copia");
 		}
 
 		[Fact]
@@ -95,7 +95,7 @@ namespace AppGM.Tests
 
 			var copia = pj.CrearCopiaProfundaEnSubtipo<ModeloPersonaje, ModeloPersonaje>();
 
-			Assert.True(copia.Alianzas[0].PersonajesAfectados[0] == copia);
+			Assert.True(copia.resultado.Alianzas[0].PersonajesAfectados[0] == copia.resultado);
 		}
 
 		[Fact]
@@ -103,7 +103,7 @@ namespace AppGM.Tests
 		{
 			var pj = CrearPersonajeDePrueba();
 
-			var copia = await pj.CrearCopiaProfundaEnSubtipoAsync<ModeloPersonaje, ModeloPersonaje>();
+			var copia = (await pj.CrearCopiaProfundaEnSubtipoAsync<ModeloPersonaje, ModeloPersonaje>()).resultado;
 
 			Assert.True(pj.Nombre == copia.Nombre, "Nombres no son iguales");
 
@@ -137,11 +137,11 @@ namespace AppGM.Tests
 
 			var copiaPj = pj.CrearCopiaProfundaEnSubtipo<ModeloPersonaje, ModeloPersonaje>();
 
-			copiaPj.Alianzas.Clear();
+			copiaPj.resultado.Alianzas.Clear();
 
-			List<ModeloBase> modelosEliminados = new List<ModeloBase>();
+			var resultadoCopia = copiaPj.resultado.CrearCopiaProfundaEnSubtipo(pj.GetType(), pj, null, null);
 
-			copiaPj.CrearCopiaProfundaEnSubtipo(pj.GetType(), pj, null, modelosEliminados, null);
+			var modelosEliminados = resultadoCopia.modelosCreadosEliminados.ModelosEliminados;
 
 			Assert.True(modelosEliminados.Count > 0, "No se eliminaron modelos");
 			Assert.Contains(modelosEliminados, m => m == alianza);
@@ -169,18 +169,18 @@ namespace AppGM.Tests
 				Descripcion = "Cooler"
 			};
 
-			var copiaPj = pj.CrearCopiaProfundaEnSubtipo<ModeloPersonaje, ModeloPersonaje>();
+			var resultadoCopia =  pj.CrearCopiaProfundaEnSubtipo<ModeloPersonaje, ModeloPersonaje>();
+
+			var copiaPj = resultadoCopia.resultado;
 
 			copiaPj.Alianzas.Add(nuevaAlianza);
 			copiaPj.Contratos.Add(nuevoContrato);
 
-			List<ModeloBase> modelosCreados = new List<ModeloBase>();
+			var resultadoSegundaCopia = copiaPj.CrearCopiaProfundaEnSubtipo<ModeloPersonaje, ModeloPersonaje>(pj, null, null);
 
-			copiaPj.CrearCopiaProfundaEnSubtipo<ModeloPersonaje, ModeloPersonaje>(pj, null, null, modelosCreados);
-
-			Assert.Contains(modelosCreados, m => m is ModeloContrato && m.Id == nuevoContrato.Id);
-			Assert.Contains(modelosCreados, m => m is ModeloAlianza && m.Id == nuevaAlianza.Id);
-			Assert.True(modelosCreados.Count == 2);
+			Assert.Contains(resultadoSegundaCopia.modelosCreadosEliminados.ModelosCreados, m => m is ModeloContrato && m.Id == nuevoContrato.Id);
+			Assert.Contains(resultadoSegundaCopia.modelosCreadosEliminados.ModelosCreados, m => m is ModeloAlianza && m.Id == nuevaAlianza.Id);
+			Assert.True(resultadoSegundaCopia.modelosCreadosEliminados.ModelosCreados.Count == 2);
 		}
 
 		public void PruebaReemplazoDeReferencias()
@@ -192,7 +192,7 @@ namespace AppGM.Tests
 			{
 				Id = 1,
 
-				PersonajesAfectados = new List<ModeloPersonaje>{copiaPj},
+				PersonajesAfectados = new List<ModeloPersonaje>{copiaPj.resultado},
 
 				Nombre = "Contrato piola",
 				Descripcion = "Contrato entre pibes piola"
@@ -203,16 +203,16 @@ namespace AppGM.Tests
 				ContratoDeAlianza = nuevoContrato,
 				Id = 1,
 				
-				PersonajesAfectados = new List<ModeloPersonaje>{copiaPj},
+				PersonajesAfectados = new List<ModeloPersonaje>{copiaPj.resultado},
 
 				Nombre = "Cooler alianza",
 				Descripcion = "Cooler"
 			};
 
-			copiaPj.Alianzas.Add(nuevaAlianza);
-			copiaPj.Contratos.Add(nuevoContrato);
+			copiaPj.resultado.Alianzas.Add(nuevaAlianza);
+			copiaPj.resultado.Contratos.Add(nuevoContrato);
 
-			copiaPj.CrearCopiaProfundaEnSubtipo<ModeloPersonaje, ModeloPersonaje>(pj, null, null, null, null);
+			copiaPj.resultado.CrearCopiaProfundaEnSubtipo<ModeloPersonaje, ModeloPersonaje>(pj, null, null);
 
 			Assert.True(pj.Contratos[0].PersonajesAfectados[0] == pj, "No se reemplazo la referencia del personaje");
 		}

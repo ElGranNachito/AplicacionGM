@@ -54,15 +54,17 @@ namespace AppGM
                         {
 	                        if (SistemaPrincipal.Aplicacion.VentanaActual.DataContext is ViewModelCrearPersonaje v)
 		                        return new UserControlCreacionPersonaje {DataContext = v};
-	                        
-		                    return new UserControlCreacionPersonaje
-		                    {
-			                    DataContext = new ViewModelCrearPersonaje(
-				                    vm =>
-				                    {
-					                    SistemaPrincipal.Aplicacion.PaginaActual = SistemaPrincipal.Aplicacion.PaginaAnterior;
-				                    })
-		                    };
+
+	                        var nuevoVmCreacionPj = new ViewModelCrearPersonaje(
+		                        vm =>
+		                        {
+			                        SistemaPrincipal.Aplicacion.PaginaActual =
+				                        SistemaPrincipal.Aplicacion.PaginaAnterior;
+		                        });
+
+                            nuevoVmCreacionPj.Inicializar().RunSynchronously();
+
+                            return new UserControlCreacionPersonaje {DataContext = nuevoVmCreacionPj};
                         }
                     }
                     break;

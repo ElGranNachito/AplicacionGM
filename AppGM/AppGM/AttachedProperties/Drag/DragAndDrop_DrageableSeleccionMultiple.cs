@@ -44,23 +44,21 @@ namespace AppGM
 				//Guardamos si el item esta previamente seleccionado
 				var estabaPreviamenteSeleccionado = seleccionable.EstaSeleccionado;
 
-				seleccionable.EstaSeleccionado = true;
-
 				//Si cualquiera de las teclas ctrl esta presionada significa que estamos realizando seleccion multiple asi que nos pegamos la vuelta
 				//
 				//Si el item estaba previamente seleccionado entonces tambien nos pegamos la vuelta porque entonces o queremos arrastrar varios elementos
 				//o hicimos un click sobre un elemento que ya se encontraba seleccionado por lo que no vale la pena ejecutar el siguiente codigo
-				if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl) || estabaPreviamenteSeleccionado)
+				if (!(Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl) || estabaPreviamenteSeleccionado))
 				{
-					return;
+					//Deseleccionamos los elementos seleccionados que no sean este seleccionable
+					foreach (var seleccionableActual in hostDragAndDrop.ElementosSeleccionados.Cast<ViewModelElementoArbolBase>().ToList())
+					{
+						if (seleccionableActual != seleccionable)
+							seleccionableActual.EstaSeleccionado = false;
+					}
 				}
 
-				//Deseleccionamos los elementos seleccionados que no sean este seleccionable
-				foreach (var seleccionableActual in hostDragAndDrop.ElementosSeleccionados.Cast<ViewModelElementoArbolBase>().ToList())
-				{
-					if (seleccionableActual != seleccionable)
-						seleccionableActual.EstaSeleccionado = false;
-				}
+				seleccionable.EstaSeleccionado = true;
 			};
 
 			fe.PreviewMouseUp += (sender, args) =>

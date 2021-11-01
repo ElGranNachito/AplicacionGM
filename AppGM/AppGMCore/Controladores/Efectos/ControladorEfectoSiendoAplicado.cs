@@ -363,9 +363,9 @@ namespace AppGM.Core
 		/// <summary>
 		/// Elimina el modelo y quita el efecto de su <see cref="objetivo"/>
 		/// </summary>
-		public override void Eliminar()
+		public override void Eliminar(bool mostrarMensajeConfirmacion = true)
 		{
-			base.Eliminar();
+			base.Eliminar(mostrarMensajeConfirmacion);
 
 			SistemaPrincipal.EliminarModelo(modelo);
 		} 

@@ -37,13 +37,13 @@ namespace AppGM.Core
 
 				if (mEstaSeleccionado)
 				{
-					HostDragAndDrop.ElementosSeleccionados.Add(this);
+					HostDragAndDrop.SeleccionarElemento(this);
 
 					OnSeleccionado(this, Raiz);
 				}
 				else
 				{
-					HostDragAndDrop.ElementosSeleccionados.Remove(this);
+					HostDragAndDrop.DeseleccionarElemento(this);
 
 					OnDeseleccionado(this, Raiz);
 				}
@@ -105,6 +105,18 @@ namespace AppGM.Core
 			{
 				SistemaPrincipal.LoggerGlobal.LogCrash($"{nameof(Raiz)} no puede ser null");
 			}
+		}
+
+		public override void RemoverDePadre()
+		{
+			if (Padre != null)
+			{
+				Padre.Hijos.Remove(this);
+
+				return;
+			}
+
+			Raiz.Hijos.Remove(this);
 		}
 	}
 }

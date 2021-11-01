@@ -33,12 +33,12 @@ namespace AppGM.Core
 
             ActualizarListaDePersonajes();
 
-            ComandoAñadirPersonaje = new Comando(() =>
+            ComandoAñadirPersonaje = new Comando(async () =>
             {
-	            var vmCreacionPj = new ViewModelCrearPersonaje(vm =>
+	            var vmCreacionPj = await new ViewModelCrearPersonaje(vm =>
 	            {
 		            SistemaPrincipal.Aplicacion.VentanaPrincipal.DataContextContenido = vmCrearRol;
-	            });
+	            }).Inicializar();
 
 	            SistemaPrincipal.Aplicacion.VentanaPrincipal.DataContextContenido = vmCreacionPj;
             });

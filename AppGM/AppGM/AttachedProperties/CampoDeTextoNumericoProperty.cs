@@ -154,7 +154,7 @@ namespace AppGM
 
 			Type tipoActual = (Type)args.NewValue;
 
-			if (tipoActual == typeof(int) || tipoActual == typeof(float) || tipoActual == typeof(double))
+			if (tipoActual == typeof(int) || tipoActual == typeof(float) || tipoActual == typeof(double) || tipoActual == typeof(decimal))
 			{
 				if (d is TextBox t)
 				{

@@ -653,13 +653,13 @@ namespace AppGM.Core
 
 			//--Parte del cuerpo - slot dueño
 			modelBuilder.Entity<ModeloParteDelCuerpo>()
-				.HasOne(p => p.SlotDueño)
+				.HasOne(p => p.SlotContenedor)
 				.WithOne(s => s.ParteDelCuerpoAlmacenada)
 				.OnDelete(DeleteBehavior.Cascade);
 
 			//--Parte del cuerpo - personaje
 			modelBuilder.Entity<ModeloParteDelCuerpo>()
-				.HasOne(p => p.PersonajeDueño)
+				.HasOne(p => p.PersonajeContenedor)
 				.WithMany(p => p.PartesDelCuerpo)
 				.OnDelete(DeleteBehavior.Cascade);
 

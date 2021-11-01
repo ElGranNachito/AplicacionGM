@@ -6,7 +6,16 @@ namespace AppGM.Core
 {
 	public abstract class ViewModelConResultadoBase : ViewModel
 	{
-		public Action<EResultadoViewModel> OnResultadoEstablecido = delegate { };
+		#region Eventos
+
+		/// <summary>
+		/// Evento disparado cuando el <see cref="Resultado"/> de este viewmodel es establecido
+		/// </summary>
+		public event Action<EResultadoViewModel> OnResultadoEstablecido = delegate { }; 
+
+		#endregion
+
+		#region Campos & Propiedades
 
 		private EResultadoViewModel mResultado = EResultadoViewModel.NoEstablecido;
 
@@ -26,7 +35,9 @@ namespace AppGM.Core
 
 				OnResultadoEstablecido(mResultado);
 			}
-		}
+		} 
+
+		#endregion
 	}
 
 	/// <summary>

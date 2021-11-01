@@ -327,7 +327,7 @@ namespace AppGM.Core
 			return null;
 		}
 
-		public override void Eliminar()
+		public override void Eliminar(bool mostrarMensajeConfirmacion = false)
 		{
 			//Comprobamos que el archivo xml de la funcion exista
 			if (File.Exists(NombreCompletoArchivoFuncion))

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using CoolLogs;
 
 namespace AppGM.Core
 {
@@ -10,14 +11,20 @@ namespace AppGM.Core
     {
 	    #region Eventos
 
-	    public delegate void dItemAlmacenado(ModeloItem item);
+	    public delegate void dItemAlmacenado(ControladorItem item);
 
-	    public delegate void dElementoAlmacenado(IContenedorDeBloques elemento);
+	    public delegate void dParteDelCuerpoAlmacenada(ControladorParteDelCuerpo parteDelCuerpo);
+
+	    public delegate void dElementoAlmacenado(IModeloConSlots elemento, ControladorBase controladorElemento);
 
 	    public event dItemAlmacenado OnItemAlmacenado = delegate { };
-	    public event dElementoAlmacenado OnElementoAlmacenado = delegate { };
+	    public event dItemAlmacenado OnItemQuitado = delegate { };
+        public event dParteDelCuerpoAlmacenada OnParteDelCuerpoAlmacenada = delegate { };
+        public event dParteDelCuerpoAlmacenada OnParteDelCuerpoQuitada = delegate { };
+        public event dElementoAlmacenado OnElementoAlmacenado = delegate { };
+        public event dElementoAlmacenado OnElementoQuitado = delegate { };
 
-	    #endregion
+        #endregion
 
         #region Campos & Propiedades
 
@@ -29,12 +36,22 @@ namespace AppGM.Core
         /// <summary>
         /// Indica si este slot se encuentra vacio
         /// </summary>
-        public bool EstaVacio => ParteDelCuerpoAlmacenada == null && ControladoresItemsAlmacenados.Count > 0;
+        public bool EstaVacio => !ContieneItems && !ContieneParteDelCuerpo;
+
+        /// <summary>
+        /// Indica si este slot contiene items
+        /// </summary>
+        public bool ContieneItems => ControladoresItemsAlmacenados.Count > 0;
+
+        /// <summary>
+        /// Indica si este slot contiene una parte del cuerpo
+        /// </summary>
+        public bool ContieneParteDelCuerpo => ParteDelCuerpoAlmacenada != null;
 
         /// <summary>
         /// Lista con todos los <see cref="ControladorItem"/> guardados
         /// </summary>
-        public List<ControladorItem> ControladoresItemsAlmacenados { get; set; } = new List<ControladorItem>();
+        public List<ControladorItem> ControladoresItemsAlmacenados { get; set; }
 
         /// <summary>
         /// Controlador de la parte del cuerpo almacenada en este slot
@@ -52,14 +69,20 @@ namespace AppGM.Core
         public ControladorSlot(ModeloSlot _modeloSlot)
 	        : base(_modeloSlot)
         {
+	        ControladoresItemsAlmacenados = new List<ControladorItem>(modelo.ItemsAlmacenados.Count);
+
 	        foreach (var item in modelo.ItemsAlmacenados)
 	        {
-				ControladoresItemsAlmacenados.Add(SistemaPrincipal.ObtenerControlador<ControladorItem, ModeloItem>(item, true));		        
+                var controladorItem = SistemaPrincipal.ObtenerControlador<ControladorItem, ModeloItem>(item, true);
+
+                AlmacenarItem(controladorItem);
 	        }
 
 	        if (modelo.ParteDelCuerpoAlmacenada != null)
 	        {
 		        ParteDelCuerpoAlmacenada = SistemaPrincipal.ObtenerControlador<ControladorParteDelCuerpo, ModeloParteDelCuerpo>(modelo.ParteDelCuerpoAlmacenada, true);
+			        
+		        AlmacenarParteDelCuerpo(ParteDelCuerpoAlmacenada);
 	        }
         }
 
@@ -89,9 +112,57 @@ namespace AppGM.Core
 
             ControladoresItemsAlmacenados.Add(item);
 
-            modelo.ItemsAlmacenados.Add(item.modelo);
+            if (!modelo.ItemsAlmacenados.Contains(item.modelo))
+            {
+	            modelo.ItemsAlmacenados.Add(item.modelo);
 
-            return false;
+	            OnItemAlmacenado(item);
+	            OnElementoAlmacenado(item.modelo, item);
+            }
+
+            item.OnItemEliminado += ItemEliminadoHandler;
+
+            SistemaPrincipal.LoggerGlobal.Log($"{item} almacenado con exito en {this}", ESeveridad.Debug);
+
+            return true;
+        }
+
+        /// <summary>
+        /// Almacena un item utilizando su modelo. Si se sabe de la existencia de su <see cref="ControladorItem"/>
+        /// es una mejor idea utilizar la sobrecarga que toma el controlador directamente
+        /// </summary>
+        /// <param name="item">Modelo del item que se quiere almacenar</param>
+        public void AlmacenarItem(ModeloItem item)
+        {
+	        var controladorItem = SistemaPrincipal.ObtenerControlador<ControladorItem, ModeloItem>(item);
+
+	        if (controladorItem != null)
+	        {
+		        AlmacenarItem(controladorItem);
+
+                return;
+	        }
+
+	        item.OnControladorCreado += ControladorElementoCreadoHandler;
+        }
+
+        /// <summary>
+        /// Almacena una parte del cuerpo utilizando su modelo. Si se sabe de la existencia de su <see cref="ControladorParteDelCuerpo"/>
+        /// es una mejor idea utilizar la sobrecarga que toma el controlador directamente
+        /// </summary>
+        /// <param name="parteDelCuerpo">Modelo de la parte del cuerpo que se queire almacenar</param>
+        public void AlmacenarParteDelCuerpo(ModeloParteDelCuerpo parteDelCuerpo)
+        {
+	        var controladorParteDelCuerpo = SistemaPrincipal.ObtenerControlador<ControladorParteDelCuerpo, ModeloParteDelCuerpo>(parteDelCuerpo);
+
+	        if (controladorParteDelCuerpo != null)
+	        {
+		        AlmacenarParteDelCuerpo(controladorParteDelCuerpo);
+
+		        return;
+	        }
+
+	        parteDelCuerpo.OnControladorCreado += ControladorElementoCreadoHandler;
         }
 
         /// <summary>
@@ -111,20 +182,118 @@ namespace AppGM.Core
                 return false;
             }
 
-	        return true;
+	        OnItemQuitado(item);
+	        OnElementoQuitado(item.modelo, item);
+
+	        item.OnItemEliminado -= ItemEliminadoHandler;
+
+            SistemaPrincipal.LoggerGlobal.Log($"{item} quitado de {this} con exito", ESeveridad.Debug);
+
+            return true;
         }
 
+        /// <summary>
+        /// Almacena una parte del cuerpo en este slot
+        /// </summary>
+        /// <param name="parteDelCuerpo">Controlador de la parte del cuerpo que se quiere almacenar</param>
         public void AlmacenarParteDelCuerpo(ControladorParteDelCuerpo parteDelCuerpo)
         {
 	        ParteDelCuerpoAlmacenada = parteDelCuerpo;
 
-	        modelo.ParteDelCuerpoAlmacenada = parteDelCuerpo.modelo;
+	        if (modelo.ParteDelCuerpoAlmacenada != parteDelCuerpo.modelo)
+	        {
+		        modelo.ParteDelCuerpoAlmacenada = parteDelCuerpo.modelo;
+
+		        OnParteDelCuerpoAlmacenada(parteDelCuerpo);
+		        OnElementoAlmacenado(parteDelCuerpo.modelo, parteDelCuerpo);
+	        }
+
+	        ParteDelCuerpoAlmacenada.OnParteDelCuerpoEliminada += ParteDelCuerpoEliminadaHandler;
+
+            SistemaPrincipal.LoggerGlobal.Log($"{parteDelCuerpo} almacenada con exito en {this}", ESeveridad.Debug);
         }
 
-        public override Task Recargar()
+        /// <summary>
+        /// Quita la parte del cuerpo almacenada en este slot
+        /// </summary>
+        public void QuitarParteDelCuerpo()
         {
-            //TODO: Implementar
-	        return base.Recargar();
+            if(ParteDelCuerpoAlmacenada == null)
+                return;
+
+	        OnParteDelCuerpoQuitada(ParteDelCuerpoAlmacenada);
+	        OnElementoQuitado(ParteDelCuerpoAlmacenada.modelo, ParteDelCuerpoAlmacenada);
+
+	        ParteDelCuerpoAlmacenada.OnParteDelCuerpoEliminada -= ParteDelCuerpoEliminadaHandler;
+
+	        ParteDelCuerpoAlmacenada = null;
+	        modelo.ParteDelCuerpoAlmacenada = null;
+
+            SistemaPrincipal.LoggerGlobal.Log($"Parte del cuerpo almacenada en {this} quitada con exito", ESeveridad.Debug);
+        }
+
+        public override async Task Recargar()
+        { 
+	        await base.Recargar();
+
+            //Solo nos interesa lidiar con el caso de que se hayan añadido mas items puesto que estamos subscritos al evento
+            //de item eliminado asi que si ocurre el caso opuesto nos encargaremos automaticamente
+	        if (modelo.ItemsAlmacenados.Count > ControladoresItemsAlmacenados.Count)
+	        {
+		        var diferencia = modelo.ItemsAlmacenados.Count - ControladoresItemsAlmacenados.Count;
+
+		        for (int i = ControladoresItemsAlmacenados.Count - 1; i < diferencia; ++i)
+			        AlmacenarItem(modelo.ItemsAlmacenados[i]);
+	        }
+
+            SistemaPrincipal.LoggerGlobal.Log($"{this} recargado", ESeveridad.Debug);
+        }
+
+        /// <summary>
+        /// Metodo encargado de almacenar elementos al slot cuando son cargados
+        /// </summary>
+        /// <param name="elemento"><see cref="ModeloBase"/> cuyo controlador fue creado</param>
+        /// <param name="controlador"><see cref="ControladorBase"/> controlador del <paramref name="elemento"/></param>
+        private void ControladorElementoCreadoHandler(ModeloBase elemento, ControladorBase controlador)
+        {
+	        elemento.OnControladorCreado -= ControladorElementoCreadoHandler;
+
+	        if (controlador is ControladorItem item)
+	        {
+		        AlmacenarItem(item);
+	        }
+	        else if (controlador is ControladorParteDelCuerpo parteDelCuerpo)
+	        {
+                AlmacenarParteDelCuerpo(parteDelCuerpo);
+	        }
+	        else
+	        {
+                SistemaPrincipal.LoggerGlobal.Log($"{nameof(controlador)} no es de un tipo aceptado", ESeveridad.Error);
+	        }
+        }
+
+        /// <summary>
+        /// Metodo encargado de lidiar con el evento de que un <see cref="ControladorItem"/> almacenado sea eliminado
+        /// </summary>
+        /// <param name="item">Controlador del item que fue eliminado</param>
+        /// <param name="portador">Controlador del personaje al que pertenece este item</param>
+        private void ItemEliminadoHandler(ControladorItem item, ControladorPersonaje portador)
+        {
+	        SistemaPrincipal.LoggerGlobal.Log($"quitando {item} porque fue eliminado", ESeveridad.Debug);
+
+	        QuitarItem(item);
+        }
+
+        /// <summary>
+        /// Metodo encargado de lidiar con el evento de que un <see cref="ControladorParteDelCuerpo"/> almacenado sea eliminado
+        /// </summary>
+        /// <param name="partedelCuerpo">Controlador de la parte del cuerpo que fue eliminada</param>
+        /// <param name="dueño">Controlador del personaje al que pertenece esta parte del cuerpo</param>
+        private void ParteDelCuerpoEliminadaHandler(ControladorParteDelCuerpo partedelCuerpo, ControladorPersonaje dueño)
+        {
+	        SistemaPrincipal.LoggerGlobal.Log($"quitando {partedelCuerpo} porque fue eliminado", ESeveridad.Debug);
+
+	        QuitarParteDelCuerpo();
         }
 
         public override string ToString()
