@@ -18,6 +18,7 @@
             <ImageBrush ImageSource="../../../../Media/Imagenes/Clima/Horarios_Hora.png"></ImageBrush>
         </Grid.Background>
         
+        <!--Horario-->
         <TextBlock Text="{Binding Hora}"
                    Foreground="Black"
                    FontSize="50"
@@ -27,6 +28,7 @@
                    VerticalAlignment="Top" 
                    />
 
+        <!--Clima y dia-->
         <Grid>
 
             <Grid.Background>
@@ -34,26 +36,104 @@
             </Grid.Background>
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="35"/>
-                <RowDefinition Height="55"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="180" MaxWidth="180"/>
-                <ColumnDefinition Width="*" MaxWidth="70"/>
-            </Grid.ColumnDefinitions>
+            <Grid>
 
-            <TextBlock 
-                Grid.Row="2" Grid.Column="0"
-                Text="{Binding DiaDeLaSemana}"
-                Foreground="MediumAquamarine"
-                FontSize="50"
-                FontFamily="{StaticResource 'Font Canon'}"
-                Margin="0 27 60 0"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Top" 
-            />            
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="35"/>
+                    <RowDefinition Height="55"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="180" MaxWidth="180"/>
+                    <ColumnDefinition Width="70" MaxWidth="70"/>
+                </Grid.ColumnDefinitions>
+
+                <Image 
+                    Grid.Row="1" Grid.Column="1"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Source="{Binding PathImagenClima}" />
+
+                <TextBlock 
+                    Grid.Row="2" Grid.Column="0"
+                    Text="{Binding DiaDeLaSemana}"
+                    Foreground="#9ac8bd"
+                    FontSize="40"
+                    FontFamily="{StaticResource 'Font Canon'}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top" 
+                />            
+
+                <Grid Grid.Row="2" Grid.Column="1">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" MaxWidth="23"/>
+                        <ColumnDefinition Width="*" MaxWidth="23"/>
+                        <ColumnDefinition Width="*" MaxWidth="23"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Image 
+                        Grid.Column="0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Source="{Binding PathImagenViento}" />
+
+                    <Image 
+                        Grid.Column="1"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Source="{Binding PathImagenHumedad}" />
+
+                    <Image 
+                        Grid.Column="2"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Margin="0 0 0 5"
+                        Source="{Binding PathImagenTemperatura}" />
+
+                </Grid>
+
+            </Grid>
+
+            <!--Set de control de clima-->
+            <StackPanel 
+                Grid.Row="1"
+                Orientation="Horizontal"
+                VerticalAlignment="Bottom"
+                >
+
+                <!-- Boton retroceder dia-->
+                <Button  
+                    Style="{StaticResource BotonClima}"
+                    Width="86"
+                    HorizontalAlignment="Right"
+                    Content="Retroceder dia"
+                    Command="{Binding ComandoBotonRetrocederDia}"/>
+
+                <!-- Boton actualizar clima -->
+                <Button
+                    Style="{StaticResource BotonClima}"
+                    Width="80"
+                    Margin="5 0 0 0"
+                    HorizontalAlignment="Center"
+                    Content="Actualizar"
+                    Command="{Binding ComandoBotonActualizarClima}"/>
+
+                <!-- Boton avanzar dia -->
+                <Button
+                    Style="{StaticResource BotonClima}"
+                    Width="83"
+                    Margin="5 0 0 0"
+                    HorizontalAlignment="Left"
+                    Content="Avanzar dia"
+                    Command="{Binding ComandoBotonAvanzarDia}"/>
+
+            </StackPanel>
 
         </Grid>
 

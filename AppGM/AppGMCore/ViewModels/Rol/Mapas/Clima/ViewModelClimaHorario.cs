@@ -82,22 +82,22 @@ namespace AppGM.Core
         /// <summary>
         /// Ruta de la imagen del cima correspondiente.
         /// </summary>
-        public string PathImagenClima => EnumHelpers.ToStringClima(Clima);
+        public string PathImagenClima => $"../../../../Media/Imagenes/Clima/{EnumHelpers.ToStringClima(Clima)}.png";
 
         /// <summary>
         /// Ruta de la imagen del tipo de viento correspondiente.
         /// </summary>
-        public string PathImagenViento => EnumHelpers.ToStringViento(Viento);
+        public string PathImagenViento => $"../../../../Media/Imagenes/Clima/Viento/{EnumHelpers.ToStringViento(Viento)}.png";
 
         /// <summary>
         /// Ruta de la imagen del valor de humedad correspondiente.
         /// </summary>
-        public string PathImagenHumedad => EnumHelpers.ToStringHumedad(Humedad);
+        public string PathImagenHumedad => $"../../../../Media/Imagenes/Clima/Humedad/{EnumHelpers.ToStringHumedad(Humedad)}.png";
 
         /// <summary>
         /// Ruta de la imagen del valor de temperatura correspondiente.
         /// </summary>
-        public string PathImagenTemperatura => EnumHelpers.ToStringTemperatura(Temperatura);
+        public string PathImagenTemperatura => $"../../../../Media/Imagenes/Clima/Temperatura/{EnumHelpers.ToStringTemperatura(Temperatura)}.png";
 
 
         #endregion
@@ -133,6 +133,11 @@ namespace AppGM.Core
             DispararPropertyChanged(new PropertyChangedEventArgs(nameof(Viento)));
             DispararPropertyChanged(new PropertyChangedEventArgs(nameof(Humedad)));
             DispararPropertyChanged(new PropertyChangedEventArgs(nameof(Temperatura)));
+
+            DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PathImagenClima)));
+            DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PathImagenViento)));
+            DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PathImagenHumedad)));
+            DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PathImagenTemperatura)));
         }
 
         /// <summary>
@@ -153,6 +158,7 @@ namespace AppGM.Core
             climaHorario.AvanzarDiaSemana();
 
             DispararPropertyChanged(new PropertyChangedEventArgs(nameof(DiaSemana)));
+            DispararPropertyChanged(new PropertyChangedEventArgs(nameof(DiaDeLaSemana)));
         }
 
         /// <summary>
@@ -163,6 +169,7 @@ namespace AppGM.Core
             climaHorario.RetrocederDiaSemana();
 
             DispararPropertyChanged(new PropertyChangedEventArgs(nameof(DiaSemana)));
+            DispararPropertyChanged(new PropertyChangedEventArgs(nameof(DiaDeLaSemana)));
         }
 
         #endregion

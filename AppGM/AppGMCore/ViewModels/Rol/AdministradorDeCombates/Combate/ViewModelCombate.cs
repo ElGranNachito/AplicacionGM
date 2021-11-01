@@ -100,7 +100,7 @@ namespace AppGM.Core
             Participantes = new ViewModelListaParticipantes(_administradorDeCombate.ControladoresParticipantes, this);
 
             for(int i = 0; i < administradorDeCombate.ControladoresMapas.Count; ++i)
-                Mapas.Add(new ViewModelMapa(administradorDeCombate.ControladoresMapas[i], SistemaPrincipal.DatosRolSeleccionado.Clima));
+                Mapas.Add(new ViewModelMapa(administradorDeCombate.ControladoresMapas[i], SistemaPrincipal.DatosRolSeleccionado.Climas[0]));
 
             DispararPropertyChanged(new PropertyChangedEventArgs(nameof(MapaActual)));
 

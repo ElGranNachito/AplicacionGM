@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AppGM.Core.Migrations
 {
     [DbContext(typeof(RolContext))]
-    [Migration("20211101020759_inicial")]
-    partial class inicial
+    [Migration("20211101122235_Inicial")]
+    partial class Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -196,6 +196,41 @@ namespace AppGM.Core.Migrations
                     b.HasIndex("IdPersonaje");
 
                     b.ToTable("ModeloCaracteristicas");
+                });
+
+            modelBuilder.Entity("AppGM.Core.ModeloClimaHorario", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Clima")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("DiaSemana")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("EsValido")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Humedad")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("IdRol")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Temperatura")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Viento")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdRol")
+                        .IsUnique();
+
+                    b.ToTable("ModeloClimaHorario");
                 });
 
             modelBuilder.Entity("AppGM.Core.ModeloContrato", b =>
@@ -1486,6 +1521,16 @@ namespace AppGM.Core.Migrations
                     b.Navigation("Personaje");
                 });
 
+            modelBuilder.Entity("AppGM.Core.ModeloClimaHorario", b =>
+                {
+                    b.HasOne("AppGM.Core.ModeloRol", "RolAlQuePertenece")
+                        .WithOne("ClimaHorarioGlobal")
+                        .HasForeignKey("AppGM.Core.ModeloClimaHorario", "IdRol")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("RolAlQuePertenece");
+                });
+
             modelBuilder.Entity("AppGM.Core.ModeloContrato", b =>
                 {
                     b.HasOne("AppGM.Core.ModeloAlianza", "Alianza")
@@ -2144,6 +2189,8 @@ namespace AppGM.Core.Migrations
             modelBuilder.Entity("AppGM.Core.ModeloRol", b =>
                 {
                     b.Navigation("AmbienteGlobal");
+
+                    b.Navigation("ClimaHorarioGlobal");
 
                     b.Navigation("Combates");
 

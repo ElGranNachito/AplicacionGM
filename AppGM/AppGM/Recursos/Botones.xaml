@@ -270,6 +270,17 @@
     </Style>
 
     <!-- Boton animado para la opcion de reglas en el menu princiapl -->
+    <Style x:Key="BotonClima" TargetType="{x:Type Button}">
+
+        <Setter Property="Background" Value="#121212"/>
+        <Setter Property="BorderBrush" Value="#9ac8bd"/>
+
+        <Setter Property="Foreground" Value="#9ac8bd"></Setter>
+        <Setter Property="FontFamily" Value="{StaticResource 'Font Awesome Regular'}"></Setter>
+
+    </Style>
+
+    <!-- Boton animado para la opcion de reglas en el menu princiapl -->
     <Style x:Key="BotonReglas" TargetType="{x:Type Button}" BasedOn="{StaticResource BotonConFondoTransparente}">
 
         <Setter Property="Content" Value="{StaticResource ImagenBotonRulesIdle}"/>

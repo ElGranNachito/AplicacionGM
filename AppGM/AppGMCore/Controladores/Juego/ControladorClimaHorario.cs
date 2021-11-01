@@ -35,10 +35,10 @@ namespace AppGM.Core
         /// </summary>
         public void ActualizarClima()
         {
-            modelo.Clima       = ((EClima)(new Random().Next(1, Enum.GetValues(typeof(EClima)).Length - 1)));
-            modelo.Viento      = ((EViento)(new Random().Next(1, Enum.GetValues(typeof(EViento)).Length - 1)));
-            modelo.Humedad     = ((EHumedad)(new Random().Next(1, Enum.GetValues(typeof(EHumedad)).Length - 1)));
-            modelo.Temperatura = ((ETemperatura)(new Random().Next(1, Enum.GetValues(typeof(ETemperatura)).Length - 1)));
+            modelo.Clima       = ((EClima)(new Random().Next(0, Enum.GetValues(typeof(EClima)).Length - 1)));
+            modelo.Viento      = ((EViento)(new Random().Next(0, Enum.GetValues(typeof(EViento)).Length - 1)));
+            modelo.Humedad     = ((EHumedad)(new Random().Next(0, Enum.GetValues(typeof(EHumedad)).Length - 1)));
+            modelo.Temperatura = ((ETemperatura)(new Random().Next(0, Enum.GetValues(typeof(ETemperatura)).Length - 1)));
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace AppGM.Core
         /// </summary>
         public void AvanzarDiaSemana()
         {
-            modelo.DiaSemana.Siguiente();
+            modelo.DiaSemana = EnumHelpers.Siguiente(modelo.DiaSemana);
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace AppGM.Core
         /// </summary>
         public void RetrocederDiaSemana()
         {
-            modelo.DiaSemana.Anterior();
+            modelo.DiaSemana = EnumHelpers.Anterior(modelo.DiaSemana);
         }
 
         #endregion

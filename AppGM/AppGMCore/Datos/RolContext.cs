@@ -54,6 +54,11 @@ namespace AppGM.Core
         public DbSet<ModeloMapa> Mapas { get; set; }
 
         /// <summary>
+        /// Climas existentes
+        /// </summary>
+        public DbSet<ModeloClimaHorario> Climas { get; set; }
+
+        /// <summary>
         /// Unidades en mapas
         /// </summary>
         public DbSet<ModeloUnidadMapa> UnidadesMapa { get; set; }

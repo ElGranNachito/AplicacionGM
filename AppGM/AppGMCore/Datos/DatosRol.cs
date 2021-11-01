@@ -42,7 +42,7 @@ namespace AppGM.Core
 		public List<ControladorMapa> Mapas { get; set; } = null;
 
 		//Unico clima general del rol.
-        public ControladorClimaHorario Clima { get; set; } = null;
+        public List<ControladorClimaHorario> Climas { get; set; } = null;
 
         #endregion
 
@@ -373,8 +373,6 @@ namespace AppGM.Core
 					mDBRol.Add(accion2);
 
 					mDBRol.SaveChanges();
-
-                    Clima = new ControladorClimaHorario(climaHorario);
                 }
 
 				//Cargamos los datos de una manera bastante primitiva :u
@@ -396,6 +394,12 @@ namespace AppGM.Core
 					 select m).ToList();
 
                 mapas.TrimExcess();
+
+                var climas =
+                    (from c in mDBRol.Climas
+                        select c).ToList();
+
+                climas.TrimExcess();
 
 				var unidadesmapa =
 					(from u in mDBRol.UnidadesMapa
@@ -455,6 +459,15 @@ namespace AppGM.Core
 
 					Mapas.Add(controladorActual);
 				}
+				
+                Climas = new List<ControladorClimaHorario>(climas.Count);
+
+                for (int i = 0; i < climas.Count; ++i)
+                {
+                    ControladorClimaHorario controladorClimaHorario = new ControladorClimaHorario(climas[i]);
+
+                    Climas.Add(controladorClimaHorario);
+                }
 
 				Participantes = new List<ControladorParticipante>(participantes.Count);
 
