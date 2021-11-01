@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using CoolLogs;
-
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Ninject;
 
 namespace AppGM.Core
@@ -59,9 +59,14 @@ namespace AppGM.Core
         public static ViewModelRol        RolSeleccionado         => ObtenerInstancia<ViewModelRol>();
 
         /// <summary>
-        /// Viewm model del menu principal del rol.
+        /// Viewm model del mapa principal del rol.
         /// </summary>
         public static ViewModelMapaPrincipal MenuPrincipal => ObtenerInstancia<ViewModelMapaPrincipal>();
+
+        /// <summary>
+        /// Viewm model del clima-horario del rol.
+        /// </summary>
+        public static ViewModelClimaHorario ClimaHorario => ObtenerInstancia<ViewModelClimaHorario>();
 
         /// <summary>
         /// View model del menu de seleccion de combate
@@ -281,7 +286,7 @@ namespace AppGM.Core
 	        Kernel.Bind<ViewModelMenuSeleccionTipoFicha>().ToConstant(new ViewModelMenuSeleccionTipoFicha());
             Kernel.Bind<ViewModelListaFichasVistaFichas>().ToConstant(new ViewModelListaFichasVistaFichas());
             Kernel.Bind<ViewModelSolapaSeccionMapas>()    .ToConstant(new ViewModelSolapaSeccionMapas());
-            Kernel.Bind<ViewModelMapaPrincipal>()         .ToConstant(new ViewModelMapaPrincipal(DatosRolSeleccionado.Mapas[0]));
+            Kernel.Bind<ViewModelMapaPrincipal>()         .ToConstant(new ViewModelMapaPrincipal(DatosRolSeleccionado.Mapas[0], DatosRolSeleccionado.Clima));
             Kernel.Bind<ViewModelMenuSeleccionCombate>()  .ToConstant(new ViewModelMenuSeleccionCombate(DatosRolSeleccionado.CombatesActivos));
             Kernel.Bind<ViewModelCombate>()               .ToConstant(new ViewModelCombate());
         }
@@ -313,6 +318,7 @@ namespace AppGM.Core
             Kernel.Unbind<ViewModelMenuSeleccionTipoFicha>();
             Kernel.Unbind<ViewModelListaFichasVistaFichas>();
             Kernel.Unbind<ViewModelMapaPrincipal>();
+            Kernel.Unbind<ViewModelClimaHorario>();
             Kernel.Unbind<ViewModelMenuSeleccionCombate>();
             Kernel.Unbind<ViewModelCombate>();
             Kernel.Unbind<ViewModelRol>();

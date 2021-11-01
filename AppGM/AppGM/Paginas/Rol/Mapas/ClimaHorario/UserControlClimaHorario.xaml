@@ -1,0 +1,62 @@
+﻿<UserControl x:Class="AppGM.UserControlClimaHorario"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AppGM"
+             mc:Ignorable="d" 
+             d:DesignHeight="170" d:DesignWidth="250">
+    
+    <!--UserControl que hace uso del ViewModelClimaHorario-->
+    <Grid Width="250" 
+          Height="170"
+          HorizontalAlignment="Right"
+          VerticalAlignment="Bottom"
+          Visibility="{Binding MuestraPanelClima, Converter={local:BooleanToVisibilityConverterOcultar}}">
+
+        <Grid.Background>
+            <ImageBrush ImageSource="../../../../Media/Imagenes/Clima/Horarios_Hora.png"></ImageBrush>
+        </Grid.Background>
+        
+        <TextBlock Text="{Binding Hora}"
+                   Foreground="Black"
+                   FontSize="50"
+                   FontFamily="{StaticResource 'Font Canon'}"
+                   Margin="0 27 60 0"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Top" 
+                   />
+
+        <Grid>
+
+            <Grid.Background>
+                <ImageBrush ImageSource="../../../../Media/Imagenes/Clima/Horarios_Dia-Clima.png"></ImageBrush>
+            </Grid.Background>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="55"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="180" MaxWidth="180"/>
+                <ColumnDefinition Width="*" MaxWidth="70"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock 
+                Grid.Row="2" Grid.Column="0"
+                Text="{Binding DiaDeLaSemana}"
+                Foreground="MediumAquamarine"
+                FontSize="50"
+                FontFamily="{StaticResource 'Font Canon'}"
+                Margin="0 27 60 0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top" 
+            />            
+
+        </Grid>
+
+    </Grid>
+
+</UserControl>

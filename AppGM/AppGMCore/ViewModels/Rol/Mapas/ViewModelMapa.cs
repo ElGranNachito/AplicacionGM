@@ -74,6 +74,11 @@ namespace AppGM.Core
         /// </summary>
         public ControladorMapa controladorMapa;
 
+        /// <summary>
+        /// Controlador del panel de clima y horario del mapa.
+        /// </summary>
+        public ControladorClimaHorario controladorClimaHorario;
+
         
         //---------------------------------PROPIEDADES-----------------------------------
 
@@ -111,6 +116,11 @@ namespace AppGM.Core
         /// Casilla del tablero que el usuario tiene actualmente seleccionada.
         /// </summary>
         public ViewModelCasillaTablero CasillaSeleccionada { get; set; }
+
+        /// <summary>
+        /// Panel de clima y horario general del rol.
+        /// </summary>
+        public ViewModelClimaHorario ClimaHorario { get; set; }
 
         /// <summary>
         /// Tamaño del canvas que contiene la imagen del mapa
@@ -181,6 +191,11 @@ namespace AppGM.Core
         /// Indica si el menu de gestion de una casilla debe estar plegado o desplegado.
         /// </summary>
         public bool DebeMostrarMenuCasilla { get; set; } = false;
+
+        /// <summary>
+        /// Indica si se debe mostrar sobre el mapa el panel de datos de clima y horario.
+        /// </summary>
+        public bool MuestraPanelClima { get; set; } = true;
 
         /// <summary>
         /// Indica si se debe mostrar el tablero de casillas sobre el mapa.
@@ -376,15 +391,18 @@ namespace AppGM.Core
         /// Constructor
         /// </summary>
         /// <param name="_controlador">Controlador del mapa</param>
-        public ViewModelMapa(ControladorMapa _controlador)
+        /// <param name="_controladorClimaHorario">Controlador del clima</param>
+        public ViewModelMapa(ControladorMapa _controlador, ControladorClimaHorario _controladorClimaHorario)
         {
             controladorMapa = _controlador;
+            controladorClimaHorario = _controladorClimaHorario;
 
             PathImagen = $"../../../Media/Imagenes/Mapas/{controladorMapa.NombreMapa}{controladorMapa.ObtenerExtension()}";
 
             for (int i = 0; i < 50; ++i)
                 FilasCasillasTablero.Add(new ViewModelFilaCasillas());
 
+            ClimaHorario = new ViewModelClimaHorario(controladorClimaHorario);
 
             Dictionary<ENumeroParty, ViewModelUnidadParty> posicionesParty = new Dictionary<ENumeroParty, ViewModelUnidadParty>();
 

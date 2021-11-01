@@ -65,6 +65,11 @@ namespace AppGM.Core
         public virtual ModeloAmbiente AmbienteGlobal { get; set; }
 
         /// <summary>
+        /// Clima horario general dentro del area de este rol.
+        /// </summary>
+        public virtual ModeloClimaHorario ClimaHorarioGlobal { get; set; }
+
+        /// <summary>
         /// Personajes que forman parte de este rol
         /// </summary>
         public virtual List<ModeloPersonaje> Personajes { get; set; } = new List<ModeloPersonaje>();

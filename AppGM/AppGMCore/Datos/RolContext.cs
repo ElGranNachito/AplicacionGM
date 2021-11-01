@@ -393,6 +393,13 @@ namespace AppGM.Core
 
 			#endregion
 
+			#region Clima
+
+            //Clima:
+            modelBuilder.Entity<ModeloClimaHorario>().ToTable("ModeloClimaHorario").HasNoDiscriminator();
+
+			#endregion
+
 			#region Mapa
 
 			//Mapa:
@@ -455,6 +462,12 @@ namespace AppGM.Core
 				.HasOne(r => r.AmbienteGlobal)
 				.WithOne(p => p.RolAlQuePertenece)
 				.OnDelete(DeleteBehavior.SetNull);
+
+            // - Rol clima
+            modelBuilder.Entity<ModeloRol>()
+                .HasOne(r => r.ClimaHorarioGlobal)
+                .WithOne(p => p.RolAlQuePertenece)
+                .OnDelete(DeleteBehavior.SetNull);
 
 			#endregion
 

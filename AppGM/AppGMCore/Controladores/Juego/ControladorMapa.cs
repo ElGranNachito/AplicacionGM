@@ -16,7 +16,7 @@ namespace AppGM.Core
 
         /// <summary>
         /// Nombre del mapa
-        /// </summary>
+        /// </summary>  
         public string NombreMapa => modelo.NombreMapa;
 
         #endregion

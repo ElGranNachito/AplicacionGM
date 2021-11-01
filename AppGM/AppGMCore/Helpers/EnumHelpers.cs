@@ -153,6 +153,47 @@ namespace AppGM.Core
 	        }
         }
 
+        /// <summary>
+        /// Avanza un valor en la enum.
+        /// </summary>
+        /// <typeparam name="T">Generico del enum del que se avanza</typeparam>
+        /// <param name="e">Enum del que se desea obtener el valor que le sigue</param>
+        /// <returns></returns>
+        public static T Siguiente<T>(this T e) where T : struct
+        {
+            if (!typeof(T).IsEnum) 
+                throw new ArgumentException(String.Format($"El argumento {typeof(T).FullName} no es un Enum"));
+
+            T[] valores = (T[])Enum.GetValues(e.GetType());
+            
+            int indice = Array.IndexOf<T>(valores, e) + 1;
+            
+            return (valores.Length==indice) ? valores[0] : valores[indice];            
+        }
+
+        /// <summary>
+        /// Retrocede un valor en la enum.
+        /// </summary>
+        /// <typeparam name="T">Generico del enum del que se retrocede</typeparam>
+        /// <param name="e">Enum del que se desea obtener el valor que le anterior</param>
+        /// <returns></returns>
+        public static T Anterior<T>(this T e) where T : struct
+        {
+            if (!typeof(T).IsEnum) 
+                throw new ArgumentException(String.Format($"El argumento {typeof(T).FullName} no es un Enum"));
+
+            T[] valores = (T[])Enum.GetValues(e.GetType());
+            
+            int indice = Array.IndexOf<T>(valores, e) - 1;
+            
+            return (valores.Length==indice) ? valores[0] : valores[indice];            
+        }
+
+        /// <summary>
+        /// Obtiene el valor string correspondiente al <see cref="ENumeroParty"/>.
+        /// </summary>
+        /// <param name="numeroParty"><see cref="ENumeroParty"/>del que se desea obtener un valor string</param>
+        /// <returns></returns>
         public static string ToStringNumeroParty(this ENumeroParty numeroParty)
         {
 	        switch (numeroParty)
@@ -195,6 +236,132 @@ namespace AppGM.Core
                 default:
 	                return string.Empty;
 	        }
+        }
+
+        /// <summary>
+        /// Obtiene el valor string correspondiente al <see cref="EClima"/>.
+        /// </summary>
+        /// <param name="clima"><see cref="EClima"/>del que se desea obtener un valor string</param>
+        /// <returns></returns>
+        public static string ToStringClima(this EClima clima)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+
+            switch (clima)
+            {
+                case EClima.Granizo: stringBuilder.Append("Granizo");
+                    break;
+                case EClima.Lluvia: stringBuilder.Append("Lluvia");
+                    break;
+                case EClima.Neblina: stringBuilder.Append("Neblina");
+                    break;
+                case EClima.Nieve: stringBuilder.Append("Nieve");
+                    break;
+                case EClima.Nublado: stringBuilder.Append("Nublado");
+                    break;
+                case EClima.Soleado: stringBuilder.Append("Soleado");
+                    break;
+                case EClima.Tormenta: stringBuilder.Append("Tormenta");
+                    break;
+            }
+
+            return stringBuilder.ToString();
+        }
+
+        /// <summary>
+        /// Obtiene el valor string correspondiente al <see cref="EViento"/>.
+        /// </summary>
+        /// <param name="viento"><see cref="EViento"/>del que se desea obtener un valor string</param>
+        /// <returns></returns>
+        public static string ToStringViento(this EViento viento)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+
+            switch (viento)
+            {
+                case EViento.Brisa: stringBuilder.Append("Brisa");
+                    break;
+                case EViento.Rafagas: stringBuilder.Append("Rafagas");
+                    break;
+                case EViento.Viento: stringBuilder.Append("Viento");
+                    break;
+            }
+
+            return stringBuilder.ToString();
+        }
+
+        /// <summary>
+        /// Obtiene el valor string correspondiente al <see cref="EHumedad"/>.
+        /// </summary>
+        /// <param name="humedad"><see cref="EHumedad"/>del que se desea obtener un valor string</param>
+        /// <returns></returns>
+        public static string ToStringHumedad(this EHumedad humedad)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+
+            switch (humedad)
+            {
+                case EHumedad.Humedad: stringBuilder.Append("Humedad");
+                    break;
+                case EHumedad.MuchaHumedad: stringBuilder.Append("MuchaHumedad");
+                    break;
+                case EHumedad.Seco: stringBuilder.Append("Seco");
+                    break;
+            }
+
+            return stringBuilder.ToString();
+        }
+
+        /// <summary>
+        /// Obtiene el valor string correspondiente al <see cref="ETemperatura"/>.
+        /// </summary>
+        /// <param name="temperatura"><see cref="ETemperatura"/>del que se desea obtener un valor string</param>
+        /// <returns></returns>
+        public static string ToStringTemperatura(this ETemperatura temperatura)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+
+            switch (temperatura)
+            {
+                case ETemperatura.Frio: stringBuilder.Append("Frio");
+                    break;
+                case ETemperatura.Calor: stringBuilder.Append("Calor");
+                    break;
+                case ETemperatura.Templado: stringBuilder.Append("Templado");
+                    break;
+            }
+
+            return stringBuilder.ToString();
+        }
+
+        /// <summary>
+        /// Obtiene el valor string correspondiente al <see cref="EDiaSemana"/>.
+        /// </summary>
+        /// <param name="diaSemana"><see cref="EDiaSemana"/>del que se desea obtener un valor string</param>
+        /// <returns></returns>
+        public static string ToStringDiaSemana(this EDiaSemana diaSemana)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+
+            switch (diaSemana)
+            {
+                case EDiaSemana.Lunes: stringBuilder.Append("Lunes");
+                    break;
+                case EDiaSemana.Martes: stringBuilder.Append("Martes");
+                    break;
+                case EDiaSemana.Miercoles: stringBuilder.Append("Miercoles");
+                    break;
+                case EDiaSemana.Jueves: stringBuilder.Append("Jueves");
+                    break;
+                case EDiaSemana.Viernes: stringBuilder.Append("Viernes");
+                    break;
+                case EDiaSemana.Sabado: stringBuilder.Append("Sabado");
+                    break;
+                case EDiaSemana.Domingo: stringBuilder.Append("Domingo");
+                    break;
+            }
+
+            return stringBuilder.ToString();
         }
 
         public static bool EsAceptarOFinalizar(this EResultadoViewModel resultado) => resultado is EResultadoViewModel.Aceptar or EResultadoViewModel.Finalizar;
