@@ -79,11 +79,6 @@ namespace AppGM.Core
         /// </summary>
         public ViewModelSolapaSeccionMapas SeccionMapaSeleccionada { get; set; } = SistemaPrincipal.ObtenerInstancia<ViewModelSolapaSeccionMapas>();
 
-        /// <summary>
-        /// Viewm model de la pagina del menu mapa
-        /// </summary>
-        public ViewModelClimaHorario ClimaHorario { get; set; } = SistemaPrincipal.ObtenerInstancia<ViewModelClimaHorario>();
-
         #endregion
 
         #region Constructores

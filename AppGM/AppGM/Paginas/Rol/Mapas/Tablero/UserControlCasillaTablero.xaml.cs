@@ -37,8 +37,11 @@ namespace AppGM
         {
             if (DataContext is ViewModelCasillaTablero vm)
             {
-                SistemaPrincipal.MenuPrincipal.CasillaSeleccionada = vm;
-                SistemaPrincipal.MenuPrincipal.DebeMostrarMenuCasilla = true;
+                SistemaPrincipal.MapaPrincipal.CasillaSeleccionada = vm;
+                SistemaPrincipal.MapaPrincipal.DebeMostrarMenuCasilla = true;
+
+                SistemaPrincipal.CombateActual.MapaActual.CasillaSeleccionada = vm;
+                SistemaPrincipal.CombateActual.MapaActual.DebeMostrarMenuCasilla = true;
             }
         }
 

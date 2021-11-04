@@ -61,7 +61,7 @@ namespace AppGM.Core
         /// <summary>
         /// Viewm model del mapa principal del rol.
         /// </summary>
-        public static ViewModelMapaPrincipal MenuPrincipal => ObtenerInstancia<ViewModelMapaPrincipal>();
+        public static ViewModelMapaPrincipal MapaPrincipal => ObtenerInstancia<ViewModelMapaPrincipal>();
 
         /// <summary>
         /// Viewm model del clima-horario del rol.

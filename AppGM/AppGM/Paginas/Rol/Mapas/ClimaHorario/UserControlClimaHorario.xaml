@@ -8,8 +8,8 @@
              d:DesignHeight="170" d:DesignWidth="250">
     
     <!--UserControl que hace uso del ViewModelClimaHorario-->
-    <Grid Width="250" 
-          Height="170"
+    <Grid Width="260" 
+          Height="180"
           HorizontalAlignment="Right"
           VerticalAlignment="Bottom"
           Visibility="{Binding MuestraPanelClima, Converter={local:BooleanToVisibilityConverterOcultar}}">
@@ -29,7 +29,7 @@
                    />
 
         <!--Clima y dia-->
-        <Grid>
+        <Grid Width="250" Height="170">
 
             <Grid.Background>
                 <ImageBrush ImageSource="../../../../Media/Imagenes/Clima/Horarios_Dia-Clima.png"></ImageBrush>
@@ -37,11 +37,10 @@
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
             <Grid>
-
+                
                 <Grid.RowDefinitions>
                     <RowDefinition Height="35"/>
                     <RowDefinition Height="55"/>
@@ -100,42 +99,44 @@
 
             </Grid>
 
-            <!--Set de control de clima-->
-            <StackPanel 
-                Grid.Row="1"
-                Orientation="Horizontal"
-                VerticalAlignment="Bottom"
-                >
-
-                <!-- Boton retroceder dia-->
-                <Button  
-                    Style="{StaticResource BotonClima}"
-                    Width="86"
-                    HorizontalAlignment="Right"
-                    Content="Retroceder dia"
-                    Command="{Binding ComandoBotonRetrocederDia}"/>
-
-                <!-- Boton actualizar clima -->
-                <Button
-                    Style="{StaticResource BotonClima}"
-                    Width="80"
-                    Margin="5 0 0 0"
-                    HorizontalAlignment="Center"
-                    Content="Actualizar"
-                    Command="{Binding ComandoBotonActualizarClima}"/>
-
-                <!-- Boton avanzar dia -->
-                <Button
-                    Style="{StaticResource BotonClima}"
-                    Width="83"
-                    Margin="5 0 0 0"
-                    HorizontalAlignment="Left"
-                    Content="Avanzar dia"
-                    Command="{Binding ComandoBotonAvanzarDia}"/>
-
-            </StackPanel>
+            <Grid.LayoutTransform>
+                <RotateTransform Angle="-5"/>
+            </Grid.LayoutTransform>
 
         </Grid>
+
+        <!--Set de control de clima-->
+        <StackPanel 
+            Orientation="Horizontal"
+            VerticalAlignment="Bottom">
+
+            <!-- Boton retroceder dia-->
+            <Button  
+                Style="{StaticResource BotonClima}"
+                Width="86"
+                HorizontalAlignment="Right"
+                Content="Retroceder dia"
+                Command="{Binding ComandoBotonRetrocederDia}"/>
+
+            <!-- Boton actualizar clima -->
+            <Button
+                Style="{StaticResource BotonClima}"
+                Width="80"
+                Margin="5 0 0 0"
+                HorizontalAlignment="Center"
+                Content="Actualizar"
+                Command="{Binding ComandoBotonActualizarClima}"/>
+
+            <!-- Boton avanzar dia -->
+            <Button
+                Style="{StaticResource BotonClima}"
+                Width="83"
+                Margin="5 0 0 0"
+                HorizontalAlignment="Left"
+                Content="Avanzar dia"
+                Command="{Binding ComandoBotonAvanzarDia}"/>
+
+        </StackPanel>
 
     </Grid>
 

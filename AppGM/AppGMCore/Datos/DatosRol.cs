@@ -303,14 +303,7 @@ namespace AppGM.Core
 					mapa.PosicionesUnidades.Add(unidadServant1);
 					mapa.PosicionesUnidades.Add(unidadServant2);
 
-					mDBRol.Add(new ModeloAdministradorDeCombate
-					{
-						IndicePersonajeTurnoActual = 0,
-						Nombre = "SuperCombateFeroz",
-						TurnoActual = 0
-					});
-
-					mDBRol.Add(mapa);
+                    mDBRol.Add(mapa);
 					mDBRol.Add(contratoPiola);
 					mDBRol.Add(alianzaPiola);
 					mDBRol.Add(servant1);

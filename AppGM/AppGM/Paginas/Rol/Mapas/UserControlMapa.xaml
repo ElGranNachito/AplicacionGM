@@ -250,11 +250,17 @@
 
                             </local:ZoomBorder>
 
-                            <local:UserControlClimaHorario 
-                                DataContext="{Binding ClimaHorario}"
-                                Margin="0 0 10 0"
-                                Visibility="{Binding MuestraPanelClima, Converter={local:BooleanToVisibilityConverterOcultar}}"
-                                />
+
+
+                            <Grid Visibility="{Binding MuestraPanelClima, Converter={local:BooleanToVisibilityConverterOcultar}}">
+
+                                <local:UserControlClimaHorario 
+                                    DataContext="{Binding ClimaHorario}"
+                                    Margin="0 0 5 5"
+                                    />
+
+                            </Grid>
+
 
                         </Grid>
 
