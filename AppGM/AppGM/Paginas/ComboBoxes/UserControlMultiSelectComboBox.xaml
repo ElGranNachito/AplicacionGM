@@ -1,21 +1,52 @@
-﻿<UserControl x:Class="AppGM.UserControlMultiSelectComboBox"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:AppGM"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+﻿<UserControl
+    x:Class="AppGM.UserControlMultiSelectComboBox"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:local="clr-namespace:AppGM"
+    mc:Ignorable="d" 
+    d:DesignHeight="100" d:DesignWidth="400"
+
+    Background="White">
 
     <!--ViewModel: ViewModelMultiselectComboBox-->
 
-    <ComboBox ItemsSource="{Binding Items.Elementos}">
-        <ComboBox.ItemTemplate>
-            <DataTemplate>
-                <CheckBox 
-                    IsChecked="{Binding EstaSeleccionado}"
-                    Style="{StaticResource CheckBoxMultiselectComboBox}"/>
-            </DataTemplate>
-        </ComboBox.ItemTemplate>
-    </ComboBox>
+    <Grid
+        Background="White">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock
+            Text="{Binding  RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}, Path=Descripcion}"
+            
+            TextWrapping="NoWrap"
+            TextTrimming="CharacterEllipsis"/>
+
+        <ComboBox
+            Grid.Column="1"
+
+            MinHeight="20"
+
+            VerticalAlignment="Center"
+
+            Margin="10 0 0 0"
+
+            Style="{StaticResource EstiloMultiselectComboBox}"
+
+            ItemContainerStyle="{StaticResource EstiloContenedorItemsMultiselect}"
+
+            ItemsSource="{Binding Items.Elementos}">
+
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <CheckBox 
+                        IsChecked="{Binding EstaSeleccionado}"
+                        Style="{StaticResource CheckBoxMultiselectComboBox}"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+    </Grid>
 </UserControl>

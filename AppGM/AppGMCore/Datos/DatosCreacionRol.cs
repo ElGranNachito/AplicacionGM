@@ -20,7 +20,6 @@ namespace AppGM.Core
 		public List<ModeloMapa> mapas                             = new List<ModeloMapa>();
         public List<ModeloAmbiente> ambientes                     = new List<ModeloAmbiente>();
 		public List<ModeloItem> items                       = new List<ModeloItem>();
-		public List<ModeloArmaDistancia> armasDistancia          = new List<ModeloArmaDistancia>();
 		public List<ModeloSlot> slots                             = new List<ModeloSlot>();
 		public List<ModeloPerk> perks                             = new List<ModeloPerk>();
 		public List<ModeloHabilidad> skills                       = new List<ModeloHabilidad>();

@@ -18,9 +18,10 @@
 	        SistemaPrincipal.Atar(datosRol.modeloRol);
             SistemaPrincipal.Atar(new ViewModelRol());
 
-	        MostrarBotonSalir = true;
+            SistemaPrincipal.DatosRolSeleccionado.BaseDeDatos.Database.EnsureDeleted();
+            SistemaPrincipal.DatosRolSeleccionado.BaseDeDatos.Database.EnsureCreated();
 
-            ModeloMapa mapaPrincipal = new ModeloMapa();
+	        ModeloMapa mapaPrincipal = new ModeloMapa();
 
             datosRol.mapas.Add(mapaPrincipal);
 
@@ -29,7 +30,7 @@
             {
                 new ViewModelCrearRol_DatosRol(datosRol.modeloRol),
                 new ViewModelCrearRol_DatosMapa(mapaPrincipal),
-                new ViewModelCrearRol_DatosPersonajes(datosRol, this) 
+                new ViewModelDatosPersonajesRol(datosRol.modeloRol, this) 
             });
 
             PasoActual.PropertyChanged += mHandlerPasoActualPropertyChanged;

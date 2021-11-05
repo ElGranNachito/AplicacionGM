@@ -39,6 +39,21 @@
 
     <!--......................................COMBO_BOX...........................................-->
 
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.ComboBoxSeleccionMultiple.Fondo.MouseOver" Color="LightBlue"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.ComboBoxSeleccionMultiple.Fondo.Presionado" Color="LightBlue"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.ComboBoxSeleccionMultiple.Fondo.Deshabilitado" Color="Gray"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.ComboBox.Fondo.Estatico" Color="#B0e2e2e2"/>
+
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.ComboBoxSeleccionMultiple.Borde.MouseOver" Color="Black"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.ComboBoxSeleccionMultiple.Borde.Presionado" Color="Black"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.ComboBoxSeleccionMultiple.Borde.Deshabilitado" Color="DimGray"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.ComboBox.Borde.Estatico" Color="DimGray"/>
+
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.ComboBoxSeleccionMultiple.Glyph.MouseOver" Color="Black"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.ComboBoxSeleccionMultiple.Glyph.Presionado" Color="Black"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.ComboBoxSeleccionMultiple.Glyph.Deshabilitado" Color="Gray"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.ComboBox.Glyph.Estatico" Color="Gray"/>
+
     <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.ComboBoxSeleccionMultiple.FondoItem.MouseOver" Color="DeepSkyBlue"/>
     <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.ComboBoxSeleccionMultiple.FondoItem.MouseDown" Color="LightSkyBlue"/>
     <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.ComboBoxSeleccionMultiple.FondoItem.Seleccionado" Color="LightSkyBlue"/>

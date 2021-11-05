@@ -110,7 +110,7 @@ namespace AppGM.Core
 		/// <summary>
 		/// Metodo encargado de eliminar el modelo de la base de datos
 		/// </summary>
-		public virtual async Task EliminarAsync(bool mostrarMensajeConfirmacion = true) => await Modelo.Eliminar(mostrarMensajeConfirmacion);
+		public virtual async Task<EResultadoViewModel> EliminarAsync(bool mostrarMensajeConfirmacion = true) => await Modelo.Eliminar(mostrarMensajeConfirmacion);
 
 		public virtual (ControladorBase controlador, List<EventInfo> eventos) ObtenerEventosDisponibles()
 		{

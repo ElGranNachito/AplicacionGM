@@ -52,10 +52,10 @@ namespace AppGM
 
                         case EPagina.CreacionDePersonaje:
                         {
-	                        if (SistemaPrincipal.Aplicacion.VentanaActual.DataContext is ViewModelCrearPersonaje v)
+	                        if (SistemaPrincipal.Aplicacion.VentanaActual.DataContext is ViewModelCreacionEdicionPersonaje v)
 		                        return new UserControlCreacionPersonaje {DataContext = v};
 
-	                        var nuevoVmCreacionPj = new ViewModelCrearPersonaje(
+	                        var nuevoVmCreacionPj = new ViewModelCreacionEdicionPersonaje(
 		                        vm =>
 		                        {
 			                        SistemaPrincipal.Aplicacion.PaginaActual =

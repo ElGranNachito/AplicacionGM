@@ -7,7 +7,7 @@ using System.Windows.Input;
 namespace AppGM.Core
 {
     /// <summary>
-    /// Representa una habilidad en un <see cref="ViewModelCrearPersonaje"/>
+    /// Representa una habilidad en un <see cref="ViewModelCreacionEdicionPersonaje"/>
     /// </summary>
     public class ViewModelCrearHabilidad : ViewModelCreacionEdicionDeModelo<ModeloHabilidad, ControladorHabilidad, ViewModelCrearHabilidad>
     {
@@ -189,7 +189,7 @@ namespace AppGM.Core
 
             ContenedorListaTiradas   = new ViewModelListaItems<ViewModelTiradaItem>(async ()=>
             {            
-                SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = await new ViewModelCrearTirada(async (vm) =>
+                SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = await new ViewModelCreacionEdicionDeTirada(async (vm) =>
                 {
                     SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = this;
 

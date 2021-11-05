@@ -19,9 +19,9 @@ namespace AppGM.Core
 		/// <returns>Nombre para un nuevo slot</returns>
 		public static string ObtenerNombreParaNuevoSlot(IModeloConSlots modelo)
 		{
-			var nombresRandom = new string[5] {"Slot promedio", "Solo un slot", "Un slot salvaje", "Slotito", "Slots a domicilio"};
+			var nombresRandom = new string[] {"Slot promedio", "Solo un slot", "Un slot salvaje", "Slotito", "Slots a domicilio", "Toc toc ¿quien es? un slot"};
 
-			return $"{nombresRandom[new Random().Next(0, 5)]} #{modelo.Slots.Count}";
+			return $"{nombresRandom[new Random().Next(0, nombresRandom.Length)]} #{modelo.Slots.Count + 1}";
 		}
 	}
 }

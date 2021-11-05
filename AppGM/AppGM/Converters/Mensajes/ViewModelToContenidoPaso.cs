@@ -29,7 +29,7 @@ namespace AppGM
                     };
 
                 //Creacion de personajes de un rol
-                case ViewModelCrearRol_DatosPersonajes crdp:
+                case ViewModelDatosPersonajesRol crdp:
                     return new UserControlCreacionRol_Personajes
                     {
                         DataContext = crdp

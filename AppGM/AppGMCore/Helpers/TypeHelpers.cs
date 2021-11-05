@@ -132,6 +132,9 @@ namespace AppGM.Core
 		///				Habilidad -> Personaje
 		///			</item>
 		///			<item>
+		///				Item -> Personaje
+		///			</item>
+		///			<item>
 		///				Efecto -> Personaje
 		///			</item>
 		///			<item>

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using CoolLogs;
 
@@ -12,6 +11,9 @@ namespace AppGM.Core
 	{
 		public delegate void dParteDelCuerpoEliminada(ControladorParteDelCuerpo parteDelCuerpo, ControladorPersonaje dueño);
 
+		/// <summary>
+		/// Evento disparado cuando el <see cref="ModeloParteDelCuerpo"/> representado por este controlador es eliminado
+		/// </summary>
 		public event dParteDelCuerpoEliminada OnParteDelCuerpoEliminada = delegate { };
 
 		#region Propiedades
@@ -43,7 +45,7 @@ namespace AppGM.Core
 			//Creamos el controlador de los slots contenidos
 			foreach (var slot in modelo.Slots)
 			{
-				Slots.Add(SistemaPrincipal.ObtenerControlador<ControladorSlot, ModeloSlot>(slot, true));
+				AñadirControladorSlot(SistemaPrincipal.ObtenerControlador<ControladorSlot, ModeloSlot>(slot, true));
 			}
 
 			//Intentamos obtener al personaje contendor
@@ -76,8 +78,10 @@ namespace AppGM.Core
 			{
 				var diferencia = modelo.Slots.Count - Slots.Count;
 
-				for (int i = modelo.Slots.Count - diferencia; i < diferencia; ++i)
-					Slots.Add(SistemaPrincipal.ObtenerControlador<ControladorSlot, ModeloSlot>(modelo.Slots[i], true));
+				for (int i = modelo.Slots.Count - diferencia; i < modelo.Slots.Count; ++i)
+					AñadirControladorSlot(SistemaPrincipal.ObtenerControlador<ControladorSlot, ModeloSlot>(modelo.Slots[i], true));
+
+				SistemaPrincipal.LoggerGlobal.Log($"Añadidos {diferencia} nuevos slots", ESeveridad.Debug);
 			}
 		}
 
@@ -99,6 +103,20 @@ namespace AppGM.Core
 					SistemaPrincipal.LoggerGlobal.Log($"{nameof(modelo)} no es de un tipo soportado", ESeveridad.Error);
 					break;
 			}
+		}
+
+		/// <summary>
+		/// Añade un nuevo <see cref="ControladorSlot"/> a <see cref="Slots"/>
+		/// </summary>
+		/// <param name="slot">Slot que añadir</param>
+		private void AñadirControladorSlot(ControladorSlot slot)
+		{
+			if(slot == null)
+				SistemaPrincipal.LoggerGlobal.LogCrash($"{nameof(slot)} no puede ser null");
+
+			Slots.Add(slot);
+
+			slot.modelo.AñadirHandlerSoloUsoModeloEliminado(m => Slots.Remove(slot));
 		}
 	}
 }

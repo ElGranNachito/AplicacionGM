@@ -12,7 +12,7 @@ namespace AppGM.Core
     /// <summary>
     /// Viewmodel para la creacion de un personaje
     /// </summary>
-    public class ViewModelCrearPersonaje : ViewModelCreacionEdicionDeModelo<ModeloPersonaje, ControladorPersonaje, ViewModelCrearPersonaje>
+    public class ViewModelCreacionEdicionPersonaje : ViewModelCreacionEdicionDeModelo<ModeloPersonaje, ControladorPersonaje, ViewModelCreacionEdicionPersonaje>
     {
         #region Campos & Propiedades
 
@@ -205,7 +205,7 @@ namespace AppGM.Core
 
         #region Constructor
 
-        public ViewModelCrearPersonaje(Action<ViewModelCrearPersonaje> _accionSalir, ControladorPersonaje _personajeEditar = null)
+        public ViewModelCreacionEdicionPersonaje(Action<ViewModelCreacionEdicionPersonaje> _accionSalir, ControladorPersonaje _personajeEditar = null)
 			:base(_accionSalir, _personajeEditar)
         {
 	        mAccionAñadirHabilidad = async () =>
@@ -290,7 +290,7 @@ namespace AppGM.Core
 
 		#region Metodos
 
-		public override async Task<ViewModelCrearPersonaje> Inicializar(Type tipoValorPorDefectoModelo = null)
+		public override async Task<ViewModelCreacionEdicionPersonaje> Inicializar(Type tipoValorPorDefectoModelo = null)
 		{
 			await base.Inicializar(tipoValorPorDefectoModelo);
 

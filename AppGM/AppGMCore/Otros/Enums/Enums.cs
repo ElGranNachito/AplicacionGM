@@ -780,7 +780,7 @@ namespace AppGM.Core
         ///     <item>Depende de <see cref="EStat.STR"/> salvo excepciones concretas</item>
         /// </list>
         /// </summary>
-	    Contundente = 1<<0,
+	    Contundente = 1<<1,
 
         /// <summary>
         /// <list type="bullet">
@@ -789,7 +789,7 @@ namespace AppGM.Core
         ///     <item>Si se inflige bien produce sangrado</item>
         /// </list>
         /// </summary>
-        Cortante = 1<<1,
+        Cortante = 1<<2,
 
         /// <summary>
         /// <list type="bullet">
@@ -797,7 +797,7 @@ namespace AppGM.Core
         ///     <item>Salvo excepciones concretas depende siempre de <see cref="EStat.AGI"/></item>
         /// </list>
         /// </summary>
-        Penetrante = 1<<2,
+        Penetrante = 1<<3,
 
         /// <summary>
         /// <list type="bullet">
@@ -805,7 +805,7 @@ namespace AppGM.Core
         ///     <item>Puede llegar a tener tirada de daño fija</item>
         /// </list>
         /// </summary>
-        Explosivo = 1<<3,
+        Explosivo = 1<<4,
 
 
         //-------------Los siguientes dos valores no estan relacionados con los anteriores-----------
@@ -815,17 +815,17 @@ namespace AppGM.Core
         /// <summary>
         /// Daño proveniente de un hechizo
         /// </summary>
-        Magico = 1<<4,
+        Magico = 1<<5,
 
         /// <summary>
         /// Daño proveniente de un proyectil
         /// </summary>
-        Proyectil = 1<<5,
+        Proyectil = 1<<6,
 
         /// <summary>
         /// Una miseria
         /// </summary>
-        NINGUNO = 0
+        NINGUNO = 1
     }
 
     /// <summary>
@@ -1128,19 +1128,24 @@ namespace AppGM.Core
         Habilidad = 1,
 
         /// <summary>
+        /// Funcion que se ejecuta al utilizar algun <see cref="ControladorItem"/> 
+        /// </summary>
+        UsoItem = 3,
+
+        /// <summary>
         /// Funcion que representa la aplicacion de un <see cref="ControladorEfecto"/>
         /// </summary>
-        Efecto    = 2,
+        Efecto = 3,
 
         /// <summary>
         /// Funcion que retorna un <see cref="bool"/>
         /// </summary>
-        PredicadoEfecto = 3,
+        PredicadoEfecto = 4,
 
         /// <summary>
         /// Funciona destinada a lidiar con eventos
         /// </summary>
-        HandlerEvento = 4,
+        HandlerEvento = 5,
 
         NINGUNO = 0
     }

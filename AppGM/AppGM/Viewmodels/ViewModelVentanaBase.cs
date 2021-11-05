@@ -105,11 +105,7 @@ namespace AppGM
 				if (value == mDataContextContenido)
 					return;
 
-				var anterior = mDataContextContenido;
-
-				mDataContextContenido = value;
-
-				OnDataContextContenidoModificado(this, anterior, mDataContextContenido);
+				SetDataContextContenido(value);
 			}
 		}
 
@@ -217,6 +213,20 @@ namespace AppGM
 		}
 
 		#endregion
+
+		private async void SetDataContextContenido(ViewModel nuevoVm)
+		{
+			var anterior = mDataContextContenido;
+
+			if(anterior != null)
+				await anterior.Desactivar();
+
+			await nuevoVm.Activar();
+
+			mDataContextContenido = nuevoVm;
+
+			OnDataContextContenidoModificado(this, anterior, mDataContextContenido);
+		}
 
 		#region Implementacion Interfaz Ventana
 

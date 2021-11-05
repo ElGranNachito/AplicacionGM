@@ -57,7 +57,7 @@ namespace AppGM.Core
 		{
 			foreach (var modelo in mModelosCreados)
 			{
-				await SistemaPrincipal.GuardarModeloAsync(modelo);
+				await modelo.GuardarAsync();
 			}
 
 			if (actualizarBaseDeDatos)
@@ -70,9 +70,9 @@ namespace AppGM.Core
 		/// <param name="actualizarBaseDeDatos"><see cref="bool"/> indicando si se deben guardar los cambios a la base de datos</param>
 		public async Task EliminarModelosQuitadosAsync(bool actualizarBaseDeDatos = true)
 		{
-			foreach (var modelo in mModelosCreados)
+			foreach (var modelo in mModelosEliminados)
 			{
-				SistemaPrincipal.EliminarModelo(modelo);
+				await modelo.Eliminar();
 			}
 
 			if (actualizarBaseDeDatos)

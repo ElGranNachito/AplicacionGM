@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace AppGM.Core
 {
 	/// <summary>
 	/// Representa una parte del cuerpo de un <see cref="ModeloPersonaje"/>
 	/// </summary>
-	public class ModeloParteDelCuerpo : ModeloBase, IModeloConSlots
+	public partial class ModeloParteDelCuerpo : ModeloBase, IModeloConSlots
 	{
 		/// <summary>
 		/// Nombre del personaje
@@ -34,7 +35,18 @@ namespace AppGM.Core
 		/// <summary>
 		/// PersonajeContenedor de esta parte del cuerpo
 		/// </summary>
-		public virtual ModeloPersonaje PersonajeContenedor { get; set; }
+		[BackingField(nameof(mPersonajeContenedor))]
+		public virtual ModeloPersonaje PersonajeContenedor
+		{
+			get
+			{
+				if (mPersonajeContenedor != null)
+					return mPersonajeContenedor;
+
+				return SlotContenedor?.PersonajeContenedor;
+			}
+			set => mPersonajeContenedor = value;
+		}
 
 		/// <summary>
 		/// Slots de esta parte del cuerpo

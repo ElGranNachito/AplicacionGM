@@ -533,6 +533,28 @@ namespace AppGM.Core
         }
 
         /// <summary>
+        /// Cambia el data context de la <paramref name="ventanaEnLaQueMostrarElControl"/> al <paramref name="viewModel"/> y una vez el usuario
+        /// sale del control se regresa el data context a su valor anterior
+        /// </summary>
+        /// <typeparam name="TViewModel">Tipo del viewmodel de creacion/edicion</typeparam>
+        /// <typeparam name="TModelo">Tipo del modelo del que se encarga el <typeparamref name="TViewModel"/></typeparam>
+        /// <typeparam name="TControlador">Tipo del controlador del <typeparamref name="TModelo"/></typeparam>
+        /// <param name="viewModel"><see cref="ViewModelCreacionEdicionDeModelo{TModelo,TControlador,TViewModel}"/> que sera asignado al data context</param>
+        /// <param name="ventanaEnLaQueMostrarElControl">Ventana en la que mostrar el contenido. Si se deja en null se utilizara la ventana actual</param>
+        public static void MostrarViewModelCreacionEdicion<TViewModel, TModelo, TControlador>(TViewModel viewModel, IVentana ventanaEnLaQueMostrarElControl = null)
+
+	        where TModelo      : ModeloBase
+	        where TControlador : ControladorBase
+	        where TViewModel   : ViewModelCreacionEdicionDeModelo<TModelo, TControlador, TViewModel>
+        {
+	        ventanaEnLaQueMostrarElControl ??= SistemaPrincipal.Aplicacion.VentanaActual;
+
+	        var dataContextActual = ventanaEnLaQueMostrarElControl.DataContextContenido;
+
+	        viewModel.OnResultadoEstablecido += model => ventanaEnLaQueMostrarElControl.DataContextContenido = dataContextActual;
+        }
+
+        /// <summary>
         /// Funcion que se encarga de lidiar con el evento de cambio de pagina actual
         /// </summary>
         /// <param name="paginaAnterior">Pagina anterior</param>

@@ -79,7 +79,7 @@ namespace AppGM.Core
 			var slotInicial = new ModeloSlot
 			{
 				NombreSlot = "SlotTorso",
-				PersonajeDueño = Personaje
+				PersonajeContenedor = Personaje
 			};
 
 			var torso = new ModeloParteDelCuerpo
@@ -101,35 +101,30 @@ namespace AppGM.Core
 				{
 					Nombre = "Brazo derecho",
 					MultiplicadorDeEstaParte = 1,
-					PersonajeContenedor = Personaje
 				},
 
 				new ModeloParteDelCuerpo
 				{
 					Nombre = "Brazo izquierdo",
 					MultiplicadorDeEstaParte = 1,
-					PersonajeContenedor = Personaje
 				},
 
 				new ModeloParteDelCuerpo
 				{
 					Nombre = "Pierna derecha",
 					MultiplicadorDeEstaParte = 1,
-					PersonajeContenedor = Personaje
 				},
 
 				new ModeloParteDelCuerpo
 				{
 					Nombre = "Pierna izquierda",
 					MultiplicadorDeEstaParte = 1,
-					PersonajeContenedor = Personaje
 				},
 
 				new ModeloParteDelCuerpo
 				{
 					Nombre = "Cuello",
 					MultiplicadorDeEstaParte = 2,
-					PersonajeContenedor = Personaje
 				},
 			};
 

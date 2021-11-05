@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
+using System.Text;
+
 using CoolLogs;
 
 namespace AppGM.Core
@@ -8,7 +11,7 @@ namespace AppGM.Core
 	/// <summary>
 	/// Viewmodel que representa un combobox que permite seleccionar multiples elementos
 	/// </summary>
-	/// <typeparam name="TItems"></typeparam>
+	/// <typeparam name="TItems">Tipo de los valores almacenados por los items</typeparam>
 	public class ViewModelMultiselectComboBox<TItems> : ViewModel
 	{
 		#region Eventos
@@ -23,10 +26,34 @@ namespace AppGM.Core
 		#region Propiedades
 
 		/// <summary>
+		/// Comparador de igual para los <see cref="TItems"/>
+		/// </summary>
+		public EqualityComparer<TItems> Comparador { get; init; }
+
+		/// <summary>
 		/// Items contenidos por este combo box
 		/// </summary>
 		public ViewModelListaDeElementos<ViewModelMultiselectComboBoxItem<TItems>> Items { get; set; } = new ViewModelListaDeElementos<ViewModelMultiselectComboBoxItem<TItems>>();
 
+		/// <summary>
+		/// Coleccion observable que contiene los items actualmente seleccionados
+		/// </summary>
+		public ObservableCollection<TItems> ItemsSeleccionados { get; set; } = new ObservableCollection<TItems>();
+
+		/// <summary>
+		/// Obtiene una cadena con la representacion textual de todos los valores seleccionados
+		/// </summary>
+		public string ToStringItemsSeleccionados
+		{
+			get
+			{
+				StringBuilder sBuilder = new StringBuilder();
+
+				sBuilder.AppendJoin(", ", ItemsSeleccionados);
+
+				return sBuilder.ToString();
+			}
+		}
 		#endregion
 
 		#region Constructor
@@ -35,9 +62,9 @@ namespace AppGM.Core
 		/// Constructor
 		/// </summary>
 		/// <param name="items"></param>
-		public ViewModelMultiselectComboBox(List<ViewModelMultiselectComboBoxItem<TItems>> items)
+		public ViewModelMultiselectComboBox(List<ViewModelMultiselectComboBoxItem<TItems>> items, EqualityComparer<TItems> _comparador = null)
 		{
-			Items.AddRange(items);
+			Comparador = _comparador ?? EqualityComparer<TItems>.Default;
 
 			Items.Elementos.CollectionChanged += (sender, args) =>
 			{
@@ -60,7 +87,20 @@ namespace AppGM.Core
 						antiguoItem.OnSeleccionadoCambio -= EstadoSeleccionItemCambioHandler;
 				}
 			};
-		} 
+
+			//Cada vez que se modifiquen los items seleccionados disparamos property changed en la propiedad que obtiene la cadena
+			ItemsSeleccionados.CollectionChanged += (sender, args) =>
+			{
+				DispararPropertyChanged(nameof(ToStringItemsSeleccionados));
+			};
+
+			Items.AddRange(items);
+
+			foreach (var item in Items.Elementos)
+			{
+				EstadoSeleccionItemCambioHandler(item);
+			}
+		}
 
 		#endregion
 
@@ -73,9 +113,9 @@ namespace AppGM.Core
 		/// <param name="estaSeleccionado">Nuevo estado de seleccion que se le dara al item</param>
 		public void ModificarEstadoSeleccionItem(TItems itemQueSeleccionar, bool estaSeleccionado)
 		{
-			if (Items.Find(i => EqualityComparer<TItems>.Default.Equals(i.Valor, itemQueSeleccionar)) is { } itemEncontrado)
+			foreach(var item in Items.FindAll(i => Comparador.Equals(i.Valor, itemQueSeleccionar)))
 			{
-				itemEncontrado.EstaSeleccionado = estaSeleccionado;
+				item.EstaSeleccionado = estaSeleccionado;
 			}
 
 			SistemaPrincipal.LoggerGlobal.Log($"No se encontro {nameof(itemQueSeleccionar)}({itemQueSeleccionar})", ESeveridad.Error);
@@ -85,7 +125,19 @@ namespace AppGM.Core
 		/// Metodo encargado con lidiar con eventos de estado de seleccion cambio de los items de la coleccion
 		/// </summary>
 		/// <param name="item">Item cuyo estado de seleccion cambio</param>
-		private void EstadoSeleccionItemCambioHandler(ViewModelMultiselectComboBoxItem<TItems> item) => OnEstadoSeleccionItemCambio(item); 
+		private void EstadoSeleccionItemCambioHandler(ViewModelMultiselectComboBoxItem<TItems> item)
+		{
+			if (item.EstaSeleccionado)
+			{
+				ItemsSeleccionados.Add(item.Valor);
+			}
+			else
+			{
+				ItemsSeleccionados.Remove(item.Valor);
+			}
+
+			OnEstadoSeleccionItemCambio(item);
+		}
 
 		#endregion
 	}

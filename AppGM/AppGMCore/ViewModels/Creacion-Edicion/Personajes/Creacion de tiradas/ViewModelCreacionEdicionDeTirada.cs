@@ -9,7 +9,7 @@ namespace AppGM.Core
 	/// <summary>
 	/// Representa un control para la creacion de una tirada
 	/// </summary>
-	public class ViewModelCrearTirada : ViewModelCreacionEdicionDeModelo<ModeloTiradaVariable, ControladorTiradaVariable, ViewModelCrearTirada>, IAutocompletable
+	public class ViewModelCreacionEdicionDeTirada : ViewModelCreacionEdicionDeModelo<ModeloTiradaVariable, ControladorTiradaVariable, ViewModelCreacionEdicionDeTirada>, IAutocompletable
 	{
 		#region Eventos
 
@@ -167,7 +167,7 @@ namespace AppGM.Core
 		/// <param name="_accionSalir">Delegado que se ejecuta al salir del control representado por este vm</param>
 		/// <param name="_personaje"><see cref="ModeloConVariablesYTiradas"/> para el que se esta creando la tirada</param>
 		/// <param name="_controladorTiradaSiendoEditada">Controlador de la tirada que esta siendo editada</param>
-		public ViewModelCrearTirada(Action<ViewModelCrearTirada> _accionSalir, ModeloConVariablesYTiradas _contenedorTirada, ControladorTiradaVariable _controladorTiradaSiendoEditada)
+		public ViewModelCreacionEdicionDeTirada(Action<ViewModelCreacionEdicionDeTirada> _accionSalir, ModeloConVariablesYTiradas _contenedorTirada, ControladorTiradaVariable _controladorTiradaSiendoEditada)
 			: base(_accionSalir, _controladorTiradaSiendoEditada)
 		{
 			mModeloContenedor = _contenedorTirada;

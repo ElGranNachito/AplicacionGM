@@ -30,6 +30,10 @@ namespace AppGM.Core
 
 		#endregion
 
+		#region Campos & Propiedades
+
+		//-----------------------------------------CAMPOS----------------------------------------
+
 		/// <summary>
 		/// Contiene el valor de <see cref="EsValido"/>
 		/// </summary>
@@ -44,6 +48,8 @@ namespace AppGM.Core
 		/// Contiene el valor de <see cref="ControladorSiendoEditado"/>
 		/// </summary>
 		protected TControlador mControladorSiendoEditado;
+
+		//--------------------------------------PROPIEDADES--------------------------------------
 
 		/// <summary>
 		/// Modelo creado
@@ -79,7 +85,7 @@ namespace AppGM.Core
 			get => mPuedeEditar;
 			set
 			{
-				if(value == mPuedeEditar)
+				if (value == mPuedeEditar)
 					return;
 
 				mPuedeEditar = value;
@@ -91,7 +97,7 @@ namespace AppGM.Core
 		/// <summary>
 		/// Indica si se esta editando un modelo existente
 		/// </summary>
-		public bool EstaEditando => ControladorSiendoEditado != null;
+		public bool EstaEditando => ModeloSiendoEditado != null;
 
 		/// <summary>
 		/// Indica si el estado actual del modelo es valido
@@ -113,7 +119,16 @@ namespace AppGM.Core
 		/// <summary>
 		/// Comando que se ejecuta cuando el usuario presiona el boton 'Eliminar'
 		/// </summary>
-		public ICommand ComandoEliminar { get; private set; }
+		public ICommand ComandoEliminar { get; protected set; }
+
+		/// <summary>
+		/// Comando que se ejecuta al presionar 'Finalizar'
+		/// </summary>
+		public ICommand ComandoFinalizar { get; protected set; }
+
+		#endregion
+
+		#region Constructores
 
 		/// <summary>
 		/// Constructor por defecto
@@ -122,7 +137,7 @@ namespace AppGM.Core
 		public ViewModelCreacionEdicionDeModelo(Action<TViewModel> _accionSalir, bool _actualizarValidezOnPropertyChanged = false)
 			: base(_accionSalir)
 		{
-			if(!_actualizarValidezOnPropertyChanged)
+			if (!_actualizarValidezOnPropertyChanged)
 				return;
 
 			PropertyChanged += (sender, args) =>
@@ -139,11 +154,15 @@ namespace AppGM.Core
 		/// <param name="_controladorParaEditar">Controlador del modelo que sera editado</param>
 		/// el tipo por defecto del modelo es una clase abstracta o no instanciable por cualquier motivo</param>
 		public ViewModelCreacionEdicionDeModelo(Action<TViewModel> _accionSalir, TControlador _controladorParaEditar, bool _puedeEditar = true, bool _actualizarValidezOnPropertyChanged = false)
-			:this(_accionSalir, _actualizarValidezOnPropertyChanged)
+			: this(_accionSalir, _actualizarValidezOnPropertyChanged)
 		{
 			ControladorSiendoEditado = _controladorParaEditar;
 			PuedeEditar = _puedeEditar;
 		}
+
+		#endregion
+
+		#region Metodos
 
 		/// <summary>
 		/// Inicializa este <see cref="ViewModelCreacionEdicionDeModelo{TModelo,TControlador,TViewModel}"/>
@@ -205,8 +224,8 @@ namespace AppGM.Core
 		/// <param name="listaModelo">Lista con los <typeparamref name="TModeloAñadir"/> de este <typeparamref name="TModelo"/></param>
 		/// <param name="listaItems"><see cref="ViewModelListaItems{TItem}"/> que contiene los <typeparamref name="TItemLista"/></param>
 		protected void AñadirModeloDesdeListaItems<TModeloAñadir, TItemLista>(
-			
-			TItemLista nuevoElemento, 
+
+			TItemLista nuevoElemento,
 			List<TModeloAñadir> listaModelo,
 			ViewModelListaItems<TItemLista> listaItems)
 
@@ -253,16 +272,37 @@ namespace AppGM.Core
 		}
 
 		/// <summary>
-		/// Inicializar el <see cref="ComandoEliminar"/>
+		/// Inicializar el <see cref="ComandoFinalizar"/>
 		/// </summary>
 		protected void CrearComandoFinalizar()
 		{
-			ComandoEliminar = new Comando(async () =>
+			ComandoFinalizar = new Comando(async () =>
 			{
-				if(!EstaEditando)
+				ActualizarValidez();
+
+				if (!EsValido)
 					return;
 
-				await ControladorSiendoEditado.EliminarAsync();
+				Resultado = EResultadoViewModel.Finalizar;
+
+				mAccionSalir?.Invoke((TViewModel)this);
+			});
+		}
+
+		/// <summary>
+		/// Inicializar el <see cref="ComandoEliminar"/>
+		/// </summary>
+		protected void CrearComandoEliminar()
+		{
+			ComandoEliminar = new Comando(async () =>
+			{
+				if (!EstaEditando)
+					return;
+
+				var resultado = await (ControladorSiendoEditado?.EliminarAsync() ?? ModeloSiendoEditado.Eliminar(true));
+
+				if(resultado != EResultadoViewModel.Aceptar)
+					return;
 
 				Resultado = EResultadoViewModel.Eliminar;
 
@@ -281,6 +321,8 @@ namespace AppGM.Core
 			}
 
 			return "Creando";
-		}
+		} 
+
+		#endregion
 	}
 }

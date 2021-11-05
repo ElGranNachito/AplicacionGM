@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Windows.Input;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace AppGM.Core
 {
@@ -16,24 +17,9 @@ namespace AppGM.Core
 		private string mPathImagen;
 
 		/// <summary>
-		/// Contiene el valor de <see cref="ContenidoBotonSuperior"/>
+		/// Contiene el valor de <see cref="EstaSeleccionado"/>
 		/// </summary>
-		private string mContenidoBotonSuperior;
-
-		/// <summary>
-		/// Contiene el valor de <see cref="ContenidoBotonInferior"/>
-		/// </summary>
-		private string mContenidoBotonInferior;
-
-		/// <summary>
-		/// Contiene el valor de <see cref="BotonSuperiorEstaHabilitado"/>
-		/// </summary>
-		private bool mBotonSuperiorEstaHabilitado = true;
-
-		/// <summary>
-		/// Contiene el valor de <see cref="BotonInferiorEstaHabilitado"/>
-		/// </summary>
-		private bool mBotonInferiorEstaHabilitado = true;
+		private bool mEstaSeleccionado;
 
 		/// <summary>
 		/// Contiene el valor de <see cref="IndiceGrupoDeBotonesActivo"/>
@@ -93,6 +79,11 @@ namespace AppGM.Core
 		/// Indica si el titulo de este item es visible
 		/// </summary>
 		public bool TituloEsVisible => Titulo.IsNullOrWhiteSpace();
+
+		/// <summary>
+		/// Indica si este item esta actualmente seleccionado
+		/// </summary>
+		public bool EstaSeleccionado { get; set; }
 
 		/// <summary>
 		/// Titulo de este item

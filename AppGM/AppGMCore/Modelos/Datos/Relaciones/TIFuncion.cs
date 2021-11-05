@@ -12,6 +12,11 @@ namespace AppGM.Core
 		public int IDFuncion { get; set; }
 
 		public virtual ModeloFuncion Funcion { get; set; }
+
+		/// <summary>
+		/// Proposito de la funcion contenida en este relacion
+		/// </summary>
+		public EPropositoFuncionRelacion PropositoFuncionRelacion { get; set; }
 	}
 
 	/// <summary>

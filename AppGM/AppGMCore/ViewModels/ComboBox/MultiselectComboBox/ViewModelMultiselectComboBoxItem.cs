@@ -1,12 +1,13 @@
 ﻿using System;
+using System.Windows.Input;
 
 namespace AppGM.Core
 {
 	/// <summary>
 	/// Viewmodel que representa un elemento en un <see cref="ViewModelMultiselectComboBox{TItems}"/>
 	/// </summary>
-	/// <typeparam name="TValor"></typeparam>
-	public class ViewModelMultiselectComboBoxItem<TValor>
+	/// <typeparam name="TValor">Tipo del valor contenido por este item</typeparam>
+	public class ViewModelMultiselectComboBoxItem<TValor> : ViewModel
 	{
 		#region Eventos
 
@@ -23,6 +24,11 @@ namespace AppGM.Core
 		/// Contiene el valor de <see cref="EstaSeleccionado"/>
 		/// </summary>
 		private bool mEstaSeleccionado;
+
+		/// <summary>
+		/// Contenedor de este item
+		/// </summary>
+		public ViewModelMultiselectComboBox<TValor> Contenedor { get; init; }
 
 		/// <summary>
 		/// Contenido de este item
@@ -49,7 +55,12 @@ namespace AppGM.Core
 		/// <summary>
 		/// Valor almacenado en este item
 		/// </summary>
-		public TValor Valor { get; init; } 
+		public TValor Valor { get; init; }
+
+		/// <summary>
+		/// Comando que se ejecuta cuando el usuario selecciona a este elemento
+		/// </summary>
+		public ICommand ComandoSeleccionar { get; private set; }
 
 		#endregion
 
@@ -60,12 +71,17 @@ namespace AppGM.Core
 		/// </summary>
 		/// <param name="_valor">Valor que contiene este item</param>
 		/// <param name="_estaSelccionado"></param>
-		public ViewModelMultiselectComboBoxItem(TValor _valor, string _contenido, bool _estaSelccionado = false)
+		public ViewModelMultiselectComboBoxItem(TValor _valor, string _contenido, ViewModelMultiselectComboBox<TValor> _contenedor, bool _estaSelccionado = false)
 		{
-			Valor = _valor;
-			Contenido = _contenido;
-
+			Valor      = _valor;
+			Contenido  = _contenido;
+			Contenedor = _contenedor;
 			EstaSeleccionado = _estaSelccionado;
+
+			ComandoSeleccionar = new Comando(() =>
+			{
+				EstaSeleccionado = !EstaSeleccionado;
+			});
 		} 
 
 		#endregion

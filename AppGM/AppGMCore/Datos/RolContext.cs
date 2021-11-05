@@ -122,14 +122,6 @@ namespace AppGM.Core
 				.WithOne(u => u.PersonajePortador)
 				.OnDelete(DeleteBehavior.Cascade);
 
-			// - Personaje defensivos
-			modelBuilder.Entity<ModeloPersonaje>()
-				.HasMany(p => p.Armadura);
-
-			// - Personaje arma a distancia
-			modelBuilder.Entity<ModeloPersonaje>()
-				.HasMany(p => p.ArmasDistancia);
-
 			// - Personaje contratos
 			modelBuilder.Entity<ModeloPersonaje>()
 				.HasMany(p => p.Contratos)
@@ -187,7 +179,7 @@ namespace AppGM.Core
 			//-- Personaje - Slots
 			modelBuilder.Entity<ModeloPersonaje>()
 				.HasMany(p => p.SlotsBase)
-				.WithOne(s => s.PersonajeDueño)
+				.WithOne(s => s.PersonajeContenedor)
 				.OnDelete(DeleteBehavior.Cascade);
 
 			#endregion
@@ -308,24 +300,26 @@ namespace AppGM.Core
 			#region Items
 
 			// Items:
-			modelBuilder.Entity<ModeloItem>().ToTable("ModeloItem")
-				.HasDiscriminator<int>("Tipo")
-				.HasValue<ModeloItem>(1)
-				.HasValue<ModeloConsumible>(2)
-				.HasValue<ModeloArmaDistancia>(3)
-				.HasValue<ModeloItemDefensivo>(4);
-
-
+			modelBuilder.Entity<ModeloItem>().ToTable("ModeloItem");
 
 			modelBuilder.Entity<ModeloItem>()
 				.HasMany(i => i.Funciones)
 				.WithOne(f => f.Item);
 
-			modelBuilder.Entity<ModeloArmaDistancia>()
-				.HasMany(a => a.Slots);
+			modelBuilder.Entity<ModeloDatosArma>().ToTable("ModeloDatosArma")
+				.HasOne(a => a.Item)
+				.WithOne(i => i.DatosArma)
+				.OnDelete(DeleteBehavior.Cascade);
 
-			modelBuilder.Entity<ModeloItemDefensivo>()
-				.HasMany(a => a.Slots);
+			modelBuilder.Entity<ModeloDatosDefensivo>().ToTable("ModeloDatosDefensivo")
+				.HasOne(d => d.Item)
+				.WithOne(i => i.DatosDefensivo)
+				.OnDelete(DeleteBehavior.Cascade);
+
+			modelBuilder.Entity<ModeloDatosConsumible>().ToTable("ModeloDatosConsumible")
+				.HasOne(c => c.Item)
+				.WithOne(i => i.DatosConsumible)
+				.OnDelete(DeleteBehavior.Cascade);
 
 			#endregion
 
@@ -683,7 +677,22 @@ namespace AppGM.Core
 
 			#endregion
 
-        }
+			#region Fuente de daño
+
+			//Fuente de daño - Modelo datos arma
+			modelBuilder.Entity<ModeloFuenteDeDaño>()
+					.HasMany(f => f.ItemsAbarcados)
+					.WithMany(i => i.FuentesDeDañoQueAbarcaEsteArma);
+
+			//Fuente de daño - Rol
+			modelBuilder.Entity<ModeloFuenteDeDaño>()
+				.HasOne(f => f.RolAlQuePertenece)
+				.WithMany(r => r.FuentesDeDaño)
+				.OnDelete(DeleteBehavior.Cascade); 
+
+			#endregion
+
+		}
         #endregion
     }
 }

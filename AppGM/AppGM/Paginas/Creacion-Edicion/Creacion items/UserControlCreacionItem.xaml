@@ -1,0 +1,357 @@
+﻿<UserControl x:Class="AppGM.UserControlCreacionItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AppGM"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="900"
+             
+             Background="White"
+             
+             Padding="5">
+
+    <!--ViewModel: ViewModelCreacionEdicionItem-->
+
+    <Grid>
+
+        <Grid.Resources>
+            <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextoDescriptivo}">
+                <Setter Property="Margin" Value="0 0 0 10"/>
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            </Style>
+        </Grid.Resources>
+
+        
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto" MaxHeight="50"/>
+        </Grid.RowDefinitions>
+
+        <TabControl>
+
+            <!--#region Datos Basicos -->
+            <TabItem>
+
+                <TabItem.Header>
+                    <TextBlock Text="Datos Basicos"/>
+                </TabItem.Header>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!--Datos esenciales (Primer columna)-->
+                    <StackPanel
+            Margin="0 0 5 0">
+
+                        <!--Nombre del item-->
+                        <TextBox
+                MinHeight="20"
+                
+                Text="{Binding Nombre}"
+                
+                Tag="Nombre">
+
+                        </TextBox>
+
+                        <!--Descripcion del item-->
+                        <TextBox
+                MinHeight="80"
+                
+                Text="{Binding Descripcion}"
+                
+                Tag="Descripcion"/>
+
+                        <!--Peso del item-->
+                        <TextBox
+                MinHeight="20"
+
+                Margin="0 50 0 10"
+                
+                Text="{Binding Peso}"
+                
+                Tag="Peso"/>
+
+                        <!--Espacio que ocupa el item-->
+                        <TextBox
+                MinHeight="20"
+                
+                Text="{Binding EspacioQueOcupa}"
+                
+                Tag="Espacio que ocupa"/>
+
+                        <!--Estado porcentual del item-->
+                        <TextBox
+                MinHeight="20"
+                
+                Text="{Binding EstadoPorcentual}"
+                
+                Tag="Estado %"/>
+
+                        <!--Datos arma a distancia-->
+                        <StackPanel
+                Visibility="{Binding EsArmaADistancia, Converter={local:BooleanToVisibilityConverterColapsar}}">
+
+                            <!--Numero de cargadores que tiene el arma-->
+                            <TextBox
+                    MinHeight="20"
+                
+                    Text="{Binding EstadoPorcentual}"
+                
+                    Tag="Numero de cargadores"/>
+
+                            <!--Municiones por cargador-->
+                            <TextBox
+                    MinHeight="20"
+                
+                    Text="{Binding EstadoPorcentual}"
+                
+                    Tag="Municiones por cargador"/>
+                        </StackPanel>
+
+                        <!--Estado de portacion actual del item-->
+                        <local:UserControlComboBoxConDescripcion
+                Margin="0 0 0 10"
+
+                Descripcion="Estado portacion"
+                
+                DataContext="{Binding ViewModelComboBoxEstadoPortacion}"/>
+
+                        <!--Tipo del item-->
+                        <local:UserControlMultiSelectComboBox
+                
+                Descripcion="Tipo de item"
+
+                DataContext="{Binding ViewModelMultiselectComboBoxTipoItem}"/>
+
+                    </StackPanel>
+
+                    <!--Segunda columna-->
+                    <Grid
+            Grid.Column="1">
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="2*"/>
+                        </Grid.RowDefinitions>
+
+                        <StackPanel>
+
+                            <!--Funcion utilizar-->
+                            <local:UserControlListaItems
+                    Margin="0 0 0 10"
+                    
+                    DataContext="{Binding ViewModelFuncionUtilizar}"/>
+
+                            <!--Predicado-->
+                            <local:UserControlListaItems
+                    DataContext="{Binding ViewModelFuncionPuedeUtilizar}"/>
+
+                        </StackPanel>
+
+                        <!--Eventos disponibles para el item-->
+                        <local:UserControlListaCreacionHandlersEventos
+                Grid.Row="1"
+                
+                DataContext="{Binding ViewModelListaHandlersEventos}"/>
+
+                    </Grid>
+
+                    <!--Tercera columna-->
+                    <Grid
+            Grid.Column="2"
+            
+            Margin="5 0 0 0">
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <!--Efectos del item-->
+                        <local:UserControlListaItems
+                DataContext="{Binding ViewModelListaEfectos}"/>
+
+                        <!--Tiradas del item-->
+                        <local:UserControlListaItems
+                Grid.Row="1"
+            
+                DataContext="{Binding ViewModelListaTiradas}"/>
+
+                        <!--Variables del item-->
+                        <local:UserControlListaItems
+                Grid.Row="2"
+                
+                DataContext="{Binding ViewModelListaVariables}"/>
+
+                    </Grid>
+
+                </Grid>
+
+            </TabItem>
+            <!--#endregion-->
+
+            <!--#region Datos Arma -->
+            
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock Text="Datos Arma"/>
+                </TabItem.Header>
+
+                <Border
+                    Padding="5">
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel
+                            Grid.Column="1">
+
+                            <local:UserControlMultiSelectComboBox
+                                Descripcion="Tipo de daño"/>
+
+                            <TextBox
+                                Margin="0 10 0 0"
+                                Padding="1 3"
+                                Tag="Numero de cargadores"/>
+
+                            <TextBox
+                                Margin="0 10 0 0"
+                                Padding="1 3"
+                                Tag="Numero de municiones por cargador"/>
+
+                            <CheckBox
+                                Margin="0 10 0 0"
+                                Content="Ignora defensa"></CheckBox>
+                        </StackPanel>
+                    </Grid>
+
+                </Border>
+                
+            </TabItem>
+            <!--#endregion-->
+
+            <!--#region Datos Consumible -->
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock Text="Datos Consumible"/>
+                </TabItem.Header>
+
+                <Border
+                    Padding="5">
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel
+                            Grid.Column="1">
+
+                            <TextBox
+                                Margin="0 10 0 0"
+                                Padding="1 3"
+                                Tag="Numero de usos totales"/>
+
+                            <TextBox
+                                Margin="0 10 0 0"
+                                Padding="1 3"
+                                Tag="Numero de usos restantes"/>
+
+                        </StackPanel>
+                    </Grid>
+
+                </Border>
+            </TabItem>
+            <!--#endregion-->
+
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock Text="Datos Defensa"/>
+                </TabItem.Header>
+
+                <Border
+                    Padding="5">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel
+                            Grid.Column="1">
+
+                            <local:UserControlMultiSelectComboBox
+                                
+                                Descripcion="Deteccion del daño que reducir"/>
+
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </TabItem>
+        </TabControl>
+
+        
+        <!--Botones inferiores-->
+        <Grid
+            Grid.Row="1"
+            Grid.ColumnSpan="3">
+
+            <Grid.Resources>
+                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BotonFondoResaltable}">
+
+                    <Setter Property="Padding" Value="5 2"></Setter>
+                </Style>
+            </Grid.Resources>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!--Boton cancelar-->
+            <Button
+                HorizontalAlignment="Center"
+
+                Content="Cancelar"
+                
+                Command="{Binding ComandoCancelar}"/>
+
+            <!--Boton guardar-->
+            <Button
+                Grid.Column="1"
+
+                HorizontalAlignment="Center"
+
+                Content="Guardar"
+                
+                Command="{Binding ComandoGuardar}"/>
+
+            <!--Boton finalizar-->
+            <Button
+                Grid.Column="2"
+
+                HorizontalAlignment="Center"
+
+                Content="Finalizar"
+
+                IsEnabled="{Binding EsValido}"
+                Command="{Binding ComandoFinalizar}"/>
+
+        </Grid>
+    </Grid>
+</UserControl>

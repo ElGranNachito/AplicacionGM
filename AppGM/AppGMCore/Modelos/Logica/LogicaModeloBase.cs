@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -21,6 +22,11 @@ namespace AppGM.Core
 		/// </summary>
 		public event Action<ModeloBase, ControladorBase> OnControladorCreado = delegate { };
 
+		/// <summary>
+		/// Evento que se dispara cuando se realizar una copia profunda hacia este modelo
+		/// </summary>
+		public event Action<ModeloBase, ModeloBase> OnRecibioCopiaProfunda = delegate { }; 
+
 		#endregion
 
 		#region Metodos
@@ -31,6 +37,30 @@ namespace AppGM.Core
 		/// <param name="controlador"><see cref="ControladorBase"/> de este modelo</param>
 		public void DispararControladorCreado(ControladorBase controlador) => OnControladorCreado(this, controlador);
 
+		/// <summary>
+		/// Dispara el evento <see cref="OnRecibioCopiaProfunda"/>
+		/// </summary>
+		/// <param name="fuenteCopia">Modelo que se copio</param>
+		public void DispararRecibioCopiaProfunda(ModeloBase fuenteCopia) => OnRecibioCopiaProfunda(this, fuenteCopia);
+
+		/// <summary>
+		/// Añade un handler a <see cref="OnControladorCreado"/> que se desubscribe despues de un uso
+		/// </summary>
+		/// <param name="handler">Handler que añadir</param>
+		public void AñadirHandlerSoloUsoControladorCreado(Action<ModeloBase, ControladorBase> handler)
+		{
+			Action<ModeloBase, ControladorBase> wrapper = null;
+
+			wrapper = (modelo, controlador) =>
+			{
+				handler(modelo, controlador);
+
+				OnControladorCreado -= wrapper;
+			};
+
+			OnControladorCreado += wrapper;
+		}
+
 		#region Copiado profundo
 
 		/// <summary>
@@ -38,8 +68,6 @@ namespace AppGM.Core
 		/// </summary>
 		/// <param name="modeloAlQueCopiarLosDatos">Modelo al que se copiaran los datos. Si se deja como null se copiaran a una nueva instancia</param>
 		/// <param name="modeloQueCopiar">Modelo cuyos datos seran copiados</param>
-		/// <param name="outModelosEliminados">Modelos que fueron eliminados</param>
-		/// <param name="outModelosAñadidos">Modelos que fueron añadidos</param>
 		/// <returns>En caso de que <paramref name="modeloAlQueCopiarLosDatos"/> sea null, devuelve un nuevo modelo con los datos copiados.
 		/// En caso de que no lo sea devuelve una referencia al modelo existente al que se copiaron los datos</returns>
 		public (ModeloBase resultado, ContenedorModelosCreadosEliminadosAlCopiar modelosCreadosEliminados) CrearCopiaProfundaEnSubtipo(
@@ -242,7 +270,10 @@ namespace AppGM.Core
 								{
 									ModeloBase elementoActualListaOrigen = listaModeloOrigen[i];
 
-									var equivalenteEnDestino = listaModeloDestinoCasteada.FirstOrDefault(m => m.Id == elementoActualListaOrigen.Id);
+									if(this is ModeloSlot s && s.NombreSlot == "Torso")
+										Debugger.Break();
+
+									var equivalenteEnDestino = elementoActualListaOrigen.Id == 0 ? null : listaModeloDestinoCasteada.FirstOrDefault(m => m.Id == elementoActualListaOrigen.Id);
 
 									//Si no hemos copiado este modelo aun, lo copiamos a su par en el destino
 									if (!modelosYaCopiados.ContainsKey(elementoActualListaOrigen))
@@ -271,10 +302,15 @@ namespace AppGM.Core
 								foreach (var modelo in listaModeloDestinoCasteada)
 									listaModeloDestino.Add(modelo);
 
+								var modelosEliminadosDestino = listaModeloDestinoCasteada.FindAll(m => modelosRestantesModeloActual.All(ma => ma.Id != m.Id));
+
+								foreach (var modelo in modelosEliminadosDestino)
+									listaModeloDestino.Remove(modelo);
+
 								//Los modelos restantes, es decir los que no se encontraban en ambas listas, son modelos que fueron eliminados, si 
 								//se encontraban en el destino, o añadidos, si se encontraban en el modelo de origen
-								outModelosAñadidos?.AddRange(listaModeloDestinoCasteada.FindAll(m => !modelosRestantesDestino.Any(ma => ma.Id == m.Id)));
-								outModelosEliminados?.AddRange(listaModeloDestinoCasteada.FindAll(m => !modelosRestantesModeloActual.Any(ma => ma.Id == m.Id)));
+								outModelosAñadidos?.AddRange(listaModeloDestinoCasteada.FindAll(m => modelosRestantesDestino.All(ma => ma.Id != m.Id)));
+								outModelosEliminados?.AddRange(modelosEliminadosDestino);
 							}
 							//Si no estamos copiando a un modelo existente...
 							else
@@ -379,6 +415,9 @@ namespace AppGM.Core
 				//Establecemos el valor del campo
 				campoActual.SetValue(modeloDestino, campoActual.GetValue(modeloQueCopiar));
 			}
+
+			if(copiandoAUnModeloExistente)
+				modeloDestino.DispararRecibioCopiaProfunda(modeloQueCopiar);
 
 			return modeloDestino;
 		}

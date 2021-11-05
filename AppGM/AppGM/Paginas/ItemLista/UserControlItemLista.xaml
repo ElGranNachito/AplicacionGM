@@ -10,6 +10,11 @@
     <!-- ViewModel: ViewModelItemLista -->
 
     <UserControl.Resources>
+
+        <Style TargetType="{x:Type local:UserControlItemLista}">
+            <Setter Property="Background" Value="White"/>
+        </Style>
+
         <Style TargetType="{x:Type Grid}" x:Key="EstiloContenedorBotones">
 
             <Setter Property="Visibility">
@@ -36,7 +41,7 @@
 
                 <Grid
                     x:Name="contendor"
-                    Background="White">
+                    Background="{TemplateBinding Background}">
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>

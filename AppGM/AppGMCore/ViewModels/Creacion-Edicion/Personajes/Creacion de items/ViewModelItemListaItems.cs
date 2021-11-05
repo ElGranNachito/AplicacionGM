@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace AppGM.Core
@@ -53,7 +51,7 @@ namespace AppGM.Core
 
 						await SistemaPrincipal.GuardarDatosAsync();
 					}
-				}, ControladorGenerico).Inicializar();
+				}, ControladorGenerico.Portador.modelo, ControladorGenerico).Inicializar();
 			};
 
 			Action accionVer = async () =>

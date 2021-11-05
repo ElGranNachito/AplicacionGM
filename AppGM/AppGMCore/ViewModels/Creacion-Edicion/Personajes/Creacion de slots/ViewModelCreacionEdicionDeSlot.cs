@@ -119,9 +119,9 @@ namespace AppGM.Core
 		/// <param name="_controladorParaEditar">Controlador del <see cref="ModeloSlot"/> que sera editado</param>
 		public ViewModelCreacionEdicionDeSlot(Action<ViewModelCreacionEdicionDeSlot> _accionSalir, ControladorSlot _controladorParaEditar) 
 			
-			: base(_accionSalir, _controladorParaEditar)
+			: base(_accionSalir, _controladorParaEditar, true, true)
 		{
-			CrearComandoFinalizar();
+			CrearComandoEliminar();
 
 			ComandoVerSlot = new Comando(() =>
 			{
@@ -191,6 +191,18 @@ namespace AppGM.Core
 			throw new NotImplementedException();
 		}
 
+		protected override void ActualizarValidez()
+		{
+			if (NombreSlot.IsNullOrWhiteSpace() || ModeloCreado.EspacioTotal <= 0)
+			{
+				EsValido = false;
+
+				return;
+			}
+
+			EsValido = true;
+		}
+
 		private async void CrearViewModelCreacionEdicionPartedelCuerpo()
 		{
 			ViewModelCreacionEdicionParteDelCuerpo =
@@ -238,7 +250,7 @@ namespace AppGM.Core
 		{
 			ViewModelListaItemsSlot = new ViewModelListaItems<ViewModelItemListaItems>(async () =>
 				{
-					await MensajeHelpers.MostrarVentanaMensajeCreacionEdicionModelo(await new ViewModelCreacionEdicionItem(mAccionSalirCreacionEdicionItem, null, ControladorSiendoEditado).Inicializar());
+					await MensajeHelpers.MostrarVentanaMensajeCreacionEdicionModelo(await new ViewModelCreacionEdicionItem(mAccionSalirCreacionEdicionItem, ControladorSiendoEditado.modelo.PersonajeContenedor ,null, ControladorSiendoEditado).Inicializar());
 				},
 				lista => ControladorSiendoEditado.EspacioDisponible > 0,
 				ControladorSiendoEditado.EspacioDisponible > 0, "Items");

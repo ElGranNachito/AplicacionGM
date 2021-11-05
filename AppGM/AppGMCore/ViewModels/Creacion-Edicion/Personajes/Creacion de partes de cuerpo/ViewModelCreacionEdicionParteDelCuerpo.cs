@@ -64,7 +64,7 @@ namespace AppGM.Core
 
 			: base(_accionSalir, _controladorParaEditar, true, true)
 		{
-			CrearComandoFinalizar();
+			CrearComandoEliminar();
 		}
 
 		#endregion
