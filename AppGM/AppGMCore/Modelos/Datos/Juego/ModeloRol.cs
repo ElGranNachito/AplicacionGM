@@ -65,6 +65,11 @@ namespace AppGM.Core
         public virtual ModeloAmbiente AmbienteGlobal { get; set; }
 
         /// <summary>
+        /// Fuentes de daño existentes en este rol
+        /// </summary>
+        public virtual List<ModeloFuenteDeDaño> FuentesDeDaño { get; set; } = new List<ModeloFuenteDeDaño>();
+
+        /// <summary>
         /// Personajes que forman parte de este rol
         /// </summary>
         public virtual List<ModeloPersonaje> Personajes { get; set; } = new List<ModeloPersonaje>();

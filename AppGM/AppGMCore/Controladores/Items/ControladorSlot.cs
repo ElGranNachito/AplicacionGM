@@ -58,6 +58,11 @@ namespace AppGM.Core
         /// </summary>
         public ControladorParteDelCuerpo ParteDelCuerpoAlmacenada { get; set; }
 
+        /// <summary>
+        /// Personaje que contiene este slot
+        /// </summary>
+        public ControladorPersonaje PersonajeContenedor { get; set; }
+
         #endregion
         
         #region Constructor
@@ -83,6 +88,16 @@ namespace AppGM.Core
 		        ParteDelCuerpoAlmacenada = SistemaPrincipal.ObtenerControlador<ControladorParteDelCuerpo, ModeloParteDelCuerpo>(modelo.ParteDelCuerpoAlmacenada, true);
 			        
 		        AlmacenarParteDelCuerpo(ParteDelCuerpoAlmacenada);
+	        }
+
+	        PersonajeContenedor = SistemaPrincipal.ObtenerControlador<ControladorPersonaje, ModeloPersonaje>(modelo.PersonajeContenedor);
+
+	        if (PersonajeContenedor == null)
+	        {
+                modelo.PersonajeContenedor.AñadirHandlerSoloUsoControladorCreado((modelo, controlador) =>
+                {
+	                PersonajeContenedor = SistemaPrincipal.ObtenerControlador<ControladorPersonaje, ModeloPersonaje>((ModeloPersonaje)modelo);
+                });
 	        }
         }
 

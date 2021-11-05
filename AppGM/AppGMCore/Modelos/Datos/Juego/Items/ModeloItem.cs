@@ -48,6 +48,21 @@ namespace AppGM.Core
         public virtual ModeloPersonaje PersonajePortador { get; set; }
 
         /// <summary>
+        /// Datos de arma
+        /// </summary>
+        public virtual ModeloDatosArma DatosArma { get; set; }
+
+        /// <summary>
+        /// Datos de consumible
+        /// </summary>
+        public virtual ModeloDatosConsumible DatosConsumible { get; set; }
+
+        /// <summary>
+        /// Datos de defensa
+        /// </summary>
+        public virtual ModeloDatosDefensivo DatosDefensivo { get; set; }
+
+        /// <summary>
         /// Handlers vinculados a eventos del controlador de este utilizable
         /// </summary>
         public virtual List<TIFuncionHandlerEvento<ModeloItem>> HandlersEventos { get; set; } = new List<TIFuncionHandlerEvento<ModeloItem>>();
@@ -61,6 +76,11 @@ namespace AppGM.Core
         /// Slots que ocupa este item
         /// </summary>
         public virtual List<ModeloSlot> SlotsQueOcupa { get; set; } = new List<ModeloSlot>();
+
+        /// <summary>
+        /// Efectos que puede aplicar este item
+        /// </summary>
+        public virtual List<ModeloEfecto> Efectos { get; set; } = new List<ModeloEfecto>();
 
         /// <summary>
         /// Slots que contiene este item

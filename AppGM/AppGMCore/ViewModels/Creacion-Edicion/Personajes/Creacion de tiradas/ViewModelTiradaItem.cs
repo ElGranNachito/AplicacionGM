@@ -41,7 +41,7 @@ namespace AppGM.Core
 			{
 				var dataContextActual = SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido;
 
-				var vmEdicion = await new ViewModelCrearTirada(vm =>
+				var vmEdicion = await new ViewModelCreacionEdicionDeTirada(vm =>
 				{
 				}, ControladorGenerico.modelo.ObtenerModeloContenedor(), ControladorGenerico).Inicializar();
 

@@ -61,11 +61,6 @@ namespace AppGM.Core
 		/// </summary>
 		public ICommand ComandoCancelar { get; protected set; }
 
-		/// <summary>
-		/// Comando que se ejecuta al presionar 'Finalizar'
-		/// </summary>
-		public ICommand ComandoFinalizar { get; protected set; }
-
 		#region Constructores
 
 		/// <summary>
@@ -95,6 +90,9 @@ namespace AppGM.Core
 
 		#region Metodos
 
+		/// <summary>
+		/// Inicializa los comandos <see cref="ComandoAceptar"/> y <see cref="ComandoCancelar"/>
+		/// </summary>
 		private void CrearComandos()
 		{
 			ComandoAceptar = new Comando(() =>
@@ -107,13 +105,6 @@ namespace AppGM.Core
 			ComandoCancelar = new Comando(() =>
 			{
 				Resultado = EResultadoViewModel.Cancelar;
-
-				mAccionSalir?.Invoke((TViewModel)this);
-			});
-
-			ComandoFinalizar = new Comando(() =>
-			{
-				Resultado = EResultadoViewModel.Finalizar;
 
 				mAccionSalir?.Invoke((TViewModel)this);
 			});

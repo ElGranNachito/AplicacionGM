@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace AppGM.Core
 {
@@ -40,15 +41,44 @@ namespace AppGM.Core
 				SistemaPrincipal.LoggerGlobal.LogCrash($"{nameof(controlador)} fue null");
 			}
 
+			ConfigurarEventoItemEliminado(controlador.Modelo);
+		}
+
+		/// <summary>
+		/// Configura el evento <see cref="OnItemEliminado"/> para que se dispare cuando el <see cref="Controlador"/> es eliminado
+		/// </summary>
+		/// <param name="modelo">Modelo para el que se configurara el evento</param>
+		protected void ConfigurarEventoItemEliminado(ModeloBase modelo)
+		{
 			mModeloEliminadoHandler = m =>
 			{
 				OnItemEliminado((TViewModel)this);
 
-				controlador.Modelo.OnModeloEliminado -= mModeloEliminadoHandler;
+				modelo.OnModeloEliminado -= mModeloEliminadoHandler;
 				mModeloEliminadoHandler = null;
 			};
 
-			controlador.Modelo.OnModeloEliminado += mModeloEliminadoHandler;
+			modelo.OnModeloEliminado += mModeloEliminadoHandler;
+		}
+
+		/// <summary>
+		/// Desubscribe <see cref="mModeloEliminadoHandler"/> del evento de item eliminado de <paramref name="modelo"/>
+		/// </summary>
+		/// <param name="modelo">Modelo del que se quitara el handler</param>
+		protected void QuitarHandlerEventoItemEliminado(ModeloBase modelo) => modelo.OnModeloEliminado -= mModeloEliminadoHandler;
+
+		/// <summary>
+		/// Crea botones con los contenidos "Editar" y "Eliminar"
+		/// </summary>
+		/// <param name="_accionBotonEditar">Delegado que se ejecutara cuando el boton editar sea presionado</param>
+		/// <param name="_accionBotonEliminar">Delegado que se ejecutara cuando el boton eliminar sea presionado</param>
+		protected void CrearBotonesParaEditarYEliminar(Action _accionBotonEditar, Action _accionBotonEliminar)
+		{
+			GruposDeBotones.Add(new ViewModelGrupoBotones(new List<ViewModelBoton>
+			{
+				new ViewModelBoton(_accionBotonEditar, ViewModelBoton.NombresComunes.Editar, ViewModelBoton.NombresComunes.Editar, this),
+				new ViewModelBoton(_accionBotonEliminar, ViewModelBoton.NombresComunes.Eliminar, ViewModelBoton.NombresComunes.Eliminar, this)
+			}));
 		}
 
 		#endregion

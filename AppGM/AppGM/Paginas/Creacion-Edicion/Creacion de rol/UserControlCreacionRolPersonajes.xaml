@@ -1,0 +1,102 @@
+﻿<UserControl x:Class="AppGM.UserControlCreacionRol_Personajes"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AppGM"
+             mc:Ignorable="d" 
+
+             Background="White"
+
+             Padding="10"
+
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <!--ViewModel: ViewModelDatosPersonajesRol-->
+
+    <TabControl>
+
+        <!--#region Personajes -->
+        <TabItem>
+            <TabItem.Header>
+                <TextBlock Text="Personajes"/>
+            </TabItem.Header>
+
+            <Border
+                Padding="5">
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!--Filtrado por el tipo de personaje buscado-->
+                    <local:UserControlMultiSelectComboBox
+                        Margin="0 0 5 0"
+                        Descripcion="Filtro tipo personajes"
+            
+                        DataContext="{Binding ViewModelMultiselectComboBoxFiltroTiposPersonajes}"/>
+
+                    <!--Filtrado por el nombre del personaje buscado-->
+                    <TextBox
+                        Grid.Column="1"
+                        Margin="5 0 0 0"
+                        Tag="Nombre"
+
+                        Text="{Binding NombrePersonajeBuscado}"
+
+                        Style="{StaticResource TextoDescriptivo}"/>
+
+                    <!--Lista de personajes existentes-->
+                    <StackPanel
+                        Grid.Row="1"
+                        Grid.ColumnSpan="2">
+
+                        <!-- Lista de personajes -->
+                        <Border
+                            BorderBrush="Black"
+                            BorderThickness="1" 
+                            Margin="0 10 0 0">
+
+                            <!-- Lista de personajes actualmente creados -->
+                            <local:UserControlListaItems
+                                DataContext="{Binding ViewModelListaPersonajes}"/>
+
+                        </Border>
+
+                    </StackPanel>
+                </Grid>
+
+            </Border>
+        </TabItem>
+        <!--#endregion-->
+
+        <!--#region Fuentes de daño -->
+
+        <TabItem>
+            <TabItem.Header>
+                <TextBlock Text="Fuentes de daño"/>
+            </TabItem.Header>
+
+            <local:UserControlVistaFuentesDeDaño
+                DataContext="{Binding ViewModelVistaFuentesDeDaño}"/>
+        </TabItem>
+
+        <!--#endregion-->
+
+        <TabItem>
+            <TabItem.Header>
+                <TextBlock Text="Variables globales" />
+            </TabItem.Header>
+        </TabItem>
+
+    </TabControl>
+    
+
+</UserControl>

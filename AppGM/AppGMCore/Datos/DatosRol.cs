@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime;
 using System.Threading.Tasks;
+
 using CoolLogs;
 
 namespace AppGM.Core
@@ -11,7 +12,7 @@ namespace AppGM.Core
 	{
 		#region Miembros
 
-		private RolContext mDBRol;
+		public RolContext BaseDeDatos;
         private ModeloRol mRolSeleccionado;
 
         #endregion
@@ -22,8 +23,6 @@ namespace AppGM.Core
 		public List<ControladorPersonaje> Masters { get; set; }                      = null;
 		public List<ControladorInvocacion> Invocaciones { get; set; }                = null;
 		public List<ControladorItem> Items { get; set; }                       = null;
-		public List<ControladorConsumible> Consumibles { get; set; }                 = null;
-		public List<ControladorArmaDistancia> ArmasDistancia { get; set; }           = null;
 		public List<ControladorSlot> Slots { get; set; }                             = null;
 		public List<ControladorHabilidad> Perks { get; set; }                        = null;
 		public List<ControladorHabilidad> Skills { get; set; }                       = null;
@@ -49,7 +48,7 @@ namespace AppGM.Core
 		/// <param name="_modeloRol"></param>
 		public DatosRol(ModeloRol _rolSeleccionado)
         {
-	        mDBRol = new RolContext();
+	        BaseDeDatos = new RolContext();
         }
 
 		#region Metodos
@@ -62,7 +61,7 @@ namespace AppGM.Core
 			await Task.Run(() =>
 			{
 				//Si no hay datos creamos algunos para probar
-				if (!mDBRol.Mapas.Any())
+				if (!BaseDeDatos.Mapas.Any())
 				{
 					ModeloMaster master1 = new ModeloMaster
 					{
@@ -290,30 +289,30 @@ namespace AppGM.Core
 					mapa.PosicionesUnidades.Add(unidadServant1);
 					mapa.PosicionesUnidades.Add(unidadServant2);
 
-					mDBRol.Add(new ModeloAdministradorDeCombate
+					BaseDeDatos.Add(new ModeloAdministradorDeCombate
 					{
 						IndicePersonajeTurnoActual = 0,
 						Nombre = "SuperCombateFeroz",
 						TurnoActual = 0
 					});
 
-					mDBRol.Add(mapa);
-					mDBRol.Add(contratoPiola);
-					mDBRol.Add(alianzaPiola);
-					mDBRol.Add(servant1);
-					mDBRol.Add(master1);
-					mDBRol.Add(servant2);
-					mDBRol.Add(master2);
-					mDBRol.Add(unidadServant1);
-					mDBRol.Add(unidadMaster1);
-					mDBRol.Add(unidadServant2);
-					mDBRol.Add(unidadMaster2);
-					mDBRol.Add(posBerserker);
-					mDBRol.Add(posMasterBerserker);
-					mDBRol.Add(posRider);
-					mDBRol.Add(posMasterRider);
-					mDBRol.Add(magia1);
-					mDBRol.Add(magia2);
+					BaseDeDatos.Add(mapa);
+					BaseDeDatos.Add(contratoPiola);
+					BaseDeDatos.Add(alianzaPiola);
+					BaseDeDatos.Add(servant1);
+					BaseDeDatos.Add(master1);
+					BaseDeDatos.Add(servant2);
+					BaseDeDatos.Add(master2);
+					BaseDeDatos.Add(unidadServant1);
+					BaseDeDatos.Add(unidadMaster1);
+					BaseDeDatos.Add(unidadServant2);
+					BaseDeDatos.Add(unidadMaster2);
+					BaseDeDatos.Add(posBerserker);
+					BaseDeDatos.Add(posMasterBerserker);
+					BaseDeDatos.Add(posRider);
+					BaseDeDatos.Add(posMasterRider);
+					BaseDeDatos.Add(magia1);
+					BaseDeDatos.Add(magia2);
 
 					ModeloAdministradorDeCombate combate = new ModeloAdministradorDeCombate
 					{
@@ -352,61 +351,61 @@ namespace AppGM.Core
 					combate.Participantes.Add(participante1);
 					combate.Participantes.Add(participante2);
 
-					mDBRol.Add(combate);
-					mDBRol.Add(participante1);
-					mDBRol.Add(participante2);
-					mDBRol.Add(accion1);
-					mDBRol.Add(accion2);
+					BaseDeDatos.Add(combate);
+					BaseDeDatos.Add(participante1);
+					BaseDeDatos.Add(participante2);
+					BaseDeDatos.Add(accion1);
+					BaseDeDatos.Add(accion2);
 
-					mDBRol.SaveChanges();
+					BaseDeDatos.SaveChanges();
 				}
 
 				//Cargamos los datos de una manera bastante primitiva :u
 
 				var masters =
-					(from m in mDBRol.Masters
+					(from m in BaseDeDatos.Masters
 					 select m).ToList();
 
 				masters.TrimExcess();
 
 				var servants =
-					(from m in mDBRol.Servants
+					(from m in BaseDeDatos.Servants
 					 select m).ToList();
 
 				servants.TrimExcess();
 
 				var mapas =
-					(from m in mDBRol.Mapas
+					(from m in BaseDeDatos.Mapas
 					 select m).ToList();
 
 				mapas.TrimExcess();
 
 				var unidadesmapa =
-					(from u in mDBRol.UnidadesMapa
+					(from u in BaseDeDatos.UnidadesMapa
 					 select u).ToList();
 
 				unidadesmapa.TrimExcess();
 
 				var posiciones =
-					(from p in mDBRol.Vectores2
+					(from p in BaseDeDatos.Vectores2
 					 select p).ToList();
 
 				posiciones.TrimExcess();
 
 				var combates =
-					(from c in mDBRol.Combates
+					(from c in BaseDeDatos.Combates
 					 select c).ToList();
 
 				combates.TrimExcess();
 
 				var participantes =
-					(from p in mDBRol.Participantes
+					(from p in BaseDeDatos.Participantes
 					 select p).ToList();
 
 				participantes.TrimExcess();
 
 				var acciones =
-					(from a in mDBRol.Acciones
+					(from a in BaseDeDatos.Acciones
 					 select a).ToList();
 
 				acciones.TrimExcess();
@@ -469,7 +468,7 @@ namespace AppGM.Core
 		/// </summary>
 		public void CerrarConexion()
 		{
-			mDBRol.Dispose();
+			BaseDeDatos.Dispose();
 		}
 
 		/// <summary>
@@ -478,7 +477,7 @@ namespace AppGM.Core
 		/// <returns></returns>
 		public async Task GuardarDatosAsync()
 		{
-			await mDBRol.SaveChangesAsync();
+			await BaseDeDatos.SaveChangesAsync();
 		}
 
 		/// <summary>
@@ -486,7 +485,7 @@ namespace AppGM.Core
 		/// </summary>
 		public void GuardarDatos()
 		{
-			mDBRol.SaveChanges();
+			BaseDeDatos.SaveChanges();
 		}
 
 		/// <summary>
@@ -495,7 +494,7 @@ namespace AppGM.Core
 		/// <param name="modelo">Modelo que guardar</param>
 		public void GuardarModelo(ModeloBaseSK modelo)
 		{
-			mDBRol.Add(modelo);
+			BaseDeDatos.Add(modelo);
 		}
 
 		/// <summary>
@@ -504,7 +503,7 @@ namespace AppGM.Core
 		/// <param name="modelo">Modelo que guardar</param>
 		public async Task GuardarModeloAsync(ModeloBaseSK modelo)
 		{
-			await mDBRol.AddAsync(modelo);
+			await BaseDeDatos.AddAsync(modelo);
 		}
 
 		/// <summary>
@@ -513,7 +512,7 @@ namespace AppGM.Core
 		/// <param name="modelo">Modelo que eliminar</param>
 		public void EliminarModelo(ModeloBaseSK modelo)
 		{
-			mDBRol.Remove(modelo);
+			BaseDeDatos.Remove(modelo);
 		}
 	} 
 

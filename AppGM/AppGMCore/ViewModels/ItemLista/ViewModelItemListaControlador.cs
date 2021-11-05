@@ -77,19 +77,5 @@ namespace AppGM.Core
 
 			ConfigurarEventoItemEliminado();
 		}
-
-		/// <summary>
-		/// Crea botones con los contenidos "Editar" y "Eliminar"
-		/// </summary>
-		/// <param name="_accionBotonEditar">Delegado que se ejecutara cuando el boton editar sea presionado</param>
-		/// <param name="_accionBotonEliminar">Delegado que se ejecutara cuando el boton eliminar sea presionado</param>
-		protected void CrearBotonesParaEditarYEliminar(Action _accionBotonEditar, Action _accionBotonEliminar)
-		{
-			GruposDeBotones.Add(new ViewModelGrupoBotones(new List<ViewModelBoton>
-			{
-				new ViewModelBoton(_accionBotonEditar, ViewModelBoton.NombresComunes.Editar, ViewModelBoton.NombresComunes.Editar, this),
-				new ViewModelBoton(_accionBotonEliminar, ViewModelBoton.NombresComunes.Eliminar, ViewModelBoton.NombresComunes.Eliminar, this)
-			}));
-		}
 	}
 }

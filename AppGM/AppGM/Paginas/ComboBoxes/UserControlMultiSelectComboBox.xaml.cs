@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 
 namespace AppGM
 {
@@ -10,6 +11,21 @@ namespace AppGM
 		public UserControlMultiSelectComboBox()
 		{
 			InitializeComponent();
+		}
+
+		/// <summary>
+		/// Contiene la descipcion
+		/// </summary>
+		public static readonly DependencyProperty DescripcionProperty =
+			DependencyProperty.Register("Descripcion_MultiselectComboBox",
+				typeof(string),
+				typeof(UserControlComboBoxConDescripcion),
+				new PropertyMetadata("Nada"));
+
+		public string Descripcion
+		{
+			get => (string)GetValue(DescripcionProperty);
+			set => SetValue(DescripcionProperty, value);
 		}
 	}
 }

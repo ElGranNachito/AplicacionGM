@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 
 namespace AppGM.Core
 {
@@ -25,7 +26,18 @@ namespace AppGM.Core
         /// <summary>
         /// Personaje que posee este slot
         /// </summary>
-        public virtual ModeloPersonaje PersonajeDueño { get; set; }
+        [BackingField(nameof(mPersonajeContenedor))]
+        public virtual ModeloPersonaje PersonajeContenedor
+        {
+	        get
+	        {
+		        if (mPersonajeContenedor != null)
+			        return mPersonajeContenedor;
+
+		        return ParteDelCuerpoDueña?.PersonajeContenedor ?? ItemDueño?.PersonajePortador;
+	        }
+	        set => mPersonajeContenedor = value;
+        }
 
         /// <summary>
         /// Parte del cuerpo almacenada en este slot

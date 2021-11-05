@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AppGM.Core
 {
@@ -12,6 +12,8 @@ namespace AppGM.Core
 		/// 
 		/// </summary>
 		private ModeloPersonaje mModeloPersonaje;
+
+		private readonly Type mTipoControladorContenedor;
 
 		/// <summary>
 		/// Nombre del efecto
@@ -74,16 +76,18 @@ namespace AppGM.Core
 		/// Constructor
 		/// </summary>
 		/// <param name="_accionSalir">Lambda llamada al salir del control representado por este vm</param>
+		/// <param name="_tipoControladorContenedor">Tipo del controlador que contiene a este efecto</param>
 		/// <param name="_efectoParaEditar">Controlador del efecto que sera editado</param>
 		public ViewModelCreacionEfecto(
 			Action<ViewModelCreacionEfecto> _accionSalir,
 			ModeloPersonaje _modeloPersonaje, 
-			Type tipoControlador,
+			Type _tipoControladorContenedor,
 			ControladorEfecto _efectoParaEditar = null)
 
 			:base(_accionSalir, _efectoParaEditar)
 		{
 			mModeloPersonaje = _modeloPersonaje;
+			mTipoControladorContenedor = _tipoControladorContenedor;
 
 			ViewModelComboBoxTipoEfecto.OnValorSeleccionadoCambio += (anterior, actual) =>
 			{
@@ -137,8 +141,15 @@ namespace AppGM.Core
 
 			}, true, "Predicado", 1);
 
+			
+		}
+
+		public override async Task<ViewModelCreacionEfecto> Inicializar(Type tipoValorPorDefectoModelo = null)
+		{
+			await base.Inicializar(tipoValorPorDefectoModelo);
+
 			//Obtenemos los eventos disponibles
-			var eventosDisponibles = TypeHelpers.ObtenerEventosDisponibles(typeof(ControladorEfecto), new Type[] {tipoControlador, typeof(ControladorPersonaje)});
+			var eventosDisponibles = TypeHelpers.ObtenerEventosDisponibles(typeof(ControladorEfecto), new Type[] { mTipoControladorContenedor, typeof(ControladorPersonaje) });
 
 			FuncionesHandlerEventos = new ViewModelListaDeElementos<ViewModelCreacionHandlersEvento<TIFuncionHandlerEvento<ModeloEfecto>, ModeloEfecto>>();
 
@@ -162,6 +173,8 @@ namespace AppGM.Core
 				//Añadimos un nuevo item a la lista de eventos y handlers
 				FuncionesHandlerEventos.Add(new ViewModelCreacionHandlersEvento<TIFuncionHandlerEvento<ModeloEfecto>, ModeloEfecto>(ModeloCreado.HandlersEventos, evento));
 			}
+
+			return this;
 		}
 
 		public override ModeloEfecto CrearModelo() => ModeloCreado;

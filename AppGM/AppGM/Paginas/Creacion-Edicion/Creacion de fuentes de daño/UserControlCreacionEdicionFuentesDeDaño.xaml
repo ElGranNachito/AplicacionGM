@@ -1,0 +1,85 @@
+﻿<UserControl x:Class="AppGM.UserControlCreacionEdicionFuentesDeDaño"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AppGM"
+             mc:Ignorable="d" 
+             d:DesignHeight="250" d:DesignWidth="300"
+             
+             Padding="5"
+
+             Background="White">
+
+    <!--ViewModel: ViewModelCreacionEdicionFuenteDeDaño-->
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel
+            Grid.Column="1">
+
+            <!--Nombre de la fuente de daño-->
+            <TextBox 
+                Padding="5"
+                Tag="Nombre fuente"
+
+                Text="{Binding Nombre}"
+
+                Style="{StaticResource TextoDescriptivo}"/>
+
+            <!--Multiselect tipos de daño-->
+            <local:UserControlMultiSelectComboBox
+                Margin="0 10 0 0"
+                Descripcion="Tipos de daño abarcados"
+                DataContext="{Binding ViewModelTiposDeDañoAbarcados}"/>
+
+            <!--Boton aceptar-->
+            <Button
+                Margin="0 20 0 10"
+                Padding="15 5"
+
+                HorizontalAlignment="Center"
+
+                Content="Aceptar"
+
+                IsEnabled="{Binding EsValido}"
+
+                Style="{StaticResource BotonFondoResaltable}"
+            
+                Command="{Binding ComandoAceptar}"/>
+
+            <!--Boton cancelar-->
+            <Button
+                Margin="0 0 0 10"
+                Padding="15 5"
+
+                HorizontalAlignment="Center"
+
+                Content="Cancelar"
+
+                Style="{StaticResource BotonFondoResaltable}"
+            
+                Command="{Binding ComandoCancelar}"/>
+
+            <!--Boton eliminar-->
+            <Button
+                Padding="15 5"
+
+                HorizontalAlignment="Center"
+
+                Content="Eliminar"
+
+                IsEnabled="{Binding EstaEditando}"
+
+                Style="{StaticResource BotonFondoResaltable}"
+            
+                Command="{Binding ComandoEliminar}"/>
+
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -43,10 +43,18 @@ namespace AppGM.Core
 
 				var vmAnterior = ViewModelEdicionSlotActual;
 
-				ViewModelEdicionSlotActual = await new ViewModelCreacionEdicionDeSlot(vm =>
+				ViewModelEdicionSlotActual = await new ViewModelCreacionEdicionDeSlot(async vm =>
 				{
-					if(vm.Resultado.EsAceptarOFinalizar())
+					if (vm.Resultado.EsAceptarOFinalizar())
+					{
+						var resultadoCopia = await vm.ModeloCreado.CrearCopiaProfundaEnSubtipoAsync<ModeloSlot, ModeloSlot>(item.Contenido.modelo);
+
+						await resultadoCopia.modelosCreadosEliminados.GuardarYEliminarModelosAsync();
+
+						await item.Contenido.Recargar();
+
 						item.Actualizar();
+					}
 
 				}, item.Contenido).Inicializar();
 

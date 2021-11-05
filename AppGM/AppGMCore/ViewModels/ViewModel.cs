@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Threading.Tasks;
 using PropertyChanged;
 
 namespace AppGM.Core
@@ -50,6 +51,16 @@ namespace AppGM.Core
 		        return i;
 	        return null;
         }
+
+        /// <summary>
+        /// Inicializar este <see cref="ViewModel"/>
+        /// </summary>
+        public virtual async Task Activar(){}
+
+        /// <summary>
+        /// Realiza la limpieza pertienente de este <see cref="ViewModel"/> cuando se lo va a dejar de utilizar
+        /// </summary>
+        public virtual async Task Desactivar(){}
 
         #endregion
     }

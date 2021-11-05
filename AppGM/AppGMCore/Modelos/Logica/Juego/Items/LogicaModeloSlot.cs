@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace AppGM.Core
 {
@@ -8,8 +9,14 @@ namespace AppGM.Core
 	public partial class ModeloSlot
 	{
 		/// <summary>
+		/// Contiene el valor de <see cref="PersonajeContenedor"/>
+		/// </summary>
+		private ModeloPersonaje mPersonajeContenedor;
+
+		/// <summary>
 		/// Espacio disponible en el slot
 		/// </summary>
+		[NotMapped]
 		public decimal EspacioDisponible => ItemsAlmacenados.Sum(i => i.EspacioQueOcupa);
 	}
 }

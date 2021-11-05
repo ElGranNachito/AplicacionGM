@@ -90,8 +90,6 @@ namespace AppGM.Core
 
         //Equipamiento del personaje
         public virtual List<ModeloItem> Inventario { get; set; } = new List<ModeloItem>();
-        public virtual List<ModeloItemDefensivo> Armadura { get; set; } = new List<ModeloItemDefensivo>();
-        public virtual List<ModeloArmaDistancia> ArmasDistancia { get; set; } = new List<ModeloArmaDistancia>();
 
         /// <summary>
         /// Contratos realizados con tros personajes

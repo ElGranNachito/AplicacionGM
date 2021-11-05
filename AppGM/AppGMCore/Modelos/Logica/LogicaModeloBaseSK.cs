@@ -47,14 +47,14 @@ namespace AppGM.Core
 		/// <summary>
 		/// Elimina el modelo de la base de datos
 		/// </summary>
-		public virtual async Task Eliminar(bool mostrarMensajeDeConfirmacion = false)
+		public virtual async Task<EResultadoViewModel> Eliminar(bool mostrarMensajeDeConfirmacion = false)
 		{
 			if (mostrarMensajeDeConfirmacion)
 			{
 				var resultado = await MensajeHelpers.MostrarMensajeConfirmacionAsync("Accion requiere confirmacion", "¿Esta seguro de querer eliminar este modelo?");
 
 				if (resultado != EResultadoViewModel.Aceptar)
-					return;
+					return resultado;
 			}
 
 			if (this is ModeloBase mb)
@@ -70,6 +70,8 @@ namespace AppGM.Core
 			}
 
 			OnModeloEliminado((ModeloBase)this);
+
+			return EResultadoViewModel.Aceptar;
 		}
 
 		/// <summary>

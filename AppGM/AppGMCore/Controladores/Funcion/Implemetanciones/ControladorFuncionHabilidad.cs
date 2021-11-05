@@ -21,7 +21,7 @@ namespace AppGM.Core
 		/// <summary>
 		/// Wrapper para llamar a la funcion subyacente de manera segura
 		/// </summary>
-		/// <param name="controladorEfecto">Controlador del efecto</param>
+		/// <param name="controladorhabilidad">Controlador del efecto</param>
 		/// <param name="instigador">Personaje responsable de aplicar el efecto</param>
 		/// <param name="objetivo">Personaje al que se le aplica el efecto</param>
 		/// <param name="parametrosExtra">Parametros extra que toma la funcion</param>

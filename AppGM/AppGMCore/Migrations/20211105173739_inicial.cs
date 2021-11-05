@@ -107,7 +107,8 @@ namespace AppGM.Core.Migrations
                 {
                     IDFuncion = table.Column<int>(type: "INTEGER", nullable: false),
                     IDPadre = table.Column<int>(type: "INTEGER", nullable: false),
-                    PadreId = table.Column<int>(type: "INTEGER", nullable: true)
+                    PadreId = table.Column<int>(type: "INTEGER", nullable: true),
+                    PropositoFuncionRelacion = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -452,28 +453,11 @@ namespace AppGM.Core.Migrations
                     EstadoPortacion = table.Column<int>(type: "INTEGER", nullable: false),
                     TipoItem = table.Column<int>(type: "INTEGER", nullable: false),
                     PersonajePortadorId = table.Column<int>(type: "INTEGER", nullable: true),
-                    Tipo = table.Column<int>(type: "INTEGER", nullable: false),
-                    Usos = table.Column<ushort>(type: "INTEGER", nullable: true),
-                    UsosRestantes = table.Column<ushort>(type: "INTEGER", nullable: true),
-                    ModeloPersonajeId = table.Column<int>(type: "INTEGER", nullable: true),
-                    ModeloItemDefensivo_ModeloPersonajeId = table.Column<int>(type: "INTEGER", nullable: true),
                     EsValido = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ModeloItem", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ModeloItem_ModeloPersonaje_ModeloItemDefensivo_ModeloPersonajeId",
-                        column: x => x.ModeloItemDefensivo_ModeloPersonajeId,
-                        principalTable: "ModeloPersonaje",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_ModeloItem_ModeloPersonaje_ModeloPersonajeId",
-                        column: x => x.ModeloPersonajeId,
-                        principalTable: "ModeloPersonaje",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_ModeloItem_ModeloPersonaje_PersonajePortadorId",
                         column: x => x.PersonajePortadorId,
@@ -616,36 +600,12 @@ namespace AppGM.Core.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ModeloEfecto",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    TurnosDeDuracion = table.Column<int>(type: "INTEGER", nullable: false),
-                    Nombre = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
-                    Descripcion = table.Column<string>(type: "TEXT", maxLength: 500, nullable: true),
-                    Tipo = table.Column<int>(type: "INTEGER", nullable: false),
-                    ComportamientoAcumulativo = table.Column<int>(type: "INTEGER", nullable: false),
-                    HabilidadContenedoraId = table.Column<int>(type: "INTEGER", nullable: true),
-                    EsValido = table.Column<bool>(type: "INTEGER", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ModeloEfecto", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ModeloEfecto_ModeloHabilidad_HabilidadContenedoraId",
-                        column: x => x.HabilidadContenedoraId,
-                        principalTable: "ModeloHabilidad",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "TIFuncionHabilidad",
                 columns: table => new
                 {
                     IDFuncion = table.Column<int>(type: "INTEGER", nullable: false),
-                    IDHabilidad = table.Column<int>(type: "INTEGER", nullable: false)
+                    IDHabilidad = table.Column<int>(type: "INTEGER", nullable: false),
+                    PropositoFuncionRelacion = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -687,6 +647,104 @@ namespace AppGM.Core.Migrations
                         principalTable: "ModeloHabilidad",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ModeloDatosArma",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    NumeroDeCargadores = table.Column<int>(type: "INTEGER", nullable: false),
+                    NumeroDeMunicionesPorCargador = table.Column<int>(type: "INTEGER", nullable: false),
+                    IgnoraDefensa = table.Column<bool>(type: "INTEGER", nullable: false),
+                    TiposDeDañoQueInfligeElArma = table.Column<int>(type: "INTEGER", nullable: false),
+                    IDItem = table.Column<int>(type: "INTEGER", nullable: false),
+                    EsValido = table.Column<bool>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ModeloDatosArma", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ModeloDatosArma_ModeloItem_IDItem",
+                        column: x => x.IDItem,
+                        principalTable: "ModeloItem",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ModeloDatosConsumible",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    UsosTotales = table.Column<int>(type: "INTEGER", nullable: false),
+                    UsosRestantes = table.Column<int>(type: "INTEGER", nullable: false),
+                    IDItem = table.Column<int>(type: "INTEGER", nullable: false),
+                    EsValido = table.Column<bool>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ModeloDatosConsumible", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ModeloDatosConsumible_ModeloItem_IDItem",
+                        column: x => x.IDItem,
+                        principalTable: "ModeloItem",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ModeloDatosDefensivo",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    IDItem = table.Column<int>(type: "INTEGER", nullable: false),
+                    EsValido = table.Column<bool>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ModeloDatosDefensivo", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ModeloDatosDefensivo_ModeloItem_IDItem",
+                        column: x => x.IDItem,
+                        principalTable: "ModeloItem",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ModeloEfecto",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    TurnosDeDuracion = table.Column<int>(type: "INTEGER", nullable: false),
+                    Nombre = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
+                    Descripcion = table.Column<string>(type: "TEXT", maxLength: 500, nullable: true),
+                    Tipo = table.Column<int>(type: "INTEGER", nullable: false),
+                    ComportamientoAcumulativo = table.Column<int>(type: "INTEGER", nullable: false),
+                    HabilidadContenedoraId = table.Column<int>(type: "INTEGER", nullable: true),
+                    ModeloItemId = table.Column<int>(type: "INTEGER", nullable: true),
+                    EsValido = table.Column<bool>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ModeloEfecto", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ModeloEfecto_ModeloHabilidad_HabilidadContenedoraId",
+                        column: x => x.HabilidadContenedoraId,
+                        principalTable: "ModeloHabilidad",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ModeloEfecto_ModeloItem_ModeloItemId",
+                        column: x => x.ModeloItemId,
+                        principalTable: "ModeloItem",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -768,7 +826,8 @@ namespace AppGM.Core.Migrations
                 columns: table => new
                 {
                     IDFuncion = table.Column<int>(type: "INTEGER", nullable: false),
-                    IDItem = table.Column<int>(type: "INTEGER", nullable: false)
+                    IDItem = table.Column<int>(type: "INTEGER", nullable: false),
+                    PropositoFuncionRelacion = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -866,6 +925,31 @@ namespace AppGM.Core.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ModeloDatosReduccionDeDaño",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    ValorReduccion = table.Column<int>(type: "INTEGER", nullable: false),
+                    TipoDeDeteccionDeDaño = table.Column<int>(type: "INTEGER", nullable: false),
+                    TipoDeReduccionDeDaño = table.Column<int>(type: "INTEGER", nullable: false),
+                    TipoDeDañoQueReduce = table.Column<int>(type: "INTEGER", nullable: false),
+                    RangoDelDañoQueReduce = table.Column<int>(type: "INTEGER", nullable: false),
+                    ModeloDatosDefensivoId = table.Column<int>(type: "INTEGER", nullable: true),
+                    EsValido = table.Column<bool>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ModeloDatosReduccionDeDaño", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ModeloDatosReduccionDeDaño_ModeloDatosDefensivo_ModeloDatosDefensivoId",
+                        column: x => x.ModeloDatosDefensivoId,
+                        principalTable: "ModeloDatosDefensivo",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ModeloEfectoSiendoAplicado",
                 columns: table => new
                 {
@@ -909,7 +993,8 @@ namespace AppGM.Core.Migrations
                 {
                     IDFuncion = table.Column<int>(type: "INTEGER", nullable: false),
                     IDEfecto = table.Column<int>(type: "INTEGER", nullable: false),
-                    TipoFuncion = table.Column<int>(type: "INTEGER", nullable: false)
+                    TipoFuncion = table.Column<int>(type: "INTEGER", nullable: false),
+                    PropositoFuncionRelacion = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -954,6 +1039,35 @@ namespace AppGM.Core.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ModeloFuenteDeDaño",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    RolAlQuePerteneceId = table.Column<int>(type: "INTEGER", nullable: true),
+                    NombreFuente = table.Column<string>(type: "TEXT", nullable: true),
+                    TiposDeDaño = table.Column<int>(type: "INTEGER", nullable: false),
+                    ModeloDatosReduccionDeDañoId = table.Column<int>(type: "INTEGER", nullable: true),
+                    EsValido = table.Column<bool>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ModeloFuenteDeDaño", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ModeloFuenteDeDaño_ModeloDatosReduccionDeDaño_ModeloDatosReduccionDeDañoId",
+                        column: x => x.ModeloDatosReduccionDeDañoId,
+                        principalTable: "ModeloDatosReduccionDeDaño",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_ModeloFuenteDeDaño_ModeloRol_RolAlQuePerteneceId",
+                        column: x => x.RolAlQuePerteneceId,
+                        principalTable: "ModeloRol",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TIEfectoSiendoAplicadoFuncion",
                 columns: table => new
                 {
@@ -974,6 +1088,30 @@ namespace AppGM.Core.Migrations
                         name: "FK_TIEfectoSiendoAplicadoFuncion_ModeloFuncion_IdFuncion",
                         column: x => x.IdFuncion,
                         principalTable: "ModeloFuncion",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ModeloDatosArmaModeloFuenteDeDaño",
+                columns: table => new
+                {
+                    FuentesDeDañoQueAbarcaEsteArmaId = table.Column<int>(type: "INTEGER", nullable: false),
+                    ItemsAbarcadosId = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ModeloDatosArmaModeloFuenteDeDaño", x => new { x.FuentesDeDañoQueAbarcaEsteArmaId, x.ItemsAbarcadosId });
+                    table.ForeignKey(
+                        name: "FK_ModeloDatosArmaModeloFuenteDeDaño_ModeloDatosArma_ItemsAbarcadosId",
+                        column: x => x.ItemsAbarcadosId,
+                        principalTable: "ModeloDatosArma",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ModeloDatosArmaModeloFuenteDeDaño_ModeloFuenteDeDaño_FuentesDeDañoQueAbarcaEsteArmaId",
+                        column: x => x.FuentesDeDañoQueAbarcaEsteArmaId,
+                        principalTable: "ModeloFuenteDeDaño",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -1005,7 +1143,7 @@ namespace AppGM.Core.Migrations
                     EsValido = table.Column<bool>(type: "INTEGER", nullable: false),
                     NombreSlot = table.Column<string>(type: "TEXT", maxLength: 100, nullable: true),
                     EspacioTotal = table.Column<decimal>(type: "TEXT", nullable: false),
-                    PersonajeDueñoId = table.Column<int>(type: "INTEGER", nullable: true),
+                    PersonajeContenedorId = table.Column<int>(type: "INTEGER", nullable: true),
                     ParteDelCuerpoDueñaId = table.Column<int>(type: "INTEGER", nullable: true),
                     ItemDueñoId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
@@ -1019,8 +1157,8 @@ namespace AppGM.Core.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ModeloSlot_ModeloPersonaje_PersonajeDueñoId",
-                        column: x => x.PersonajeDueñoId,
+                        name: "FK_ModeloSlot_ModeloPersonaje_PersonajeContenedorId",
+                        column: x => x.PersonajeContenedorId,
                         principalTable: "ModeloPersonaje",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -1105,15 +1243,48 @@ namespace AppGM.Core.Migrations
                 column: "PersonajesAfectadosId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ModeloDatosArma_IDItem",
+                table: "ModeloDatosArma",
+                column: "IDItem",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ModeloDatosArmaModeloFuenteDeDaño_ItemsAbarcadosId",
+                table: "ModeloDatosArmaModeloFuenteDeDaño",
+                column: "ItemsAbarcadosId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ModeloDatosConsumible_IDItem",
+                table: "ModeloDatosConsumible",
+                column: "IDItem",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ModeloDatosDefensivo_IDItem",
+                table: "ModeloDatosDefensivo",
+                column: "IDItem",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ModeloDatosInvocacionBase_IdInvocacion",
                 table: "ModeloDatosInvocacionBase",
                 column: "IdInvocacion",
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_ModeloDatosReduccionDeDaño_ModeloDatosDefensivoId",
+                table: "ModeloDatosReduccionDeDaño",
+                column: "ModeloDatosDefensivoId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ModeloEfecto_HabilidadContenedoraId",
                 table: "ModeloEfecto",
                 column: "HabilidadContenedoraId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ModeloEfecto_ModeloItemId",
+                table: "ModeloEfecto",
+                column: "ModeloItemId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ModeloEfectoSiendoAplicado_EfectoId",
@@ -1134,6 +1305,16 @@ namespace AppGM.Core.Migrations
                 name: "IX_ModeloEspecialidad_PersonajeContenedorId",
                 table: "ModeloEspecialidad",
                 column: "PersonajeContenedorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ModeloFuenteDeDaño_ModeloDatosReduccionDeDañoId",
+                table: "ModeloFuenteDeDaño",
+                column: "ModeloDatosReduccionDeDañoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ModeloFuenteDeDaño_RolAlQuePerteneceId",
+                table: "ModeloFuenteDeDaño",
+                column: "RolAlQuePerteneceId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ModeloHabilidad_DueñoId",
@@ -1159,16 +1340,6 @@ namespace AppGM.Core.Migrations
                 name: "IX_ModeloHabilidad_ModeloServantId",
                 table: "ModeloHabilidad",
                 column: "ModeloServantId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ModeloItem_ModeloItemDefensivo_ModeloPersonajeId",
-                table: "ModeloItem",
-                column: "ModeloItemDefensivo_ModeloPersonajeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ModeloItem_ModeloPersonajeId",
-                table: "ModeloItem",
-                column: "ModeloPersonajeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ModeloItem_PersonajePortadorId",
@@ -1226,9 +1397,9 @@ namespace AppGM.Core.Migrations
                 column: "ParteDelCuerpoDueñaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ModeloSlot_PersonajeDueñoId",
+                name: "IX_ModeloSlot_PersonajeContenedorId",
                 table: "ModeloSlot",
-                column: "PersonajeDueñoId");
+                column: "PersonajeContenedorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ModeloVariable_FuncionContenedoraId",
@@ -1394,19 +1565,11 @@ namespace AppGM.Core.Migrations
                 table: "ModeloPersonaje");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_ModeloItem_ModeloPersonaje_ModeloItemDefensivo_ModeloPersonajeId",
-                table: "ModeloItem");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_ModeloItem_ModeloPersonaje_ModeloPersonajeId",
-                table: "ModeloItem");
-
-            migrationBuilder.DropForeignKey(
                 name: "FK_ModeloItem_ModeloPersonaje_PersonajePortadorId",
                 table: "ModeloItem");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_ModeloSlot_ModeloPersonaje_PersonajeDueñoId",
+                name: "FK_ModeloSlot_ModeloPersonaje_PersonajeContenedorId",
                 table: "ModeloSlot");
 
             migrationBuilder.DropForeignKey(
@@ -1435,6 +1598,12 @@ namespace AppGM.Core.Migrations
 
             migrationBuilder.DropTable(
                 name: "ModeloContratoModeloPersonaje");
+
+            migrationBuilder.DropTable(
+                name: "ModeloDatosArmaModeloFuenteDeDaño");
+
+            migrationBuilder.DropTable(
+                name: "ModeloDatosConsumible");
 
             migrationBuilder.DropTable(
                 name: "ModeloDatosInvocacionBase");
@@ -1488,6 +1657,12 @@ namespace AppGM.Core.Migrations
                 name: "ModeloContrato");
 
             migrationBuilder.DropTable(
+                name: "ModeloDatosArma");
+
+            migrationBuilder.DropTable(
+                name: "ModeloFuenteDeDaño");
+
+            migrationBuilder.DropTable(
                 name: "ModeloEfectoSiendoAplicado");
 
             migrationBuilder.DropTable(
@@ -1500,10 +1675,16 @@ namespace AppGM.Core.Migrations
                 name: "ModeloAlianza");
 
             migrationBuilder.DropTable(
+                name: "ModeloDatosReduccionDeDaño");
+
+            migrationBuilder.DropTable(
                 name: "ModeloEfecto");
 
             migrationBuilder.DropTable(
                 name: "Combates");
+
+            migrationBuilder.DropTable(
+                name: "ModeloDatosDefensivo");
 
             migrationBuilder.DropTable(
                 name: "ModeloHabilidad");
