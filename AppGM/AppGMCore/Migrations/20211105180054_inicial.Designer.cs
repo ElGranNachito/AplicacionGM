@@ -9,13 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AppGM.Core.Migrations
 {
     [DbContext(typeof(RolContext))]
-<<<<<<< HEAD:AppGM/AppGMCore/Migrations/20211101122235_Inicial.Designer.cs
-    [Migration("20211101122235_Inicial")]
-    partial class Inicial
-=======
-    [Migration("20211105173739_inicial")]
+    [Migration("20211105180054_inicial")]
     partial class inicial
->>>>>>> Nachito:AppGM/AppGMCore/Migrations/20211105173739_inicial.Designer.cs
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

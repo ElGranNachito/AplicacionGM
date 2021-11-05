@@ -65,15 +65,14 @@ namespace AppGM.Core
         public virtual ModeloAmbiente AmbienteGlobal { get; set; }
 
         /// <summary>
-<<<<<<< HEAD
         /// Clima horario general dentro del area de este rol.
         /// </summary>
         public virtual ModeloClimaHorario ClimaHorarioGlobal { get; set; }
-=======
+
+        /// <summary>
         /// Fuentes de daño existentes en este rol
         /// </summary>
         public virtual List<ModeloFuenteDeDaño> FuentesDeDaño { get; set; } = new List<ModeloFuenteDeDaño>();
->>>>>>> Nachito
 
         /// <summary>
         /// Personajes que forman parte de este rol

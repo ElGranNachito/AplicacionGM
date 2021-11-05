@@ -32,6 +32,8 @@ namespace AppGM.Core
         public static List<ETipoTirada>              TiposDeTiradasDisponibles       => Enum.GetValues(typeof(ETipoTirada)).Cast<ETipoTirada>().ToList();
         public static List<ETipoEfecto>              TiposDeEfectoDisponibles => Enum.GetValues(typeof(ETipoEfecto)).Cast<ETipoEfecto>().ToList();
         public static List<EComportamientoAcumulativo> ComportamientosAcumulativosDisponibles => Enum.GetValues(typeof(EComportamientoAcumulativo)).Cast<EComportamientoAcumulativo>().ToList();
+        public static List<ETipoItem> TiposItemDisponibles => Enum.GetValues(typeof(ETipoItem)).Cast<ETipoItem>().ToList();
+        public static List<EEstadoPortacion> EstadosDePortacionDisponibles => Enum.GetValues(typeof(EEstadoPortacion)).Cast<EEstadoPortacion>().ToList();
 
         /// <summary>
         /// Transforma el valor del <see cref="EFormatoImagen"/> a una cadena
@@ -362,6 +364,60 @@ namespace AppGM.Core
             }
 
             return stringBuilder.ToString();
+        }
+
+        /// Obtiene una representacion textual del valor de <paramref name="nivelMagia"/>
+        /// </summary>
+        /// <param name="nivelMagia">Valor de <see cref="ENivelMagia"/> que pasar a cadena</param>
+        /// <returns></returns>
+        public static string ToStringNivelMagia(this ENivelMagia nivelMagia)
+        {
+            switch (nivelMagia)
+            {
+                case ENivelMagia.Cero:
+                    return "0";
+                case ENivelMagia.Uno:
+                    return "1";
+                case ENivelMagia.Dos:
+                    return "2";
+                case ENivelMagia.Tres:
+                    return "3";
+                case ENivelMagia.Cuatro:
+                    return "4";
+                case ENivelMagia.Cinco:
+                    return "5";
+                case ENivelMagia.Seis:
+                    return "6";
+                case ENivelMagia.Siete:
+                    return "7";
+                case ENivelMagia.Ocho:
+                    return "8";
+                default:
+                    return string.Empty;
+            }
+        }
+
+        /// <summary>
+        /// Devuelve una cadena con todas las flags activas de un <typeparamref name="TEnum"/>
+        /// </summary>
+        /// <typeparam name="TEnum">Tipo del enum</typeparam>
+        /// <param name="flags">Flags activas</param>
+        /// <returns>Cadena con todos los valores activos de <paramref name="flags"/></returns>
+        public static string FlagsActivasEnumToString<TEnum>(this TEnum flags)
+            where TEnum : struct, Enum
+        {
+            StringBuilder sBuilder = new StringBuilder();
+
+            List<TEnum> flagsActivas = new List<TEnum>();
+
+            foreach (var valor in Enum.GetValues<TEnum>())
+            {
+                //Revisamos si la flag actual esta activada
+                if (flags.HasFlag(valor))
+                    flagsActivas.Add(valor);
+            }
+
+            return sBuilder.AppendJoin(", ", flagsActivas).ToString();
         }
 
         public static bool EsAceptarOFinalizar(this EResultadoViewModel resultado) => resultado is EResultadoViewModel.Aceptar or EResultadoViewModel.Finalizar;
