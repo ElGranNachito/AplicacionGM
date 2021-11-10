@@ -44,7 +44,7 @@ namespace AppGM.Core
 						//Si el filtro es una cadena en vacia entonces añadimos todos los controladores disponibles
 						? mControladoresDisponibles
 						//Si no lo es entonces añadimos todos los controladores que concuerden con la cadena
-						: mControladoresDisponibles.FindAll(c => c.CompararConCadena(Filtro)))
+						: mControladoresDisponibles.FindAll(c => c.Equals(Filtro)))
 					.Select(c =>
 					{
 						var vmNuevoItem = c.CrearViewModelItem();

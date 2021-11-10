@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace AppGM.Core
 {
@@ -126,16 +127,6 @@ namespace AppGM.Core
 				TipoSeleccionado = actual.valor;
 			};
 
-			if (EstaEditando)
-			{
-				TipoSeleccionado = ModeloSiendoEditado.TipoVariable;
-			}
-			else
-			{
-				//Colocamos como valor por defecto el primer elemento de los tipos posibles
-				ComboBoxTiposDisponibles.ValorSeleccionado = ComboBoxTiposDisponibles.ValoresPosibles.First();
-			}
-
 			PropertyChanged += (sender, args) =>
 			{
 				if (args.PropertyName == nameof(EsValido))
@@ -160,6 +151,25 @@ namespace AppGM.Core
 		}
 
 		#region Metodos
+
+		public override async Task<ViewModelCreacionDeVariable> Inicializar(Type tipoValorPorDefectoModelo = null)
+		{
+			await base.Inicializar(tipoValorPorDefectoModelo);
+
+			if (EstaEditando)
+			{
+				ModeloCreado.TipoVariableString = string.Empty;
+
+				ComboBoxTiposDisponibles.SeleccionarValor(ModeloSiendoEditado.TipoVariable);
+			}
+			else
+			{
+				//Colocamos como valor por defecto el primer elemento de los tipos posibles
+				ComboBoxTiposDisponibles.SeleccionarValor(ComboBoxTiposDisponibles.ValoresPosibles.First().valor);
+			}
+
+			return this;
+		}
 
 		public override ModeloVariableBase CrearModelo()
 		{
