@@ -10,7 +10,7 @@ namespace AppGM.Core
 	{
 		public ViewModelCreacionDeFuncionItem(
 			Action<ViewModelCreacionDeFuncionBase> _accionSalir, 
-			ControladorFuncion<Action<ControladorItem, ControladorPersonaje, ControladorPersonaje, ControladorFuncionBase, object[]>> _controladorFuncion) 
+			ControladorFuncion<Action<ControladorItem, ControladorPersonaje, ControladorPersonaje, ControladorFuncionBase, object[]>> _controladorFuncion = null) 
 			
 			: base(_accionSalir, _controladorFuncion, EPropositoFuncion.UsoItem)
 		{}
@@ -29,9 +29,9 @@ namespace AppGM.Core
 		{
 			VariablesBase = new List<BloqueVariable>
 			{
-				new BloqueVariable(ObtenerID(),"Usuario", typeof(ControladorPersonaje), ETipoVariable.Parametro),
+				new BloqueVariable(Compilador.Variables.VariableDueña, "ControladorItem", typeof(ControladorItem), ETipoVariable.Parametro),
+				new BloqueVariable(ObtenerID(), "Usuario", typeof(ControladorPersonaje), ETipoVariable.Parametro),
 				new BloqueVariable(ObtenerID(), "Objetivo", typeof(ControladorPersonaje), ETipoVariable.Parametro),
-				new BloqueVariable(Compilador.Variables.VariableDueña, "ControladorHabilidad", typeof(ControladorItem), ETipoVariable.Parametro)
 			};
 		}
 	}

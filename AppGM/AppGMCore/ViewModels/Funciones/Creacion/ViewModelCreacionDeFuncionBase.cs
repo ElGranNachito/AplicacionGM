@@ -19,7 +19,7 @@ namespace AppGM.Core
 	/// <summary>
 	/// <see cref="ViewModel"/> que representa un control para la creacion de una funcion
 	/// </summary>
-	public abstract class ViewModelCreacionDeFuncionBase: ViewModelCreacionEdicionDeModelo<ModeloFuncion, ControladorFuncionBase, ViewModelCreacionDeFuncionBase>, IReceptorDeDrag, IContenedorDeBloques
+	public abstract class ViewModelCreacionDeFuncionBase: ViewModelCreacionEdicionDeModelo<ModeloFuncion, ControladorFuncionBase, ViewModelCreacionDeFuncionBase>, IReceptorDeDragUnico, IContenedorDeBloques
 	{
 		/// <summary>
 		/// Evento que se dispara cuando un bloque es removido
@@ -370,28 +370,28 @@ namespace AppGM.Core
 
 		#region Implementacion de IReceptorDeDrag
 
-		public void OnDragEntro_Impl(IDrageable vm)
+		public void OnDragEntro_Impl(ArgumentosDragAndDropUnico args)
 		{
-			if (vm is ViewModelBloqueFuncionBase)
+			if (args.contenido is ViewModelBloqueFuncionBase)
 				GrosorBordesGridBloquesColocados = new Grosor(5);
 		}
 
-		public void OnDragSalio_Impl(IDrageable vm)
+		public void OnDragSalio_Impl(ArgumentosDragAndDropUnico args)
 		{
-			if (vm is ViewModelBloqueFuncionBase)
+			if (args.contenido is ViewModelBloqueFuncionBase)
 				GrosorBordesGridBloquesColocados = new Grosor(0, 1);
 		}
 
-		public bool OnDrop_Impl(IDrageable vm)
+		public bool OnDrop_Impl(ArgumentosDragAndDropUnico args)
 		{
-			if (vm is ViewModelBloqueFuncionBase bloque)
+			if (args.contenido is ViewModelBloqueFuncionBase bloque)
 			{
 				AñadirBloque(bloque.Copiar(Padre), -1);
 
 				return true;
 			}
 
-			SistemaPrincipal.LoggerGlobal.Log($"Se intento dropear un {vm.GetType()} pero no esta soportado", ESeveridad.Advertencia);
+			SistemaPrincipal.LoggerGlobal.Log($"Se intento dropear un {args.contenido.GetType()} pero no esta soportado", ESeveridad.Advertencia);
 
 			return false;
 		}

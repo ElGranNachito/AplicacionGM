@@ -27,6 +27,9 @@
         <Setter Property="MinHeight" Value="15"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
 
+        <!--Hacemos que el tooltip por defecto sea el tag-->
+        <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Tag}"/>
+
         <Setter Property="Template">
             <Setter.Value>
 

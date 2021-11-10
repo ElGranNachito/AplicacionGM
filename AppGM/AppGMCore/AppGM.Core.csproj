@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="CreacionDeFunciones\Bloques\VMs\" />
+    <Folder Include="Migrations\" />
     <Folder Include="ViewModels\Personaje\" />
   </ItemGroup>
 </Project>

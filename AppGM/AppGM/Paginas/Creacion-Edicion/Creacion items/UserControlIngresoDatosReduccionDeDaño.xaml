@@ -1,0 +1,102 @@
+﻿<UserControl x:Class="AppGM.UserControlIngresoDatosReduccionDeDaño"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:local="clr-namespace:AppGM"
+             mc:Ignorable="d" 
+             d:DesignHeight="100" d:DesignWidth="1000"
+             
+             Background="Transparent"
+             
+             Padding="5">
+
+    <!--ViewModel: ViewModelCreacionEdicionDatosReduccionDaño-->
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <!--Tipos de daño con los que lidia-->
+        <local:UserControlComboBoxConDescripcion
+            Margin="0 0 5 0"
+            Descripcion="Estrategia de deteccion:"
+
+            VerticalAlignment="Center"
+            
+            DataContext="{Binding ViewModelComboBoxEstrategiaDeDeteccionDeDaño}"/>
+
+        <!--Valores del tipo de daño-->
+        <local:UserControlMultiSelectComboBox
+            Grid.Column="1"
+
+            Margin="0 0 5 0"
+
+            Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControlIngresoDatosReduccionDeDaño}}, Path=DataContext.EstrategiaDeReduccionEsDetectarFuenteDelDaño, Converter={local:BooleanToVisibilityConverterColapsar}, ConverterParameter=1}"
+
+            DataContext="{Binding ViewModelMultiselectComboBoxValorTipoDeDeteccion}"
+            Descripcion="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControlIngresoDatosReduccionDeDaño}}, Path=DataContext.DescripcionValorTipoQueDetectar}"/>
+
+        <local:UserControlMultiSelectComboBox
+            Grid.Column="1"
+
+            Margin="0 0 5 0"
+
+            Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControlIngresoDatosReduccionDeDaño}}, Path=DataContext.EstrategiaDeReduccionEsDetectarFuenteDelDaño, Converter={local:BooleanToVisibilityConverterColapsar}}"
+
+            DataContext="{Binding ViewModelMultiselectComboBoxSeleccionFuentesDeDaño}"
+            Descripcion="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControlIngresoDatosReduccionDeDaño}}, Path=DataContext.DescripcionValorTipoQueDetectar}"/>
+
+        <!--Metodo de reduccion del daño-->
+        <local:UserControlComboBoxConDescripcion
+            Grid.Column="2"
+            Descripcion="Metodo de reduccion:"
+
+            VerticalAlignment="Center"
+            
+            DataContext="{Binding ViewModelComboBoxMetodoDeReduccionDeDaño}"/>
+
+        <!--Valor de la reduccion-->
+        <TextBox
+            Grid.Column="3"
+
+            Margin="5 0 0 0"
+            Padding="10 6"
+
+            HorizontalContentAlignment="Center"
+
+            Tag="Reduccion"
+
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+
+            local:CampoDeTextoNumericoProperty.Value="True"
+            local:CampoDeTextoNumericoProperty.Tipo="{x:Type sys:Decimal}"
+
+            Style="{StaticResource TextoDescriptivo}"
+
+            Visibility="{Binding DebeIngresarValorDeReduccion, Converter={local:BooleanToVisibilityConverterColapsar}}"
+
+            Text="{Binding ValorReduccion}"/>
+
+
+        <Rectangle
+            Grid.Column="4"
+
+            Margin="10 0"
+            
+            Height="15"
+            Width="15"
+            
+            Fill="Red"
+            
+            Visibility="{Binding EsValido, Converter={local:BooleanToVisibilityConverterColapsar}, ConverterParameter=1}"/>
+    </Grid>
+
+</UserControl>

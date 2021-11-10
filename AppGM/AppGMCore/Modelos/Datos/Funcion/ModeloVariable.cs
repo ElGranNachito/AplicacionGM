@@ -44,7 +44,7 @@ namespace AppGM.Core
 			{
 				try
 				{
-					TipoVariable = Type.GetType(value);
+					TipoVariable = value.IsNullOrWhiteSpace() ? null : Type.GetType(value);
 				}
 				catch(Exception ex)
 				{

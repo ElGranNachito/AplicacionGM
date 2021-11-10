@@ -100,7 +100,7 @@
 
                                     <TextBlock
                                         Margin="0 5 0 0"
-                                        Text="{Binding Valor, FallbackValue=No existo}"/>
+                                        Text="{Binding Valor, FallbackValue='No existo'}"/>
 
                                 </StackPanel>
                             </DataTemplate>
@@ -115,7 +115,7 @@
                 
                         VerticalScrollBarVisibility="Auto">
 
-                        <ItemsControl ItemsSource="{Binding GruposDeBotones}">
+                        <ItemsControl ItemsSource="{Binding GruposDeBotones.Elementos}">
 
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>

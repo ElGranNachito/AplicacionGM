@@ -28,7 +28,7 @@ namespace AppGM.Core
 		/// <summary>
 		/// Comparador de igual para los <see cref="TItems"/>
 		/// </summary>
-		public EqualityComparer<TItems> Comparador { get; init; }
+		public EqualityComparer<TItems> Comparador { get; set; }
 
 		/// <summary>
 		/// Items contenidos por este combo box

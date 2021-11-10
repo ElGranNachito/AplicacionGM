@@ -31,6 +31,11 @@ namespace AppGM.Core
 		/// <summary>
 		/// Un mystic code bien piola
 		/// </summary>
-		MysticCode = 1<<4
+		MysticCode = 1<<4,
+
+		/// <summary>
+		/// Un item con usos limitados
+		/// </summary>
+		Consumible = 1<<5
 	}
 }

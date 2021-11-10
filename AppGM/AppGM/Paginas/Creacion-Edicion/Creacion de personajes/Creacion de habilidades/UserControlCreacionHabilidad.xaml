@@ -155,24 +155,21 @@
                 </StackPanel>
 
                 <Grid
-                    Grid.Column="1"
-                    HorizontalAlignment="Center">
+                    Grid.Column="1">
 
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <StackPanel>
+                    <local:UserControlListaItems
+                        DataContext="{Binding FuncionUtilizar}"
+                    />
 
-                        <local:UserControlItemLista
-                            Margin="0 10 0 0"
-                            DataContext="{Binding FuncionUtilizar}" Loaded="UserControlFuncion_Loaded"/>
-
-                        <local:UserControlItemLista
-                            Margin="0 10 0 0"
-                            DataContext="{Binding FuncionCondicion}"/>
-                    </StackPanel>
+                    <local:UserControlListaItems
+                        Grid.Row="1"
+                        DataContext="{Binding FuncionCondicion}"
+                    />
 
                 </Grid>
 
