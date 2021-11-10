@@ -225,8 +225,8 @@ namespace AppGM.Core
         {
 	        switch (tipoItem)
 	        {
-                case ETipoItem.ArmaDistancia:
-	                return string.Intern("Arma a distancia");
+                case ETipoItem.Arma:
+	                return string.Intern("Arma");
                 case ETipoItem.Defensivo:
 	                return string.Intern("Defensivo");
                 case ETipoItem.Item:
