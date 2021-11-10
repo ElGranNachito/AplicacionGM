@@ -123,24 +123,22 @@
 
                             <!-- Nombre de personaje -->
                             <TextBox
-                                Grid.Column="1"
-                                Margin="10 0 0 0"
-                                Style="{StaticResource TextoDescriptivo}"
-                                VerticalAlignment="Top"
-                                TextAlignment="Center"
-                                MinHeight="20"
-                                Tag="Nombre"/>
+                            Grid.Column="1"
+                            Margin="10 0 0 0"
+                            Style="{StaticResource TextoDescriptivo}"
+                            VerticalAlignment="Top"
+                            TextAlignment="Center"
+                            Tag="Nombre"/>
 
                             <!-- Nombre de personaje -->
                             <TextBox
-                                Grid.Column="1"
-                                Margin="10 25 0 0"
-                                Visibility="{Binding EsServant, Converter={local:BooleanToVisibilityConverterColapsar}}"
-                                Style="{StaticResource TextoDescriptivo}"
-                                VerticalAlignment="Top"
-                                TextAlignment="Center"
-                                MinHeight="20"
-                                Tag="Nombre real"/>
+                            Grid.Column="1"
+                            Margin="10 20 0 0"
+                            Visibility="{Binding EsServant, Converter={local:BooleanToVisibilityConverterColapsar}}"
+                            Style="{StaticResource TextoDescriptivo}"
+                            VerticalAlignment="Top"
+                            TextAlignment="Center"
+                            Tag="Nombre real"/>
 
                         </Grid>
 
@@ -194,8 +192,6 @@
                             Text="{Binding Edad}"
                             Style="{StaticResource TextoDescriptivo}"
 
-                            MinHeight="20"
-
                             TextAlignment="Center"
                             
                             local:CampoDeTextoNumericoProperty.Value="True"/>
@@ -209,8 +205,6 @@
                             Text="{Binding Estatura}"
                             Style="{StaticResource TextoDescriptivo}"
                             
-                            MinHeight="20"
-
                             local:CampoDeTextoNumericoProperty.Value="True"/>
 
                         <!--Peso-->
@@ -222,8 +216,6 @@
                             Text="{Binding Peso}"
                             Style="{StaticResource TextoDescriptivo}"
                             
-                            MinHeight="20"
-
                             local:CampoDeTextoNumericoProperty.Value="True"/>
 
                         <!--Fisico-->
@@ -233,9 +225,6 @@
                             MaxLength="200"
                             TextWrapping="Wrap"
                             AcceptsReturn="True"
-
-                            MinHeight="20"
-
                             Style="{StaticResource TextoDescriptivo}"/>
 
                         <!--Origen-->
@@ -245,9 +234,6 @@
                             MaxLength="200"
                             TextWrapping="Wrap"
                             AcceptsReturn="True"
-
-                            MinHeight="20"
-
                             Style="{StaticResource TextoDescriptivo}"/>
 
                         <!--Afinidad-->
@@ -257,10 +243,6 @@
                             MaxLength="200"
                             TextWrapping="Wrap"
                             AcceptsReturn="True"
-
-                            MinHeight="20"
-
-
                             Style="{StaticResource TextoDescriptivo}"/>
 
 
@@ -285,8 +267,6 @@
                                     Tag="HP"
                                     MaxLength="2"
                                     Text="{Binding HP}"
-
-                                    MinHeight="20"
                                     
                                     local:CampoDeTextoNumericoProperty.Value="True"/>
 
@@ -297,8 +277,6 @@
                                     Tag="STR"
                                     MaxLength="2"
                                     Text="{Binding STR}"
-
-                                    MinHeight="20"
                                     
                                     local:CampoDeTextoNumericoProperty.Value="True"/>
 
@@ -309,8 +287,6 @@
                                     Tag="END"
                                     MaxLength="2"
                                     Text="{Binding END}"
-
-                                    MinHeight="20"
                                     
                                     local:CampoDeTextoNumericoProperty.Value="True"/>
 
@@ -321,8 +297,6 @@
                                     Tag="AGI"
                                     MaxLength="2"
                                     Text="{Binding AGI}"
-
-                                    MinHeight="20"
                                     
                                     local:CampoDeTextoNumericoProperty.Value="True"/>
 
@@ -333,8 +307,6 @@
                                     Tag="INT"
                                     MaxLength="2"
                                     Text="{Binding INT}"
-
-                                    MinHeight="20"
                                     
                                     local:CampoDeTextoNumericoProperty.Value="True"/>
 
@@ -345,8 +317,6 @@
                                     Tag="LCK"
                                     MaxLength="2"
                                     Text="{Binding LCK}"
-
-                                    MinHeight="20"
                                     
                                     local:CampoDeTextoNumericoProperty.Value="True"/>
 
@@ -357,8 +327,6 @@
                                     Tag="CHR"
                                     MaxLength="2"
                                     Text="{Binding CHR}"
-
-                                    MinHeight="20"
                                     
                                     local:CampoDeTextoNumericoProperty.Value="True"/>
 

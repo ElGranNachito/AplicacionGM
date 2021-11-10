@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace AppGM.Core
@@ -107,7 +106,7 @@ namespace AppGM.Core
         public ViewModelComboBox<ERango> ComboBoxRangoHabilidad { get; set; } = new ViewModelComboBox<ERango>(EnumHelpers.RangosDisponibles);
 
         public ViewModelListaItems<ViewModelFuncionItem<ControladorFuncion_Habilidad>> FuncionUtilizar { get; set; }
-        public ViewModelListaItems<ViewModelFuncionItem<ControladorFuncion_Item>> FuncionCondicion { get; set; }
+        public ViewModelFuncionItem<ControladorFuncion_PredicadoEfecto> FuncionCondicion { get; set; }
 
         public ICommand ComandoGuardar { get; set; }
 
@@ -129,7 +128,8 @@ namespace AppGM.Core
             }
             else
             {
-	            mModeloPersonaje.Habilidades.Add(ModeloCreado);
+	            ModeloCreado.Dueño = mModeloPersonaje;
+                mModeloPersonaje.Habilidades.Add(ModeloCreado);
 
                 SistemaPrincipal.GuardarModelo(ModeloCreado);
             }
@@ -155,48 +155,20 @@ namespace AppGM.Core
 		                var nuevaRelacion = new TIFuncionHabilidad
 		                {
 			                Funcion = nuevaFuncion.modelo,
-			                Habilidad = ModeloCreado,
-
-                            PropositoFuncionRelacion = EPropositoFuncionRelacion.Uso
+			                Habilidad = ModeloCreado
 		                };
 
 		                AñadirFuncionDesdeListaItems<TIFuncionHabilidad, ViewModelFuncionItem<ControladorFuncion_Habilidad>>((ViewModelFuncionItem<ControladorFuncion_Habilidad>)nuevaFuncion.CrearViewModelItem(), nuevaRelacion, ModeloCreado.Funciones, FuncionUtilizar);
 	                }
                 }).Inicializar();
 
-                SistemaPrincipal.MostrarViewModelCreacionEdicion<ViewModelCreacionDeFuncionBase, ModeloFuncion, ControladorFuncionBase>(vmCreacion);
-
             }, true, "Funcion Utilizar", 1);
-
-            FuncionCondicion = new ViewModelListaItems<ViewModelFuncionItem<ControladorFuncion_Item>>(async () =>
-            {
-	            var vmCreacion = await new ViewModelCreacionDeFuncionItem(vm =>
-	            {
-		            if (vm.Resultado.EsAceptarOFinalizar())
-		            {
-			            var nuevaFuncion = ((ViewModelCreacionDeFuncionItem)vm).ControladorFuncion;
-
-			            var nuevaRelacion = new TIFuncionHabilidad
-			            {
-				            Funcion = nuevaFuncion.modelo,
-				            Habilidad = ModeloCreado,
-
-                            PropositoFuncionRelacion = EPropositoFuncionRelacion.PredicadoUso
-			            };
-
-			            AñadirFuncionDesdeListaItems<TIFuncionHabilidad, ViewModelFuncionItem<ControladorFuncion_Item>>((ViewModelFuncionItem<ControladorFuncion_Item>)nuevaFuncion.CrearViewModelItem(), nuevaRelacion, ModeloCreado.Funciones, FuncionCondicion);
-		            }
-	            }).Inicializar();
-
-	            SistemaPrincipal.MostrarViewModelCreacionEdicion<ViewModelCreacionDeFuncionBase, ModeloFuncion, ControladorFuncionBase>(vmCreacion);
-
-            }, true, "Predicado puede utilizar", 1);
 
             //FuncionCondicion = new ViewModelFuncionItem<ControladorFuncion_Predicado>(null);
 
             ContenedorListaEfectos   = new ViewModelListaItems<ViewModelEfectoItem>(async () =>
             {
-	            SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = await new ViewModelCreacionEdicionEfecto(async vm =>
+	            SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = await new ViewModelCreacionEfecto(async vm =>
 	            {
 		            SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = this;
 
@@ -242,35 +214,17 @@ namespace AppGM.Core
 	            {
 		            if (vm.Resultado.EsAceptarOFinalizar())
 		            {
-			            var nuevaVariable = vm.CrearModelo();
+                        var nuevaVariable = vm.CrearControlador();
 
-                        if (vm.EstaEditando)
-                        {
-	                        await nuevaVariable.CrearCopiaProfundaEnSubtipoAsync(vm.ModeloSiendoEditado.GetType(), vm.ModeloSiendoEditado);
+                        ModeloCreado.Variables.Add(nuevaVariable.modelo);
 
-                            var controladorModeloEditado = SistemaPrincipal.ObtenerControlador(vm.ModeloSiendoEditado);
+                        await nuevaVariable.GuardarAsync();
 
-                            if (controladorModeloEditado != null)
-	                            await controladorModeloEditado.Recargar();
-                        }
-                        else
-                        {
-	                        ModeloCreado.Variables.Add(nuevaVariable);
-
-	                        await nuevaVariable.GuardarAsync();
-
-	                        AñadirModeloDesdeListaItems<ModeloVariableBase, ViewModelVariableItem>((ViewModelVariableItem)vm.CrearControlador().CrearViewModelItem(), ModeloCreado.Variables, ContenedorListaVariables);
-                        }
-		            }
-		            else if(vm.Resultado == EResultadoViewModel.Eliminar)
-		            {
-			            ModeloCreado.Variables.Remove(vm.ModeloSiendoEditado);
-
-                        ContenedorListaVariables.Items.RemoveFirst(i => i.ControladorGenerico.modelo == vm.ModeloSiendoEditado);
+                        AñadirModeloDesdeListaItems<ModeloVariableBase, ViewModelVariableItem>((ViewModelVariableItem)vm.CrearControlador().CrearViewModelItem(), ModeloCreado.Variables, ContenedorListaVariables);
 		            }
 
 		            SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = this;
-	            }).Inicializar(typeof(ModeloVariableInt));
+	            }).Inicializar();
             }, true, "Variables");
 
             ComandoGuardar = new Comando(async () =>
@@ -307,16 +261,6 @@ namespace AppGM.Core
 		#endregion
 
 		#region Metodos
-
-		public override async Task<ViewModelCrearHabilidad> Inicializar(Type tipoValorPorDefectoModelo = null)
-		{
-			await base.Inicializar(tipoValorPorDefectoModelo);
-
-            if(!EstaEditando)
-	            ModeloCreado.Dueño = mModeloPersonaje;
-
-            return this;
-		}
 
 		public override ModeloHabilidad CrearModelo()
 		{

@@ -134,18 +134,16 @@ namespace AppGM.Core
 		/// Constructor por defecto
 		/// </summary>
 		/// <param name="_accionSalir">Accion que se ejecuta al salir de este vm</param>
-		public ViewModelCreacionEdicionDeModelo(Action<TViewModel> _accionSalir, bool _actualizarValidezOnPropertyChanged = false, bool _crearComandoPorDefecto = true)
-			: base(_accionSalir, _crearComandoPorDefecto)
+		public ViewModelCreacionEdicionDeModelo(Action<TViewModel> _accionSalir, bool _actualizarValidezOnPropertyChanged = false)
+			: base(_accionSalir)
 		{
 			if (!_actualizarValidezOnPropertyChanged)
 				return;
 
 			PropertyChanged += (sender, args) =>
 			{
-				if (args.PropertyName == nameof(EsValido) || ModeloCreado == null)
-					return;
-
-				ActualizarValidez();
+				if (args.PropertyName != nameof(EsValido) && ModeloCreado != null)
+					ActualizarValidez();
 			};
 		}
 

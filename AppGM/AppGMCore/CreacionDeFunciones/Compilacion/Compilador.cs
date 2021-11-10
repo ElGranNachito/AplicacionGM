@@ -127,7 +127,7 @@ namespace AppGM.Core
 				//Colocamos la label al final de funcion
 				expresiones.Add(Expression.Label(labelFinalFuncion));
 
-				var metodoAsignarValorAVariable = typeof(ControladorBase).GetMethod(nameof(ControladorBase.AsignarAVariable), new[] {typeof(int), typeof(object)});
+				var metodoAsignarValorAVariable = typeof(ControladorBase).GetMethod(nameof(ControladorBase.AsignarAVariable), new[] {typeof(object)});
 
 				if (metodoAsignarValorAVariable == null)
 					throw new Exception($"No se pudo hallar el metodo {nameof(ControladorBase.AsignarAVariable)}!");

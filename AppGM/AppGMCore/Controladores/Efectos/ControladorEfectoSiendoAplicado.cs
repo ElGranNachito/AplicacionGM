@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Threading.Tasks;
+
 using CoolLogs;
 
 namespace AppGM.Core
@@ -290,11 +290,11 @@ namespace AppGM.Core
 			ComportamientoAcumulativo = nuevoComportamiento;
 		}
 
-		public override async Task Recargar()
+		public override void ActulizarModelo(ModeloEfectoSiendoAplicado nuevoModelo, bool eliminarSiNuevoModeloEsNull = false)
 		{
-			await base.Recargar();
+			base.ActulizarModelo(modelo, eliminarSiNuevoModeloEsNull);
 
-			var nuevoEfecto = modelo.Efecto;
+			var nuevoEfecto = nuevoModelo.Efecto;
 
 			ActualizarFuncion(
 				GetType().GetProperty(nameof(FnPuedeAplicarEfecto), typeof(ControladorFuncion_PredicadoEfecto)), controladorEfecto.FnPuedeAplicarEfecto.modelo,
@@ -306,6 +306,9 @@ namespace AppGM.Core
 
 			ActualizarFuncion(GetType().GetProperty(nameof(FnQuitarEfecto), typeof(ControladorFuncion_Efecto)), controladorEfecto.FnQuitarEfecto.modelo,
 				nuevoEfecto.Funciones.Find(f => f.TipoFuncion == ETipoFuncionEfecto.FuncionQuitar)?.Funcion);
+
+			ComportamientoAcumulativo = nuevoModelo.ComportamientoAcumulativo;
+			TurnosRestantes           = nuevoModelo.TurnosRestantes;
 		}
 
 		/// <summary>
@@ -314,7 +317,7 @@ namespace AppGM.Core
 		/// <param name="propertyFuncionActualizar">Propiedad cuyo valor actualizar</param>
 		/// <param name="funcionEfectoPrincipal">Funcion del <see cref="controladorEfecto"/>en la que se basa <paramref name="nuevaFuncion"/></param>
 		/// <param name="nuevaFuncion">Modelo de la nueva funcion</param>
-		private async void ActualizarFuncion(PropertyInfo propertyFuncionActualizar, ModeloFuncion funcionEfectoPrincipal, ModeloFuncion nuevaFuncion)
+		private void ActualizarFuncion(PropertyInfo propertyFuncionActualizar, ModeloFuncion funcionEfectoPrincipal, ModeloFuncion nuevaFuncion)
 		{
 			if ((!propertyFuncionActualizar.PropertyType.IsInstanceOfType(nuevaFuncion)))
 			{
@@ -328,8 +331,6 @@ namespace AppGM.Core
 			//Si el modelo dela funcion actual es igual entonces no hacemos nada
 			if (nuevaFuncion == funcionActual?.modelo)
 				return;
-
-			//TODO: Ver bien esto
 
 			//Establecemos el padre del modelo de la nueva funcion
 			nuevaFuncion.Padre = new TIFuncionPadreFuncion
@@ -352,10 +353,10 @@ namespace AppGM.Core
 				propertyFuncionActualizar.SetValue(this, null);
 			}
 			//Si no se cumple nada de lo de arriba...
-			else if(funcionActual != null)
+			else
 			{
 				//Actualizamos el modelo de la funcion actual si es que existe
-				await funcionActual.Recargar();
+				funcionActual?.ActulizarModelo(nuevaFuncion);
 			}
 		}
 

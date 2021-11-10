@@ -2,7 +2,6 @@
 using System;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace AppGM.Core
@@ -173,6 +172,13 @@ namespace AppGM.Core
 		{
 			mModeloContenedor = _contenedorTirada;
 
+			if (EstaEditando)
+			{
+				TextoTextbox = ModeloCreado.Tirada;
+
+				ViewModelComboBoxTipoTirada.SeleccionarValor(ModeloCreado.TipoTirada);
+			}
+
 			ViewModelComboBoxTipoTirada.OnValorSeleccionadoCambio += async (ViewModelItemComboBoxBase<ETipoTirada> anterior, ViewModelItemComboBoxBase<ETipoTirada> actual) =>
 			{
 				if (actual.valor == ETipoTirada.Daño)
@@ -198,20 +204,6 @@ namespace AppGM.Core
 		#endregion
 
 		#region Metodos
-
-		public override async Task<ViewModelCreacionEdicionDeTirada> Inicializar(Type tipoValorPorDefectoModelo = null)
-		{
-			await base.Inicializar(tipoValorPorDefectoModelo);
-
-			if (EstaEditando)
-			{
-				TextoTextbox = ModeloCreado.Tirada;
-
-				ViewModelComboBoxTipoTirada.SeleccionarValor(ModeloCreado.TipoTirada);
-			}
-
-			return this;
-		}
 
 		public override ModeloTiradaVariable CrearModelo()
 		{

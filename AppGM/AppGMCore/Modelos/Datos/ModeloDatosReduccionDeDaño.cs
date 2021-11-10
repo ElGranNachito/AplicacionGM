@@ -10,17 +10,17 @@ namespace AppGM.Core
 		/// <summary>
 		/// Valor de la reduccion
 		/// </summary>
-		public decimal ValorReduccion { get; set; }
+		public int ValorReduccion { get; set; }
 
 		/// <summary>
 		/// Manera en la que se detecta el daño que reducir
 		/// </summary>
-		public EEstrategiaDeDeteccionDeDaño EstrategiaDeDeteccionDeDaño { get; set; }
+		public ETipoDeDeteccionDeDaño TipoDeDeteccionDeDaño { get; set; }
 
 		/// <summary>
 		/// Manera en la que reduce el daño
 		/// </summary>
-		public EMetodoDeReduccionDeDaño MetodoDeReduccionDeDaño { get; set; }
+		public ETipoDeReduccionDeDaño TipoDeReduccionDeDaño { get; set; }
 
 		/// <summary>
 		/// Tipo del daño que reduce
@@ -31,11 +31,6 @@ namespace AppGM.Core
 		/// Rango del daño que reduce
 		/// </summary>
 		public ERango RangoDelDañoQueReduce { get; set; }
-
-		/// <summary>
-		/// Nivel de la magia cuyo daño reduce
-		/// </summary>
-		public ENivelMagia NivelDeLaMagiaCuyoDañoReduce { get; set; }
 
 		/// <summary>
 		/// Fuentes de daño que abarca la reduccion

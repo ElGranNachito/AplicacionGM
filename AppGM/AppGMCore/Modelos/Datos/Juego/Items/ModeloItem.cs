@@ -48,11 +48,6 @@ namespace AppGM.Core
         public virtual ModeloPersonaje PersonajePortador { get; set; }
 
         /// <summary>
-        /// Rol al que pertenece este item
-        /// </summary>
-        public virtual ModeloRol RolAlQuePertenece { get; set; }
-
-        /// <summary>
         /// Datos de arma
         /// </summary>
         public virtual ModeloDatosArma DatosArma { get; set; }

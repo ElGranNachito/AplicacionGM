@@ -8,11 +8,11 @@ namespace AppGM.Core
 	/// </summary>
 	public class ViewModelCreacionDeFuncionEfecto : ViewModelCreacionDeFuncion
 		
-		<Action<ControladorEfectoSiendoAplicado, ControladorEfecto, ControladorPersonaje, ControladorPersonaje, ControladorFuncionBase, object[]>>
+		<Action<ControladorEfecto, ControladorEfectoSiendoAplicado, ControladorPersonaje, ControladorPersonaje, ControladorFuncionBase, object[]>>
 	{
 		public ViewModelCreacionDeFuncionEfecto(
 			Action<ViewModelCreacionDeFuncionBase> _accionSalir, 
-			ControladorFuncion<Action<ControladorEfectoSiendoAplicado, ControladorEfecto, ControladorPersonaje, ControladorPersonaje, ControladorFuncionBase, object[]>> _controladorFuncion) 
+			ControladorFuncion<Action<ControladorEfecto, ControladorEfectoSiendoAplicado, ControladorPersonaje, ControladorPersonaje, ControladorFuncionBase, object[]>> _controladorFuncion) 
 			
 			: base(_accionSalir, _controladorFuncion, EPropositoFuncion.Efecto)
 		{
@@ -33,8 +33,8 @@ namespace AppGM.Core
 		{
 			VariablesBase = new List<BloqueVariable>
 			{
+				new BloqueVariable(Compilador.Variables.VariableDueña, "Efecto", typeof(ControladorHabilidad), ETipoVariable.Parametro),
 				new BloqueVariable(ObtenerID(), "AplicacionEfecto", typeof(ControladorEfectoSiendoAplicado), ETipoVariable.Parametro),
-				new BloqueVariable(Compilador.Variables.VariableDueña, "Efecto", typeof(ControladorEfecto), ETipoVariable.Parametro),
 				new BloqueVariable(ObtenerID(), "Instigador", typeof(ControladorPersonaje), ETipoVariable.Parametro),
 				new BloqueVariable(ObtenerID(), "Objetivo", typeof(ControladorPersonaje), ETipoVariable.Parametro)
 			};

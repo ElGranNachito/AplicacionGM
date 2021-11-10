@@ -11,5 +11,10 @@ namespace AppGM
         {
             InitializeComponent();
         }
-    }
+
+		private void UserControlFuncion_Loaded(object sender, System.Windows.RoutedEventArgs e)
+		{
+
+		}
+	}
 }

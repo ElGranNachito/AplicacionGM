@@ -9,8 +9,6 @@ namespace AppGM.Core
 	/// </summary>
 	/// <typeparam name="TFuncion">Tipo de la funcion contenida</typeparam>
 	public abstract class ControladorFuncion<TFuncion> : ControladorFuncionBase
-
-		where TFuncion: class
 	{
 		/// <summary>
 		/// <para>
@@ -22,8 +20,6 @@ namespace AppGM.Core
 		/// </summary>
 		/// <typeparam name="TFuncion">Tipo de la funcion</typeparam>
 		internal class FuncionCargada<TFuncion>
-
-			where TFuncion: class
 		{
 			/// <summary>
 			/// Lambda compilada
@@ -33,7 +29,7 @@ namespace AppGM.Core
 			/// <summary>
 			/// Bloques que conforman la funcion
 			/// </summary>
-			public List<BloqueBase> bloques = new List<BloqueBase>();
+			public List<BloqueBase> bloques;
 		}
 
 		#region Propiedades
@@ -73,13 +69,7 @@ namespace AppGM.Core
 				return null;
 			}
 
-			protected set
-			{
-				if (!mFuncionesConocidas.ContainsKey(NombreArchivoFuncion))
-					mFuncionesConocidas.Add(NombreArchivoFuncion, new FuncionCargada<TFuncion>{bloques = new List<BloqueBase>(), funcion = ResultadoCompilacion?.Funcion});
-
-				mFuncionesConocidas[NombreArchivoFuncion].bloques = value;
-			} 
+			protected set => mFuncionesConocidas[NombreArchivoFuncion].bloques = value;
 		}
 
 		/// <summary>
@@ -92,7 +82,7 @@ namespace AppGM.Core
 		///		estaticas y por lo tanto puede tener varias instancias, no necesitemos cargar el xml y compilar los bloques para cada una.
 		/// </para>
 		/// </summary>
-		private static Dictionary<string, FuncionCargada<TFuncion>> mFuncionesConocidas = new Dictionary<string, FuncionCargada<TFuncion>>();
+		internal static Dictionary<string, FuncionCargada<TFuncion>> mFuncionesConocidas = new Dictionary<string, FuncionCargada<TFuncion>>();
 
 		#endregion
 

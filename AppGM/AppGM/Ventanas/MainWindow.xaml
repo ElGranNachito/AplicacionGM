@@ -18,7 +18,7 @@
 
         BorderThickness="{Binding ResizeBorderThickness}"
 
-        Title="Ventana principal">
+        Title="MainWindow">
 
     <Window.Resources>
         

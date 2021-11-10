@@ -5,7 +5,7 @@ namespace AppGM.Core
 	/// <summary>
 	/// Modelo que representa una fuente de daño
 	/// </summary>
-	public partial class ModeloFuenteDeDaño : ModeloBase
+	public class ModeloFuenteDeDaño : ModeloBase
 	{
 		/// <summary>
 		/// Rol al que pertenece esta fuente de daño

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace AppGM.Core
@@ -9,7 +10,7 @@ namespace AppGM.Core
 	/// <summary>
 	/// Clase abstracta base de todos los controladores
 	/// </summary>
-	public abstract class ControladorBase : IEquatable<ControladorBase>, IEquatable<string>
+	public abstract class ControladorBase
 	{
 		/// <summary>
 		/// <para>
@@ -79,6 +80,13 @@ namespace AppGM.Core
 		public abstract IControladorTiradaBase ObtenerTirada(string nombreTirada);
 
 		/// <summary>
+		/// Compara este controlador con una <paramref name="cadena"/> y determina si la cadena lo representa
+		/// </summary>
+		/// <param name="cadena">Cadena con la que comparar</param>
+		/// <returns><see cref="bool"/> que indica si este controlador es representado por la cadena</returns>
+		public virtual bool CompararConCadena(string cadena) => false;
+
+		/// <summary>
 		/// Crea un viewmodel para representar a este controlador en una lista
 		/// </summary>
 		/// <returns>Instancia del viewmodel creado o null</returns>
@@ -117,9 +125,5 @@ namespace AppGM.Core
 		{
 			await Task.FromResult(0);
 		}
-
-		public virtual bool Equals(string other) => false;
-
-		public virtual bool Equals(ControladorBase otro) => this == otro;
 	}
 }

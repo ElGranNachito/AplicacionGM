@@ -17,12 +17,6 @@ namespace AppGM.Core
 		/// Espacio disponible en el slot
 		/// </summary>
 		[NotMapped]
-		public decimal EspacioDisponible => EspacioTotal - EspacioOcupado;
-
-		/// <summary>
-		/// Espacio ocupado del slot
-		/// </summary>
-		[NotMapped]
-		public decimal EspacioOcupado => ItemsAlmacenados.Sum(i => i.EspacioQueOcupa);
+		public decimal EspacioDisponible => ItemsAlmacenados.Sum(i => i.EspacioQueOcupa);
 	}
 }

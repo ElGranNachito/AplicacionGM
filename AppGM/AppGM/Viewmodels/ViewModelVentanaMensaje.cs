@@ -15,6 +15,8 @@ namespace AppGM.Viewmodels
 
         public override Lazy<IVentanaMensaje> VentanaMensaje { get; set; } = new Lazy<IVentanaMensaje>(() => new ViewModelVentanaMensaje(new Window()));
 
+        public ViewModelConResultadoBase ViewModelContenidoVentana { get; set; }
+
         #endregion
 
         #region Constructores
@@ -40,7 +42,7 @@ namespace AppGM.Viewmodels
         /// <returns></returns>
         public async Task<EResultadoViewModel> Mostrar(ViewModelConResultadoBase vm, string titulo, bool esperarCierre, int alto = -1, int ancho = -1)
         {
-            DataContextContenido = vm;
+            ViewModelContenidoVentana = vm;
 
             TituloVentana = titulo;
 
@@ -72,6 +74,8 @@ namespace AppGM.Viewmodels
 
             return EResultadoViewModel.NoEstablecido;
         }
+
+        public void EstablecerViewModel(ViewModelConResultadoBase nuevoVM) => ViewModelContenidoVentana = nuevoVM;
 
         public override void CerrarVentana() => mVentana.Hide();
 

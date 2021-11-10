@@ -55,7 +55,8 @@ namespace AppGM
 
         private static void OnDescripcionChanged(DependencyObject dp, DependencyPropertyChangedEventArgs args)
         {
-           
+            if (dp is UserControlComboBoxConDescripcion userControl)
+                userControl.TextBox_Descripcion.Text = (string) args.NewValue;
         }
 
         private static void OnItemsSourceChanged(DependencyObject dp, DependencyPropertyChangedEventArgs args)

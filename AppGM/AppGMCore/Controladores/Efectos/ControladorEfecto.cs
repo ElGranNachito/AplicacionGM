@@ -106,16 +106,6 @@ namespace AppGM.Core
 	        }
         }
 
-		/// <summary>
-		/// <see cref="ControladorHabilidad"/> que contiene este efecto
-		/// </summary>
-		public ControladorHabilidad HabilidadContenedora { get; private set; }
-
-		/// <summary>
-		/// <see cref="ControladorItem"/> que contiene este efecto
-		/// </summary>
-		public ControladorItem ItemContenedor { get; private set; }
-
         /// <summary>
         /// Obtiene o establece el valor de <see cref="ModeloEfecto.Nombre"/>
         /// </summary>
@@ -178,28 +168,6 @@ namespace AppGM.Core
 
 		        AplicarEfecto(instigador, objetivo, aplicacion.ComportamientoAcumulativo, aplicacion);
 	        }
-
-	        var modeloContenedor = modelo.ObtenerModeloContenedor();
-
-	        if (modeloContenedor is ModeloHabilidad h)
-	        {
-		        HabilidadContenedora = SistemaPrincipal.ObtenerControlador<ControladorHabilidad, ModeloHabilidad>(h);
-	        }
-			else if (modeloContenedor is ModeloItem i)
-	        {
-		        ItemContenedor = SistemaPrincipal.ObtenerControlador<ControladorItem, ModeloItem>(i);
-	        }
-	        
-			if(HabilidadContenedora != null || ItemContenedor != null)
-				return;
-
-			modeloContenedor.AñadirHandlerSoloUsoControladorCreado((m, c) =>
-			{
-				if (m is ModeloHabilidad)
-					HabilidadContenedora = (ControladorHabilidad) c;
-				else if (m is ModeloItem)
-					ItemContenedor = (ControladorItem) c;
-			});
         }
 
         #endregion
@@ -487,38 +455,45 @@ namespace AppGM.Core
 	        }
         }
 
-        public override async Task Recargar()
+        public override void ActulizarModelo(ModeloEfecto nuevoModelo, bool eliminarSiNuevoModeloEsNull = false)
         {
-	        await base.Recargar();
+	        base.ActulizarModelo(nuevoModelo, eliminarSiNuevoModeloEsNull);
+
+	        var nuevaFuncionPuedeAplicar = nuevoModelo.Funciones.Find(f => f.TipoFuncion == ETipoFuncionEfecto.FuncionPuedeAplicar);
+	        var nuevaFuncionAplicar      = nuevoModelo.Funciones.Find(f => f.TipoFuncion == ETipoFuncionEfecto.FuncionAplicar);
+	        var nuevaFuncionQuitar       = nuevoModelo.Funciones.Find(f => f.TipoFuncion == ETipoFuncionEfecto.FuncionQuitar);
 
 	        //Actualizamos las funciones del efecto
-			if(FnAplicarEfecto != null)
-				await FnAplicarEfecto.Recargar();
+	        FnPuedeAplicarEfecto.ActulizarModelo(nuevaFuncionPuedeAplicar?.Funcion);
+	        FnAplicarEfecto.ActulizarModelo(nuevaFuncionAplicar?.Funcion);
+	        FnQuitarEfecto.ActulizarModelo(nuevaFuncionQuitar?.Funcion);
 
-			if (FnPuedeAplicarEfecto != null)
-				await FnPuedeAplicarEfecto.Recargar();
-
-			if(FnQuitarEfecto != null) 
-				await FnQuitarEfecto.Recargar();
+			//Obtenemos una copia de las aplicaciones del efecto del nuevo modelo
+			var aplicacionesNuevoModelo = nuevoModelo.Aplicaciones;
 
 	        //Por cada aplicacion en el efecto actual...
-	        foreach (var aplicacion in AplicacionesEfectoGlobal)
+			foreach (var aplicacion in AplicacionesEfectoGlobal)
 	        {
-		        //Intentamos obtener el indice de la aplicacion actual en la lista de nuevas aplicaciones
-		        int indiceAplicacionActual = modelo.Aplicaciones.IndexOf(aplicacion.AplicacionEfecto);
+				//Intentamos obtener el indice de la aplicacion actual en la lista de nuevas aplicaciones
+				int indiceAplicacionActual = aplicacionesNuevoModelo.IndexOf(aplicacion.AplicacionEfecto);
 
-		        //Si no se encontro entonces significa que se quito la aplicacion, por lo que la eliminamos del modleo actual y de la base de datos
-		        if (indiceAplicacionActual == -1)
-		        {
-			        aplicacion.Eliminar();
-		        }
-		        //Si se encontro entonces solamente acutalizamos su modelo
-		        else
-		        {
-			        await aplicacion.Recargar();
-		        }
-	        }
-		}
+				//Si no se encontro entonces significa que se quito la aplicacion, por lo que la eliminamos del modleo actual y de la base de datos
+				if (indiceAplicacionActual == -1)
+				{
+					aplicacion.Eliminar();
+				}
+				//Si se encontro entonces solamente acutalizamos su modelo
+				else
+				{
+					aplicacion.ActulizarModelo(aplicacionesNuevoModelo[indiceAplicacionActual]);
+				}
+			}
+
+            modelo.Nombre      = nuevoModelo.Nombre;
+	        modelo.Tipo        = nuevoModelo.Tipo;
+	        modelo.Descripcion = nuevoModelo.Descripcion;
+	        modelo.TurnosDeDuracion = nuevoModelo.TurnosDeDuracion;
+        }
 
         /// <summary>
         /// Lidia con el cambio de <see cref="ControladorEfectoSiendoAplicado.ComportamientoAcumulativo"/> en un <see cref="ControladorEfectoSiendoAplicado"/>
@@ -891,11 +866,6 @@ namespace AppGM.Core
 			});
 		}
 
-		public override ViewModelItemListaBase CrearViewModelItem()
-		{
-			return new ViewModelEfectoItem(this);
-		}
-
-		#endregion
+        #endregion
     }
 }

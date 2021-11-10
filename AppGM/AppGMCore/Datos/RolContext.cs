@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace AppGM.Core
 {
@@ -76,7 +75,7 @@ namespace AppGM.Core
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public RolContext(){}
+		public RolContext() { }
 
         #endregion
 
@@ -208,12 +207,6 @@ namespace AppGM.Core
 			// Efectos:
 
 			modelBuilder.Entity<ModeloEfecto>().ToTable("ModeloEfecto").HasNoDiscriminator();
-
-			//Efecto - item contenedor
-			modelBuilder.Entity<ModeloEfecto>()
-				.HasOne(e => e.ItemContenedor)
-				.WithMany(i => i.Efectos)
-				.OnDelete(DeleteBehavior.Cascade);
 
 			// Efectos siendo aplicados:
 

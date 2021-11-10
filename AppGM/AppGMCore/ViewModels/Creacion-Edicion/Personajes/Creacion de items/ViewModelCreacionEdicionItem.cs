@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,17 +10,7 @@ namespace AppGM.Core
 	/// </summary>
 	public class ViewModelCreacionEdicionItem : ViewModelCreacionEdicionDeModelo<ModeloItem, ControladorItem, ViewModelCreacionEdicionItem>
 	{
-		#region Campos & Propiedades
-
-		/// <summary>
-		/// Personaje que porta este item
-		/// </summary>
-		public readonly ModeloPersonaje personajePortador;
-
-		/// <summary>
-		/// Controlador del slot que contiene este item
-		/// </summary>
-		public readonly ControladorSlot controladorSlotContenedor;
+		#region Propiedades
 
 		/// <summary>
 		/// Nombre del item
@@ -69,17 +60,7 @@ namespace AppGM.Core
 		/// <summary>
 		/// Indica si el tipo de item es un arma a distancia
 		/// </summary>
-		public bool EsArma => ViewModelMultiselectComboBoxTipoItem.ItemsSeleccionados.Contains(ETipoItem.Arma);
-
-		/// <summary>
-		/// Indica si el tipo de item es un arma a distancia
-		/// </summary>
-		public bool EsDefensivo => ViewModelMultiselectComboBoxTipoItem.ItemsSeleccionados.Contains(ETipoItem.Defensivo);
-
-		/// <summary>
-		/// Indica si el item es un consumible
-		/// </summary>
-		public bool EsConsumible => ViewModelMultiselectComboBoxTipoItem.ItemsSeleccionados.Contains(ETipoItem.Consumible);
+		public bool EsArmaADistancia => ViewModelMultiselectComboBoxTipoItem.ItemsSeleccionados.Contains(ETipoItem.ArmaDistancia);
 
 		/// <summary>
 		/// Viewmodel que representa a la combobox de seleccion de <see cref="EEstadoPortacion"/>
@@ -122,41 +103,18 @@ namespace AppGM.Core
 		public ViewModelListaDeElementos<ViewModelCreacionHandlersEvento<TIFuncionHandlerEvento<ModeloItem>, ModeloItem>> ViewModelListaHandlersEventos { get; set; }
 
 		/// <summary>
-		/// Datos del arma
+		/// Controlador del slot que contiene este item
 		/// </summary>
-		public ViewModelIngresoDatosArma DatosArma { get; set; }
-
-		/// <summary>
-		/// Datos de la defensa de este item
-		/// </summary>
-		public ViewModelIngresoDatosDefensivo DatosDefensivo { get; set; }
-
-		/// <summary>
-		/// Datos de consumo
-		/// </summary>
-		public ViewModelIngresoDatosConsumible DatosConsumible { get; set; }
+		public ControladorSlot ControladorSlotContenedor { get; init; }
 
 		#endregion
 
 		#region Constructor
 
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		/// <param name="_accionSalir">Accion que se ejecuta al salir de este vm</param>
-		/// <param name="_personajePortador">Personaje que porta el item</param>
-		/// <param name="_controladorParaEditar">Controlador del item que editaremos</param>
-		/// <param name="_controladorSlotContenedor">Controlador del slot que contiene el item</param>
-		public ViewModelCreacionEdicionItem(
-			Action<ViewModelCreacionEdicionItem> _accionSalir,
-			ModeloPersonaje _personajePortador,
-			ControladorItem _controladorParaEditar = null,
-			ControladorSlot _controladorSlotContenedor = null)
-
-			: base(_accionSalir, _controladorParaEditar, true, true)
+		public ViewModelCreacionEdicionItem(Action<ViewModelCreacionEdicionItem> _accionSalir, ModeloPersonaje _personajeContenedor, ControladorItem _controladorParaEditar = null, ControladorSlot _controladorSlotContenedor = null)
+			: base(_accionSalir, _controladorParaEditar)
 		{
-			personajePortador = _personajePortador;
-			controladorSlotContenedor = _controladorSlotContenedor;
+			ControladorSlotContenedor = _controladorSlotContenedor;
 
 			CrearComandoFinalizar();
 			CrearComandoEliminar();
@@ -178,41 +136,9 @@ namespace AppGM.Core
 				ViewModelMultiselectComboBoxTipoItem.ModificarEstadoSeleccionItem(ModeloSiendoEditado.TipoItem, true);
 			}
 
-			ViewModelMultiselectComboBoxTipoItem.OnEstadoSeleccionItemCambio += async item =>
+			ViewModelMultiselectComboBoxTipoItem.OnEstadoSeleccionItemCambio += item =>
 			{
-				switch (item.Valor)
-				{
-					case ETipoItem.Arma:
-					{
-						ModeloCreado.DatosArma ??= new ModeloDatosArma();
-
-						DatosArma = await new ViewModelIngresoDatosArma(ModeloCreado.DatosArma, this).Inicializar();
-
-						DispararPropertyChanged(nameof(EsArma));
-
-						break;
-					}
-					case ETipoItem.Defensivo:
-					{
-						ModeloCreado.DatosDefensivo ??= new ModeloDatosDefensivo();
-
-						DatosDefensivo = await new ViewModelIngresoDatosDefensivo(ModeloCreado.DatosDefensivo, this).Inicializar();
-
-						DispararPropertyChanged(nameof(EsDefensivo));
-
-						break;
-					}
-					case ETipoItem.Consumible:
-					{
-						ModeloCreado.DatosConsumible ??= new ModeloDatosConsumible();
-
-						DatosConsumible = new ViewModelIngresoDatosConsumible(this, ModeloCreado.DatosConsumible);
-
-						DispararPropertyChanged(nameof(EsConsumible));
-
-						break;
-					}
-				}
+				DispararPropertyChanged(nameof(EsArmaADistancia));
 			};
 
 			//Inicializamos la lista para crear la funcion de utilizacion
@@ -273,7 +199,7 @@ namespace AppGM.Core
 			{
 				var dataContextActual = SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido;
 
-				SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = new ViewModelCreacionEdicionEfecto(vm =>
+				SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = new ViewModelCreacionEfecto(vm =>
 				{
 					if (vm.Resultado.EsAceptarOFinalizar())
 					{
@@ -281,7 +207,7 @@ namespace AppGM.Core
 					}
 
 					SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = dataContextActual;
-				}, _personajePortador, typeof(ControladorItem), null);
+				}, _personajeContenedor, typeof(ControladorItem), null);
 			}, true, "Efectos");
 
 			//Inicializamos el viewmodel de la lista que contiene las tiradas de este item
@@ -325,11 +251,6 @@ namespace AppGM.Core
 		{
 			await base.Inicializar(tipoValorPorDefectoModelo);
 
-			if (!EstaEditando)
-			{
-				ModeloCreado.PersonajePortador = personajePortador;
-			}
-
 			var eventosDisponibles = TypeHelpers.ObtenerEventosDisponibles(typeof(ControladorItem), new[] { typeof(ControladorPersonaje) });
 
 			ViewModelListaHandlersEventos = new ViewModelListaDeElementos<ViewModelCreacionHandlersEvento<TIFuncionHandlerEvento<ModeloItem>, ModeloItem>>();
@@ -360,16 +281,12 @@ namespace AppGM.Core
 
 		public override ModeloItem CrearModelo()
 		{
-			ActualizarValidez();
-
-			return EsValido ? ModeloCreado : null;
+			throw new NotImplementedException();
 		}
 
 		public override ControladorItem CrearControlador()
 		{
-			var modelo = CrearModelo();
-
-			return modelo == null ? null : SistemaPrincipal.ObtenerControlador<ControladorItem, ModeloItem>(modelo, true);
+			throw new NotImplementedException();
 		}
 
 		protected override void ActualizarValidez()
@@ -387,20 +304,6 @@ namespace AppGM.Core
 			//Nos aseguramos de que el espacio ocupado por el item no sea inferior a cero
 			if(ModeloCreado.EspacioQueOcupa < 0)
 				return;
-
-			if (controladorSlotContenedor != null)
-			{
-				if (EstaEditando)
-				{
-					if(controladorSlotContenedor.EspacioDisponible < ModeloCreado.Peso - ModeloSiendoEditado.Peso)
-						return;
-				}
-				else
-				{
-					if(controladorSlotContenedor.EspacioDisponible < ModeloCreado.EspacioQueOcupa)
-						return;
-				}
-			}
 
 			//Nos aseguramos de que el estado del item este en un rango valido
 			if(ModeloCreado.Estado is < 0 or > 100)
@@ -420,18 +323,6 @@ namespace AppGM.Core
 				if(!efecto.ControladorGenerico.modelo.EsValido)
 					return;
 			}
-
-			//Si el item es un arma nos aseguramos de que los datos del arma sean validos
-			if(ViewModelMultiselectComboBoxTipoItem.ItemsSeleccionados.Contains(ETipoItem.Arma) && !DatosArma.EsValido)
-				return;
-
-			//Si el item es un consumible nos aseguramos de que los datos del consumible sea valido
-			if (ViewModelMultiselectComboBoxTipoItem.ItemsSeleccionados.Contains(ETipoItem.Consumible) && !DatosConsumible.EsValido)
-				return;
-
-			//Si el item es defensivo nos aseguramos de que los datos de defensa sean validos
-			if (ViewModelMultiselectComboBoxTipoItem.ItemsSeleccionados.Contains(ETipoItem.Defensivo) && !DatosDefensivo.EsValido)
-				return;
 
 			EsValido = true;
 		}

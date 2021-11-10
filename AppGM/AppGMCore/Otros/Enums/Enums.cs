@@ -1130,7 +1130,7 @@ namespace AppGM.Core
         /// <summary>
         /// Funcion que se ejecuta al utilizar algun <see cref="ControladorItem"/> 
         /// </summary>
-        UsoItem = 2,
+        UsoItem = 3,
 
         /// <summary>
         /// Funcion que representa la aplicacion de un <see cref="ControladorEfecto"/>

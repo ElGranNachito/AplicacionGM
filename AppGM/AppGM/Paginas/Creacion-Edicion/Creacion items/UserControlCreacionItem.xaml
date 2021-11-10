@@ -4,12 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AppGM"
-             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
-
-             MinHeight="500"
-
-             d:DesignHeight="500" d:DesignWidth="900"
+             d:DesignHeight="450" d:DesignWidth="900"
              
              Background="White"
              
@@ -25,6 +21,8 @@
                 <Setter Property="HorizontalContentAlignment" Value="Center"/>
             </Style>
         </Grid.Resources>
+
+        
 
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -49,72 +47,93 @@
 
                     <!--Datos esenciales (Primer columna)-->
                     <StackPanel
-                        Margin="0 0 5 0">
+            Margin="0 0 5 0">
 
                         <!--Nombre del item-->
                         <TextBox
-                            MinHeight="20"
+                MinHeight="20"
                 
-                            Text="{Binding Nombre}"
+                Text="{Binding Nombre}"
                 
-                            Tag="Nombre">
+                Tag="Nombre">
 
                         </TextBox>
 
                         <!--Descripcion del item-->
                         <TextBox
-                            MinHeight="80"
+                MinHeight="80"
                 
-                            Text="{Binding Descripcion}"
+                Text="{Binding Descripcion}"
                 
-                            Tag="Descripcion"/>
+                Tag="Descripcion"/>
 
                         <!--Peso del item-->
                         <TextBox
-                            MinHeight="20"
+                MinHeight="20"
 
-                            Margin="0 50 0 10"
+                Margin="0 50 0 10"
                 
-                            Text="{Binding Peso}"
+                Text="{Binding Peso}"
                 
-                            Tag="Peso"/>
+                Tag="Peso"/>
 
                         <!--Espacio que ocupa el item-->
                         <TextBox
-                            MinHeight="20"
+                MinHeight="20"
                 
-                            Text="{Binding EspacioQueOcupa}"
+                Text="{Binding EspacioQueOcupa}"
                 
-                            Tag="Espacio que ocupa"/>
+                Tag="Espacio que ocupa"/>
 
                         <!--Estado porcentual del item-->
                         <TextBox
-                            MinHeight="20"
+                MinHeight="20"
                 
-                            Text="{Binding EstadoPorcentual}"
+                Text="{Binding EstadoPorcentual}"
                 
-                            Tag="Estado %"/>
+                Tag="Estado %"/>
+
+                        <!--Datos arma a distancia-->
+                        <StackPanel
+                Visibility="{Binding EsArmaADistancia, Converter={local:BooleanToVisibilityConverterColapsar}}">
+
+                            <!--Numero de cargadores que tiene el arma-->
+                            <TextBox
+                    MinHeight="20"
+                
+                    Text="{Binding EstadoPorcentual}"
+                
+                    Tag="Numero de cargadores"/>
+
+                            <!--Municiones por cargador-->
+                            <TextBox
+                    MinHeight="20"
+                
+                    Text="{Binding EstadoPorcentual}"
+                
+                    Tag="Municiones por cargador"/>
+                        </StackPanel>
 
                         <!--Estado de portacion actual del item-->
                         <local:UserControlComboBoxConDescripcion
-                            Margin="0 0 0 10"
+                Margin="0 0 0 10"
 
-                            Descripcion="Estado portacion:"
+                Descripcion="Estado portacion"
                 
-                            DataContext="{Binding ViewModelComboBoxEstadoPortacion}"/>
+                DataContext="{Binding ViewModelComboBoxEstadoPortacion}"/>
 
                         <!--Tipo del item-->
                         <local:UserControlMultiSelectComboBox
                 
-                            Descripcion="Tipo de item:"
+                Descripcion="Tipo de item"
 
-                            DataContext="{Binding ViewModelMultiselectComboBoxTipoItem}"/>
+                DataContext="{Binding ViewModelMultiselectComboBoxTipoItem}"/>
 
                     </StackPanel>
 
                     <!--Segunda columna-->
                     <Grid
-                        Grid.Column="1">
+            Grid.Column="1">
 
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
@@ -125,29 +144,29 @@
 
                             <!--Funcion utilizar-->
                             <local:UserControlListaItems
-                                Margin="0 0 0 10"
+                    Margin="0 0 0 10"
                     
-                                DataContext="{Binding ViewModelFuncionUtilizar}"/>
+                    DataContext="{Binding ViewModelFuncionUtilizar}"/>
 
                             <!--Predicado-->
                             <local:UserControlListaItems
-                                DataContext="{Binding ViewModelFuncionPuedeUtilizar}"/>
+                    DataContext="{Binding ViewModelFuncionPuedeUtilizar}"/>
 
                         </StackPanel>
 
                         <!--Eventos disponibles para el item-->
                         <local:UserControlListaCreacionHandlersEventos
-                            Grid.Row="1"
+                Grid.Row="1"
                 
-                            DataContext="{Binding ViewModelListaHandlersEventos}"/>
+                DataContext="{Binding ViewModelListaHandlersEventos}"/>
 
                     </Grid>
 
                     <!--Tercera columna-->
                     <Grid
-                        Grid.Column="2"
+            Grid.Column="2"
             
-                        Margin="5 0 0 0">
+            Margin="5 0 0 0">
 
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
@@ -157,19 +176,19 @@
 
                         <!--Efectos del item-->
                         <local:UserControlListaItems
-                            DataContext="{Binding ViewModelListaEfectos}"/>
+                DataContext="{Binding ViewModelListaEfectos}"/>
 
                         <!--Tiradas del item-->
                         <local:UserControlListaItems
-                            Grid.Row="1"
+                Grid.Row="1"
             
-                            DataContext="{Binding ViewModelListaTiradas}"/>
+                DataContext="{Binding ViewModelListaTiradas}"/>
 
                         <!--Variables del item-->
                         <local:UserControlListaItems
-                            Grid.Row="2"
+                Grid.Row="2"
                 
-                            DataContext="{Binding ViewModelListaVariables}"/>
+                DataContext="{Binding ViewModelListaVariables}"/>
 
                     </Grid>
 
@@ -180,9 +199,7 @@
 
             <!--#region Datos Arma -->
             
-            <TabItem
-                Visibility="{Binding EsArma, Converter={local:BooleanToVisibilityConverterColapsar}}">
-
+            <TabItem>
                 <TabItem.Header>
                     <TextBlock Text="Datos Arma"/>
                 </TabItem.Header>
@@ -201,47 +218,21 @@
                             Grid.Column="1">
 
                             <local:UserControlMultiSelectComboBox
-                                Descripcion="Tipo de daño:"
-                                
-                                DataContext="{Binding DatosArma.ViewModelMultiselectTiposDeDaño}"/>
-
-                            <local:UserControlMultiSelectComboBox
-                                Margin="0 10 0 0"
-                                Descripcion="Fuentes de daño que abarca:"
-                                
-                                DataContext="{Binding DatosArma.ViewModelMultiselectFuentesDeDañoQueAbarca}"/>
+                                Descripcion="Tipo de daño"/>
 
                             <TextBox
                                 Margin="0 10 0 0"
                                 Padding="1 3"
-                                Tag="Numero de cargadores"
-
-                                Visibility="{Binding ElementName=checkBoxTieneMunicion, Path=IsChecked, Converter={local:BooleanToVisibilityConverterColapsar}}"
-                                
-                                Text="{Binding DatosArma.NumeroDeCargadores}"/>
+                                Tag="Numero de cargadores"/>
 
                             <TextBox
                                 Margin="0 10 0 0"
                                 Padding="1 3"
-                                Tag="Numero de municiones por cargador"
-                                
-                                Visibility="{Binding ElementName=checkBoxTieneMunicion, Path=IsChecked, Converter={local:BooleanToVisibilityConverterColapsar}}"
-
-                                Text="{Binding DatosArma.NumeroDeMunicionesPorCargador}"/>
-
-                            <CheckBox
-                                x:Name="checkBoxTieneMunicion"
-
-                                Margin="0 10 0 0"
-                                Content="Tiene municion"
-                                
-                                IsChecked="{Binding DatosArma.TieneMunicion}"/>
+                                Tag="Numero de municiones por cargador"/>
 
                             <CheckBox
                                 Margin="0 10 0 0"
-                                Content="Ignora defensa"
-                                
-                                IsChecked="{Binding DatosArma.IgnoraDefensa}"/>
+                                Content="Ignora defensa"></CheckBox>
                         </StackPanel>
                     </Grid>
 
@@ -251,12 +242,7 @@
             <!--#endregion-->
 
             <!--#region Datos Consumible -->
-            <TabItem
-
-                Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.EsConsumible, Converter={local:BooleanToVisibilityConverterColapsar}}"
-
-                DataContext="{Binding DatosConsumible}">
-
+            <TabItem>
                 <TabItem.Header>
                     <TextBlock Text="Datos Consumible"/>
                 </TabItem.Header>
@@ -274,29 +260,15 @@
                         <StackPanel
                             Grid.Column="1">
 
-                            <!--Numeto total de usos-->
                             <TextBox
                                 Margin="0 10 0 0"
                                 Padding="1 3"
+                                Tag="Numero de usos totales"/>
 
-                                Tag="Numero de usos totales"
-
-                                Text="{Binding UsosTotales}"
-                                
-                                local:CampoDeTextoNumericoProperty.Value="True"
-                                local:CampoDeTextoNumericoProperty.Tipo="{x:Type sys:Int32}"/>
-
-                            <!--Numero de usos restantes-->
                             <TextBox
                                 Margin="0 10 0 0"
                                 Padding="1 3"
-
-                                Tag="Numero de usos restantes"
-
-                                Text="{Binding UsosRestantes}"
-                                
-                                local:CampoDeTextoNumericoProperty.Value="True"
-                                local:CampoDeTextoNumericoProperty.Tipo="{x:Type sys:Int32}"/>
+                                Tag="Numero de usos restantes"/>
 
                         </StackPanel>
                     </Grid>
@@ -305,12 +277,7 @@
             </TabItem>
             <!--#endregion-->
 
-            <!--#region Datos Defensa -->
-            <TabItem
-                Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}, Path=DataContext.EsDefensivo, Converter={local:BooleanToVisibilityConverterColapsar}}"
-                
-                DataContext="{Binding DatosDefensivo}">
-
+            <TabItem>
                 <TabItem.Header>
                     <TextBlock Text="Datos Defensa"/>
                 </TabItem.Header>
@@ -318,64 +285,23 @@
                 <Border
                     Padding="5">
                     <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
 
-                        <Grid
-                            Grid.Row="0">
+                        <StackPanel
+                            Grid.Column="1">
 
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="2*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-
-                            <!--Seleccion de estrategias utilizadas-->
                             <local:UserControlMultiSelectComboBox
                                 
-                                Descripcion="Estrategias de deteccion disponibles:"
-                                
-                                DataContext="{Binding ViewModelComboBoxSeleccionEstrategiaDeteccionDeDaño}"/>
+                                Descripcion="Deteccion del daño que reducir"/>
 
-                            <!--Boton para añadir nueva reduccion-->
-                            <Button
-                                Grid.Column="1"
-                                Content="+"
-
-                                Style="{StaticResource BotonFondoResaltable}"
-                                    
-                                Command="{Binding ComandoAñadirReduccionDeDaño}"/>
-
-                            <!--Boton para quitar la reduccion seleccionada-->
-                            <Button
-                                Grid.Column="2"
-                                Content="-"
-
-                                Style="{StaticResource BotonFondoResaltable}"
-
-                                IsEnabled="{Binding PuedeQuitarReduccionDeDaño}"
-                                Command="{Binding ComandoQuitarReduccionDeDaño}"/>
-                        </Grid>
-
-                        <ListView
-                                Grid.Row="1"
-                                Margin="0 5"
-                                ItemsSource="{Binding ReduccionesDeDaño.Elementos}"
-                                SelectedValue="{Binding ReduccionDeDañoSeleccionada}">
-
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <local:UserControlIngresoDatosReduccionDeDaño
-                                        HorizontalAlignment="Stretch"/>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
+                        </StackPanel>
                     </Grid>
                 </Border>
             </TabItem>
-            <!--#endregion-->
         </TabControl>
 
         

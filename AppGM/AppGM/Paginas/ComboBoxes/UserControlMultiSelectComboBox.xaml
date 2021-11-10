@@ -6,29 +6,47 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:local="clr-namespace:AppGM"
     mc:Ignorable="d" 
-    d:DesignHeight="100" d:DesignWidth="400">
+    d:DesignHeight="100" d:DesignWidth="400"
+
+    Background="White">
 
     <!--ViewModel: ViewModelMultiselectComboBox-->
 
-    <ComboBox
-        Grid.Column="1"
+    <Grid
+        Background="White">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
 
-        MinHeight="20"
+        <TextBlock
+            Text="{Binding  RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}, Path=Descripcion}"
+            
+            TextWrapping="NoWrap"
+            TextTrimming="CharacterEllipsis"/>
 
-        VerticalAlignment="Center"
+        <ComboBox
+            Grid.Column="1"
 
-        Style="{StaticResource EstiloMultiselectComboBox}"
+            MinHeight="20"
 
-        ItemContainerStyle="{StaticResource EstiloContenedorItemsMultiselect}"
+            VerticalAlignment="Center"
 
-        ItemsSource="{Binding Items.Elementos}">
+            Margin="10 0 0 0"
 
-        <ComboBox.ItemTemplate>
-            <DataTemplate>
-                <CheckBox 
-                    IsChecked="{Binding EstaSeleccionado}"
-                    Style="{StaticResource CheckBoxMultiselectComboBox}"/>
-            </DataTemplate>
-        </ComboBox.ItemTemplate>
-    </ComboBox>
+            Style="{StaticResource EstiloMultiselectComboBox}"
+
+            ItemContainerStyle="{StaticResource EstiloContenedorItemsMultiselect}"
+
+            ItemsSource="{Binding Items.Elementos}">
+
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <CheckBox 
+                        IsChecked="{Binding EstaSeleccionado}"
+                        Style="{StaticResource CheckBoxMultiselectComboBox}"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+    </Grid>
 </UserControl>

@@ -105,7 +105,7 @@ namespace AppGM.Core
 				}
 			};
 
-			ViewModelBotonVincular = new ViewModelBoton(PuedeVincularAEventoExistente ? accionBotonVincular: null, "BotonVincular", string.Intern("Vincular"), this);
+			ViewModelBotonVincular = new(PuedeVincularAEventoExistente ? accionBotonVincular: null, "BotonVincular", string.Intern("Vincular"), this);
 			ViewModelBotonVincular.EstaHabilitado = PuedeVincularAEventoExistente;
 
 			ViewModelComboBoxHandlersDisponibles.OnValorSeleccionadoCambio += (anterior, actual) =>

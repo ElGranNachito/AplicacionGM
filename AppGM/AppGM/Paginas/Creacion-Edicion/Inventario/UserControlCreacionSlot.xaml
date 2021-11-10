@@ -153,14 +153,12 @@
 
                 </StackPanel>
 
-                <!--Parte del cuerpo contenida-->
                 <local:UserControlCreacionParteDelCuerpo
                     DataContext="{Binding ViewModelCreacionEdicionParteDelCuerpo}">
 
                     <local:UserControlCreacionParteDelCuerpo.Resources>
                         <x:Array x:Key="ArregloParametroConvertidor" Type="{x:Type sys:Boolean}">
                             <sys:Boolean>True</sys:Boolean>
-                            <sys:Boolean>False</sys:Boolean>
                             <sys:Boolean>False</sys:Boolean>
                         </x:Array>
                     </local:UserControlCreacionParteDelCuerpo.Resources>
@@ -169,39 +167,10 @@
                         <MultiBinding Converter="{local:MultiplesBoolsAVisibilidad}" ConverterParameter="{StaticResource ArregloParametroConvertidor}">
                             <Binding Path="DataContext.MostrarContenido" ElementName="Base"  Mode="OneWay"/>
                             <Binding Path="DataContext.MostrarMenuCrearContenido" ElementName="Base" Mode="OneWay"/>
-                            <Binding Path="DataContext.MostrarListaItems" ElementName="Base" Mode="OneWay"/>
                         </MultiBinding>
                     </local:UserControlCreacionParteDelCuerpo.Visibility>
 
                 </local:UserControlCreacionParteDelCuerpo>
-
-                <!--Lista de items-->
-                <local:UserControlListaItems
-                    DataContext="{Binding ViewModelListaItemsSlot}">
-
-                    <local:UserControlListaItems.ItemTemplate>
-                        <DataTemplate>
-                            <local:UserControlItemLista/>
-                        </DataTemplate>
-                    </local:UserControlListaItems.ItemTemplate>
-
-                    <local:UserControlListaItems.Resources>
-                        <x:Array x:Key="ArregloParametroConvertidor" Type="{x:Type sys:Boolean}">
-                            <sys:Boolean>True</sys:Boolean>
-                            <sys:Boolean>False</sys:Boolean>
-                            <sys:Boolean>True</sys:Boolean>
-                        </x:Array>
-                    </local:UserControlListaItems.Resources>
-
-                    <local:UserControlListaItems.Visibility>
-                        <MultiBinding Converter="{local:MultiplesBoolsAVisibilidad}" ConverterParameter="{StaticResource ArregloParametroConvertidor}">
-                            <Binding Path="DataContext.MostrarContenido" ElementName="Base"  Mode="OneWay"/>
-                            <Binding Path="DataContext.MostrarMenuCrearContenido" ElementName="Base" Mode="OneWay"/>
-                            <Binding Path="DataContext.MostrarListaItems" ElementName="Base" Mode="OneWay"/>
-                        </MultiBinding>
-                    </local:UserControlListaItems.Visibility>
-
-                </local:UserControlListaItems>
 
             </Grid>
 

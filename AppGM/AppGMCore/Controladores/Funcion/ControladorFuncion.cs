@@ -139,8 +139,6 @@ namespace AppGM.Core
 		/// <param name="nuevosBloques">Lista con los bloques actuales</param>
 		public void ActualizarBloques(List<BloqueBase> nuevosBloques)
 		{
-			Bloques ??= new List<BloqueBase>();
-
 			Bloques.Clear();
 
 			Bloques.AddRange(nuevosBloques);
@@ -250,17 +248,26 @@ namespace AppGM.Core
 				SistemaPrincipal.GuardarModelo(modelo);
 		}
 
-		public override async Task Recargar()
+		public override void ActulizarModelo(ModeloFuncion nuevoModelo, bool eliminarSiNuevoModeloEsNull = false)
 		{
-			await base.Recargar();
+			base.ActulizarModelo(nuevoModelo, true);
 
-			if (!File.Exists(ObtenerPathArchivoFuncion(ObtenerNombreArchivo(modelo.NombreFuncion, modelo.IDFuncion))))
+			//Si el nuevo modelo es null nos pegamos media vuelta porque ya se debio haber llamado Eliminar desde base.ActualizarModelo
+			if (nuevoModelo == null)
+				return;
+
+			if (nuevoModelo.NombreFuncion != NombreFuncion && File.Exists(ObtenerPathArchivoFuncion(ObtenerNombreArchivo(nuevoModelo.NombreFuncion, nuevoModelo.IDFuncion))))
 			{
-				SistemaPrincipal.LoggerGlobal.LogCrash($"Se intento cambiar el archivo de origen de {this} pero el nuevo archivo {ObtenerNombreArchivo(modelo.NombreFuncion, modelo.Id)} no existe!");
+				//Cambiamos el valor directamente al modelo para que no se intente mover el archivo desde la propiedad
+				modelo.NombreFuncion = nuevoModelo.NombreFuncion;
+			}
+			else
+			{
+				SistemaPrincipal.LoggerGlobal.LogCrash($"Se intento cambiar el archivo de origen de {this} pero el nuevo archivo {ObtenerNombreArchivo(nuevoModelo.NombreFuncion, nuevoModelo.Id)} no existe!");
 			}
 
 			//Obtenemos las variables persistentes del nuevo modelo y las del modelo actual
-			var variablesPersistentesNuevoModelo = modelo.Variables;
+			var variablesPersistentesNuevoModelo = nuevoModelo.Variables;
 			var variablesPersistentesModeloActual = mVariablesPersistenes.Values.ToList();
 
 			//Quitamos de la lista de variables de ambos modelos las que se encuentren repetidas en ambos
@@ -414,8 +421,6 @@ namespace AppGM.Core
 					return new ControladorFuncion_Efecto(modelo);
 				case EPropositoFuncion.PredicadoEfecto:
 					return new ControladorFuncion_PredicadoEfecto(modelo);
-				case EPropositoFuncion.UsoItem:
-					return new ControladorFuncion_Item(modelo);
 				default:
 					SistemaPrincipal.LoggerGlobal.Log($"{nameof(propositoFuncion)}({propositoFuncion}), valor no soportado!", ESeveridad.Error);
 

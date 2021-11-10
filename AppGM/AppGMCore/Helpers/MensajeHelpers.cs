@@ -15,11 +15,9 @@ namespace AppGM.Core
 		/// <typeparam name="TControlador">Tipo del controlador del <typeparamref name="TModelo"/></typeparam>
 		/// <typeparam name="TViewModel">Tipo del viewmodel</typeparam>
 		/// <param name="viewModel">Viewmodel para la manipulacion del modelo</param>
-		/// <param name="alto">Alto de la ventana. Si se deja en -1, se le asignara el alto por defecto</param>
-		/// <param name="ancho">Ancho de la ventana. Si se deja en -1, se le asignara el ancho por defeto</param>
 		/// <returns>Resultado del viewmodel</returns>
 		public static async Task<EResultadoViewModel> MostrarVentanaMensajeCreacionEdicionModelo<TModelo, TControlador, TViewModel>
-			(ViewModelCreacionEdicionDeModelo<TModelo, TControlador, TViewModel> viewModel, int alto = -1, int ancho = -1)
+			(ViewModelCreacionEdicionDeModelo<TModelo, TControlador, TViewModel> viewModel)
 
 			where TModelo: ModeloBase
 			where TControlador: ControladorBase
@@ -32,7 +30,7 @@ namespace AppGM.Core
 
 			viewModel.OnPuedeEditarCambio += handlerOnPuedeEditarCambio;
 
-			var resultado = await SistemaPrincipal.MostrarMensajeAsync(viewModel, string.Empty, true, alto, ancho);
+			var resultado = await SistemaPrincipal.MostrarMensajeAsync(viewModel, string.Empty, true);
 
 			viewModel.OnPuedeEditarCambio -= handlerOnPuedeEditarCambio;
 
@@ -47,7 +45,7 @@ namespace AppGM.Core
 		/// <returns><see cref="EResultadoViewModel"/> que indica la accion seleccionada por el usuario</returns>
 		public static async Task<EResultadoViewModel> MostrarMensajeConfirmacionAsync(string titulo, string mensaje)
 		{
-			return await SistemaPrincipal.MostrarMensajeAsync(new ViewModelMensajeConfirmacionAccion(titulo, mensaje), titulo, true, 375, 500);
+			return await SistemaPrincipal.MostrarMensajeAsync(new ViewModelMensajeConfirmacionAccion(titulo, mensaje), string.Empty, true, 375, 500);
 		}
 	}
 }

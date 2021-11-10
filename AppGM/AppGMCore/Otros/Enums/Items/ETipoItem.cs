@@ -19,23 +19,23 @@ namespace AppGM.Core
 		Arma = 1<<1,
 
 		/// <summary>
+		/// Arma a distancia
+		/// </summary>
+		ArmaDistancia = 1<<2,
+
+		/// <summary>
 		/// Item destinado a la defensa
 		/// </summary>
-		Defensivo = 1<<2,
+		Defensivo = 1<<3,
 
 		/// <summary>
 		/// Ropita
 		/// </summary>
-		Ropa = 1<<3,
+		Ropa = 1<<4,
 
 		/// <summary>
 		/// Un mystic code bien piola
 		/// </summary>
-		MysticCode = 1<<4,
-
-		/// <summary>
-		/// Un item con usos limitados
-		/// </summary>
-		Consumible = 1<<5
+		MysticCode = 1<<5
 	}
 }

@@ -23,7 +23,7 @@
 
             Visibility="{Binding MostrarCampoTexto, Converter={local:BooleanToVisibilityConverterColapsar}}"
 
-            Text="{Binding TextoActual}"
+            Text="{Binding TextoActual, Mode=OneWayToSource}"
 
             MinHeight="20"
 

@@ -15,7 +15,7 @@ namespace AppGM
 		/// Parametro extra que se pasara al drag
 		/// </summary>
 		public static readonly DependencyProperty ParametroDragProperty =
-			DependencyProperty.RegisterAttached("ParametroDrag", typeof(object), typeof(DragAndDrop_DrageableBase<TDrag>));
+			DependencyProperty.RegisterAttached("ParametroDrag", typeof(object), typeof(DragAndDrop_Drageable));
 
 		public static object GetParametroDrag(DependencyObject d) => d.GetValue(ParametroDragProperty);
 

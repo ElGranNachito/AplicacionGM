@@ -7,9 +7,6 @@
 #Ruta de logs
 AppGM/AppGM/tmp
 
-#Funciones
-AppGM/AppGM/Funciones
-
 # User-specific files
 *.rsuser
 *.suo

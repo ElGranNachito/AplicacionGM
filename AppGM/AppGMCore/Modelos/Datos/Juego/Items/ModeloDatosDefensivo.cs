@@ -9,11 +9,6 @@ namespace AppGM.Core
 	public class ModeloDatosDefensivo : ModeloBase
 	{
 		/// <summary>
-		/// Contiene los tipo de deteccion de daño que utiliza este item
-		/// </summary>
-		public EEstrategiaDeDeteccionDeDaño EstrategiasDeDeteccionDeDañoUtilizadas { get; set; }
-
-		/// <summary>
 		/// Clave foranea del <see cref="Item"/>
 		/// </summary>
 		[ForeignKey(nameof(Item))]
@@ -27,6 +22,6 @@ namespace AppGM.Core
 		/// <summary>
 		/// Daños que reduce
 		/// </summary>
-		public virtual List<ModeloDatosReduccionDeDaño> ReduccionesDeDaños { get; set; } = new List<ModeloDatosReduccionDeDaño>();
+		public virtual List<ModeloDatosReduccionDeDaño> ReduccionesDeDaños { get; set; }
 	}
 }

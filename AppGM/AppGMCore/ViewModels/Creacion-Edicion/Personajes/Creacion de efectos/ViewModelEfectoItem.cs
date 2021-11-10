@@ -1,4 +1,4 @@
-﻿using System;
+﻿using CoolLogs;
 
 namespace AppGM.Core
 {
@@ -13,7 +13,7 @@ namespace AppGM.Core
 		/// Constructor
 		/// </summary>
 		/// <param name="_controladorEfecto">Controlador del efecto que representara esta instancia</param>
-		public ViewModelEfectoItem(ControladorEfecto _controladorEfecto)
+		public ViewModelEfectoItem(ControladorEfecto _controladorEfecto, bool _mostrarBotonesLaterales = true)
 			: base(_controladorEfecto)
 		{
 			ControladorGenerico = _controladorEfecto;
@@ -39,36 +39,7 @@ namespace AppGM.Core
 					Valor = ControladorGenerico.TipoEfecto.ToString()
 				}
 			});
-		}
-
-		protected override void ActualizarGruposDeBotones()
-		{
-			Action accionEditar = () =>
-			{
-				SistemaPrincipal.MostrarViewModelCreacionEdicion<ViewModelCreacionEdicionEfecto, ModeloEfecto, ControladorEfecto>(
-					new ViewModelCreacionEdicionEfecto(async vm =>
-					{
-						if (vm.Resultado.EsAceptarOFinalizar())
-						{
-							var modelosCreadosEliminados = (await vm.CrearModelo().CrearCopiaProfundaEnSubtipoAsync<ModeloEfecto, ModeloEfecto>(ControladorGenerico.modelo)).modelosCreadosEliminados;
-
-							await modelosCreadosEliminados.GuardarYEliminarModelosAsync();
-
-							await ControladorGenerico.Recargar();
-
-							ActualizarCaracteristicas();
-						}
-
-					}, ControladorGenerico.modelo.ObtenerPersonajeContenedor(), ControladorGenerico.modelo.ObtenerModeloContenedor().GetType().ObtenerTipoControladorParaModelo(), ControladorGenerico));
-			};
-
-			Action accionEliminar = async () =>
-			{
-				await ControladorGenerico.EliminarAsync();
-			};
-
-			CrearBotonesParaEditarYEliminar(accionEditar, accionEliminar);
-		}
+		} 
 
 		#endregion
 	}

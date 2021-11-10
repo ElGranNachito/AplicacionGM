@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Specialized;
+using System.Linq;
 using System.Windows.Input;
 
 namespace AppGM.Core
@@ -74,11 +76,6 @@ namespace AppGM.Core
 		public bool MostrarMenuCrearContenido => ModeloCreado.ParteDelCuerpoAlmacenada == null && ModeloCreado.ItemsAlmacenados.Count == 0;
 
 		/// <summary>
-		/// Indica si se debe mostrar la lista de items
-		/// </summary>
-		public bool MostrarListaItems => ModeloCreado.ParteDelCuerpoAlmacenada == null;
-
-		/// <summary>
 		/// Viewmodel para el control de creacion/edicion de la parte del cuerpo contenida por este slot
 		/// </summary>
 		public ViewModelCreacionEdicionParteDelCuerpo ViewModelCreacionEdicionParteDelCuerpo { get; private set; }
@@ -122,7 +119,7 @@ namespace AppGM.Core
 		/// <param name="_controladorParaEditar">Controlador del <see cref="ModeloSlot"/> que sera editado</param>
 		public ViewModelCreacionEdicionDeSlot(Action<ViewModelCreacionEdicionDeSlot> _accionSalir, ControladorSlot _controladorParaEditar) 
 			
-			: base(_accionSalir, _controladorParaEditar, true, false)
+			: base(_accionSalir, _controladorParaEditar, true, true)
 		{
 			CrearComandoEliminar();
 
@@ -154,14 +151,12 @@ namespace AppGM.Core
 				{
 					var controladorCreado = vm.CrearControlador();
 
-					await SistemaPrincipal.GuardarModeloAsync(controladorCreado.modelo);
+					await SistemaPrincipal.GuardarModeloAsync(vm.CrearModelo());
 					await SistemaPrincipal.GuardarDatosAsync();
 
 					ControladorSiendoEditado.AlmacenarItem(controladorCreado);
 
 					AñadirModeloDesdeListaItems<ModeloItem, ViewModelItemListaItems>((ViewModelItemListaItems)controladorCreado.CrearViewModelItem(), ModeloCreado.ItemsAlmacenados, ViewModelListaItemsSlot);
-
-					DispararPropertyChanged(nameof(MostrarMenuCrearContenido));
 				}
 			};
 
@@ -184,15 +179,6 @@ namespace AppGM.Core
 					CrearViewModelCreacionEdicionPartedelCuerpo();
 				}
 			}
-
-			PropertyChanged += (sender, args) =>
-			{
-				if (args.PropertyName != nameof(EsValido) && ModeloCreado != null)
-					ActualizarValidez();
-
-				if(args.PropertyName == nameof(MostrarMenuCrearContenido)) 
-					DispararPropertyChanged(nameof(MostrarListaItems));
-			};
 		}
 
 		public override ModeloSlot CrearModelo()
@@ -264,17 +250,15 @@ namespace AppGM.Core
 		{
 			ViewModelListaItemsSlot = new ViewModelListaItems<ViewModelItemListaItems>(async () =>
 				{
-					await MensajeHelpers.MostrarVentanaMensajeCreacionEdicionModelo(await new ViewModelCreacionEdicionItem(mAccionSalirCreacionEdicionItem, ControladorSiendoEditado.modelo.PersonajeContenedor ,null, ControladorSiendoEditado).Inicializar(), (int)SistemaPrincipal.Aplicacion.VentanaActual.ObtenerTamaño().Y - 100, (int)SistemaPrincipal.Aplicacion.VentanaActual.ObtenerTamaño().X - 200);
+					await MensajeHelpers.MostrarVentanaMensajeCreacionEdicionModelo(await new ViewModelCreacionEdicionItem(mAccionSalirCreacionEdicionItem, ControladorSiendoEditado.modelo.PersonajeContenedor ,null, ControladorSiendoEditado).Inicializar());
 				},
 				lista => ControladorSiendoEditado.EspacioDisponible > 0,
 				ControladorSiendoEditado.EspacioDisponible > 0, "Items");
 
 			ViewModelListaItemsSlot.Items.Elementos.CollectionChanged += (sender, args) =>
 			{
-				if (ViewModelListaItemsSlot.Items.Count <= 0)
-				{
+				if(ViewModelListaItemsSlot.Items.Count <= 0)
 					DispararPropertyChanged(nameof(MostrarMenuCrearContenido));
-				}
 
 				OnSlotModificado(ControladorSiendoEditado);
 			};

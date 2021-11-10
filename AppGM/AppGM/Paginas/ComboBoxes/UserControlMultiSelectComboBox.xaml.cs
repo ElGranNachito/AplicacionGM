@@ -17,9 +17,9 @@ namespace AppGM
 		/// Contiene la descipcion
 		/// </summary>
 		public static readonly DependencyProperty DescripcionProperty =
-			DependencyProperty.Register("Descripcion",
+			DependencyProperty.Register("Descripcion_MultiselectComboBox",
 				typeof(string),
-				typeof(UserControlMultiSelectComboBox),
+				typeof(UserControlComboBoxConDescripcion),
 				new PropertyMetadata("Nada"));
 
 		public string Descripcion

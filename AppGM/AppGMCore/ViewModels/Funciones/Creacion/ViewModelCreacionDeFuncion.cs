@@ -11,8 +11,6 @@ namespace AppGM.Core
 	/// </summary>
 	/// <typeparam name="TFuncion">Tipo de la funcion que sera creada</typeparam>
 	public abstract class ViewModelCreacionDeFuncion<TFuncion> : ViewModelCreacionDeFuncionBase
-
-		where TFuncion: class
 	{
 		#region Propiedad & Campos
 
@@ -62,10 +60,7 @@ namespace AppGM.Core
 
 		protected ViewModelCreacionDeFuncion(Action<ViewModelCreacionDeFuncionBase> _accionSalir, ControladorFuncion<TFuncion> _controladorFuncion, EPropositoFuncion _propositoDeFuncion)
 
-			:base(vm =>
-			{
-				SistemaPrincipal.Desatar<ViewModelCreacionDeFuncionBase>(); _accionSalir(vm);
-			})
+			:base(vm => { SistemaPrincipal.Desatar<ViewModelCreacionDeFuncionBase>(); _accionSalir(vm); })
 		{
 			PropositoFuncion = _propositoDeFuncion;
 

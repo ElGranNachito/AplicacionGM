@@ -67,8 +67,6 @@ namespace AppGM.Core
 			};
 
 			CrearBotonesParaEditarYEliminar(accionBotonEditar, accionBotonEliminar);
-
-			IndiceGrupoDeBotonesActivo = 0;
 		}
 
 		#endregion

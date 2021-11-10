@@ -142,11 +142,15 @@ namespace AppGM.Core
 		/// <typeparam name="TModeloOrigen">Tipo del modelo del que se copiaran los datos</typeparam>
 		/// <param name="modeloAlQueCopiarLosDatos">Modelo al que se copiaran los datos. Si se deja como null se copiaran a una nueva instancia</param>
 		/// <param name="modeloQueCopiar">Modelo cuyos datos seran copiados</param>
+		/// <param name="outModelosEliminados">Modelos que fueron eliminados</param>
+		/// <param name="outModelosAñadidos">Modelos que fueron añadidos</param>
 		/// <returns>En caso de que <paramref name="modeloAlQueCopiarLosDatos"/> sea null, devuelve un nuevo modelo con los datos copiados.
 		/// En caso de que no lo sea devuelve una referencia al modelo existente al que se copiaron los datos</returns>
 		public async Task<(TResultado resultado, ContenedorModelosCreadosEliminadosAlCopiar modelosCreadosEliminados)> CrearCopiaProfundaEnSubtipoAsync<TResultado, TModeloOrigen>(
 			TResultado modeloAlQueCopiarLosDatos = null,
 			TModeloOrigen modeloQueCopiar = null,
+			List<ModeloBase> outModelosEliminados = null,
+			List<ModeloBase> outModelosAñadidos = null,
 			Dictionary<ModeloBase, ModeloBase> referenciasQueReemplazar = null)
 
 			where TModeloOrigen : ModeloBase, new()
