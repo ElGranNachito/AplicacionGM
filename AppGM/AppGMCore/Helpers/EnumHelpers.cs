@@ -33,14 +33,8 @@ namespace AppGM.Core
         public static List<ETipoEfecto>              TiposDeEfectoDisponibles => Enum.GetValues(typeof(ETipoEfecto)).Cast<ETipoEfecto>().ToList();
         public static List<EComportamientoAcumulativo> ComportamientosAcumulativosDisponibles => Enum.GetValues(typeof(EComportamientoAcumulativo)).Cast<EComportamientoAcumulativo>().ToList();
 <<<<<<< HEAD
-<<<<<<< HEAD
         public static List<ETipoItem> TiposItemDisponibles => Enum.GetValues(typeof(ETipoItem)).Cast<ETipoItem>().ToList();
         public static List<EEstadoPortacion> EstadosDePortacionDisponibles => Enum.GetValues(typeof(EEstadoPortacion)).Cast<EEstadoPortacion>().ToList();
-=======
-        public static List<EEstadoPortacion> EstadosDePortacionDisponibles => Enum.GetValues(typeof(EEstadoPortacion)).Cast<EEstadoPortacion>().ToList();
-
-        public static List<ETipoItem> TiposItemDisponibles => Enum.GetValues(typeof(ETipoItem)).Cast<ETipoItem>().ToList();
->>>>>>> parent of 5d77f96 (Ver descripcion)
 =======
         public static List<EEstadoPortacion> EstadosDePortacionDisponibles => Enum.GetValues(typeof(EEstadoPortacion)).Cast<EEstadoPortacion>().ToList();
 
@@ -437,9 +431,6 @@ namespace AppGM.Core
 	        }
 
 	        return sBuilder.AppendJoin(", ", flagsActivas).ToString();
-<<<<<<< HEAD
->>>>>>> parent of 5d77f96 (Ver descripcion)
-=======
 >>>>>>> parent of 5d77f96 (Ver descripcion)
         }
 
