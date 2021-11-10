@@ -43,7 +43,7 @@
                         Foreground="White"
                         Visibility="{Binding EsMaster, Converter={local:BooleanToVisibilityConverterColapsar}}">
                         <Run Text="Clase de su servant: "/>
-                        <Run Text="{Binding Personaje.EClaseDeSuServant}"/>
+                        <Run Text="{Binding Personaje.ClaseServant}"/>
                     </TextBlock>
 
                 </StackPanel>

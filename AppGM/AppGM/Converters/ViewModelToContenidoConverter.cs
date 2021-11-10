@@ -75,9 +75,13 @@ namespace AppGM
                 case ViewModelInfoCombateGlobo vm:
                     return new UserControlInfoCombateGlobo {DataContext = vm};
 
+                //Globo de creacion de unidad mapa
 	            case ViewModelCrearUnidadMapa vm:
 		            return new UserControlMensajeCrearUnidadMapa {DataContext = vm};
 
+                //Globo de creacion de participante de un combate
+                case ViewModelCrearParticipanteCombate vm:
+                    return new UserControlMensajeCrearParticipanteCombate {DataContext = vm};
 
                 default:
                     return null;

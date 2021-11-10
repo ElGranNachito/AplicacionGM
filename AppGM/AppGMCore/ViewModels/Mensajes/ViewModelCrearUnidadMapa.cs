@@ -53,7 +53,7 @@ namespace AppGM.Core
         /// Cantidad de unidades en el grupo.
         /// Solamente se utiliza si el <see cref="TipoSeleccionado"/> es <see cref="ETipoUnidad.Invocacion"/> o <see cref="ETipoUnidad.Trampa"/>
         /// </summary>
-        public int CantidadInicialDeUnidades { get; set; } = 0;
+        public int CantidadInicialDeUnidades { get; set; } = 1;
 
         /// <summary>
         /// Indica si es necesario seleccionar una <see cref="EClaseServant"/>
@@ -84,19 +84,64 @@ namespace AppGM.Core
         /// <summary>
         /// Valores del enum <see cref="ETipoUnidad"/>
         /// </summary>
-        /// TODO: Remover
-        public List<ETipoUnidad>   TiposUnidades  => Enum.GetValues(typeof(ETipoUnidad)).Cast<ETipoUnidad>().ToList();
+        public List<ETipoUnidad> TiposUnidades => Enum.GetValues(typeof(ETipoUnidad)).Cast<ETipoUnidad>().ToList();
 
         /// <summary>
         /// Valores del enum <see cref="EClaseServant"/>
         /// </summary>
-        /// TODO: Remover
         public List<EClaseServant> ClasesServants => Enum.GetValues(typeof(EClaseServant)).Cast<EClaseServant>().ToList();
 
         /// <summary>
         /// Comando que ejecutara cuando el usuario presiones el boton 'Finalizar'
         /// </summary>
         public ICommand ComandoFinalizar { get; set; }
+
+        /// <summary>
+        /// Indica si se puede agregar el personaje marcado.
+        /// </summary>
+        public bool PuedeFinalizarCreacion
+        {
+            get
+            {
+                if (Nombre == string.Empty)
+                    return false;
+
+                if (PersonajeSeleccionado == string.Empty)
+                    return false;
+
+                if (TipoSeleccionado == ETipoUnidad.NINGUNO)
+                    return false;
+
+                if (DebeSeleccionarClaseServant && ClaseSeleccionada == EClaseServant.NINGUNO)
+                    return false;
+
+                if (DebeSeleccionarCantidad && CantidadInicialDeUnidades < 1)
+                    return false;
+
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// Lista de personajes dispobibles segun el tipo de personaje seleccionado.
+        /// </summary>
+        public List<string> PersonajesDisponibles
+        {
+            get
+            {
+                switch (TipoSeleccionado)
+                {
+                    case ETipoUnidad.Servant:
+                        return SistemaPrincipal.DatosRolSeleccionado.Servants.Select(s => s.ToString()).ToList();
+                    case ETipoUnidad.Master:
+                        return SistemaPrincipal.DatosRolSeleccionado.Masters.Select(m => m.ToString()).ToList();
+                    case ETipoUnidad.Invocacion:
+                        return SistemaPrincipal.DatosRolSeleccionado.Invocaciones.Select(i => i.ToString()).ToList();
+                    default:
+                        return new List<string>(0);
+                }
+            }
+        }
 
         #endregion
 
@@ -178,8 +223,7 @@ namespace AppGM.Core
                     break;
 
                 case ETipoUnidad.Invocacion:
-                case ETipoUnidad.Trampa:
-                    modeloUnidad = new ModeloUnidadMapaInvocacionTrampa
+                    modeloUnidad = new ModeloUnidadMapaInvocacionTrampa()
                     {
                         ETipoUnidad = TipoSeleccionado,
                         EClaseServant = ClaseSeleccionada,
@@ -188,6 +232,7 @@ namespace AppGM.Core
 
                     if (TipoSeleccionado == ETipoUnidad.Invocacion)
                         modeloUnidad.Personaje = SistemaPrincipal.DatosRolSeleccionado.Invocaciones.Find(i => i.ToString() == PersonajeSeleccionado).modelo;
+                    
                     break;
             }
 
@@ -205,45 +250,6 @@ namespace AppGM.Core
         }
 
         #endregion
-
-        public bool PuedeFinalizarCreacion
-        {
-            get
-            {
-                if (TipoSeleccionado == ETipoUnidad.NINGUNO
-                || Nombre == string.Empty)
-                    return false;
-
-                if (DebeSeleccionarClaseServant && ClaseSeleccionada == EClaseServant.NINGUNO)
-                    return false;
-
-                if(DebeSeleccionarPersonaje && PersonajeSeleccionado == string.Empty)
-                    return false;
-
-                if (DebeSeleccionarCantidad && CantidadInicialDeUnidades == 0)
-                    return false;
-
-                return true;
-            }
-        }
-
-        public List<string> PersonajesDisponibles
-        {
-            get
-            {
-                switch (TipoSeleccionado)
-                {
-                    case ETipoUnidad.Servant:
-                        return SistemaPrincipal.DatosRolSeleccionado.Servants.Select(s => s.ToString()).ToList();
-                    case ETipoUnidad.Master:
-                        return SistemaPrincipal.DatosRolSeleccionado.Masters.Select(m => m.ToString()).ToList();
-                    case ETipoUnidad.Invocacion:
-                        return SistemaPrincipal.DatosRolSeleccionado.Invocaciones.Select(i => i.ToString()).ToList();
-                    default:
-                        return new List<string>(0);
-                }
-            }
-        }
 
     }
 }

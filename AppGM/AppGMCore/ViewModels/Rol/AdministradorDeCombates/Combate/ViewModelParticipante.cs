@@ -1,5 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Dynamic;
+using System.Text;
+using System.Windows.Input;
 
 namespace AppGM.Core
 {
@@ -33,19 +36,40 @@ namespace AppGM.Core
 
 
         /// <summary>
-        /// Nombre del participante
+        /// Comando que se ejecuta al presionar el boton de eliminar participante.
         /// </summary>
-        public string NombreParticipante { get; private set; } = "Mr Sin Nombre";
+        public ICommand ComandoEliminarParticipante { get; set; }
 
         /// <summary>
-        /// Ruta relativa a la imagen del participante
+        /// Nombre del participante
         /// </summary>
-        public string PathImagen { get; private set; } = "../../../../Media/Imagenes/Megumin.png";
+        public string NombreParticipante { get; private set; } = "Participante X";
 
         /// <summary>
         /// Tipo del personaje
         /// </summary>
-        public string TipoPersonaje { get; private set; } = Enum.GetName(typeof(ETipoPersonaje), ETipoPersonaje.Master);
+        public string TipoPersonaje { get; private set; }
+
+        /// <summary>
+        /// Ruta relativa a la imagen del participante
+        /// </summary>
+        public string PathImagen
+        {
+            get
+            {
+                switch (controladorParticipante.ControladorPersonaje.modelo.TipoPersonaje)
+                {
+                    case ETipoPersonaje.Master:
+                        return string.Intern($"../../../../Media/Imagenes/Posiciones/Master_{EnumHelpers.ToStringClaseServant(((ModeloMaster) controladorParticipante.ControladorPersonaje.modelo).ClaseServant)}.png");
+                    case ETipoPersonaje.Servant:
+                        return string.Intern($"../../../../Media/Imagenes/Posiciones/{EnumHelpers.ToStringClaseServant(((ModeloServant) controladorParticipante.ControladorPersonaje.modelo).ClaseServant)}.png");
+                    case ETipoPersonaje.Invocacion:
+                        return string.Intern($"../../../../Media/Imagenes/Posiciones/Invocacion_{EnumHelpers.ToStringClaseServant(((ModeloPersonajeJugable)((ModeloInvocacion)controladorParticipante.ControladorPersonaje.modelo).Invocador).ClaseServant)}.png");
+                    default:
+                        return string.Intern("../../../../Media/Imagenes/Megumin.png");
+                }
+            }
+        }
 
         /// <summary>
         /// Indica si actualmente es el turno del personaje
@@ -67,9 +91,8 @@ namespace AppGM.Core
             combate = _combate;
 
             NombreParticipante = controladorParticipante.modelo.Personaje.Nombre;
-            TipoPersonaje      = Enum.GetName(typeof(ETipoPersonaje), controladorParticipante.modelo.Personaje.TipoPersonaje);
-            PathImagen         = controladorParticipante.ControladorPersonaje.modelo.PathImagenRelativo.IsNullOrWhiteSpace() ? PathImagen : controladorParticipante.ControladorPersonaje.ObtenerPathAImagen(4);
-
+            TipoPersonaje = EnumHelpers.ToStringTipoPersonaje(controladorParticipante.ControladorPersonaje.modelo.TipoPersonaje);
+            
             handlerTurnoCambio = (ref int turnoActual) =>
             {
                 if (combate.ParticipanteTurnoActual == this)
@@ -80,7 +103,30 @@ namespace AppGM.Core
                 }
             };
 
+            ComandoEliminarParticipante = new Comando(EliminarParticipante);
+
             combate.HandlerTurnoCambio += handlerTurnoCambio;
+        }
+
+        #endregion
+
+        #region Funciones
+
+        /// <summary>
+        /// Elimina este participante del combate y de la base de datos
+        /// </summary>
+        private void EliminarParticipante()
+        {
+            if (combate.ParticipanteTurnoActual == this)
+            {
+                //Avanzar turno.
+            }
+
+            combate.Participantes.Remove(this);
+
+            controladorParticipante.Eliminar();
+
+            SistemaPrincipal.GuardarDatosAsync();
         }
 
         #endregion

@@ -429,7 +429,7 @@ namespace AppGM.Core
 
             UnidadesPartiesVisibles.CollectionChanged += this.OnUnidadesPartiesCollectionChanged;
 
-            ComandoAñadirParticipante    = new Comando(AñadirUnidad);
+            ComandoAñadirParticipante = new Comando(AñadirUnidad);
 
             UnidadesSeleccionadas.CollectionChanged += UnidadesSeleccionadasOnCollectionChanged;
         }

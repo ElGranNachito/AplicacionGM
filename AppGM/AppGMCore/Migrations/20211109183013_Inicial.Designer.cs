@@ -3,14 +3,21 @@ using System;
 using AppGM.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AppGM.Core.Migrations
 {
     [DbContext(typeof(RolContext))]
-    partial class RolContextModelSnapshot : ModelSnapshot
+<<<<<<< HEAD:AppGM/AppGMCore/Migrations/20211110171613_inicial.Designer.cs
+    [Migration("20211110171613_inicial")]
+    partial class inicial
+=======
+    [Migration("20211109183013_Inicial")]
+    partial class Inicial
+>>>>>>> Furlanis:AppGM/AppGMCore/Migrations/20211109183013_Inicial.Designer.cs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

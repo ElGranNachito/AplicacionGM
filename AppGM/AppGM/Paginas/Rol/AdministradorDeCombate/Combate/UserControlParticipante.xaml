@@ -7,7 +7,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="100" d:DesignWidth="200">
 
-    <Grid Background="White">
+    <Grid Background="#121212"
+          Height="100"
+          Width="200">
 
         <!-- Context menu -->
         <Grid.ContextMenu>
@@ -31,27 +33,45 @@
         <Border 
             Width="5"
             Background="LimeGreen"
-            Visibility="{Binding EsSuTurno, Converter={local:BooleanToVisibilityConverterOcultar}}"/>
+            Visibility="{Binding EsSuTurno, Converter={local:BooleanToVisibilityConverterOcultar}}"
+            />
 
         <StackPanel Grid.Column="1" 
-                    Margin="5">
+                    Margin="5"
+                    Orientation="Vertical">
 
             <!-- Nombre y tipo de participante -->
-            <TextBlock Text="{Binding NombreParticipante, Mode=OneWay, FallbackValue=Mr Sin Nombre}"
+            <TextBlock Text="{Binding NombreParticipante, Mode=OneWay, FallbackValue=Participante X}"
                        Style="{StaticResource TextBlockBase}"
+                       Foreground="White"
                        />
             <TextBlock Text="{Binding TipoPersonaje, Mode=OneWay, FallbackValue=Es un misterio}"
                        Style="{StaticResource TextBlockBase}"
-                       />
+                       Foreground="White"
+                       Margin="0 10 0 0"
+            />
 
         </StackPanel>
+
+        <!-- Boton eliminar participante -->
+        <Button
+            Grid.Column="2"
+            Content="{StaticResource Fa-Cruz}"
+            FontFamily="{StaticResource 'Font Awesome Regular'}"
+            Command="{Binding ComandoEliminarParticipante}"
+            Style="{StaticResource BotonBase}"
+            Foreground="White"
+            ToolTip="Click para eliminar al participante."
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+        />
 
         <!-- Fotito del personaje -->
         <Border Grid.Column="2"
                 CornerRadius="50"
                 Width="65"
                 Height="65"
-                BorderBrush="Black"
+                BorderBrush="White"
                 BorderThickness="1">
 
             <Border.Background>
@@ -59,6 +79,7 @@
                     Stretch="Fill"
                     ImageSource="{Binding PathImagen, Mode=OneWay}"/>
             </Border.Background>
+
         </Border>
             
     </Grid>
