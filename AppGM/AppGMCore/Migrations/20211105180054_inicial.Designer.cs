@@ -9,11 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AppGM.Core.Migrations
 {
     [DbContext(typeof(RolContext))]
-<<<<<<< HEAD:AppGM/AppGMCore/Migrations/20211105180054_inicial.Designer.cs
     [Migration("20211105180054_inicial")]
-=======
-    [Migration("20211105173739_inicial")]
->>>>>>> parent of 5d77f96 (Ver descripcion):AppGM/AppGMCore/Migrations/20211105173739_inicial.Designer.cs
     partial class inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
