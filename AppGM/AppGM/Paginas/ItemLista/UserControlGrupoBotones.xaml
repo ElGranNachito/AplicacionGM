@@ -13,7 +13,7 @@
         VerticalScrollBarVisibility="Auto"
         Visibility="{Binding EsVisible, Converter={local:BooleanToVisibilityConverterColapsar}}">
 
-        <ItemsControl ItemsSource="{Binding Botones}">
+        <ItemsControl ItemsSource="{Binding Botones.Elementos}">
 
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>

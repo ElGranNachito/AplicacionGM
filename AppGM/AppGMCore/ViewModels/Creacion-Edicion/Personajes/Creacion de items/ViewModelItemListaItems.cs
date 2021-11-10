@@ -28,7 +28,7 @@ namespace AppGM.Core
 				new ViewModelCaracteristicaItem
 				{
 					Titulo = string.Intern("Tipo"),
-					Valor = ControladorGenerico.TipoItem.ToStringTipoItem()
+					Valor = ControladorGenerico.TipoItem.FlagsActivasEnumToString()
 				}
 			});
 		}
@@ -56,7 +56,7 @@ namespace AppGM.Core
 
 			Action accionVer = async () =>
 			{
-				await SistemaPrincipal.MostrarMensajeAsync(await accionCrearVmCreacionEdicion(false), $"Editar {ControladorGenerico.Nombre}", true);
+				await SistemaPrincipal.MostrarMensajeAsync(await accionCrearVmCreacionEdicion(false), $"Viendo {ControladorGenerico.Nombre}", true);
 			};
 
 			Action accionEditar = async () =>
@@ -64,9 +64,9 @@ namespace AppGM.Core
 				await SistemaPrincipal.MostrarMensajeAsync(await accionCrearVmCreacionEdicion(true), $"Editar {ControladorGenerico.Nombre}", true);
 			};
 
-			Action accionEliminar = () =>
+			Action accionEliminar = async () =>
 			{
-
+				await ControladorGenerico.EliminarAsync();
 			};
 
 			GruposDeBotones.Add(new ViewModelGrupoBotones(new List<ViewModelBoton>
@@ -75,6 +75,8 @@ namespace AppGM.Core
 				new ViewModelBoton(accionEditar, ViewModelBoton.NombresComunes.Editar, ViewModelBoton.NombresComunes.Editar, this),
 				new ViewModelBoton(accionEliminar, ViewModelBoton.NombresComunes.Eliminar, ViewModelBoton.NombresComunes.Eliminar, this)
 			}));
+
+			IndiceGrupoDeBotonesActivo = 0;
 		}
 	}
 }

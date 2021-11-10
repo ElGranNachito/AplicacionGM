@@ -6,7 +6,7 @@ namespace AppGM.Core
 	/// <summary>
 	/// Representa un control para la creacion/edicion de un <see cref="ModeloEfecto"/>
 	/// </summary>
-	public class ViewModelCreacionEfecto : ViewModelCreacionEdicionDeModelo<ModeloEfecto, ControladorEfecto, ViewModelCreacionEfecto>
+	public class ViewModelCreacionEdicionEfecto : ViewModelCreacionEdicionDeModelo<ModeloEfecto, ControladorEfecto, ViewModelCreacionEdicionEfecto>
 	{
 		/// <summary>
 		/// 
@@ -60,12 +60,12 @@ namespace AppGM.Core
 		/// <summary>
 		/// Viewmodel del item que representa a la funcion aplicar
 		/// </summary>
-		public ViewModelListaItems<ViewModelFuncionItem<ControladorFuncion_Efecto>> ViewModelFuncionAplicarItem { get; set; }
+		public ViewModelListaItems<ViewModelFuncionItem<ControladorFuncion_Efecto>> ViewModelFuncionAplicar { get; set; }
 
 		/// <summary>
 		/// Viewmodel del item que representa al predicado puede aplicar
 		/// </summary>
-		public ViewModelListaItems<ViewModelFuncionItem<ControladorFuncion_PredicadoEfecto>> ViewModelPredicadoPuedeAplicarItem { get; set; }
+		public ViewModelListaItems<ViewModelFuncionItem<ControladorFuncion_PredicadoEfecto>> ViewModelPredicadoPuedeAplicar { get; set; }
 
 		/// <summary>
 		/// Lista de items con los eventos disponibles y sus handlers
@@ -78,8 +78,8 @@ namespace AppGM.Core
 		/// <param name="_accionSalir">Lambda llamada al salir del control representado por este vm</param>
 		/// <param name="_tipoControladorContenedor">Tipo del controlador que contiene a este efecto</param>
 		/// <param name="_efectoParaEditar">Controlador del efecto que sera editado</param>
-		public ViewModelCreacionEfecto(
-			Action<ViewModelCreacionEfecto> _accionSalir,
+		public ViewModelCreacionEdicionEfecto(
+			Action<ViewModelCreacionEdicionEfecto> _accionSalir,
 			ModeloPersonaje _modeloPersonaje, 
 			Type _tipoControladorContenedor,
 			ControladorEfecto _efectoParaEditar = null)
@@ -89,6 +89,8 @@ namespace AppGM.Core
 			mModeloPersonaje = _modeloPersonaje;
 			mTipoControladorContenedor = _tipoControladorContenedor;
 
+			CrearComandoEliminar();
+
 			ViewModelComboBoxTipoEfecto.OnValorSeleccionadoCambio += (anterior, actual) =>
 			{
 				DispararPropertyChanged(nameof(EsEfectoConDuracion));
@@ -97,10 +99,8 @@ namespace AppGM.Core
 			ViewModelComboBoxComportamientoAcumulativo.SeleccionarValor(EComportamientoAcumulativo.Solapar);
 			ViewModelComboBoxTipoEfecto.SeleccionarValor(ETipoEfecto.Normal);
 
-			ComandoAceptar = new Comando(() =>
+			ComandoAceptar = new Comando(async () =>
 			{
-				ControladorSiendoEditado?.ActulizarModelo(ModeloCreado);
-
 				Resultado = EResultadoViewModel.Aceptar;
 
 				mAccionSalir(this);
@@ -113,10 +113,9 @@ namespace AppGM.Core
 				mAccionSalir(this);
 			});
 
-			ViewModelFuncionAplicarItem = new ViewModelListaItems<ViewModelFuncionItem<ControladorFuncion_Efecto>>(() =>
+			ViewModelFuncionAplicar = new ViewModelListaItems<ViewModelFuncionItem<ControladorFuncion_Efecto>>(async () =>
 			{
-				SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido =
-					new ViewModelCreacionDeFuncionEfecto(
+				var vmCreacion = await new ViewModelCreacionDeFuncionEfecto(
 						vm =>
 						{
 							if (vm.Resultado.EsAceptarOFinalizar())
@@ -131,12 +130,15 @@ namespace AppGM.Core
 									TipoFuncion = ETipoFuncionEfecto.FuncionAplicar
 								};
 
-								AñadirFuncionDesdeListaItems<TIFuncionEfecto, ViewModelFuncionItem<ControladorFuncion_Efecto>>((ViewModelFuncionItem<ControladorFuncion_Efecto>)controladorNuevaFuncion.CrearViewModelItem(), nuevaFuncion, ModeloCreado.Funciones, ViewModelFuncionAplicarItem);
+								AñadirFuncionDesdeListaItems<TIFuncionEfecto, ViewModelFuncionItem<ControladorFuncion_Efecto>>((ViewModelFuncionItem<ControladorFuncion_Efecto>)controladorNuevaFuncion.CrearViewModelItem(), nuevaFuncion, ModeloCreado.Funciones, ViewModelFuncionAplicar);
 							}
-						}, null);
+						}, null).Inicializar();
+
+				SistemaPrincipal.MostrarViewModelCreacionEdicion<ViewModelCreacionDeFuncionBase, ModeloFuncion, ControladorFuncionBase>(vmCreacion);
+
 			}, true, "Funcion aplicar", 1);
 
-			ViewModelPredicadoPuedeAplicarItem = new ViewModelListaItems<ViewModelFuncionItem<ControladorFuncion_PredicadoEfecto>>(() =>
+			ViewModelPredicadoPuedeAplicar = new ViewModelListaItems<ViewModelFuncionItem<ControladorFuncion_PredicadoEfecto>>(() =>
 			{
 
 			}, true, "Predicado", 1);
@@ -144,7 +146,7 @@ namespace AppGM.Core
 			
 		}
 
-		public override async Task<ViewModelCreacionEfecto> Inicializar(Type tipoValorPorDefectoModelo = null)
+		public override async Task<ViewModelCreacionEdicionEfecto> Inicializar(Type tipoValorPorDefectoModelo = null)
 		{
 			await base.Inicializar(tipoValorPorDefectoModelo);
 

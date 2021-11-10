@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AppGM.Core.Migrations
 {
     [DbContext(typeof(RolContext))]
-    [Migration("20211105173739_inicial")]
+    [Migration("20211110162302_inicial")]
     partial class inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -250,7 +250,10 @@ namespace AppGM.Core.Migrations
                     b.Property<int>("NumeroDeMunicionesPorCargador")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("TiposDeDañoQueInfligeElArma")
+                    b.Property<bool>("TieneMunicion")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("TiposDeDañoQueInflige")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -296,6 +299,9 @@ namespace AppGM.Core.Migrations
                     b.Property<bool>("EsValido")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("EstrategiasDeDeteccionDeDañoUtilizadas")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("IDItem")
                         .HasColumnType("INTEGER");
 
@@ -336,7 +342,16 @@ namespace AppGM.Core.Migrations
                     b.Property<bool>("EsValido")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("EstrategiaDeDeteccionDeDaño")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("MetodoDeReduccionDeDaño")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int?>("ModeloDatosDefensivoId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("NivelDeLaMagiaCuyoDañoReduce")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("RangoDelDañoQueReduce")
@@ -345,14 +360,8 @@ namespace AppGM.Core.Migrations
                     b.Property<int>("TipoDeDañoQueReduce")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("TipoDeDeteccionDeDaño")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("TipoDeReduccionDeDaño")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("ValorReduccion")
-                        .HasColumnType("INTEGER");
+                    b.Property<decimal>("ValorReduccion")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -380,7 +389,7 @@ namespace AppGM.Core.Migrations
                     b.Property<int?>("HabilidadContenedoraId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("ModeloItemId")
+                    b.Property<int?>("ItemContenedorId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Nombre")
@@ -397,7 +406,7 @@ namespace AppGM.Core.Migrations
 
                     b.HasIndex("HabilidadContenedoraId");
 
-                    b.HasIndex("ModeloItemId");
+                    b.HasIndex("ItemContenedorId");
 
                     b.ToTable("ModeloEfecto");
                 });
@@ -605,12 +614,17 @@ namespace AppGM.Core.Migrations
                     b.Property<decimal>("Peso")
                         .HasColumnType("TEXT");
 
+                    b.Property<int?>("RolAlQuePerteneceId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("TipoItem")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
                     b.HasIndex("PersonajePortadorId");
+
+                    b.HasIndex("RolAlQuePerteneceId");
 
                     b.ToTable("ModeloItem");
                 });
@@ -1685,11 +1699,14 @@ namespace AppGM.Core.Migrations
                         .HasForeignKey("HabilidadContenedoraId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("AppGM.Core.ModeloItem", null)
+                    b.HasOne("AppGM.Core.ModeloItem", "ItemContenedor")
                         .WithMany("Efectos")
-                        .HasForeignKey("ModeloItemId");
+                        .HasForeignKey("ItemContenedorId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("HabilidadContenedora");
+
+                    b.Navigation("ItemContenedor");
                 });
 
             modelBuilder.Entity("AppGM.Core.ModeloEfectoSiendoAplicado", b =>
@@ -1760,7 +1777,13 @@ namespace AppGM.Core.Migrations
                         .HasForeignKey("PersonajePortadorId")
                         .OnDelete(DeleteBehavior.Cascade);
 
+                    b.HasOne("AppGM.Core.ModeloRol", "RolAlQuePertenece")
+                        .WithMany()
+                        .HasForeignKey("RolAlQuePerteneceId");
+
                     b.Navigation("PersonajePortador");
+
+                    b.Navigation("RolAlQuePertenece");
                 });
 
             modelBuilder.Entity("AppGM.Core.ModeloMapa", b =>

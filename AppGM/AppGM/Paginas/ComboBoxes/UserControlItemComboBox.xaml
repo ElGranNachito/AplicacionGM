@@ -10,7 +10,7 @@
     <Border
         Background ="Transparent"
 
-        Padding="0 2"
+        Padding="0 1 0 2"
         BorderThickness="0  0 0 1">
         <Grid>
 

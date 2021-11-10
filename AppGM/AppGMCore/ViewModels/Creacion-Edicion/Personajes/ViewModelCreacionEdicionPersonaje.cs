@@ -236,6 +236,9 @@ namespace AppGM.Core
 
                 ModeloCreado.TipoPersonaje = actual.valor;
 
+                if (ModeloCreado is ModeloPersonajeJugable p)
+	                p.Caracteristicas = new ModeloCaracteristicas();
+
                 DispararPropertyChanged(new PropertyChangedEventArgs(nameof(ClasesDeServantDisponibles)));
                 DispararPropertyChanged(new PropertyChangedEventArgs(nameof(EsMasterOServant)));
                 DispararPropertyChanged(new PropertyChangedEventArgs(nameof(EsServant)));
@@ -277,6 +280,26 @@ namespace AppGM.Core
                 mAccionSalir(this);
             });
 
+            ComandoCancelar = new Comando(() =>
+            {
+	            Resultado = EResultadoViewModel.Cancelar;
+
+	            mAccionSalir(this);
+            });
+
+            ComandoSeleccionarImagen = new Comando(() =>
+            {
+	            var archivoSeleccionado = SistemaPrincipal.ControladorDeArchivos.MostrarDialogoAbrirArchivo(
+		            "Seleccionar imagen para personaje", "Formatos de imagen (*.jpg, *.png)|*.jpg;*.png",
+		            SistemaPrincipal.Aplicacion.VentanaActual);
+
+	            archivoSeleccionado.CopiarADirectorio(SistemaPrincipal.ControladorDeArchivos.DirectorioImagenes, true);
+
+	            ModeloCreado.PathImagenAbsoluto = archivoSeleccionado.Ruta;
+
+                DispararPropertyChanged(nameof(PathImagen));
+            });
+
             ComandoCancelar = new Comando(()=>mAccionSalir(this));
 
             PropertyChanged += (sender, args) =>
@@ -286,7 +309,7 @@ namespace AppGM.Core
             };
         }
 
-		#endregion
+        #endregion
 
 		#region Metodos
 
@@ -299,6 +322,8 @@ namespace AppGM.Core
 				await SistemaPrincipal.GuardarModeloAsync(ModeloCreado);
 
 				await SistemaPrincipal.GuardarDatosAsync();
+
+				ModeloCreado.Rol = SistemaPrincipal.ModeloRolActual;
 			}
 
 			return this;

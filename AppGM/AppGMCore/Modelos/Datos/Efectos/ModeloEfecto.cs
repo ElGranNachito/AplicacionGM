@@ -7,7 +7,7 @@ namespace AppGM.Core
 	/// <summary>
 	/// Modelo de datos para un efecto
 	/// </summary>
-	public class ModeloEfecto : ModeloBase
+	public partial class ModeloEfecto : ModeloBase
 	{
 		/// <summary>
 		/// Turnos que dura el efecto
@@ -57,5 +57,10 @@ namespace AppGM.Core
 		/// Habilidad que contiene este efecto
 		/// </summary>
 		public virtual ModeloHabilidad HabilidadContenedora { get; set; }
+
+		/// <summary>
+		/// Item que contiene este efecto
+		/// </summary>
+		public virtual ModeloItem ItemContenedor { get; set; }
 	}
 }

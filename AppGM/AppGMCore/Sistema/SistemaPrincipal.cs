@@ -546,6 +546,8 @@ namespace AppGM.Core
 	        var dataContextActual = ventanaEnLaQueMostrarElControl.DataContextContenido;
 
 	        viewModel.OnResultadoEstablecido += model => ventanaEnLaQueMostrarElControl.DataContextContenido = dataContextActual;
+
+	        ventanaEnLaQueMostrarElControl.DataContextContenido = viewModel;
         }
 
         /// <summary>

@@ -81,6 +81,7 @@
 
                     <!-- Tipo de la tirada -->
                     <local:UserControlComboBoxConDescripcion
+                        Descripcion="Tipo de la tirada:"
                         DataContext="{Binding ViewModelComboBoxTipoTirada}"/>
 
                 </StackPanel>
@@ -92,18 +93,21 @@
 
                     <!-- Stat de la tirada -->
                     <local:UserControlComboBoxConDescripcion
+                        Descripcion="Stat de la tirada:"
                         DataContext="{Binding ViewModelComboBoxStatTirada}"/>
 
                     <!-- Tipo de daño de la tirada -->
                     <local:UserControlComboBoxConDescripcion
-                        Margin="0 10 0 10"
+                        Margin="0 10 0 0"
 
-                        Visibility="{Binding EsTiradaDeDaño, Converter={local:BooleanToVisibilityConverterColapsar}}"
+                        Descripcion="Tipo de daño:"
+
+                        Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControlCreacionTirada}}, Path=DataContext.EsTiradaDeDaño, Converter={local:BooleanToVisibilityConverterColapsar}}"
 
                         DataContext="{Binding ViewModelComboBoxTipoDeDañoTirada}"/>
 
                     <StackPanel
-                        Margin="0 0 0 10"
+                        Margin="0 10 0 10"
 
                         Orientation="Horizontal">
 
@@ -212,7 +216,7 @@
 
                         BorderBrush="Black"
                         
-                        IsEnabled="{Binding EsValida}"
+                        IsEnabled="{Binding EsValido}"
                         
                         Style="{StaticResource BotonFondoResaltable}"
                         Command="{Binding ComandoAceptar}"/>

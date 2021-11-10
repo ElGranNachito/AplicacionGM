@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -30,11 +31,13 @@ namespace AppGM.Core
         public static List<EUsoDeHabilidad>          UsosDeHabilidadDisponibles      => Enum.GetValues(typeof(EUsoDeHabilidad)).Cast<EUsoDeHabilidad>().ToList();
         public static List<ETipoHabilidad>           TiposDeHabilidadDisponibles     => Enum.GetValues(typeof(ETipoHabilidad)).Cast<ETipoHabilidad>().ToList();
         public static List<ETipoTirada>              TiposDeTiradasDisponibles       => Enum.GetValues(typeof(ETipoTirada)).Cast<ETipoTirada>().ToList();
-        public static List<ETipoEfecto>              TiposDeEfectoDisponibles => Enum.GetValues(typeof(ETipoEfecto)).Cast<ETipoEfecto>().ToList();
+        public static List<ETipoEfecto>              TiposDeEfectoDisponibles                 => Enum.GetValues(typeof(ETipoEfecto)).Cast<ETipoEfecto>().ToList();
         public static List<EComportamientoAcumulativo> ComportamientosAcumulativosDisponibles => Enum.GetValues(typeof(EComportamientoAcumulativo)).Cast<EComportamientoAcumulativo>().ToList();
-        public static List<EEstadoPortacion> EstadosDePortacionDisponibles => Enum.GetValues(typeof(EEstadoPortacion)).Cast<EEstadoPortacion>().ToList();
-
-        public static List<ETipoItem> TiposItemDisponibles => Enum.GetValues(typeof(ETipoItem)).Cast<ETipoItem>().ToList();
+        public static List<EEstadoPortacion>         EstadosDePortacionDisponibles            => Enum.GetValues(typeof(EEstadoPortacion)).Cast<EEstadoPortacion>().ToList();
+        public static List<ETipoItem>                TiposItemDisponibles                     => Enum.GetValues(typeof(ETipoItem)).Cast<ETipoItem>().ToList();
+        public static List<EEstrategiaDeDeteccionDeDaño>   TiposDeDeteccionDeDañoDisponibles        => Enum.GetValues<EEstrategiaDeDeteccionDeDaño>().ToList();
+        public static List<EMetodoDeReduccionDeDaño> MetodosDeReduccionDeDañoDisponibles      => Enum.GetValues<EMetodoDeReduccionDeDaño>().ToList();
+        public static List<ENivelMagia>              NivelesDeMagiaDisponibles                => Enum.GetValues<ENivelMagia>().ToList();
 
         /// <summary>
         /// Transforma el valor del <see cref="EFormatoImagen"/> a una cadena
@@ -185,9 +188,7 @@ namespace AppGM.Core
         {
 	        switch (tipoItem)
 	        {
-                case ETipoItem.ArmaDistancia:
-	                return string.Intern("Arma a distancia");
-                case ETipoItem.Defensivo:
+		        case ETipoItem.Defensivo:
 	                return string.Intern("Defensivo");
                 case ETipoItem.Item:
 					return string.Intern("Item");
@@ -253,6 +254,32 @@ namespace AppGM.Core
 	        }
 
 	        return sBuilder.AppendJoin(", ", flagsActivas).ToString();
+        }
+
+        /// <summary>
+        /// Obtiene los valores de tipo de deteccion de daño disponible para el valor de <paramref name="estrategiaDeDeteccion"/>
+        /// </summary>
+        /// <param name="estrategiaDeDeteccion">Tipo de deteccion para el que se queiren obtener los valores disponibles</param>
+        /// <returns><see cref="List{T}"/> con los valores de deteccion disponibles para <paramref name="estrategiaDeDeteccion"/></returns>
+        public static List<Enum> ObtenerValoresDeDeteccionDeDañoDisponibles(this EEstrategiaDeDeteccionDeDaño estrategiaDeDeteccion)
+        {
+	        switch (estrategiaDeDeteccion)
+	        {
+                case EEstrategiaDeDeteccionDeDaño.Nivel:
+	                return EnumHelpers.NivelesDeMagiaDisponibles.Cast<Enum>().ToList();
+                case EEstrategiaDeDeteccionDeDaño.Rango:
+	                return EnumHelpers.RangosDisponibles.Cast<Enum>().ToList();
+                case EEstrategiaDeDeteccionDeDaño.TipoDeDaño:
+	                return EnumHelpers.TiposDeDañoDisponibles.Cast<Enum>().ToList();
+                case EEstrategiaDeDeteccionDeDaño.FuenteDelDaño:
+                {
+                    SistemaPrincipal.LoggerGlobal.Log($"el valor de {nameof(estrategiaDeDeteccion)} no puede ser {EEstrategiaDeDeteccionDeDaño.FuenteDelDaño}", ESeveridad.Error);
+
+                    return new List<Enum>();
+                }
+	        }
+
+	        return new List<Enum>();
         }
 
         public static bool EsAceptarOFinalizar(this EResultadoViewModel resultado) => resultado is EResultadoViewModel.Aceptar or EResultadoViewModel.Finalizar;

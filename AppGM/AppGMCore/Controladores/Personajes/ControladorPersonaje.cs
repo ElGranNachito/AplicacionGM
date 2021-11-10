@@ -586,7 +586,7 @@ namespace AppGM.Core
             return sb.ToString();
         }
 
-        public override bool CompararConCadena(string cadena)
+        public override bool Equals(string cadena)
         {
 	        return Regex.IsMatch(modelo.Nombre, $"*{cadena}*");
         }

@@ -27,7 +27,7 @@ namespace AppGM.Core
 		/// <summary>
 		/// Indica si este grupo esta habilitado
 		/// </summary>
-		public bool EstaHabilitado { get; set; }
+		public bool EstaHabilitado { get; set; } = true;
 
 		/// <summary>
 		/// Indica si este grupo es visible
