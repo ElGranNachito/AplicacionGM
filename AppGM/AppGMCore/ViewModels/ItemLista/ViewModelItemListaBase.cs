@@ -24,7 +24,7 @@ namespace AppGM.Core
 		/// <summary>
 		/// Contiene el valor de <see cref="IndiceGrupoDeBotonesActivo"/>
 		/// </summary>
-		private int mIndiceGrupoDeBotonesActivo = 0;
+		private int mIndiceGrupoDeBotonesActivo = -1;
 
 		/// <summary>
 		/// Delegado que representa a un metodo encargado de lidiar con el evento de que el modelo
@@ -42,7 +42,7 @@ namespace AppGM.Core
 			get => mIndiceGrupoDeBotonesActivo;
 			set
 			{
-				if (mIndiceGrupoDeBotonesActivo >= GruposDeBotones.Count)
+				if (value >= GruposDeBotones.Count)
 					return;
 
 				if(mIndiceGrupoDeBotonesActivo != -1)

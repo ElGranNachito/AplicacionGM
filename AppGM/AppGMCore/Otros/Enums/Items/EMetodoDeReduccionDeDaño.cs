@@ -3,7 +3,7 @@
 	/// <summary>
 	/// Especifica la forma en la que se reduce el daño
 	/// </summary>
-	public enum ETipoDeReduccionDeDaño
+	public enum EMetodoDeReduccionDeDaño
 	{
 		/// <summary>
 		/// Reduce el daño por un valor fijo

@@ -3,7 +3,7 @@
 	/// <summary>
 	/// Manera en la que se detecta el daño a reducir
 	/// </summary>
-	public enum ETipoDeDeteccionDeDaño
+	public enum EEstrategiaDeDeteccionDeDaño
 	{
 		/// <summary>
 		/// El daño se detecta en base a su <see cref="ETipoDeDaño"/>

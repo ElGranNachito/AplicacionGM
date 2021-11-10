@@ -26,10 +26,10 @@ namespace AppGM.Core
 		{
 			VariablesBase = new List<BloqueVariable>
 			{
-				new BloqueVariable(ObtenerID(),"Combate",  typeof(ControladorAdministradorDeCombate), ETipoVariable.Normal),
+				new BloqueVariable(Compilador.Variables.VariableDueña, "ControladorHabilidad", typeof(ControladorHabilidad), ETipoVariable.Parametro),
 				new BloqueVariable(ObtenerID(),"Usuario", typeof(ControladorPersonaje), ETipoVariable.Parametro),
-				new BloqueVariable(ObtenerID(), "Objetivos", typeof(ControladorPersonaje[]), ETipoVariable.Parametro),
-				new BloqueVariable(Compilador.Variables.VariableDueña, "ControladorHabilidad", typeof(ControladorHabilidad), ETipoVariable.Parametro)
+				new BloqueVariable(ObtenerID(), "Objetivo", typeof(ControladorPersonaje), ETipoVariable.Parametro),
+				new BloqueVariable(ObtenerID(),"Combate",  typeof(ControladorAdministradorDeCombate), ETipoVariable.Normal),
 			};
 		}
 	}

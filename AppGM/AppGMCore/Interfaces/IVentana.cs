@@ -144,12 +144,6 @@ namespace AppGM.Core
 		Task<EResultadoViewModel> Mostrar(ViewModelConResultadoBase vm, string titulo, bool esperarCierre, int alto, int ancho);
 
 		/// <summary>
-		/// Establece el viewmodel de la ventana
-		/// </summary>
-		/// <param name="nuevoVM">Nuevo viewmodel</param>
-		void EstablecerViewModel(ViewModelConResultadoBase nuevoVM);
-
-		/// <summary>
 		/// Ventana de la que depende este mensaje
 		/// </summary>
 		public IVentana VentanaPadre { get; set; }

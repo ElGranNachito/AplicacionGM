@@ -144,7 +144,7 @@
                         Background="{TemplateBinding Background}" 
                         BorderThickness="{TemplateBinding BorderThickness}" 
                         BorderBrush="{TemplateBinding BorderBrush}"
-                        Padding="4 2"
+                        Padding="4 3"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch">
 
@@ -440,15 +440,31 @@
                             Grid.ColumnSpan="2"
                             IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                             Style="{StaticResource ComboBoxToggleButton}"/>
-                        
-                        <TextBlock
+
+                        <StackPanel
                             Margin="5 5 0 5"
 
-                            IsHitTestVisible="False"
+                            Orientation="Horizontal"
+                        
+                            IsHitTestVisible="False">
 
-                            TextWrapping="NoWrap"
-                            TextTrimming="CharacterEllipsis"
-                            Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=DataContext.ToStringItemsSeleccionados}"/>
+                            <TextBlock
+                                x:Name="descripcion"
+
+                                VerticalAlignment="Center"
+
+                                Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControlMultiSelectComboBox}}, Path=Descripcion}"/>
+
+                            <TextBlock
+                                Margin="5 5 0 5"
+
+                                IsHitTestVisible="False"
+
+                                TextWrapping="NoWrap"
+                                TextTrimming="CharacterEllipsis"
+                                Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=DataContext.ToStringItemsSeleccionados}"/>
+
+                        </StackPanel>
 
                     </Grid>
                     <ControlTemplate.Triggers>
@@ -524,6 +540,21 @@
                     Grid.ColumnSpan="2"
                     IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                     Style="{StaticResource ComboBoxToggleButton}"/>
+                
+                <StackPanel
+                    Margin="0 5 0 5"
+
+                    Orientation="Horizontal"
+                        
+                    IsHitTestVisible="False">
+
+                    <TextBlock
+                        Padding="5 5 0 5"
+                        x:Name="descripcion"
+
+                        VerticalAlignment="Center"
+
+                        Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControlComboBoxConDescripcion}}, Path=Descripcion}"/>
 
                 <ContentPresenter 
                     x:Name="contentPresenter" 
@@ -535,6 +566,10 @@
                     IsHitTestVisible="false" Margin="{TemplateBinding Padding}" 
                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
                     VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+            </StackPanel>
+                
+
+                
             </Grid>
             <ControlTemplate.Triggers>
                 <Trigger Property="HasDropShadow" SourceName="PART_Popup" Value="true">

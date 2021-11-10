@@ -88,10 +88,15 @@ namespace AppGM.Core
         {
 	        Portador = SistemaPrincipal.ObtenerControlador<ControladorPersonaje, ModeloPersonaje>(modelo.PersonajePortador, false);
 
-            if(Portador == null)
-                SistemaPrincipal.LoggerGlobal.LogCrash($"{Portador} no puede ser null!");
+	        if (Portador == null)
+	        {
+                modelo.PersonajePortador.AñadirHandlerSoloUsoControladorCreado((modelo, controlador) =>
+                {
+	                Portador = (ControladorPersonaje) controlador;
+                });
+	        }
 
-            modelo.AñadirHandlerSoloUsoModeloEliminado(m =>
+	        modelo.AñadirHandlerSoloUsoModeloEliminado(m =>
             {
 	            OnItemEliminado(this, Portador);
             });
@@ -126,6 +131,16 @@ namespace AppGM.Core
 	        {
 		        
 	        }
+        }
+
+        public override ViewModelItemListaBase CrearViewModelItem()
+        {
+	        return new ViewModelItemListaItems(this);
+        }
+
+        public override string ToString()
+        {
+	        return $"{Nombre} ({TipoItem.FlagsActivasEnumToString()}). Portado por: {modelo.PersonajePortador}";
         }
 
         #endregion

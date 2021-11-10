@@ -1,8 +1,11 @@
-﻿namespace AppGM.Core
+﻿using System;
+
+namespace AppGM.Core
 {
 	/// <summary>
 	/// Representa el nivel de una magia
 	/// </summary>
+	[Flags]
 	public enum ENivelMagia
 	{
 		Cero   = 1<<0,

@@ -24,9 +24,14 @@ namespace AppGM.Core
 		public bool IgnoraDefensa { get; set; }
 
 		/// <summary>
+		/// Indica si este arma ignora a la defensa
+		/// </summary>
+		public bool TieneMunicion { get; set; }
+
+		/// <summary>
 		/// Tipos de daño que inflige este arma
 		/// </summary>
-		public ETipoDeDaño TiposDeDañoQueInfligeElArma { get; set; }
+		public ETipoDeDaño TiposDeDañoQueInflige { get; set; }
 
 		/// <summary>
 		/// Clave foranea del <see cref="Item"/>
