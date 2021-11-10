@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using AppGM.Core;
 using CoolLogs;
 
 namespace AppGM.Core
@@ -33,34 +34,11 @@ namespace AppGM.Core
         public static List<ETipoTirada>              TiposDeTiradasDisponibles       => Enum.GetValues(typeof(ETipoTirada)).Cast<ETipoTirada>().ToList();
         public static List<ETipoEfecto>              TiposDeEfectoDisponibles                 => Enum.GetValues(typeof(ETipoEfecto)).Cast<ETipoEfecto>().ToList();
         public static List<EComportamientoAcumulativo> ComportamientosAcumulativosDisponibles => Enum.GetValues(typeof(EComportamientoAcumulativo)).Cast<EComportamientoAcumulativo>().ToList();
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-        public static List<ETipoItem> TiposItemDisponibles => Enum.GetValues(typeof(ETipoItem)).Cast<ETipoItem>().ToList();
-        public static List<EEstadoPortacion> EstadosDePortacionDisponibles => Enum.GetValues(typeof(EEstadoPortacion)).Cast<EEstadoPortacion>().ToList();
-=======
-        public static List<EEstadoPortacion> EstadosDePortacionDisponibles => Enum.GetValues(typeof(EEstadoPortacion)).Cast<EEstadoPortacion>().ToList();
-
-        public static List<ETipoItem> TiposItemDisponibles => Enum.GetValues(typeof(ETipoItem)).Cast<ETipoItem>().ToList();
->>>>>>> parent of 5d77f96 (Ver descripcion)
-=======
-        public static List<EEstadoPortacion> EstadosDePortacionDisponibles => Enum.GetValues(typeof(EEstadoPortacion)).Cast<EEstadoPortacion>().ToList();
-
-        public static List<ETipoItem> TiposItemDisponibles => Enum.GetValues(typeof(ETipoItem)).Cast<ETipoItem>().ToList();
->>>>>>> parent of 5d77f96 (Ver descripcion)
-=======
-        public static List<EEstadoPortacion> EstadosDePortacionDisponibles => Enum.GetValues(typeof(EEstadoPortacion)).Cast<EEstadoPortacion>().ToList();
-
-        public static List<ETipoItem> TiposItemDisponibles => Enum.GetValues(typeof(ETipoItem)).Cast<ETipoItem>().ToList();
->>>>>>> parent of 5d77f96 (Ver descripcion)
-=======
         public static List<EEstadoPortacion>         EstadosDePortacionDisponibles            => Enum.GetValues(typeof(EEstadoPortacion)).Cast<EEstadoPortacion>().ToList();
         public static List<ETipoItem>                TiposItemDisponibles                     => Enum.GetValues(typeof(ETipoItem)).Cast<ETipoItem>().ToList();
         public static List<EEstrategiaDeDeteccionDeDaño>   TiposDeDeteccionDeDañoDisponibles        => Enum.GetValues<EEstrategiaDeDeteccionDeDaño>().ToList();
         public static List<EMetodoDeReduccionDeDaño> MetodosDeReduccionDeDañoDisponibles      => Enum.GetValues<EMetodoDeReduccionDeDaño>().ToList();
         public static List<ENivelMagia>              NivelesDeMagiaDisponibles                => Enum.GetValues<ENivelMagia>().ToList();
->>>>>>> parent of ead5dfb (Revert "esto")
 
         /// <summary>
         /// Transforma el valor del <see cref="EFormatoImagen"/> a una cadena
@@ -225,9 +203,45 @@ namespace AppGM.Core
         }
 
         /// <summary>
-        /// Obtiene una representacion textual del valor de <paramref name="nivelMagia"/>
+        /// Avanza un valor en la enum.
         /// </summary>
-        /// <param name="nivelMagia">Valor de <see cref="ENivelMagia"/> que pasar a cadena</param>
+        /// <typeparam name="T">Generico del enum del que se avanza</typeparam>
+        /// <param name="e">Enum del que se desea obtener el valor que le sigue</param>
+        /// <returns></returns>
+        public static T Siguiente<T>(this T e) where T : struct
+        {
+	        if (!typeof(T).IsEnum)
+		        throw new ArgumentException(String.Format($"El argumento {typeof(T).FullName} no es un Enum"));
+
+	        T[] valores = (T[])Enum.GetValues(e.GetType());
+
+	        int indice = Array.IndexOf<T>(valores, e) + 1;
+
+	        return (valores.Length == indice) ? valores[0] : valores[indice];
+        }
+
+        /// <summary>
+        /// Retrocede un valor en la enum.
+        /// </summary>
+        /// <typeparam name="T">Generico del enum del que se retrocede</typeparam>
+        /// <param name="e">Enum del que se desea obtener el valor que le anterior</param>
+        /// <returns></returns>
+        public static T Anterior<T>(this T e) where T : struct
+        {
+	        if (!typeof(T).IsEnum)
+		        throw new ArgumentException(String.Format($"El argumento {typeof(T).FullName} no es un Enum"));
+
+	        T[] valores = (T[])Enum.GetValues(e.GetType());
+
+	        int indice = Array.IndexOf<T>(valores, e) - 1;
+
+	        return (valores.Length == indice) ? valores[0] : valores[indice];
+        }
+
+        /// <summary>
+        /// Obtiene el valor string correspondiente al <see cref="ENumeroParty"/>.
+        /// </summary>
+        /// <param name="numeroParty"><see cref="ENumeroParty"/>del que se desea obtener un valor string</param>
         /// <returns></returns>
         public static string ToStringNivelMagia(this ENivelMagia nivelMagia)
         {
@@ -257,6 +271,155 @@ namespace AppGM.Core
         }
 
         /// <summary>
+        /// Obtiene el valor string correspondiente al <see cref="EClima"/>.
+        /// </summary>
+        /// <param name="clima"><see cref="EClima"/>del que se desea obtener un valor string</param>
+        /// <returns></returns>
+        public static string ToStringClima(this EClima clima)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+
+            switch (clima)
+            {
+                case EClima.Granizo:
+                    stringBuilder.Append("Granizo");
+                    break;
+                case EClima.Lluvia:
+                    stringBuilder.Append("Lluvia");
+                    break;
+                case EClima.Neblina:
+                    stringBuilder.Append("Neblina");
+                    break;
+                case EClima.Nieve:
+                    stringBuilder.Append("Nieve");
+                    break;
+                case EClima.Nublado:
+                    stringBuilder.Append("Nublado");
+                    break;
+                case EClima.Soleado:
+                    stringBuilder.Append("Soleado");
+                    break;
+                case EClima.Tormenta:
+                    stringBuilder.Append("Tormenta");
+                    break;
+            }
+
+            return stringBuilder.ToString();
+        }
+
+        /// <summary>
+        /// Obtiene el valor string correspondiente al <see cref="EViento"/>.
+        /// </summary>
+        /// <param name="viento"><see cref="EViento"/>del que se desea obtener un valor string</param>
+        /// <returns></returns>
+        public static string ToStringViento(this EViento viento)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+
+            switch (viento)
+            {
+                case EViento.Brisa:
+                    stringBuilder.Append("Brisa");
+                    break;
+                case EViento.Rafagas:
+                    stringBuilder.Append("Rafagas");
+                    break;
+                case EViento.Viento:
+                    stringBuilder.Append("Viento");
+                    break;
+            }
+
+            return stringBuilder.ToString();
+        }
+
+        /// <summary>
+        /// Obtiene el valor string correspondiente al <see cref="EHumedad"/>.
+        /// </summary>
+        /// <param name="humedad"><see cref="EHumedad"/>del que se desea obtener un valor string</param>
+        /// <returns></returns>
+        public static string ToStringHumedad(this EHumedad humedad)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+
+            switch (humedad)
+            {
+                case EHumedad.Humedad:
+                    stringBuilder.Append("Humedad");
+                    break;
+                case EHumedad.MuchaHumedad:
+                    stringBuilder.Append("MuchaHumedad");
+                    break;
+                case EHumedad.Seco:
+                    stringBuilder.Append("Seco");
+                    break;
+            }
+
+            return stringBuilder.ToString();
+        }
+
+        /// <summary>
+        /// Obtiene el valor string correspondiente al <see cref="ETemperatura"/>.
+        /// </summary>
+        /// <param name="temperatura"><see cref="ETemperatura"/>del que se desea obtener un valor string</param>
+        /// <returns></returns>
+        public static string ToStringTemperatura(this ETemperatura temperatura)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+
+            switch (temperatura)
+            {
+                case ETemperatura.Frio:
+                    stringBuilder.Append("Frio");
+                    break;
+                case ETemperatura.Calor:
+                    stringBuilder.Append("Calor");
+                    break;
+                case ETemperatura.Templado:
+                    stringBuilder.Append("Templado");
+                    break;
+            }
+
+            return stringBuilder.ToString();
+        }
+
+        /// <summary>
+        /// Obtiene el valor string correspondiente al <see cref="EDiaSemana"/>.
+        /// </summary>
+        /// <param name="diaSemana"><see cref="EDiaSemana"/>del que se desea obtener un valor string</param>
+        /// <returns></returns>
+        public static string ToStringDiaSemana(this EDiaSemana diaSemana)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+
+            switch (diaSemana)
+            {
+                case EDiaSemana.Lunes:
+                    stringBuilder.Append("Lunes");
+                    break;
+                case EDiaSemana.Martes:
+                    stringBuilder.Append("Martes");
+                    break;
+                case EDiaSemana.Miercoles:
+                    stringBuilder.Append("Miercoles");
+                    break;
+                case EDiaSemana.Jueves:
+                    stringBuilder.Append("Jueves");
+                    break;
+                case EDiaSemana.Viernes:
+                    stringBuilder.Append("Viernes");
+                    break;
+                case EDiaSemana.Sabado:
+                    stringBuilder.Append("Sabado");
+                    break;
+                case EDiaSemana.Domingo:
+                    stringBuilder.Append("Domingo");
+                    break;
+            }
+
+            return stringBuilder.ToString();
+        }
+
+        /// <summary>
         /// Devuelve una cadena con todas las flags activas de un <typeparamref name="TEnum"/>
         /// </summary>
         /// <typeparam name="TEnum">Tipo del enum</typeparam>
@@ -272,32 +435,11 @@ namespace AppGM.Core
 	        foreach (var valor in Enum.GetValues<TEnum>())
 	        {
                 //Revisamos si la flag actual esta activada
-<<<<<<< HEAD
-<<<<<<< HEAD
                 if (flags.HasFlag(valor))
                     flagsActivas.Add(valor);
             }
 
             return sBuilder.AppendJoin(", ", flagsActivas).ToString();
-=======
-		        if (flags.HasFlag(valor))
-			        flagsActivas.Add(valor);
-	        }
-
-	        return sBuilder.AppendJoin(", ", flagsActivas).ToString();
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> parent of 5d77f96 (Ver descripcion)
-=======
->>>>>>> parent of 5d77f96 (Ver descripcion)
-=======
->>>>>>> parent of 5d77f96 (Ver descripcion)
-=======
-		        if (flags.HasFlag(valor))
-			        flagsActivas.Add(valor);
-	        }
-
-	        return sBuilder.AppendJoin(", ", flagsActivas).ToString();
         }
 
         /// <summary>
@@ -324,7 +466,6 @@ namespace AppGM.Core
 	        }
 
 	        return new List<Enum>();
->>>>>>> parent of ead5dfb (Revert "esto")
         }
 
         public static bool EsAceptarOFinalizar(this EResultadoViewModel resultado) => resultado is EResultadoViewModel.Aceptar or EResultadoViewModel.Finalizar;
