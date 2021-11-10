@@ -32,8 +32,14 @@ namespace AppGM.Core
         public static List<ETipoTirada>              TiposDeTiradasDisponibles       => Enum.GetValues(typeof(ETipoTirada)).Cast<ETipoTirada>().ToList();
         public static List<ETipoEfecto>              TiposDeEfectoDisponibles => Enum.GetValues(typeof(ETipoEfecto)).Cast<ETipoEfecto>().ToList();
         public static List<EComportamientoAcumulativo> ComportamientosAcumulativosDisponibles => Enum.GetValues(typeof(EComportamientoAcumulativo)).Cast<EComportamientoAcumulativo>().ToList();
+<<<<<<< HEAD
         public static List<ETipoItem> TiposItemDisponibles => Enum.GetValues(typeof(ETipoItem)).Cast<ETipoItem>().ToList();
         public static List<EEstadoPortacion> EstadosDePortacionDisponibles => Enum.GetValues(typeof(EEstadoPortacion)).Cast<EEstadoPortacion>().ToList();
+=======
+        public static List<EEstadoPortacion> EstadosDePortacionDisponibles => Enum.GetValues(typeof(EEstadoPortacion)).Cast<EEstadoPortacion>().ToList();
+
+        public static List<ETipoItem> TiposItemDisponibles => Enum.GetValues(typeof(ETipoItem)).Cast<ETipoItem>().ToList();
+>>>>>>> parent of 5d77f96 (Ver descripcion)
 
         /// <summary>
         /// Transforma el valor del <see cref="EFormatoImagen"/> a una cadena
@@ -413,11 +419,19 @@ namespace AppGM.Core
             foreach (var valor in Enum.GetValues<TEnum>())
             {
                 //Revisamos si la flag actual esta activada
+<<<<<<< HEAD
                 if (flags.HasFlag(valor))
                     flagsActivas.Add(valor);
             }
 
             return sBuilder.AppendJoin(", ", flagsActivas).ToString();
+=======
+		        if (flags.HasFlag(valor))
+			        flagsActivas.Add(valor);
+	        }
+
+	        return sBuilder.AppendJoin(", ", flagsActivas).ToString();
+>>>>>>> parent of 5d77f96 (Ver descripcion)
         }
 
         public static bool EsAceptarOFinalizar(this EResultadoViewModel resultado) => resultado is EResultadoViewModel.Aceptar or EResultadoViewModel.Finalizar;

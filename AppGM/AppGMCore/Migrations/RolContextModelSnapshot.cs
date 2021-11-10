@@ -3,20 +3,14 @@ using System;
 using AppGM.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AppGM.Core.Migrations
 {
     [DbContext(typeof(RolContext))]
-<<<<<<< HEAD:AppGM/AppGMCore/Migrations/20211105180054_inicial.Designer.cs
-    [Migration("20211105180054_inicial")]
-=======
-    [Migration("20211105173739_inicial")]
->>>>>>> parent of 5d77f96 (Ver descripcion):AppGM/AppGMCore/Migrations/20211105173739_inicial.Designer.cs
-    partial class inicial
+    partial class RolContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -200,41 +194,6 @@ namespace AppGM.Core.Migrations
                     b.HasIndex("IdPersonaje");
 
                     b.ToTable("ModeloCaracteristicas");
-                });
-
-            modelBuilder.Entity("AppGM.Core.ModeloClimaHorario", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Clima")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("DiaSemana")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("EsValido")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Humedad")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("IdRol")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Temperatura")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Viento")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IdRol")
-                        .IsUnique();
-
-                    b.ToTable("ModeloClimaHorario");
                 });
 
             modelBuilder.Entity("AppGM.Core.ModeloContrato", b =>
@@ -1656,16 +1615,6 @@ namespace AppGM.Core.Migrations
                     b.Navigation("Personaje");
                 });
 
-            modelBuilder.Entity("AppGM.Core.ModeloClimaHorario", b =>
-                {
-                    b.HasOne("AppGM.Core.ModeloRol", "RolAlQuePertenece")
-                        .WithOne("ClimaHorarioGlobal")
-                        .HasForeignKey("AppGM.Core.ModeloClimaHorario", "IdRol")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.Navigation("RolAlQuePertenece");
-                });
-
             modelBuilder.Entity("AppGM.Core.ModeloContrato", b =>
                 {
                     b.HasOne("AppGM.Core.ModeloAlianza", "Alianza")
@@ -2397,8 +2346,6 @@ namespace AppGM.Core.Migrations
             modelBuilder.Entity("AppGM.Core.ModeloRol", b =>
                 {
                     b.Navigation("AmbienteGlobal");
-
-                    b.Navigation("ClimaHorarioGlobal");
 
                     b.Navigation("Combates");
 
