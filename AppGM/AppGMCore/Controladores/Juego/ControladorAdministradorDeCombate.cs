@@ -79,6 +79,17 @@ namespace AppGM.Core
         #region Funciones
 
         /// <summary>
+        /// Agrega un participante al combate
+        /// </summary>
+        /// <param name="participante">Participante que agregar</param>
+        public void AgregarParticipante(ModeloParticipante participante)
+        {
+            modelo.Participantes.Add(participante);
+
+            SistemaPrincipal.GuardarModelo(participante);
+        }
+
+        /// <summary>
         /// Avanza el turno actual del combate si todos los personajes ya tuvieron su turnos,
         /// si no es asi entonces avanza al turno del proximo personaje
         /// </summary>

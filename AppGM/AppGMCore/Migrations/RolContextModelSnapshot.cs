@@ -1512,9 +1512,6 @@ namespace AppGM.Core.Migrations
                     b.Property<int>("EBienestar")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("EClaseDeSuServant")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("Lore")
                         .HasMaxLength(5000)
                         .HasColumnType("TEXT");

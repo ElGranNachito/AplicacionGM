@@ -247,27 +247,25 @@ namespace AppGM.Core
         /// <returns></returns>
         public static string ToStringClima(this EClima clima)
         {
-            StringBuilder stringBuilder = new StringBuilder();
-
             switch (clima)
             {
-                case EClima.Granizo: stringBuilder.Append("Granizo");
-                    break;
-                case EClima.Lluvia: stringBuilder.Append("Lluvia");
-                    break;
-                case EClima.Neblina: stringBuilder.Append("Neblina");
-                    break;
-                case EClima.Nieve: stringBuilder.Append("Nieve");
-                    break;
-                case EClima.Nublado: stringBuilder.Append("Nublado");
-                    break;
-                case EClima.Soleado: stringBuilder.Append("Soleado");
-                    break;
-                case EClima.Tormenta: stringBuilder.Append("Tormenta");
-                    break;
+                case EClima.Granizo: 
+                    return string.Intern("Granizo");
+                case EClima.Lluvia: 
+                    return string.Intern("Lluvia");
+                case EClima.Neblina: 
+                    return string.Intern("Neblina");
+                case EClima.Nieve: 
+                    return string.Intern("Nieve");
+                case EClima.Nublado: 
+                    return string.Intern("Nublado");
+                case EClima.Soleado: 
+                    return string.Intern("Soleado");
+                case EClima.Tormenta: 
+                    return string.Intern("Tormenta");
+                default:
+                    return string.Empty;
             }
-
-            return stringBuilder.ToString();
         }
 
         /// <summary>
@@ -277,19 +275,17 @@ namespace AppGM.Core
         /// <returns></returns>
         public static string ToStringViento(this EViento viento)
         {
-            StringBuilder stringBuilder = new StringBuilder();
-
             switch (viento)
             {
-                case EViento.Brisa: stringBuilder.Append("Brisa");
-                    break;
-                case EViento.Rafagas: stringBuilder.Append("Rafagas");
-                    break;
-                case EViento.Viento: stringBuilder.Append("Viento");
-                    break;
+                case EViento.Brisa: 
+                    return string.Intern("Brisa");
+                case EViento.Rafagas: 
+                    return string.Intern("Rafagas");
+                case EViento.Viento: 
+                    return string.Intern("Viento");
+                default:
+                    return string.Empty;
             }
-
-            return stringBuilder.ToString();
         }
 
         /// <summary>
@@ -299,19 +295,17 @@ namespace AppGM.Core
         /// <returns></returns>
         public static string ToStringHumedad(this EHumedad humedad)
         {
-            StringBuilder stringBuilder = new StringBuilder();
-
             switch (humedad)
             {
-                case EHumedad.Humedad: stringBuilder.Append("Humedad");
-                    break;
-                case EHumedad.MuchaHumedad: stringBuilder.Append("MuchaHumedad");
-                    break;
-                case EHumedad.Seco: stringBuilder.Append("Seco");
-                    break;
+                case EHumedad.Humedad: 
+                    return string.Intern("Humedad");
+                case EHumedad.MuchaHumedad: 
+                    return string.Intern("MuchaHumedad");
+                case EHumedad.Seco: 
+                    return string.Intern("Seco");
+                default:
+                    return string.Empty;
             }
-
-            return stringBuilder.ToString();
         }
 
         /// <summary>
@@ -321,19 +315,17 @@ namespace AppGM.Core
         /// <returns></returns>
         public static string ToStringTemperatura(this ETemperatura temperatura)
         {
-            StringBuilder stringBuilder = new StringBuilder();
-
             switch (temperatura)
             {
-                case ETemperatura.Frio: stringBuilder.Append("Frio");
-                    break;
-                case ETemperatura.Calor: stringBuilder.Append("Calor");
-                    break;
-                case ETemperatura.Templado: stringBuilder.Append("Templado");
-                    break;
+                case ETemperatura.Frio: 
+                    return string.Intern("Frio");
+                case ETemperatura.Calor: 
+                    return string.Intern("Calor");
+                case ETemperatura.Templado: 
+                    return string.Intern("Templado");
+                default:
+                    return string.Empty;
             }
-
-            return stringBuilder.ToString();
         }
 
         /// <summary>
@@ -343,27 +335,75 @@ namespace AppGM.Core
         /// <returns></returns>
         public static string ToStringDiaSemana(this EDiaSemana diaSemana)
         {
-            StringBuilder stringBuilder = new StringBuilder();
-
             switch (diaSemana)
             {
-                case EDiaSemana.Lunes: stringBuilder.Append("Lunes");
-                    break;
-                case EDiaSemana.Martes: stringBuilder.Append("Martes");
-                    break;
-                case EDiaSemana.Miercoles: stringBuilder.Append("Miercoles");
-                    break;
-                case EDiaSemana.Jueves: stringBuilder.Append("Jueves");
-                    break;
-                case EDiaSemana.Viernes: stringBuilder.Append("Viernes");
-                    break;
-                case EDiaSemana.Sabado: stringBuilder.Append("Sabado");
-                    break;
-                case EDiaSemana.Domingo: stringBuilder.Append("Domingo");
-                    break;
+                case EDiaSemana.Lunes: 
+                    return string.Intern("Lunes");
+                case EDiaSemana.Martes: 
+                    return string.Intern("Martes");
+                case EDiaSemana.Miercoles: 
+                    return string.Intern("Miercoles");
+                case EDiaSemana.Jueves: 
+                    return string.Intern("Jueves");
+                case EDiaSemana.Viernes: 
+                    return string.Intern("Viernes");
+                case EDiaSemana.Sabado: 
+                    return string.Intern("Sabado");
+                case EDiaSemana.Domingo: 
+                    return string.Intern("Domingo");
+                default:
+                    return string.Empty;
             }
+        }
 
-            return stringBuilder.ToString();
+        /// <summary>
+        /// Obtiene el valor string correspondiente al <see cref="ETipoPersonaje"/>.
+        /// </summary>
+        /// <param name="tipoPersonaje"><see cref="ETipoPersonaje"/>del que se desea obtener un valor string</param>
+        /// <returns></returns>
+        public static string ToStringTipoPersonaje(this ETipoPersonaje tipoPersonaje)
+        {
+            switch (tipoPersonaje)
+            {
+                case ETipoPersonaje.Master: 
+                    return string.Intern("Master");
+                case ETipoPersonaje.Servant: 
+                    return string.Intern("Servant");
+                case ETipoPersonaje.Invocacion: 
+                    return string.Intern("Invocacion");
+                case ETipoPersonaje.NPC: 
+                    return string.Intern("NPC");
+                default:
+                    return string.Empty;
+            }
+        }
+
+        /// <summary>
+        /// Obtiene el valor string correspondiente al <see cref="EClaseServant"/>.
+        /// </summary>
+        /// <param name="claseServant"><see cref="EClaseServant"/>del que se desea obtener un valor string</param>
+        /// <returns></returns>
+        public static string ToStringClaseServant(this EClaseServant claseServant)
+        {
+            switch (claseServant)
+            {
+                case EClaseServant.Saber: 
+                    return string.Intern("Saber");
+                case EClaseServant.Archer: 
+                    return string.Intern("Archer");
+                case EClaseServant.Lancer: 
+                    return string.Intern("Lancer");
+                case EClaseServant.Rider: 
+                    return string.Intern("Rider");
+                case EClaseServant.Berserker: 
+                    return string.Intern("Berserker");
+                case EClaseServant.Caster: 
+                    return string.Intern("Caster");
+                case EClaseServant.Assassin: 
+                    return string.Intern("Assassin");
+                default:
+                    return string.Empty;
+            }
         }
 
         /// Obtiene una representacion textual del valor de <paramref name="nivelMagia"/>

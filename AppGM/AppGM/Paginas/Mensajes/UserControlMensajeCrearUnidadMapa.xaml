@@ -85,8 +85,9 @@
 
                         <TextBlock Text="Clase de servant:"/>
                         <ComboBox 
-                        ItemsSource="{Binding ClasesServants}"
-                          SelectedValue="{Binding ClaseSeleccionada}"/>
+                            ItemsSource="{Binding ClasesServants}"
+                            SelectedValue="{Binding ClaseSeleccionada}"
+                            Margin="0 0 0 20"/>
 
                     </StackPanel>
 
@@ -94,10 +95,11 @@
                     <StackPanel 
                         Visibility="{Binding DebeSeleccionarPersonaje, Converter={local:BooleanToVisibilityConverterOcultar}}">
 
-                        <TextBlock Text="Personaje:" FontFamily="{StaticResource 'Font Canon'}"/>
+                        <TextBlock Text="Personaje:"/>
                         <ComboBox 
                             ItemsSource="{Binding PersonajesDisponibles}"
-                            SelectedValue="{Binding PersonajeSeleccionado}"/>
+                            SelectedValue="{Binding PersonajeSeleccionado}"
+                            Margin="0 0 0 20"/>
 
                     </StackPanel>
 
@@ -105,8 +107,10 @@
                     <StackPanel 
                         Visibility="{Binding DebeSeleccionarCantidad, Converter={local:BooleanToVisibilityConverterOcultar}}">
 
-                        <TextBlock Text="Cantidad:" FontFamily="{StaticResource 'Font Canon'}"/>
-                        <TextBox local:CampoDeTextoNumericoProperty.Value="True"/>
+                        <TextBlock Text="Cantidad:"/>
+                        <TextBox 
+                            local:CampoDeTextoNumericoProperty.Value="True"
+                            Text="{Binding CantidadInicialDeUnidades, Mode=TwoWay}"/>
 
                     </StackPanel>
 
@@ -121,4 +125,5 @@
                 
         </Grid>
     </Border>
+
 </UserControl>

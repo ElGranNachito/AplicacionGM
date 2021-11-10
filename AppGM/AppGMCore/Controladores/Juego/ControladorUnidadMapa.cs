@@ -92,7 +92,7 @@ namespace AppGM.Core
 
                 case ModeloUnidadMapaMasterServant mms:
 
-                    //TODO:Hacer esto bien
+                    //TODO: Rehacer esto.
                     if (modelo.Personaje != null && modelo.Personaje.Hp <= 0)
                         sb.Append("Cadaver_");
 

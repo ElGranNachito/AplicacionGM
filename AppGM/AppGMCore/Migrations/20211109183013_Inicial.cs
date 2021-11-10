@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AppGM.Core.Migrations
 {
-    public partial class inicial : Migration
+    public partial class Inicial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -212,7 +212,6 @@ namespace AppGM.Core.Migrations
                     ClaseServant = table.Column<int>(type: "INTEGER", nullable: true),
                     RangoHechiceria = table.Column<ushort>(type: "INTEGER", nullable: true),
                     NombreReal = table.Column<string>(type: "TEXT", maxLength: 100, nullable: true),
-                    EClaseDeSuServant = table.Column<int>(type: "INTEGER", nullable: true),
                     EBienestar = table.Column<int>(type: "INTEGER", nullable: true),
                     Od = table.Column<int>(type: "INTEGER", nullable: true),
                     OdActual = table.Column<int>(type: "INTEGER", nullable: true),

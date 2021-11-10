@@ -20,8 +20,9 @@ namespace AppGM.Core
 
 		public List<ControladorPersonaje> Servants { get; set; }                     = null;
 		public List<ControladorPersonaje> Masters { get; set; }                      = null;
+        public List<ControladorPersonaje> NPCs { get; set; }                         = null;
 		public List<ControladorInvocacion> Invocaciones { get; set; }                = null;
-		public List<ControladorItem> Items { get; set; }                       = null;
+		public List<ControladorItem> Items { get; set; }                             = null;
 		public List<ControladorSlot> Slots { get; set; }                             = null;
 		public List<ControladorHabilidad> Perks { get; set; }                        = null;
 		public List<ControladorHabilidad> Skills { get; set; }                       = null;
@@ -33,13 +34,13 @@ namespace AppGM.Core
 		public List<ControladorCargasHabilidad> CargasHabilidades { get; set; }      = null;
 		public List<ControladorParticipante> Participantes { get; set; }             = null;
 		
-		//TODO: Ver
+		//Diferentes ambientes que estan existiendo dentro del rol. TODO: Ver
         public List<ControladorAmbiente> Ambientes { get; set; } = null;
 
         //El primer mapa siempre es el principal
 		public List<ControladorMapa> Mapas { get; set; } = null;
 
-		//Unico clima general del rol.
+		//El primer clima es el general del rol.
         public List<ControladorClimaHorario> Climas { get; set; } = null;
 
         #endregion
@@ -64,7 +65,22 @@ namespace AppGM.Core
 			{
 				//Si no hay datos creamos algunos para probar
 				if (!BaseDeDatos.Mapas.Any())
-				{
+                {
+                    ModeloPersonaje personaje1 = new ModeloPersonaje
+                    {
+                        Nombre = "Ejecutor Molesto",
+						
+                        MaxHp = 20,
+                        Hp = 20,
+                        Str = 12,
+                        Agi = 13,
+                        End = 12,
+                        Int = 13,
+                        Lck = 13,
+
+                        TipoPersonaje = ETipoPersonaje.NPC
+                    };
+
 					ModeloMaster master1 = new ModeloMaster
 					{
 						Nombre = "Master Bahsakah",
@@ -81,9 +97,9 @@ namespace AppGM.Core
 						Lck = 13,
 						Chr = 12,
 
-						EClaseDeSuServant = EClaseServant.Berserker,
-						TipoPersonaje     = ETipoPersonaje.Master,
-						NumeroParty       = ENumeroParty.Party_Berserker
+						ClaseServant  = EClaseServant.Berserker,
+                        TipoPersonaje = ETipoPersonaje.Master,
+						NumeroParty   = ENumeroParty.Party_Berserker
                     };
 
 					ModeloServant servant1 = new ModeloServant
@@ -101,7 +117,7 @@ namespace AppGM.Core
 						Int = 13,
 						Lck = 13,
 
-						ClaseServant = EClaseServant.Berserker,
+						ClaseServant  = EClaseServant.Berserker,
 						TipoPersonaje = ETipoPersonaje.Servant,
 						NumeroParty   = ENumeroParty.Party_Berserker
 					};
@@ -122,9 +138,9 @@ namespace AppGM.Core
 						Lck = 13,
 						Chr = 12,
 
-						EClaseDeSuServant = EClaseServant.Rider,
-						TipoPersonaje     = ETipoPersonaje.Master,
-                        NumeroParty       = ENumeroParty.Party_Rider
+						ClaseServant  = EClaseServant.Rider,
+						TipoPersonaje = ETipoPersonaje.Master,
+                        NumeroParty   = ENumeroParty.Party_Rider
 					};
 
 					ModeloServant servant2 = new ModeloServant
@@ -142,10 +158,37 @@ namespace AppGM.Core
 						Int = 13,
 						Lck = 13,
 
-						ClaseServant = EClaseServant.Rider,
+                        ClaseServant  = EClaseServant.Rider,
 						TipoPersonaje = ETipoPersonaje.Servant,
                         NumeroParty   = ENumeroParty.Party_Rider
 					};
+
+                    ModeloInvocacion invocacion1 = new ModeloInvocacion
+                    {
+                        Nombre = "Clon de Michael Jackson",
+
+                        MaxHp = 20,
+                        Hp = 20,
+                        Str = 12,
+                        Agi = 13,
+                        End = 12,
+                        Int = 13,
+                        Lck = 13,
+
+						TipoPersonaje = ETipoPersonaje.Invocacion,
+                        NumeroParty = ENumeroParty.Party_Rider
+                    };
+
+                    ModeloDatosInvocacion_Fisica datosInvocacion1 = new ModeloDatosInvocacion_Fisica
+                    {
+                        Od = 1000,
+                        OdActual = 1000,
+                        Mana = 500,
+                        ManaActual = 500
+                    };
+
+                    invocacion1.DatosInvocacion = datosInvocacion1;
+                    invocacion1.Invocador = master2;
 
 					ModeloContrato contratoPiola = new ModeloContrato
 					{
@@ -304,10 +347,13 @@ namespace AppGM.Core
                     BaseDeDatos.Add(mapa);
 					BaseDeDatos.Add(contratoPiola);
 					BaseDeDatos.Add(alianzaPiola);
+                    BaseDeDatos.Add(personaje1);
 					BaseDeDatos.Add(servant1);
 					BaseDeDatos.Add(master1);
 					BaseDeDatos.Add(servant2);
 					BaseDeDatos.Add(master2);
+                    BaseDeDatos.Add(invocacion1);
+                    BaseDeDatos.Add(datosInvocacion1);
                     BaseDeDatos.Add(climaHorario);
                     BaseDeDatos.Add(unidadServant1);
 					BaseDeDatos.Add(unidadMaster1);
@@ -337,10 +383,17 @@ namespace AppGM.Core
 						EsSuTurno = false
 					};
 
-					participante1.Personaje = master1;
-					participante2.Personaje = master2;
+                    ModeloParticipante participante3 = new ModeloParticipante
+                    {
+                        EsSuTurno = false
+                    };
 
-					ModeloAccion accion1 = new ModeloAccion
+                    ModeloParticipante participante4 = new ModeloParticipante
+                    {
+                        EsSuTurno = false
+                    };
+
+                    ModeloAccion accion1 = new ModeloAccion
 					{
 						Descripcion = "Se tiro un backflip y se ligo a una piba"
 					};
@@ -350,12 +403,32 @@ namespace AppGM.Core
 						Descripcion = "Visito un maid cafe y se ligo a una de las maids"
 					};
 
+                    ModeloAccion accion3 = new ModeloAccion
+                    {
+                        Descripcion = "Se maravillo tanto que exploto"
+                    };
+
+                    ModeloAccion accion4 = new ModeloAccion
+                    {
+                        Descripcion = $"Se comio una hamburguesa mientras {master2.Nombre} ligaba una maid"
+                    };
+
+                    participante1.Personaje = master1;
+                    participante2.Personaje = master2;
+                    participante3.Personaje = servant1;
+                    participante4.Personaje = servant2;
+
 					participante1.AccionesRealizadas.Add(accion1);
 					participante2.AccionesRealizadas.Add(accion2);
+                    participante3.AccionesRealizadas.Add(accion3);
+                    participante4.AccionesRealizadas.Add(accion4);
 
 					combate.Mapas.Add(mapa);
+
 					combate.Participantes.Add(participante1);
 					combate.Participantes.Add(participante2);
+					combate.Participantes.Add(participante3);
+					combate.Participantes.Add(participante4);
 
 					BaseDeDatos.Add(combate);
 					BaseDeDatos.Add(participante1);
@@ -379,6 +452,18 @@ namespace AppGM.Core
 					 select m).ToList();
 
 				servants.TrimExcess();
+
+                var personajes =
+                    (from m in BaseDeDatos.Personajes
+                        select m).ToList();
+
+                personajes.TrimExcess();
+
+                var invocaciones =
+                    (from m in BaseDeDatos.Invocaciones
+                        select m).ToList();
+
+                invocaciones.TrimExcess();
 
 				var mapas =
 					(from m in BaseDeDatos.Mapas
@@ -424,7 +509,7 @@ namespace AppGM.Core
 
 				SistemaPrincipal.LoggerGlobal.Log("Creando controladores...", ESeveridad.Info);
 
-				Masters = new List<ControladorPersonaje>(masters.Count);
+                Masters = new List<ControladorPersonaje>(masters.Count);
 
 				for (int i = 0; i < masters.Count; ++i)
 				{
@@ -441,6 +526,24 @@ namespace AppGM.Core
 
 					Servants.Add(controladorActual);
 				}
+
+                NPCs = new List<ControladorPersonaje>(personajes.Count);
+
+                for (int i = 0; i < personajes.Count; ++i)
+                {
+                    ControladorPersonaje controladorActual = new ControladorPersonaje(personajes[i]);
+
+                    NPCs.Add(controladorActual);
+                }
+
+                Invocaciones = new List<ControladorInvocacion>(invocaciones.Count);
+
+                for (int i = 0; i < invocaciones.Count; ++i)
+                {
+                    ControladorInvocacion controladorActual = new ControladorInvocacion(invocaciones[i]);
+
+                    Invocaciones.Add(controladorActual);
+                }
 
 				Mapas = new List<ControladorMapa>(mapas.Count);
 

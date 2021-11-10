@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AppGM.Core.Migrations
 {
     [DbContext(typeof(RolContext))]
-    [Migration("20211105180054_inicial")]
-    partial class inicial
+    [Migration("20211109183013_Inicial")]
+    partial class Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -1512,9 +1512,6 @@ namespace AppGM.Core.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("EBienestar")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("EClaseDeSuServant")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Lore")
