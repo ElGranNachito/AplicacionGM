@@ -74,7 +74,7 @@ namespace AppGM.Core
         /// <summary>
         /// Indica si actualmente es el turno del personaje
         /// </summary>
-        public bool   EsSuTurno { get; private set; } = false;
+        public bool EsSuTurno => controladorParticipante.modelo.EsSuTurno;
 
         #endregion
 
@@ -93,14 +93,17 @@ namespace AppGM.Core
             NombreParticipante = controladorParticipante.modelo.Personaje.Nombre;
             TipoPersonaje = EnumHelpers.ToStringTipoPersonaje(controladorParticipante.ControladorPersonaje.modelo.TipoPersonaje);
             
-            handlerTurnoCambio = (ref int turnoActual) =>
+            handlerTurnoCambio = (ref int turnoAnterior, ref int turnoActual) =>
             {
                 if (combate.ParticipanteTurnoActual == this)
                 {
-                    EsSuTurno = true;
+                    var participanteAnterior = combate.Participantes[turnoAnterior];
+                    
+                    participanteAnterior.DispararPropertyChanged(nameof(participanteAnterior.EsSuTurno));
 
                     DispararPropertyChanged(new PropertyChangedEventArgs(nameof(EsSuTurno)));
                 }
+
             };
 
             ComandoEliminarParticipante = new Comando(EliminarParticipante);
@@ -118,9 +121,7 @@ namespace AppGM.Core
         private void EliminarParticipante()
         {
             if (combate.ParticipanteTurnoActual == this)
-            {
-                //Avanzar turno.
-            }
+                combate.AvanzarTurno();
 
             combate.Participantes.Remove(this);
 

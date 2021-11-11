@@ -9,13 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AppGM.Core.Migrations
 {
     [DbContext(typeof(RolContext))]
-<<<<<<< HEAD:AppGM/AppGMCore/Migrations/20211110171613_inicial.Designer.cs
-    [Migration("20211110171613_inicial")]
-    partial class inicial
-=======
-    [Migration("20211109183013_Inicial")]
+    [Migration("20211111130833_Inicial")]
     partial class Inicial
->>>>>>> Furlanis:AppGM/AppGMCore/Migrations/20211109183013_Inicial.Designer.cs
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -738,6 +733,9 @@ namespace AppGM.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("AccionesRealizadasEnTurno")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int?>("CombateActualId")
                         .HasColumnType("INTEGER");
 
@@ -751,6 +749,9 @@ namespace AppGM.Core.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("TiradaIniciativa")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("TotalAccionesPorTurno")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");

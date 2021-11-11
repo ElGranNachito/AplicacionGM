@@ -14,13 +14,33 @@
         <!-- Context menu -->
         <Grid.ContextMenu>
 
-            <ContextMenu>
-                <TextBlock Text="Ver Ficha"/>
+            <ContextMenu Style="{StaticResource ConextMenuBase}">
+                <!--<TextBlock Text="Ver Ficha"/>
                 <Separator/>
                 <TextBlock Text="Realizar tirada"/>
-                <TextBlock Text="Realizar competencia de tirada"/>
-            </ContextMenu>
+                <TextBlock Text="Realizar competencia de tirada"/>-->
 
+                <MenuItem Style="{StaticResource MenuOpcionesMapa}" 
+                          ItemContainerStyle="{DynamicResource MenuItemOpcionesMapa1}" 
+                          Template="{DynamicResource MenuItemOpcionesMapaControlTemplate2}"
+                          Header="Accion" 
+                          ToolTip="Abre menu de acciones del participante."
+                />
+                <Separator/>
+                <MenuItem Header="Tiradas" 
+                          Style="{StaticResource MenuOpcionesMapa}" 
+                          ItemContainerStyle="{DynamicResource MenuItemOpcionesMapa1}" 
+                          Template="{DynamicResource MenuItemOpcionesMapaControlTemplate2}">
+                    <MenuItem Header="Tirada" 
+                              ToolTip="Realiza una tirada para este participante."
+                    />
+                    <MenuItem Header="Tirada de competencia" 
+                              ToolTip="Realiza una tirada de competencia entre este participante y otra tirada."
+                    />
+                </MenuItem>
+
+            </ContextMenu>
+            
         </Grid.ContextMenu>
 
         <Grid.ColumnDefinitions>

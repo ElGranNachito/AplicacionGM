@@ -731,6 +731,9 @@ namespace AppGM.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("AccionesRealizadasEnTurno")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int?>("CombateActualId")
                         .HasColumnType("INTEGER");
 
@@ -744,6 +747,9 @@ namespace AppGM.Core.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("TiradaIniciativa")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("TotalAccionesPorTurno")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");

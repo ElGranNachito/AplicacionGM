@@ -86,12 +86,16 @@ namespace AppGM.Core
         {
             ComandoSalir               = new Comando(() => SistemaPrincipal.RolSeleccionado.EMenu = EMenuRol.AdministrarCombates);
             ComandoAgregarParticipante = new Comando(AgregarParticipante);
+            ComandoAvanzarTurno        = new Comando(AvanzarTurno);
+            ComandoRetrocederTurno     = new Comando(RetrocederTurno);
 
-	        HandlerTurnoCambio = (ref int turno) =>
+            HandlerTurnoCambio = (ref int turnoAnterior, ref int turnoActual) =>
             {
-                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(TurnoActual)));
+                ParticipanteTurnoActual = Participantes[turnoActual];
 
-                ParticipanteTurnoActual = Participantes[turno];
+                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(TurnoActual)));
+                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(ParticipanteTurnoActual)));
+
             };
         }
 
@@ -118,12 +122,32 @@ namespace AppGM.Core
 
                 for(int i = 0; i < administradorDeCombate.ControladoresMapas.Count; ++i)
                     Mapas.Add(new ViewModelMapa(administradorDeCombate.ControladoresMapas[i], SistemaPrincipal.DatosRolSeleccionado.Climas[0]));
+
+                ParticipanteTurnoActual = Participantes[0];
+
+                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(ParticipanteTurnoActual)));
             }
 
             DispararPropertyChanged(new PropertyChangedEventArgs(nameof(MapaActual)));
 
             administradorDeCombate.OnTurnoCambio += HandlerTurnoCambio;
-        } 
+        }
+
+        /// <summary>
+        /// Funcion llamada para avanzar de turno en el combate
+        /// </summary>
+        public void AvanzarTurno()
+        {
+            administradorDeCombate.AvanzarTurno();
+        }
+
+        /// <summary>
+        /// Funcion llamada para retroceder de turno en el combate
+        /// </summary>
+        public void RetrocederTurno()
+        {
+            administradorDeCombate.RetrocederTurno();
+        }
 
         /// <summary>
         /// Funcion llamada para agregar un nuevo participante al combate

@@ -504,6 +504,8 @@ namespace AppGM.Core.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     TiradaIniciativa = table.Column<int>(type: "INTEGER", nullable: false),
+                    TotalAccionesPorTurno = table.Column<int>(type: "INTEGER", nullable: false),
+                    AccionesRealizadasEnTurno = table.Column<int>(type: "INTEGER", nullable: false),
                     EsSuTurno = table.Column<bool>(type: "INTEGER", nullable: false),
                     PersonajeId = table.Column<int>(type: "INTEGER", nullable: true),
                     CombateActualId = table.Column<int>(type: "INTEGER", nullable: true),

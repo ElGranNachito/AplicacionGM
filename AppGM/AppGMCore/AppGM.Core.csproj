@@ -46,6 +46,8 @@
     <Compile Remove="Migrations\20210522221841_Inicial.Designer.cs" />
     <Compile Remove="Migrations\20210523220935_Inicial.cs" />
     <Compile Remove="Migrations\20210523220935_Inicial.Designer.cs" />
+    <Compile Remove="Migrations\20211110171613_inicial.cs" />
+    <Compile Remove="Migrations\20211110171613_inicial.Designer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="CoolLogs">
@@ -54,7 +56,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="CreacionDeFunciones\Bloques\VMs\" />
-    <Folder Include="Migrations\" />
     <Folder Include="ViewModels\Personaje\" />
   </ItemGroup>
 </Project>
