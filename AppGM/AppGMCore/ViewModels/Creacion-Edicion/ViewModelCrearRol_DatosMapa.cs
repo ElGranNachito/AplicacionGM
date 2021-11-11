@@ -13,11 +13,6 @@ namespace AppGM.Core
         //----------------------------------CAMPOS---------------------------------------
 
         /// <summary>
-        /// Modelo del mapa que crearemos
-        /// </summary>
-		private ModeloMapa mMapa;
-
-        /// <summary>
         /// Archivo de la imagen del mapa
         /// </summary>
 		private IArchivo mArchivoMapa;
@@ -49,10 +44,9 @@ namespace AppGM.Core
 
 		#region Constructor
 
-		public ViewModelCrearRol_DatosMapa(ModeloMapa _mapa)
+		public ViewModelCrearRol_DatosMapa(ViewModelCrearRol _contenedor)
+			:base(_contenedor)
 		{
-			mMapa = _mapa;
-
 			ComandoSeleccionarImagenMapa = new Comando(() =>
 			{
 				mArchivoMapa = SistemaPrincipal.ControladorDeArchivos.MostrarDialogoAbrirArchivo(
@@ -63,6 +57,8 @@ namespace AppGM.Core
                 if(mArchivoMapa == null)
                     return;
 
+
+
 				PathImagenMapa = mArchivoMapa.Ruta;
 			});
 		}
@@ -70,6 +66,36 @@ namespace AppGM.Core
 		#endregion
 
 		#region Funciones
+
+		/// <summary>
+		/// Crea un nuevo <see cref="ModeloMapa"/> con los datos ingresados por el usuario
+		/// </summary>
+		/// <returns></returns>
+		public ModeloMapa CrearMapa()
+		{
+			var nuevoMapa = new ModeloMapa
+			{
+				EFormatoImagen = Enum.Parse<EFormatoImagen>(mArchivoMapa.Extension.Remove(0, 1), true),
+				NombreMapa = NombreMapa,
+				Rol = SistemaPrincipal.ModeloRolActual,
+				RutaAbsolutaImagen = mArchivoMapa.Ruta,
+			};
+
+			//Ambiente hardcodeadito
+			var nuevoAmbiente = new ModeloAmbiente
+			{
+				CaracteristicasAmbiente = ECaracteristicasAmbiente.Ligacion,
+				HumedadActual = 0.5f,
+				TemperaturaActual = -9.65f,
+				CantidadCasillas = 10,
+				RolAlQuePertenece = SistemaPrincipal.ModeloRolActual,
+				MapaDelAmbiente = nuevoMapa,
+			};
+
+			nuevoMapa.Ambiente = nuevoAmbiente;
+
+			return nuevoMapa;
+		}
 
 		public override void Desactivar(ViewModelCrearRol vm)
 		{

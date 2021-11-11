@@ -5,37 +5,84 @@
     /// </summary>
     public class ViewModelCrearRol : ViewModelVentanaConPasos<ViewModelCrearRol>
     {
-	    /// <summary>
-        /// Datos del rol que estamos creando
-        /// </summary>
-        public DatosCreacionRol datosRol { get; set; } = new DatosCreacionRol();
+	    public ModeloRol modeloRol;
 
         /// <summary>
         /// Constructor
         /// </summary>
         public ViewModelCrearRol()
         {
-	        SistemaPrincipal.Atar(datosRol.modeloRol);
-            SistemaPrincipal.Atar(new ViewModelRol());
+	        SistemaPrincipal.CrearInstanciaDatosRol(0);
 
-            SistemaPrincipal.DatosRolSeleccionado.BaseDeDatos.Database.EnsureDeleted();
-            SistemaPrincipal.DatosRolSeleccionado.BaseDeDatos.Database.EnsureCreated();
+            modeloRol = new ModeloRol();
 
-	        ModeloMapa mapaPrincipal = new ModeloMapa();
+	        SistemaPrincipal.Atar(modeloRol);
 
-            datosRol.mapas.Add(mapaPrincipal);
+	        //SistemaPrincipal.DatosRolSeleccionado.BaseDeDatos.Database.EnsureDeleted();
+			//SistemaPrincipal.DatosRolSeleccionado.BaseDeDatos.Database.EnsureCreated();
+
+            SistemaPrincipal.GuardarModelo(SistemaPrincipal.ModeloRolActual);
+            SistemaPrincipal.GuardarDatos();
 
             //Añadimos los pasos
             mViewModelsPasos.AddRange(new ViewModelPaso<ViewModelCrearRol>[]
             {
-                new ViewModelCrearRol_DatosRol(datosRol.modeloRol),
-                new ViewModelCrearRol_DatosMapa(mapaPrincipal),
-                new ViewModelDatosPersonajesRol(datosRol.modeloRol, this) 
+                new ViewModelCrearRol_DatosRol(this),
+                new ViewModelCrearRol_DatosMapa(this),
+                new ViewModelDatosPersonajesRol(this) 
             });
 
             PasoActual.PropertyChanged += mHandlerPasoActualPropertyChanged;
 
-            ComandoSalir = new Comando(() => { SistemaPrincipal.Aplicacion.PaginaActual = EPagina.PaginaPrincipal; });
+            ComandoCancelar = new Comando(async () =>
+            {
+	            SistemaPrincipal.EliminarModelo(modeloRol);
+	            SistemaPrincipal.Desatar<ModeloRol>();
+                SistemaPrincipal.Desatar<DatosRol>();
+
+	            await SistemaPrincipal.GuardarDatosAsync();
+
+                Resultado = EResultadoViewModel.Cancelar;
+
+                SistemaPrincipal.Aplicacion.PaginaActual = EPagina.PaginaPrincipal;
+            });
+
+            ComandoFinalizar = new Comando(async () =>
+            {
+	            var mapaRol = ((ViewModelCrearRol_DatosMapa) mViewModelsPasos[1]).CrearMapa();
+
+                modeloRol.Mapas.Add(mapaRol);
+                modeloRol.ClimaHorarioGlobal = new ModeloClimaHorario
+                {
+	                Clima = EClima.Soleado,
+	                Viento = EViento.Brisa,
+	                Humedad = EHumedad.Humedad,
+	                Temperatura = ETemperatura.Frio,
+
+	                DiaSemana = EDiaSemana.Viernes
+                };
+
+                await SistemaPrincipal.GuardarModeloAsync(mapaRol);
+                await SistemaPrincipal.GuardarModeloAsync(modeloRol.ClimaHorarioGlobal);
+
+                await SistemaPrincipal.GuardarDatosAsync();
+
+                SistemaPrincipal.DatosRolSeleccionado.CerrarConexion();
+
+                SistemaPrincipal.Desatar<DatosRol>();
+                SistemaPrincipal.Desatar<ModeloRol>();
+
+                await SistemaPrincipal.CargarRolAsincronicamente(modeloRol.Id);
+
+                SistemaPrincipal.Aplicacion.PaginaActual = EPagina.PaginaPrincipalRol;
+
+	            Resultado = EResultadoViewModel.Finalizar;
+            });
+
+            ComandoGuardar = new Comando(async () =>
+            {
+	            await SistemaPrincipal.GuardarDatosAsync();
+            });
 
             Inicializar();
         }

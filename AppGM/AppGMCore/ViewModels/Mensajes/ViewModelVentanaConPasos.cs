@@ -8,7 +8,7 @@ namespace AppGM.Core
     /// <summary>
     /// View model para una ventana en la que se hayan que seguir varios pasos
     /// </summary>
-    public class ViewModelVentanaConPasos<TipoViewModel> : ViewModel
+    public class ViewModelVentanaConPasos<TipoViewModel> : ViewModelConResultado<ViewModelVentanaConPasos<TipoViewModel>>
         where TipoViewModel: ViewModelVentanaConPasos<TipoViewModel>
     {
         #region Campos & Propiedades
@@ -49,6 +49,11 @@ namespace AppGM.Core
         public bool PuedeRetroceder => mIndicePasoActual > 0;
 
         /// <summary>
+        /// Indica si el usuario puede finalizar
+        /// </summary>
+        public bool PuedeFinalizar => PasoActual.PuedeAvanzar() && mIndicePasoActual == mViewModelsPasos.Count - 1;
+
+        /// <summary>
         /// Comando que se ejecuta al presionar el boton para avanzar de paso
         /// </summary>
         public ICommand ComandoPasoSiguiente { get; private set; }
@@ -57,6 +62,21 @@ namespace AppGM.Core
         /// Comando que se ejecuta al presionar el boton para retroceder de paso
         /// </summary>
         public ICommand ComandoPasoAnterior { get; private set; }
+
+        /// <summary>
+        /// Comando que se ejecuta cuando el usuario presiona el boton salir
+        /// </summary>
+        public ICommand ComandoCancelar { get; protected set; }
+
+        /// <summary>
+        /// Comando que se ejecuta cuando el usuario presiona el boton finalizar
+        /// </summary>
+        public ICommand ComandoFinalizar { get; protected set; }
+
+        /// <summary>
+        /// Comando que se ejecuta cuando el usuario presiona guardar
+        /// </summary>
+        public ICommand ComandoGuardar { get; protected set; }
 
         /// <summary>
         /// Comando que se ejecuta al presionar la x

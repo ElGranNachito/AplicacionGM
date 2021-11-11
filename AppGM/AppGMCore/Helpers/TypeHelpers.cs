@@ -310,5 +310,29 @@ namespace AppGM.Core
 
 			#endregion
 		}
+
+		/// <summary>
+		/// Indica si <paramref name="t"/> tiene el <typeparamref name="TAtributo"/>
+		/// </summary>
+		/// <typeparam name="TAtributo">Tipo del atributo</typeparam>
+		/// <param name="t">Tipo</param>
+		/// <returns><see cref="bool"/> indicando si <paramref name="t"/> tiene el <typeparamref name="TAtributo"/></returns>
+		public static bool TieneAtributo<TAtributo>(this Type t)
+			where TAtributo: Attribute
+		{
+			return t.GetCustomAttribute<TAtributo>() is not null;
+		}
+
+		/// <summary>
+		/// Indica si <paramref name="m"/> tiene el <typeparamref name="TAtributo"/>
+		/// </summary>
+		/// <typeparam name="TAtributo">Tipo del atributo</typeparam>
+		/// <param name="m">Miembro</param>
+		/// <returns><see cref="bool"/> indicando si <paramref name="m"/> tiene el <typeparamref name="TAtributo"/></returns>
+		public static bool TieneAtributo<TAtributo>(this MemberInfo m)
+			where TAtributo : Attribute
+		{
+			return m.GetCustomAttribute<TAtributo>() is not null;
+		}
 	}
 }

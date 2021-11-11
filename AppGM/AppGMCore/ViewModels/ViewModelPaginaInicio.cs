@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace AppGM.Core
@@ -86,8 +87,7 @@ namespace AppGM.Core
         /// </summary>
         public ViewModelCarta CartaAñadirRol { get; set; } = new ViewModelCarta
         {
-            ZIndex = 1,
-            Comando = new Comando(CrearRol)
+            ZIndex = 1
         };
 
         /// <summary>
@@ -101,22 +101,7 @@ namespace AppGM.Core
         /// <summary>
         /// Lista de los roles disponibles
         /// </summary>
-        public List<ModeloRol> Roles = new List<ModeloRol>
-        {
-            new ModeloRol
-            {
-                Nombre = "SuperRol",
-                Descripcion = "Increible rol super genial con mucha emocion y accion",
-                FechaUltimaSesion = DateTime.UtcNow.AddDays(5)
-            },
-
-            new ModeloRol
-            {
-                Nombre = "MegaRol",
-                Descripcion = "Super, super, super rol",
-                FechaUltimaSesion = DateTime.UtcNow.AddYears(-8)
-            }
-        };
+        public List<ModeloRol> Roles = new List<ModeloRol>();
         #endregion
 
         #region Constructor
@@ -126,10 +111,12 @@ namespace AppGM.Core
         /// </summary>
         public ViewModelPaginaInicio()
         {
+	        CartaAñadirRol.Comando = new Comando(CrearRol);
+
             //Comando que se ejecuta al presionar la carta de seleccionar rol
-	        CartaSeleccionarRol.Comando = new Comando(async () =>
+            CartaSeleccionarRol.Comando = new Comando(async () =>
             {
-	            await SistemaPrincipal.CargarRolAsincronicamente(RolActual);
+	            await SistemaPrincipal.CargarRolAsincronicamente(RolActual.Id);
 
 	            SistemaPrincipal.Aplicacion.PaginaActual =
 		            EPagina.PaginaPrincipalRol;
@@ -188,18 +175,28 @@ namespace AppGM.Core
 
         #endregion
 
-        #region Funciones
+        #region Metodos
+
+        public async Task CargarRolesDisponibles()
+        {
+	        await using RolContext rolContext = new RolContext();
+
+	        Roles.AddRange(rolContext.Roles);
+        }
 
         /// <summary>
         /// Crea el popup de creacion de rol
         /// </summary>
-        private static async void CrearRol()
+        private async void CrearRol()
         {
 	        SistemaPrincipal.Aplicacion.PaginaActual = EPagina.CreacionDeRol;
-	        //ViewModelCrearRol viewModelCreacionDeRol = new ViewModelCrearRol();
 
-	        //Creamos el popup de creacion de rol
-	        //await SistemaPrincipal.Aplicacion.VentanaMensajePrincipal.Mostrar(viewModelCreacionDeRol, "Creacion de Rol", true, 575, -1);
+	        var vmCreacionRol = (ViewModelCrearRol) SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido;
+           vmCreacionRol.OnResultadoEstablecido += res =>
+		        {
+                    if(res.EsAceptarOFinalizar())
+						Roles.Add(vmCreacionRol.modeloRol);
+		        };
         }
         #endregion
     }

@@ -260,6 +260,7 @@ namespace AppGM.Core.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     NombreMapa = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
+                    RutaAbsolutaImagen = table.Column<string>(type: "TEXT", maxLength: 200, nullable: true),
                     EFormatoImagen = table.Column<int>(type: "INTEGER", nullable: false),
                     RolId = table.Column<int>(type: "INTEGER", nullable: true),
                     CombateAlQuePerteneceId = table.Column<int>(type: "INTEGER", nullable: true),
@@ -331,7 +332,7 @@ namespace AppGM.Core.Migrations
                         column: x => x.Id,
                         principalTable: "ModeloPersonaje",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.SetNull);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ModeloCaracteristicas_ModeloPersonaje_IdPersonaje",
                         column: x => x.IdPersonaje,

@@ -86,23 +86,23 @@ namespace AppGM.Core
         /// <summary>                                                       
         /// Modelo del rol actualmente abierto                              
         /// </summary>                                                      
-        public static ModeloRol                     ModeloRolActual         => ObtenerInstancia<ModeloRol>();
+        public static ModeloRol                     ModeloRolActual         => Kernel.TryGet<ModeloRol>();
 
         /// <summary>
         /// Controladores de personajes, habilidades, etc. Del rol actualmente seleccionado
-        /// </summary>
-        public static DatosRol                      DatosRolSeleccionado    => RolSeleccionado.ControladorRol.datosRol;
+        /// </summary>Kernel.Bind<ModeloRol>()
+        public static DatosRol                      DatosRolSeleccionado    => Kernel.TryGet<DatosRol>();
                                                                             
         /// <summary>                                                       
         /// Logger global                                                   
         /// </summary>                                                      
-        public static LoggerFactory                 LoggerFactoryGlobal     => ObtenerInstancia<LoggerFactory>();
+        public static LoggerFactory                 LoggerFactoryGlobal     => Kernel.TryGet<LoggerFactory>();
                                                                             
         /// <summary>                                                       
         /// Logger global                                                   
         /// </summary>                                                      
-        public static Logger                        LoggerGlobal            => ObtenerInstancia<Logger>();
-                                                                            
+        public static Logger                        LoggerGlobal            => Kernel.TryGet<Logger>();
+
         public static Drag                          Drag                    => ObtenerInstancia<Drag>();
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace AppGM.Core
         public static SynchronizationContext ThreadUISyncContext;
         #endregion
 
-        #region Funciones
+        #region Metodos
 
         /// <summary>
         /// Funcion que se llama antes de que se inicie la primera ventana. Se encarga de la carga
@@ -142,6 +142,12 @@ namespace AppGM.Core
             Kernel.Bind<ViewModelAplicacion>().ToConstant(new ViewModelAplicacion());
             Kernel.Bind<ViewModelPaginaInicio>().ToConstant(new ViewModelPaginaInicio());
 
+            LoggerGlobal.Log("Cargando roles...", ESeveridad.Info);
+
+            await ObtenerInstancia<ViewModelPaginaInicio>().CargarRolesDisponibles();
+
+            LoggerGlobal.Log("Roles cargados", ESeveridad.Info);
+
             LoggerGlobal.Log("Creados VMs aplicacion y pagina inicio", ESeveridad.Info);
 
             Kernel.Bind<Drag>().ToConstant(new Drag());
@@ -165,13 +171,13 @@ namespace AppGM.Core
         /// </summary>
         /// <param name="modelo">Modelo cuyos datos seran cargados</param>
         /// <returns></returns>
-        public static async Task CargarRolAsincronicamente(ModeloRol modelo)
+        public static async Task CargarRolAsincronicamente(int idRol)
         {
-	        //Atamos primero estos das clases al IoC porque son necesarias para la carga
-	        Kernel.Bind<ModeloRol>().ToConstant(modelo);
-            Kernel.Bind<ViewModelRol>().ToConstant(new ViewModelRol());
+	        CrearInstanciaDatosRol(idRol);
 
-            SistemaPrincipal.LoggerGlobal.Log($"Cargando datos rol resleccionado ({modelo.Nombre})", ESeveridad.Info);
+	        Kernel.Bind<ViewModelRol>().ToConstant(new ViewModelRol());
+
+            SistemaPrincipal.LoggerGlobal.Log($"Cargando datos rol resleccionado ({ModeloRolActual.Nombre})", ESeveridad.Info);
 
             //Cargamos los datos
             await DatosRolSeleccionado.CargarDatos();
@@ -180,7 +186,23 @@ namespace AppGM.Core
             CrearViewModelsRol();
 
             //Le damos a la ventana el nombre del rol
-            Aplicacion.VentanaPrincipal.TituloVentana = modelo.Nombre;
+            Aplicacion.VentanaPrincipal.TituloVentana = ModeloRolActual.Nombre;
+        }
+
+        /// <summary>
+        /// Crea una nueva instancia de <see cref="DatosRol"/> y la añade al di
+        /// </summary>
+        /// <param name="idRol">Id del rol cuyos datos se quieren cargar</param>
+        public static void CrearInstanciaDatosRol(int idRol)
+        {
+	        if (DatosRolSeleccionado != null)
+	        {
+		        LoggerGlobal.Log($"Ya existe un {nameof(DatosRol)} activo", ESeveridad.Error);
+
+		        return;
+	        }
+
+	        Atar(new DatosRol(idRol));
         }
 
         /// <summary>
@@ -220,7 +242,7 @@ namespace AppGM.Core
         /// <summary>
         /// Guarda todos los cambios realizados a los modelos sincronicamente
         /// </summary>
-        public static void GuardarDatosRol()
+        public static void GuardarDatos()
         {
             DatosRolSeleccionado.GuardarDatos();
         }
@@ -323,6 +345,7 @@ namespace AppGM.Core
             Kernel.Unbind<ViewModelCombate>();
             Kernel.Unbind<ViewModelRol>();
             Kernel.Unbind<ModeloRol>();
+            Kernel.Unbind<DatosRol>();
         }
 
         /// <summary>

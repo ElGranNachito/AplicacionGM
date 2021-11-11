@@ -208,7 +208,9 @@ namespace AppGM.Core
         public ViewModelCreacionEdicionPersonaje(Action<ViewModelCreacionEdicionPersonaje> _accionSalir, ControladorPersonaje _personajeEditar = null)
 			:base(_accionSalir, _personajeEditar)
         {
-	        mAccionAñadirHabilidad = async () =>
+	        CrearComandoFinalizar();
+
+            mAccionAñadirHabilidad = async () =>
 	        {
 		        SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = await new ViewModelCrearHabilidad( 
 			        vm =>
@@ -232,12 +234,28 @@ namespace AppGM.Core
 
             ComboBoxTipoPersonaje.OnValorSeleccionadoCambio += async (anterior, actual) =>
             {
-                ModeloCreado = (await ModeloCreado.CrearCopiaProfundaEnSubtipoAsync(actual.valor.ObtenerTipoPersonaje())).resultado as ModeloPersonaje;
+	            var modeloAnterior = ModeloCreado;
+
+	            ModeloCreado = (await ModeloCreado.CrearCopiaProfundaEnSubtipoAsync(actual.valor.ObtenerTipoPersonaje())).resultado as ModeloPersonaje;
+
+                if (!EstaEditando)
+                {
+	                await modeloAnterior.Eliminar();
+
+		            await SistemaPrincipal.GuardarModeloAsync(ModeloCreado);
+	            }
 
                 ModeloCreado.TipoPersonaje = actual.valor;
 
                 if (ModeloCreado is ModeloPersonajeJugable p)
-	                p.Caracteristicas = new ModeloCaracteristicas();
+                {
+	                p.Caracteristicas = new ModeloCaracteristicas
+	                {
+                        Personaje = p
+	                };
+                }
+
+                await SistemaPrincipal.GuardarDatosAsync();
 
                 DispararPropertyChanged(new PropertyChangedEventArgs(nameof(ClasesDeServantDisponibles)));
                 DispararPropertyChanged(new PropertyChangedEventArgs(nameof(EsMasterOServant)));
@@ -272,14 +290,7 @@ namespace AppGM.Core
             };
 
             ComandoActualizarStats = new Comando(ActualizarStatsPersonaje);
-
-            ComandoFinalizar = new Comando(() =>
-            {
-                ActualizarValidez();
-
-                mAccionSalir(this);
-            });
-
+            
             ComandoCancelar = new Comando(() =>
             {
 	            Resultado = EResultadoViewModel.Cancelar;
@@ -300,7 +311,26 @@ namespace AppGM.Core
                 DispararPropertyChanged(nameof(PathImagen));
             });
 
-            ComandoCancelar = new Comando(()=>mAccionSalir(this));
+            ComandoGuardar = new Comando(async () =>
+            {
+	            ContenedorModelosCreadosEliminadosAlCopiar modelosCreadosEliminados;
+
+	            if (!EstaEditando)
+	            {
+		            var resultado = await ModeloCreado.CrearCopiaProfundaEnSubtipoAsync(ModeloCreado.GetType());
+
+		            ModeloSiendoEditado = ModeloCreado;
+		            ModeloCreado = resultado.resultado as ModeloPersonaje;
+
+		            modelosCreadosEliminados = resultado.modelosCreadosEliminados;
+	            }
+	            else
+	            {
+		           modelosCreadosEliminados = (await ModeloCreado.CrearCopiaProfundaEnSubtipoAsync(ModeloCreado.GetType(), ModeloSiendoEditado)).modelosCreadosEliminados;
+                }
+
+	            await modelosCreadosEliminados.GuardarYEliminarModelosAsync();
+            });
 
             PropertyChanged += (sender, args) =>
             {
@@ -321,9 +351,9 @@ namespace AppGM.Core
 			{
 				await SistemaPrincipal.GuardarModeloAsync(ModeloCreado);
 
-				await SistemaPrincipal.GuardarDatosAsync();
-
 				ModeloCreado.Rol = SistemaPrincipal.ModeloRolActual;
+
+                await SistemaPrincipal.GuardarDatosAsync();
 			}
 
 			return this;
@@ -331,19 +361,19 @@ namespace AppGM.Core
 
 		public override ModeloPersonaje CrearModelo()
 		{
-            return null;
+			ActualizarValidez();
+
+			if (!EsValido)
+				return null;
+
+            return ModeloCreado;
 		}
 
 		public override ControladorPersonaje CrearControlador()
 		{
-            ActualizarValidez();
+			var modeloCreado = CrearModelo();
 
-            if (!EsValido)
-                return null;
-
-            var modeloCreado = CrearModelo();
-
-            return null;
+			return modeloCreado == null ? null : SistemaPrincipal.ObtenerControlador<ControladorPersonaje, ModeloPersonaje>(modeloCreado, true);
 		}
 
 		private List<EClaseServant> ObtenerClasesDeServantDisponibles()
@@ -362,12 +392,14 @@ namespace AppGM.Core
 
         private bool PuedeSeleccionarClase(EClaseServant claseDeseada)
         {
-            //for (int i = 0; i < mDatosCreacionRol.personajes.Count; ++i)
-            //{
-            //    if (mDatosCreacionRol.personajes[i] is ModeloPersonajeJugable mpj)
-            //        if (mpj.EClaseServant == claseDeseada && TipoPersonajeSeleccionado == mpj.TipoPersonaje)
-            //            return false;
-            //}
+	        var rolActual = SistemaPrincipal.ModeloRolActual;
+
+            for (int i = 0; i < rolActual.Personajes.Count; ++i)
+            {
+                if (rolActual.Personajes[i] is ModeloPersonajeJugable mpj)
+                    if (mpj.ClaseServant == claseDeseada && TipoPersonajeSeleccionado == mpj.TipoPersonaje)
+                        return false;
+            }
 
             return true;
         }
@@ -467,7 +499,7 @@ namespace AppGM.Core
             {
                 ModeloCreado.Str = value;
 
-                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PuntosHabilidadRestantes)));
+                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(TextoPuntosDeHabilidadRestantes)));
             }
         }
 
@@ -478,7 +510,7 @@ namespace AppGM.Core
             {
                 ModeloCreado.End = value;
 
-                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PuntosHabilidadRestantes)));
+                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(TextoPuntosDeHabilidadRestantes)));
             }
         }
 
@@ -489,7 +521,7 @@ namespace AppGM.Core
             {
                 ModeloCreado.Agi = value;
 
-                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PuntosHabilidadRestantes)));
+                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(TextoPuntosDeHabilidadRestantes)));
             }
         }
 
@@ -500,7 +532,7 @@ namespace AppGM.Core
             {
                 ModeloCreado.Int = value;
 
-                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PuntosHabilidadRestantes)));
+                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(TextoPuntosDeHabilidadRestantes)));
             }
         }
 
@@ -511,7 +543,7 @@ namespace AppGM.Core
             {
                 ModeloCreado.Lck = value;
 
-                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PuntosHabilidadRestantes)));
+                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(TextoPuntosDeHabilidadRestantes)));
             }
         }
 
@@ -530,7 +562,7 @@ namespace AppGM.Core
                 {
                     m.Chr = value;
 
-                    DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PuntosHabilidadRestantes)));
+                    DispararPropertyChanged(new PropertyChangedEventArgs(nameof(TextoPuntosDeHabilidadRestantes)));
                 }    
             }
         }

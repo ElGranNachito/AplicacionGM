@@ -183,6 +183,7 @@ namespace AppGM.Tests
 			Assert.True(resultadoSegundaCopia.modelosCreadosEliminados.ModelosCreados.Count == 2);
 		}
 
+		[Fact]
 		public void PruebaReemplazoDeReferencias()
 		{
 			var pj = CrearPersonajeDePrueba();
@@ -215,6 +216,28 @@ namespace AppGM.Tests
 			copiaPj.resultado.CrearCopiaProfundaEnSubtipo<ModeloPersonaje, ModeloPersonaje>(pj, null, null);
 
 			Assert.True(pj.Contratos[0].PersonajesAfectados[0] == pj, "No se reemplazo la referencia del personaje");
+		}
+
+		[Fact]
+		public async void PruebaAtributoCopiarSuperficialmente()
+		{
+			var pj = CrearPersonajeDePrueba();
+
+			pj.Rol = new ModeloRol
+			{
+				Nombre = "Rolsito",
+				ClimaHorarioGlobal = new ModeloClimaHorario
+				{
+					Clima = EClima.Granizo,
+					DiaSemana = EDiaSemana.Lunes,
+					Humedad = EHumedad.MuchaHumedad,
+					Temperatura = ETemperatura.Frio
+				}
+			};
+
+			var copia = (await pj.CrearCopiaProfundaEnSubtipoAsync<ModeloPersonaje, ModeloPersonaje>()).resultado;
+
+			Assert.Equal(pj.Rol, copia.Rol);
 		}
 	}
 }

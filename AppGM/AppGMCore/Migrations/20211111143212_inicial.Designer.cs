@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AppGM.Core.Migrations
 {
     [DbContext(typeof(RolContext))]
-    [Migration("20211110171613_inicial")]
+    [Migration("20211111143212_inicial")]
     partial class inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -685,6 +685,10 @@ namespace AppGM.Core.Migrations
 
                     b.Property<int?>("RolId")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("RutaAbsolutaImagen")
+                        .HasMaxLength(200)
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -1654,7 +1658,7 @@ namespace AppGM.Core.Migrations
                     b.HasOne("AppGM.Core.ModeloPersonajeJugable", null)
                         .WithOne("Caracteristicas")
                         .HasForeignKey("AppGM.Core.ModeloCaracteristicas", "Id")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("AppGM.Core.ModeloPersonajeJugable", "Personaje")

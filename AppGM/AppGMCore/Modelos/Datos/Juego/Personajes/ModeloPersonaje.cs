@@ -12,6 +12,7 @@ namespace AppGM.Core
         /// <summary>
         /// Relacion rol
         /// </summary>
+        [CopiarSuperficialmente]
         public virtual ModeloRol Rol { get; set; }
 
         /// <summary>
@@ -32,13 +33,13 @@ namespace AppGM.Core
         public ENumeroParty NumeroParty { get; set; }
 
         //Stats del personaje
-        public int MaxHp { get; set; }
-        public int Hp { get; set; }
-        public int Str { get; set; }
-        public int End { get; set; }
-        public int Agi { get; set; }
-        public int Int { get; set; }
-        public int Lck { get; set; }
+        public int MaxHp { get; set; } = 20;
+        public int Hp { get; set; } = 10;
+        public int Str { get; set; } = 10;
+        public int End { get; set; } = 10;
+        public int Agi { get; set; } = 10;
+        public int Int { get; set; } = 10;
+        public int Lck { get; set; } = 10;
 
         //Ventajas stats del personaje
         public int VentajaStr { get; set; }

@@ -44,7 +44,7 @@
         public ControladorRol(ModeloRol _modelo)
 			:base(_modelo)
         {
-	        datosRol = new DatosRol(_modelo);
+	        datosRol = SistemaPrincipal.DatosRolSeleccionado;
         } 
 
         #endregion

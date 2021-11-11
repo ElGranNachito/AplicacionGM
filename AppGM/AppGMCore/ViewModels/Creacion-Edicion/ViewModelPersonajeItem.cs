@@ -6,7 +6,7 @@ namespace AppGM.Core
 	/// <summary>
 	/// Representa a un <see cref="ControladorPersonaje"/> en una lista
 	/// </summary>
-	public class ViewModelPersonajeItem : ViewModelItemListaControlador<ViewModelPersonajeItem, ControladorPersonaje>
+	public sealed class ViewModelPersonajeItem : ViewModelItemListaControlador<ViewModelPersonajeItem, ControladorPersonaje>
 	{
 		public readonly ModeloPersonaje modeloPersonaje;
 
@@ -18,6 +18,8 @@ namespace AppGM.Core
 			: base(_controladorPersonaje)
 		{
 			modeloPersonaje = _controladorPersonaje.modelo;
+
+			ActualizarCaracteristicas();
 		}
 
 		/// <summary>
@@ -30,10 +32,15 @@ namespace AppGM.Core
 
 			if(modeloPersonaje == null)
 				SistemaPrincipal.LoggerGlobal.LogCrash($"{nameof(modeloPersonaje)} no puede ser null");
+
+			ActualizarCaracteristicas();
 		}
 
 		protected override void ActualizarCaracteristicas()
 		{
+			if(modeloPersonaje == null)
+				return;
+
 			CaracteristicasItem.Elementos = new ObservableCollection<ViewModelCaracteristicaItem>
 			{
 				new ViewModelCaracteristicaItem
@@ -68,7 +75,7 @@ namespace AppGM.Core
 			{
 				var dataContextActual = SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido;
 
-				SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = new ViewModelCreacionEdicionPersonaje(async vm =>
+				SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = await new ViewModelCreacionEdicionPersonaje(async vm =>
 				{
 					if (vm.Resultado.EsAceptarOFinalizar())
 					{
@@ -80,7 +87,7 @@ namespace AppGM.Core
 					}
 
 					SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = dataContextActual;
-				});
+				}).Inicializar();
 			};
 
 			Action accionEliminar = async () =>
@@ -96,6 +103,8 @@ namespace AppGM.Core
 			};
 
 			CrearBotonesParaEditarYEliminar(accionEditar, accionEliminar);
+
+			IndiceGrupoDeBotonesActivo = 0;
 		}
 	}
 }

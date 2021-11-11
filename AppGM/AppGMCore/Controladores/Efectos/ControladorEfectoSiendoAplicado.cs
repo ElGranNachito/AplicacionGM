@@ -181,7 +181,7 @@ namespace AppGM.Core
 			SistemaPrincipal.GuardarModelo(modelo.Instigador);
 			SistemaPrincipal.GuardarModelo(modelo.Objetivo);
 
-			SistemaPrincipal.GuardarDatosRol();
+			SistemaPrincipal.GuardarDatos();
 		}
 
 		/// <summary>

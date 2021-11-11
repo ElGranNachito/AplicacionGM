@@ -168,8 +168,6 @@ namespace AppGM.Core
 			}
 
 			await SistemaPrincipal.GuardarModelosAsync(Personaje.SlotsBase);
-			await SistemaPrincipal.GuardarModelosAsync(Personaje.PartesDelCuerpo);
-			await SistemaPrincipal.GuardarModelosAsync(torso.Slots);
 			await SistemaPrincipal.GuardarModelosAsync(partesDelCuerpoTorso);
 
 			await SistemaPrincipal.GuardarDatosAsync();

@@ -15,7 +15,7 @@ namespace AppGM.Core
 		/// <summary>
 		/// Items que abarca esta fuente de daño
 		/// </summary>
-		public virtual List<ModeloDatosArma> ItemsAbarcados { get; set; }
+		public virtual List<ModeloDatosArma> ItemsAbarcados { get; set; } = new List<ModeloDatosArma>();
 
 		/// <summary>
 		/// Nombre de esta fuente de daño

@@ -12,7 +12,7 @@ namespace AppGM.Core
         /// <summary>
         /// Roles existentes
         /// </summary>
-        public DbSet<ModeloRol> Rols { get; set; }
+        public DbSet<ModeloRol> Roles { get; set; }
 
         /// <summary>
         /// Personajes existentes
@@ -163,7 +163,7 @@ namespace AppGM.Core
 			modelBuilder.Entity<ModeloPersonajeJugable>()
 				.HasOne(p => p.Caracteristicas)
 				.WithOne()
-				.OnDelete(DeleteBehavior.SetNull);
+				.OnDelete(DeleteBehavior.Cascade);
 
 			// - Invocacion personaje
 			modelBuilder.Entity<ModeloInvocacion>()

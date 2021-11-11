@@ -27,9 +27,10 @@ namespace AppGM.Core
 
         #region Constructor
 
-        public ViewModelDatosPersonajesRol(ModeloRol _rol, ViewModelCrearRol vmCrearRol)
+        public ViewModelDatosPersonajesRol(ViewModelCrearRol _contenedor)
+			:base(_contenedor)
         {
-            mRol = _rol;
+            mRol = SistemaPrincipal.ModeloRolActual;
 
             mRol.FuentesDeDaño.Add(new ModeloFuenteDeDaño
             {
@@ -45,20 +46,45 @@ namespace AppGM.Core
             ViewModelListaPersonajes = new ViewModelListaItems<ViewModelPersonajeItem>(async () =>
             {
 	            SistemaPrincipal.MostrarViewModelCreacionEdicion<ViewModelCreacionEdicionPersonaje, ModeloPersonaje, ControladorPersonaje>(
-		            await new ViewModelCreacionEdicionPersonaje(vm =>
+		            await new ViewModelCreacionEdicionPersonaje(async vm =>
 		            {
 			            if (vm.Resultado.EsAceptarOFinalizar())
 			            {
-				            var modeloNuevoPersonaje = vm.CrearModelo();
+				            var nuevoPersonaje = vm.CrearControlador();
 
-				            ViewModelListaPersonajes.Items.Add(new ViewModelPersonajeItem(modeloNuevoPersonaje));
+				            if (vm.EstaEditando)
+				            {
+					            var resultado = await nuevoPersonaje.modelo.CrearCopiaProfundaEnSubtipoAsync(vm.ModeloSiendoEditado.GetType(), vm.ModeloSiendoEditado);
+
+					            await resultado.modelosCreadosEliminados.GuardarYEliminarModelosAsync();
+				            }
+				            else
+				            {
+					            await SistemaPrincipal.GuardarDatosAsync();
+				            }
+
+				            ViewModelListaPersonajes.Items.Add(new ViewModelPersonajeItem(nuevoPersonaje));
 			            }
+
+                        contenedorPasos.DispararPropertyChanged(nameof(contenedorPasos.PuedeFinalizar));
 		            }).Inicializar());
             }, true, "Personajes");
 
             ViewModelListaPersonajes.Items.AddRange(mRol.Personajes.Select(p => new ViewModelPersonajeItem(p)));
+
+            PropertyChanged += (sender, e) =>
+            {
+	            if (e.PropertyName != nameof(contenedorPasos.PuedeFinalizar))
+		            contenedorPasos.DispararPropertyChanged(nameof(contenedorPasos.PuedeFinalizar));
+            };
         }
 
         #endregion
+
+		#region Metodos
+
+		public override bool PuedeAvanzar() => true;
+
+		#endregion
     }
 }

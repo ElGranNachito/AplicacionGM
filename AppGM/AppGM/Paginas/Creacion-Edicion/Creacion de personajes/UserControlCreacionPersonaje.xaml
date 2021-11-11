@@ -129,18 +129,22 @@
                                 VerticalAlignment="Top"
                                 TextAlignment="Center"
                                 MinHeight="20"
-                                Tag="Nombre"/>
+                                Tag="Nombre"
+                                
+                                Text="{Binding Nombre}"/>
 
                             <!-- Nombre de personaje -->
                             <TextBox
                                 Grid.Column="1"
                                 Margin="10 25 0 0"
-                                Visibility="{Binding EsServant, Converter={local:BooleanToVisibilityConverterColapsar}}"
+                                Visibility="{Binding EsMasterOServant, Converter={local:BooleanToVisibilityConverterColapsar}}"
                                 Style="{StaticResource TextoDescriptivo}"
                                 VerticalAlignment="Top"
                                 TextAlignment="Center"
                                 MinHeight="20"
-                                Tag="Nombre real"/>
+                                Tag="Nombre real"
+                                
+                                Text="{Binding NombreReal}"/>
 
                         </Grid>
 
@@ -205,7 +209,7 @@
                             Margin="0 0 0 5"
                             TextAlignment="Center"
                             Tag="Estatura"
-                            MaxLength="2"
+                            MaxLength="3"
                             Text="{Binding Estatura}"
                             Style="{StaticResource TextoDescriptivo}"
                             
@@ -236,6 +240,8 @@
 
                             MinHeight="20"
 
+                            HorizontalContentAlignment="Center"
+
                             Style="{StaticResource TextoDescriptivo}"/>
 
                         <!--Origen-->
@@ -247,6 +253,8 @@
                             AcceptsReturn="True"
 
                             MinHeight="20"
+
+                            HorizontalContentAlignment="Center"
 
                             Style="{StaticResource TextoDescriptivo}"/>
 
@@ -260,6 +268,7 @@
 
                             MinHeight="20"
 
+                            HorizontalContentAlignment="Center"
 
                             Style="{StaticResource TextoDescriptivo}"/>
 
@@ -523,6 +532,8 @@
                     HorizontalAlignment="Center"
                     Width="90"
                     BorderBrush="Black"
+
+                    IsEnabled="{Binding EsValido}"
                     Style="{StaticResource BotonFondoResaltable}"
                     Command="{Binding ComandoFinalizar}"/>
 

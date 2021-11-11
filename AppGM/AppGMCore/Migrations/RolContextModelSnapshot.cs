@@ -684,6 +684,10 @@ namespace AppGM.Core.Migrations
                     b.Property<int?>("RolId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("RutaAbsolutaImagen")
+                        .HasMaxLength(200)
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CombateAlQuePerteneceId");
@@ -1652,7 +1656,7 @@ namespace AppGM.Core.Migrations
                     b.HasOne("AppGM.Core.ModeloPersonajeJugable", null)
                         .WithOne("Caracteristicas")
                         .HasForeignKey("AppGM.Core.ModeloCaracteristicas", "Id")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("AppGM.Core.ModeloPersonajeJugable", "Personaje")

@@ -15,6 +15,7 @@ namespace AppGM.Core
         /// <summary>
         /// Contiene el valor de <see cref="Id"/>
         /// </summary>
+        [NoCopiar]
 	    private int mId;
 
 		/// <summary>
@@ -24,6 +25,7 @@ namespace AppGM.Core
 
         //Id
         [Key]
+        [NoCopiar]
         public int Id
         {
 	        get => mId;

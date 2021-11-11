@@ -135,7 +135,7 @@ namespace AppGM.Core
         /// <summary>
         /// Ruta completa a la imagen del mapa
         /// </summary>
-        public string PathImagen { get; set; }
+        public string PathImagen => controladorMapa.modelo.RutaAbsolutaImagen;
 
         /// <summary>
         /// Tamaño del canvas en el eje X
@@ -396,8 +396,6 @@ namespace AppGM.Core
         {
             controladorMapa = _controlador;
             controladorClimaHorario = _controladorClimaHorario;
-
-            PathImagen = $"../../../Media/Imagenes/Mapas/{controladorMapa.NombreMapa}{controladorMapa.ObtenerExtension()}";
 
             for (int i = 0; i < 50; ++i)
                 FilasCasillasTablero.Add(new ViewModelFilaCasillas());

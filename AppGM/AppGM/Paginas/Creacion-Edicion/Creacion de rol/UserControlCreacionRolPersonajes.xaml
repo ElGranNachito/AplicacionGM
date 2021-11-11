@@ -66,7 +66,14 @@
 
                             <!-- Lista de personajes actualmente creados -->
                             <local:UserControlListaItems
-                                DataContext="{Binding ViewModelListaPersonajes}"/>
+                                DataContext="{Binding ViewModelListaPersonajes}">
+
+                                <local:UserControlListaItems.ItemTemplate>
+                                    <DataTemplate>
+                                        <local:UserControlItemLista/>
+                                    </DataTemplate>
+                                </local:UserControlListaItems.ItemTemplate>
+                            </local:UserControlListaItems>
 
                         </Border>
 

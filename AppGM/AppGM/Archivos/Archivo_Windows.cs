@@ -89,7 +89,7 @@ namespace AppGM
         {
             string nuevaRuta = Path.Combine(directorioDestino, Nombre);
 
-            mArchivo.CopyTo(nuevaRuta);
+            mArchivo.CopyTo(nuevaRuta, true);
 
             if (actualizarANuevoArchivo)
             {

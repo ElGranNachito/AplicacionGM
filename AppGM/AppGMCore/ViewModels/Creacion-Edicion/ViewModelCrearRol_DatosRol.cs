@@ -31,19 +31,20 @@
 
 		#region Constructores
 
-		/// <summary>
-		/// No usar para construir instancia de la clase!
-		/// </summary>
-		public ViewModelCrearRol_DatosRol() { }
+        /// <summary>
+        /// Constructor por defecto
+        /// </summary>
+		public ViewModelCrearRol_DatosRol()
+			:base(null) {}
 
 		/// <summary>
-		/// Constrcutor
+		/// Constructor
 		/// </summary>
-		/// <param name="_modeloRol">Modelo del rol que estamos creando</param>
-		public ViewModelCrearRol_DatosRol(ModeloRol _modeloRol)
+		public ViewModelCrearRol_DatosRol(ViewModelCrearRol _contenedor)
+			: base(_contenedor)
 		{
-			mModeloRol = _modeloRol;
-		} 
+			mModeloRol = SistemaPrincipal.ModeloRolActual;
+		}
 
 		#endregion
 

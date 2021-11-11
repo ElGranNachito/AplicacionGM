@@ -90,15 +90,15 @@ namespace AppGM.Core
         {
             ControladorRol = new ControladorRol(SistemaPrincipal.ModeloRolActual);
 
-            ComandoBotonFichas        = new Comando(() => SistemaPrincipal.RolSeleccionado.EMenu = EMenuRol.SeleccionTipoFichas);
-            ComandoBotonMapas         = new Comando(() => SistemaPrincipal.RolSeleccionado.EMenu = EMenuRol.Mapas);
-            ComandoBotonCombates      = new Comando(() => SistemaPrincipal.RolSeleccionado.EMenu = EMenuRol.AdministrarCombates);
+            ComandoBotonFichas   = new Comando(() => SistemaPrincipal.RolSeleccionado.EMenu = EMenuRol.SeleccionTipoFichas);
+            ComandoBotonMapas    = new Comando(() => SistemaPrincipal.RolSeleccionado.EMenu = EMenuRol.Mapas);
+            ComandoBotonCombates = new Comando(() => SistemaPrincipal.RolSeleccionado.EMenu = EMenuRol.AdministrarCombates);
 
             ComandoBotonSalir = new Comando(()=>
             {
 	            BotonSeleccionado = null;
 
-                SistemaPrincipal.GuardarDatosRol();
+                SistemaPrincipal.GuardarDatos();
 
                 SistemaPrincipal.Aplicacion.PaginaActual =
                         EPagina.PaginaPrincipal;

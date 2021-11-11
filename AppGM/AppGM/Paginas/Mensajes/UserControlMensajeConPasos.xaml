@@ -35,38 +35,88 @@
             Grid.Row="1"
             Content="{Binding PasoActual, Converter={local:ViewModelToContenidoPaso}}"/>
 
-        <!-- Flechas -->
-        <StackPanel
-            Orientation="Horizontal"
-            HorizontalAlignment="Right"
-            Grid.Row="2"
-            Margin="0 10 5 5">
-    
-            <!-- Flecha izquierda -->
-            <Button
-                Style="{StaticResource BotonFondoResaltable}"
-                FontFamily="{StaticResource 'Font Awesome Regular'}"
-                Content="{StaticResource Fa-FlechaIzquierda}"
-                FontSize="{StaticResource TamañoFontMediano}"
-                IsEnabled="{Binding PuedeRetroceder}"
-                Command="{Binding ComandoPasoAnterior}"
-                HorizontalContentAlignment="Center"
-                Width="40"
-                Margin="0 0 10 0"/>
+        <Grid
+            Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-            <!-- Flecha derecha -->
-            <Button
-                Style="{StaticResource BotonFondoResaltable}"
-                FontFamily="{StaticResource 'Font Awesome Regular'}"
-                Content="{StaticResource Fa-FlechaDerecha}"
-                FontSize="{StaticResource TamañoFontMediano}"
-                IsEnabled="{Binding PuedeAvanzar}"
-                Command="{Binding ComandoPasoSiguiente}"
-                HorizontalContentAlignment="Center"
-                Width="40"/>
+            <StackPanel
+                Orientation="Horizontal">
+
+                <!--Boton cancelar-->
+                <Button
+                    Grid.Column="0"
+
+                    Content="Cancelar"
+
+                    Margin="5 5 0 5"
+                    Padding="10 0"
+                
+                    Command="{Binding ComandoCancelar}"
+                    Style="{StaticResource BotonFondoResaltable}"/>
+
+                <!--Boton guardar-->
+                <Button
+                    Grid.Column="0"
+
+                    Content="Guardar"
+
+                    Margin="25 5 0 5"
+                    Padding="10 0"
+                
+                    Command="{Binding ComandoGuardar}"
+                    Style="{StaticResource BotonFondoResaltable}"/>
+
+                <!--Boton finalizar-->
+                <Button
+                    Grid.Column="0"
+
+                    Content="Finalizar"
+
+                    Margin="25 5 0 5"
+                    Padding="10 0"
+
+                    IsEnabled="{Binding PuedeFinalizar}"
+                    Command="{Binding ComandoFinalizar}"
+                    Style="{StaticResource BotonFondoResaltable}"/>
+            </StackPanel>
+
+            <!-- Flechas -->
+            <StackPanel
+                Orientation="Horizontal"
+                HorizontalAlignment="Right"
+                Grid.Column="1"
+                Margin="0 10 5 5">
+
+                <!-- Flecha izquierda -->
+                <Button
+                    Style="{StaticResource BotonFondoResaltable}"
+                    FontFamily="{StaticResource 'Font Awesome Regular'}"
+                    Content="{StaticResource Fa-FlechaIzquierda}"
+                    FontSize="{StaticResource TamañoFontMediano}"
+                    IsEnabled="{Binding PuedeRetroceder}"
+                    Command="{Binding ComandoPasoAnterior}"
+                    HorizontalContentAlignment="Center"
+                    Width="40"
+                    Margin="0 0 10 0"/>
+
+                <!-- Flecha derecha -->
+                <Button
+                    Style="{StaticResource BotonFondoResaltable}"
+                    FontFamily="{StaticResource 'Font Awesome Regular'}"
+                    Content="{StaticResource Fa-FlechaDerecha}"
+                    FontSize="{StaticResource TamañoFontMediano}"
+                    IsEnabled="{Binding PuedeAvanzar}"
+                    Command="{Binding ComandoPasoSiguiente}"
+                    HorizontalContentAlignment="Center"
+                    Width="40"/>
 
 
-        </StackPanel>
+            </StackPanel>
+
+        </Grid>
 
     </Grid>
 

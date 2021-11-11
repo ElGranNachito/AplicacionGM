@@ -59,7 +59,7 @@ namespace AppGM.Core
 		/// <summary>
 		/// Modelo que esta siendo editado
 		/// </summary>
-		public virtual TModelo ModeloSiendoEditado { get; init; }
+		public virtual TModelo ModeloSiendoEditado { get; protected set; }
 
 		/// <summary>
 		/// Controlador del <see cref="ModeloSiendoEditado"/>
