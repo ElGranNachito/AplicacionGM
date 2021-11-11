@@ -1,0 +1,88 @@
+﻿<UserControl x:Class="AppGM.UserControlMensajeCrearParticipanteCombate"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AppGM"
+             mc:Ignorable="d" 
+             d:DesignHeight="250" d:DesignWidth="800">
+
+    <!-- UserControl que hace uso de un ViewModelCrearParticipanteCombate -->
+    <!-- Control para la creacion de la representacion de un participante en un combate-->
+    <Border Background="White"
+            Padding="10">
+        
+        <Grid >
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50*" MaxWidth="50"/>
+                <ColumnDefinition Width="*" MaxWidth="350"/>
+                <ColumnDefinition Width="*" MaxWidth="400"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Campo ingreso de nombre -->
+            <TextBlock 
+                Grid.Column="0"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Left"
+                Text="Nombre:"/>
+
+            <TextBox 
+                Grid.Column="1"
+                FontFamily="{StaticResource 'Font Canon'}"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                MinWidth="330"
+                MinHeight="15"
+                Text="{Binding Nombre, Mode=OneWayToSource}"/>
+
+            <Grid Grid.Column="2">
+
+                <StackPanel>
+
+                    <!-- Tipo de unidad (Todos) -->
+                    <TextBlock Text="Tipo de participante:"/>
+                    
+                    <ComboBox ItemsSource="{Binding TiposPersonajes}"
+                              SelectedValue="{Binding TipoPersonajeSeleccionado}"
+                              Margin="0 0 0 20"/>
+
+                    <!-- Clase de servant (Masters, Servants, Invocaciones y trampas) -->
+                    <StackPanel Visibility="{Binding DebeSeleccionarClaseServant, Converter={local:BooleanToVisibilityConverterOcultar}}">
+
+                        <TextBlock Text="Clase de servant:"/>
+
+                        <ComboBox 
+                            ItemsSource="{Binding ClasesServants}"
+                            SelectedValue="{Binding ClaseSeleccionada}"
+                            Margin="0 0 0 20"/>
+
+                    </StackPanel>
+
+                    <!-- Personaje (Masters, Servants e invocaciones) -->
+                    <StackPanel Visibility="{Binding DebeSeleccionarPersonaje, Converter={local:BooleanToVisibilityConverterOcultar}}">
+
+                        <TextBlock Text="Personaje:"/>
+                        
+                        <ComboBox 
+                            ItemsSource="{Binding PersonajesDisponibles}"
+                            SelectedValue="{Binding PersonajeSeleccionado}"
+                            Margin="0 0 0 40"/>
+
+                    </StackPanel>
+
+                    <!-- Boton confirmar -->
+                    <Button VerticalAlignment="Bottom" 
+                            Content="Confirmar"
+                            IsEnabled="{Binding PuedeFinalizarCreacion}"
+                            Command="{Binding ComandoFinalizar}"/>
+
+                </StackPanel>
+
+            </Grid>
+                
+        </Grid>
+
+    </Border>
+
+</UserControl>

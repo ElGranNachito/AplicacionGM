@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
+using Castle.Core.Internal;
 
 namespace AppGM.Core
 {
@@ -44,24 +46,29 @@ namespace AppGM.Core
         public ICommand ComandoTirada { get; set; }
 
         /// <summary>
+        /// Comando que se ejecuta cuando el usuario presiona el boton 'Agregar Participante'
+        /// </summary>
+        public ICommand ComandoAgregarParticipante { get; set; }
+
+        /// <summary>
         /// Turno actual del combate
         /// </summary>
         public uint TurnoActual => administradorDeCombate.modelo.TurnoActual;
 
         /// <summary>
-        /// Participantes del combate
+        /// Participantes
         /// </summary>
-        public ViewModelListaParticipantes Participantes { get; set; }
+        public ObservableCollection<ViewModelParticipante> Participantes { get; set; } = new ObservableCollection<ViewModelParticipante>();
+
+        /// <summary>
+        /// Mapas del combate
+        /// </summary>
+        public ObservableCollection<ViewModelMapa> Mapas { get; set; } = new ObservableCollection<ViewModelMapa>();
 
         /// <summary>
         /// Participante de quien es el turno actual
         /// </summary>
         public ViewModelParticipante ParticipanteTurnoActual { get; set; }
-
-        /// <summary>
-        /// Mapas del combate
-        /// </summary>
-        public List<ViewModelMapa> Mapas { get; set; } = new List<ViewModelMapa>();
 
         /// <summary>
         /// Mapa actualmente siendo mostrado
@@ -71,13 +78,24 @@ namespace AppGM.Core
         #endregion
 
         #region Constructores
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public ViewModelCombate()
         {
-	        HandlerTurnoCambio = (ref int turno) =>
-            {
-                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(TurnoActual)));
+            ComandoSalir               = new Comando(() => SistemaPrincipal.RolSeleccionado.EMenu = EMenuRol.AdministrarCombates);
+            ComandoAgregarParticipante = new Comando(AgregarParticipante);
+            ComandoAvanzarTurno        = new Comando(AvanzarTurno);
+            ComandoRetrocederTurno     = new Comando(RetrocederTurno);
 
-                ParticipanteTurnoActual = Participantes.Participantes[turno];
+            HandlerTurnoCambio = (ref int turnoAnterior, ref int turnoActual) =>
+            {
+                ParticipanteTurnoActual = Participantes[turnoActual];
+
+                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(TurnoActual)));
+                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(ParticipanteTurnoActual)));
+
             };
         }
 
@@ -93,19 +111,65 @@ namespace AppGM.Core
         {
             //Desubscribimos los delegado del controlador anterior
             if(administradorDeCombate != null)
-				administradorDeCombate.OnTurnoCambio    -= HandlerTurnoCambio;
-
+				administradorDeCombate.OnTurnoCambio -= HandlerTurnoCambio;
+            
             administradorDeCombate = _administradorDeCombate;
 
-            Participantes = new ViewModelListaParticipantes(_administradorDeCombate.ControladoresParticipantes, this);
+            if (Participantes.IsNullOrEmpty())
+            {
+                for (int i = 0; i < administradorDeCombate.ControladoresParticipantes.Count; ++i)
+                    Participantes.Add(new ViewModelParticipante(administradorDeCombate.ControladoresParticipantes[i],this));
 
-            for(int i = 0; i < administradorDeCombate.ControladoresMapas.Count; ++i)
-                Mapas.Add(new ViewModelMapa(administradorDeCombate.ControladoresMapas[i], SistemaPrincipal.DatosRolSeleccionado.Climas[0]));
+                for(int i = 0; i < administradorDeCombate.ControladoresMapas.Count; ++i)
+                    Mapas.Add(new ViewModelMapa(administradorDeCombate.ControladoresMapas[i], SistemaPrincipal.DatosRolSeleccionado.Climas[0]));
+
+                ParticipanteTurnoActual = Participantes[0];
+
+                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(ParticipanteTurnoActual)));
+            }
 
             DispararPropertyChanged(new PropertyChangedEventArgs(nameof(MapaActual)));
 
-            administradorDeCombate.OnTurnoCambio    += HandlerTurnoCambio;
-        } 
+            administradorDeCombate.OnTurnoCambio += HandlerTurnoCambio;
+        }
+
+        /// <summary>
+        /// Funcion llamada para avanzar de turno en el combate
+        /// </summary>
+        public void AvanzarTurno()
+        {
+            administradorDeCombate.AvanzarTurno();
+        }
+
+        /// <summary>
+        /// Funcion llamada para retroceder de turno en el combate
+        /// </summary>
+        public void RetrocederTurno()
+        {
+            administradorDeCombate.RetrocederTurno();
+        }
+
+        /// <summary>
+        /// Funcion llamada para agregar un nuevo participante al combate
+        /// </summary>
+        private async void AgregarParticipante()
+        {
+            //VM para el contenido del popup
+            ViewModelCrearParticipanteCombate vm = new ViewModelCrearParticipanteCombate(this);
+
+            //Se crea el popup y se espera a que se cierre
+            await SistemaPrincipal.MostrarMensajeAsync(vm, "Agregar Personaje", true, -1, -1);
+
+            //Si el resultado es valido entonces añadimos la nueva unidad
+            if (vm.vmResultado is ViewModelParticipante vmNuevoParticipante)
+            {
+                administradorDeCombate.ControladoresParticipantes.Add(vmNuevoParticipante.controladorParticipante);
+
+                Participantes.Add(vmNuevoParticipante);
+
+                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(Participantes)));
+            }
+        }
 
         #endregion
     }

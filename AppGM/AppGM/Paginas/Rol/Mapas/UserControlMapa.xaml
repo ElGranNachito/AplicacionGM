@@ -161,7 +161,8 @@
                 </Border>
 
                 <!-- Boton añadir participante -->
-                <Button  Grid.Row="3"
+                <Button  
+                    Grid.Row="3"
                     Content="Añadir Participante"
                     Command="{Binding ComandoAñadirParticipante}"/>
 

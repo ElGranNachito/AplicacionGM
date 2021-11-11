@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace AppGM.Core
 {
@@ -32,7 +33,7 @@ namespace AppGM.Core
         /// Representa un metodo que lidia con el cambio de turnos durante el combate
         /// </summary>
         /// <param name="TurnoActual"></param>
-        public delegate void dTurnoCambio(ref int turnoActual);
+        public delegate void dTurnoCambio(ref int turnoAnterior, ref int turnoActual);
 
         /// <summary>
         /// Evento que se dispara cuando se cambia de turno
@@ -72,6 +73,8 @@ namespace AppGM.Core
 
             for (int i = 0; i < modelo.Mapas.Count; ++i)
                 ControladoresMapas.Add(SistemaPrincipal.ObtenerControlador<ControladorMapa, ModeloMapa>(modelo.Mapas[i]));
+
+            ControladoresParticipantes[0].modelo.EsSuTurno = true;
         }
 
         #endregion
@@ -79,19 +82,37 @@ namespace AppGM.Core
         #region Funciones
 
         /// <summary>
+        /// Agrega un participante al combate
+        /// </summary>
+        /// <param name="participante">Participante que agregar</param>
+        public void AgregarParticipante(ModeloParticipante participante)
+        {
+            modelo.Participantes.Add(participante);
+
+            SistemaPrincipal.GuardarModelo(participante);
+        }
+
+        /// <summary>
         /// Avanza el turno actual del combate si todos los personajes ya tuvieron su turnos,
         /// si no es asi entonces avanza al turno del proximo personaje
         /// </summary>
         public void AvanzarTurno()
         {
+            int turnoAnteriorTmp = modelo.IndicePersonajeTurnoActual;
+            
+            ControladoresParticipantes[modelo.IndicePersonajeTurnoActual].modelo.EsSuTurno = false;
+
+            ++modelo.IndicePersonajeTurnoActual;
+            ++modelo.TurnoActual;
+
             if (modelo.IndicePersonajeTurnoActual >= modelo.Participantes.Count)
                 modelo.IndicePersonajeTurnoActual = 0;
-            else
-                ++modelo.IndicePersonajeTurnoActual;
 
             int turnoActualTmp = modelo.IndicePersonajeTurnoActual;
 
-            OnTurnoCambio(ref turnoActualTmp);
+            ControladoresParticipantes[modelo.IndicePersonajeTurnoActual].modelo.EsSuTurno = true;
+
+            OnTurnoCambio(ref turnoAnteriorTmp, ref turnoActualTmp);
 
             modelo.IndicePersonajeTurnoActual = turnoActualTmp;
         }
@@ -102,14 +123,20 @@ namespace AppGM.Core
         /// </summary>
         public void RetrocederTurno()
         {
+            int turnoAnteriorTmp = modelo.IndicePersonajeTurnoActual;
+
+            ControladoresParticipantes[modelo.IndicePersonajeTurnoActual].modelo.EsSuTurno = false;
+
+            --modelo.IndicePersonajeTurnoActual;
+
             if (modelo.IndicePersonajeTurnoActual < 0)
                 modelo.IndicePersonajeTurnoActual = modelo.Participantes.Count - 1;
-            else
-                --modelo.IndicePersonajeTurnoActual;
 
             int turnoActualTmp = modelo.IndicePersonajeTurnoActual;
 
-            OnTurnoCambio(ref turnoActualTmp);
+            ControladoresParticipantes[modelo.IndicePersonajeTurnoActual].modelo.EsSuTurno = true;
+
+            OnTurnoCambio(ref turnoAnteriorTmp, ref turnoActualTmp);
 
             modelo.IndicePersonajeTurnoActual = turnoActualTmp;
         }

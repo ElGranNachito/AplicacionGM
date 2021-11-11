@@ -18,6 +18,16 @@ namespace AppGM.Core
         public int TiradaIniciativa { get; set; }
 
         /// <summary>
+        /// Base de acciones que puede realizar por turno.
+        /// </summary>
+        public int TotalAccionesPorTurno { get; set; }
+
+        /// <summary>
+        /// Acciones realizadas hasta el momento en su turno.  
+        /// </summary>
+        public int AccionesRealizadasEnTurno { get; set; } 
+
+        /// <summary>
         /// Indica si es su turno de actuar en el combate
         /// </summary>
         public bool EsSuTurno { get; set; }

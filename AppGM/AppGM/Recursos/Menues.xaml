@@ -4,6 +4,12 @@
 
     <!--......................................ESTILOS PARA MENUES..........................................-->
 
+    <Style x:Key="ConextMenuBase" TargetType="ContextMenu">
+            
+        <Setter Property="Background" Value="Black"/>
+        <Setter Property="BorderBrush" Value="Aqua"/>
+
+    </Style>
 
     <!--Estilo para los MenuItem de opciones en las solapas horizontales de mapas-->
     <Style x:Key="MenuSolapaBase" TargetType="Menu">

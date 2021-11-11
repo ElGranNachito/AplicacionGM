@@ -6,17 +6,23 @@
              xmlns:local="clr-namespace:AppGM"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="400">
-    <Grid Background="White">
+    <Grid Background="Black">
 
         <!-- Lista de participantes de un combate -->
         <ScrollViewer>
-            <ItemsControl ItemsSource="{Binding Participantes}">
+
+            <ItemsControl ItemsSource="{Binding }">
+                
                 <ItemsControl.ItemTemplate>
+                    
                     <DataTemplate>
                         <local:UserControlParticipante></local:UserControlParticipante>
                     </DataTemplate>
+
                 </ItemsControl.ItemTemplate>
+
             </ItemsControl>
+
         </ScrollViewer>
             
     </Grid>

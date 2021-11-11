@@ -5,10 +5,6 @@ namespace AppGM.Core
     public class ModeloMaster : ModeloPersonajeJugable
     {
         /// <summary>
-        /// Clase de servant que posee el master
-        /// </summary>
-        public EClaseServant EClaseDeSuServant { get; set; }
-        /// <summary>
         /// Estado de bienestar del master
         /// </summary>
         public EBienestar EBienestar           { get; set; }

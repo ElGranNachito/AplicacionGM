@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <!--UserControl que hace uso de ViewModelCombate-->
-    <Grid Background="White">
+    <Grid Background="Black">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -20,31 +20,43 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto" MaxWidth="200"/>
             </Grid.ColumnDefinitions>
 
             <!-- Boton salir -->
-            <Button Content="Salir"/>
+            <Button 
+                Grid.Column="0"
+                Content="Salir"
+                Command="{Binding ComandoSalir}"/>
 
             <!-- Boton tirada -->
-            <Button Grid.Column="1" Content="Tirada" HorizontalAlignment="Center"/>
+            <Button 
+                Grid.Column="1" 
+                Content="Tirada" 
+                HorizontalAlignment="Center"
+                Command="{Binding ComandoTirada}"/>
 
             <!-- Turnos -->
-            <StackPanel Grid.Column="2" Orientation="Horizontal">
+            <StackPanel 
+                Grid.Column="2" 
+                Orientation="Horizontal">
 
                 <!-- Flecha izquierda (Retroceder turno) -->
                 <Button 
-                    FontFamily="{StaticResource 'Font Awesome Regular'}"
+                    Command="{Binding ComandoRetrocederTurno}"
                     Content="{StaticResource Fa-FlechaIzquierda}"
-                    Command="{Binding ComandoRetrocederTurno}"/>
+                    FontFamily="{StaticResource 'Font Awesome Regular'}"
+                    Width="95"
+                    Margin="0 0 5 0"/>
                 
-                <TextBlock Text="5" Margin="5 0" Style="{StaticResource TextBlockBase}"/>
-
+                
                 <!-- Flecha derecha (Avanzar turno) -->
                 <Button 
-                    FontFamily="{StaticResource 'Font Awesome Regular'}"
+                    Command="{Binding ComandoAvanzarTurno}"
                     Content="{StaticResource Fa-FlechaDerecha}"
-                    Command="{Binding ComandoAvanzarTurno}"/>
+                    FontFamily="{StaticResource 'Font Awesome Regular'}"
+                    Width="95" 
+                    Margin="5 0 0 0"/>
 
             </StackPanel>
 
@@ -65,36 +77,34 @@
             </Grid>
 
             <!-- Participantes -->
-            <Grid Grid.Column="1">
+            <Border 
+                Grid.Column="1"
+                BorderThickness="2 2 0 0"
+                BorderBrush="Aqua">
 
-                <!-- Lista de participantes -->
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="5*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
+                <Grid>
 
-                <local:UserControlListaPartipantes DataContext="{Binding Participantes, Mode=OneWay}"/>
+                    <!-- Lista de participantes -->
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="40"/>
+                    </Grid.RowDefinitions>
 
-                <!-- Botones añadir y quitar participante -->
-                <Grid Grid.Row="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
+                    <local:UserControlListaPartipantes 
+                        Grid.Row="0"
+                        DataContext="{Binding Participantes, Mode=OneWay}"
+                    />
 
                     <!--Boton agregar participante-->
-                    <Button>
-                        <TextBlock Text="Agregar Particpante" TextWrapping="Wrap"/>
-                    </Button>
-
-                    <!-- Boton quitar participante -->
-                    <Button Grid.Column="1">
-                        <TextBlock Text="Quitar Participante" TextWrapping="Wrap"/>
-                    </Button>
+                    <Button 
+                        Grid.Row="1"
+                        Content="Agregar Particpante"
+                        Command="{Binding ComandoAgregarParticipante}"
+                    />
 
                 </Grid>
 
-            </Grid>
+            </Border>
 
         </Grid>
             

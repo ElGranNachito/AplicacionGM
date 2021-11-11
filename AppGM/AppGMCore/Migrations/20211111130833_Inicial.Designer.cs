@@ -3,14 +3,16 @@ using System;
 using AppGM.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AppGM.Core.Migrations
 {
     [DbContext(typeof(RolContext))]
-    partial class RolContextModelSnapshot : ModelSnapshot
+    [Migration("20211111130833_Inicial")]
+    partial class Inicial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -683,10 +685,6 @@ namespace AppGM.Core.Migrations
 
                     b.Property<int?>("RolId")
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("RutaAbsolutaImagen")
-                        .HasMaxLength(200)
-                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -1659,7 +1657,7 @@ namespace AppGM.Core.Migrations
                     b.HasOne("AppGM.Core.ModeloPersonajeJugable", null)
                         .WithOne("Caracteristicas")
                         .HasForeignKey("AppGM.Core.ModeloCaracteristicas", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.SetNull)
                         .IsRequired();
 
                     b.HasOne("AppGM.Core.ModeloPersonajeJugable", "Personaje")

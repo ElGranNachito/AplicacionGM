@@ -123,7 +123,7 @@ namespace AppGM
                 new ModeloMaster
                 {
                     Nombre = "Charles",
-                    EClaseDeSuServant = EClaseServant.Saber,
+                    ClaseServant = EClaseServant.Saber,
                     Origen = "Traicion",
                     Afinidad = "Escudo",
                     Str = 14,
