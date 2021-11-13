@@ -10,12 +10,12 @@ namespace AppGM
     {
         #region Propiedades
         public ViewModelListaFichas ViewModelListaFichas { get; set; } = new ViewModelListaFichas();
-        public ViewModelFichaItem FichaSeleccionada { get; set; }
+        public ViewModelFichaPersonaje FichaSeleccionada { get; set; }
 
         public ViewModel BotonSeleccionado
         {
             get => FichaSeleccionada;
-            set => FichaSeleccionada = (ViewModelFichaItem)value;
+            set => FichaSeleccionada = (ViewModelFichaPersonaje)value;
         }
 
         #endregion

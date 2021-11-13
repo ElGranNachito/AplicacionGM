@@ -8,11 +8,6 @@ namespace AppGM.Core
         public EClaseServant ClaseServant { get; set; }
 
         /// <summary>
-        /// Rango en el que el personaje puede realizar hechiceria
-        /// </summary>
-        public ushort RangoHechiceria { get; set; }
-
-        /// <summary>
         /// Nombre real del persoane
         /// </summary>
         [StringLength(100)]

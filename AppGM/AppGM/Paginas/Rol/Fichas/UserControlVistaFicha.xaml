@@ -5,10 +5,76 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AppGM"
              mc:Ignorable="d" 
-             d:DesignHeight="700" d:DesignWidth="600">
-    <Grid>
+             d:DesignHeight="450" d:DesignWidth="800">
+    
+    <!-- UserControl que hace uso de ViewModelFichaItem -->
+    <Grid Background="{StaticResource Tema.BlancoVerde}">
 
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" MaxHeight="100"/>
+            <RowDefinition Height="Auto" MaxHeight="350"/>
+        </Grid.RowDefinitions>
             
+        <Grid Grid.Row="0">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" MaxWidth="100 "/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Fotito del personaje -->
+            <Border 
+                Grid.Column="0"
+                CornerRadius="50"
+                Width="65"
+                Height="65"
+                BorderThickness="1"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Left"
+                Margin="20 20 0 0"
+                BorderBrush="{StaticResource Tema.VerdeOscuro}">
+
+                <Border.Background>
+                    <ImageBrush
+                        Stretch="Fill"
+                        ImageSource="{Binding PathImagen, Mode=OneWay}"/>
+                </Border.Background>
+
+            </Border>
+
+            <StackPanel Grid.Column="1"
+                        Margin="0 20 0 0">
+
+                <!-- Nombre -->
+                <TextBlock 
+                    HorizontalAlignment="Left"
+                    FontSize="{StaticResource TamañoFontMediano}"
+                    FontFamily="{StaticResource 'Font Awesome Regular'}"
+                    FontWeight="Bold"
+                    Foreground="{StaticResource Tema.VerdeOscuro}">
+                    <Run Text="Nombre: "/>
+                    <Run Text="{Binding Personaje.Nombre}"/>
+                </TextBlock>
+
+            </StackPanel>
+
+        </Grid>
+
+        <Grid Grid.Row="1"
+              Height="350"
+              Margin="20 0 20 20"
+              Background="{StaticResource Tema.VerdeOscuro}"
+              >
+
+            <TextBlock 
+                FontFamily="{StaticResource 'Font Canon'}"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                local:CampoDeTextoNumericoProperty.Value="True"
+                Text="{Binding CantidadInicialDeAcciones, Mode=TwoWay, FallbackValue=0}"/>
+
+        </Grid>
+
     </Grid>
+
 </UserControl>

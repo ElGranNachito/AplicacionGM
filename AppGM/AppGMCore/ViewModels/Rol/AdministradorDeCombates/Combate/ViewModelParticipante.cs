@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Windows.Input;
 
 namespace AppGM.Core
@@ -55,7 +56,7 @@ namespace AppGM.Core
         /// <summary>
         /// Tipo del personaje
         /// </summary>
-        public string TipoPersonaje { get; private set; }
+        public string TipoPersonaje => Enum.GetName(controladorParticipante.ControladorPersonaje.modelo.TipoPersonaje);
 
         /// <summary>
         /// Ruta relativa a la imagen del participante
@@ -113,11 +114,10 @@ namespace AppGM.Core
             combate = _combate;
 
             NombreParticipante = controladorParticipante.modelo.Personaje.Nombre;
-            TipoPersonaje = EnumHelpers.ToStringTipoPersonaje(controladorParticipante.ControladorPersonaje.modelo.TipoPersonaje);
             
             handlerTurnoCambio = (ref int turnoAnterior, ref int turnoActual) =>
             {
-                if (combate.Participantes[turnoActual] == this)
+                if (combate.ParticipanteTurnoActual.controladorParticipante.ControladorPersonaje.modelo.Id == this.controladorParticipante.ControladorPersonaje.modelo.Id)
                 {
                     var participanteAnterior = combate.Participantes[turnoAnterior];
                     

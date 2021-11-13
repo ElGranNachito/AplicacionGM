@@ -7,7 +7,7 @@ namespace AppGM.Core
         /// <summary>
         /// Estado de bienestar del master
         /// </summary>
-        public EBienestar EBienestar           { get; set; }
+        public EBienestar Bienestar { get; set; }
 
         /// <summary>
         /// Energia magica del personaje
@@ -20,7 +20,7 @@ namespace AppGM.Core
         /// <summary>
         /// Stat de carisma
         /// </summary>
-        public int Chr        { get; set; }
+        public int Chr { get; set; }
         /// <summary>
         /// Ventaja en stat de carisma
         /// </summary>
@@ -35,16 +35,6 @@ namespace AppGM.Core
         /// Lore del personaje
         /// </summary>
         [MaxLength(5000)]
-        public string Lore     { get; set; }
-        /// <summary>
-        /// Condicion relacionada al lore del personaje
-        /// </summary>
-        [MaxLength(50)]
-        public string Origen   { get; set; } 
-        /// <summary>
-        /// Conceptos dominados por el master
-        /// </summary>
-        [MaxLength(50)]
-        public string Afinidad { get; set; }
+        public string Lore { get; set; }
     }
 }

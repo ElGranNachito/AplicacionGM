@@ -13,6 +13,7 @@
 
     <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Tema.BlancoVerde" Color="#c3ccc7"/>
     <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Tema.Verde" Color="#b4e1d6"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Tema.VerdeSemiOscuro" Color="#0e2e1e"/>
     <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Tema.VerdeOscuro" Color="#06140d"/>
 
     <system:Color x:Key="Tema.Color.BlancoVerde">#c3ccc7</system:Color>

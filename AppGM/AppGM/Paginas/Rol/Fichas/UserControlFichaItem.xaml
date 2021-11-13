@@ -7,52 +7,59 @@
              mc:Ignorable="d" 
              d:DesignHeight="70" d:DesignWidth="250">
 
+    <!-- UserControl que hace uso de ViewModelFichaItem -->
     <!-- Representacion de una ficha en una lista de estas -->
     <UserControl.Template>
+
         <ControlTemplate TargetType="{x:Type UserControl}">
 
-            <Border x:Name="contenido">
+            <Border 
+                x:Name="contenido"
+                Background="{StaticResource Tema.VerdeOscuro}">
 
-            <Grid>
+                <Grid>
 
-                <!--TODO: Ver si hace falta conservar este boton-->
-                <Button 
-                    Style="{StaticResource BotonMenuRol}" 
-                    local:BotonMenuRolConViewModelProperty.Value="{Binding}"
-                    BorderBrush="Aqua"/>
 
-                <StackPanel IsHitTestVisible="False">
+                    <Border Background="{StaticResource Tema.BlancoVerde}"
+                            CornerRadius="35 0 0 35"
+                            Margin="125 0 0 0" 
+                            Visibility="{Binding EstaSeleccionada, Converter={local:BooleanToVisibilityConverterOcultar}}"/>
 
-                    <!-- Nombre -->
-                    <TextBlock
-                        Foreground="White">
-                        <Run Text="Nombre: "/>
-                        <Run Text="{Binding Personaje.Nombre}"/>
-                    </TextBlock>
+                    <!--TODO: Ver si hace falta conservar este boton-->
+                    <Button 
+                        Style="{StaticResource BotonMenuRol}" 
+                        local:BotonMenuRolConViewModelProperty.Value="{Binding}"
+                        />
 
-                    <!-- Clase del servant (Servants) -->
-                    <TextBlock
-                        Foreground="White"
-                        Visibility="{Binding EsServant, Converter={local:BooleanToVisibilityConverterColapsar}}">
-                        <Run Text="Clase: "/>
-                        <Run Text="{Binding Personaje.mEClaseDeServant}"/>
-                    </TextBlock>
+                    <StackPanel IsHitTestVisible="False"
+                                Margin="4">
 
-                    <!-- Clase de su servant (Masters) -->
-                    <TextBlock
-                        Foreground="White"
-                        Visibility="{Binding EsMaster, Converter={local:BooleanToVisibilityConverterColapsar}}">
-                        <Run Text="Clase de su servant: "/>
-                        <Run Text="{Binding Personaje.ClaseServant}"/>
-                    </TextBlock>
+                        <!-- Nombre -->
+                        <TextBlock Foreground="{StaticResource Tema.Verde}">
+                            <Run Text="Nombre: "/>
+                            <Run Text="{Binding Personaje.Nombre}"/>
+                        </TextBlock>
 
-                </StackPanel>
+                        <!-- Tipo de personaje -->
+                        <TextBlock Foreground="{StaticResource Tema.Verde}">
+                            <Run Text="- "/>
+                            <Run Text="{Binding Personaje.TipoDelPersonaje}"/>
+                        </TextBlock>
 
-            </Grid>
+                        <!-- Numero de party -->
+                        <TextBlock Foreground="{StaticResource Tema.Verde}">
+                            <Run Text="- "/>
+                            <Run Text="{Binding Personaje.NumeroDeParty}"/>
+                        </TextBlock>
 
-        </Border>
+                    </StackPanel>
+
+                </Grid>
+
+            </Border>
 
         </ControlTemplate>
+
     </UserControl.Template>
 
 </UserControl>

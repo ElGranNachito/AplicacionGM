@@ -10,7 +10,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
 
     <!-- UserControl que hace uso del ViewModelMapa -->
-    <Grid Background="Black">
+    <Grid Background="{StaticResource Tema.VerdeOscuro}">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="*" MaxHeight="20"/>
@@ -20,7 +20,7 @@
         <!--Seccion de solapas-->
         <Border
             Grid.Row="0"
-            BorderBrush="Aqua"
+            BorderBrush="{StaticResource Tema.BlancoVerde}"
             BorderThickness="0 0 0 2">
 
             <Grid>
@@ -147,14 +147,14 @@
                     />
 
                 <!-- Lista de entidades de personajes y objetos -->
-                <Border Grid.Row="1" BorderBrush="Aqua" BorderThickness="0 2 0 2">
+                <Border Grid.Row="1" BorderBrush="{StaticResource Tema.BlancoVerde}" BorderThickness="0 2 0 2">
 
                     <local:UserControlListaIngresoPosicion Grid.Row="0" DataContext="{Binding Posiciones}"/>
 
                 </Border>
 
                 <!-- Lista de entidades parties -->
-                <Border Grid.Row="2" BorderBrush="Aqua" BorderThickness="0 2 0 2">
+                <Border Grid.Row="2" BorderBrush="{StaticResource Tema.BlancoVerde}" BorderThickness="0 2 0 2">
 
                     <local:UserControlListaIngresoPosicionParty Grid.Row="1" DataContext="{Binding PosicionesParties}"/>
 
@@ -177,7 +177,7 @@
             </ToggleButton>
 
             <!--Columna media contenedora del mapa-->
-            <Border Padding="5" Grid.Column="2" Grid.Row="0" Background="Gray">
+            <Border Padding="5" Grid.Column="2" Grid.Row="0" Background="{StaticResource Tema.BlancoVerde}">
 
                 <Grid>
 
@@ -223,7 +223,7 @@
                         <!-- Mapa -->
                         <Grid Grid.Row="1">
 
-                            <local:ZoomBorder x:Name="border" ClipToBounds="True" Background="Gray">
+                            <local:ZoomBorder x:Name="border" ClipToBounds="True" Background="{StaticResource Tema.BlancoVerde}">
 
                                 <Grid SizeChanged="OnMapaSizeXChanged">
 
@@ -284,7 +284,7 @@
                 </Grid.RowDefinitions>
 
                 <TextBlock Text="Casilla:" 
-                           Foreground="White"
+                           Foreground="{StaticResource Tema.Verde}"
                            FontSize="15"
                            Margin="10, 10, 0, 0"
                            HorizontalAlignment="Left"
@@ -315,7 +315,7 @@
                         Grid.Row="0" Grid.Column="1"
                         Text="Puede ocuparse" 
                         FontSize="13"
-                        Foreground="White"
+                        Foreground="{StaticResource Tema.Verde}"
                         VerticalAlignment="Center"
                         HorizontalAlignment="Left"/>
 

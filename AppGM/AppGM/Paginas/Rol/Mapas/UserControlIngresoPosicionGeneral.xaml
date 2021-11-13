@@ -13,7 +13,7 @@
         <!-- Elementos ocultos en la lista de ingreso posicion -->
         <Border Grid.Row="0" 
                 VerticalAlignment="Top"
-                BorderBrush="Aqua" 
+                BorderBrush="{StaticResource Tema.BlancoVerde}" 
                 BorderThickness="0 2 0 2"
                 >
 
@@ -31,7 +31,7 @@
                 <!-- Campos de ingreso de posicion general -->
 
                 <!--Posicion X-->
-                <TextBlock Grid.Column="0" Text="X: " Margin="10 0 0 0" Foreground="White"/>
+                <TextBlock Grid.Column="0" Text="X: " Margin="10 0 0 0" Foreground="{StaticResource Tema.Verde}"/>
                 <TextBox 
                     Grid.Column="0"
                     local:CampoDeTextoNumericoProperty.Value="True"
@@ -47,7 +47,7 @@
                     Text="{Binding TextoPosicionX, Mode=TwoWay}"/>
 
                 <!--Posicion Y-->
-                <TextBlock Grid.Column="1" Text="Y: " Margin="10 0 0 0" Foreground="White"/>
+                <TextBlock Grid.Column="1" Text="Y: " Margin="10 0 0 0" Foreground="{StaticResource Tema.Verde}"/>
                 <TextBox 
                     Grid.Column="1"
                     local:CampoDeTextoNumericoProperty.Value="True"
