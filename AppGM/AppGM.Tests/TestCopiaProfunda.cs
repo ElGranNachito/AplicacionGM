@@ -36,6 +36,7 @@ namespace AppGM.Tests
 				{
 					new ModeloAlianza
 					{
+						Id = 5,
 						Descripcion = "Descripcion",
 						Nombre = "Alianza de choripaneros",
 						EIconoAlianza = EIconoAlianza.Team_Hetero
@@ -45,6 +46,7 @@ namespace AppGM.Tests
 				{
 					new ModeloEspecialidad
 					{
+						Id = 1,
 						Nombre = "nada"
 					}
 				}
@@ -178,8 +180,8 @@ namespace AppGM.Tests
 
 			var resultadoSegundaCopia = copiaPj.CrearCopiaProfundaEnSubtipo<ModeloPersonaje, ModeloPersonaje>(pj, null, null);
 
-			Assert.Contains(resultadoSegundaCopia.modelosCreadosEliminados.ModelosCreados, m => m is ModeloContrato && m.Id == nuevoContrato.Id);
-			Assert.Contains(resultadoSegundaCopia.modelosCreadosEliminados.ModelosCreados, m => m is ModeloAlianza && m.Id == nuevaAlianza.Id);
+			Assert.Contains(resultadoSegundaCopia.modelosCreadosEliminados.ModelosCreados, m => m is ModeloContrato && m.guid == nuevoContrato.guid);
+			Assert.Contains(resultadoSegundaCopia.modelosCreadosEliminados.ModelosCreados, m => m is ModeloAlianza && m.guid == nuevaAlianza.guid);
 			Assert.True(resultadoSegundaCopia.modelosCreadosEliminados.ModelosCreados.Count == 2);
 		}
 

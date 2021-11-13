@@ -230,7 +230,7 @@
                                     <Grid.Background>
                                         <!-- Fondo mapa -->
                                         <ImageBrush
-                                            ImageSource="{Binding PathImagen, 
+                                            ImageSource="{Binding ImagenMapa, 
                                             Converter={local:FullPathToImageConverter}}"/>
                                     </Grid.Background>
 

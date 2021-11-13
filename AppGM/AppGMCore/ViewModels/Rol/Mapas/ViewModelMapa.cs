@@ -137,7 +137,7 @@ namespace AppGM.Core
         /// <summary>
         /// Ruta completa a la imagen del mapa
         /// </summary>
-        public string PathImagen => Path.Combine(SistemaPrincipal.ControladorDeArchivos.DirectorioImagenesMapas, $"{controladorMapa.modelo.NombreMapa}.{Enum.GetName(controladorMapa.modelo.EFormatoImagen)}");
+        public byte[] ImagenMapa => controladorMapa.modelo.Imagen;
 
         /// <summary>
         /// Tamaño del canvas en el eje X

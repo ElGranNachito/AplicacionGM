@@ -75,7 +75,7 @@
                             <Border.Background>
                                 <ImageBrush 
                                     Stretch="Uniform"
-                                    ImageSource="{Binding PathImagen, 
+                                    ImageSource="{Binding Imagen, 
                                     Converter={local:FullPathToImageConverter}}"/>
                             </Border.Background>
 

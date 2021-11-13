@@ -685,11 +685,11 @@ namespace AppGM.Core.Migrations
                     b.Property<int?>("CombateAlQuePerteneceId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("EFormatoImagen")
-                        .HasColumnType("INTEGER");
-
                     b.Property<bool>("EsValido")
                         .HasColumnType("INTEGER");
+
+                    b.Property<byte[]>("Imagen")
+                        .HasColumnType("BLOB");
 
                     b.Property<string>("NombreMapa")
                         .HasMaxLength(50)
@@ -805,6 +805,9 @@ namespace AppGM.Core.Migrations
                     b.Property<int>("Hp")
                         .HasColumnType("INTEGER");
 
+                    b.Property<byte[]>("Imagen")
+                        .HasColumnType("BLOB");
+
                     b.Property<int>("Int")
                         .HasColumnType("INTEGER");
 
@@ -818,14 +821,8 @@ namespace AppGM.Core.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("NombreArchivoImagen")
-                        .HasColumnType("varchar(260)");
-
                     b.Property<int>("NumeroParty")
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("PathImagenRelativo")
-                        .HasColumnType("varchar(260)");
 
                     b.Property<decimal>("PesoCargado")
                         .HasColumnType("TEXT");

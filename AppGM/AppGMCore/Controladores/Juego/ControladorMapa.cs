@@ -39,12 +39,6 @@ namespace AppGM.Core
         #region Funciones
 
         /// <summary>
-        /// Obtiene la extension de la imagen del mapa
-        /// </summary>
-        /// <returns>extension de la imagen del mapa</returns>
-        public string ObtenerExtension() => modelo.EFormatoImagen.Valor();
-
-        /// <summary>
         /// Añade una unidad al mapa
         /// </summary>
         /// <param name="unidad">Unidad que añadir</param>

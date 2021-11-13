@@ -22,6 +22,11 @@ namespace AppGM.Core
         public string Nombre { get; set; }
 
         /// <summary>
+        /// Bytes de la imagen
+        /// </summary>
+        public byte[] Imagen { get; set; }
+
+        /// <summary>
         /// Puede ser un personaje Master, Servant, Invocacion, o NPC
         /// </summary>
         public ETipoPersonaje TipoPersonaje { get; set; }
@@ -55,18 +60,6 @@ namespace AppGM.Core
         /// Cantidad de peso siendo cargado actualmente
         /// </summary>
         public decimal PesoCargado { get; set; }
-
-        /// <summary>
-        /// Ruta relativa a la imagen del personaje
-        /// </summary>
-        [Column(TypeName = "varchar(260)")]
-        public string PathImagenRelativo { get; set; }
-
-        /// <summary>
-        /// Ruta completa a la imagen del personaje
-        /// </summary>
-        [Column(TypeName = "varchar(260)")]
-        public string NombreArchivoImagen { get; set; }
 
         /// <summary>
         /// Estado del personaje (en combate o no en combate)

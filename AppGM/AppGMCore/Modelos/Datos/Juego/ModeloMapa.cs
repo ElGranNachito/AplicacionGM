@@ -16,9 +16,9 @@ namespace AppGM.Core
         public string NombreMapa { get; set; }
 
         /// <summary>
-        /// Formato de la imagen del mapa
+        /// Imagen del mapa
         /// </summary>
-        public EFormatoImagen EFormatoImagen { get; set; }
+        public byte[] Imagen { get; set; }
 
         /// <summary>
         /// Posiciones de las unidades dentro de este mapa

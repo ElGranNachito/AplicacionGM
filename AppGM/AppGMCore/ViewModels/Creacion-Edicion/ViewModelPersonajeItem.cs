@@ -67,7 +67,7 @@ namespace AppGM.Core
 				});
 			}
 
-			PathImagen = Path.Combine(SistemaPrincipal.ControladorDeArchivos.DirectorioImagenes, modeloPersonaje.NombreArchivoImagen);
+			Imagen = ControladorGenerico.modelo.Imagen;
 		}
 
 		protected override void ActualizarGruposDeBotones()

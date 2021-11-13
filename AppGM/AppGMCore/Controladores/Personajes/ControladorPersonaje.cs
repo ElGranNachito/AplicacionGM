@@ -569,23 +569,6 @@ namespace AppGM.Core
             return SistemaPrincipal.ObtenerControlador<ControladorAmbiente, ModeloAmbiente>(participante.CombateActual.AmbienteDelCombate);
         }
 
-        /// <summary>
-        /// Obtiene el path a la imagen del personaje
-        /// </summary>
-        /// <param name="nivelDelDirectorioActual">Nivel del directorio en el que se encuentra el control con respecto a la carpeta Media</param>
-        /// <returns>Ruta absoluta de la imagen del personaje</returns>
-        public string ObtenerPathAImagen(byte nivelDelDirectorioActual)
-        {
-            StringBuilder sb = new StringBuilder();
-
-            for(; nivelDelDirectorioActual > 0; --nivelDelDirectorioActual)
-                sb.Append("../");
-
-            sb.Append(modelo.PathImagenRelativo + Enum.GetName(typeof(EFormatoImagen), modelo.FormatoImagen));
-
-            return sb.ToString();
-        }
-
         public override bool Equals(string cadena)
         {
 	        return Regex.IsMatch(modelo.Nombre, $"*{cadena}*");

@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Input;
 
 namespace AppGM.Core
 {
@@ -8,6 +10,15 @@ namespace AppGM.Core
 	/// </summary>
 	public class ViewModelSeleccionDeControlador : ViewModelConResultado<ViewModelSeleccionDeControlador>
 	{
+		#region Eventos
+
+		/// <summary>
+		/// Evento disparado cuando el usuario selecciona un item
+		/// </summary>
+		public event Action<ViewModelItemListaBase, ControladorBase> OnControladorSeleccionado = delegate { };  
+
+		#endregion
+
 		#region Campos & Propiedades
 
 		//------------------------------------CAMPOS----------------------------------------
@@ -72,6 +83,11 @@ namespace AppGM.Core
 		/// </summary>
 		public ControladorBase ControladorSeleccionado => ItemSeleccionado.Controlador;
 
+		/// <summary>
+		/// Comando que se ejecuta cuando el usuario presiona el boton para seleccion un controlador
+		/// </summary>
+		public ICommand ComandoSeleccionarControlador { get; private set; }
+
 		#endregion
 
 		#region Constructores
@@ -92,6 +108,33 @@ namespace AppGM.Core
 
 				return nuevoVm;
 			}));
+
+			ComandoSeleccionarControlador = new Comando(async () =>
+			{
+				await SistemaPrincipal.MostrarMensajeAsync(this, "Seleccionar Controlador", true, 400, 300);
+
+				ControladoresConcordantes.Elementos.Clear();
+
+				if (ItemSeleccionado != null && Resultado == EResultadoViewModel.Aceptar)
+					OnControladorSeleccionado(ItemSeleccionado, ControladorSeleccionado);
+			});
+		}
+
+		#endregion
+
+		#region Metodos
+
+		/// <summary>
+		/// Selecciona un controlador
+		/// </summary>
+		/// <param name="controlador">Controlador que seleccionar</param>
+		public void SeleccionarControlador(ControladorBase controlador)
+		{
+			var nuevoItemSeleccionado = mControladoresDisponibles.Find(c => c == controlador);
+
+			ItemSeleccionado = nuevoItemSeleccionado.CrearViewModelItem();
+
+			OnControladorSeleccionado(ItemSeleccionado, ControladorSeleccionado);
 		}
 
 		#endregion

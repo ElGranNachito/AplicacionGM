@@ -120,7 +120,9 @@
 
                     Foreground="Black"
 
-                    Background="Transparent"/>
+                    Background="Transparent"
+                    
+                    Command="{Binding ComandoSalir}"/>
 
                 <!--Marco-->
                 <Image
@@ -164,14 +166,9 @@
                         MinWidth="200"
                         Source="../../../Media/Imagenes/Tiradas/Iconos/Personaje.png">
                         
-                        <Border>
-
-                            <Button
-                                Content="Seleccionar usuario"
-                                BorderThickness="0 "
-                                
-                                Command="{Binding ComandoSeleccionarUsuario}"/>
-                        </Border>
+                        <local:UserControlSeleccionControlador
+                            Background="Transparent"
+                            Content="Seleccionar usuario"/>
                        
                     </local:UserControlConImagencitaAlCostado>
 
@@ -321,6 +318,20 @@
 
                     </local:UserControlConImagencitaAlCostado>
 
+                    <local:UserControlConImagencitaAlCostado
+                        Background="{StaticResource Tema.VerdeOscuro}"
+                        Margin="0 40 0 0"
+                        MinHeight="40"
+                        MaxHeight="40"
+                        MaxWidth="200"
+                        Source="../../../Media/Imagenes/Tiradas/Iconos/Tiradas.png">
+
+                        <local:UserControlComboBoxConDescripcion
+                            Descripcion="Tipo de la tirada:"
+                            DataContext="{Binding ViewModelComboBoxTipoTirada}"/>
+
+                    </local:UserControlConImagencitaAlCostado>
+
                 </StackPanel>
 
                 <!--Panel seleccion objetivo-->
@@ -357,6 +368,8 @@
                             MaxWidth="200"
                             Source="../../../Media/Imagenes/Tiradas/Iconos/Objetivo.png">
 
+                            <local:UserControlSeleccionControlador
+                                Content="Objetivo"/>
                         </local:UserControlConImagencitaAlCostado>
 
                         <RadioButton

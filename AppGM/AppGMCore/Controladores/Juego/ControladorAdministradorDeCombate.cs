@@ -74,7 +74,8 @@ namespace AppGM.Core
             for (int i = 0; i < modelo.Mapas.Count; ++i)
                 ControladoresMapas.Add(SistemaPrincipal.ObtenerControlador<ControladorMapa, ModeloMapa>(modelo.Mapas[i]));
 
-            ControladoresParticipantes[0].modelo.EsSuTurno = true;
+            if(ControladoresParticipantes.Count > 0)
+				ControladoresParticipantes[0].modelo.EsSuTurno = true;
         }
 
         #endregion

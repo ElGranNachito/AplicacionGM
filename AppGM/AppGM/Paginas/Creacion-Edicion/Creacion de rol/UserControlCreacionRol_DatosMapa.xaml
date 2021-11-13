@@ -68,7 +68,7 @@
                 <Border.Background>
                     <ImageBrush 
                         x:Name="Fondo"
-                        ImageSource="{Binding PathAbsolutoImagenMapa, Converter={local:FullPathToImageConverter}}"/>
+                        ImageSource="{Binding ImagenMapa, Converter={local:FullPathToImageConverter}}"/>
                 </Border.Background>
 
             </Border>

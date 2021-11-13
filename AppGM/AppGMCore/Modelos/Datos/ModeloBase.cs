@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AppGM.Core
 {
@@ -12,6 +14,12 @@ namespace AppGM.Core
     /// </summary>
     public partial class ModeloBase : ModeloBaseSK
     {
+        /// <summary>
+        /// Guid del modelo. Utilizado para identificarlos en la copia profunda
+        /// </summary>
+        [NotMapped]
+	    public Guid guid = Guid.NewGuid(); 
+
         /// <summary>
         /// Contiene el valor de <see cref="Id"/>
         /// </summary>

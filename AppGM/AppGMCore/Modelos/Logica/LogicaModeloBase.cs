@@ -255,8 +255,8 @@ namespace AppGM.Core
 				//por si no podemos escribir a la propiedad
 				try
 				{
-					//Si la propiedad actual es una lista...
-					if (typeof(IList).IsAssignableFrom(propiedadActual.PropertyType))
+					//Si la propiedad actual es una lista generica...
+					if (typeof(IList).IsAssignableFrom(propiedadActual.PropertyType) && propiedadActual.PropertyType.GenericTypeArguments.Length > 0)
 					{
 						//Si es una lista de modelos...
 						if (propiedadActual.EsListaDe<ModeloBase>(modeloQueCopiar, out var listaModeloOrigen))
@@ -264,18 +264,17 @@ namespace AppGM.Core
 							//Si estamos copiando a un modelo existente...
 							if (copiandoAUnModeloExistente)
 							{
-								//Creamos listas con los modelos existente en el destino y el modelo origen
-								var modelosRestantesDestino = (Activator.CreateInstance(propiedadActual.PropertyType, propiedadActual.GetValue(modeloDestino)) as IList).Cast<ModeloBase>().ToList();
-								var modelosRestantesModeloActual = (Activator.CreateInstance(propiedadActual.PropertyType, propiedadActual.GetValue(modeloQueCopiar)) as IList).Cast<ModeloBase>().ToList();
 								var listaModeloDestino = propiedadActual.GetValue(modeloDestino) as IList;
 								var listaModeloDestinoCasteada = listaModeloDestino.Cast<ModeloBase>().ToList();
+
+								listaModeloDestino.Clear();
 
 								//Por cada elemento en la lista del modelo de origen...
 								for (int i = 0; i < listaModeloOrigen.Count; ++i)
 								{
 									ModeloBase elementoActualListaOrigen = listaModeloOrigen[i];
 
-									var equivalenteEnDestino = elementoActualListaOrigen.Id == 0 ? null : listaModeloDestinoCasteada.FirstOrDefault(m => m.Id == elementoActualListaOrigen.Id);
+									var equivalenteEnDestino = listaModeloDestinoCasteada.FirstOrDefault(m => m.guid == elementoActualListaOrigen.guid);
 
 									//Si no hemos copiado este modelo aun, lo copiamos a su par en el destino
 									if (!modelosYaCopiados.ContainsKey(elementoActualListaOrigen))
@@ -287,36 +286,24 @@ namespace AppGM.Core
 											modeloQueAñadir = metodoClonar.MakeGenericMethod(elementoActualListaOrigen.GetType()).Invoke(elementoActualListaOrigen, new object[] { equivalenteEnDestino, null, outModelosEliminados, outModelosAñadidos, referenciasQueReemplazar, modelosYaCopiados });
 										}
 
-										if (equivalenteEnDestino == null)
-										{
-											listaModeloDestinoCasteada.Add((ModeloBase)modeloQueAñadir);
-										}
+										listaModeloDestino.Add(modeloQueAñadir);
 									}
 									//Si lo hace entonces asignamos el modelo correspondiente del destino a la copia
 									else
 									{
-										if (equivalenteEnDestino != null)
-										{
-											listaModeloDestinoCasteada.Remove(equivalenteEnDestino);
-										}
 
-										listaModeloDestinoCasteada.Add(modelosYaCopiados[elementoActualListaOrigen]);
+										listaModeloDestino.Add(modelosYaCopiados[elementoActualListaOrigen]);
 									}
 								}
 
-								listaModeloDestino.Clear();
+								var listaModeloDestinoActualCasteada = listaModeloDestino.Cast<ModeloBase>().ToList();
 
-								foreach (var modelo in listaModeloDestinoCasteada)
-									listaModeloDestino.Add(modelo);
-
-								var modelosEliminadosDestino = listaModeloDestinoCasteada.FindAll(m => modelosRestantesModeloActual.All(ma => ma.Id != m.Id));
-
-								foreach (var modelo in modelosEliminadosDestino)
-									listaModeloDestino.Remove(modelo);
+								var modelosEliminadosDestino = listaModeloDestinoCasteada.FindAll(m => listaModeloDestinoActualCasteada.All(ma => ma.guid != m.guid));
+								var modelosAñadidos = listaModeloDestinoActualCasteada.FindAll(m => listaModeloDestinoCasteada.All(ma => ma.guid != m.guid));
 
 								//Los modelos restantes, es decir los que no se encontraban en ambas listas, son modelos que fueron eliminados, si 
 								//se encontraban en el destino, o añadidos, si se encontraban en el modelo de origen
-								outModelosAñadidos?.AddRange(listaModeloDestinoCasteada.FindAll(m => modelosRestantesDestino.All(ma => ma.Id != m.Id)));
+								outModelosAñadidos?.AddRange(modelosAñadidos);
 								outModelosEliminados?.AddRange(modelosEliminadosDestino);
 							}
 							//Si no estamos copiando a un modelo existente...
@@ -354,6 +341,11 @@ namespace AppGM.Core
 									}
 								}
 							}
+						}
+						else
+						{
+							//Esto copia directamente la referencia a la coleccion asi que espero que no me cague mas adelante en algun caso raro
+							propiedadActual.SetValue(modeloDestino, propiedadActual.GetValue(modeloQueCopiar));
 						}
 					}
 					//Si la propiedad actual es un modelo

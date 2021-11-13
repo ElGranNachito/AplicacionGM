@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using CoolLogs;
 
 namespace AppGM.Core
 {
@@ -48,21 +49,19 @@ namespace AppGM.Core
             }
 		}
 
-        public string PathImagen
+        public object Imagen
         {
 			get
 			{
-                if(ModeloCreado.NombreArchivoImagen.IsNullOrWhiteSpace())
+                if(ModeloCreado.Imagen == null)
                     return Path.Combine(SistemaPrincipal.ControladorDeArchivos.DirectorioImagenes, "camarita.png");
 
-                return Path.Combine(SistemaPrincipal.ControladorDeArchivos.DirectorioImagenes, ModeloCreado.NombreArchivoImagen); ;
-            }
+                return ModeloCreado.Imagen;
+			}
 			set
 			{
-                if (!File.Exists(value))
-                    return;
-
-                ModeloCreado.NombreArchivoImagen = value;
+				if (value is byte[] bytesImagen)
+					ModeloCreado.Imagen = bytesImagen;
 			}
         }
 
@@ -355,11 +354,18 @@ namespace AppGM.Core
 		            "Seleccionar imagen para personaje", "Formatos de imagen (*.jpg, *.png)|*.jpg;*.png",
 		            SistemaPrincipal.Aplicacion.VentanaActual);
 
-	            archivoSeleccionado.CopiarADirectorio(SistemaPrincipal.ControladorDeArchivos.DirectorioImagenes, true);
+	            try
+	            {
+		            using BinaryReader bReader =
+			            new BinaryReader(File.Open(archivoSeleccionado.Ruta, FileMode.Open, FileAccess.Read));
 
-	            ModeloCreado.NombreArchivoImagen = archivoSeleccionado.Nombre;
-                
-                DispararPropertyChanged(nameof(PathImagen));
+		            Imagen = bReader.ReadBytes((int) bReader.BaseStream.Length);
+	            }
+	            catch (Exception ex)
+	            {
+		            SistemaPrincipal.LoggerGlobal.Log(
+			            $"Error al intentar leer imagen {archivoSeleccionado.Nombre}.{Environment.NewLine}{ex.Message}", ESeveridad.Error);
+	            }
             });
 
             ComandoGuardar = new Comando(async () =>

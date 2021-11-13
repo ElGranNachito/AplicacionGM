@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -21,30 +22,63 @@ namespace AppGM
         
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            string tmp = (string) value;
+	        if (value is null)
+		        return null;
 
-            if (String.IsNullOrEmpty(tmp))
-                return null;
+	        BitmapImage nuevaImagen = null;
 
-            //Si la BitmapImage ya existe entonces la obtenemos
-            if (mImagenesCacheadas.ContainsKey(tmp))
-                return mImagenesCacheadas[tmp];
+            //Si la fuente de la imagen es un arreglo de bytes
+	        if (value is byte[] bytesImagen)
+	        {
+		        nuevaImagen = new BitmapImage();
 
-            //Si no existe la creamos y luego la añadimos al diccionario
-            BitmapImage bitmapImage = new BitmapImage(new Uri(tmp, UriKind.Absolute));
+		        using MemoryStream streamImagen = new MemoryStream(bytesImagen);
+
+                nuevaImagen.BeginInit();
+
+                nuevaImagen.CreateOptions = BitmapCreateOptions.PreservePixelFormat;
+                nuevaImagen.CacheOption   = BitmapCacheOption.OnLoad;
+                nuevaImagen.UriSource     = null;
+                nuevaImagen.StreamSource  = streamImagen;
+
+                nuevaImagen.EndInit();
+	        }
+            //Si es un path
+	        else
+	        {
+		        string tmp = (string)value;
+
+		        if (!File.Exists(tmp))
+		        {
+                    SistemaPrincipal.LoggerGlobal.Log($"Se intento cargar una imagen que no existe ({tmp})", ESeveridad.Error);
+
+			        return null;
+		        }
+
+		        if (String.IsNullOrEmpty(tmp))
+			        return null;
+
+		        //Si la BitmapImage ya existe entonces la obtenemos
+		        if (mImagenesCacheadas.ContainsKey(tmp))
+			        return mImagenesCacheadas[tmp];
+
+		        //Si no existe la creamos y luego la añadimos al diccionario
+		        nuevaImagen = new BitmapImage(new Uri(tmp, UriKind.Absolute));
+
+		        mImagenesCacheadas.Add(tmp, nuevaImagen);
+            }
             
-            mImagenesCacheadas.Add(tmp, bitmapImage);
 
-            if (bitmapImage.CanFreeze)
+            if (nuevaImagen.CanFreeze)
             {
-                bitmapImage.Freeze();
+	            nuevaImagen.Freeze();
             }
             else
 			{
-                SistemaPrincipal.LoggerGlobal.Log($"No se pudo congelar imagen {tmp}", ESeveridad.Advertencia);
+                SistemaPrincipal.LoggerGlobal.Log($"No se pudo congelar imagen {nuevaImagen}", ESeveridad.Advertencia);
 			}
             
-            return bitmapImage;
+            return nuevaImagen;
         }
 
         public FullPathToImageConverter()

@@ -12,9 +12,9 @@ namespace AppGM.Core
 		//-------------------------------------------------CAMPOS---------------------------------------------------
 
 		/// <summary>
-		/// Contiene el valor de <see cref="PathImagen"/>
+		/// Contiene el valor de <see cref="Imagen"/>
 		/// </summary>
-		private string mPathImagen;
+		private object mImagen;
 
 		/// <summary>
 		/// Contiene el valor de <see cref="EstaSeleccionado"/>
@@ -66,9 +66,9 @@ namespace AppGM.Core
 		public ViewModelListaDeElementos<ViewModelCaracteristicaItem> CaracteristicasItem { get; set; } = new ViewModelListaDeElementos<ViewModelCaracteristicaItem>();
 
 		/// <summary>
-		/// Indica si <see cref="PathImagen"/> es valido
+		/// Indica si <see cref="Imagen"/> es valido
 		/// </summary>
-		public bool TieneImagen => File.Exists(PathImagen);
+		public bool TieneImagen => mImagen is not null;
 
 		/// <summary>
 		/// Indica si este item representa a un controlador
@@ -93,15 +93,15 @@ namespace AppGM.Core
 		/// <summary>
 		/// Ruta completa a la imagen de este item
 		/// </summary>
-		public string PathImagen
+		public object Imagen
 		{
-			get => mPathImagen;
+			get => mImagen;
 			set
 			{
-				if (value == mPathImagen)
+				if (value == mImagen)
 					return;
 
-				mPathImagen = value;
+				mImagen = value;
 
 				DispararPropertyChanged(nameof(TieneImagen));
 			}

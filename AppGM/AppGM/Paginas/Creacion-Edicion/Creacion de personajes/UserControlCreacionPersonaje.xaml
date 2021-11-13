@@ -112,7 +112,7 @@
 
                                 <Border.Background>
                                     <ImageBrush
-                                        ImageSource="{Binding PathImagen, Converter={local:FullPathToImageConverter}}"/>
+                                        ImageSource="{Binding Imagen, Converter={local:FullPathToImageConverter}}"/>
                                 </Border.Background>
 
                                 <Border.InputBindings>

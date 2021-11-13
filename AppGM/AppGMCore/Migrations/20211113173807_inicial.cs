@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AppGM.Core.Migrations
 {
-    public partial class inicia : Migration
+    public partial class inicial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -184,6 +184,7 @@ namespace AppGM.Core.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     RolId = table.Column<int>(type: "INTEGER", nullable: true),
                     Nombre = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
+                    Imagen = table.Column<byte[]>(type: "BLOB", nullable: true),
                     TipoPersonaje = table.Column<int>(type: "INTEGER", nullable: false),
                     NumeroParty = table.Column<int>(type: "INTEGER", nullable: false),
                     MaxHp = table.Column<int>(type: "INTEGER", nullable: false),
@@ -200,8 +201,6 @@ namespace AppGM.Core.Migrations
                     VentajaLck = table.Column<int>(type: "INTEGER", nullable: false),
                     PesoMaximoCargable = table.Column<decimal>(type: "TEXT", nullable: false),
                     PesoCargado = table.Column<decimal>(type: "TEXT", nullable: false),
-                    PathImagenRelativo = table.Column<string>(type: "varchar(260)", nullable: true),
-                    NombreArchivoImagen = table.Column<string>(type: "varchar(260)", nullable: true),
                     EstaEnCombate = table.Column<bool>(type: "INTEGER", nullable: false),
                     FormatoImagen = table.Column<int>(type: "INTEGER", nullable: false),
                     PosicionId = table.Column<int>(type: "INTEGER", nullable: true),
@@ -259,7 +258,7 @@ namespace AppGM.Core.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     NombreMapa = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
-                    EFormatoImagen = table.Column<int>(type: "INTEGER", nullable: false),
+                    Imagen = table.Column<byte[]>(type: "BLOB", nullable: true),
                     RolId = table.Column<int>(type: "INTEGER", nullable: true),
                     CombateAlQuePerteneceId = table.Column<int>(type: "INTEGER", nullable: true),
                     EsValido = table.Column<bool>(type: "INTEGER", nullable: false)

@@ -24,7 +24,7 @@ namespace AppGM.Core
         public ViewModelHabilidadItem(ControladorHabilidad _habilidad)
 	        :base(_habilidad)
         {
-	        PathImagen = Path.Combine(
+	        Imagen = Path.Combine(
 							Path.Combine(
 								SistemaPrincipal.ControladorDeArchivos.DirectorioImagenes, "Habilidades" + Path.DirectorySeparatorChar),
 								ControladorGenerico.TipoHabilidad + ".png");
