@@ -1,7 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using System.Dynamic;
-using System.Text;
+﻿using System.ComponentModel;
 using System.Windows.Input;
 
 namespace AppGM.Core
@@ -11,7 +8,7 @@ namespace AppGM.Core
     /// </summary>
     public class ViewModelParticipante : ViewModel
     {
-        #region Campos & Propiedades
+        #region Miembros
 
         //----------------------------------CAMPOS-----------------------------------
 
@@ -36,9 +33,19 @@ namespace AppGM.Core
 
 
         /// <summary>
-        /// Comando que se ejecuta al presionar el boton de eliminar participante.
+        /// Comando que se ejecuta al presionar el boton 'Eliminar participante'.
         /// </summary>
         public ICommand ComandoEliminarParticipante { get; set; }
+
+        /// <summary>
+        /// Comando que se ejecuta al presionar el menu 'Accion'.
+        /// </summary>
+        public ICommand ComandoAñadirAccion { get; set; }
+
+        /// <summary>
+        /// Comando que se ejecuta al presionar el menu 'Ver personaje'.
+        /// </summary>
+        public ICommand ComandoCrearMensajeFichaPersonaje { get; set; }
 
         /// <summary>
         /// Nombre del participante
@@ -72,6 +79,21 @@ namespace AppGM.Core
         }
 
         /// <summary>
+        /// Total de acciones realizadas desde que comenzo su turno.
+        /// </summary>
+        public int AccionesRealizadas => controladorParticipante.modelo.AccionesRealizadasEnTurno;
+
+        /// <summary>
+        /// Total de acciones restantes hasta alcanzar el limite por turno.
+        /// </summary>
+        public int AccionesRestantes => controladorParticipante.modelo.AccionesRestantes;
+
+        /// <summary>
+        /// Total de acciones posibles por turno.
+        /// </summary>
+        public int TotalAccionesPosibles => controladorParticipante.modelo.TotalAccionesPorTurno;
+
+        /// <summary>
         /// Indica si actualmente es el turno del personaje
         /// </summary>
         public bool EsSuTurno => controladorParticipante.modelo.EsSuTurno;
@@ -99,14 +121,19 @@ namespace AppGM.Core
                 {
                     var participanteAnterior = combate.Participantes[turnoAnterior];
                     
+                    participanteAnterior.controladorParticipante.modelo.AccionesRestantes         = 0;
+                    participanteAnterior.controladorParticipante.modelo.AccionesRealizadasEnTurno = 0;
+
+                    participanteAnterior.DispararPropertyChanged(nameof(participanteAnterior.AccionesRestantes));
+                    participanteAnterior.DispararPropertyChanged(nameof(participanteAnterior.AccionesRealizadas));
                     participanteAnterior.DispararPropertyChanged(nameof(participanteAnterior.EsSuTurno));
 
                     DispararPropertyChanged(new PropertyChangedEventArgs(nameof(EsSuTurno)));
                 }
-
             };
 
             ComandoEliminarParticipante = new Comando(EliminarParticipante);
+            ComandoAñadirAccion         = new Comando(AñadirAccion);
 
             combate.HandlerTurnoCambio += handlerTurnoCambio;
         }
@@ -128,6 +155,27 @@ namespace AppGM.Core
             controladorParticipante.Eliminar();
 
             SistemaPrincipal.GuardarDatosAsync();
+        }
+
+        /// <summary>
+        /// Funcion llamada para añadir una nueva accion al participante
+        /// </summary>
+        private async void AñadirAccion()
+        {
+            //VM para el contenido del popup
+            ViewModelCrearAccionParticipante vm = new ViewModelCrearAccionParticipante(this);
+
+            //Se crea el popup y se espera a que se cierre
+            await SistemaPrincipal.MostrarMensajeAsync(vm, "Añadir accion", true, -1, -1);
+
+            //Si el resultado es valido entonces añadimos la nueva accion
+            if (vm.vmResultado is ViewModelAccion vmNuevaAccion)
+            {
+                controladorParticipante.ControladoresAcciones.Add(vmNuevaAccion.accion);
+
+                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(AccionesRestantes)));
+                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(AccionesRealizadas)));
+            }
         }
 
         #endregion

@@ -10,7 +10,13 @@ namespace AppGM
     /// </summary>
     public class ViewModelMenuSeleccionTipoFicha : ViewModel
     {
-        #region Propiedades
+        #region Miembros
+
+        // Campos ---
+
+
+        // Propiedades ---
+
 
         /// <summary>
         /// Margen de las cartas que representan los tipos de las fichas disponibles
@@ -40,30 +46,6 @@ namespace AppGM
         /// </summary>
         public ICommand ComandoBotonFichasNPCs { get; set; }
 
-        //TODO: Seguramente remover todas estas listas ya que podemos acceder a ellas desde el sistema principal----------------
-
-        /// <summary>
-        /// Lista de los <see cref="ModeloServant"/> disponibles
-        /// </summary>
-        public List<ModeloServant> Servants { get; set; }
-
-        /// <summary>
-        /// Lista de los <see cref="ModeloMaster"/> disponibles
-        /// </summary>
-        public List<ModeloMaster> Masters { get; set; }
-
-        /// <summary>
-        /// Lista de los <see cref="ModeloInvocacion"/> disponibles
-        /// </summary>
-        public List<ModeloInvocacion> Invocaciones { get; set; }
-
-        /// <summary>
-        /// Lista de los <see cref="ModeloPersonaje"/> disponibles
-        /// </summary>
-        public List<ModeloPersonaje> NPCs { get; set; }
-
-        //TODO----------------------------------------------------------------------------------------------------------------------
-
         #endregion
 
         #region Constructores
@@ -81,10 +63,6 @@ namespace AppGM
             List<ModeloInvocacion> _invocaciones,
             List<ModeloPersonaje> _npcs)
         {
-            Servants     = _servants;
-            Masters      = _masters;
-            Invocaciones = _invocaciones;
-            NPCs         = _npcs;
 
             EstablecerComandos();
 
@@ -104,47 +82,6 @@ namespace AppGM
                 DispararPropertyChanged(new PropertyChangedEventArgs(nameof(AnchoMargenCartas)));
             };
 
-            Servants = new List<ModeloServant>
-            {
-                new ModeloServant
-                {
-                    Nombre = "King Pellinore",
-                    ClaseServant = EClaseServant.Saber,
-                    Str = ERango.A.AValorNumerico(),
-                    End = ERango.A.AValorNumerico(),
-                    Agi = ERango.C.AValorNumerico(),
-                    Int = ERango.D.AValorNumerico(),
-                    Lck = ERango.B.AValorNumerico()
-                }
-            };
-
-            Masters = new List<ModeloMaster>
-            {
-                new ModeloMaster
-                {
-                    Nombre = "Charles",
-                    ClaseServant = EClaseServant.Saber,
-                    Origen = "Traicion",
-                    Afinidad = "Escudo",
-                    Str = 14,
-                    Agi = 13,
-                    End = 14,
-                    Int = 15,
-                    Lck = 14,
-                    Chr = 8,
-
-                    Caracteristicas = new ModeloCaracteristicas
-                    {
-                       Fisico = "1.90, Mamadisimo",
-                       Arquetipo = EArquetipo.Mago,
-                       Edad = 32,
-                       ManoDominante = EManoDominante.Derecha,
-                       Sexo = ESexo.Masculino,
-                       Nacionalidad = "Britanico"
-                    }
-                }
-            };
-
             EstablecerComandos();
         }
         #endregion
@@ -159,11 +96,11 @@ namespace AppGM
             ComandoBotonFichasServants = new Comando(() =>
             {
                 //Creamos una variable tempoal para almacenar los view models para cada item
-                List<ViewModelFichaItem> fichasTemp = new List<ViewModelFichaItem>(Servants.Count);
+                List<ViewModelFichaItem> fichasTemp = new List<ViewModelFichaItem>(SistemaPrincipal.DatosRolSeleccionado.Servants.Count);
 
                 //Creamos los view models
-                for (int i = 0; i < Servants.Count; ++i)
-                    fichasTemp.Add(new ViewModelFichaItem(Servants[i]));
+                for (int i = 0; i < SistemaPrincipal.DatosRolSeleccionado.Servants.Count; ++i)
+                    fichasTemp.Add(new ViewModelFichaItem(SistemaPrincipal.DatosRolSeleccionado.Servants[i]));
 
                 //Cambiamos las fichas actuales por la variable temporal que creamos
                 SistemaPrincipal.ObtenerInstancia<ViewModelListaFichasVistaFichas>().ViewModelListaFichas.FichaItems = fichasTemp;
@@ -175,10 +112,10 @@ namespace AppGM
 
             ComandoBotonFichasMasters = new Comando(() =>
             {
-                List<ViewModelFichaItem> fichasTemp = new List<ViewModelFichaItem>(Masters.Count);
+                List<ViewModelFichaItem> fichasTemp = new List<ViewModelFichaItem>(SistemaPrincipal.DatosRolSeleccionado.Masters.Count);
 
-                for (int i = 0; i < Masters.Count; ++i)
-                    fichasTemp.Add(new ViewModelFichaItem(Masters[i]));
+                for (int i = 0; i < SistemaPrincipal.DatosRolSeleccionado.Masters.Count; ++i)
+                    fichasTemp.Add(new ViewModelFichaItem(SistemaPrincipal.DatosRolSeleccionado.Masters[i]));
 
                 SistemaPrincipal.ObtenerInstancia<ViewModelListaFichasVistaFichas>().ViewModelListaFichas.FichaItems = fichasTemp;
 
@@ -188,10 +125,10 @@ namespace AppGM
 
             ComandoBotonFichasInvocaciones = new Comando(() =>
             {
-                List<ViewModelFichaItem> fichasTemp = new List<ViewModelFichaItem>(Invocaciones.Count);
+                List<ViewModelFichaItem> fichasTemp = new List<ViewModelFichaItem>(SistemaPrincipal.DatosRolSeleccionado.Invocaciones.Count);
 
-                for (int i = 0; i < Invocaciones.Count; ++i)
-                    fichasTemp.Add(new ViewModelFichaItem(Invocaciones[i]));
+                for (int i = 0; i < SistemaPrincipal.DatosRolSeleccionado.Invocaciones.Count; ++i)
+                    fichasTemp.Add(new ViewModelFichaItem(SistemaPrincipal.DatosRolSeleccionado.Invocaciones[i]));
 
                 SistemaPrincipal.ObtenerInstancia<ViewModelListaFichasVistaFichas>().ViewModelListaFichas.FichaItems = fichasTemp;
 
@@ -201,10 +138,10 @@ namespace AppGM
 
             ComandoBotonFichasNPCs = new Comando(() =>
             {
-                List<ViewModelFichaItem> fichasTemp = new List<ViewModelFichaItem>(NPCs.Count);
+                List<ViewModelFichaItem> fichasTemp = new List<ViewModelFichaItem>(SistemaPrincipal.DatosRolSeleccionado.NPCs.Count);
 
-                for (int i = 0; i < NPCs.Count; ++i)
-                    fichasTemp.Add(new ViewModelFichaItem(NPCs[i]));
+                for (int i = 0; i < SistemaPrincipal.DatosRolSeleccionado.NPCs.Count; ++i)
+                    fichasTemp.Add(new ViewModelFichaItem(SistemaPrincipal.DatosRolSeleccionado.NPCs[i]));
 
                 SistemaPrincipal.ObtenerInstancia<ViewModelListaFichasVistaFichas>().ViewModelListaFichas.FichaItems = fichasTemp;
 

@@ -8,11 +8,6 @@ namespace AppGM.Core
     public class ModeloParticipante : ModeloBase
     {
         /// <summary>
-        /// Controlador
-        /// </summary>
-        public ControladorParticipante controladorParticipante;
-
-        /// <summary>
         /// Resultado de la tirada de iniciativa
         /// </summary>
         public int TiradaIniciativa { get; set; }
@@ -23,9 +18,14 @@ namespace AppGM.Core
         public int TotalAccionesPorTurno { get; set; }
 
         /// <summary>
+        /// Acciones restantes que puede realizar en su turno.  
+        /// </summary>
+        public int AccionesRestantes { get; set; }
+
+        /// <summary>
         /// Acciones realizadas hasta el momento en su turno.  
         /// </summary>
-        public int AccionesRealizadasEnTurno { get; set; } 
+        public int AccionesRealizadasEnTurno { get; set; }
 
         /// <summary>
         /// Indica si es su turno de actuar en el combate

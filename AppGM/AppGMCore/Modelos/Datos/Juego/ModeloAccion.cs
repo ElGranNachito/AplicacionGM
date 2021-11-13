@@ -9,6 +9,16 @@ namespace AppGM.Core
     public class ModeloAccion : ModeloBase
     {
         /// <summary>
+        /// Tipo de la accion.
+        /// </summary>
+        public ETipoAccion TipoAccion { get; set; }
+
+        /// <summary>
+        /// Indica si la accion consume parte del total maximo de acciones por turno de un participante.
+        /// </summary>
+        public bool ConsumeTurno { get; set; }
+
+        /// <summary>
         /// Descripcion de la accion
         /// </summary>
         [StringLength(2000)]
