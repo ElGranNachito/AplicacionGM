@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     
-    <!-- UserControl que hace uso de ViewModelFichaItem -->
+    <!-- UserControl que hace uso de ViewModelFichaPersonaje -->
     <Grid Background="{StaticResource Tema.BlancoVerde}">
 
         <Grid.RowDefinitions>

@@ -105,7 +105,7 @@ namespace AppGM
         /// </summary>
         public int Mana => ((ModeloMaster) personaje.modelo).Mana;
 
-                /// <summary>
+        /// <summary>
         /// Energia magica concentrada actual del personaje.
         /// </summary>
         public int ManaActual => ((ModeloMaster) personaje.modelo).ManaActual;
@@ -200,6 +200,9 @@ namespace AppGM
         /// </summary>
         public string Bienestar => Enum.GetName(((ModeloMaster) personaje.modelo).Bienestar);
 
+        /// <summary>
+        /// Rango del Noble Phantasm del personaje si es servant.
+        /// </summary>
         public string RangoNP => Enum.GetName(((ModeloServant)personaje.modelo).RangoNP);
 
         #endregion
