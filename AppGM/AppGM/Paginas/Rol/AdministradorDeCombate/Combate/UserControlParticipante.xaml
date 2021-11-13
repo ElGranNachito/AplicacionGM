@@ -15,16 +15,21 @@
         <Grid.ContextMenu>
 
             <ContextMenu Style="{StaticResource ConextMenuBase}">
-                <!--<TextBlock Text="Ver Ficha"/>
+                
+                <MenuItem Style="{StaticResource MenuOpcionesMapa}" 
+                          ItemContainerStyle="{DynamicResource MenuItemOpcionesMapa1}" 
+                          Template="{DynamicResource MenuItemOpcionesMapaControlTemplate2}"
+                          Header="Ver personaje" 
+                          ToolTip="Abre una vista de la ficha del personaje en una nueva ventana."
+                          Command="{Binding ComandoCrearMensajeFichaPersonaje}"
+                />
                 <Separator/>
-                <TextBlock Text="Realizar tirada"/>
-                <TextBlock Text="Realizar competencia de tirada"/>-->
-
                 <MenuItem Style="{StaticResource MenuOpcionesMapa}" 
                           ItemContainerStyle="{DynamicResource MenuItemOpcionesMapa1}" 
                           Template="{DynamicResource MenuItemOpcionesMapaControlTemplate2}"
                           Header="Accion" 
                           ToolTip="Abre menu de acciones del participante."
+                          Command="{Binding ComandoAñadirAccion}"
                 />
                 <Separator/>
                 <MenuItem Header="Tiradas" 
@@ -52,7 +57,7 @@
         <!-- Indicador de turno -->
         <Border 
             Width="5"
-            Background="LimeGreen"
+            Background="Aqua"
             Visibility="{Binding EsSuTurno, Converter={local:BooleanToVisibilityConverterOcultar}}"
             />
 
@@ -65,11 +70,55 @@
                        Style="{StaticResource TextBlockBase}"
                        Foreground="White"
                        />
+
             <TextBlock Text="{Binding TipoPersonaje, Mode=OneWay, FallbackValue=Es un misterio}"
                        Style="{StaticResource TextBlockBase}"
                        Foreground="White"
                        Margin="0 10 0 0"
             />
+            
+            <!-- Textblocks acciones realizadas dentro del limite por turno -->
+            <StackPanel Margin="0 30 0 10"
+                        Orientation="Horizontal"
+                        Visibility="{Binding EsSuTurno, Converter={local:BooleanToVisibilityConverterOcultar}}">
+
+                <TextBlock Text="Acciones: "
+                           Style="{StaticResource TextBlockBase}"
+                           Foreground="White"
+                />
+
+                <TextBlock Text="{Binding AccionesRestantes, Mode=OneWay, FallbackValue=0}"
+                           Style="{StaticResource TextBlockBase}"
+                           Foreground="White"
+                />
+
+                <TextBlock Text=" / "
+                           Style="{StaticResource TextBlockBase}"
+                           Foreground="White"
+                />
+
+                <TextBlock Text="{Binding TotalAccionesPosibles, Mode=OneWay, FallbackValue=0}"
+                           Style="{StaticResource TextBlockBase}"
+                           Foreground="White"
+                />
+
+            </StackPanel>
+
+            <!-- Textblocks total de acciones realizadas en el mismo turno -->
+            <StackPanel Orientation="Horizontal"
+                        Visibility="{Binding EsSuTurno, Converter={local:BooleanToVisibilityConverterOcultar}}">
+                
+                <TextBlock Text="Total acciones: "
+                           Style="{StaticResource TextBlockBase}"
+                           Foreground="White"
+                />
+
+                <TextBlock Text="{Binding AccionesRealizadas, Mode=OneWay, FallbackValue=0}"
+                           Style="{StaticResource TextBlockBase}"
+                           Foreground="White"
+                />
+
+            </StackPanel>
 
         </StackPanel>
 

@@ -83,6 +83,10 @@ namespace AppGM
                 case ViewModelCrearParticipanteCombate vm:
                     return new UserControlMensajeCrearParticipanteCombate {DataContext = vm};
 
+                //Globo de creacion de accion de un participante
+                case ViewModelCrearAccionParticipante vm:
+                    return new UserControlCrearAccionParticipante() {DataContext = vm};
+
                 default:
                     return null;
             }

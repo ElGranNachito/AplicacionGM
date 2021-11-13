@@ -1,0 +1,121 @@
+﻿<UserControl x:Class="AppGM.UserControlCrearAccionParticipante"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AppGM"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <!-- UserControl que hace uso de un ViewModelCrearAccionParticipante -->
+    <!-- Control para la creacion de la representacion de un participante en un combate-->
+    <Border Background="White"
+            Padding="10">
+        
+        <Grid >
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" MaxHeight="140"/>
+                <RowDefinition Height="*" MaxHeight="250"/>
+                <RowDefinition Height="60*" MaxHeight="60"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" MaxWidth="400"/>
+                    <ColumnDefinition Width="*" MaxWidth="200"/>
+                    <ColumnDefinition Width="*" MaxWidth="200"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Row="0">
+                    
+                    <local:UserControlComboBoxConDescripcion 
+                        Grid.Row="0"
+                        Descripcion="Tipo de accion: "
+                        DataContext="{Binding ComboBoxTipoAccion}"/>
+
+                </StackPanel>
+
+                <!-- Boton confirmar -->
+                <Button 
+                    VerticalAlignment="Top"
+                    Grid.Column="1"
+                    Width="150"
+                    Height="36"
+                    Margin="15 0 0 0"
+                    Content="Tirada"
+                    Command="{Binding ComandoTiradaHabilidad}"
+                    Visibility="{Binding DebeMostrarTiradas, Converter={local:BooleanToVisibilityConverterOcultar}}"
+                />
+
+                <!-- Boton confirmar -->
+                <Button 
+                    VerticalAlignment="Top"
+                    Grid.Column="2"
+                    Width="150"
+                    Height="36"
+                    Margin="0 0 15 0"
+                    Content="Tirada en GuraSratch"
+                    Command="{Binding ComandoTiradaHabilidadGura}"
+                    Visibility="{Binding DebeMostrarTiradas, Converter={local:BooleanToVisibilityConverterOcultar}}"
+                />
+
+            </Grid>
+
+            <Grid Grid.Row="1">
+
+                <TextBox
+                    Style="{StaticResource TextoDescriptivo}"
+                    Text="{Binding DescripcionRol, Mode=TwoWay}"
+                    Tag="Descripcion"
+                    MaxLength="2000"
+                    TextAlignment="Left"
+                    TextWrapping="Wrap"
+                    AcceptsReturn="True"
+                    TextChanged="TextBoxBase_OnTextChanged"
+                    />
+
+                <!-- Texto que muestra los caracteres restantes -->
+                <TextBlock
+                    Margin="0 0 10 10"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    FontFamily="{StaticResource 'Font Awesome Regular'}"
+                    Text="{Binding TextoLetrasRestantesDescripcion, FallbackValue=Err}"/>
+
+            </Grid>
+
+            <Grid Grid.Row="2">
+                
+                <StackPanel Orientation="Horizontal">
+                    
+                    <!-- CheckBox  -->
+                    <CheckBox VerticalAlignment="Center"
+                              HorizontalAlignment="Left"
+                              Margin="15 0 0 0"
+                              IsChecked="{Binding ConsumeLimiteTurno}"
+                    />
+
+                    <TextBlock VerticalAlignment="Center"
+                               Margin="10 0 0 0"
+                               Text="Consume accion por turno"/>
+
+                </StackPanel>
+
+                <!-- Boton confirmar -->
+                <Button VerticalAlignment="Center"
+                        HorizontalAlignment="Right"
+                        Width="200"
+                        Height="30"
+                        Margin="0 0 15 0"
+                        Content="Confirmar"
+                        Command="{Binding ComandoFinalizar}"
+                />
+
+            </Grid>
+                
+        </Grid>
+
+    </Border>
+</UserControl>

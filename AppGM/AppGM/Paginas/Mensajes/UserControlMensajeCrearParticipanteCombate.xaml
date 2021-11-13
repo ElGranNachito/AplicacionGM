@@ -15,8 +15,8 @@
         <Grid >
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="50*" MaxWidth="50"/>
-                <ColumnDefinition Width="*" MaxWidth="350"/>
+                <ColumnDefinition Width="50*" MaxWidth="80"/>
+                <ColumnDefinition Width="*" MaxWidth="320"/>
                 <ColumnDefinition Width="*" MaxWidth="400"/>
             </Grid.ColumnDefinitions>
 
@@ -32,9 +32,27 @@
                 FontFamily="{StaticResource 'Font Canon'}"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
-                MinWidth="330"
+                MinWidth="300"
                 MinHeight="15"
                 Text="{Binding Nombre, Mode=OneWayToSource}"/>
+
+            <TextBlock 
+                Grid.Column="0"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Left"
+                Margin="0 40 0 0"
+                Text="Total acciones:"/>
+
+            <TextBox 
+                Grid.Column="1"
+                FontFamily="{StaticResource 'Font Canon'}"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                MinWidth="300"
+                MinHeight="15"
+                Margin="0 40 0 0"
+                local:CampoDeTextoNumericoProperty.Value="True"
+                Text="{Binding CantidadInicialDeAcciones, Mode=TwoWay}"/>
 
             <Grid Grid.Column="2">
 
