@@ -212,7 +212,6 @@ namespace AppGM.Core.Migrations
                     ClaseServant = table.Column<int>(type: "INTEGER", nullable: true),
                     RangoHechiceria = table.Column<ushort>(type: "INTEGER", nullable: true),
                     NombreReal = table.Column<string>(type: "TEXT", maxLength: 100, nullable: true),
-                    EClaseDeSuServant = table.Column<int>(type: "INTEGER", nullable: true),
                     EBienestar = table.Column<int>(type: "INTEGER", nullable: true),
                     Od = table.Column<int>(type: "INTEGER", nullable: true),
                     OdActual = table.Column<int>(type: "INTEGER", nullable: true),
@@ -506,6 +505,8 @@ namespace AppGM.Core.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     TiradaIniciativa = table.Column<int>(type: "INTEGER", nullable: false),
+                    TotalAccionesPorTurno = table.Column<int>(type: "INTEGER", nullable: false),
+                    AccionesRealizadasEnTurno = table.Column<int>(type: "INTEGER", nullable: false),
                     EsSuTurno = table.Column<bool>(type: "INTEGER", nullable: false),
                     PersonajeId = table.Column<int>(type: "INTEGER", nullable: true),
                     CombateActualId = table.Column<int>(type: "INTEGER", nullable: true),

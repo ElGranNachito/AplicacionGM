@@ -12,20 +12,45 @@
 
     </Style>
 
-    <Style TargetType="{x:Type TextBox}" x:Key="TextBoxBase">
+    <Style TargetType="{x:Type TextBox}">
 
         <Setter Property="FontFamily" Value="{StaticResource 'Font Canon'}"/>
+
+        <Setter Property="BorderBrush" Value="{StaticResource Color.TextBox.Borde.Estatico}"/>
+        <Setter Property="Background" Value="{StaticResource Color.TextBox.Fondo.Estatico}"/>
+        <Setter Property="Foreground" Value="{StaticResource Color.TextBox.Texto.Estatico}"/>
+
+        <Style.Triggers>
+            <Trigger Property="IsFocused" Value="True">
+                <Setter Property="BorderBrush" Value="{StaticResource Color.TextBox.Borde.Seleccionado}"/>
+                <Setter Property="Background" Value="{StaticResource Color.TextBox.Fondo.Seleccionado}"/>
+                <Setter Property="Foreground" Value="{StaticResource Color.TextBox.Texto.Seleccionado}"/>
+            </Trigger>
+
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="BorderBrush" Value="{StaticResource Color.TextBox.Borde.MouseOver}"/>
+                <Setter Property="Background" Value="{StaticResource Color.TextBox.Fondo.MouseOver}"/>
+                <Setter Property="Foreground" Value="{StaticResource Color.TextBox.Texto.MouseOver}"/>
+            </Trigger>
+
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="BorderBrush" Value="{StaticResource Color.TextBox.Borde.Deshabilitado}"/>
+                <Setter Property="Background" Value="{StaticResource Color.TextBox.Fondo.Deshabilitado}"/>
+                <Setter Property="Foreground" Value="{StaticResource Color.TextBox.Texto.Deshabilitado}"/>
+            </Trigger>
+        </Style.Triggers>
 
     </Style>
 
     <!-- Estilo que permite añadir un texto de asistencia un campo de texto que desaparece ni bien el usuario ingrese un caracter -->
-    <Style TargetType="{x:Type TextBox}" x:Key="TextoDescriptivo" BasedOn="{StaticResource TextBoxBase}">
+    <Style TargetType="{x:Type TextBox}" x:Key="TextoDescriptivo">
 
-        <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="BorderBrush" Value="Black"/>
-        <Setter Property="Background" Value="White"/>
-        <Setter Property="MinHeight" Value="15"/>
+        <Setter Property="MinHeight" Value="20"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
+
+        <Setter Property="BorderBrush" Value="{StaticResource Color.TextBox.Borde.Estatico}"/>
+        <Setter Property="Background" Value="{StaticResource Color.TextBox.Fondo.Estatico}"/>
+        <Setter Property="Foreground" Value="{StaticResource Color.TextBox.Texto.Estatico}"/>
 
         <!--Hacemos que el tooltip por defecto sea el tag-->
         <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Tag}"/>
@@ -50,7 +75,8 @@
                                     x:Name="PART_ContentHost" 
                                     Focusable="false" 
                                     HorizontalScrollBarVisibility="Hidden"
-                                    VerticalScrollBarVisibility="Hidden"/>
+                                    VerticalScrollBarVisibility="Hidden"
+                                    Foreground="{TemplateBinding Foreground}"/>
 
                                 <!-- Texto de ayuda -->
                                 <TextBlock
@@ -61,8 +87,8 @@
                                     IsEnabled="{TemplateBinding IsEnabled}"
                                     FontSize="{TemplateBinding FontSize}"
                                     FontFamily="{TemplateBinding FontFamily}"
-                                    Foreground="{StaticResource Color.CampoDeTexto.TextoAyuda}"
-                                    Text="{TemplateBinding Tag}">
+                                    Text="{TemplateBinding Tag}"
+                                    Foreground="{StaticResource Color.TextBox.TextoAyuda.Estatico}">
 
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">
@@ -83,17 +109,24 @@
                         </Border>
                     </Grid>
 
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter TargetName="TextoDeAyuda" Property="Foreground" Value="{StaticResource Color.TextBox.TextoAyuda.Seleccionado}"/>
+                        </Trigger>
+
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="TextoDeAyuda" Property="Foreground" Value="{StaticResource Color.TextBox.TextoAyuda.MouseOver}"/>
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="TextoDeAyuda" Property="Foreground" Value="{StaticResource Color.TextBox.TextoAyuda.Deshabilitado}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+
                 </ControlTemplate>
 
             </Setter.Value>
         </Setter>
-
-        <Style.Triggers>
-            <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Foreground" Value="{StaticResource Color.CampoDeTexto.TextoDeshabilitado}"/>
-                <Setter Property="BorderBrush" Value="{StaticResource Color.CampoDeTexto.BordeDeshabilitado}"/>
-            </Trigger>
-        </Style.Triggers>
 
     </Style>
     

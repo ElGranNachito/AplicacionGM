@@ -11,9 +11,13 @@
     <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="ColorVentanaAutocompletado" Color="White"/>
     <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="ColorBordeVentanaAutocompletado" Color="DimGray"/>
 
-    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.CampoDeTexto.TextoDeshabilitado" Color="DarkGray"/>
-    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.CampoDeTexto.BordeDeshabilitado" Color="Gray"/>
-    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.CampoDeTexto.TextoAyuda" Color="DarkGray"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Tema.BlancoVerde" Color="#c3ccc7"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Tema.Verde" Color="#b4e1d6"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Tema.VerdeOscuro" Color="#06140d"/>
+
+    <system:Color x:Key="Tema.Color.BlancoVerde">#c3ccc7</system:Color>
+    <system:Color x:Key="Tema.Color.Verde">#b4e1d6</system:Color>
+    <system:Color x:Key="Tema.Color.VerdeOscuro">#06140d</system:Color>
 
     <!--......................................BLOQUES...........................................-->
 
@@ -65,6 +69,45 @@
     <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.ComboBoxSeleccionMultiple.BordeItem.Seleccionado" Color="Transparent"/>
     <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.ComboBoxSeleccionMultiple.BordeItem.Deshabilitado" Color="Transparent"/>
     <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.ComboBoxSeleccionMultiple.BordeItem.Estatico" Color="Transparent"/>
+
+    <!--..............................................TEXT_BOXES..................................................-->
+
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.TextBox.Borde.Estatico" Color="Black"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.TextBox.Borde.MouseOver" Color="Black"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.TextBox.Borde.Seleccionado" Color="Black"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.TextBox.Borde.Deshabilitado" Color="Gray"/>
+
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.TextBox.Fondo.Estatico" Color="White"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.TextBox.Fondo.MouseOver" Color="White"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.TextBox.Fondo.Seleccionado" Color="White"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.TextBox.Fondo.Deshabilitado" Color="Gray"/>
+
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.TextBox.Texto.Estatico" Color="Black"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.TextBox.Texto.MouseOver" Color="Black"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.TextBox.Texto.Seleccionado" Color="Black"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.TextBox.Texto.Deshabilitado" Color="DarkGray"/>
+
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.TextBox.TextoAyuda.Estatico" Color="DarkGray"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.TextBox.TextoAyuda.MouseOver" Color="DarkGray"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.TextBox.TextoAyuda.Seleccionado" Color="DarkGray"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.TextBox.TextoAyuda.Deshabilitado" Color="Gray"/>
+
+    <!--................................................BOTONES....................................................-->
+
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.Boton.Borde.Estatico" Color="{StaticResource Tema.Color.VerdeOscuro}"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.Boton.Borde.MouseOver" Color="{StaticResource Tema.Color.VerdeOscuro}"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.Boton.Borde.Seleccionado" Color="{StaticResource Tema.Color.VerdeOscuro}"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.Boton.Borde.Deshabilitado" Color="{StaticResource Tema.Color.VerdeOscuro}"/>
+
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.Boton.Fondo.Estatico" Color="{StaticResource Tema.Color.VerdeOscuro}"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.Boton.Fondo.MouseOver" Color="{StaticResource Tema.Color.VerdeOscuro}"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.Boton.Fondo.Seleccionado" Color="{StaticResource Tema.Color.VerdeOscuro}"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.Boton.Fondo.Deshabilitado" Color="{StaticResource Tema.Color.VerdeOscuro}"/>
+
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.Boton.Texto.Estatico" Color="{StaticResource Tema.Color.Verde}"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.Boton.Texto.MouseOver" Color="{StaticResource Tema.Color.Verde}"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.Boton.Texto.Seleccionado" Color="{StaticResource Tema.Color.Verde}"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.Boton.Texto.Deshabilitado" Color="{StaticResource Tema.Color.Verde}"/>
 
     <!--......................................UNIDADES_INGRESO_POSICION...........................................-->
 
