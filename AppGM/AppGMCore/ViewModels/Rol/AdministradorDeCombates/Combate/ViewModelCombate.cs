@@ -160,15 +160,9 @@ namespace AppGM.Core
             //Se crea el popup y se espera a que se cierre
             await SistemaPrincipal.MostrarMensajeAsync(vm, "Agregar Personaje", true, -1, -1);
 
-            //Si el resultado es valido entonces añadimos la nueva unidad
-            if (vm.vmResultado is ViewModelParticipante vmNuevoParticipante)
-            {
-                administradorDeCombate.ControladoresParticipantes.Add(vmNuevoParticipante.controladorParticipante);
+            administradorDeCombate.ControladoresParticipantes.Add(vm.vmResultado.controladorParticipante);
 
-                Participantes.Add(vmNuevoParticipante);
-
-                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(Participantes)));
-            }
+            Participantes.Add(vm.vmResultado);
         }
 
         #endregion

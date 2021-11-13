@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 
@@ -72,6 +70,11 @@ namespace AppGM.Core
         /// Nombre del personaje actualmente seleccionado
         /// </summary>
         public string PersonajeSeleccionado { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Cantidad inicial de acciones que puede realizar por turno.
+        /// </summary>
+        public int CantidadInicialDeAcciones { get; set; } = 2;
 
         /// <summary>
         /// Indica si es necesario seleccionar una <see cref="EClaseServant"/>
@@ -167,7 +170,8 @@ namespace AppGM.Core
                 {
                     modeloParticipante = new ModeloParticipante
                     {
-                        EsSuTurno = false
+                        EsSuTurno = false,
+                        TotalAccionesPorTurno = CantidadInicialDeAcciones
                     };
 
                     modeloParticipante.Personaje = SistemaPrincipal.DatosRolSeleccionado.Masters.Find(m => m.ToString() == PersonajeSeleccionado).modelo;
@@ -177,7 +181,8 @@ namespace AppGM.Core
                 {
                     modeloParticipante = new ModeloParticipante
                     {
-                        EsSuTurno = false
+                        EsSuTurno = false,
+                        TotalAccionesPorTurno = CantidadInicialDeAcciones
                     };
 
                     modeloParticipante.Personaje = SistemaPrincipal.DatosRolSeleccionado.Servants.Find(s => s.ToString() == PersonajeSeleccionado).modelo;
@@ -187,7 +192,8 @@ namespace AppGM.Core
                 {
                     modeloParticipante = new ModeloParticipante
                     {
-                        EsSuTurno = false
+                        EsSuTurno = false,
+                        TotalAccionesPorTurno = CantidadInicialDeAcciones
                     };
                     modeloParticipante.Personaje = SistemaPrincipal.DatosRolSeleccionado.Invocaciones.Find(s => s.ToString() == PersonajeSeleccionado).modelo;
                     break;
@@ -196,7 +202,8 @@ namespace AppGM.Core
                 {
                     modeloParticipante = new ModeloParticipante
                     {
-                        EsSuTurno = false
+                        EsSuTurno = false,
+                        TotalAccionesPorTurno = CantidadInicialDeAcciones
                     };
 
                     modeloParticipante.Personaje = SistemaPrincipal.DatosRolSeleccionado.NPCs.Find(i => i.ToString() == PersonajeSeleccionado).modelo;

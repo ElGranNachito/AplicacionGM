@@ -22,6 +22,9 @@ namespace AppGM.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("ConsumeTurno")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Descripcion")
                         .HasMaxLength(2000)
                         .HasColumnType("TEXT");
@@ -30,6 +33,9 @@ namespace AppGM.Core.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<int?>("ParticipanteId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("TipoAccion")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -736,6 +742,9 @@ namespace AppGM.Core.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("AccionesRealizadasEnTurno")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("AccionesRestantes")
                         .HasColumnType("INTEGER");
 
                     b.Property<int?>("CombateActualId")

@@ -113,7 +113,7 @@ namespace AppGM.Core
             ControladoresParticipantes[modelo.IndicePersonajeTurnoActual].modelo.EsSuTurno = true;
 
             OnTurnoCambio(ref turnoAnteriorTmp, ref turnoActualTmp);
-
+            
             modelo.IndicePersonajeTurnoActual = turnoActualTmp;
         }
 
