@@ -7,8 +7,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="700" d:DesignWidth="800">
 
-    <!-- Este control muestra una lista de personajes y permite visualizar
-         sus respectivas fichas -->
+
+    <!-- Este control muestra una lista de personajes y permite visualizar sus respectivas fichas -->
     <Grid>
 
         <Grid.ColumnDefinitions>
@@ -21,7 +21,10 @@
             DataContext="{Binding ViewModelListaFichas}"/>
 
         <!-- Vista de la fichas actualmente seleccionada -->
-        <local:UserControlVistaFicha Grid.Column="1" 
-                                     DataContext="{Binding FichaSeleccionada}"/>
+        <local:UserControlVistaFicha 
+            Grid.Column="1" 
+            DataContext="{Binding FichaSeleccionada}"/>
+
     </Grid>
+
 </UserControl>

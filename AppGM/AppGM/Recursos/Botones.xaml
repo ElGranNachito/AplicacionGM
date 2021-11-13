@@ -409,8 +409,8 @@
         <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="0"/>
 
-        <Setter Property="Background" Value="#121212" />
-        <Setter Property="Foreground" Value="Aqua" />
+        <Setter Property="Background" Value="{StaticResource Tema.VerdeOscuro}" />
+        <Setter Property="Foreground" Value="{StaticResource Tema.BlancoVerde}" />
 
         <Setter Property="Content" Value="{StaticResource Fa-FlechaDerecha-Chevron}"/>
 
@@ -421,7 +421,7 @@
             <!-- Cuando el cursor este sobre el control el fondo cambia de color -->
             <Trigger Property="IsMouseOver" Value="True">
                 <Trigger.Setters>
-                    <Setter Property="Background" Value="#1f1f1f"></Setter>
+                    <Setter Property="Background" Value="{StaticResource Tema.VerdeOscuro}"></Setter>
                 </Trigger.Setters>
             </Trigger>
 
@@ -429,11 +429,13 @@
             <Trigger Property="IsChecked" Value="True">
                 <Trigger.Setters>
                     <Setter Property="Content" Value="{StaticResource Fa-FlechaIzquierda-Chevron}" />
+                    <Setter Property="Background" Value="{StaticResource Tema.VerdeOscuro}"></Setter>
                 </Trigger.Setters>
             </Trigger>
 
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Foreground" Value="{StaticResource Color.TextBox.Texto.Deshabilitado}"/>
+                <Setter Property="Foreground" Value="{StaticResource Tema.BlancoVerde}"/>
+                <Setter Property="Background" Value="{StaticResource Tema.VerdeOscuro}"></Setter>
             </Trigger>
 
         </Style.Triggers>
@@ -460,7 +462,7 @@
                         <Trigger Property="IsMouseOver" Value="True">
                             <Trigger.Setters>
                                 <Setter TargetName="Texto" Property="Background" 
-                                        Value="#88A9A9A9"></Setter>
+                                        Value="{StaticResource Tema.VerdeOscuro}"></Setter>
                             </Trigger.Setters>
                         </Trigger>
 
@@ -480,7 +482,7 @@
 
         <Style.Triggers>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Foreground" Value="{StaticResource Color.TextBox.Texto.Deshabilitado}"/>
+                <Setter Property="Foreground" Value="{StaticResource {StaticResource Tema.VerdeOscuro}}"/>
             </Trigger>
         </Style.Triggers>
 

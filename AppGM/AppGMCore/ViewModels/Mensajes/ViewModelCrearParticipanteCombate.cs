@@ -62,11 +62,6 @@ namespace AppGM.Core
         public ETipoPersonaje TipoPersonajeSeleccionado { get; set; }
 
         /// <summary>
-        /// Nombre del participante.
-        /// </summary>
-        public string Nombre { get; set; } = "Participante X";
-
-        /// <summary>
         /// Nombre del personaje actualmente seleccionado
         /// </summary>
         public string PersonajeSeleccionado { get; set; } = string.Empty;
@@ -88,9 +83,6 @@ namespace AppGM.Core
         {
             get
             {
-                if (Nombre == string.Empty)
-                    return false;
-
                 if (DebeSeleccionarClaseServant && ClaseSeleccionada == EClaseServant.NINGUNO)
                     return false;
 

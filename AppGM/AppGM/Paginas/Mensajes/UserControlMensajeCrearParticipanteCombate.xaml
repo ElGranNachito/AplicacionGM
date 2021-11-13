@@ -20,27 +20,10 @@
                 <ColumnDefinition Width="*" MaxWidth="400"/>
             </Grid.ColumnDefinitions>
 
-            <!-- Campo ingreso de nombre -->
             <TextBlock 
                 Grid.Column="0"
                 VerticalAlignment="Top"
                 HorizontalAlignment="Left"
-                Text="Nombre:"/>
-
-            <TextBox 
-                Grid.Column="1"
-                FontFamily="{StaticResource 'Font Canon'}"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                MinWidth="300"
-                MinHeight="15"
-                Text="{Binding Nombre, Mode=OneWayToSource}"/>
-
-            <TextBlock 
-                Grid.Column="0"
-                VerticalAlignment="Top"
-                HorizontalAlignment="Left"
-                Margin="0 40 0 0"
                 Text="Total acciones:"/>
 
             <TextBox 
@@ -50,7 +33,6 @@
                 VerticalAlignment="Top"
                 MinWidth="300"
                 MinHeight="15"
-                Margin="0 40 0 0"
                 local:CampoDeTextoNumericoProperty.Value="True"
                 Text="{Binding CantidadInicialDeAcciones, Mode=TwoWay}"/>
 

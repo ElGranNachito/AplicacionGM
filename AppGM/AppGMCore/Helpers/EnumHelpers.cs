@@ -388,28 +388,6 @@ namespace AppGM.Core
         }
 
         /// <summary>
-        /// Obtiene el valor string correspondiente al <see cref="ETipoPersonaje"/>.
-        /// </summary>
-        /// <param name="tipoPersonaje"><see cref="ETipoPersonaje"/>del que se desea obtener un valor string</param>
-        /// <returns></returns>
-        public static string ToStringTipoPersonaje(this ETipoPersonaje tipoPersonaje)
-        {
-            switch (tipoPersonaje)
-            {
-                case ETipoPersonaje.Master: 
-                    return string.Intern("Master");
-                case ETipoPersonaje.Servant: 
-                    return string.Intern("Servant");
-                case ETipoPersonaje.Invocacion: 
-                    return string.Intern("Invocacion");
-                case ETipoPersonaje.NPC: 
-                    return string.Intern("NPC");
-                default:
-                    return string.Empty;
-            }
-        }
-
-        /// <summary>
         /// Obtiene el valor string correspondiente al <see cref="EClaseServant"/>.
         /// </summary>
         /// <param name="claseServant"><see cref="EClaseServant"/>del que se desea obtener un valor string</param>

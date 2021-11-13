@@ -450,8 +450,7 @@ namespace AppGM.Core
         {
             for (int i = 0; i < UnidadesSeleccionadas.Count; ++i)
             {
-                UnidadesSeleccionadas[i].ColorBordeIngresoPosicion = "363636";
-                UnidadesSeleccionadas[i].ColorFondoIngresoPosicion = "242424";
+                UnidadesSeleccionadas[i].ColorFondoIngresoPosicion = "06140d";
 
                 UnidadesSeleccionadas[i].DispararPropertyChangedColorBordeFondoUnidad();
             }

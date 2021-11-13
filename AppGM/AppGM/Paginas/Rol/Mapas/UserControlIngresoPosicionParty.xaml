@@ -8,11 +8,13 @@
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              d:DesignHeight="100" d:DesignWidth="200">
+    
     <!-- ViewModel: ViewModelUnidadParty -->
     <UserControl.Template>
+
         <ControlTemplate TargetType="{x:Type UserControl}">
 
-            <Border Padding="3" Background="{Binding ColorBordeIngresoPosicion, Converter={local:StringToSolidColorBrushConverter}}">
+            <Border Padding="2" Background="{Binding ColorBordeIngresoPosicion, Converter={local:StringToSolidColorBrushConverter}}">
 
                 <Border.InputBindings>
                     <MouseBinding Gesture="Control+LeftClick" Command="{Binding ComandoUnidadSeleccionada}" />
@@ -37,7 +39,7 @@
                             Grid.ColumnSpan="4"
                             Text="{Binding Nombre, FallbackValue=Mr.Sin Nombre}" 
                             FontSize="{StaticResource TamañoFontPequeño}"
-                            Foreground="White"/>
+                            Foreground="{StaticResource Tema.Verde}"/>
 
                         <!-- Checkbox mostrar unidad -->
                         <CheckBox
@@ -50,7 +52,7 @@
                         <CheckBox
                         Grid.Column="1"
                         Margin="5 0 0 0"
-                        Foreground="White"
+                        Foreground="{StaticResource Tema.Verde}"
                         MinWidth="20"
                         Style="{StaticResource CheckBoxDropDown}"
                         IsChecked="{Binding DebeMostrarDatosExtra}"
@@ -63,7 +65,7 @@
                                  FontFamily="{StaticResource 'Font Awesome Regular'}"
                                  Command="{Binding ComandoEliminarUnidad}"
                                  Style="{StaticResource BotonBase}"
-                                 Foreground="White"
+                                 Foreground="{StaticResource Tema.Verde}"
                                  Margin="0 0 5 0"
                                  ToolTip="Click para eliminar la unidad"
                         />
@@ -82,7 +84,7 @@
                         Margin="0 5">
 
                             <!--Posicion X-->
-                            <TextBlock Text="X: " Foreground="White"/>
+                            <TextBlock Text="X: " Foreground="{StaticResource Tema.Verde}"/>
                             <TextBox 
                             local:CampoDeTextoNumericoProperty.Value="True"
                             local:CampoDeTextoNumericoProperty.Tipo="{x:Type system:Double}"
@@ -97,7 +99,7 @@
                             <!--Posicion Y-->
                             <TextBlock Text="Y: "
                                Margin="10 0 0 0"
-                               Foreground="White"/>
+                               Foreground="{StaticResource Tema.Verde}"/>
                             <TextBox 
                             local:CampoDeTextoNumericoProperty.Value="True"
                             local:CampoDeTextoNumericoProperty.Tipo="{x:Type system:Double}"

@@ -72,12 +72,12 @@ namespace AppGM.Core
         /// <summary>
         /// Color del borde de la unidad.
         /// </summary>
-        public string ColorBordeIngresoPosicion { get; set; } = "363636";
+        public string ColorBordeIngresoPosicion { get; set; } = "c3ccc7";
 
         /// <summary>
         /// Color del fondo de la unidad.
         /// </summary>
-        public string ColorFondoIngresoPosicion { get; set; } = "242424";
+        public string ColorFondoIngresoPosicion { get; set; } = "06140d";
 
         /// <summary>
         /// Ruta de la imagen de la unidad
@@ -316,8 +316,7 @@ namespace AppGM.Core
                 return;
             }
 
-            ColorBordeIngresoPosicion = "242424";
-            ColorFondoIngresoPosicion = "363636";
+            ColorFondoIngresoPosicion = "0e2e1e";
 
             mapa.UnidadesSeleccionadas.Add(this);
 
@@ -331,9 +330,8 @@ namespace AppGM.Core
         {
             if (!mapa.UnidadesSeleccionadas.Contains(this))
                 return;
-
-            ColorBordeIngresoPosicion = "363636";
-            ColorFondoIngresoPosicion = "242424";
+            
+            ColorFondoIngresoPosicion = "06140d";
 
             mapa.UnidadesSeleccionadas.Remove(this);
 
