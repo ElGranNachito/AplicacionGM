@@ -20,6 +20,8 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" MaxWidth="100 "/>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
             <!-- Fotito del personaje -->
@@ -45,15 +47,122 @@
             <StackPanel Grid.Column="1"
                         Margin="0 20 0 0">
 
-                <!-- Nombre -->
+                <!-- Arquetipo -->
                 <TextBlock 
+                    Margin="0 5 0 0"
                     HorizontalAlignment="Left"
                     FontSize="{StaticResource TamañoFontMediano}"
                     FontFamily="{StaticResource 'Font Awesome Regular'}"
                     FontWeight="Bold"
                     Foreground="{StaticResource Tema.VerdeOscuro}">
-                    <Run Text="Nombre: "/>
-                    <Run Text="{Binding Personaje.Nombre}"/>
+                    <Run Text="Arquetipo: "/>
+                    <Run Text="{Binding Arquetipo}"/>
+                </TextBlock>
+
+                <!-- Origen -->
+                <TextBlock 
+                    Margin="0 5 0 0"
+                    HorizontalAlignment="Left"
+                    FontSize="{StaticResource TamañoFontMediano}"
+                    FontFamily="{StaticResource 'Font Awesome Regular'}"
+                    FontWeight="Bold"
+                    Foreground="{StaticResource Tema.VerdeOscuro}">
+                    <Run Text="Origen: "/>
+                    <Run Text="{Binding Origen}"/>
+                </TextBlock>
+
+                <!-- Afinidad -->
+                <TextBlock 
+                    Margin="0 5 0 0"
+                    HorizontalAlignment="Left"
+                    FontSize="{StaticResource TamañoFontMediano}"
+                    FontFamily="{StaticResource 'Font Awesome Regular'}"
+                    FontWeight="Bold"
+                    Foreground="{StaticResource Tema.VerdeOscuro}">
+                    <Run Text="Afinidad: "/>
+                    <Run Text="{Binding Afinidad}"/>
+                </TextBlock>
+
+            </StackPanel>
+
+            <StackPanel Grid.Column="2"
+                        Margin="0 20 0 0">
+
+                <!-- Nacionalidad -->
+                <TextBlock 
+                    Margin="0 5 0 0"
+                    HorizontalAlignment="Left"
+                    FontSize="{StaticResource TamañoFontMediano}"
+                    FontFamily="{StaticResource 'Font Awesome Regular'}"
+                    FontWeight="Bold"
+                    Foreground="{StaticResource Tema.VerdeOscuro}">
+                    <Run Text="Nacionalidad: "/>
+                    <Run Text="{Binding Nacionalidad}"/>
+                </TextBlock>
+
+                <!-- Mano dominante -->
+                <TextBlock 
+                    Margin="0 5 0 0"
+                    HorizontalAlignment="Left"
+                    FontSize="{StaticResource TamañoFontMediano}"
+                    FontFamily="{StaticResource 'Font Awesome Regular'}"
+                    FontWeight="Bold"
+                    Foreground="{StaticResource Tema.VerdeOscuro}">
+                    <Run Text="Mano dominante: "/>
+                    <Run Text="{Binding ManoDominante}"/>
+                </TextBlock>
+
+                <!-- Sexo -->
+                <TextBlock 
+                    Margin="0 5 0 0"
+                    HorizontalAlignment="Left"
+                    FontSize="{StaticResource TamañoFontMediano}"
+                    FontFamily="{StaticResource 'Font Awesome Regular'}"
+                    FontWeight="Bold"
+                    Foreground="{StaticResource Tema.VerdeOscuro}">
+                    <Run Text="Sexo: "/>
+                    <Run Text="{Binding Sexo}"/>
+                </TextBlock>
+
+            </StackPanel>
+
+            <StackPanel Grid.Column="3"
+                        Margin="0 20 0 0">
+
+                <!-- Fisico -->
+                <TextBlock 
+                    Margin="0 5 0 0"
+                    HorizontalAlignment="Left"
+                    FontSize="{StaticResource TamañoFontMediano}"
+                    FontFamily="{StaticResource 'Font Awesome Regular'}"
+                    FontWeight="Bold"
+                    Foreground="{StaticResource Tema.VerdeOscuro}">
+                    <Run Text="Fisico: "/>
+                    <Run Text="{Binding Fisico}"/>
+                </TextBlock>
+
+                <!-- Peso maximo cargable -->
+                <TextBlock 
+                    Margin="0 5 0 0"
+                    HorizontalAlignment="Left"
+                    FontSize="{StaticResource TamañoFontMediano}"
+                    FontFamily="{StaticResource 'Font Awesome Regular'}"
+                    FontWeight="Bold"
+                    Foreground="{StaticResource Tema.VerdeOscuro}">
+                    <Run Text="Peso maximo: "/>
+                    <Run Text="{Binding PesoMaximoCargable}"/>
+                </TextBlock>
+
+                <!-- PesoCargado -->
+                <TextBlock 
+                    Margin="0 5 0 0"
+                    HorizontalAlignment="Left"
+                    FontSize="{StaticResource TamañoFontMediano}"
+                    FontFamily="{StaticResource 'Font Awesome Regular'}"
+                    FontWeight="Bold"
+                    Foreground="{StaticResource Tema.VerdeOscuro}">
+                    <Run Text="Peso cargado: "/>
+                    <Run Text="{Binding PesoCargado}"/>
                 </TextBlock>
 
             </StackPanel>
@@ -61,17 +170,484 @@
         </Grid>
 
         <Grid Grid.Row="1"
-              Height="350"
               Margin="20 0 20 20"
               Background="{StaticResource Tema.VerdeOscuro}"
               >
 
-            <TextBlock 
-                FontFamily="{StaticResource 'Font Canon'}"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                local:CampoDeTextoNumericoProperty.Value="True"
-                Text="{Binding CantidadInicialDeAcciones, Mode=TwoWay, FallbackValue=0}"/>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" MaxWidth="500 "/>
+                <ColumnDefinition Width="*" MaxWidth="300"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" MaxHeight="116"/>
+                    <RowDefinition Height="*" MaxHeight="116"/>
+                    <RowDefinition Height="*" MaxHeight="116"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" MaxWidth="125"/>
+                    <ColumnDefinition Width="*" MaxWidth="125"/>
+                    <ColumnDefinition Width="*" MaxWidth="125"/>
+                    <ColumnDefinition Width="*" MaxWidth="125"/>
+                </Grid.ColumnDefinitions>
+
+                <Border 
+                    Grid.Row="0" Grid.Column="0"
+                    CornerRadius="10"
+                    Background="{StaticResource Tema.Verde}">
+
+                    <Grid>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" MaxHeight="58"/>
+                            <RowDefinition Height="*" MaxHeight="58"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock 
+                            Grid.Row="0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            local:CampoDeTextoNumericoProperty.Value="True"
+                            FontFamily="{StaticResource 'Font Awesome Regular'}"
+                            FontSize="{StaticResource TamañoFontMuyGrande}"
+                            Text="{Binding CommandSpells, Mode=TwoWay, FallbackValue=CS}"/>
+                        
+                        <TextBlock 
+                            Grid.Row="1"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            FontFamily="{StaticResource 'Font Awesome Regular'}"
+                            FontSize="{StaticResource TamañoFontMuyGrande}"
+                            Text="{Binding Bienestar, Mode=TwoWay, FallbackValue=Bienestar}"/>
+
+                    </Grid>
+
+                </Border>
+
+                <Border 
+                    Grid.Row="1" Grid.Column="0"
+                    CornerRadius="10"
+                    Background="{StaticResource Tema.Verde}">
+
+                    <Grid>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" MaxHeight="78"/>
+                            <RowDefinition Height="*" MaxHeight="38"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock 
+                            Grid.Row="0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            local:CampoDeTextoNumericoProperty.Value="True"
+                            FontFamily="{StaticResource 'Font Awesome Regular'}"
+                            FontSize="{StaticResource TamañoFontMuyGrande}"
+                            Text="{Binding Str, Mode=TwoWay, FallbackValue=Str}"/>
+                        
+                        <StackPanel 
+                            Grid.Row="1"
+                            Orientation="Horizontal"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center">
+
+                            <TextBlock
+                                Margin="0 0 5 0"
+                                local:CampoDeTextoNumericoProperty.Value="True"
+                                FontFamily="{StaticResource 'Font Awesome Regular'}"
+                                FontSize="{StaticResource TamañoFontMediano}"
+                                Text="{Binding ModificadorStr, Mode=TwoWay, FallbackValue=str}"/>
+
+                            <TextBlock
+                                Margin="5 0 0 0"
+                                local:CampoDeTextoNumericoProperty.Value="True"
+                                FontFamily="{StaticResource 'Font Awesome Regular'}"
+                                FontSize="{StaticResource TamañoFontMediano}"
+                                Text="{Binding VentajaStr, Mode=TwoWay, FallbackValue=str}"/>
+
+                        </StackPanel>
+
+                    </Grid>
+
+                </Border>
+
+                <Border 
+                    Grid.Row="2" Grid.Column="0"
+                    CornerRadius="10"
+                    Background="{StaticResource Tema.Verde}">
+
+                    <Grid>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" MaxHeight="78"/>
+                            <RowDefinition Height="*" MaxHeight="38"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock 
+                            Grid.Row="0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            local:CampoDeTextoNumericoProperty.Value="True"
+                            FontFamily="{StaticResource 'Font Awesome Regular'}"
+                            FontSize="{StaticResource TamañoFontMuyGrande}"
+                            Text="{Binding Lck, Mode=TwoWay, FallbackValue=Lck}"/>
+                        
+                        <StackPanel 
+                            Grid.Row="1"
+                            Orientation="Horizontal"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center">
+
+                            <TextBlock
+                                Margin="0 0 5 0"
+                                local:CampoDeTextoNumericoProperty.Value="True"
+                                FontFamily="{StaticResource 'Font Awesome Regular'}"
+                                FontSize="{StaticResource TamañoFontMediano}"
+                                Text="{Binding ModificadorLck, Mode=TwoWay, FallbackValue=Lck}"/>
+
+                            <TextBlock
+                                Margin="5 0 0 0"
+                                local:CampoDeTextoNumericoProperty.Value="True"
+                                FontFamily="{StaticResource 'Font Awesome Regular'}"
+                                FontSize="{StaticResource TamañoFontMediano}"
+                                Text="{Binding VentajaLck, Mode=TwoWay, FallbackValue=Lck}"/>
+
+                        </StackPanel>
+
+                    </Grid>
+
+                </Border>
+
+                <Border 
+                    Grid.Row="0" Grid.Column="1"
+                    CornerRadius="10"
+                    Background="{StaticResource Tema.Verde}">
+
+                    <Grid>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" MaxHeight="78"/>
+                            <RowDefinition Height="*" MaxHeight="38"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock 
+                            Grid.Row="0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            local:CampoDeTextoNumericoProperty.Value="True"
+                            FontFamily="{StaticResource 'Font Awesome Regular'}"
+                            FontSize="{StaticResource TamañoFontMuyGrande}"
+                            Text="{Binding MaxHp, Mode=TwoWay, FallbackValue=HP}"/>
+                        
+                        <TextBlock 
+                            Grid.Row="1"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            local:CampoDeTextoNumericoProperty.Value="True"
+                            FontFamily="{StaticResource 'Font Awesome Regular'}"
+                            FontSize="{StaticResource TamañoFontMediano}"
+                            Text="{Binding MaxHp, Mode=TwoWay, FallbackValue=HP}"/>
+
+                    </Grid>
+
+                </Border>
+
+                <Border 
+                    Grid.Row="1" Grid.Column="1"
+                    CornerRadius="10"
+                    Background="{StaticResource Tema.Verde}">
+
+                    <Grid>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" MaxHeight="78"/>
+                            <RowDefinition Height="*" MaxHeight="38"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock 
+                            Grid.Row="0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            local:CampoDeTextoNumericoProperty.Value="True"
+                            FontFamily="{StaticResource 'Font Awesome Regular'}"
+                            FontSize="{StaticResource TamañoFontMuyGrande}"
+                            Text="{Binding End, Mode=TwoWay, FallbackValue=End}"/>
+                        
+                        <StackPanel 
+                            Grid.Row="1"
+                            Orientation="Horizontal"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center">
+
+                            <TextBlock
+                                Margin="0 0 5 0"
+                                local:CampoDeTextoNumericoProperty.Value="True"
+                                FontFamily="{StaticResource 'Font Awesome Regular'}"
+                                FontSize="{StaticResource TamañoFontMediano}"
+                                Text="{Binding ModificadorEnd, Mode=TwoWay, FallbackValue=End}"/>
+
+                            <TextBlock
+                                Margin="5 0 0 0"
+                                local:CampoDeTextoNumericoProperty.Value="True"
+                                FontFamily="{StaticResource 'Font Awesome Regular'}"
+                                FontSize="{StaticResource TamañoFontMediano}"
+                                Text="{Binding VentajaEnd, Mode=TwoWay, FallbackValue=End}"/>
+
+                        </StackPanel>
+
+                    </Grid>
+
+                </Border>
+
+                <Border 
+                    Grid.Row="2" Grid.Column="1"
+                    CornerRadius="10"
+                    Background="{StaticResource Tema.Verde}">
+
+                    <Grid>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" MaxHeight="78"/>
+                            <RowDefinition Height="*" MaxHeight="38"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock 
+                            Grid.Row="0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            local:CampoDeTextoNumericoProperty.Value="True"
+                            FontFamily="{StaticResource 'Font Awesome Regular'}"
+                            FontSize="{StaticResource TamañoFontMuyGrande}"
+                            Text="{Binding Chr, Mode=TwoWay, FallbackValue=Chr}"/>
+                        
+                        <StackPanel 
+                            Grid.Row="1"
+                            Orientation="Horizontal"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center">
+
+                            <TextBlock
+                                Margin="0 0 5 0"
+                                local:CampoDeTextoNumericoProperty.Value="True"
+                                FontFamily="{StaticResource 'Font Awesome Regular'}"
+                                FontSize="{StaticResource TamañoFontMediano}"
+                                Text="{Binding ModificadorChr, Mode=TwoWay, FallbackValue=Chr}"/>
+
+                            <TextBlock
+                                Margin="5 0 0 0"
+                                local:CampoDeTextoNumericoProperty.Value="True"
+                                FontFamily="{StaticResource 'Font Awesome Regular'}"
+                                FontSize="{StaticResource TamañoFontMediano}"
+                                Text="{Binding VentajaChr, Mode=TwoWay, FallbackValue=Chr}"/>
+
+                        </StackPanel>
+
+                    </Grid>
+
+                </Border>
+
+                <Border 
+                    Grid.Row="0" Grid.Column="2"
+                    CornerRadius="10"
+                    Background="{StaticResource Tema.Verde}">
+
+                    <Grid>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" MaxHeight="78"/>
+                            <RowDefinition Height="*" MaxHeight="38"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock 
+                            Grid.Row="0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            local:CampoDeTextoNumericoProperty.Value="True"
+                            FontFamily="{StaticResource 'Font Awesome Regular'}"
+                            FontSize="{StaticResource TamañoFontMuyGrande}"
+                            Text="{Binding Od, Mode=TwoWay, FallbackValue=Od}"/>
+                        
+                        <TextBlock 
+                            Grid.Row="1"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            local:CampoDeTextoNumericoProperty.Value="True"
+                            FontFamily="{StaticResource 'Font Awesome Regular'}"
+                            FontSize="{StaticResource TamañoFontMediano}"
+                            Text="{Binding OdActual, Mode=TwoWay, FallbackValue=Od}"/>
+
+                    </Grid>
+
+                </Border>
+
+                <Border 
+                    Grid.Row="1" Grid.Column="2"
+                    CornerRadius="10"
+                    Background="{StaticResource Tema.Verde}">
+
+                    <Grid>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" MaxHeight="78"/>
+                            <RowDefinition Height="*" MaxHeight="38"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock 
+                            Grid.Row="0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            local:CampoDeTextoNumericoProperty.Value="True"
+                            FontFamily="{StaticResource 'Font Awesome Regular'}"
+                            FontSize="{StaticResource TamañoFontMuyGrande}"
+                            Text="{Binding Agi, Mode=TwoWay, FallbackValue=Agi}"/>
+                        
+                        <StackPanel 
+                            Grid.Row="1"
+                            Orientation="Horizontal"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center">
+
+                            <TextBlock
+                                Margin="0 0 5 0"
+                                local:CampoDeTextoNumericoProperty.Value="True"
+                                FontFamily="{StaticResource 'Font Awesome Regular'}"
+                                FontSize="{StaticResource TamañoFontMediano}"
+                                Text="{Binding ModificadorAgi, Mode=TwoWay, FallbackValue=Agi}"/>
+
+                            <TextBlock
+                                Margin="5 0 0 0"
+                                local:CampoDeTextoNumericoProperty.Value="True"
+                                FontFamily="{StaticResource 'Font Awesome Regular'}"
+                                FontSize="{StaticResource TamañoFontMediano}"
+                                Text="{Binding VentajaAgi, Mode=TwoWay, FallbackValue=Agi}"/>
+
+                        </StackPanel>
+
+                    </Grid>
+
+                </Border>
+
+                <Border 
+                    Grid.Row="2" Grid.Column="2"
+                    CornerRadius="10"
+                    Background="{StaticResource Tema.Verde}">
+
+                    <TextBlock 
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        local:CampoDeTextoNumericoProperty.Value="True"
+                        FontFamily="{StaticResource 'Font Awesome Regular'}"
+                        FontSize="{StaticResource TamañoFontMuyGrande}"
+                        Text="{Binding Estatura, Mode=TwoWay, FallbackValue=Estatura}"/>
+
+                </Border>
+
+                <Border 
+                    Grid.Row="0" Grid.Column="3"
+                    CornerRadius="10"
+                    Background="{StaticResource Tema.Verde}">
+
+                    <Grid>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" MaxHeight="78"/>
+                            <RowDefinition Height="*" MaxHeight="38"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock 
+                            Grid.Row="0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            local:CampoDeTextoNumericoProperty.Value="True"
+                            FontFamily="{StaticResource 'Font Awesome Regular'}"
+                            FontSize="{StaticResource TamañoFontMuyGrande}"
+                            Text="{Binding Mana, Mode=TwoWay, FallbackValue=Mana}"/>
+                        
+                        <TextBlock 
+                            Grid.Row="1"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            local:CampoDeTextoNumericoProperty.Value="True"
+                            FontFamily="{StaticResource 'Font Awesome Regular'}"
+                            FontSize="{StaticResource TamañoFontMediano}"
+                            Text="{Binding ManaActual, Mode=TwoWay, FallbackValue=Mana}"/>
+
+                    </Grid>
+
+                </Border>
+
+                <Border 
+                    Grid.Row="1" Grid.Column="3"
+                    CornerRadius="10"
+                    Background="{StaticResource Tema.Verde}">
+
+                    <Grid>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" MaxHeight="78"/>
+                            <RowDefinition Height="*" MaxHeight="38"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock 
+                            Grid.Row="0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            local:CampoDeTextoNumericoProperty.Value="True"
+                            FontFamily="{StaticResource 'Font Awesome Regular'}"
+                            FontSize="{StaticResource TamañoFontMuyGrande}"
+                            Text="{Binding Int, Mode=TwoWay, FallbackValue=Int}"/>
+                        
+                        <StackPanel 
+                            Grid.Row="1"
+                            Orientation="Horizontal"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center">
+
+                            <TextBlock
+                                Margin="0 0 5 0"
+                                local:CampoDeTextoNumericoProperty.Value="True"
+                                FontFamily="{StaticResource 'Font Awesome Regular'}"
+                                FontSize="{StaticResource TamañoFontMediano}"
+                                Text="{Binding ModificadorInt, Mode=TwoWay, FallbackValue=Int}"/>
+
+                            <TextBlock
+                                Margin="5 0 0 0"
+                                local:CampoDeTextoNumericoProperty.Value="True"
+                                FontFamily="{StaticResource 'Font Awesome Regular'}"
+                                FontSize="{StaticResource TamañoFontMediano}"
+                                Text="{Binding VentajaInt, Mode=TwoWay, FallbackValue=Int}"/>
+
+                        </StackPanel>
+
+                    </Grid>
+
+                </Border>
+
+                <Border 
+                    Grid.Row="2" Grid.Column="3"
+                    CornerRadius="10"
+                    Background="{StaticResource Tema.Verde}">
+
+                    <TextBlock 
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        local:CampoDeTextoNumericoProperty.Value="True"
+                        FontFamily="{StaticResource 'Font Awesome Regular'}"
+                        FontSize="{StaticResource TamañoFontMuyGrande}"
+                        Text="{Binding Peso, Mode=TwoWay, FallbackValue=Peso}"/>
+
+                </Border>
+
+            </Grid>
+
+            <Grid Grid.Column="1">
+
+                
+
+            </Grid>
 
         </Grid>
 

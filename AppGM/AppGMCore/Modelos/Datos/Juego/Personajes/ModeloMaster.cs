@@ -7,7 +7,7 @@ namespace AppGM.Core
         /// <summary>
         /// Estado de bienestar del master
         /// </summary>
-        public EBienestar Bienestar { get; set; }
+        public EBienestar EBienestar { get; set; }
 
         /// <summary>
         /// Energia magica del personaje

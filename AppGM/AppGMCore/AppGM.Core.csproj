@@ -8,6 +8,11 @@
     <DefineConstants>TRACE;DEBUG</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="ViewModels\Personaje\**" />
+    <EmbeddedResource Remove="ViewModels\Personaje\**" />
+    <None Remove="ViewModels\Personaje\**" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Update="Migrations\20210422005255_Inicial.designer.cs">
       <DependentUpon>20210422005255_Inicial.cs</DependentUpon>
     </Compile>
@@ -56,6 +61,5 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="CreacionDeFunciones\Bloques\VMs\" />
-    <Folder Include="ViewModels\Personaje\" />
   </ItemGroup>
 </Project>

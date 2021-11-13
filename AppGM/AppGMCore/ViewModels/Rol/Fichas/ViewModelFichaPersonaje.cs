@@ -61,6 +61,36 @@ namespace AppGM
         public int Chr => ((ModeloMaster) personaje.modelo).Chr;
 
         /// <summary>
+        /// Modificador en fuerza del personaje.
+        /// </summary>
+        public int ModificadorStr { get; set; }
+
+        /// <summary>
+        /// Modificador en resistencia del personaje.
+        /// </summary>
+        public int ModificadorEnd { get; set; }
+
+        /// <summary>
+        /// Modificador en agilidad del personaje.
+        /// </summary>
+        public int ModificadorAgi { get; set; }
+        
+        /// <summary>
+        /// Modificador en inteligencia del personaje.
+        /// </summary>
+        public int ModificadorInt { get; set; }
+
+        /// <summary>
+        /// Modificador en suerte del personaje.
+        /// </summary>
+        public int ModificadorLck { get; set; }
+
+        /// <summary>
+        /// Modificador en stat de carisma
+        /// </summary>
+        public int ModificadorChr { get; set; }
+
+        /// <summary>
         /// Ventaja en fuerza del personaje.
         /// </summary>
         public int VentajaStr => personaje.VentajaStr;
@@ -88,7 +118,7 @@ namespace AppGM
         /// <summary>
         /// Ventaja en stat de carisma
         /// </summary>
-        public ushort VentajaChr => ((ModeloMaster) personaje.modelo).VentajaChr;
+        public int VentajaChr => ((ModeloMaster) personaje.modelo).VentajaChr;
 
         /// <summary>
         /// Energia vital total del personaje
@@ -151,6 +181,11 @@ namespace AppGM
         public decimal PesoCargado => personaje.modelo.PesoCargado;
 
         /// <summary>
+        /// Indica si la ficha fue seleccionada.
+        /// </summary>
+        public bool EstaSeleccionada { get; set; }
+
+        /// <summary>
         /// Puede ser un personaje Master, Servant, Invocacion, o NPC
         /// </summary>
         public string TipoDelPersonaje => Enum.GetName(personaje.modelo.TipoPersonaje);
@@ -198,7 +233,7 @@ namespace AppGM
         /// <summary>
         /// Bienestar del personaje.
         /// </summary>
-        public string Bienestar => Enum.GetName(((ModeloMaster) personaje.modelo).Bienestar);
+        public string Bienestar => Enum.GetName(((ModeloMaster) personaje.modelo).EBienestar);
 
         /// <summary>
         /// Rango del Noble Phantasm del personaje si es servant.
@@ -216,6 +251,13 @@ namespace AppGM
         public ViewModelFichaPersonaje(ControladorPersonaje _personaje)
         {
             personaje = _personaje;
+
+            ModificadorStr = Helpers.Juego.ObtenerModificadorStat(Str);
+            ModificadorAgi = Helpers.Juego.ObtenerModificadorStat(Agi);
+            ModificadorEnd = Helpers.Juego.ObtenerModificadorStat(End);
+            ModificadorInt = Helpers.Juego.ObtenerModificadorStat(Int);
+            ModificadorLck = Helpers.Juego.ObtenerModificadorStat(Lck);
+            ModificadorChr = Helpers.Juego.ObtenerModificadorStat(Chr);
         }
 
         #endregion
