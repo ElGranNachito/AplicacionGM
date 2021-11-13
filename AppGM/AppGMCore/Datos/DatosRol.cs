@@ -21,7 +21,8 @@ namespace AppGM.Core
 		public List<ControladorPersonaje> Servants { get; set; }                     = null;
 		public List<ControladorPersonaje> Masters { get; set; }                      = null;
 		public List<ControladorInvocacion> Invocaciones { get; set; }                = null;
-		public List<ControladorItem> Items { get; set; }                       = null;
+		public List<ControladorPersonaje> NPCs { get; set; }                         = null; 
+		public List<ControladorItem> Items { get; set; }                             = null;
 		public List<ControladorSlot> Slots { get; set; }                             = null;
 		public List<ControladorHabilidad> Perks { get; set; }                        = null;
 		public List<ControladorHabilidad> Skills { get; set; }                       = null;

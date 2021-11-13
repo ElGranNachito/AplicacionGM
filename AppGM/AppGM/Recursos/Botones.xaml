@@ -29,11 +29,12 @@
     <!-- Estilo base para los botones de la aplicacion, por defecto no tienen fondo o borde -->
     <Style TargetType="{x:Type ButtonBase}" x:Key="BotonBase">
 
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Background" Value="{StaticResource Color.Boton.Fondo.Estatico}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource Color.Boton.Borde.Estatico}"/>
+        <Setter Property="Foreground" Value="{StaticResource Color.Boton.Texto.Estatico}"/>
+
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="Foreground" Value="Black"/>
-        <Setter Property="FontFamily" Value="My Font Regular"/>
+        <Setter Property="FontFamily" Value="Font Canon"/>
 
         <Setter Property="Template">
             <Setter.Value>
@@ -47,6 +48,7 @@
                         <TextBlock 
                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                             HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            Foreground="{TemplateBinding Foreground}"
                             Text="{TemplateBinding Content}"
                             TextAlignment="Center"/>
                     </Border>
@@ -56,15 +58,26 @@
 
         <!-- Cuando el boton esta desabilitado cambiamos los colores del texto y del fondo -->
         <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground" Value="{StaticResource Color.Boton.Texto.MouseOver}"/>
+                <Setter Property="Background" Value="{StaticResource Color.Boton.Fondo.MouseOver}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource Color.Boton.Borde.MouseOver}"/>
+            </Trigger>
+            <Trigger Property="IsFocused" Value="True">
+                <Setter Property="Foreground" Value="{StaticResource Color.Boton.Texto.Seleccionado}"/>
+                <Setter Property="Background" Value="{StaticResource Color.Boton.Fondo.Seleccionado}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource Color.Boton.Borde.Seleccionado}"/>
+            </Trigger>
             <Trigger Property="IsEnabled" Value="False">
-                <Trigger.Setters>
-                    <Setter Property="Foreground" Value="DimGray"/>
-                    <Setter Property="Background" Value="DarkGray"/>
-                </Trigger.Setters>
+                <Setter Property="Foreground" Value="{StaticResource Color.Boton.Texto.Deshabilitado}"/>
+                <Setter Property="Background" Value="{StaticResource Color.Boton.Fondo.Deshabilitado}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource Color.Boton.Borde.Deshabilitado}"/>
             </Trigger>
         </Style.Triggers>
 
     </Style>
+
+    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BotonBase}"/>
 
     <!-- Estilo base para los botones de la aplicacion sin texto, por default no tienen fondo o borde -->
     <Style TargetType="{x:Type ButtonBase}" x:Key="BotonConFondoTransparente">
@@ -86,9 +99,10 @@
     </Style>
 
     <!-- Estilo para los botones de la barra superior de la ventana -->
-    <Style TargetType="{x:Type ButtonBase}" x:Key="BotonVentanaPrincipal" BasedOn="{StaticResource BotonBase}">
+    <Style TargetType="{x:Type ButtonBase}" x:Key="BotonVentanaPrincipal">
 
         <Setter Property="Padding" Value="3 0"/>
+        <Setter Property="Background" Value="Transparent"/>
 
         <!-- Hacemos este boton testeable para hits dentro del chrome porque el titulo cae dentro del chrome de la ventana -->
         <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
@@ -119,7 +133,7 @@
 
             <!-- Cuando el mouse pasa sobre el boton cambiar el color del fondo -->
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="#1F1F1F"/>
+                <Setter Property="Background" Value="DarkGray"/>
             </Trigger>
 
         </Style.Triggers>
@@ -128,6 +142,8 @@
 
     <!-- Estilo para el boton para cerrar la ventana principal -->
     <Style TargetType="{x:Type ButtonBase}" x:Key="BotonCerrarVentanaPrincipal" BasedOn="{StaticResource BotonVentanaPrincipal}">
+
+        <Setter Property="Background" Value="Transparent"/>
 
         <Style.Triggers>
 
@@ -141,7 +157,7 @@
     </Style>
 
     <!-- Boton cuyo marco se resalta cuando el cursor se encuentra sobre ellos -->
-    <Style TargetType="{x:Type ButtonBase}" x:Key="BotonMarcoResaltable" BasedOn="{StaticResource BotonBase}">
+    <Style TargetType="{x:Type ButtonBase}" x:Key="BotonMarcoResaltable">
 
         <Setter Property="Template">
             <Setter.Value>
@@ -175,10 +191,11 @@
     </Style>
 
     <!-- Botones de la barra derecha del menu principal del rol -->
-    <Style TargetType="{x:Type Button}" x:Key="BotonMenuRol" BasedOn="{StaticResource BotonBase}">
+    <Style TargetType="{x:Type Button}" x:Key="BotonMenuRol">
 
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="Padding" Value="5 10"/>
+        <Setter Property="Background" Value="Transparent"/>
 
         <Setter Property="Template">
             <Setter.Value>
@@ -241,10 +258,11 @@
             <EventTrigger RoutedEvent="MouseEnter">
 
                 <BeginStoryboard>
+
                     <Storyboard
                         TargetProperty="Background.Color">
 
-                        <ColorAnimation Duration="0:0:0.2" Storyboard.TargetProperty="Background.Color" To="DarkGray"/>
+                        <ColorAnimation Duration="0:0:0.2" Storyboard.TargetProperty="Background.Color" To="#06140d"/>
 
                     </Storyboard>
                 </BeginStoryboard>
@@ -258,7 +276,7 @@
                     <Storyboard 
                         TargetProperty="Background.Color">
 
-                        <ColorAnimation Duration="0:0:0.2" To="Transparent"/>
+                        <ColorAnimation Duration="0:0:0.2" To="#06140d"/>
 
                     </Storyboard>
                 </BeginStoryboard>
@@ -415,7 +433,7 @@
             </Trigger>
 
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Foreground" Value="{StaticResource Color.CampoDeTexto.TextoDeshabilitado}"/>
+                <Setter Property="Foreground" Value="{StaticResource Color.TextBox.Texto.Deshabilitado}"/>
             </Trigger>
 
         </Style.Triggers>
@@ -462,7 +480,7 @@
 
         <Style.Triggers>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Foreground" Value="{StaticResource Color.CampoDeTexto.TextoDeshabilitado}"/>
+                <Setter Property="Foreground" Value="{StaticResource Color.TextBox.Texto.Deshabilitado}"/>
             </Trigger>
         </Style.Triggers>
 

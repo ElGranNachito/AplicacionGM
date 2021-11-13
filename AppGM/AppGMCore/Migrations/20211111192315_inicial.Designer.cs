@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AppGM.Core.Migrations
 {
     [DbContext(typeof(RolContext))]
-    [Migration("20211111143212_inicial")]
+    [Migration("20211111192315_inicial")]
     partial class inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -737,6 +737,9 @@ namespace AppGM.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("AccionesRealizadasEnTurno")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int?>("CombateActualId")
                         .HasColumnType("INTEGER");
 
@@ -750,6 +753,9 @@ namespace AppGM.Core.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("TiradaIniciativa")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("TotalAccionesPorTurno")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -1530,9 +1536,6 @@ namespace AppGM.Core.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("EBienestar")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("EClaseDeSuServant")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Lore")

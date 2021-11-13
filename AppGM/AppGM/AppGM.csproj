@@ -242,6 +242,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Media\Imagenes\Iconos\Parties\" />
+    <Folder Include="Media\Imagenes\Tiradas\Iconos\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="CoolLogs">

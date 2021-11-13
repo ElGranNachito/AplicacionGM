@@ -57,7 +57,16 @@ namespace AppGM.Core
         /// <summary>
         /// Devuelve el rol seleccionado actualmente
         /// </summary>
-        public ModeloRol RolActual => Roles[mIndiceRolActual];
+        public ModeloRol RolActual
+        {
+	        get
+	        {
+		        if (mIndiceRolActual >= Roles.Count)
+			        return null;
+
+		        return Roles[mIndiceRolActual];
+	        }
+        }
 
         /// <summary>
         /// Viewmodel del globo que muestra la info del rol actualmente seleccionado
