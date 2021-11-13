@@ -66,6 +66,57 @@ namespace AppGM.Core
 			}
         }
 
+        public string Fisico
+        {
+	        get
+	        {
+		        if (ModeloCreado is ModeloPersonajeJugable pjJugable)
+			        return pjJugable.Caracteristicas.Fisico;
+
+		        return string.Empty;
+	        }
+
+	        set
+	        {
+		        if (ModeloCreado is ModeloPersonajeJugable pjJugable)
+			        pjJugable.Caracteristicas.Fisico = value;
+            }
+        }
+
+        public string Origen
+        {
+	        get
+	        {
+		        if (ModeloCreado is ModeloPersonajeJugable pjJugable)
+			        return pjJugable.Caracteristicas.Origen;
+
+		        return string.Empty;
+	        }
+
+	        set
+	        {
+		        if (ModeloCreado is ModeloPersonajeJugable pjJugable)
+			        pjJugable.Caracteristicas.Origen = value;
+	        }
+        }
+
+        public string Afinidad
+        {
+	        get
+	        {
+		        if (ModeloCreado is ModeloPersonajeJugable pjJugable)
+			        return pjJugable.Caracteristicas.Afinidad;
+
+		        return string.Empty;
+	        }
+
+	        set
+	        {
+		        if (ModeloCreado is ModeloPersonajeJugable pjJugable)
+			        pjJugable.Caracteristicas.Afinidad = value;
+	        }
+        }
+
         public string TextoPuntosDeHabilidadRestantes => $"Puntos de habilidad restantes: {PuntosHabilidadRestantes}";
 
         public int PuntosHabilidadRestantes

@@ -160,9 +160,11 @@ namespace AppGM.Core
             //Se crea el popup y se espera a que se cierre
             await SistemaPrincipal.MostrarMensajeAsync(vm, "Agregar Personaje", true, -1, -1);
 
-            administradorDeCombate.ControladoresParticipantes.Add(vm.vmResultado.controladorParticipante);
+            administradorDeCombate.AgregarParticipante(vm.vmResultado.controladorParticipante.modelo);
 
             Participantes.Add(vm.vmResultado);
+
+            await SistemaPrincipal.GuardarDatosAsync();
         }
 
         #endregion

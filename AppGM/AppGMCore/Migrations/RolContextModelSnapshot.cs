@@ -160,6 +160,10 @@ namespace AppGM.Core.Migrations
                     b.Property<int>("Id")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Afinidad")
+                        .HasMaxLength(128)
+                        .HasColumnType("TEXT");
+
                     b.Property<int>("Arquetipo")
                         .HasColumnType("INTEGER");
 
@@ -173,7 +177,7 @@ namespace AppGM.Core.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Fisico")
-                        .HasMaxLength(100)
+                        .HasMaxLength(128)
                         .HasColumnType("TEXT");
 
                     b.Property<int>("IdPersonaje")
@@ -186,7 +190,11 @@ namespace AppGM.Core.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Nacionalidad")
-                        .HasMaxLength(50)
+                        .HasMaxLength(64)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Origen")
+                        .HasMaxLength(64)
                         .HasColumnType("TEXT");
 
                     b.Property<int>("Peso")

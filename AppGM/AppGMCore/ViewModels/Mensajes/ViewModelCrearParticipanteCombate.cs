@@ -155,71 +155,46 @@ namespace AppGM.Core
 
         #endregion
 
-        #region Funciones
+        #region Metodos
 
         /// <summary>
         /// Crea el VM
         /// </summary>
         private void GenerarViewModel()
         {
-            ModeloParticipante modeloParticipante = null;
+            ModeloParticipante modeloParticipante = new ModeloParticipante
+            {
+	            EsSuTurno = false,
+	            TotalAccionesPorTurno = CantidadInicialDeAcciones
+            };
 
             switch (TipoPersonajeSeleccionado)
             {
                 case ETipoPersonaje.Master:
                 {
-                    modeloParticipante = new ModeloParticipante
-                    {
-                        EsSuTurno = false,
-                        TotalAccionesPorTurno = CantidadInicialDeAcciones
-                    };
-
-                    modeloParticipante.Personaje = SistemaPrincipal.DatosRolSeleccionado.Masters.Find(m => m.ToString() == PersonajeSeleccionado).modelo;
+	                modeloParticipante.Personaje = SistemaPrincipal.DatosRolSeleccionado.Masters.Find(m => m.ToString() == PersonajeSeleccionado).modelo;
                     break;
                 }
                 case ETipoPersonaje.Servant:
                 {
-                    modeloParticipante = new ModeloParticipante
-                    {
-                        EsSuTurno = false,
-                        TotalAccionesPorTurno = CantidadInicialDeAcciones
-                    };
-
-                    modeloParticipante.Personaje = SistemaPrincipal.DatosRolSeleccionado.Servants.Find(s => s.ToString() == PersonajeSeleccionado).modelo;
+	                modeloParticipante.Personaje = SistemaPrincipal.DatosRolSeleccionado.Servants.Find(s => s.ToString() == PersonajeSeleccionado).modelo;
                     break;
                 }
                 case ETipoPersonaje.Invocacion:
                 {
-                    modeloParticipante = new ModeloParticipante
-                    {
-                        EsSuTurno = false,
-                        TotalAccionesPorTurno = CantidadInicialDeAcciones
-                    };
-                    modeloParticipante.Personaje = SistemaPrincipal.DatosRolSeleccionado.Invocaciones.Find(s => s.ToString() == PersonajeSeleccionado).modelo;
+	                modeloParticipante.Personaje = SistemaPrincipal.DatosRolSeleccionado.Invocaciones.Find(s => s.ToString() == PersonajeSeleccionado).modelo;
                     break;
                 }
                 case ETipoPersonaje.NPC:
                 {
-                    modeloParticipante = new ModeloParticipante
-                    {
-                        EsSuTurno = false,
-                        TotalAccionesPorTurno = CantidadInicialDeAcciones
-                    };
-
-                    modeloParticipante.Personaje = SistemaPrincipal.DatosRolSeleccionado.NPCs.Find(i => i.ToString() == PersonajeSeleccionado).modelo;
+	                modeloParticipante.Personaje = SistemaPrincipal.DatosRolSeleccionado.NPCs.Find(i => i.ToString() == PersonajeSeleccionado).modelo;
                     break;
                 }
             }
 
-            combate.administradorDeCombate.AgregarParticipante(modeloParticipante);
-
             ControladorParticipante controlador = new ControladorParticipante(modeloParticipante);
             
             vmResultado = new ViewModelParticipante(controlador, combate);
-
-            SistemaPrincipal.GuardarModelo(modeloParticipante);
-
-            SistemaPrincipal.GuardarDatosAsync();
 
             Resultado = EResultadoViewModel.Aceptar;
         }

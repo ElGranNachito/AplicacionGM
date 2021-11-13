@@ -317,8 +317,10 @@ namespace AppGM.Core.Migrations
                     Sexo = table.Column<int>(type: "INTEGER", nullable: false),
                     Arquetipo = table.Column<int>(type: "INTEGER", nullable: false),
                     ManoDominante = table.Column<int>(type: "INTEGER", nullable: false),
-                    Fisico = table.Column<string>(type: "TEXT", maxLength: 100, nullable: true),
-                    Nacionalidad = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
+                    Fisico = table.Column<string>(type: "TEXT", maxLength: 128, nullable: true),
+                    Nacionalidad = table.Column<string>(type: "TEXT", maxLength: 64, nullable: true),
+                    Afinidad = table.Column<string>(type: "TEXT", maxLength: 128, nullable: true),
+                    Origen = table.Column<string>(type: "TEXT", maxLength: 64, nullable: true),
                     IdPersonaje = table.Column<int>(type: "INTEGER", nullable: false),
                     ModeloPersonajeJugableId = table.Column<int>(type: "INTEGER", nullable: false),
                     EsValido = table.Column<bool>(type: "INTEGER", nullable: false)
@@ -506,6 +508,7 @@ namespace AppGM.Core.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     TiradaIniciativa = table.Column<int>(type: "INTEGER", nullable: false),
                     TotalAccionesPorTurno = table.Column<int>(type: "INTEGER", nullable: false),
+                    AccionesRestantes = table.Column<int>(type: "INTEGER", nullable: false),
                     AccionesRealizadasEnTurno = table.Column<int>(type: "INTEGER", nullable: false),
                     EsSuTurno = table.Column<bool>(type: "INTEGER", nullable: false),
                     PersonajeId = table.Column<int>(type: "INTEGER", nullable: true),
@@ -945,6 +948,8 @@ namespace AppGM.Core.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
+                    TipoAccion = table.Column<int>(type: "INTEGER", nullable: false),
+                    ConsumeTurno = table.Column<bool>(type: "INTEGER", nullable: false),
                     Descripcion = table.Column<string>(type: "TEXT", maxLength: 2000, nullable: true),
                     ParticipanteId = table.Column<int>(type: "INTEGER", nullable: true),
                     EsValido = table.Column<bool>(type: "INTEGER", nullable: false)

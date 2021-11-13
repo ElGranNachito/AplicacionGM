@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AppGM.Core.Migrations
 {
     [DbContext(typeof(RolContext))]
-    [Migration("20211111192315_inicial")]
+    [Migration("20211113124224_inicial")]
     partial class inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,9 @@ namespace AppGM.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("ConsumeTurno")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Descripcion")
                         .HasMaxLength(2000)
                         .HasColumnType("TEXT");
@@ -32,6 +35,9 @@ namespace AppGM.Core.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<int?>("ParticipanteId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("TipoAccion")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -156,6 +162,10 @@ namespace AppGM.Core.Migrations
                     b.Property<int>("Id")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Afinidad")
+                        .HasMaxLength(128)
+                        .HasColumnType("TEXT");
+
                     b.Property<int>("Arquetipo")
                         .HasColumnType("INTEGER");
 
@@ -169,7 +179,7 @@ namespace AppGM.Core.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Fisico")
-                        .HasMaxLength(100)
+                        .HasMaxLength(128)
                         .HasColumnType("TEXT");
 
                     b.Property<int>("IdPersonaje")
@@ -182,7 +192,11 @@ namespace AppGM.Core.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Nacionalidad")
-                        .HasMaxLength(50)
+                        .HasMaxLength(64)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Origen")
+                        .HasMaxLength(64)
                         .HasColumnType("TEXT");
 
                     b.Property<int>("Peso")
@@ -738,6 +752,9 @@ namespace AppGM.Core.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("AccionesRealizadasEnTurno")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("AccionesRestantes")
                         .HasColumnType("INTEGER");
 
                     b.Property<int?>("CombateActualId")

@@ -35,16 +35,26 @@ namespace AppGM.Core
         /// <summary>
         /// Breve descripcion de su contextura fisica
         /// </summary>
-        [StringLength(100)]
-        [MaxLength(100)]
+        [StringLength(128)]
         public string Fisico { get; set; }
 
         /// <summary>
         /// Nacionalidad del personaje
         /// </summary>
-        [StringLength(50)]
-        [MaxLength(100)]
+        [StringLength(64)]
         public string Nacionalidad { get; set; }
+
+        /// <summary>
+        /// Afinidad
+        /// </summary>
+        [StringLength(128)]
+        public string Afinidad { get; set; }
+
+        /// <summary>
+        /// Origen del personaje
+        /// </summary>
+        [StringLength(64)]
+        public string Origen { get; set; }
         
         /// <summary>
         /// Clave foranea que referencia al <see cref="ModeloPersonajeJugable"/> al que pertenecen estas caracteristicas

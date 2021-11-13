@@ -89,6 +89,8 @@ namespace AppGM.Core
         {
             modelo.Participantes.Add(participante);
 
+            ControladoresParticipantes.Add(SistemaPrincipal.ObtenerControlador<ControladorParticipante, ModeloParticipante>(participante, true));
+
             SistemaPrincipal.GuardarModelo(participante);
         }
 
