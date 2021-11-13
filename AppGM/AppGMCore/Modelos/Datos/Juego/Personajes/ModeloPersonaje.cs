@@ -19,7 +19,6 @@ namespace AppGM.Core
         /// Nombre del personaje
         /// </summary>
         [StringLength(50)]
-        [MaxLength(50)]
         public string Nombre { get; set; }
 
         /// <summary>
@@ -67,7 +66,7 @@ namespace AppGM.Core
         /// Ruta completa a la imagen del personaje
         /// </summary>
         [Column(TypeName = "varchar(260)")]
-        public string PathImagenAbsoluto { get; set; }
+        public string NombreArchivoImagen { get; set; }
 
         /// <summary>
         /// Estado del personaje (en combate o no en combate)

@@ -17,7 +17,7 @@ namespace AppGM
         private void TextBoxBase_OnTextChanged(object sender, TextChangedEventArgs e)
         {
             ViewModel.DescripcionRol = ((TextBox) sender).Text;
-
+            
             ViewModel.DispararPropertyChanged(new PropertyChangedEventArgs(nameof(ViewModelCrearRol_DatosRol.TextoLetrasRestantes)));
         } 
     }

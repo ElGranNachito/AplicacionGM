@@ -16,12 +16,6 @@ namespace AppGM.Core
         public string NombreMapa { get; set; }
 
         /// <summary>
-        /// Ruta absoluta a la imagen del mapa
-        /// </summary>
-        [MaxLength(200)]
-        public string RutaAbsolutaImagen { get; set; }
-
-        /// <summary>
         /// Formato de la imagen del mapa
         /// </summary>
         public EFormatoImagen EFormatoImagen { get; set; }

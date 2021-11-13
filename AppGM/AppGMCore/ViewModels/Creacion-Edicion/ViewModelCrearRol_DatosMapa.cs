@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Windows.Input;
 
 namespace AppGM.Core
@@ -28,12 +29,12 @@ namespace AppGM.Core
         /// <summary>
         /// Nombre del mapa
         /// </summary>
-        public string NombreMapa     { get; set; } = string.Empty;
+        public string NombreMapa { get; set; } = string.Empty;
 
         /// <summary>
         /// Ruta a la imagen del mapa
         /// </summary>
-        public string PathImagenMapa { get; set; } = string.Empty;
+        public string PathAbsolutoImagenMapa { get; set; } 
 
         /// <summary>
         /// Indica si borrar la imagen de su ubicacion anterior
@@ -57,9 +58,9 @@ namespace AppGM.Core
                 if(mArchivoMapa == null)
                     return;
 
+				PathAbsolutoImagenMapa = mArchivoMapa.Ruta;
 
-
-				PathImagenMapa = mArchivoMapa.Ruta;
+				DispararPropertyChanged(PathAbsolutoImagenMapa);
 			});
 		}
 
@@ -78,7 +79,6 @@ namespace AppGM.Core
 				EFormatoImagen = Enum.Parse<EFormatoImagen>(mArchivoMapa.Extension.Remove(0, 1), true),
 				NombreMapa = NombreMapa,
 				Rol = SistemaPrincipal.ModeloRolActual,
-				RutaAbsolutaImagen = mArchivoMapa.Ruta,
 			};
 
 			//Ambiente hardcodeadito
@@ -97,9 +97,15 @@ namespace AppGM.Core
 			return nuevoMapa;
 		}
 
+		public override void Activar(ViewModelCrearRol vm)
+		{
+			if (vm.modeloRol.Mapas.Count > 0)
+				PathAbsolutoImagenMapa = Path.Combine(SistemaPrincipal.ControladorDeArchivos.DirectorioImagenesMapas, vm.modeloRol.Mapas[0].NombreMapa + Enum.GetName(vm.modeloRol.Mapas[0].EFormatoImagen));
+		}
+
 		public override void Desactivar(ViewModelCrearRol vm)
 		{
-			if (string.IsNullOrEmpty(NombreMapa) || string.IsNullOrEmpty(PathImagenMapa))
+			if (string.IsNullOrEmpty(NombreMapa) || string.IsNullOrEmpty(PathAbsolutoImagenMapa))
 				return;
 
 			if (mArchivoMapa.NombreSinExtension == NombreMapa)
@@ -112,8 +118,6 @@ namespace AppGM.Core
             IArchivo archivoViejo = mArchivoMapa.CopiarADirectorio(SistemaPrincipal.ControladorDeArchivos.DirectorioImagenesMapas, true);
             mArchivoMapa.CambiarNombre(NombreMapa);
 
-            
-
             //Borramos el archivo al salir de la aplicacion porque de intentar hacerlo aqui no podremos
             if (BorrarImagenDeLaUbicacionAnterior)
                 SistemaPrincipal.Aplicacion.VentanaPrincipal.OnVentanaCerrada += ventana =>
@@ -122,11 +126,9 @@ namespace AppGM.Core
                 };
 
 			#endif
-
-			PathImagenMapa = mArchivoMapa.Ruta;
 		}
 
-		public override bool PuedeAvanzar() => !(String.IsNullOrEmpty(NombreMapa) || String.IsNullOrEmpty(PathImagenMapa)); 
+		public override bool PuedeAvanzar() => !(String.IsNullOrEmpty(NombreMapa) || String.IsNullOrEmpty(PathAbsolutoImagenMapa)); 
 
 		#endregion
 	}

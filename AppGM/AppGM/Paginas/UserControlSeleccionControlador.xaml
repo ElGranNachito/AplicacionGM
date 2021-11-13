@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="AppGM.UserControlSeleccionControlador"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AppGM"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             
+             Background="Transparent">
+
+    <!--ViewModel: ViewModelSeleccionDeControlador-->
+    
+    <UserControl.Template>
+        <ControlTemplate TargetType="{x:Type UserControl}">
+
+            <Grid
+                Background="{TemplateBinding Background}">
+
+                <!--Boton para seleccionar el controlador-->
+                <Button
+                    Content="{TemplateBinding Content}"
+                    Visibility="{Binding ItemSeleccionado, Converter={local:IsNullToVisibilityConverter}}"/>
+
+                <!--Controlador seleccionado-->
+                <local:UserControlItemLista
+                    DataContext="{Binding ItemSeleccionado}"
+                    Visibility="{Binding ItemSeleccionado, Converter={local:IsNullToVisibilityConverter}, ConverterParameter=0}"/>
+
+            </Grid>
+        </ControlTemplate>
+    </UserControl.Template>
+</UserControl>

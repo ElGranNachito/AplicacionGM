@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Windows.Input;
@@ -135,7 +137,7 @@ namespace AppGM.Core
         /// <summary>
         /// Ruta completa a la imagen del mapa
         /// </summary>
-        public string PathImagen => controladorMapa.modelo.RutaAbsolutaImagen;
+        public string PathImagen => Path.Combine(SistemaPrincipal.ControladorDeArchivos.DirectorioImagenesMapas, $"{controladorMapa.modelo.NombreMapa}.{Enum.GetName(controladorMapa.modelo.EFormatoImagen)}");
 
         /// <summary>
         /// Tamaño del canvas en el eje X

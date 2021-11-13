@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AppGM.Core.Migrations
 {
-    public partial class inicial : Migration
+    public partial class inicia : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -201,7 +201,7 @@ namespace AppGM.Core.Migrations
                     PesoMaximoCargable = table.Column<decimal>(type: "TEXT", nullable: false),
                     PesoCargado = table.Column<decimal>(type: "TEXT", nullable: false),
                     PathImagenRelativo = table.Column<string>(type: "varchar(260)", nullable: true),
-                    PathImagenAbsoluto = table.Column<string>(type: "varchar(260)", nullable: true),
+                    NombreArchivoImagen = table.Column<string>(type: "varchar(260)", nullable: true),
                     EstaEnCombate = table.Column<bool>(type: "INTEGER", nullable: false),
                     FormatoImagen = table.Column<int>(type: "INTEGER", nullable: false),
                     PosicionId = table.Column<int>(type: "INTEGER", nullable: true),
@@ -259,7 +259,6 @@ namespace AppGM.Core.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     NombreMapa = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
-                    RutaAbsolutaImagen = table.Column<string>(type: "TEXT", maxLength: 200, nullable: true),
                     EFormatoImagen = table.Column<int>(type: "INTEGER", nullable: false),
                     RolId = table.Column<int>(type: "INTEGER", nullable: true),
                     CombateAlQuePerteneceId = table.Column<int>(type: "INTEGER", nullable: true),

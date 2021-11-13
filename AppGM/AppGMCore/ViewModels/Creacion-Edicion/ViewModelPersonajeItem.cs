@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.IO;
 
 namespace AppGM.Core
 {
@@ -66,7 +67,7 @@ namespace AppGM.Core
 				});
 			}
 
-			PathImagen = modeloPersonaje.PathImagenAbsoluto;
+			PathImagen = Path.Combine(SistemaPrincipal.ControladorDeArchivos.DirectorioImagenes, modeloPersonaje.NombreArchivoImagen);
 		}
 
 		protected override void ActualizarGruposDeBotones()

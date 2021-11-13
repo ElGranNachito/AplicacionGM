@@ -52,17 +52,17 @@ namespace AppGM.Core
         {
 			get
 			{
-                if(ModeloCreado.PathImagenAbsoluto.IsNullOrWhiteSpace())
+                if(ModeloCreado.NombreArchivoImagen.IsNullOrWhiteSpace())
                     return Path.Combine(SistemaPrincipal.ControladorDeArchivos.DirectorioImagenes, "camarita.png");
 
-                return ModeloCreado.PathImagenAbsoluto;
+                return Path.Combine(SistemaPrincipal.ControladorDeArchivos.DirectorioImagenes, ModeloCreado.NombreArchivoImagen); ;
             }
 			set
 			{
                 if (!File.Exists(value))
                     return;
 
-                ModeloCreado.PathImagenAbsoluto = value;
+                ModeloCreado.NombreArchivoImagen = value;
 			}
         }
 
@@ -357,8 +357,8 @@ namespace AppGM.Core
 
 	            archivoSeleccionado.CopiarADirectorio(SistemaPrincipal.ControladorDeArchivos.DirectorioImagenes, true);
 
-	            ModeloCreado.PathImagenAbsoluto = archivoSeleccionado.Ruta;
-
+	            ModeloCreado.NombreArchivoImagen = archivoSeleccionado.Nombre;
+                
                 DispararPropertyChanged(nameof(PathImagen));
             });
 

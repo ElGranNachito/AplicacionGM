@@ -698,10 +698,6 @@ namespace AppGM.Core.Migrations
                     b.Property<int?>("RolId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("RutaAbsolutaImagen")
-                        .HasMaxLength(200)
-                        .HasColumnType("TEXT");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CombateAlQuePerteneceId");
@@ -822,11 +818,11 @@ namespace AppGM.Core.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("NombreArchivoImagen")
+                        .HasColumnType("varchar(260)");
+
                     b.Property<int>("NumeroParty")
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("PathImagenAbsoluto")
-                        .HasColumnType("varchar(260)");
 
                     b.Property<string>("PathImagenRelativo")
                         .HasColumnType("varchar(260)");

@@ -117,7 +117,7 @@ namespace AppGM.Core
             
             handlerTurnoCambio = (ref int turnoAnterior, ref int turnoActual) =>
             {
-                if (combate.ParticipanteTurnoActual == this)
+                if (combate.Participantes[turnoActual] == this)
                 {
                     var participanteAnterior = combate.Participantes[turnoAnterior];
                     
