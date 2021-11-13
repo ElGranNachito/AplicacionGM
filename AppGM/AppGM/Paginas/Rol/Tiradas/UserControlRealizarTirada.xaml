@@ -11,6 +11,8 @@
              
              Background="{StaticResource Tema.BlancoVerde}">
 
+    <!--ViewModel: ViewModelRealizarTirada-->
+
     <Grid
         Background="{StaticResource Tema.VerdeOscuro}">
 
@@ -166,7 +168,9 @@
 
                             <Button
                                 Content="Seleccionar usuario"
-                                BorderThickness="0 "/>
+                                BorderThickness="0 "
+                                
+                                Command="{Binding ComandoSeleccionarUsuario}"/>
                         </Border>
                        
                     </local:UserControlConImagencitaAlCostado>
@@ -177,8 +181,12 @@
                         MaxHeight="40"
                         MaxWidth="200"
                         Source="../../../Media/Imagenes/Tiradas/Iconos/Manoutilizada.png">
+                        
                         <local:UserControlComboBoxConDescripcion
-                            Descripcion="Mano utilizada:"/>
+                            Descripcion="Mano utilizada:"
+                            
+                            DataContext="{Binding ViewModelComboBoxManoUtilizada}"/>
+
                     </local:UserControlConImagencitaAlCostado>
 
                     <!--Fuentes de daño abarcadas-->
@@ -187,8 +195,10 @@
                         MaxHeight="40"
                         MaxWidth="200"
                         Source="../../../Media/Imagenes/Tiradas/Iconos/FuentedeDaño.png">
+                        
                         <local:UserControlComboBoxConDescripcion
-                            Descripcion="Fuentes de daño:"/>
+                            Descripcion="Fuentes de daño:"
+                            DataContext="{Binding ViewModelMultiselectComboBoxFuentesDeDañoAbarcadas}"/>
                     </local:UserControlConImagencitaAlCostado>
 
                     <!--Multiplicador de especialidad-->
@@ -197,9 +207,12 @@
                         MaxHeight="40"
                         MaxWidth="200"
                         Source="../../../Media/Imagenes/Tiradas/Iconos/Especialidades.png">
+                        
                         <TextBox
                             Tag="Especialidad"
-                            Style="{StaticResource TextoDescriptivo}"/>
+                            Style="{StaticResource TextoDescriptivo}"
+                            Text="{Binding MultiplicadorEspecialidad}"/>
+
                     </local:UserControlConImagencitaAlCostado>
 
                     <local:UserControlConImagencitaAlCostado
@@ -208,8 +221,11 @@
                         MaxHeight="40"
                         MaxWidth="200"
                         Source="../../../Media/Imagenes/Tiradas/Iconos/Presets.png">
+
                         <local:UserControlComboBoxConDescripcion
-                            Descripcion="Preset:"/>
+                            Descripcion="Preset:"
+                            DataContext="{Binding ViewModelComboBoxPresetsDisponibles}"/>
+
                     </local:UserControlConImagencitaAlCostado>
                 </StackPanel>
 
@@ -224,7 +240,9 @@
                             MaxWidth="200"
                             Source="../../../Media/Imagenes/Tiradas/Iconos/Stat.png">
 
-                            <local:UserControlComboBoxConDescripcion/>
+                            <local:UserControlComboBoxConDescripcion
+                                
+                                DataContext="{Binding ViewModelComboBoxStat}"/>
                             
                         </local:UserControlConImagencitaAlCostado>
 
@@ -250,8 +268,24 @@
                         Source="../../../Media/Imagenes/Tiradas/Iconos/CantTiradas.png">
 
                         <TextBox
+                            Tag="Cantidad de tiradas"
                             Style="{StaticResource TextoDescriptivo}"
-                            Tag="Cantidad de tiradas"/>
+                            Text="{Binding NumeroDeTiradas}"/>
+
+                    </local:UserControlConImagencitaAlCostado>
+
+                    <local:UserControlConImagencitaAlCostado
+                        Background="{StaticResource Tema.VerdeOscuro}"
+                        Margin="0 40 0 0"
+                        MinHeight="40"
+                        MaxHeight="40"
+                        MaxWidth="200"
+                        Source="../../../Media/Imagenes/GuraScratch/GuraScratchLogo-v1.png">
+
+                        <TextBox
+                            Tag="Varialble extra"
+                            Style="{StaticResource TextoDescriptivo}"
+                            Text="{Binding VariableExtra}"/>
 
                     </local:UserControlConImagencitaAlCostado>
 
@@ -267,8 +301,9 @@
                         Source="../../../Media/Imagenes/Tiradas/Iconos/Mod.png">
 
                         <TextBox
+                            Tag="Modificador"
                             Style="{StaticResource TextoDescriptivo}"
-                            Tag="Modificador"/>
+                            Text="{Binding Modificador}"/>
 
                     </local:UserControlConImagencitaAlCostado>
 
@@ -280,8 +315,9 @@
                         Source="../../../Media/Imagenes/Tiradas/Iconos/tiradas.png">
 
                         <TextBox
+                            Tag="Tirada"
                             Style="{StaticResource TextoDescriptivo}"
-                            Tag="Tirada"/>
+                            Text="{Binding Tirada}"/>
 
                     </local:UserControlConImagencitaAlCostado>
 
@@ -300,25 +336,98 @@
                     <Grid>
 
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <StackPanel>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                        </Grid.RowDefinitions>
 
-                            <local:UserControlConImagencitaAlCostado
-                                Background="{StaticResource Tema.VerdeOscuro}"
-                                Margin="0 40 0 0"
+                        <local:UserControlConImagencitaAlCostado
+                            Grid.ColumnSpan="2"
+                            Background="{StaticResource Tema.VerdeOscuro}"
+                            HorizontalAlignment="Left"
+                            MinHeight="40"
+                            MinWidth="200"
+                            MaxWidth="200"
+                            Source="../../../Media/Imagenes/Tiradas/Iconos/Objetivo.png">
+
+                        </local:UserControlConImagencitaAlCostado>
+
+                        <RadioButton
+                            VerticalAlignment="Center"
+                            Margin="0 -10 0 0"
+                            Grid.Row="2"/>
+
+                        <StackPanel
+                            Grid.Row="2"
+                            Grid.Column="1"
+
+                            Margin="0 -10 0 0"
+                            
+                            HorizontalAlignment="Left"
+                            Orientation="Horizontal">
+
+                            <Image
                                 MinHeight="40"
-                                MaxWidth="200"
-                                Source="../../../Media/Imagenes/Tiradas/Iconos/Objetivo.png">
+                                MinWidth="40"
+                                MaxWidth="40"
+                                Margin="5 0 0 0"
+                                Source="../../../Media/Imagenes/Tiradas/Iconos/Multiplicador.png"/>
 
-                                <TextBox
-                                    Style="{StaticResource TextoDescriptivo}"
-                                    Tag="Tirada"/>
+                            <TextBlock
+                                VerticalAlignment="Center"
 
-                            </local:UserControlConImagencitaAlCostado>
+                                Margin="10 0 0 0"
+
+                                Text="Multiplicador"
+                                FontSize="20"
+                                Foreground="{StaticResource Tema.Verde}"/>
+
                         </StackPanel>
+
+                        <RadioButton
+                            Grid.Row="3"
+                            VerticalAlignment="Center"
+                            
+                            IsChecked="{Binding UtilizaMultiplicadorDelPuntoVital}"/>
+
+                        <StackPanel
+                            Grid.Row="3"
+                            Grid.Column="1"
+                            
+                            HorizontalAlignment="Left"
+                            Orientation="Horizontal">
+
+                            <Image
+                                MinHeight="40"
+                                MinWidth="40"
+                                MaxWidth="40"
+                                Margin="5 0 0 0"
+                                Source="../../../Media/Imagenes/Tiradas/Iconos/PuntoVital.png"/>
+
+                            <TextBlock
+                                VerticalAlignment="Center"
+
+                                Margin="10 0 0 0"
+
+                                Text="Punto vital"
+                                FontSize="20"
+                                Foreground="{StaticResource Tema.Verde}"/>
+
+                        </StackPanel>
+
+                        <local:UserControlMultiSelectComboBox
+                            Grid.Column="2"
+                            
+                            Descripcion="Tipos de daño:"
+                            
+                            DataContext="{Binding ViewModelMultiselectComboBoxTipoDeDaño}"/>
 
                     </Grid>
 
@@ -332,19 +441,25 @@
                     <!--Boton realizaar tirada-->
                     <Button
                         MinHeight="30"
-                        Content="Realizar tirada"/>
+                        Content="Realizar tirada"
+                        
+                        Command="{Binding ComandoRealizarTirada}"/>
 
                     <!--Boton aplicar daño-->
                     <Button
                         Margin="0 10 0 0"
                         MinHeight="30"
-                        Content="Aplicar daño"/>
+                        Content="Aplicar daño"
+                        
+                        Command="{Binding ComandoAplicarDaño}"/>
 
                     <!--Boton crear preset-->
                     <Button
                         Margin="0 30 0 0"
                         MinHeight="30"
-                        Content="Crear preset"/>
+                        Content="Crear preset"
+                        
+                        Command="{Binding ComandoCrearPreset}"/>
 
                 </StackPanel>
 

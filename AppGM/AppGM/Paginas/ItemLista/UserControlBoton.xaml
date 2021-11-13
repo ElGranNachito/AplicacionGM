@@ -12,14 +12,9 @@
     <Button
         VerticalAlignment="Top"
         Margin="0 5 0 0"
-        Style="{StaticResource BotonFondoResaltable}"
-                    
         Content="{Binding Contenido}"
-                    
         Command="{Binding Comando}"
-
         IsEnabled="{Binding EstaHabilitado}"
-                    
         Visibility="{Binding EsVisible, 
                     Converter={local:BooleanToVisibilityConverterColapsar}}"/>
 </UserControl>

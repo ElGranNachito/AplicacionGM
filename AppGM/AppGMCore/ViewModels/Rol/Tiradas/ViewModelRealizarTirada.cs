@@ -1,4 +1,6 @@
-﻿namespace AppGM.Core
+﻿using System.Windows.Input;
+
+namespace AppGM.Core
 {
 	public class ViewModelRealizarTirada : ViewModelConResultado<ViewModelRealizarTirada>
 	{
@@ -12,6 +14,8 @@
 
 		public string TextoTipoTirada { get; set; }
 
+		public string MultiplicadorEspecialidad { get; set; }
+
 		public bool UtilizaMultiplicadorDelPuntoVital { get; set; }
 
 		public ViewModelComboBox<EStat> ViewModelComboBoxStat { get; set; }
@@ -19,6 +23,8 @@
 		public ViewModelComboBox<EManoUtilizada> ViewModelComboBoxManoUtilizada { get; set; }
 
 		public ViewModelComboBox<ETipoTirada> ViewModelComboBoxTipoTirada {get; set; }
+
+		public ViewModelComboBox<ModeloPresetTirada> ViewModelComboBoxPresetsDisponibles { get; set; }
 
 		public ViewModelMultiselectComboBox<ETipoDeDaño> ViewModelMultiselectComboBoxTipoDeDaño { get; set; }
 
@@ -36,13 +42,13 @@
 
 		public ModeloPresetTirada PresetTirada { get; set; } = new ModeloPresetTirada();
 
-		public ViewModelBoton ViewModelBotonRealizarTirada { get; set; }
+		public ICommand ComandoRealizarTirada { get; private set; }
 
-		public ViewModelBoton ViewModelBotonAplicarDaño { get; set; }
+		public ICommand ComandoAplicarDaño { get; private set; }
 
-		public ViewModelBoton ViewModelBotonSalir { get; set; }
+		public ICommand ComandoCrearPreset { get; private set; }
 
-		public ViewModelBoton ViewModelBotonAñadirPreset { get; set; }
+		public ICommand ComandoSalir { get; private set; }
 
 		public ViewModelRealizarTirada(ControladorPersonaje usuario, ControladorHabilidad habilidadContenedoraDeTirada, ControladorItem itemContenedorDeTirada)
 		{
