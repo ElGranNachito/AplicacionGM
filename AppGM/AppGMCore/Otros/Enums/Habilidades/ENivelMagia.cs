@@ -8,6 +8,8 @@ namespace AppGM.Core
 	[Flags]
 	public enum ENivelMagia
 	{
+		NINGUNO = 0,
+
 		Cero   = 1<<0,
 		Uno    = 1<<1,
 		Dos    = 1<<2,

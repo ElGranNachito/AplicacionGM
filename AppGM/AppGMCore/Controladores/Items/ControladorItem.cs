@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace AppGM.Core
 {
-	public class ControladorItem : Controlador<ModeloItem>
+	public class ControladorItem : Controlador<ModeloItem>, IInfligidorDaño
     {
 	    #region Eventos
 
@@ -19,7 +19,9 @@ namespace AppGM.Core
 
 	    public event dItemEliminado OnItemEliminado = delegate { };
 
-	    #endregion
+	    public event IInfligidorDaño.dInfligirDaño OnInfligirDaño;
+
+        #endregion
 
         #region Propiedades
 
@@ -121,6 +123,11 @@ namespace AppGM.Core
         public virtual bool PuedeUtilizar(ControladorPersonaje usuario, ControladorPersonaje[] objetivos)
         {
 	        return false;
+        }
+
+        public void InfligirDaño(IDañable objetivo, ModeloArgumentosDaño argsDaño, SortedList<int, IDañable> subObjetivos = null)
+        {
+	        throw new System.NotImplementedException();
         }
 
         public override async Task Recargar()

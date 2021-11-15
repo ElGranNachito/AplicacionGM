@@ -10,7 +10,7 @@ namespace AppGM.Core
 	/// <summary>
 	/// Representa un control para la creacion de una tirada
 	/// </summary>
-	public class ViewModelCreacionEdicionDeTirada : ViewModelCreacionEdicionDeModelo<ModeloTiradaVariable, ControladorTiradaVariable, ViewModelCreacionEdicionDeTirada>, IAutocompletable
+	public class ViewModelCreacionEdicionDeTirada : ViewModelCreacionEdicionDeModelo<ModeloTiradaPersonalizada, ControladorTiradaPersonalizada, ViewModelCreacionEdicionDeTirada>, IAutocompletable
 	{
 		#region Eventos
 
@@ -168,7 +168,7 @@ namespace AppGM.Core
 		/// <param name="_accionSalir">Delegado que se ejecuta al salir del control representado por este vm</param>
 		/// <param name="_personaje"><see cref="ModeloConVariablesYTiradas"/> para el que se esta creando la tirada</param>
 		/// <param name="_controladorTiradaSiendoEditada">Controlador de la tirada que esta siendo editada</param>
-		public ViewModelCreacionEdicionDeTirada(Action<ViewModelCreacionEdicionDeTirada> _accionSalir, ModeloConVariablesYTiradas _contenedorTirada, ControladorTiradaVariable _controladorTiradaSiendoEditada)
+		public ViewModelCreacionEdicionDeTirada(Action<ViewModelCreacionEdicionDeTirada> _accionSalir, ModeloConVariablesYTiradas _contenedorTirada, ControladorTiradaPersonalizada _controladorTiradaSiendoEditada)
 			: base(_accionSalir, _controladorTiradaSiendoEditada)
 		{
 			mModeloContenedor = _contenedorTirada;
@@ -176,9 +176,9 @@ namespace AppGM.Core
 			ViewModelComboBoxTipoTirada.OnValorSeleccionadoCambio += async (ViewModelItemComboBoxBase<ETipoTirada> anterior, ViewModelItemComboBoxBase<ETipoTirada> actual) =>
 			{
 				if (actual.valor == ETipoTirada.Daño)
-					ModeloCreado = (await ModeloCreado.CrearCopiaProfundaEnSubtipoAsync<ModeloTiradaDeDaño, ModeloTiradaVariable>()).resultado;
+					ModeloCreado = (await ModeloCreado.CrearCopiaProfundaEnSubtipoAsync<ModeloTiradaDeDaño, ModeloTiradaPersonalizada>()).resultado;
 				else
-					ModeloCreado = (await ModeloCreado.CrearCopiaProfundaEnSubtipoAsync<ModeloTiradaVariable, ModeloTiradaDeDaño>()).resultado;
+					ModeloCreado = (await ModeloCreado.CrearCopiaProfundaEnSubtipoAsync<ModeloTiradaPersonalizada, ModeloTiradaDeDaño>()).resultado;
 
 				DispararPropertyChanged(nameof(EsTiradaDeDaño));
 			};
@@ -213,7 +213,7 @@ namespace AppGM.Core
 			return this;
 		}
 
-		public override ModeloTiradaVariable CrearModelo()
+		public override ModeloTiradaPersonalizada CrearModelo()
 		{
 			ActualizarValidez();
 
@@ -230,14 +230,14 @@ namespace AppGM.Core
 			return ModeloCreado;
 		}
 
-		public override ControladorTiradaVariable CrearControlador()
+		public override ControladorTiradaPersonalizada CrearControlador()
 		{
 			var nuevaTirada = CrearModelo();
 
 			if (nuevaTirada == null)
 				return null;
 
-			return IControladorTiradaBase.CrearControladorDeTiradaCorrespondiente(nuevaTirada) as ControladorTiradaVariable;
+			return IControladorTiradaBase.CrearControladorDeTiradaCorrespondiente(nuevaTirada) as ControladorTiradaPersonalizada;
 		}
 
 		public void ActualizarPosibilidadesAutocompletado(string nuevoTexto, int nuevoIndiceIntercalacion)

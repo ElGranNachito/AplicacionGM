@@ -22,7 +22,11 @@
                     <Setter Property="HeaderTemplate">
                         <Setter.Value>
                             <DataTemplate>
-                                <StackPanel x:Name="Header" Orientation="Horizontal">
+                                <StackPanel 
+                                    x:Name="Header"
+                                    Orientation="Horizontal"
+                                    
+                                    Visibility="{Binding EsVisible, Converter={local:BooleanToColorConverter}}">
 
                                     <Image Source="../../../Media/Imagenes/Botones/MenuPrincipal/Flechita_Derecha_Click.png"/>
 

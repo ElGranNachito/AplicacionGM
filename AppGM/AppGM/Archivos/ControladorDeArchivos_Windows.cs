@@ -17,6 +17,7 @@ namespace AppGM
         public string DirectorioDeTrabajo { get; set; }
         public string DirectorioEjecutable { get; set; }
         public string DirectorioImagenes { get; set; }
+        public string DirectorioImagenesTiradas { get; set; }
         public string DirectorioImagenesMapas { get; set; }
         public string DirectorioControles { get; set; }
 
@@ -38,6 +39,8 @@ namespace AppGM
             DirectorioImagenesMapas = Path.Combine(DirectorioImagenes, @"Imagenes\Mapas\");
 
             DirectorioAnimaciones = Path.Combine(DirectorioImagenes, @"Imagenes\Animaciones\");
+
+            DirectorioImagenesTiradas = Path.Combine(DirectorioImagenes, @"Imagenes\Tiradas\");
 
             DirectorioFunciones = Path.Combine(DirectorioDeTrabajo, @"Funciones\");
 

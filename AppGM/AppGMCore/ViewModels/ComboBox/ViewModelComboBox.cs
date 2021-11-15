@@ -35,6 +35,11 @@ namespace AppGM.Core
 		public string Descripcion { get; set; }
 
 		/// <summary>
+		/// Indica si esta combobox esta habilitada
+		/// </summary>
+		public bool EstaHabilitada { get; set; } = true;
+
+		/// <summary>
 		/// <see cref="List{T}"/> de <see cref="ViewModelItemComboBoxBase{TipoValor}"/> que puede
 		/// seleccionar el usuario
 		/// </summary>

@@ -4,7 +4,7 @@ using CoolLogs;
 
 namespace AppGM.Core
 {
-    public class ControladorHabilidad : Controlador<ModeloHabilidad>
+    public class ControladorHabilidad : Controlador<ModeloHabilidad>, IInfligidorDaño
     {
         #region Campos & Propiedades
 
@@ -95,6 +95,8 @@ namespace AppGM.Core
 
         public event dUtilizarHabilidad OnUtilizarHabilidad = delegate { };
 
+        public event IInfligidorDaño.dInfligirDaño OnInfligirDaño;
+
         #endregion
 
         #region Funciones
@@ -116,6 +118,11 @@ namespace AppGM.Core
 	        object parametroExtra, object segundoParametroExtra)
         {
 	        mUtilizarHabilidad.EjecutarFuncion(this, usuario, null, new[]{parametroExtra, segundoParametroExtra});
+        }
+
+        public void InfligirDaño(IDañable objetivo, ModeloArgumentosDaño argsDaño, SortedList<int, IDañable> subObjetivos = null)
+        {
+	        throw new NotImplementedException();
         }
 
         public virtual bool PuedeUtilizar(ControladorPersonaje usuario, ControladorPersonaje[] objetivos)
@@ -150,6 +157,11 @@ namespace AppGM.Core
 	        SistemaPrincipal.LoggerGlobal.Log($"Se intento obtener una variable con id: {idVariable}, pero no se encuentra en {nameof(mVariablesPersistenes)}", ESeveridad.Error);
 
 	        return null;
+        }
+
+        public override ViewModelItemListaBase CrearViewModelItem()
+        {
+	        return new ViewModelHabilidadItem(this);
         }
 
         #endregion

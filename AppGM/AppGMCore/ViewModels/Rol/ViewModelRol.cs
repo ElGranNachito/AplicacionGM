@@ -103,6 +103,11 @@ namespace AppGM.Core
                 SistemaPrincipal.Aplicacion.PaginaActual =
                         EPagina.PaginaPrincipal;
             });
+
+            ComandoBotonTirada = new Comando(async () =>
+            {
+	            await SistemaPrincipal.MostrarMensajeAsync(new ViewModelRealizarTirada(null, null, null), "Tirada", true, 750, 1200);
+            });
         }
         #endregion
 

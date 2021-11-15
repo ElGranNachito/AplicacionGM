@@ -297,8 +297,8 @@ namespace AppGM.Core
 				if (tipoModelo == typeof(ModeloTiradaDeDaño))
 					return typeof(ControladorTiradaDaño);
 
-				if (tipoModelo == typeof(ModeloTiradaVariable))
-					return typeof(ControladorTiradaVariable);
+				if (tipoModelo == typeof(ModeloTiradaPersonalizada))
+					return typeof(ControladorTiradaPersonalizada);
 
 				if (tipoModelo == typeof(ModeloTiradaStat))
 					return typeof(ControladorTiradaStat);

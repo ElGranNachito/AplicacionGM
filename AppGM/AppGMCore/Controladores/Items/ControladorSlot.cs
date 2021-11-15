@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using CoolLogs;
 
@@ -7,7 +8,7 @@ namespace AppGM.Core
     /// <summary>
     /// Controlador de un <see cref="ModeloSlot"/>
     /// </summary>
-    public class ControladorSlot : Controlador<ModeloSlot>
+    public class ControladorSlot : Controlador<ModeloSlot>, IDañable
     {
 	    #region Eventos
 
@@ -24,14 +25,16 @@ namespace AppGM.Core
         public event dElementoAlmacenado OnElementoAlmacenado = delegate { };
         public event dElementoAlmacenado OnElementoQuitado = delegate { };
 
-        #endregion
+		public event IDañable.dDañado OnDañado;
 
-        #region Campos & Propiedades
+		#endregion
 
-        /// <summary>
-        /// Espacio disponible en este slot
-        /// </summary>
-        public decimal EspacioDisponible => modelo.EspacioDisponible;
+		#region Campos & Propiedades
+
+		/// <summary>
+		/// Espacio disponible en este slot
+		/// </summary>
+		public decimal EspacioDisponible => modelo.EspacioDisponible;
 
         /// <summary>
         /// Indica si este slot se encuentra vacio
@@ -247,6 +250,16 @@ namespace AppGM.Core
             SistemaPrincipal.LoggerGlobal.Log($"Parte del cuerpo almacenada en {this} quitada con exito", ESeveridad.Debug);
         }
 
+        public void Dañar(ModeloArgumentosDaño argsDaño, SortedList<int, IDañable> subObjetivos = null)
+        {
+	        throw new NotImplementedException();
+        }
+
+        public bool ContieneItemsDeTipo(ETipoItem tipoItem, bool incluirHijos)
+        {
+	        throw new NotImplementedException();
+        }
+
         public override async Task Recargar()
         { 
 	        await base.Recargar();
@@ -335,5 +348,5 @@ namespace AppGM.Core
         }
 
         #endregion
-    }
+	}
 }

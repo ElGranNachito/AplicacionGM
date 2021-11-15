@@ -31,10 +31,20 @@
     <ProjectReference Include="..\AppGMCore\AppGM.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Media\Imagenes\Habilidades\Hechizo.png" />
+    <Resource Include="Media\Imagenes\Habilidades\NP.png" />
+    <Resource Include="Media\Imagenes\Habilidades\Perks.png" />
+    <Resource Include="Media\Imagenes\Lupita.png" />
+  </ItemGroup>
+  <ItemGroup>
     <Resource Include="Media\Imagenes\Carta_Servant.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Media\Imagenes\MenuPrincipal1.png" />
+    <Resource Include="Media\Imagenes\Tiradas\Iconos\ParametroExtra.png" />
+    <Resource Include="Media\Imagenes\Tiradas\Iconos\TiradaDaño.png" />
+    <Resource Include="Media\Imagenes\Tiradas\Iconos\TiradaPersonalizada.png" />
+    <Resource Include="Media\Imagenes\Tiradas\Iconos\TiradaStat.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Media\Imagenes\UiFondoMenuPrincipal.png" />
@@ -184,6 +194,31 @@
     <Resource Include="Media\Imagenes\GuraScratch\GuraScratchLogo-v8.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Media\Imagenes\Tiradas\CrotoPromedio.png" />
+    <Resource Include="Media\Imagenes\Tiradas\CrotoArmado.png" />
+    <Resource Include="Media\Imagenes\Tiradas\Cartelito.png" />
+    <Resource Include="Media\Imagenes\Tiradas\FlechaSalir.png" />
+    <Resource Include="Media\Imagenes\Tiradas\GloboTipoTirada.png" />
+    <Resource Include="Media\Imagenes\Tiradas\Marco1.png" />
+    <Resource Include="Media\Imagenes\Tiradas\Marco2.png" />
+    <Resource Include="Media\Imagenes\Tiradas\Iconos\CantTiradas.png" />
+    <Resource Include="Media\Imagenes\Tiradas\Iconos\Cortante.png" />
+    <Resource Include="Media\Imagenes\Tiradas\Iconos\Especialidades.png" />
+    <Resource Include="Media\Imagenes\Tiradas\Iconos\Explosivo.png" />
+    <Resource Include="Media\Imagenes\Tiradas\Iconos\FuentedeDaño.png" />
+    <Resource Include="Media\Imagenes\Tiradas\Iconos\Impactante.png" />
+    <Resource Include="Media\Imagenes\Tiradas\Iconos\Manoutilizada.png" />
+    <Resource Include="Media\Imagenes\Tiradas\Iconos\Mod.png" />
+    <Resource Include="Media\Imagenes\Tiradas\Iconos\Multiplicador.png" />
+    <Resource Include="Media\Imagenes\Tiradas\Iconos\Objetivo.png" />
+    <Resource Include="Media\Imagenes\Tiradas\Iconos\Penetrante.png" />
+    <Resource Include="Media\Imagenes\Tiradas\Iconos\Personaje.png" />
+    <Resource Include="Media\Imagenes\Tiradas\Iconos\PuntoVital.png" />
+    <Resource Include="Media\Imagenes\Tiradas\Iconos\Presets.png" />
+    <Resource Include="Media\Imagenes\Tiradas\Iconos\Stat.png" />
+    <Resource Include="Media\Imagenes\Tiradas\Iconos\tiradas.png" />
+  </ItemGroup>
+  <ItemGroup>
     <Resource Include="Media\Imagenes\Iconos\App\Icon_Window.png" />
   </ItemGroup>
   <ItemGroup>
@@ -222,6 +257,13 @@
     <Compile Remove="BaseDesignModel.cs" />
     <Compile Remove="DesignModelRolItem.cs" />
     <Compile Remove="Viewmodels\BaseViewModel.cs" />
+    <None Remove="Media\Imagenes\Habilidades\Hechizo.png" />
+    <None Remove="Media\Imagenes\Habilidades\NP.png" />
+    <None Remove="Media\Imagenes\Habilidades\Perks.png" />
+    <None Remove="Media\Imagenes\Tiradas\Iconos\ParametroExtra.png" />
+    <None Remove="Media\Imagenes\Tiradas\Iconos\TiradaDaño.png" />
+    <None Remove="Media\Imagenes\Tiradas\Iconos\TiradaPersonalizada.png" />
+    <None Remove="Media\Imagenes\Tiradas\Iconos\TiradaStat.png" />
     <Page Remove="Estilos\Colores.xaml" />
   </ItemGroup>
   <ItemGroup>
@@ -245,7 +287,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Media\Imagenes\Iconos\Parties\" />
-    <Folder Include="Media\Imagenes\Tiradas\Iconos\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="CoolLogs">

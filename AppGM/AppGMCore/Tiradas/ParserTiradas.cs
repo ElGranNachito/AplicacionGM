@@ -258,7 +258,7 @@ namespace AppGM.Core
 		private FieldInfo mFieldResultado;
 
 		/// <summary>
-		/// Campo <see cref="ResultadoTirada.cadena"/>
+		/// Campo <see cref="ResultadoTirada.resultadoDetallado"/>
 		/// </summary>
 		private FieldInfo mFieldCadena;
 
@@ -424,7 +424,7 @@ namespace AppGM.Core
 
 					mExpresiones.AddRange(new []
 					{
-						Expression.Assign(parametroExtra,Expression.Field(argumentos, nameof(ArgumentosTiradaPersonalizada.parametroExtra))),
+						Expression.Assign(parametroExtra,Expression.Field(argumentos, nameof(ArgumentosTiradaPersonalizada.argumentoExtra))),
 						Expression.Assign(stat,Expression.Field(argumentos, nameof(ArgumentosTiradaPersonalizada.stat))),
 						Expression.Assign(usuario, Expression.Field(argumentos, nameof(ArgumentosTiradaPersonalizada.controlador))),
 						Expression.Assign(modificador, Expression.Field(argumentos, nameof(ArgumentosTiradaPersonalizada.modificador))),
@@ -851,11 +851,11 @@ namespace AppGM.Core
 				return false;
 			}
 
-			mFieldCadena = typeof(ResultadoTirada).GetField(nameof(ResultadoTirada.cadena));
+			mFieldCadena = typeof(ResultadoTirada).GetField(nameof(ResultadoTirada.resultadoDetallado));
 
 			if (mFieldResultado == null)
 			{
-				mError = $"No se pudo encontrar el campo {nameof(ResultadoTirada.cadena)}";
+				mError = $"No se pudo encontrar el campo {nameof(ResultadoTirada.resultadoDetallado)}";
 
 				return false;
 			}

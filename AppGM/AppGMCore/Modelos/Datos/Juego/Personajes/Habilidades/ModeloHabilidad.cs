@@ -87,6 +87,11 @@ namespace AppGM.Core
         /// </summary>
         public virtual List<TIFuncionHandlerEvento<ModeloHabilidad>> HandlersEventos { get; set; } = new List<TIFuncionHandlerEvento<ModeloHabilidad>>();
 
+        /// <summary>
+        /// Historial del daño infligido por esta habilidad
+        /// </summary>
+        public virtual List<ModeloInfligidorDaño> HistorialDañoInfligido { get; set; } = new List<ModeloInfligidorDaño>();
+
 		public override IReadOnlyList<ModeloVariableBase> ObtenerVariablesDisponibles()
 		{
             var variablesDisponibles = new List<ModeloVariableBase>(Variables);

@@ -14,6 +14,13 @@ namespace AppGM.Core
 		public List<ModeloSlot> Slots { get; set; }
 
 		/// <summary>
+		/// Obtiene la profundidad de este elemento en el inventario de un <see cref="ModeloPersonaje"/>
+		/// </summary>
+		/// <param name="profundidadActual"></param>
+		/// <returns></returns>
+		public int ObtenerProfundidad(int profundidadActual);
+
+		/// <summary>
 		/// Obtiene un nombre random para un nuevo slot
 		/// </summary>
 		/// <returns>Nombre para un nuevo slot</returns>

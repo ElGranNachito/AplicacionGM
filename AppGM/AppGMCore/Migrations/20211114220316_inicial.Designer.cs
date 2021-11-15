@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AppGM.Core.Migrations
 {
     [DbContext(typeof(RolContext))]
-    [Migration("20211113173807_inicial")]
+    [Migration("20211114220316_inicial")]
     partial class inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -155,6 +155,29 @@ namespace AppGM.Core.Migrations
                         .IsUnique();
 
                     b.ToTable("ModeloAmbiente");
+                });
+
+            modelBuilder.Entity("AppGM.Core.ModeloArgumentosDaño", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("DañoTotal")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("EsValido")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("NivelMagia")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Rango")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ArgumentosDaño");
                 });
 
             modelBuilder.Entity("AppGM.Core.ModeloCaracteristicas", b =>
@@ -419,6 +442,53 @@ namespace AppGM.Core.Migrations
                     b.ToTable("ModeloDatosReduccionDeDaño");
                 });
 
+            modelBuilder.Entity("AppGM.Core.ModeloDañable", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("ArgumentosDañoId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("EsValido")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Indice")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("ItemId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("ModeloHistorialTiradaId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("ParteDelCuerpoId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("PersonajeId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("SlotId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ArgumentosDañoId");
+
+                    b.HasIndex("ItemId");
+
+                    b.HasIndex("ModeloHistorialTiradaId");
+
+                    b.HasIndex("ParteDelCuerpoId");
+
+                    b.HasIndex("PersonajeId");
+
+                    b.HasIndex("SlotId");
+
+                    b.ToTable("Dañable");
+                });
+
             modelBuilder.Entity("AppGM.Core.ModeloEfecto", b =>
                 {
                     b.Property<int>("Id")
@@ -631,6 +701,102 @@ namespace AppGM.Core.Migrations
                     b.ToTable("ModeloHabilidad");
 
                     b.HasDiscriminator<int>("Tipo").HasValue(1);
+                });
+
+            modelBuilder.Entity("AppGM.Core.ModeloHistorialTirada", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ArgumentoExtra")
+                        .HasMaxLength(128)
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("EsValido")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("IdArgumentosDaño")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ManoUtilizada")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Modificador")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("MultiplicadorEspecialidad")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<float>("Mutliplicador")
+                        .HasColumnType("REAL");
+
+                    b.Property<int>("Resultado")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ResultadoDetallado")
+                        .HasMaxLength(256)
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Stat")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("TipoTirada")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("TiradaRepresentadaId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdArgumentosDaño")
+                        .IsUnique();
+
+                    b.HasIndex("TiradaRepresentadaId");
+
+                    b.ToTable("HistorialTirada");
+                });
+
+            modelBuilder.Entity("AppGM.Core.ModeloInfligidorDaño", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("ArgumentosDañoId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("EsValido")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("HabilidadId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("ItemId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("ModeloHistorialTiradaId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("PersonajeId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Tipo")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ArgumentosDañoId");
+
+                    b.HasIndex("HabilidadId");
+
+                    b.HasIndex("ItemId");
+
+                    b.HasIndex("ModeloHistorialTiradaId");
+
+                    b.HasIndex("PersonajeId");
+
+                    b.ToTable("InfligidorDaño");
                 });
 
             modelBuilder.Entity("AppGM.Core.ModeloItem", b =>
@@ -1315,6 +1481,21 @@ namespace AppGM.Core.Migrations
                     b.ToTable("ModeloAlianzaModeloPersonaje");
                 });
 
+            modelBuilder.Entity("ModeloArgumentosDañoModeloFuenteDeDaño", b =>
+                {
+                    b.Property<int>("FuentesDeDañoAbarcadasId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("HistorialDañoCausadoId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("FuentesDeDañoAbarcadasId", "HistorialDañoCausadoId");
+
+                    b.HasIndex("HistorialDañoCausadoId");
+
+                    b.ToTable("ModeloArgumentosDañoModeloFuenteDeDaño");
+                });
+
             modelBuilder.Entity("ModeloContratoModeloPersonaje", b =>
                 {
                     b.Property<int>("ContratosId")
@@ -1446,30 +1627,31 @@ namespace AppGM.Core.Migrations
                     b.HasDiscriminator().HasValue(1);
                 });
 
+            modelBuilder.Entity("AppGM.Core.ModeloTiradaPersonalizada", b =>
+                {
+                    b.HasBaseType("AppGM.Core.ModeloTiradaBase");
+
+                    b.Property<string>("DescripcionVariableExtra")
+                        .HasMaxLength(512)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Tirada")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("TEXT");
+
+                    b.HasDiscriminator().HasValue(1);
+                });
+
             modelBuilder.Entity("AppGM.Core.ModeloTiradaStat", b =>
                 {
                     b.HasBaseType("AppGM.Core.ModeloTiradaBase");
 
                     b.Property<int>("StatDeLaQueDepende")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("ModeloTiradaStat_StatDeLaQueDepende");
 
                     b.HasDiscriminator().HasValue(2);
-                });
-
-            modelBuilder.Entity("AppGM.Core.ModeloTiradaVariable", b =>
-                {
-                    b.HasBaseType("AppGM.Core.ModeloTiradaBase");
-
-                    b.Property<string>("DescripcionVariableExtra")
-                        .HasMaxLength(500)
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Tirada")
-                        .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("TEXT");
-
-                    b.HasDiscriminator().HasValue(1);
                 });
 
             modelBuilder.Entity("AppGM.Core.ModeloUnidadMapaMasterServant", b =>
@@ -1596,7 +1778,10 @@ namespace AppGM.Core.Migrations
 
             modelBuilder.Entity("AppGM.Core.ModeloTiradaDeDaño", b =>
                 {
-                    b.HasBaseType("AppGM.Core.ModeloTiradaVariable");
+                    b.HasBaseType("AppGM.Core.ModeloTiradaPersonalizada");
+
+                    b.Property<int>("StatDeLaQueDepende")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("TipoDeDaño")
                         .HasColumnType("INTEGER");
@@ -1754,6 +1939,48 @@ namespace AppGM.Core.Migrations
                         .HasForeignKey("ModeloDatosDefensivoId");
                 });
 
+            modelBuilder.Entity("AppGM.Core.ModeloDañable", b =>
+                {
+                    b.HasOne("AppGM.Core.ModeloArgumentosDaño", "ArgumentosDaño")
+                        .WithMany("Objetivos")
+                        .HasForeignKey("ArgumentosDañoId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("AppGM.Core.ModeloItem", "Item")
+                        .WithMany("HistorialDañoRecibido")
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("AppGM.Core.ModeloHistorialTirada", null)
+                        .WithMany("Objetivos")
+                        .HasForeignKey("ModeloHistorialTiradaId");
+
+                    b.HasOne("AppGM.Core.ModeloParteDelCuerpo", "ParteDelCuerpo")
+                        .WithMany("HistorialDañoRecibido")
+                        .HasForeignKey("ParteDelCuerpoId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("AppGM.Core.ModeloPersonaje", "Personaje")
+                        .WithMany("HistorialDañoRecibido")
+                        .HasForeignKey("PersonajeId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("AppGM.Core.ModeloSlot", "Slot")
+                        .WithMany("HistorialDañoRecibido")
+                        .HasForeignKey("SlotId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("ArgumentosDaño");
+
+                    b.Navigation("Item");
+
+                    b.Navigation("ParteDelCuerpo");
+
+                    b.Navigation("Personaje");
+
+                    b.Navigation("Slot");
+                });
+
             modelBuilder.Entity("AppGM.Core.ModeloEfecto", b =>
                 {
                     b.HasOne("AppGM.Core.ModeloHabilidad", "HabilidadContenedora")
@@ -1830,6 +2057,59 @@ namespace AppGM.Core.Migrations
                         .HasForeignKey("ModeloPersonajeId");
 
                     b.Navigation("Dueño");
+                });
+
+            modelBuilder.Entity("AppGM.Core.ModeloHistorialTirada", b =>
+                {
+                    b.HasOne("AppGM.Core.ModeloArgumentosDaño", "ArgumentosDaño")
+                        .WithOne("Tirada")
+                        .HasForeignKey("AppGM.Core.ModeloHistorialTirada", "IdArgumentosDaño")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AppGM.Core.ModeloTiradaBase", "TiradaRepresentada")
+                        .WithMany("Historial")
+                        .HasForeignKey("TiradaRepresentadaId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("ArgumentosDaño");
+
+                    b.Navigation("TiradaRepresentada");
+                });
+
+            modelBuilder.Entity("AppGM.Core.ModeloInfligidorDaño", b =>
+                {
+                    b.HasOne("AppGM.Core.ModeloArgumentosDaño", "ArgumentosDaño")
+                        .WithMany("InfligidoresDaño")
+                        .HasForeignKey("ArgumentosDañoId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("AppGM.Core.ModeloHabilidad", "Habilidad")
+                        .WithMany("HistorialDañoInfligido")
+                        .HasForeignKey("HabilidadId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("AppGM.Core.ModeloItem", "Item")
+                        .WithMany("HistorialDañoInfligido")
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("AppGM.Core.ModeloHistorialTirada", null)
+                        .WithMany("InfligidoresDaño")
+                        .HasForeignKey("ModeloHistorialTiradaId");
+
+                    b.HasOne("AppGM.Core.ModeloPersonaje", "Personaje")
+                        .WithMany("HistorialDañoInfligido")
+                        .HasForeignKey("PersonajeId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("ArgumentosDaño");
+
+                    b.Navigation("Habilidad");
+
+                    b.Navigation("Item");
+
+                    b.Navigation("Personaje");
                 });
 
             modelBuilder.Entity("AppGM.Core.ModeloItem", b =>
@@ -2213,6 +2493,21 @@ namespace AppGM.Core.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("ModeloArgumentosDañoModeloFuenteDeDaño", b =>
+                {
+                    b.HasOne("AppGM.Core.ModeloFuenteDeDaño", null)
+                        .WithMany()
+                        .HasForeignKey("FuentesDeDañoAbarcadasId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AppGM.Core.ModeloArgumentosDaño", null)
+                        .WithMany()
+                        .HasForeignKey("HistorialDañoCausadoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("ModeloContratoModeloPersonaje", b =>
                 {
                     b.HasOne("AppGM.Core.ModeloContrato", null)
@@ -2303,6 +2598,15 @@ namespace AppGM.Core.Migrations
                     b.Navigation("ContratoDeAlianza");
                 });
 
+            modelBuilder.Entity("AppGM.Core.ModeloArgumentosDaño", b =>
+                {
+                    b.Navigation("InfligidoresDaño");
+
+                    b.Navigation("Objetivos");
+
+                    b.Navigation("Tirada");
+                });
+
             modelBuilder.Entity("AppGM.Core.ModeloDatosDefensivo", b =>
                 {
                     b.Navigation("ReduccionesDeDaños");
@@ -2352,11 +2656,20 @@ namespace AppGM.Core.Migrations
 
                     b.Navigation("HandlersEventos");
 
+                    b.Navigation("HistorialDañoInfligido");
+
                     b.Navigation("Tiradas");
 
                     b.Navigation("TiradasDeUso");
 
                     b.Navigation("Variables");
+                });
+
+            modelBuilder.Entity("AppGM.Core.ModeloHistorialTirada", b =>
+                {
+                    b.Navigation("InfligidoresDaño");
+
+                    b.Navigation("Objetivos");
                 });
 
             modelBuilder.Entity("AppGM.Core.ModeloItem", b =>
@@ -2372,6 +2685,10 @@ namespace AppGM.Core.Migrations
                     b.Navigation("Funciones");
 
                     b.Navigation("HandlersEventos");
+
+                    b.Navigation("HistorialDañoInfligido");
+
+                    b.Navigation("HistorialDañoRecibido");
 
                     b.Navigation("Slots");
 
@@ -2389,6 +2706,8 @@ namespace AppGM.Core.Migrations
 
             modelBuilder.Entity("AppGM.Core.ModeloParteDelCuerpo", b =>
                 {
+                    b.Navigation("HistorialDañoRecibido");
+
                     b.Navigation("Slots");
                 });
 
@@ -2406,6 +2725,10 @@ namespace AppGM.Core.Migrations
                     b.Navigation("Habilidades");
 
                     b.Navigation("HandlersEventos");
+
+                    b.Navigation("HistorialDañoInfligido");
+
+                    b.Navigation("HistorialDañoRecibido");
 
                     b.Navigation("Inventario");
 
@@ -2447,7 +2770,14 @@ namespace AppGM.Core.Migrations
 
             modelBuilder.Entity("AppGM.Core.ModeloSlot", b =>
                 {
+                    b.Navigation("HistorialDañoRecibido");
+
                     b.Navigation("ParteDelCuerpoAlmacenada");
+                });
+
+            modelBuilder.Entity("AppGM.Core.ModeloTiradaBase", b =>
+                {
+                    b.Navigation("Historial");
                 });
 
             modelBuilder.Entity("AppGM.Core.ModeloFuncion_HandlerEvento", b =>

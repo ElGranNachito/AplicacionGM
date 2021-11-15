@@ -13,7 +13,10 @@
             <Border
                 BorderThickness="{TemplateBinding BorderThickness}"
                 BorderBrush="{TemplateBinding BorderBrush}"
-                Padding="{TemplateBinding Padding}">
+                Padding="{TemplateBinding Padding}"
+                
+                HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                VerticalAlignment="{TemplateBinding VerticalAlignment}">
 
                 <Grid
                     Background="{TemplateBinding Background}">

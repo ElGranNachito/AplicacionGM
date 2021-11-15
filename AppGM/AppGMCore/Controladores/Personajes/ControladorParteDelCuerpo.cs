@@ -7,14 +7,20 @@ namespace AppGM.Core
 	/// <summary>
 	/// Controlador para un <see cref="ModeloParteDelCuerpo"/>
 	/// </summary>
-	public class ControladorParteDelCuerpo : Controlador<ModeloParteDelCuerpo>
+	public class ControladorParteDelCuerpo : Controlador<ModeloParteDelCuerpo>, IDañable
 	{
+		#region Eventos
+
 		public delegate void dParteDelCuerpoEliminada(ControladorParteDelCuerpo parteDelCuerpo, ControladorPersonaje dueño);
 
 		/// <summary>
 		/// Evento disparado cuando el <see cref="ModeloParteDelCuerpo"/> representado por este controlador es eliminado
 		/// </summary>
 		public event dParteDelCuerpoEliminada OnParteDelCuerpoEliminada = delegate { };
+
+		public event IDañable.dDañado OnDañado; 
+
+		#endregion
 
 		#region Propiedades
 
@@ -35,12 +41,14 @@ namespace AppGM.Core
 
 		#endregion
 
+		#region Constructor
+
 		/// <summary>
 		/// Constructor
 		/// </summary>
 		/// <param name="_modelo">Modelo de la parte del cuerpo contenida por este controlador</param>
 		public ControladorParteDelCuerpo(ModeloParteDelCuerpo _modelo)
-			:base(_modelo)
+			: base(_modelo)
 		{
 			//Creamos el controlador de los slots contenidos
 			foreach (var slot in modelo.Slots)
@@ -68,6 +76,15 @@ namespace AppGM.Core
 			{
 				OnParteDelCuerpoEliminada(this, PersonajeContenedor);
 			});
+		} 
+
+		#endregion
+
+		#region Metodos
+
+		public void Dañar(ModeloArgumentosDaño argsDaño, SortedList<int, IDañable> subObjetivos = null)
+		{
+			throw new System.NotImplementedException();
 		}
 
 		public override async Task Recargar()
@@ -92,11 +109,11 @@ namespace AppGM.Core
 			switch (modelo)
 			{
 				case ModeloPersonaje pj:
-					PersonajeContenedor = (ControladorPersonaje) controlador;
+					PersonajeContenedor = (ControladorPersonaje)controlador;
 					break;
 
 				case ModeloSlot slot:
-					SlotContenedor = (ControladorSlot) controlador;
+					SlotContenedor = (ControladorSlot)controlador;
 					break;
 
 				default:
@@ -111,12 +128,14 @@ namespace AppGM.Core
 		/// <param name="slot">Slot que añadir</param>
 		private void AñadirControladorSlot(ControladorSlot slot)
 		{
-			if(slot == null)
+			if (slot == null)
 				SistemaPrincipal.LoggerGlobal.LogCrash($"{nameof(slot)} no puede ser null");
 
 			Slots.Add(slot);
 
 			slot.modelo.AñadirHandlerSoloUsoModeloEliminado(m => Slots.Remove(slot));
-		}
+		} 
+
+		#endregion
 	}
 }
