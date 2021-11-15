@@ -86,6 +86,9 @@ namespace AppGM.Core
 		/// <param name="actualizarBaseDeDatos">Indica si se deben guardar los cambios a la base de datos al finalizar todas las operaciones</param>
 		public async Task GuardarYEliminarModelosAsync(bool actualizarBaseDeDatos = true)
 		{
+            if (ModelosCreados.Count == 0 && ModelosEliminados.Count == 0)
+                return;
+
 			await GuardarModelosCreadosAsync(false);
 			await EliminarModelosQuitadosAsync(false);
 

@@ -1,0 +1,70 @@
+﻿<UserControl x:Class="AppGM.UserControlCrearCombate"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AppGM"
+             mc:Ignorable="d" 
+             d:DesignHeight="150" d:DesignWidth="400">
+
+    <!-- UserControl que hace uso de un ViewModelCrearParticipanteCombate -->
+    <!-- Control para la creacion de la representacion de un participante en un combate-->
+    <Border Background="White"
+            Padding="10">
+        
+        <Grid >
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50*" MaxWidth="80"/>
+                <ColumnDefinition Width="*" MaxWidth="320"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock 
+                Grid.Column="0"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Left"
+                Text="Nombre:"/>
+
+            <TextBox 
+                Grid.Column="1"
+                FontFamily="{StaticResource 'Font Awesome Regular'}"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                MinWidth="300"
+                MinHeight="15"
+                Text="{Binding NombreCombate, Mode=TwoWay}"/>
+    
+            <StackPanel
+                Grid.Column="1"
+                Margin="0 30 0 0">
+
+                <StackPanel Orientation="Horizontal">
+                    
+                    <!-- CheckBox  -->
+                    <CheckBox VerticalAlignment="Center"
+                              HorizontalAlignment="Left"
+                              Margin="15 0 0 0"
+                              IsChecked="{Binding EstaActivo}"
+                    />
+
+                    <TextBlock VerticalAlignment="Center"
+                               Margin="10 0 0 0"
+                               Text="Esta activo"
+                               ToolTip="Indica si el combate esta concurriendo o si estara pausado, concluido"/>
+
+                </StackPanel>
+
+                <!-- Boton confirmar -->
+                <Button VerticalAlignment="Bottom"
+                        Margin="0 65"
+                        Content="Confirmar"
+                        IsEnabled="{Binding PuedeFinalizarCreacion}"
+                        Command="{Binding ComandoFinalizar}"/>
+
+            </StackPanel>
+                
+        </Grid>
+
+    </Border>
+
+</UserControl>

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AppGM.Core.Migrations
 {
-    public partial class inicial : Migration
+    public partial class Inicial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -178,6 +178,8 @@ namespace AppGM.Core.Migrations
                     Temperatura = table.Column<int>(type: "INTEGER", nullable: false),
                     Humedad = table.Column<int>(type: "INTEGER", nullable: false),
                     DiaSemana = table.Column<int>(type: "INTEGER", nullable: false),
+                    Hora = table.Column<int>(type: "INTEGER", nullable: false),
+                    Minuto = table.Column<int>(type: "INTEGER", nullable: false),
                     IdRol = table.Column<int>(type: "INTEGER", nullable: true),
                     EsValido = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
@@ -225,7 +227,6 @@ namespace AppGM.Core.Migrations
                     InvocadorId = table.Column<int>(type: "INTEGER", nullable: true),
                     TurnosDeDuracion = table.Column<byte>(type: "INTEGER", nullable: true),
                     ClaseServant = table.Column<int>(type: "INTEGER", nullable: true),
-                    RangoHechiceria = table.Column<ushort>(type: "INTEGER", nullable: true),
                     NombreReal = table.Column<string>(type: "TEXT", maxLength: 100, nullable: true),
                     EBienestar = table.Column<int>(type: "INTEGER", nullable: true),
                     Od = table.Column<int>(type: "INTEGER", nullable: true),
@@ -236,8 +237,6 @@ namespace AppGM.Core.Migrations
                     VentajaChr = table.Column<ushort>(type: "INTEGER", nullable: true),
                     CommandSpells = table.Column<ushort>(type: "INTEGER", nullable: true),
                     Lore = table.Column<string>(type: "TEXT", maxLength: 5000, nullable: true),
-                    Origen = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
-                    Afinidad = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
                     RangoNP = table.Column<int>(type: "INTEGER", nullable: true),
                     Prana = table.Column<int>(type: "INTEGER", nullable: true),
                     PranaActual = table.Column<int>(type: "INTEGER", nullable: true),

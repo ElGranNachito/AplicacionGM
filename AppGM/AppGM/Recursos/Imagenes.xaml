@@ -24,4 +24,7 @@
     <Image x:Key="ImagenBotonFlechitaDerechaMouse" Source="../Media/Imagenes/Botones/MenuPrincipal/Flechita_Derecha_Select.png"/>
     <Image x:Key="ImagenBotonFlechitaDerechaClick" Source="../Media/Imagenes/Botones/MenuPrincipal/Flechita_Derecha_Click.png"/>
 
+    <Image x:Key="ImagenBotonAgregar" Source="../Media/Imagenes/Botones/Agregar_Mapas_Frame1.png"/>
+    <Image x:Key="ImagenBotonAgregarClick" Source="../Media/Imagenes/Botones/Agregar_Mapas_Frame2.png"/>
+
 </ResourceDictionary>

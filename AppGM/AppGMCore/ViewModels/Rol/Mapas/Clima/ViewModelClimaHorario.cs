@@ -20,12 +20,6 @@ namespace AppGM.Core
         /// </summary>
         private ControladorClimaHorario climaHorario;
 
-        /// <summary>
-        /// Timer para actualizar la hora a cada minuto que pase.
-        /// </summary>
-        private Timer timerHora;
-
-
         // Propiedades ---
 
         
@@ -77,8 +71,63 @@ namespace AppGM.Core
         /// <summary>
         /// Hora actual.
         /// </summary>
-        public string Hora => DateTimeOffset.Now.ToString("HH:mm");
+        public string Hora
+        {
+            get => climaHorario.modelo.Hora.ToString();
+            set
+            {
+                if (climaHorario == null)
+                    return;
+
+                int tmp;
+                
+                //Intentamos parsear el nuevo valor
+                if (int.TryParse(value, out tmp))
+                {
+                    if (tmp < 0 || tmp > 23 || value.IsNullOrWhiteSpace())
+                        climaHorario.modelo.Hora = 0;
+                    else
+                        climaHorario.modelo.Hora = tmp;
+
+                    DispararPropertyChanged(new PropertyChangedEventArgs(nameof(Hora)));
+
+                    return;
+                }
+
+                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(Hora)));
+            }
+        }
         
+        /// <summary>
+        /// Minuto actual.
+        /// </summary>
+        public string Minuto
+        {
+            get => climaHorario.modelo.Minuto.ToString();
+            set
+            {
+                if (climaHorario == null)
+                    return;
+
+                int tmp;
+                
+                //Intentamos parsear el nuevo valor
+                if (int.TryParse(value, out tmp))
+                {
+                    if (tmp < 0 || tmp > 59 || value.IsNullOrWhiteSpace())
+                        climaHorario.modelo.Minuto = 0;
+                    else
+                        climaHorario.modelo.Minuto = tmp;
+
+                    DispararPropertyChanged(new PropertyChangedEventArgs(nameof(Minuto)));
+
+                    return;
+                }
+
+                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(Minuto)));
+            }
+        }
+
         /// <summary>
         /// Ruta de la imagen del cima correspondiente.
         /// </summary>
@@ -115,9 +164,6 @@ namespace AppGM.Core
             ComandoBotonActualizarClima = new Comando(ActualizarCondicionClimatica);
             ComandoBotonAvanzarDia      = new Comando(AvanzarDia);
             ComandoBotonRetrocederDia   = new Comando(RetrocederDia);
-
-            timerHora = new Timer(TimeSpan.TicksPerMinute);
-            timerHora.Elapsed += (sender, args) => { DispararPropertyChanged(new PropertyChangedEventArgs(nameof(Hora))); };
         }
 
         #endregion

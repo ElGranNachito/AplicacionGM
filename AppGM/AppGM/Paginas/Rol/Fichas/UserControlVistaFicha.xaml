@@ -12,16 +12,17 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="*" MaxHeight="100"/>
-            <RowDefinition Height="Auto" MaxHeight="350"/>
+            <RowDefinition Height="*" MaxHeight="350"/>
         </Grid.RowDefinitions>
             
         <Grid Grid.Row="0">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" MaxWidth="100 "/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*" MaxWidth="180"/>
+                <ColumnDefinition Width="*" MaxWidth="250"/>
+                <ColumnDefinition Width="*" MaxWidth="140"/>
+                <ColumnDefinition Width="*" MaxWidth="150"/>
             </Grid.ColumnDefinitions>
 
             <!-- Fotito del personaje -->
@@ -39,7 +40,7 @@
                 <Border.Background>
                     <ImageBrush
                         Stretch="Fill"
-                        ImageSource="{Binding PathImagen, Mode=OneWay}"/>
+                        ImageSource="{Binding Imagen, Mode=OneWay, Converter={local:FullPathToImageConverter}}"/>
                 </Border.Background>
 
             </Border>
@@ -56,7 +57,7 @@
                     FontWeight="Bold"
                     Foreground="{StaticResource Tema.VerdeOscuro}">
                     <Run Text="Arquetipo: "/>
-                    <Run Text="{Binding Arquetipo}"/>
+                    <Run Text="{Binding Arquetipo, Mode=OneWay}"/>
                 </TextBlock>
 
                 <!-- Origen -->
@@ -68,7 +69,7 @@
                     FontWeight="Bold"
                     Foreground="{StaticResource Tema.VerdeOscuro}">
                     <Run Text="Origen: "/>
-                    <Run Text="{Binding Origen}"/>
+                    <Run Text="{Binding Origen, Mode=OneWay}"/>
                 </TextBlock>
 
                 <!-- Afinidad -->
@@ -80,7 +81,7 @@
                     FontWeight="Bold"
                     Foreground="{StaticResource Tema.VerdeOscuro}">
                     <Run Text="Afinidad: "/>
-                    <Run Text="{Binding Afinidad}"/>
+                    <Run Text="{Binding Afinidad, Mode=OneWay}"/>
                 </TextBlock>
 
             </StackPanel>
@@ -97,7 +98,7 @@
                     FontWeight="Bold"
                     Foreground="{StaticResource Tema.VerdeOscuro}">
                     <Run Text="Nacionalidad: "/>
-                    <Run Text="{Binding Nacionalidad}"/>
+                    <Run Text="{Binding Nacionalidad, Mode=OneWay}"/>
                 </TextBlock>
 
                 <!-- Mano dominante -->
@@ -109,7 +110,7 @@
                     FontWeight="Bold"
                     Foreground="{StaticResource Tema.VerdeOscuro}">
                     <Run Text="Mano dominante: "/>
-                    <Run Text="{Binding ManoDominante}"/>
+                    <Run Text="{Binding ManoDominante, Mode=OneWay}"/>
                 </TextBlock>
 
                 <!-- Sexo -->
@@ -121,7 +122,7 @@
                     FontWeight="Bold"
                     Foreground="{StaticResource Tema.VerdeOscuro}">
                     <Run Text="Sexo: "/>
-                    <Run Text="{Binding Sexo}"/>
+                    <Run Text="{Binding Sexo, Mode=OneWay}"/>
                 </TextBlock>
 
             </StackPanel>
@@ -138,7 +139,7 @@
                     FontWeight="Bold"
                     Foreground="{StaticResource Tema.VerdeOscuro}">
                     <Run Text="Fisico: "/>
-                    <Run Text="{Binding Fisico}"/>
+                    <Run Text="{Binding Fisico, Mode=OneWay}"/>
                 </TextBlock>
 
                 <!-- Peso maximo cargable -->
@@ -150,7 +151,7 @@
                     FontWeight="Bold"
                     Foreground="{StaticResource Tema.VerdeOscuro}">
                     <Run Text="Peso maximo: "/>
-                    <Run Text="{Binding PesoMaximoCargable}"/>
+                    <Run Text="{Binding PesoMaximoCargable, Mode=OneWay}"/>
                 </TextBlock>
 
                 <!-- PesoCargado -->
@@ -162,8 +163,34 @@
                     FontWeight="Bold"
                     Foreground="{StaticResource Tema.VerdeOscuro}">
                     <Run Text="Peso cargado: "/>
-                    <Run Text="{Binding PesoCargado}"/>
+                    <Run Text="{Binding PesoCargado, Mode=OneWay}"/>
                 </TextBlock>
+
+            </StackPanel>
+
+            <!-- Opciones fichas -->
+            <StackPanel 
+                Grid.Column="4"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center">
+
+                <!-- Boton editar -->
+                <Button
+                    Width="110"
+                    Height="25"
+                    Margin="0 0 0 10"
+                    Content="Editar"
+                    Command="{Binding ComandoEditar}"
+                />
+
+                <!-- Boton eliminar -->
+                <Button
+                    Width="110"
+                    Height="25"
+                    Margin="0 10 0 0"
+                    Content="Eliminar"
+                    Command="{Binding ComandoEliminar}"
+                />
 
             </StackPanel>
 
@@ -197,6 +224,7 @@
                 <Border 
                     Grid.Row="0" Grid.Column="0"
                     CornerRadius="10"
+                    Margin="10"
                     Background="{StaticResource Tema.Verde}">
 
                     <Grid>
@@ -213,7 +241,7 @@
                             local:CampoDeTextoNumericoProperty.Value="True"
                             FontFamily="{StaticResource 'Font Awesome Regular'}"
                             FontSize="{StaticResource TamañoFontMuyGrande}"
-                            Text="{Binding CommandSpells, Mode=TwoWay, FallbackValue=CS}"/>
+                            Text="{Binding CommandSpells, Mode=OneWay, FallbackValue=CS}"/>
                         
                         <TextBlock 
                             Grid.Row="1"
@@ -221,7 +249,7 @@
                             VerticalAlignment="Center"
                             FontFamily="{StaticResource 'Font Awesome Regular'}"
                             FontSize="{StaticResource TamañoFontMuyGrande}"
-                            Text="{Binding Bienestar, Mode=TwoWay, FallbackValue=Bienestar}"/>
+                            Text="{Binding Bienestar, Mode=OneWay, FallbackValue=Bienestar}"/>
 
                     </Grid>
 
@@ -230,7 +258,11 @@
                 <Border 
                     Grid.Row="1" Grid.Column="0"
                     CornerRadius="10"
-                    Background="{StaticResource Tema.Verde}">
+                    Margin="10">
+
+                    <Border.Background>
+                        <ImageBrush ImageSource="../../../Media/Imagenes/Fichas/Elementos/STR_Icon.png"></ImageBrush>
+                    </Border.Background>
 
                     <Grid>
 
@@ -246,7 +278,7 @@
                             local:CampoDeTextoNumericoProperty.Value="True"
                             FontFamily="{StaticResource 'Font Awesome Regular'}"
                             FontSize="{StaticResource TamañoFontMuyGrande}"
-                            Text="{Binding Str, Mode=TwoWay, FallbackValue=Str}"/>
+                            Text="{Binding Str, Mode=OneWay, FallbackValue=Str}"/>
                         
                         <StackPanel 
                             Grid.Row="1"
@@ -259,14 +291,14 @@
                                 local:CampoDeTextoNumericoProperty.Value="True"
                                 FontFamily="{StaticResource 'Font Awesome Regular'}"
                                 FontSize="{StaticResource TamañoFontMediano}"
-                                Text="{Binding ModificadorStr, Mode=TwoWay, FallbackValue=str}"/>
+                                Text="{Binding ModificadorStr, Mode=OneWay, FallbackValue=str}"/>
 
                             <TextBlock
                                 Margin="5 0 0 0"
                                 local:CampoDeTextoNumericoProperty.Value="True"
                                 FontFamily="{StaticResource 'Font Awesome Regular'}"
                                 FontSize="{StaticResource TamañoFontMediano}"
-                                Text="{Binding VentajaStr, Mode=TwoWay, FallbackValue=str}"/>
+                                Text="{Binding VentajaStr, Mode=OneWay, FallbackValue=str}"/>
 
                         </StackPanel>
 
@@ -277,7 +309,11 @@
                 <Border 
                     Grid.Row="2" Grid.Column="0"
                     CornerRadius="10"
-                    Background="{StaticResource Tema.Verde}">
+                    Margin="10">
+
+                    <Border.Background>
+                        <ImageBrush ImageSource="../../../Media/Imagenes/Fichas/Elementos/LCK_Icon.png"></ImageBrush>
+                    </Border.Background>
 
                     <Grid>
 
@@ -293,7 +329,7 @@
                             local:CampoDeTextoNumericoProperty.Value="True"
                             FontFamily="{StaticResource 'Font Awesome Regular'}"
                             FontSize="{StaticResource TamañoFontMuyGrande}"
-                            Text="{Binding Lck, Mode=TwoWay, FallbackValue=Lck}"/>
+                            Text="{Binding Lck, Mode=OneWay, FallbackValue=Lck}"/>
                         
                         <StackPanel 
                             Grid.Row="1"
@@ -306,14 +342,14 @@
                                 local:CampoDeTextoNumericoProperty.Value="True"
                                 FontFamily="{StaticResource 'Font Awesome Regular'}"
                                 FontSize="{StaticResource TamañoFontMediano}"
-                                Text="{Binding ModificadorLck, Mode=TwoWay, FallbackValue=Lck}"/>
+                                Text="{Binding ModificadorLck, Mode=OneWay, FallbackValue=Lck}"/>
 
                             <TextBlock
                                 Margin="5 0 0 0"
                                 local:CampoDeTextoNumericoProperty.Value="True"
                                 FontFamily="{StaticResource 'Font Awesome Regular'}"
                                 FontSize="{StaticResource TamañoFontMediano}"
-                                Text="{Binding VentajaLck, Mode=TwoWay, FallbackValue=Lck}"/>
+                                Text="{Binding VentajaLck, Mode=OneWay, FallbackValue=Lck}"/>
 
                         </StackPanel>
 
@@ -324,7 +360,11 @@
                 <Border 
                     Grid.Row="0" Grid.Column="1"
                     CornerRadius="10"
-                    Background="{StaticResource Tema.Verde}">
+                    Margin="10">
+
+                    <Border.Background>
+                        <ImageBrush ImageSource="../../../Media/Imagenes/Fichas/Elementos/HP_Icon.png"></ImageBrush>
+                    </Border.Background>
 
                     <Grid>
 
@@ -340,7 +380,7 @@
                             local:CampoDeTextoNumericoProperty.Value="True"
                             FontFamily="{StaticResource 'Font Awesome Regular'}"
                             FontSize="{StaticResource TamañoFontMuyGrande}"
-                            Text="{Binding MaxHp, Mode=TwoWay, FallbackValue=HP}"/>
+                            Text="{Binding MaxHp, Mode=OneWay, FallbackValue=HP}"/>
                         
                         <TextBlock 
                             Grid.Row="1"
@@ -349,7 +389,7 @@
                             local:CampoDeTextoNumericoProperty.Value="True"
                             FontFamily="{StaticResource 'Font Awesome Regular'}"
                             FontSize="{StaticResource TamañoFontMediano}"
-                            Text="{Binding MaxHp, Mode=TwoWay, FallbackValue=HP}"/>
+                            Text="{Binding MaxHp, Mode=OneWay, FallbackValue=HP}"/>
 
                     </Grid>
 
@@ -358,7 +398,11 @@
                 <Border 
                     Grid.Row="1" Grid.Column="1"
                     CornerRadius="10"
-                    Background="{StaticResource Tema.Verde}">
+                    Margin="10">
+
+                    <Border.Background>
+                        <ImageBrush ImageSource="../../../Media/Imagenes/Fichas/Elementos/END_Icon.png"></ImageBrush>
+                    </Border.Background>
 
                     <Grid>
 
@@ -374,7 +418,7 @@
                             local:CampoDeTextoNumericoProperty.Value="True"
                             FontFamily="{StaticResource 'Font Awesome Regular'}"
                             FontSize="{StaticResource TamañoFontMuyGrande}"
-                            Text="{Binding End, Mode=TwoWay, FallbackValue=End}"/>
+                            Text="{Binding End, Mode=OneWay, FallbackValue=End}"/>
                         
                         <StackPanel 
                             Grid.Row="1"
@@ -387,14 +431,14 @@
                                 local:CampoDeTextoNumericoProperty.Value="True"
                                 FontFamily="{StaticResource 'Font Awesome Regular'}"
                                 FontSize="{StaticResource TamañoFontMediano}"
-                                Text="{Binding ModificadorEnd, Mode=TwoWay, FallbackValue=End}"/>
+                                Text="{Binding ModificadorEnd, Mode=OneWay, FallbackValue=End}"/>
 
                             <TextBlock
                                 Margin="5 0 0 0"
                                 local:CampoDeTextoNumericoProperty.Value="True"
                                 FontFamily="{StaticResource 'Font Awesome Regular'}"
                                 FontSize="{StaticResource TamañoFontMediano}"
-                                Text="{Binding VentajaEnd, Mode=TwoWay, FallbackValue=End}"/>
+                                Text="{Binding VentajaEnd, Mode=OneWay, FallbackValue=End}"/>
 
                         </StackPanel>
 
@@ -405,7 +449,11 @@
                 <Border 
                     Grid.Row="2" Grid.Column="1"
                     CornerRadius="10"
-                    Background="{StaticResource Tema.Verde}">
+                    Margin="10">
+
+                    <Border.Background>
+                        <ImageBrush ImageSource="../../../Media/Imagenes/Fichas/Elementos/CHR_Icon.png"></ImageBrush>
+                    </Border.Background>
 
                     <Grid>
 
@@ -421,7 +469,7 @@
                             local:CampoDeTextoNumericoProperty.Value="True"
                             FontFamily="{StaticResource 'Font Awesome Regular'}"
                             FontSize="{StaticResource TamañoFontMuyGrande}"
-                            Text="{Binding Chr, Mode=TwoWay, FallbackValue=Chr}"/>
+                            Text="{Binding Chr, Mode=OneWay, FallbackValue=Chr}"/>
                         
                         <StackPanel 
                             Grid.Row="1"
@@ -434,14 +482,14 @@
                                 local:CampoDeTextoNumericoProperty.Value="True"
                                 FontFamily="{StaticResource 'Font Awesome Regular'}"
                                 FontSize="{StaticResource TamañoFontMediano}"
-                                Text="{Binding ModificadorChr, Mode=TwoWay, FallbackValue=Chr}"/>
+                                Text="{Binding ModificadorChr, Mode=OneWay, FallbackValue=Chr}"/>
 
                             <TextBlock
                                 Margin="5 0 0 0"
                                 local:CampoDeTextoNumericoProperty.Value="True"
                                 FontFamily="{StaticResource 'Font Awesome Regular'}"
                                 FontSize="{StaticResource TamañoFontMediano}"
-                                Text="{Binding VentajaChr, Mode=TwoWay, FallbackValue=Chr}"/>
+                                Text="{Binding VentajaChr, Mode=OneWay, FallbackValue=Chr}"/>
 
                         </StackPanel>
 
@@ -452,7 +500,11 @@
                 <Border 
                     Grid.Row="0" Grid.Column="2"
                     CornerRadius="10"
-                    Background="{StaticResource Tema.Verde}">
+                    Margin="10">
+
+                    <Border.Background>
+                        <ImageBrush ImageSource="../../../Media/Imagenes/Fichas/Elementos/OD_Icon.png"></ImageBrush>
+                    </Border.Background>
 
                     <Grid>
 
@@ -468,7 +520,7 @@
                             local:CampoDeTextoNumericoProperty.Value="True"
                             FontFamily="{StaticResource 'Font Awesome Regular'}"
                             FontSize="{StaticResource TamañoFontMuyGrande}"
-                            Text="{Binding Od, Mode=TwoWay, FallbackValue=Od}"/>
+                            Text="{Binding Od, Mode=OneWay, FallbackValue=Od}"/>
                         
                         <TextBlock 
                             Grid.Row="1"
@@ -477,7 +529,7 @@
                             local:CampoDeTextoNumericoProperty.Value="True"
                             FontFamily="{StaticResource 'Font Awesome Regular'}"
                             FontSize="{StaticResource TamañoFontMediano}"
-                            Text="{Binding OdActual, Mode=TwoWay, FallbackValue=Od}"/>
+                            Text="{Binding OdActual, Mode=OneWay, FallbackValue=Od}"/>
 
                     </Grid>
 
@@ -486,7 +538,11 @@
                 <Border 
                     Grid.Row="1" Grid.Column="2"
                     CornerRadius="10"
-                    Background="{StaticResource Tema.Verde}">
+                    Margin="10">
+
+                    <Border.Background>
+                        <ImageBrush ImageSource="../../../Media/Imagenes/Fichas/Elementos/AGI_Icon.png"></ImageBrush>
+                    </Border.Background>
 
                     <Grid>
 
@@ -502,7 +558,7 @@
                             local:CampoDeTextoNumericoProperty.Value="True"
                             FontFamily="{StaticResource 'Font Awesome Regular'}"
                             FontSize="{StaticResource TamañoFontMuyGrande}"
-                            Text="{Binding Agi, Mode=TwoWay, FallbackValue=Agi}"/>
+                            Text="{Binding Agi, Mode=OneWay, FallbackValue=Agi}"/>
                         
                         <StackPanel 
                             Grid.Row="1"
@@ -515,14 +571,14 @@
                                 local:CampoDeTextoNumericoProperty.Value="True"
                                 FontFamily="{StaticResource 'Font Awesome Regular'}"
                                 FontSize="{StaticResource TamañoFontMediano}"
-                                Text="{Binding ModificadorAgi, Mode=TwoWay, FallbackValue=Agi}"/>
+                                Text="{Binding ModificadorAgi, Mode=OneWay, FallbackValue=Agi}"/>
 
                             <TextBlock
                                 Margin="5 0 0 0"
                                 local:CampoDeTextoNumericoProperty.Value="True"
                                 FontFamily="{StaticResource 'Font Awesome Regular'}"
                                 FontSize="{StaticResource TamañoFontMediano}"
-                                Text="{Binding VentajaAgi, Mode=TwoWay, FallbackValue=Agi}"/>
+                                Text="{Binding VentajaAgi, Mode=OneWay, FallbackValue=Agi}"/>
 
                         </StackPanel>
 
@@ -533,7 +589,11 @@
                 <Border 
                     Grid.Row="2" Grid.Column="2"
                     CornerRadius="10"
-                    Background="{StaticResource Tema.Verde}">
+                    Margin="10">
+
+                    <Border.Background>
+                        <ImageBrush ImageSource="../../../Media/Imagenes/Fichas/Elementos/Altura_Icon.png"></ImageBrush>
+                    </Border.Background>
 
                     <TextBlock 
                         HorizontalAlignment="Center"
@@ -541,14 +601,18 @@
                         local:CampoDeTextoNumericoProperty.Value="True"
                         FontFamily="{StaticResource 'Font Awesome Regular'}"
                         FontSize="{StaticResource TamañoFontMuyGrande}"
-                        Text="{Binding Estatura, Mode=TwoWay, FallbackValue=Estatura}"/>
+                        Text="{Binding Estatura, Mode=OneWay, FallbackValue=Estatura}"/>
 
                 </Border>
 
                 <Border 
                     Grid.Row="0" Grid.Column="3"
                     CornerRadius="10"
-                    Background="{StaticResource Tema.Verde}">
+                    Margin="10">
+
+                    <Border.Background>
+                        <ImageBrush ImageSource="../../../Media/Imagenes/Fichas/Elementos/MANA_Icon.png"></ImageBrush>
+                    </Border.Background>
 
                     <Grid>
 
@@ -564,7 +628,7 @@
                             local:CampoDeTextoNumericoProperty.Value="True"
                             FontFamily="{StaticResource 'Font Awesome Regular'}"
                             FontSize="{StaticResource TamañoFontMuyGrande}"
-                            Text="{Binding Mana, Mode=TwoWay, FallbackValue=Mana}"/>
+                            Text="{Binding Mana, Mode=OneWay, FallbackValue=Mana}"/>
                         
                         <TextBlock 
                             Grid.Row="1"
@@ -573,7 +637,7 @@
                             local:CampoDeTextoNumericoProperty.Value="True"
                             FontFamily="{StaticResource 'Font Awesome Regular'}"
                             FontSize="{StaticResource TamañoFontMediano}"
-                            Text="{Binding ManaActual, Mode=TwoWay, FallbackValue=Mana}"/>
+                            Text="{Binding ManaActual, Mode=OneWay, FallbackValue=Mana}"/>
 
                     </Grid>
 
@@ -582,7 +646,11 @@
                 <Border 
                     Grid.Row="1" Grid.Column="3"
                     CornerRadius="10"
-                    Background="{StaticResource Tema.Verde}">
+                    Margin="10">
+
+                    <Border.Background>
+                        <ImageBrush ImageSource="../../../Media/Imagenes/Fichas/Elementos/INT_Icon.png"></ImageBrush>
+                    </Border.Background>
 
                     <Grid>
 
@@ -598,7 +666,7 @@
                             local:CampoDeTextoNumericoProperty.Value="True"
                             FontFamily="{StaticResource 'Font Awesome Regular'}"
                             FontSize="{StaticResource TamañoFontMuyGrande}"
-                            Text="{Binding Int, Mode=TwoWay, FallbackValue=Int}"/>
+                            Text="{Binding Int, Mode=OneWay, FallbackValue=Int}"/>
                         
                         <StackPanel 
                             Grid.Row="1"
@@ -611,14 +679,14 @@
                                 local:CampoDeTextoNumericoProperty.Value="True"
                                 FontFamily="{StaticResource 'Font Awesome Regular'}"
                                 FontSize="{StaticResource TamañoFontMediano}"
-                                Text="{Binding ModificadorInt, Mode=TwoWay, FallbackValue=Int}"/>
+                                Text="{Binding ModificadorInt, Mode=OneWay, FallbackValue=Int}"/>
 
                             <TextBlock
                                 Margin="5 0 0 0"
                                 local:CampoDeTextoNumericoProperty.Value="True"
                                 FontFamily="{StaticResource 'Font Awesome Regular'}"
                                 FontSize="{StaticResource TamañoFontMediano}"
-                                Text="{Binding VentajaInt, Mode=TwoWay, FallbackValue=Int}"/>
+                                Text="{Binding VentajaInt, Mode=OneWay, FallbackValue=Int}"/>
 
                         </StackPanel>
 
@@ -629,7 +697,11 @@
                 <Border 
                     Grid.Row="2" Grid.Column="3"
                     CornerRadius="10"
-                    Background="{StaticResource Tema.Verde}">
+                    Margin="10">
+
+                    <Border.Background>
+                        <ImageBrush ImageSource="../../../Media/Imagenes/Fichas/Elementos/Peso_Icon.png"></ImageBrush>
+                    </Border.Background>
 
                     <TextBlock 
                         HorizontalAlignment="Center"
@@ -637,15 +709,17 @@
                         local:CampoDeTextoNumericoProperty.Value="True"
                         FontFamily="{StaticResource 'Font Awesome Regular'}"
                         FontSize="{StaticResource TamañoFontMuyGrande}"
-                        Text="{Binding Peso, Mode=TwoWay, FallbackValue=Peso}"/>
+                        Text="{Binding Peso, Mode=OneWay, FallbackValue=Peso}"/>
 
                 </Border>
 
             </Grid>
 
-            <Grid Grid.Column="1">
+            <Grid 
+                Grid.Column="1"
+                Margin="10">
 
-                
+                <local:UserControlVistaArbolInventario DataContext="{Binding Inventario}"/>
 
             </Grid>
 

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Windows.Input;
 
 namespace AppGM.Core
 {
@@ -8,6 +9,11 @@ namespace AppGM.Core
     public class ViewModelMenuSeleccionCombate : ViewModel
     {
         #region Propiedades
+
+        /// <summary>
+        /// Comando que se ejecuta al presionar el boton 'Agregar'.
+        /// </summary>
+        public ICommand ComandoAgregarCombate { get; set; }
 
         /// <summary>
         /// Lista de combates existentes
@@ -35,7 +41,30 @@ namespace AppGM.Core
                 ViewModelContenido = new ViewModelInfoCombateGlobo(),
                 GloboVisible = false
             };
+
+            ComandoAgregarCombate = new Comando(AgregarCombate);
         }
+
+        #endregion
+
+        #region Funciones
+
+        /// <summary>
+        /// Funcion llamada para agregar un nuevo participante al combate
+        /// </summary>
+        public async void AgregarCombate()
+        {
+            //VM para el contenido del popup
+            ViewModelCrearCombate vm = new ViewModelCrearCombate();
+
+            //Se crea el popup y se espera a que se cierre
+            await SistemaPrincipal.MostrarMensajeAsync(vm, "Agregar combate", true, 150, 500);
+
+            Combates.Combates.Add(new ViewModelCombateItem(vm.vmResultado.administradorDeCombate));
+
+            await SistemaPrincipal.GuardarDatosAsync();
+        }
+
         #endregion
     }
 }

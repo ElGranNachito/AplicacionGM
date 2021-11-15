@@ -22,6 +22,11 @@ namespace AppGM.Core
         private int mIndiceRolActual = 0;
 
         /// <summary>
+        /// Indica si se esta cargando el rol seleccionado.
+        /// </summary>
+        private bool mEstaCargando;
+
+        /// <summary>
         /// Animacion del fondo.
         /// </summary>
         private Animacion mAnimacionFondoMenuPrincipalLoop;
@@ -125,7 +130,14 @@ namespace AppGM.Core
             //Comando que se ejecuta al presionar la carta de seleccionar rol
             CartaSeleccionarRol.Comando = new Comando(async () =>
             {
+                if (mEstaCargando)
+                    return;
+
+                mEstaCargando = true;
+
 	            await SistemaPrincipal.CargarRolAsincronicamente(RolActual.Id);
+
+                mEstaCargando = false;
 
 	            SistemaPrincipal.Aplicacion.PaginaActual =
 		            EPagina.PaginaPrincipalRol;

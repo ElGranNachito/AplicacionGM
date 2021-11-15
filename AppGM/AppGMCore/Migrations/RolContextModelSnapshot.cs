@@ -248,10 +248,16 @@ namespace AppGM.Core.Migrations
                     b.Property<bool>("EsValido")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("Hora")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("Humedad")
                         .HasColumnType("INTEGER");
 
                     b.Property<int?>("IdRol")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Minuto")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("Temperatura")
@@ -1619,9 +1625,6 @@ namespace AppGM.Core.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
-                    b.Property<ushort>("RangoHechiceria")
-                        .HasColumnType("INTEGER");
-
                     b.HasDiscriminator().HasValue(1);
                 });
 
@@ -1715,10 +1718,6 @@ namespace AppGM.Core.Migrations
                 {
                     b.HasBaseType("AppGM.Core.ModeloPersonajeJugable");
 
-                    b.Property<string>("Afinidad")
-                        .HasMaxLength(50)
-                        .HasColumnType("TEXT");
-
                     b.Property<int>("Chr")
                         .HasColumnType("INTEGER");
 
@@ -1743,10 +1742,6 @@ namespace AppGM.Core.Migrations
 
                     b.Property<int>("OdActual")
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("Origen")
-                        .HasMaxLength(50)
-                        .HasColumnType("TEXT");
 
                     b.Property<ushort>("VentajaChr")
                         .HasColumnType("INTEGER");

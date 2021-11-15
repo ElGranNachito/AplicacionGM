@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     
-    <Grid>
+    <Grid Background="{StaticResource Tema.VerdeOscuro}">
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -15,81 +15,263 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+        
+        <Grid Grid.Column="0">
 
-        <!-- Tipo ficha servants -->
-        <local:UserControlSeleccionTipoFicha>
-            <Grid
-                Margin="{Binding AnchoMargenCartas, Converter={local:GrosorToThicknessConverter}}">
+            <Grid.Background>
+                <ImageBrush ImageSource="../../../../Media/Imagenes/Fichas/Master_Fichas.png"/>
+            </Grid.Background>
 
-                <Grid.Background>
-                    <ImageBrush ImageSource="../../../../Media/Imagenes/Carta_Servant.png"/>
-                </Grid.Background>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*" MaxHeight="200"/>
+            </Grid.RowDefinitions>
 
-                <Button Style="{StaticResource BotonMarcoResaltable}"
-                        Command="{Binding ComandoBotonFichasServants}"
-                        BorderThickness="1"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch"/>
+            <!-- Listado de personajes "master" dentro de este rol -->
+            <Border  
+                Grid.Row="0"
+                BorderThickness="2 2 2 0"
+                BorderBrush="{StaticResource Tema.Verde}">
 
-            </Grid>
-        </local:UserControlSeleccionTipoFicha>
+                <local:UserControlSeleccionTipoFicha DataContext="{Binding Masters}"/>
 
-        <!-- Tipo ficha masters -->
-        <local:UserControlSeleccionTipoFicha
-            Grid.Column="1">
-            <Grid
-                Margin="{Binding AnchoMargenCartas, Converter={local:GrosorToThicknessConverter}}">
+            </Border>
 
-                <Grid.Background>
-                    <ImageBrush ImageSource="../../../../Media/Imagenes/Carta_Master.png"/>
-                </Grid.Background>
+            <!-- Breve descripcion de los personajes "master" -->
+            <Border
+                Grid.Row="1"
+                BorderThickness="2 0 2 2"
+                BorderBrush="{StaticResource Tema.Verde}">
+                
+                <Border 
+                    CornerRadius="10"
+                    Margin="10"
+                    Background="{StaticResource Tema.Verde}">
 
-                <Button Style="{StaticResource BotonMarcoResaltable}"
-                        Command="{Binding ComandoBotonFichasMasters}"
-                        BorderThickness="1"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch"/>
+                    <StackPanel>
 
-            </Grid>
-        </local:UserControlSeleccionTipoFicha>
+                        <TextBlock 
+                            VerticalAlignment="Top"
+                            HorizontalAlignment="Center"
+                            Margin="0 10 0 0"
+                            FontWeight="Bold"
+                            FontSize="{StaticResource TamañoFontMuyGrande}"
+                            Foreground="{StaticResource Tema.VerdeOscuro}"
+                            Text="Masters"/>
+                
+                        <TextBlock 
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Margin="10"
+                            FontWeight="Bold"
+                            FontSize="{StaticResource TamañoFontMedioPequeño}"
+                            Foreground="{StaticResource Tema.VerdeOscuro}"
+                            TextWrapping="Wrap"
+                            TextAlignment="Center"
+                            Text="Humanos(en su mayoría) con capacidades sobrenaturales y adeptos en las artes místicas, hacen contratos con los Servants para lograr sus metas."/>
 
-        <!-- Tipo ficha invocaciones -->
-        <local:UserControlSeleccionTipoFicha
-            Grid.Column="2">
-            <Grid
-                Margin="{Binding AnchoMargenCartas, Converter={local:GrosorToThicknessConverter}}">
+                    </StackPanel>
 
-                <Grid.Background>
-                    <ImageBrush ImageSource="../../../../Media/Imagenes/Carta_Invocacion.png"/>
-                </Grid.Background>
+                </Border>
 
-                <Button Style="{StaticResource BotonMarcoResaltable}"
-                        Command="{Binding ComandoBotonFichasInvocaciones}"
-                        BorderThickness="1"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch"/>
+            </Border>
 
-            </Grid>
-        </local:UserControlSeleccionTipoFicha>
+            <Button 
+                Grid.Row="1"
+                Style="{StaticResource BotonAgregar}"
+                Width="65"
+                Height="65"
+                VerticalAlignment="Bottom"
+                HorizontalAlignment="Left"
+                Command="{Binding ComandoAñadirPersonaje}"/>
 
-        <!-- Tipo ficha NPCs -->
-        <local:UserControlSeleccionTipoFicha
-            Grid.Column="3">
-            <Grid
-                Margin="{Binding AnchoMargenCartas, Converter={local:GrosorToThicknessConverter}}">
+        </Grid>
 
-                <Grid.Background>
-                    <ImageBrush ImageSource="../../../../Media/Imagenes/Carta_NPC.png"/>
-                </Grid.Background>
+        <Grid Grid.Column="1">
 
-                <Button Style="{StaticResource BotonMarcoResaltable}"
-                        Command="{Binding ComandoBotonFichasNPCs}"
-                        BorderThickness="1"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch"/>
+            <Grid.Background>
+                <ImageBrush ImageSource="../../../../Media/Imagenes/Fichas/Servant_Fichas.png"/>
+            </Grid.Background>
 
-            </Grid>
-        </local:UserControlSeleccionTipoFicha>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*" MaxHeight="200"/>
+            </Grid.RowDefinitions>
+
+            <!-- Listado de personajes "servant" dentro de este rol -->
+            <Border 
+                Grid.Row="0"
+                BorderThickness="2 2 2 0"
+                BorderBrush="{StaticResource Tema.Verde}">
+
+                <local:UserControlSeleccionTipoFicha DataContext="{Binding Servants}"/>
+
+            </Border>
+
+            <!-- Breve descripcion de los personajes "servant" -->
+            <Border
+                Grid.Row="1"
+                BorderThickness="2 0 2 2"
+                BorderBrush="{StaticResource Tema.Verde}">
+
+                <Border 
+                    CornerRadius="10"
+                    Margin="10"
+                    Background="{StaticResource Tema.Verde}">
+
+                    <StackPanel>
+
+                        <TextBlock 
+                            VerticalAlignment="Top"
+                            HorizontalAlignment="Center"
+                            Margin="0 10 0 0"
+                            FontWeight="Bold"
+                            FontSize="{StaticResource TamañoFontMuyGrande}"
+                            Foreground="{StaticResource Tema.VerdeOscuro}"
+                            Text="Servants"/>
+            
+                        <TextBlock 
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Margin="10"
+                            FontWeight="Bold"
+                            FontSize="{StaticResource TamañoFontMedioPequeño}"
+                            Foreground="{StaticResource Tema.VerdeOscuro}"
+                            TextWrapping="Wrap"
+                            TextAlignment="Center"
+                            Text="Seres sobrenaturales del pasado que han ascendido gracias a la cultura humana y son la más alta jerarquía Espiritual, son invocados por los Masters y siguen sus ordenes con la promesa de conseguir lo que no pudieron en vida."/>
+
+                    </StackPanel>
+
+                </Border>
+
+            </Border>
+
+        </Grid>
+        
+        <Grid Grid.Column="2">
+            
+            <Grid.Background>
+                <ImageBrush ImageSource="../../../../Media/Imagenes/Fichas/Invocación_Fichas.png"/>
+            </Grid.Background>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*" MaxHeight="200"/>
+            </Grid.RowDefinitions>
+
+            <!-- Listado de personajes "invocacion" dentro de este rol -->
+            <Border 
+                Grid.Row="0"
+                BorderThickness="2 2 2 0"
+                BorderBrush="{StaticResource Tema.Verde}">
+
+                <local:UserControlSeleccionTipoFicha DataContext="{Binding Invocaciones}"/>
+
+            </Border>
+
+            <!-- Breve descripcion de los personajes "invocacion" -->
+            <Border
+                Grid.Row="1"
+                BorderThickness="2 0 2 2"
+                BorderBrush="{StaticResource Tema.Verde}">
+
+                <Border 
+                    CornerRadius="10"
+                    Margin="10"
+                    Background="{StaticResource Tema.Verde}">
+
+                    <StackPanel>
+
+                        <TextBlock 
+                            VerticalAlignment="Top"
+                            HorizontalAlignment="Center"
+                            Margin="0 10 0 0"
+                            FontWeight="Bold"
+                            FontSize="{StaticResource TamañoFontMuyGrande}"
+                            Foreground="{StaticResource Tema.VerdeOscuro}"
+                            Text="Invocaciones"/>
+            
+                        <TextBlock 
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Margin="10"
+                            FontWeight="Bold"
+                            FontSize="{StaticResource TamañoFontMedioPequeño}"
+                            Foreground="{StaticResource Tema.VerdeOscuro}"
+                            TextWrapping="Wrap"
+                            TextAlignment="Center"
+                            Text="Familiares, espíritus de cualquier tipo, criaturas místicas, creaciones del hombre o incluso seres simplemente tienen lealtad; entre otras cosas, cuentan una extensión y actúan en consecuencia de aquel a quien pertenezcan."/>
+
+                    </StackPanel>
+
+                </Border>
+
+            </Border>
+
+        </Grid>
+
+        <Grid Grid.Column="3">
+
+            <Grid.Background>
+                <ImageBrush ImageSource="../../../../Media/Imagenes/Fichas/NPC_Fichas.png"/>
+            </Grid.Background>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*" MaxHeight="200"/>
+            </Grid.RowDefinitions>
+
+            <!-- Listado de personajes "NPC" dentro de este rol -->
+            <Border 
+                Grid.Row="0"
+                BorderThickness="2 2 2 0"
+                BorderBrush="{StaticResource Tema.Verde}">
+
+                <local:UserControlSeleccionTipoFicha DataContext="{Binding NPCs}"/>
+
+            </Border>
+
+            <!-- Breve descripcion de los personajes "NPC" -->
+            <Border
+                Grid.Row="1"
+                BorderThickness="2 0 2 2"
+                BorderBrush="{StaticResource Tema.Verde}">
+
+                <Border 
+                    CornerRadius="10"
+                    Margin="10"
+                    Background="{StaticResource Tema.Verde}">
+
+                    <StackPanel>
+
+                        <TextBlock 
+                            VerticalAlignment="Top"
+                            HorizontalAlignment="Center"
+                            Margin="0 10 0 0"
+                            FontWeight="Bold"
+                            FontSize="{StaticResource TamañoFontMuyGrande}"
+                            Foreground="{StaticResource Tema.VerdeOscuro}"
+                            Text="NPCs"/>
+            
+                        <TextBlock 
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Margin="10"
+                            FontWeight="Bold"
+                            FontSize="{StaticResource TamañoFontMedioPequeño}"
+                            Foreground="{StaticResource Tema.VerdeOscuro}"
+                            TextWrapping="Wrap"
+                            TextAlignment="Center"
+                            Text="Personajes que no son jugables y actúan, no por orden de algún jugador, sino del GM, si algún personaje no entra en ninguna de las demás denominaciones, esta seguro será la adecuada."/>
+
+                    </StackPanel>
+
+                </Border>
+
+            </Border>
+
+        </Grid>
 
     </Grid>
     

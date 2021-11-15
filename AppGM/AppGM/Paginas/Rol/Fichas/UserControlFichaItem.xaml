@@ -9,57 +9,96 @@
 
     <!-- UserControl que hace uso de ViewModelFichaItem -->
     <!-- Representacion de una ficha en una lista de estas -->
-    <UserControl.Template>
+    <Grid 
+        Background="Transparent"
+        x:Name="Gridsito">
 
-        <ControlTemplate TargetType="{x:Type UserControl}">
+        <!-- Context menu -->
+        <Grid.ContextMenu>
 
+            <ContextMenu Style="{StaticResource ConextMenuBase}">
+                
+                <MenuItem Style="{StaticResource MenuOpcionesMapa}" 
+                          ItemContainerStyle="{DynamicResource MenuItemOpcionesMapa1}" 
+                          Template="{DynamicResource MenuItemOpcionesMapaControlTemplate2}"
+                          Header="Ver ficha" 
+                          ToolTip="Abre una vista de la ficha del personaje en una nueva ventana."
+                          Command="{Binding ComandoVerFicha}"
+                />
+                <Separator/>
+                <MenuItem Style="{StaticResource MenuOpcionesMapa}" 
+                          ItemContainerStyle="{DynamicResource MenuItemOpcionesMapa1}" 
+                          Template="{DynamicResource MenuItemOpcionesMapaControlTemplate2}"
+                          Header="Editar" 
+                          ToolTip="Abre un menu de edicion del personaje en una nueva ventana."
+                          Command="{Binding ComandoEditar}"
+                />
+                <MenuItem Style="{StaticResource MenuOpcionesMapa}" 
+                          ItemContainerStyle="{DynamicResource MenuItemOpcionesMapa1}" 
+                          Template="{DynamicResource MenuItemOpcionesMapaControlTemplate2}"
+                          Header="Eliminar" 
+                          ToolTip="Elimina al personaje del rol y la base de datos."
+                          Command="{Binding ComandoEliminar}"
+                />
+
+            </ContextMenu>
+            
+        </Grid.ContextMenu>
+
+        <Border Background="{StaticResource Tema.BlancoVerde}"
+                CornerRadius="35 0 0 35"
+                Margin="250 0 0 0" 
+                Visibility="{Binding EstaSeleccionada, Converter={local:BooleanToVisibilityConverterOcultar}}"
+                >
+
+        </Border>
+
+        <StackPanel Margin="4"
+                    Orientation="Horizontal">
+
+            <!-- Fotito del personaje -->
             <Border 
-                x:Name="contenido"
-                Background="{StaticResource Tema.VerdeOscuro}">
+                CornerRadius="50"
+                Width="60"
+                Height="60"
+                BorderThickness="1"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Left"
+                BorderBrush="{StaticResource Tema.Verde}">
 
-                <Grid>
-
-
-                    <Border Background="{StaticResource Tema.BlancoVerde}"
-                            CornerRadius="35 0 0 35"
-                            Margin="125 0 0 0" 
-                            Visibility="{Binding EstaSeleccionada, Converter={local:BooleanToVisibilityConverterOcultar}}"/>
-
-                    <!--TODO: Ver si hace falta conservar este boton-->
-                    <Button 
-                        Style="{StaticResource BotonMenuRol}" 
-                        local:BotonMenuRolConViewModelProperty.Value="{Binding}"
-                        />
-
-                    <StackPanel IsHitTestVisible="False"
-                                Margin="4">
-
-                        <!-- Nombre -->
-                        <TextBlock Foreground="{StaticResource Tema.Verde}">
-                            <Run Text="Nombre: "/>
-                            <Run Text="{Binding Personaje.Nombre}"/>
-                        </TextBlock>
-
-                        <!-- Tipo de personaje -->
-                        <TextBlock Foreground="{StaticResource Tema.Verde}">
-                            <Run Text="- "/>
-                            <Run Text="{Binding Personaje.TipoDelPersonaje}"/>
-                        </TextBlock>
-
-                        <!-- Numero de party -->
-                        <TextBlock Foreground="{StaticResource Tema.Verde}">
-                            <Run Text="- "/>
-                            <Run Text="{Binding Personaje.NumeroDeParty}"/>
-                        </TextBlock>
-
-                    </StackPanel>
-
-                </Grid>
+                <Border.Background>
+                    <ImageBrush
+                        Stretch="Fill"
+                        ImageSource="{Binding Imagen, Mode=OneWay, Converter={local:FullPathToImageConverter}}"/>
+                </Border.Background>
 
             </Border>
 
-        </ControlTemplate>
+            <StackPanel Margin="5 0 0 0">
 
-    </UserControl.Template>
+                <!-- Nombre -->
+                <TextBlock 
+                    Foreground="{StaticResource Tema.Verde}"
+                    FontWeight="Bold">
+                    <Run Text="{Binding Nombre, Mode=OneWay}"/>
+                </TextBlock>
+
+                <!-- Tipo de personaje -->
+                <TextBlock Foreground="{StaticResource Tema.Verde}">
+                    <Run Text="- "/>
+                    <Run Text="{Binding TipoDelPersonaje, Mode=OneWay}"/>
+                </TextBlock>
+
+                <!-- Numero de party -->
+                <TextBlock Foreground="{StaticResource Tema.Verde}">
+                    <Run Text="- "/>
+                    <Run Text="{Binding NumeroDeParty, Mode=OneWay}"/>
+                </TextBlock>
+
+            </StackPanel>
+
+        </StackPanel>
+
+    </Grid>
 
 </UserControl>

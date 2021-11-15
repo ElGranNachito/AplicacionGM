@@ -18,7 +18,7 @@
 
             <!-- Contenido del recuadro izquierdo -->
             <Border
-                BorderBrush="Aqua"
+                BorderBrush="{StaticResource Tema.BlancoVerde}"
                 BorderThickness="2">
 
                 <ContentControl Content="{Binding EMenu, Converter={local:EnumToUserControlConverter}, ConverterParameter=2, IsAsync=True}"/>
@@ -39,7 +39,7 @@
 
                     <!-- Fichas -->
                     <Button Content="Fichas" 
-                            BorderBrush="Aqua"
+                            BorderBrush="{StaticResource Tema.BlancoVerde}"
                             BorderThickness="0"
                             Command="{Binding ComandoBotonFichas}"
                             Style="{StaticResource BotonMenuRol}"
@@ -48,7 +48,7 @@
 
                     <!-- Mapas -->
                     <Button Content="Mapas" 
-                            BorderBrush="Aqua"
+                            BorderBrush="{StaticResource Tema.BlancoVerde}"
                             BorderThickness="0"
                             Command="{Binding ComandoBotonMapas}"
                             Style="{StaticResource BotonMenuRol}"
@@ -57,7 +57,7 @@
 
                     <!-- Registro -->
                     <Button Content="Registro"
-                            BorderBrush="Aqua"
+                            BorderBrush="{StaticResource Tema.BlancoVerde}"
                             BorderThickness="0"
                             Command="{Binding ComandoBotonRegistro}"
                             Style="{StaticResource BotonMenuRol}"
@@ -66,7 +66,7 @@
 
                     <!-- Tirada -->
                     <Button Content="Tirada"
-                            BorderBrush="Aqua"
+                            BorderBrush="{StaticResource Tema.BlancoVerde}"
                             BorderThickness="0"
                             Command="{Binding ComandoBotonTirada}"
                             Style="{StaticResource BotonMenuRol}"
@@ -75,7 +75,7 @@
 
                     <!-- Combates -->
                     <Button Content="Combates"
-                            BorderBrush="Aqua"
+                            BorderBrush="{StaticResource Tema.BlancoVerde}"
                             BorderThickness="0"
                             Command="{Binding ComandoBotonCombates}"
                             Style="{StaticResource BotonMenuRol}"

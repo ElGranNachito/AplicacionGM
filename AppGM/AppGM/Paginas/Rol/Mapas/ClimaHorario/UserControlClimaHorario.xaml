@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AppGM"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
              mc:Ignorable="d" 
              d:DesignHeight="170" d:DesignWidth="250">
     
@@ -17,16 +18,6 @@
         <Grid.Background>
             <ImageBrush ImageSource="../../../../Media/Imagenes/Clima/Horarios_Hora.png"></ImageBrush>
         </Grid.Background>
-        
-        <!--Horario-->
-        <TextBlock Text="{Binding Hora}"
-                   Foreground="Black"
-                   FontSize="50"
-                   FontFamily="{StaticResource 'Font Canon'}"
-                   Margin="0 27 60 0"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Top" 
-                   />
 
         <!--Clima y dia-->
         <Grid Width="250" Height="170">
@@ -137,6 +128,54 @@
                 Command="{Binding ComandoBotonAvanzarDia}"/>
 
         </StackPanel>
+
+        <!--Hora-->
+        <TextBox 
+            local:CampoDeTextoNumericoProperty.Value="True"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
+            Margin="0 40 100 0"
+            MinWidth="20"
+            MinHeight="10"
+            Width="25"
+            Height="25"
+            Background="{StaticResource Tema.VerdeClima}"
+            BorderBrush="{StaticResource Tema.VerdeClima}"
+            FontSize="{StaticResource TamañoFontMuyGrande}"
+            FontFamily="{StaticResource 'Font Canon'}"
+            TextChanged="TextBoxBaseHora_OnTextChanged"
+            Text="{Binding Hora, Mode=TwoWay}"/>
+
+        <TextBlock 
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
+            Margin="0 40 50 0"
+            MinWidth="20"
+            MinHeight="10"
+            Width="25"
+            Height="25"
+            Foreground="Black"
+            FontSize="{StaticResource TamañoFontMuyGrande}"
+            FontFamily="{StaticResource 'Font Canon'}"
+            Text=":"
+            />
+
+        <!--Minuto-->
+        <TextBox 
+            local:CampoDeTextoNumericoProperty.Value="True"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
+            Margin="0 40 30 0"
+            MinWidth="20"
+            MinHeight="10"
+            Width="25"
+            Height="25"
+            Background="{StaticResource Tema.VerdeClima}"
+            BorderBrush="{StaticResource Tema.VerdeClima}"
+            FontSize="{StaticResource TamañoFontMuyGrande}"
+            FontFamily="{StaticResource 'Font Canon'}"
+            TextChanged="TextBoxBaseMinuto_OnTextChanged"
+            Text="{Binding Minuto, Mode=TwoWay}"/>
 
     </Grid>
 

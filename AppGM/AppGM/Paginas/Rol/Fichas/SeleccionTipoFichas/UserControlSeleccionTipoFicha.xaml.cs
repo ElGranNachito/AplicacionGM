@@ -11,8 +11,6 @@ namespace AppGM
         public UserControlSeleccionTipoFicha()
         {
             InitializeComponent();
-
-            DataContext = SistemaPrincipal.ObtenerInstancia<ViewModelMenuSeleccionTipoFicha>();
         }
     }
 }

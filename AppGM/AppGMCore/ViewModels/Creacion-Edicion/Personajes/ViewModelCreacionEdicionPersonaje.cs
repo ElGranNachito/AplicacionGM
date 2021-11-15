@@ -623,7 +623,7 @@ namespace AppGM.Core
                     m.Chr = value;
 
                     DispararPropertyChanged(new PropertyChangedEventArgs(nameof(TextoPuntosDeHabilidadRestantes)));
-                }    
+                }
             }
         }
 
