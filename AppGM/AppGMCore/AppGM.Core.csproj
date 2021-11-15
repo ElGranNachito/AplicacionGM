@@ -61,5 +61,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="CreacionDeFunciones\Bloques\VMs\" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
 </Project>
