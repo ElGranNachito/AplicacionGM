@@ -9,13 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AppGM.Core.Migrations
 {
     [DbContext(typeof(RolContext))]
-<<<<<<< HEAD:AppGM/AppGMCore/Migrations/20211114220316_inicial.Designer.cs
-    [Migration("20211114220316_inicial")]
+    [Migration("20211115025946_inicial")]
     partial class inicial
-=======
-    [Migration("20211115011147_Inicial")]
-    partial class Inicial
->>>>>>> Furlanis:AppGM/AppGMCore/Migrations/20211115011147_Inicial.Designer.cs
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
