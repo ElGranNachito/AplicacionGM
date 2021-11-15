@@ -151,6 +151,11 @@ namespace AppGM.Core
 				ResultadoDetalladoTirada = resultadoTirada.resultadoDetallado;
 			});
 
+			ComandoToggleExistenciaTirada = new Comando(() =>
+			{
+
+			});
+
 			ComandoSalir = new Comando(() =>
 			{
 				Resultado = EResultadoViewModel.Aceptar;
