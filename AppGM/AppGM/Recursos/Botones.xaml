@@ -179,7 +179,7 @@
                     <!-- Cuando el cursor esta sobre el boton cambiar el color del borde -->
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="border" Property="BorderBrush" Value="Aqua"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource Tema.Verde}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
 
@@ -193,7 +193,7 @@
     <!-- Botones de la barra derecha del menu principal del rol -->
     <Style TargetType="{x:Type Button}" x:Key="BotonMenuRol">
 
-        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Foreground" Value="{StaticResource Tema.Verde}"/>
         <Setter Property="Padding" Value="5 10"/>
         <Setter Property="Background" Value="Transparent"/>
 
@@ -228,7 +228,7 @@
 
                             <!-- Cambiamos el color del fondo -->
                             <MultiTrigger.Setters>
-                                <Setter TargetName="border" Property="Background" Value="Aqua"/>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource Tema.Verde}"/>
                             </MultiTrigger.Setters>
 
                         </MultiTrigger>
@@ -397,6 +397,22 @@
             <!-- Cuando se hace click sobre el boton, cambia su imagen -->
             <Trigger Property="IsPressed" Value="True">
                 <Setter Property="Content" Value="{StaticResource ImagenBotonFlechitaDerechaClick}"/>
+            </Trigger>
+
+        </Style.Triggers>
+
+    </Style>
+
+    <!-- Boton animado para las flechas de rotacion de cartas roles en el menu princiapl -->
+    <Style x:Key="BotonAgregar" TargetType="{x:Type Button}" BasedOn="{StaticResource BotonConFondoTransparente}">
+
+        <Setter Property="Content" Value="{StaticResource ImagenBotonAgregar}"/>
+
+        <Style.Triggers>
+
+            <!-- Cuando se hace click sobre el boton, cambia su imagen -->
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Content" Value="{StaticResource ImagenBotonAgregarClick}"/>
             </Trigger>
 
         </Style.Triggers>

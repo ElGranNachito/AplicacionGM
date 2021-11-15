@@ -114,7 +114,7 @@ namespace AppGM.Core
             
             administradorDeCombate = _administradorDeCombate;
 
-            if (Participantes.IsNullOrEmpty())
+            if (Participantes.IsNullOrEmpty() && !_administradorDeCombate.ControladoresParticipantes.IsNullOrEmpty())
             {
                 for (int i = 0; i < administradorDeCombate.ControladoresParticipantes.Count; ++i)
                     Participantes.Add(new ViewModelParticipante(administradorDeCombate.ControladoresParticipantes[i],this));

@@ -11,6 +11,7 @@
     
     <system:Double x:Key="TamañoFontMuyPequeño">10</system:Double>
     <system:Double x:Key="TamañoFontPequeño">10</system:Double>
+    <system:Double x:Key="TamañoFontMedioPequeño">13</system:Double>
     <system:Double x:Key="TamañoFontMediano">15</system:Double>
     <system:Double x:Key="TamañoFontGrande">20</system:Double>
     <system:Double x:Key="TamañoFontMuyGrande">25</system:Double>

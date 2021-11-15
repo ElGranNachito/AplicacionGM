@@ -305,8 +305,7 @@ namespace AppGM.Core
         /// </summary>
         private static void CrearViewModelsRol()
         {
-	        Kernel.Bind<ViewModelMenuSeleccionTipoFicha>().ToConstant(new ViewModelMenuSeleccionTipoFicha());
-            Kernel.Bind<ViewModelListaFichasVistaFichas>().ToConstant(new ViewModelListaFichasVistaFichas());
+	        Kernel.Bind<ViewModelMenuSeleccionFicha>().ToConstant(new ViewModelMenuSeleccionFicha());
             Kernel.Bind<ViewModelSolapaSeccionMapas>()    .ToConstant(new ViewModelSolapaSeccionMapas());
             Kernel.Bind<ViewModelMapaPrincipal>()         .ToConstant(new ViewModelMapaPrincipal(DatosRolSeleccionado.Mapas[0], DatosRolSeleccionado.Climas[0]));
             Kernel.Bind<ViewModelMenuSeleccionCombate>()  .ToConstant(new ViewModelMenuSeleccionCombate(DatosRolSeleccionado.CombatesActivos));
@@ -337,8 +336,7 @@ namespace AppGM.Core
         /// </summary>
         private static void DesatarViewModelsRol()
         {
-            Kernel.Unbind<ViewModelMenuSeleccionTipoFicha>();
-            Kernel.Unbind<ViewModelListaFichasVistaFichas>();
+            Kernel.Unbind<ViewModelMenuSeleccionFicha>();
             Kernel.Unbind<ViewModelMapaPrincipal>();
             Kernel.Unbind<ViewModelClimaHorario>();
             Kernel.Unbind<ViewModelMenuSeleccionCombate>();

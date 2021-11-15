@@ -34,6 +34,16 @@ namespace AppGM.Core
         public EDiaSemana DiaSemana { get; set; }
 
         /// <summary>
+        /// Hora del rol.
+        /// </summary>
+        public int Hora { get; set; }
+
+        /// <summary>
+        /// Minuto del rol.
+        /// </summary>
+        public int Minuto { get; set; }
+
+        /// <summary>
         /// Clave foranea que referencia al <see cref="ModeloRol"/> al que pertenece este clima-horario
         /// </summary>
         [ForeignKey(nameof(RolAlQuePertenece))]

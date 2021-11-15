@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Input;
 using AppGM.Core;
 
 namespace AppGM
@@ -7,18 +8,36 @@ namespace AppGM
     /// <summary>
     /// View model para un item en un ItemControl que contiene datos basicos de una ficha de un personaje
     /// </summary>
-    public class ViewModelFichaPersonaje : ViewModel
+    public class ViewModelFichaPersonaje : ViewModelConResultado<ViewModelFichaPersonaje>
     {
         #region Miembros
 
         // Campos ---
 
 
+        /// <summary>
+        /// Controlador del personaje.
+        /// </summary>
         private ControladorPersonaje personaje;
 
 
         // Propiedades ---
 
+
+        /// <summary>
+        /// Comando que se ejecuta cuando el usuario presiona el menu item 'Ver ficha'
+        /// </summary>
+        public ICommand ComandoVerFicha { get; set; }
+
+        /// <summary>
+        /// Comando que se ejecuta cuando el usuario presiona el menu item 'Editar'
+        /// </summary>
+        public ICommand ComandoEditar { get; set; }
+
+        /// <summary>
+        /// Comando que se ejecuta cuando el usuario presiona el menu item 'Eliminar'
+        /// </summary>
+        public ICommand ComandoEliminar { get; set; }
 
         /// <summary>
         /// Vida maxima del personaje.
@@ -171,6 +190,11 @@ namespace AppGM
         public int Peso => ((ModeloPersonajeJugable) personaje.modelo).Caracteristicas.Peso;
 
         /// <summary>
+        /// Imagen del personaje.
+        /// </summary>
+        public byte[] Imagen => personaje.modelo.Imagen;
+
+        /// <summary>
         /// Peso maximo que puede cargar el personaje.
         /// </summary>
         public decimal PesoMaximoCargable => personaje.modelo.PesoMaximoCargable;
@@ -184,6 +208,11 @@ namespace AppGM
         /// Indica si la ficha fue seleccionada.
         /// </summary>
         public bool EstaSeleccionada { get; set; }
+
+        /// <summary>
+        /// Nombre del personaje.
+        /// </summary>
+        public string Nombre => personaje.modelo.Nombre;
 
         /// <summary>
         /// Puede ser un personaje Master, Servant, Invocacion, o NPC
@@ -240,6 +269,11 @@ namespace AppGM
         /// </summary>
         public string RangoNP => Enum.GetName(((ModeloServant)personaje.modelo).RangoNP);
 
+        /// <summary>
+        /// VM del inventario del personaje.
+        /// </summary>
+        public ViewModelInventario Inventario { get; set; }
+
         #endregion
 
         #region Constructores
@@ -252,19 +286,84 @@ namespace AppGM
         {
             personaje = _personaje;
 
+            Inventario = new ViewModelInventario(personaje.modelo, personaje);
+
             ModificadorStr = Helpers.Juego.ObtenerModificadorStat(Str);
             ModificadorAgi = Helpers.Juego.ObtenerModificadorStat(Agi);
             ModificadorEnd = Helpers.Juego.ObtenerModificadorStat(End);
             ModificadorInt = Helpers.Juego.ObtenerModificadorStat(Int);
             ModificadorLck = Helpers.Juego.ObtenerModificadorStat(Lck);
             ModificadorChr = Helpers.Juego.ObtenerModificadorStat(Chr);
+
+            ComandoVerFicha = new Comando(VerFicha);
+            ComandoEditar = new Comando(EditarPersonaje);
+            ComandoEliminar = new Comando(EliminarPersonaje);
         }
 
         #endregion
 
         #region Funciones
 
-        
+        /// <summary>
+        /// Funcion llamada para ver la ficha completa de un personaje.
+        /// </summary>
+        public async void VerFicha()
+        {
+            await SistemaPrincipal.MostrarMensajeAsync(this, $"Ficha {Nombre}", false, 450, 800);
+        }
+
+        /// <summary>
+        /// Funcion llamada para editar a un personaje.
+        /// </summary>
+        public async void EditarPersonaje()
+        { 
+            SistemaPrincipal.MostrarViewModelCreacionEdicion<ViewModelCreacionEdicionPersonaje, ModeloPersonaje, ControladorPersonaje>(
+                await new ViewModelCreacionEdicionPersonaje(async vm =>
+                {
+                    if (vm.Resultado.EsAceptarOFinalizar())
+                    {
+                        var nuevoPersonaje = vm.CrearControlador();
+
+                        if (vm.EstaEditando)
+                        {
+                            var resultado = await nuevoPersonaje.modelo.CrearCopiaProfundaEnSubtipoAsync(vm.ModeloSiendoEditado.GetType(), vm.ModeloSiendoEditado);
+
+                            await resultado.modelosCreadosEliminados.GuardarYEliminarModelosAsync();
+                        }
+                        else
+                        {
+                            await SistemaPrincipal.GuardarDatosAsync();
+                        }
+                    }
+
+                }, personaje).Inicializar());
+        }
+
+        /// <summary>
+        /// Funcion llamada para eliminar a un personaje.
+        /// </summary>
+        public void EliminarPersonaje()
+        {
+            switch (personaje.modelo.TipoPersonaje)
+            {
+                case ETipoPersonaje.Master:
+                    SistemaPrincipal.ObtenerInstancia<ViewModelMenuSeleccionFicha>().Masters.Remove(this);
+                    break;
+                case ETipoPersonaje.Servant:
+                    SistemaPrincipal.ObtenerInstancia<ViewModelMenuSeleccionFicha>().Servants.Remove(this);
+                    break;
+                case ETipoPersonaje.Invocacion:
+                    SistemaPrincipal.ObtenerInstancia<ViewModelMenuSeleccionFicha>().Invocaciones.Remove(this);
+                    break;
+                case ETipoPersonaje.NPC:
+                    SistemaPrincipal.ObtenerInstancia<ViewModelMenuSeleccionFicha>().NPCs.Remove(this);
+                    break;
+            }
+
+            personaje.Eliminar();
+
+            SistemaPrincipal.GuardarDatosAsync();
+        }
 
         #endregion
     }

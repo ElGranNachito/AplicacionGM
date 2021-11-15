@@ -7,33 +7,28 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="300">
 
-    <!-- Control para la seleccion de un tipo de fichas, es decir
-    fichas pertenecientes a cierto tipo de personaje-->
-    <UserControl.Template>
-        <ControlTemplate TargetType="{x:Type UserControl}">
-            <Grid Background="Beige">
+    <!-- Control de seleccion de fichas listadas -->
+    <Grid>
 
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
+        <!-- Lista de fichas de personaje -->
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            
+            <ItemsControl ItemsSource="{Binding }">
+                
+                <ItemsControl.ItemTemplate>
+                    
+                    <DataTemplate>
+                        
+                        <local:UserControlFichaItem/>
 
-                <!-- Contenido a mostrar en el bloque superior del control -->
-                <ContentPresenter Grid.Row="0"/>
+                    </DataTemplate>
 
-                <!-- Informacion de este tipo de fichas -->
-                <StackPanel Grid.Row="1">
-                    <TextBlock Text="Un poco de info general"
-                               TextWrapping="Wrap"
-                               Style="{StaticResource TextBlockBase}"
-                               />
-                    <TextBlock Text="Info info"
-                               TextWrapping="Wrap"
-                               Style="{StaticResource TextBlockBase}"
-                               />
-                </StackPanel>
-            </Grid>
-        </ControlTemplate>
-    </UserControl.Template>
+                </ItemsControl.ItemTemplate>
+
+            </ItemsControl>
+
+        </ScrollViewer>
+
+    </Grid>
 
 </UserControl>

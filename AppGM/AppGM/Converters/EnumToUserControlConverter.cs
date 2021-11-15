@@ -77,8 +77,6 @@ namespace AppGM
                             return null;
                         case EMenuRol.SeleccionTipoFichas:
                             return new UserControlMenuSeleccionTipoFicha();
-                        case EMenuRol.VistaFichas:
-                            return new UserControlListaFichasViewFichas();
                         case EMenuRol.Mapas:
                             return new UserControlMapa
                             {
