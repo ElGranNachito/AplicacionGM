@@ -15,30 +15,30 @@ namespace AppGM.Core
 		/// <summary>
 		/// Cadena que contiene los resultados de todos los dados lanzados en la tirada
 		/// </summary>
-		public readonly string cadena;
+		public readonly string resultadoDetallado;
 
 		/// <summary>
 		/// Constructor
 		/// </summary>
 		/// <param name="_resultado">Resultado de la tirada</param>
-		/// <param name="_cadena">Resultados de todos los dados</param>
-		public ResultadoTirada(int _resultado, string _cadena)
+		/// <param name="_resultadoDetallado">Resultados de todos los dados</param>
+		public ResultadoTirada(int _resultado, string _resultadoDetallado)
 		{
 			resultado = _resultado;
-			cadena    = _cadena;
+			resultadoDetallado    = _resultadoDetallado;
 		}
 
-		public override string ToString() => cadena;
+		public override string ToString() => resultadoDetallado;
 
 		public string ToString(char modo)
 		{
 			switch (modo)
 			{
 				case 'c':
-					return $"{cadena}{Environment.NewLine}Total: {resultado}";
+					return $"{resultadoDetallado}{Environment.NewLine}Total: {resultado}";
 
 				default:
-					return cadena;
+					return resultadoDetallado;
 			}
 		}
 	}

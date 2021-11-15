@@ -91,5 +91,15 @@ namespace AppGM.Core
         /// Slots que contiene este item
         /// </summary>
         public virtual List<ModeloSlot> Slots { get; set; } = new List<ModeloSlot>();
+
+        /// <summary>
+        /// Historial del daño infligido por este item
+        /// </summary>
+        public virtual List<ModeloInfligidorDaño> HistorialDañoInfligido { get; set; } = new List<ModeloInfligidorDaño>();
+
+        /// <summary>
+        /// Historial del daño recibido por este item
+        /// </summary>
+        public virtual List<ModeloDañable> HistorialDañoRecibido { get; set; } = new List<ModeloDañable>();
     }
 }

@@ -469,6 +469,57 @@ namespace AppGM.Core
             return sBuilder.AppendJoin(", ", flagsActivas).ToString();
         }
 
+        /// <summary>
+        /// Obtiene el <see cref="Type"/> del modelo representado por un <see cref="ETipoDañable"/>
+        /// </summary>
+        /// <param name="tipoDañable">Valor de <see cref="ETipoDañable"/></param>
+        /// <returns> <see cref="Type"/> del modelo representado por <paramref name="tipoDañable"/></returns>
+        public static Type ObtenerTipoModelo(this ETipoDañable tipoDañable)
+        {
+	        switch (tipoDañable)
+	        {
+                case ETipoDañable.Item:
+	                return typeof(ModeloItem);
+
+                case ETipoDañable.Slot:
+	                return typeof(ModeloSlot);
+
+                case ETipoDañable.ParteDelCuerpo:
+	                return typeof(ModeloParteDelCuerpo);
+
+                case ETipoDañable.Personaje:
+	                return typeof(ModeloPersonaje);
+
+                default:
+                    SistemaPrincipal.LoggerGlobal.Log($"{nameof(tipoDañable)}({tipoDañable}) valor no soportado", ESeveridad.Error);
+	                return null;
+	        }
+        }
+
+        /// <summary>
+        /// Obtiene el <see cref="Type"/> del modelo representado por un <see cref="ETipoInfligidorDaño"/>
+        /// </summary>
+        /// <param name="tipoInfligidorDaño">Valor de <see cref="ETipoInfligidorDaño"/></param>
+        /// <returns> <see cref="Type"/> del modelo representado por <paramref name="tipoInfligidorDaño"/></returns>
+        public static Type ObtenerTipoModelo(this ETipoInfligidorDaño tipoInfligidorDaño)
+        {
+	        switch (tipoInfligidorDaño)
+	        {
+                case ETipoInfligidorDaño.Personaje:
+	                return typeof(ModeloPersonaje);
+
+                case ETipoInfligidorDaño.Habilidad:
+	                return typeof(ModeloHabilidad);
+
+                case ETipoInfligidorDaño.Item:
+	                return typeof(ModeloItem);
+
+                default:
+	                SistemaPrincipal.LoggerGlobal.Log($"{nameof(tipoInfligidorDaño)}({tipoInfligidorDaño}) valor no soportado", ESeveridad.Error);
+	                return null;
+            }
+        }
+
         public static bool EsAceptarOFinalizar(this EResultadoViewModel resultado) => resultado is EResultadoViewModel.Aceptar or EResultadoViewModel.Finalizar;
     }
 }

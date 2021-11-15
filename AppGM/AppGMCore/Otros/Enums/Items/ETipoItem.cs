@@ -36,6 +36,11 @@ namespace AppGM.Core
 		/// <summary>
 		/// Un item con usos limitados
 		/// </summary>
-		Consumible = 1<<5
+		Consumible = 1<<5,
+
+		/// <summary>
+		/// Abarca todos los tipos de item
+		/// </summary>
+		TODOS = Item | Arma | Defensivo | Ropa | MysticCode | Consumible
 	}
 }

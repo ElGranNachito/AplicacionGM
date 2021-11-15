@@ -111,17 +111,9 @@ namespace AppGM.Core
     #endregion
 
     /// <summary>
-    /// Representa una entidad que puede ser dañada
-    /// </summary>
-    public interface IDañable
-    {
-        void SufrirDaño(int cantidad, ETipoDeDaño ETipo, ControladorPersonaje instigador);
-    }
-
-    /// <summary>
     /// Controlador de un personaje
     /// </summary>
-    public class ControladorPersonaje : Controlador<ModeloPersonaje>, IDañable
+    public class ControladorPersonaje : Controlador<ModeloPersonaje>, IDañable, IInfligidorDaño
     {
         #region Propiedades
 
@@ -136,11 +128,6 @@ namespace AppGM.Core
         /// Items que el personaje tiene en su inventario
         /// </summary>
         public List<ControladorItem> Inventario { get; set; }
-
-        /// <summary>
-        /// Items defensivos que el personaje tiene equipados
-        /// </summary>
-        public List<ControladorDefensivo> Armadura { get; set; }
 
         /// <summary>
         /// Alianzas a las que pertenece el personaje
@@ -330,6 +317,10 @@ namespace AppGM.Core
         /// </summary>
         public event dCurarse             OnRecibirCuracion   = delegate { };
 
+        public event IInfligidorDaño.dInfligirDaño OnInfligirDaño = delegate{};
+
+        public event IDañable.dDañado OnDañado;
+
         #endregion
 
         #region Constructores
@@ -373,18 +364,15 @@ namespace AppGM.Core
             ModificarVida(cantidad);
         }
 
-        /// <summary>
-        /// Realiza daño al personaje
-        /// </summary>
-        /// <param name="cantidad">Cantidad de daño</param>
-        /// <param name="eTipo">Tipo del daño realizado</param>
-        /// <param name="instigador">Controlador del personaje que realiza el daño</param>
-        public void SufrirDaño(int cantidad, ETipoDeDaño eTipo, ControladorPersonaje instigador)
+        
+        public void Dañar(ModeloArgumentosDaño argsDaño, SortedList<int, IDañable> subObjetivos = null)
         {
-            //Llamamos el evento de sufrir daño antes por si algunos de los metodos subscritos modifica el daño realizado
-            OnSufrirDaño(ref cantidad, eTipo, this, instigador);
+	        throw new NotImplementedException();
+        }
 
-            ModificarVida(-cantidad);
+        public void InfligirDaño(IDañable objetivo, ModeloArgumentosDaño argsDaño, SortedList<int, IDañable> subObjetivos = null)
+        {
+	        throw new NotImplementedException();
         }
 
         /// <summary>
@@ -571,7 +559,7 @@ namespace AppGM.Core
 
         public override bool Equals(string cadena)
         {
-	        return Regex.IsMatch(modelo.Nombre, $"*{cadena}*");
+	        return Regex.IsMatch(modelo.Nombre, $".*{cadena}.*");
         }
 
         public override ViewModelItemListaBase CrearViewModelItem()

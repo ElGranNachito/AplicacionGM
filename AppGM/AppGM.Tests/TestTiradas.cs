@@ -94,7 +94,7 @@ namespace AppGM.Tests
 				multiplicador = multiplicador,
 				stat = stat,
 				manoUtilizada = manoUtilizada,
-				parametroExtra = parametroExtra
+				argumentoExtra = parametroExtra
 			};
 
 			//Prueba
@@ -144,9 +144,9 @@ namespace AppGM.Tests
 			                                       + especialidad * Constantes.BonoEspecialidad 
 			                                       + Math.Floor(controlador.ObtenerModificadorStat(stat) * Helpers.Juego.ObtenerMultiplicadorManoUsada(manoUtilizada))
 			                                       + mod
-												   + int.Parse(parametroExtra)) * multiplicador);
+												   + int.Parse(argumentoExtra)) * multiplicador);
 
-			int resultadoMaximo = (int)Math.Floor((resultadoMaximoTiradas + especialidad * Constantes.BonoEspecialidad + Math.Floor(controlador.ObtenerModificadorStat(stat) * Helpers.Juego.ObtenerMultiplicadorManoUsada(manoUtilizada)) + int.Parse(parametroExtra) + mod) * multiplicador);
+			int resultadoMaximo = (int)Math.Floor((resultadoMaximoTiradas + especialidad * Constantes.BonoEspecialidad + Math.Floor(controlador.ObtenerModificadorStat(stat) * Helpers.Juego.ObtenerMultiplicadorManoUsada(manoUtilizada)) + int.Parse(argumentoExtra) + mod) * multiplicador);
 
 			var resultado = await ParserTiradas.TryParseAsync(tirada, controlador, ETipoTirada.Daño, stat);
 
@@ -158,7 +158,7 @@ namespace AppGM.Tests
 				multiplicador = multiplicador,
 				stat = stat,
 				manoUtilizada = manoUtilizada,
-				parametroExtra = parametroExtra
+				argumentoExtra = argumentoExtra
 			};
 
 			CoolLogs.Globales.Inicializar<CoolFactory>(ESeveridad.TODOS, "%t-T [%a>%f:%l %s-u]: %m", "LoggerPrincipal", "log");

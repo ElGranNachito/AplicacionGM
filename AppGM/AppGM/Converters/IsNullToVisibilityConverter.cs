@@ -19,4 +19,19 @@ namespace AppGM
 			return value is null ? Visibility.Visible : Visibility.Collapsed;
 		}
 	}
+
+	/// <summary>
+	/// Convierte un objeto a un valor de <see cref="Visibility"/> en base a si dicho objeto es null
+	/// </summary>
+	[ValueConversion(sourceType: typeof(object), targetType: typeof(Visibility), ParameterType = typeof(object))]
+	public class IsNullToVisibilityConverterOcultar : BaseConverter<IsNullToVisibilityConverterOcultar>
+	{
+		public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+		{
+			if (parameter is null)
+				return value is null ? Visibility.Hidden : Visibility.Visible;
+
+			return value is null ? Visibility.Visible : Visibility.Hidden;
+		}
+	}
 }

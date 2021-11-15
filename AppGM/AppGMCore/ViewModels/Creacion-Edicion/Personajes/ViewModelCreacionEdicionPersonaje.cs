@@ -354,6 +354,9 @@ namespace AppGM.Core
 		            "Seleccionar imagen para personaje", "Formatos de imagen (*.jpg, *.png)|*.jpg;*.png",
 		            SistemaPrincipal.Aplicacion.VentanaActual);
 
+                if(archivoSeleccionado == null)
+                    return;
+
 	            try
 	            {
 		            using BinaryReader bReader =

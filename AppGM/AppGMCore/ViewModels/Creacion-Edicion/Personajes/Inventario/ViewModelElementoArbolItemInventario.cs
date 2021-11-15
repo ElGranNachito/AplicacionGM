@@ -34,6 +34,8 @@ namespace AppGM.Core
 
 		public string DescripcionSlot => Contenido.ToString();
 
+		public ETipoItem TiposDeItemQueMostrar { get; set; }
+
 		public override ControladorSlot Contenido
 		{
 			get => mContenido;
@@ -57,9 +59,11 @@ namespace AppGM.Core
 		public ViewModelElementoArbolItemInventario(
 			ViewModelVistaArbol<ViewModelElementoArbol<ControladorSlot>, ControladorSlot> _raiz,
 			ViewModelElementoArbol<ControladorSlot> _padre,
-			ControladorSlot _slot) : base(_raiz, _padre, _slot)
+			ControladorSlot _slot,
+			ETipoItem _tiposDeItemQueMostrar) : base(_raiz, _padre, _slot)
 		{
 			mContenido = _slot;
+			TiposDeItemQueMostrar = _tiposDeItemQueMostrar;
 
 			mContenido.modelo.OnModeloEliminado += m =>
 			{
@@ -84,7 +88,7 @@ namespace AppGM.Core
 			{
 				foreach (var slot in Contenido.ParteDelCuerpoAlmacenada.Slots)
 				{
-					Hijos.Add(new ViewModelElementoArbolItemInventario(Raiz, this, slot));
+					Hijos.Add(new ViewModelElementoArbolItemInventario(Raiz, this, slot, TiposDeItemQueMostrar));
 				}
 			}
 
@@ -92,7 +96,7 @@ namespace AppGM.Core
 			{
 				foreach (var controladorSlot in item.Slots)
 				{
-					Hijos.Add(new ViewModelElementoArbolItemInventario(Raiz, this, controladorSlot));
+					Hijos.Add(new ViewModelElementoArbolItemInventario(Raiz, this, controladorSlot, TiposDeItemQueMostrar));
 				}
 			}
 		}

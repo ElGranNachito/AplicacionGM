@@ -9,6 +9,14 @@ namespace AppGM.Core
 	{
 		public override ModeloPersonaje ObtenerPersonajeContenedor() => PersonajePortador;
 
+		public int ObtenerProfundidad(int profundidadActual = 0)
+		{
+			if (SlotsQueOcupa.Count > 0)
+				return SlotsQueOcupa[0].ObtenerProfundidad(profundidadActual);
+
+			return profundidadActual;
+		}
+
 		public override IReadOnlyList<ModeloVariableBase> ObtenerVariablesDisponibles()
 		{
 			var variablesDisponibles = new List<ModeloVariableBase>(PersonajePortador.Variables);

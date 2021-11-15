@@ -20,7 +20,7 @@ namespace AppGM.Core
 		/// </summary>
 		/// <param name="_modeloPersonaje">Modelo del personaje a quein pertenece este inventario</param>
 		/// <param name="_controladorPersonaje">Controlador del personaje a quien pertenece este incentario</param>
-		public ViewModelInventario(ModeloPersonaje _modeloPersonaje, ControladorPersonaje _controladorPersonaje)
+		public ViewModelInventario(ModeloPersonaje _modeloPersonaje, ControladorPersonaje _controladorPersonaje, ETipoItem tiposDeItemQueMostrar = ETipoItem.TODOS)
 		{
 			ModeloPersonaje      = _modeloPersonaje;
 			ControladorPersonaje = _controladorPersonaje;
@@ -31,7 +31,7 @@ namespace AppGM.Core
 			{
 				var controladorSlot = SistemaPrincipal.ObtenerControlador<ControladorSlot, ModeloSlot>(s, true);
 
-				return new ViewModelElementoArbolItemInventario(ViewModelVistaInventario, null, controladorSlot);
+				return new ViewModelElementoArbolItemInventario(ViewModelVistaInventario, null, controladorSlot, tiposDeItemQueMostrar);
 			}).Cast<ViewModelElementoArbol<ControladorSlot>>().ToList();
 			
 			ViewModelVistaInventario.Hijos.AddRange(elementosBaseArbol);

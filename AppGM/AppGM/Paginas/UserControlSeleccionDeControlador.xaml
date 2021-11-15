@@ -20,16 +20,39 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <!-- Filtro -->
-            <TextBox
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
 
-                Tag="Filtro"
+                <!-- Filtro -->
+                <TextBox
 
-                Style="{StaticResource TextoDescriptivo}"
+                    Tag="Filtro"
 
-                MinHeight="20"
+                    HorizontalContentAlignment="Center"
+
+                    Margin="0 0 5 0"
+                    MinHeight="20"
+
+                    Style="{StaticResource TextoDescriptivo}"
                 
-                Text="{Binding Filtro}"/>
+                    Text="{Binding Filtro}"/>
+
+                <Button
+                    Grid.Column="1"
+                    
+                    MinHeight="20"
+                    MinWidth="20">
+
+                    <Button.Background>
+                        <ImageBrush
+                            ImageSource="../Media/Imagenes/Lupita.png"/>
+                    </Button.Background>
+                </Button>
+
+            </Grid>
 
             <!-- Contenedor de la lista de concordancias -->
             <Border

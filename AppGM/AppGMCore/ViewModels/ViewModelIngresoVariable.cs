@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Linq;
 
 namespace AppGM.Core
 {
@@ -269,7 +270,7 @@ namespace AppGM.Core
 		/// <returns>Controlador seleccionado por el usuario</returns>
 		private async Task<ViewModelItemListaBase> SeleccionarControlador()
 		{
-			var vmSeleccionControlador = new ViewModelSeleccionDeControlador(
+			var vmSeleccionControlador = new ViewModelSeleccionDeControlador<ControladorBase>(
 				SistemaPrincipal.ObtenerControladores(TipoVariable, TipoVariable == typeof(ControladorItem)));
 
 			var resultado = await SistemaPrincipal.MostrarMensajeAsync(vmSeleccionControlador, "Seleccionar entidad", true, 500, 450);

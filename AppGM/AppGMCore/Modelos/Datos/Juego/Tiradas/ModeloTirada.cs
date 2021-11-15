@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AppGM.Core
@@ -49,24 +50,29 @@ namespace AppGM.Core
         /// Modelo del la funcion que contiene la tirada
         /// </summary>
         public virtual ModeloFuncion FuncionContenedora { get; set; }
+
+        /// <summary>
+        /// Historial de lanzamientos de esta tirada
+        /// </summary>
+        public virtual List<ModeloHistorialTirada> Historial { get; set; }
     }
 
     /// <summary>
     /// Tirada con un numero de caras y dados personalizado
     /// </summary>
-    public class ModeloTiradaVariable : ModeloTiradaBase
+    public class ModeloTiradaPersonalizada : ModeloTiradaBase
     {
         /// <summary>
         /// Cadena que representa la tirada
         /// </summary>
-        [MaxLength(1000)]
+        [MaxLength(256)]
         [Required]
 	    public string Tirada { get; set; }
 
         /// <summary>
         /// Descripcion de la variable extra que requiere la tirada
         /// </summary>
-        [MaxLength(500)]
+        [MaxLength(512)]
         public string DescripcionVariableExtra { get; set; }
     }
 
@@ -84,11 +90,16 @@ namespace AppGM.Core
     /// <summary>
     /// Tirada de daño
     /// </summary>
-    public class ModeloTiradaDeDaño : ModeloTiradaVariable
+    public class ModeloTiradaDeDaño : ModeloTiradaPersonalizada
     {
 	    /// <summary>
         /// Tipo de daño que aplica la tirada
         /// </summary>
         public ETipoDeDaño TipoDeDaño { get; set; }
+
+	    /// <summary>
+	    /// Stat a tener en cuenta durante la tirada
+	    /// </summary>
+	    public EStat StatDeLaQueDepende { get; set; }
     }
 }

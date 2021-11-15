@@ -37,7 +37,7 @@ namespace AppGM
                 case ViewModelCreacionDeVariable vm:
 	                return new UserControlCreacionVariable {DataContext = vm};
 
-                case ViewModelSeleccionDeControlador vm:
+                case ViewModelSeleccionDeControladorBase vm:
 	                return new UserControlSeleccionDeControlador {DataContext = vm};
 
                 case ViewModelCreacionEdicionDeTirada vm:
@@ -66,6 +66,9 @@ namespace AppGM
 
                 case ViewModelVistaFuentesDeDaño vm:
 	                return new UserControlVistaFuentesDeDaño {DataContext = vm};
+
+                case ViewModelRealizarTirada vm:
+	                return new UserControlRealizarTirada {DataContext = vm};
 
 	            //Globo para mostrar informacion de un rol
                 case ViewModelContenidoGloboInfoRol vm:

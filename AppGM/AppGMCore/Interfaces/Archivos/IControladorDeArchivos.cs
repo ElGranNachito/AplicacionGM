@@ -28,6 +28,11 @@
         string DirectorioImagenes { get; set; }
 
         /// <summary>
+        /// Directorio donde se encuentran las imagenes utilizadas por la aplicacion
+        /// </summary>
+        string DirectorioImagenesTiradas { get; set; }
+
+        /// <summary>
         /// Directorio donde se encuentran los controles de la aplicacion 
         /// </summary>
         string DirectorioControles { get; set; }

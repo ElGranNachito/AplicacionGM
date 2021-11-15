@@ -149,5 +149,15 @@ namespace AppGM.Core
         /// Handlers vinculados a eventos del controlador de este persoanje
         /// </summary>
         public virtual List<TIFuncionHandlerEvento<ModeloPersonaje>> HandlersEventos { get; set; } = new List<TIFuncionHandlerEvento<ModeloPersonaje>>();
+
+        /// <summary>
+        /// Historial de daño infligido por este personaje
+        /// </summary>
+        public virtual List<ModeloInfligidorDaño> HistorialDañoInfligido { get; set; } = new List<ModeloInfligidorDaño>();
+
+        /// <summary>
+        /// Historial de daño recibido por este personaje
+        /// </summary>
+        public virtual List<ModeloDañable> HistorialDañoRecibido { get; set; } = new List<ModeloDañable>();
     }
 }

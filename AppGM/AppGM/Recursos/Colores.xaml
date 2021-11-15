@@ -110,6 +110,23 @@
     <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.Boton.Texto.Seleccionado" Color="{StaticResource Tema.Color.Verde}"/>
     <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.Boton.Texto.Deshabilitado" Color="{StaticResource Tema.Color.Verde}"/>
 
+    <!--...............................................TAB_CONTROL....................................................-->
+
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.TabItem.Fondo.Estatico" Color="{StaticResource Tema.Color.Verde}"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.TabItem.Fondo.Seleccionado" Color="{StaticResource Tema.Color.VerdeOscuro}"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.TabItem.Fondo.MouseOver" Color="{StaticResource Tema.Color.Verde}"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.TabItem.Fondo.Deshabilitado" Color=" Gray"/>
+
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.TabItem.Borde.Estatico" Color="{StaticResource Tema.Color.BlancoVerde}"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.TabItem.Borde.Seleccionado" Color="{StaticResource Tema.Color.BlancoVerde}"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.TabItem.Borde.MouseOver" Color="{StaticResource Tema.Color.BlancoVerde}"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.TabItem.Borde.Deshabilitado" Color="Gray"/>
+
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.TabItem.Texto.Estatico" Color="{StaticResource Tema.Color.VerdeOscuro}"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.TabItem.Texto.Seleccionado" Color="{StaticResource Tema.Color.Verde}"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.TabItem.Texto.MouseOver" Color="{StaticResource Tema.Color.VerdeOscuro}"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.TabItem.Texto.Deshabilitado" Color=" Gray"/>
+
     <!--......................................UNIDADES_INGRESO_POSICION...........................................-->
 
     <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.UnidadMapa.BordeIngresoPosicion" Color="#363636"/>

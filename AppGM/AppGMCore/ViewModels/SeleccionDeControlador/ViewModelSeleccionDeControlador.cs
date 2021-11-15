@@ -8,14 +8,16 @@ namespace AppGM.Core
 	/// <summary>
 	/// Viewmodel que representa un control cuyo proposito es la seleccion de un <see cref="ControladorBase"/>
 	/// </summary>
-	public class ViewModelSeleccionDeControlador : ViewModelConResultado<ViewModelSeleccionDeControlador>
+	public class ViewModelSeleccionDeControlador<TControlador> : ViewModelSeleccionDeControladorBase
+
+		where TControlador: ControladorBase
 	{
 		#region Eventos
 
 		/// <summary>
 		/// Evento disparado cuando el usuario selecciona un item
 		/// </summary>
-		public event Action<ViewModelItemListaBase, ControladorBase> OnControladorSeleccionado = delegate { };  
+		public event Action<ViewModelItemListaBase, TControlador> OnControladorSeleccionado = delegate { };  
 
 		#endregion
 
@@ -31,7 +33,7 @@ namespace AppGM.Core
 		/// <summary>
 		/// Contiene todos los controladores disponibles
 		/// </summary>
-		private List<ControladorBase> mControladoresDisponibles;
+		private List<TControlador> mControladoresDisponibles;
 
 		//---------------------------------PROPIEDADES----------------------------------------
 
@@ -68,20 +70,20 @@ namespace AppGM.Core
 		}
 
 		/// <summary>
+		/// Lista de solo lectura de los controladores disponibles
+		/// </summary>
+		public IReadOnlyList<TControlador> ControladoresDisponibles => mControladoresDisponibles.AsReadOnly();
+
+		/// <summary>
 		/// Contiene los vms de los controladores que concuerdan con el <see cref="Filtro"/>
 		/// </summary>
 		public ViewModelListaDeElementos<ViewModelItemListaBase> ControladoresConcordantes { get; set; } =
 			new ViewModelListaDeElementos<ViewModelItemListaBase>();
 
 		/// <summary>
-		/// Contiene el vm del controlador actualmente seleccionado
-		/// </summary>
-		public ViewModelItemListaBase ItemSeleccionado { get; set; }
-
-		/// <summary>
 		/// Controlador seleccionado
 		/// </summary>
-		public ControladorBase ControladorSeleccionado => ItemSeleccionado.Controlador;
+		public TControlador ControladorSeleccionado => (TControlador)ItemSeleccionado?.Controlador;
 
 		/// <summary>
 		/// Comando que se ejecuta cuando el usuario presiona el boton para seleccion un controlador
@@ -96,7 +98,7 @@ namespace AppGM.Core
 		/// Constructor
 		/// </summary>
 		/// <param name="_controladoresDisponibles"></param>
-		public ViewModelSeleccionDeControlador(List<ControladorBase> _controladoresDisponibles)
+		public ViewModelSeleccionDeControlador(List<TControlador> _controladoresDisponibles)
 		{
 			mControladoresDisponibles = _controladoresDisponibles;
 
@@ -113,8 +115,6 @@ namespace AppGM.Core
 			{
 				await SistemaPrincipal.MostrarMensajeAsync(this, "Seleccionar Controlador", true, 400, 300);
 
-				ControladoresConcordantes.Elementos.Clear();
-
 				if (ItemSeleccionado != null && Resultado == EResultadoViewModel.Aceptar)
 					OnControladorSeleccionado(ItemSeleccionado, ControladorSeleccionado);
 			});
@@ -130,6 +130,9 @@ namespace AppGM.Core
 		/// <param name="controlador">Controlador que seleccionar</param>
 		public void SeleccionarControlador(ControladorBase controlador)
 		{
+			if(controlador == null)
+				return;
+
 			var nuevoItemSeleccionado = mControladoresDisponibles.Find(c => c == controlador);
 
 			ItemSeleccionado = nuevoItemSeleccionado.CrearViewModelItem();

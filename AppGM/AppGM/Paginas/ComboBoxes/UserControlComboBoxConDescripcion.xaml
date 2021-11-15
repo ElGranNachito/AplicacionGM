@@ -15,6 +15,9 @@
 
         Template="{StaticResource ComboBoxTemplate}"
 
+        VerticalContentAlignment="Center"
+
+        IsEnabled="{Binding EstaHabilitada}"
         ItemsSource="{Binding ValoresPosibles.Elementos}"
         SelectedValue="{Binding ValorSeleccionado}">
 

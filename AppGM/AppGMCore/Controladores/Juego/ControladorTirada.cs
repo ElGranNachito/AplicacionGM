@@ -51,8 +51,8 @@ namespace AppGM.Core
 			        return new ControladorTiradaStat(t);
                 case ModeloTiradaDeDaño t:
 			        return new ControladorTiradaDaño(t);
-		        case ModeloTiradaVariable t:
-	                return new ControladorTiradaVariable(t);
+		        case ModeloTiradaPersonalizada t:
+	                return new ControladorTiradaPersonalizada(t);
                 default:
                 {
                     SistemaPrincipal.LoggerGlobal.Log($"Tipo de {nameof(modeloTirada)}({modeloTirada.GetType()}) no soportado!", ESeveridad.Error);
@@ -97,7 +97,7 @@ namespace AppGM.Core
 	        return Resultado.ToString();
         }
 
-		#region Implementacion Interfaz
+        #region Implementacion Interfaz
 
 		public int Resultado { get; set; }
 
@@ -132,7 +132,7 @@ namespace AppGM.Core
 
         public override ViewModelItemListaBase CrearViewModelItem()
         {
-            if(this is ControladorTiradaVariable tiradaVariable)
+            if(this is ControladorTiradaPersonalizada tiradaVariable)
                 return new ViewModelTiradaItem(tiradaVariable);
 
             SistemaPrincipal.LoggerGlobal.Log($"Se intento crear un {nameof(ViewModelTiradaItem)} para una tirada de stat", ESeveridad.Error);
@@ -144,16 +144,16 @@ namespace AppGM.Core
     /// <summary>
     /// Tirada con un numero de caras y dados personalizado
     /// </summary>
-    public class ControladorTiradaVariable : ControladorTirada<ModeloTiradaVariable>
+    public class ControladorTiradaPersonalizada : ControladorTirada<ModeloTiradaPersonalizada>
     {
 		#region Constructor
 
-		public ControladorTiradaVariable(ModeloTiradaVariable _modeloTiradaPersonalizada)
+		public ControladorTiradaPersonalizada(ModeloTiradaPersonalizada _modeloTiradaPersonalizada)
 			:base(_modeloTiradaPersonalizada) {} 
 
 		#endregion
 
-		#region Funciones
+		#region Metodos
 
 		public override void RealizarTirada()
         {
@@ -170,6 +170,11 @@ namespace AppGM.Core
 	        }*/
         }
 
+		public override ViewModelItemListaBase CrearViewModelItem()
+		{
+			return new ViewModelTiradaItem(this);
+		}
+
         #endregion
     }
 
@@ -185,7 +190,7 @@ namespace AppGM.Core
 
 		#endregion
 
-		#region Funciones
+		#region Metodos
 
 		public override void RealizarTirada(object p)
         {
@@ -198,7 +203,7 @@ namespace AppGM.Core
     /// <summary>
     /// Tirada de daño
     /// </summary>
-    public class ControladorTiradaDaño : ControladorTirada<ModeloTiradaDeDaño>
+    public class ControladorTiradaDaño : ControladorTiradaPersonalizada
     {
         #region Constructor
 
@@ -207,7 +212,7 @@ namespace AppGM.Core
 
         #endregion
 
-        #region Funciones
+        #region Metodos
 
         public override void RealizarTirada(object p)
         {

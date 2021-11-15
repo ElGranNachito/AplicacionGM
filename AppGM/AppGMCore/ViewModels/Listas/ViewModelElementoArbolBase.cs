@@ -28,6 +28,11 @@
 		/// </summary>
 		public virtual bool EstaExpandido { get; set; }
 
+		/// <summary>
+		/// Indica si este elemento es visible
+		/// </summary>
+		public virtual bool EsVisible { get; set; } = true;
+
 		public virtual int IndiceZ { get; set; }
 
 		public abstract void RemoverDePadre();

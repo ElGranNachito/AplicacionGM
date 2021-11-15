@@ -6,9 +6,9 @@ namespace AppGM.Core
 	/// <summary>
 	/// Representa un <see cref="ModeloTiradaBase"/> en una lista
 	/// </summary>
-	public class ViewModelTiradaItem : ViewModelItemListaControlador<ViewModelTiradaItem, ControladorTiradaVariable>
+	public class ViewModelTiradaItem : ViewModelItemListaControlador<ViewModelTiradaItem, ControladorTiradaPersonalizada>
 	{
-		public ViewModelTiradaItem(ControladorTiradaVariable _controladorTirada)
+		public ViewModelTiradaItem(ControladorTiradaPersonalizada _controladorTirada)
 			:base(_controladorTirada) {}
 
 		protected override void ActualizarCaracteristicas()
@@ -24,7 +24,7 @@ namespace AppGM.Core
 				new ViewModelCaracteristicaItem
 				{
 					Titulo = "Tirada",
-					Valor = ((ModeloTiradaVariable)ControladorGenerico.modelo).Tirada
+					Valor = ((ModeloTiradaPersonalizada)ControladorGenerico.modelo).Tirada
 				},
 
 				new ViewModelCaracteristicaItem

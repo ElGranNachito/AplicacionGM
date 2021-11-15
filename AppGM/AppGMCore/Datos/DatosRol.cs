@@ -21,7 +21,8 @@ namespace AppGM.Core
 		public List<ControladorPersonaje> Servants { get; set; }                     = null;
 		public List<ControladorPersonaje> Masters { get; set; }                      = null;
 		public List<ControladorInvocacion> Invocaciones { get; set; }                = null;
-		public List<ControladorPersonaje> NPCs { get; set; }                         = null; 
+		public List<ControladorPersonaje> NPCs { get; set; }                         = null;
+		public List<ControladorPersonaje> Personajes { get; set; }                   = new List<ControladorPersonaje>();
 		public List<ControladorItem> Items { get; set; }                             = null;
 		public List<ControladorSlot> Slots { get; set; }                             = null;
 		public List<ControladorHabilidad> Perks { get; set; }                        = null;
@@ -150,6 +151,8 @@ namespace AppGM.Core
 					Masters.Add(controladorActual);
 				}
 
+				Personajes.AddRange(Masters);
+
 				Servants = new List<ControladorPersonaje>(servants.Count);
 
 				for (int i = 0; i < servants.Count; ++i)
@@ -158,6 +161,8 @@ namespace AppGM.Core
 
 					Servants.Add(controladorActual);
 				}
+
+				Personajes.AddRange(Servants);
 
 				Mapas = new List<ControladorMapa>(mRolSeleccionado.Mapas.Count);
 

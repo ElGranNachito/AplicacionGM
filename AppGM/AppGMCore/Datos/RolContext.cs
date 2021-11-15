@@ -596,7 +596,7 @@ namespace AppGM.Core
 
 			modelBuilder.Entity<ModeloTiradaBase>().ToTable("Tirada")
 				.HasDiscriminator<int>("Tipo")
-				.HasValue<ModeloTiradaVariable>(1)
+				.HasValue<ModeloTiradaPersonalizada>(1)
 				.HasValue<ModeloTiradaStat>(2)
 				.HasValue<ModeloTiradaDeDaño>(3);
 
@@ -623,6 +623,96 @@ namespace AppGM.Core
 				.HasOne(t => t.FuncionContenedora)
 				.WithMany(p => p.Tiradas)
 				.OnDelete(DeleteBehavior.Cascade);
+
+			#endregion
+
+			#region Historial Daño
+
+			modelBuilder.Entity<ModeloArgumentosDaño>().ToTable("ArgumentosDaño");
+
+			modelBuilder.Entity<ModeloArgumentosDaño>()
+				.HasMany(a => a.Objetivos)
+				.WithOne(d => d.ArgumentosDaño)
+				.OnDelete(DeleteBehavior.Cascade);
+
+			modelBuilder.Entity<ModeloArgumentosDaño>()
+				.HasMany(a => a.InfligidoresDaño)
+				.WithOne(d => d.ArgumentosDaño)
+				.OnDelete(DeleteBehavior.Cascade);
+
+			modelBuilder.Entity<ModeloArgumentosDaño>()
+				.HasOne(a => a.Tirada)
+				.WithOne(h => h.ArgumentosDaño)
+				.OnDelete(DeleteBehavior.Cascade);
+
+			modelBuilder.Entity<ModeloArgumentosDaño>()
+				.HasMany(a => a.FuentesDeDañoAbarcadas)
+				.WithMany(f => f.HistorialDañoCausado);
+
+			#endregion
+
+			#region Historial Tirada
+
+			modelBuilder.Entity<ModeloHistorialTirada>().ToTable("HistorialTirada");
+
+			modelBuilder.Entity<ModeloHistorialTirada>()
+				.HasOne(h => h.TiradaRepresentada)
+				.WithMany(t => t.Historial)
+				.OnDelete(DeleteBehavior.Cascade);
+
+			modelBuilder.Entity<ModeloHistorialTirada>()
+				.HasMany(h => h.InfligidoresDaño);
+
+			modelBuilder.Entity<ModeloHistorialTirada>()
+				.HasMany(h => h.Objetivos);
+
+			#endregion
+
+			#region Infligidor Daño
+
+			modelBuilder.Entity<ModeloInfligidorDaño>().ToTable("InfligidorDaño");
+
+			modelBuilder.Entity<ModeloInfligidorDaño>()
+				.HasOne(i => i.Personaje)
+				.WithMany(p => p.HistorialDañoInfligido)
+				.OnDelete(DeleteBehavior.SetNull);
+
+			modelBuilder.Entity<ModeloInfligidorDaño>()
+				.HasOne(i => i.Habilidad)
+				.WithMany(h => h.HistorialDañoInfligido)
+				.OnDelete(DeleteBehavior.SetNull);
+
+			modelBuilder.Entity<ModeloInfligidorDaño>()
+				.HasOne(i => i.Item)
+				.WithMany(i => i.HistorialDañoInfligido)
+				.OnDelete(DeleteBehavior.SetNull);
+
+
+			#endregion
+
+			#region Dañable
+
+			modelBuilder.Entity<ModeloDañable>().ToTable("Dañable");
+
+			modelBuilder.Entity<ModeloDañable>()
+				.HasOne(d => d.Personaje)
+				.WithMany(d => d.HistorialDañoRecibido)
+				.OnDelete(DeleteBehavior.SetNull);
+
+			modelBuilder.Entity<ModeloDañable>()
+				.HasOne(i => i.Item)
+				.WithMany(h => h.HistorialDañoRecibido)
+				.OnDelete(DeleteBehavior.SetNull);
+
+			modelBuilder.Entity<ModeloDañable>()
+				.HasOne(i => i.ParteDelCuerpo)
+				.WithMany(i => i.HistorialDañoRecibido)
+				.OnDelete(DeleteBehavior.SetNull);
+
+			modelBuilder.Entity<ModeloDañable>()
+				.HasOne(i => i.Slot)
+				.WithMany(i => i.HistorialDañoRecibido)
+				.OnDelete(DeleteBehavior.SetNull);
 
 			#endregion
 

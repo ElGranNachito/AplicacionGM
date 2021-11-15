@@ -52,5 +52,10 @@ namespace AppGM.Core
 		/// Slots de esta parte del cuerpo
 		/// </summary>
 		public virtual List<ModeloSlot> Slots { get; set; } = new List<ModeloSlot>();
+
+		/// <summary>
+		/// Historial del daño recibido por esta parte del cuerpo
+		/// </summary>
+		public virtual List<ModeloDañable> HistorialDañoRecibido { get; set; } = new List<ModeloDañable>();
 	}
 }

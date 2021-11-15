@@ -58,5 +58,10 @@ namespace AppGM.Core
         /// Items actualmente almacenados en el slot
         /// </summary>
         public virtual List<ModeloItem> ItemsAlmacenados { get; set; } = new List<ModeloItem>();
+
+        /// <summary>
+        /// Historial del daño recibido por este slot
+        /// </summary>
+        public virtual List<ModeloDañable> HistorialDañoRecibido { get; set; } = new List<ModeloDañable>();
     }
 }
