@@ -307,6 +307,11 @@
     <None Remove="Media\Imagenes\Tiradas\Iconos\TiradaPersonalizada.png" />
     <None Remove="Media\Imagenes\Tiradas\Iconos\TiradaStat.png" />
     <Page Remove="Estilos\Colores.xaml" />
+    <Page Remove="Recursos\Botones.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Media\Imagenes\Botones\Agregar_Mapas_Frame1.png" />
+    <Resource Include="Media\Imagenes\Botones\Agregar_Mapas_Frame2.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Media\Imagenes\Botones\MenuPrincipal\Info_Click.png" />
@@ -326,6 +331,7 @@
     <Resource Include="Media\Imagenes\Botones\MenuPrincipal\Flechita_Derecha_Click.png" />
     <Resource Include="Media\Imagenes\Botones\MenuPrincipal\Flechita_Derecha_Idle.png" />
     <Resource Include="Media\Imagenes\Botones\MenuPrincipal\Flechita_Derecha_Select.png" />
+    <Resource Include="Recursos\Botones.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Media\Imagenes\Iconos\Parties\" />

@@ -298,7 +298,7 @@
 
     </Style>
 
-    <!-- Boton animado para la opcion de reglas en el menu princiapl -->
+    <!-- Boton animado para la opcion de agregar roles en la seccion de fichas -->
     <Style x:Key="BotonReglas" TargetType="{x:Type Button}" BasedOn="{StaticResource BotonConFondoTransparente}">
 
         <Setter Property="Content" Value="{StaticResource ImagenBotonRulesIdle}"/>
