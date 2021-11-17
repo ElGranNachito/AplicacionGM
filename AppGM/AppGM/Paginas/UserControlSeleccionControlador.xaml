@@ -19,22 +19,20 @@
 
                 <!--Boton para seleccionar el controlador-->
                 <Button
+                    Opacity="{Binding ItemSeleccionado, Converter={local:IsNullToOpacityConverter}}"
+                    
                     Content="{TemplateBinding Content}"
                     Command="{Binding ComandoSeleccionarControlador}"/>
 
-                <StackPanel
-                    Orientation="Horizontal"
-                    
-                    VerticalAlignment="Stretch"
-                    HorizontalAlignment="Stretch">
+                <local:UserControlItemLista
+                    IsHitTestVisible="False"
 
-                    <Image
-                        IsHitTestVisible="False"
-                        Visibility="{Binding Converter={local:IsNullToVisibilityConverterOcultar}, FallbackValue=Collapsed}"
-                        Source="{Binding ItemSeleccionado.Imagen}"/>
+                    MostrarVersionReducida="True"
 
-                </StackPanel>
-                
+                    Foreground="{StaticResource Tema.Verde}"
+
+                    Visibility="{Binding ItemSeleccionado, Converter={local:IsNullToVisibilityConverterOcultar}}"
+                    DataContext="{Binding ItemSeleccionado}"/>
 
             </Grid>
         </ControlTemplate>

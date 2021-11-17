@@ -179,22 +179,7 @@
                        
                     </local:UserControlConImagencitaAlCostado>
 
-                    <!--Mano utilizada-->
-                    <local:UserControlConImagencitaAlCostado
-                        Background="{StaticResource Tema.VerdeOscuro}"
-                        MaxHeight="40"
-                        Source="../../../Media/Imagenes/Tiradas/Iconos/Manoutilizada.png"
-                        
-                        Visibility="{Binding EsTiradaDeDaño, Converter={local:BooleanToVisibilityConverterColapsar}}">
-                        
-                        <local:UserControlComboBoxConDescripcion
-                            Descripcion="Mano utilizada:"
-                            
-                            DataContext="{Binding ViewModelComboBoxManoUtilizada}"/>
-
-                    </local:UserControlConImagencitaAlCostado>
-
-                    <!--Fuentes de daño abarcadas-->
+                    <!--Contenedor de la tirada-->
                     <local:UserControlConImagencitaAlCostado
                         Background="{StaticResource Tema.VerdeOscuro}"
                         MaxHeight="40"
@@ -205,6 +190,21 @@
                         <local:UserControlSeleccionControlador
                             Content="Seleccionar contenedor"
                             DataContext="{Binding ViewModelSeleccionContenedor}"/>
+
+                    </local:UserControlConImagencitaAlCostado>
+
+                    <!--Mano utilizada-->
+                    <local:UserControlConImagencitaAlCostado
+                        Background="{StaticResource Tema.VerdeOscuro}"
+                        MaxHeight="40"
+                        Source="../../../Media/Imagenes/Tiradas/Iconos/Manoutilizada.png"
+                        
+                        Visibility="{Binding EsTiradaDeDaño, Converter={local:BooleanToVisibilityConverterColapsar}}">
+
+                        <local:UserControlComboBoxConDescripcion
+                            Descripcion="Mano utilizada:"
+                            
+                            DataContext="{Binding ViewModelComboBoxManoUtilizada}"/>
 
                     </local:UserControlConImagencitaAlCostado>
 
@@ -222,7 +222,7 @@
                             HorizontalContentAlignment="Center"
 
                             Style="{StaticResource TextoDescriptivo}"
-                            Text="{Binding MultiplicadorEspecialidad}"
+                            Text="{Binding MultiplicadorEspecialidad, UpdateSourceTrigger=PropertyChanged}"
                             
                             local:CampoDeTextoNumericoProperty.Value="True"/>
 
@@ -300,7 +300,7 @@
                             HorizontalContentAlignment="Center"
 
                             Style="{StaticResource TextoDescriptivo}"
-                            Text="{Binding NumeroDeTiradas}"
+                            Text="{Binding NumeroDeTiradas, UpdateSourceTrigger=PropertyChanged}"
                             
                             local:CampoDeTextoNumericoProperty.Value="True"/>
 
@@ -319,7 +319,7 @@
                         <TextBox
                             Tag="Varialble extra"
                             Style="{StaticResource TextoDescriptivo}"
-                            Text="{Binding VariableExtra}"/>
+                            Text="{Binding VariableExtra, UpdateSourceTrigger=PropertyChanged}"/>
 
                     </local:UserControlConImagencitaAlCostado>
 
@@ -341,7 +341,7 @@
                             HorizontalContentAlignment="Center"
 
                             Style="{StaticResource TextoDescriptivo}"
-                            Text="{Binding Modificador}"
+                            Text="{Binding Modificador, UpdateSourceTrigger=PropertyChanged}"
                             
                             local:CampoDeTextoNumericoProperty.Value="True"/>
 
@@ -374,15 +374,16 @@
                                     HorizontalContentAlignment="Center"
 
                                     Style="{StaticResource TextoDescriptivo}"
-                                    Text="{Binding Tirada}"
+                                    Text="{Binding Tirada, UpdateSourceTrigger=PropertyChanged}"
                                     
-                                    Visibility="{Binding ControladorTirada, Converter={local:IsNullToVisibilityConverter}, ConverterParameter=0}"/>
+                                    Visibility="{Binding EsTiradaPreexistente, Converter={local:BooleanToVisibilityConverterColapsar}, ConverterParameter=0}"/>
 
                                 <local:UserControlSeleccionControlador
                                     Margin="0 40 0 0"
                                     Content="Seleccionar tirada"
                                     
-                                    Visibility="{Binding ControladorTirada, Converter={local:IsNullToVisibilityConverter}}"/>
+                                    Visibility="{Binding EsTiradaPreexistente, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControlRealizarTirada}}, Converter={local:BooleanToVisibilityConverterColapsar}}"
+                                    DataContext="{Binding ViewModelSeleccionTirada}"/>
 
                                 <Button
                                     Grid.Column="1"
@@ -391,7 +392,7 @@
                                     
                                     Visibility="{Binding ContenedorSeleccionado, Converter={local:IsNullToVisibilityConverter}}"
                                     
-                                    Command="{Binding ComandoToggleExistenciaTirada}"/>
+                                    Command="{Binding ComandoToggleEsTiradaExistente}"/>
                             </Grid>
 
                         </local:UserControlConImagencitaAlCostado>
@@ -496,7 +497,7 @@
                                         FontSize="20"
                                         Foreground="Black"
 
-                                        Text="{Binding Multiplicador}"
+                                        Text="{Binding Multiplicador, UpdateSourceTrigger=PropertyChanged}"
                                         
                                         Style="{StaticResource TextoDescriptivo}"
                                         
@@ -558,7 +559,7 @@
                             Header="Detalles Objetivo"
 
                             IsEnabled="{Binding UsuarioSeleccionado, Converter={local:IsNullToBooleanConverter}, ConverterParameter=0}"
-                            Visibility="{Binding EsTiradaDeDaño, Converter={local:BooleanToVisibilityConverterColapsar}}">
+                            Visibility="{Binding ViewModelInventarioObjetivo, Converter={local:IsNullToVisibilityConverterOcultar}}">
 
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -570,7 +571,7 @@
                                 <local:UserControlVistaArbolInventario
                                     Grid.Column="0"
 
-                                    DataContext="{Binding ViewModelInventario}"/>
+                                    DataContext="{Binding ViewModelInventarioObjetivo}"/>
 
                                 <!--Subobjetivos-->
                                 <ListView

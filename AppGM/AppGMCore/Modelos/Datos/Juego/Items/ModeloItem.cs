@@ -30,7 +30,7 @@ namespace AppGM.Core
         /// <summary>
         /// Condicion porcentual del item
         /// </summary>
-        public int Estado { get; set; }
+        public int Estado { get; set; } = 100;
 
         /// <summary>
         /// Estado de portancion del item
@@ -45,11 +45,13 @@ namespace AppGM.Core
         /// <summary>
         /// Personaje que porta este utilizable
         /// </summary>
+        [CopiarSuperficialmente]
         public virtual ModeloPersonaje PersonajePortador { get; set; }
 
         /// <summary>
         /// Rol al que pertenece este item
         /// </summary>
+        [CopiarSuperficialmente]
         public virtual ModeloRol RolAlQuePertenece { get; set; }
 
         /// <summary>

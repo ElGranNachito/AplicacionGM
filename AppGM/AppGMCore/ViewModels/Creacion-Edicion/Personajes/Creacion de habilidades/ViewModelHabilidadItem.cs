@@ -42,7 +42,7 @@ namespace AppGM.Core
 				new ViewModelCaracteristicaItem
 				{
 					Titulo = "Nombre",
-					Valor = ControladorGenerico.Nombre + $".{(EsHechizo ? (ControladorGenerico.modelo as ModeloMagia)?.Nivel.ToString() : ControladorGenerico.Rango.ToString())}"
+					Valor = ControladorGenerico.Nombre + " - " + (EsHechizo ? "Lv." : "Rango:") + (EsHechizo ? (ControladorGenerico.modelo as ModeloMagia)?.Nivel.ToString() : ControladorGenerico.Rango.ToString())
 				},
 
 				//Tipo de la habilidad

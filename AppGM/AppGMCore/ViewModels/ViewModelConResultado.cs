@@ -17,7 +17,7 @@ namespace AppGM.Core
 
 		#region Campos & Propiedades
 
-		private EResultadoViewModel mResultado = EResultadoViewModel.NoEstablecido;
+		protected EResultadoViewModel mResultado = EResultadoViewModel.NoEstablecido;
 
 		/// <summary>
 		/// Resultado del vm

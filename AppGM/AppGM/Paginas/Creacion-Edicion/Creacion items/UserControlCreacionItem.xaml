@@ -55,7 +55,7 @@
                         <TextBox
                             MinHeight="20"
                 
-                            Text="{Binding Nombre}"
+                            Text="{Binding Nombre, UpdateSourceTrigger=PropertyChanged}"
                 
                             Tag="Nombre">
 
@@ -65,7 +65,7 @@
                         <TextBox
                             MinHeight="80"
                 
-                            Text="{Binding Descripcion}"
+                            Text="{Binding Descripcion, UpdateSourceTrigger=PropertyChanged}"
                 
                             Tag="Descripcion"/>
 
@@ -75,7 +75,7 @@
 
                             Margin="0 50 0 10"
                 
-                            Text="{Binding Peso}"
+                            Text="{Binding Peso, UpdateSourceTrigger=PropertyChanged}"
                 
                             Tag="Peso"/>
 
@@ -83,7 +83,7 @@
                         <TextBox
                             MinHeight="20"
                 
-                            Text="{Binding EspacioQueOcupa}"
+                            Text="{Binding EspacioQueOcupa, UpdateSourceTrigger=PropertyChanged}"
                 
                             Tag="Espacio que ocupa"/>
 
@@ -91,7 +91,7 @@
                         <TextBox
                             MinHeight="20"
                 
-                            Text="{Binding EstadoPorcentual}"
+                            Text="{Binding EstadoPorcentual, UpdateSourceTrigger=PropertyChanged}"
                 
                             Tag="Estado %"/>
 
@@ -281,7 +281,7 @@
 
                                 Tag="Numero de usos totales"
 
-                                Text="{Binding UsosTotales}"
+                                Text="{Binding UsosTotales, UpdateSourceTrigger=PropertyChanged}"
                                 
                                 local:CampoDeTextoNumericoProperty.Value="True"
                                 local:CampoDeTextoNumericoProperty.Tipo="{x:Type sys:Int32}"/>
@@ -293,7 +293,7 @@
 
                                 Tag="Numero de usos restantes"
 
-                                Text="{Binding UsosRestantes}"
+                                Text="{Binding UsosRestantes, UpdateSourceTrigger=PropertyChanged}"
                                 
                                 local:CampoDeTextoNumericoProperty.Value="True"
                                 local:CampoDeTextoNumericoProperty.Tipo="{x:Type sys:Int32}"/>

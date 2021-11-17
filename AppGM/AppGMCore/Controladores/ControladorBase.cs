@@ -79,6 +79,12 @@ namespace AppGM.Core
 		public abstract IControladorTiradaBase ObtenerTirada(string nombreTirada);
 
 		/// <summary>
+		/// Obtiene todos los <see cref="IControladorTiradaBase"/> guardados en este controlador
+		/// </summary>
+		/// <returns><see cref="List{T}"/> con los <see cref="IControladorTiradaBase"/> guardados en este controlador</returns>
+		public abstract List<IControladorTiradaBase> ObtenerTiradas();
+
+		/// <summary>
 		/// Crea un viewmodel para representar a este controlador en una lista
 		/// </summary>
 		/// <returns>Instancia del viewmodel creado o null</returns>

@@ -265,6 +265,10 @@ namespace AppGM.Core
 		        SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = await new ViewModelCrearHabilidad( 
 			        vm =>
 			        {
+				        if (vm.Resultado.EsAceptarOFinalizar())
+				        {
+
+				        }
 				        SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = this;
 			        }, ModeloCreado).Inicializar();
 	        };

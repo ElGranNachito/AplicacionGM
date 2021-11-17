@@ -19,7 +19,7 @@
 
             <!-- Nombre del rol -->
             <TextBox Style="{StaticResource TextoDescriptivo}" 
-                     Text="{Binding NombreRol, Mode=TwoWay}"
+                     Text="{Binding NombreRol, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      Tag="Nombre"
                      MaxLength="50"
                      TextAlignment="Center"
@@ -30,7 +30,7 @@
 
                 <TextBox
                          Style="{StaticResource TextoDescriptivo}"
-                         Text="{Binding DescripcionRol, Mode=TwoWay}"
+                         Text="{Binding DescripcionRol, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Tag="Descripcion"
                          MaxLength="1000"
                          TextAlignment="Center"

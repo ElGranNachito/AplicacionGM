@@ -100,19 +100,12 @@ namespace AppGM.Core
 		/// <param name="_controladoresDisponibles"></param>
 		public ViewModelSeleccionDeControlador(List<TControlador> _controladoresDisponibles)
 		{
-			mControladoresDisponibles = _controladoresDisponibles;
-
-			ControladoresConcordantes.AddRange(mControladoresDisponibles.Select(c =>
-			{
-				var nuevoVm = c.CrearViewModelItem();
-
-				nuevoVm.IndiceGrupoDeBotonesActivo = -1;
-
-				return nuevoVm;
-			}));
+			ActualizarControladorDisponibles(_controladoresDisponibles);
 
 			ComandoSeleccionarControlador = new Comando(async () =>
 			{
+				mResultado = EResultadoViewModel.NoEstablecido;
+
 				await SistemaPrincipal.MostrarMensajeAsync(this, "Seleccionar Controlador", true, 400, 300);
 
 				if (ItemSeleccionado != null && Resultado == EResultadoViewModel.Aceptar)
@@ -140,6 +133,26 @@ namespace AppGM.Core
 			OnControladorSeleccionado(ItemSeleccionado, ControladorSeleccionado);
 		}
 
+		/// <summary>
+		/// Actualiza los <typeparamref name="TControlador"/> disponibles
+		/// </summary>
+		/// <param name="nuevosControladoresDisponibles">Nueva <see cref="List{T}"/> con los nuevos <typeparamref name="TControlador"/> disponibles</param>
+		public void ActualizarControladorDisponibles(List<TControlador> nuevosControladoresDisponibles)
+		{
+			mControladoresDisponibles = nuevosControladoresDisponibles;
+
+			ItemSeleccionado = null;
+			ControladoresConcordantes.Elementos.Clear();
+
+			ControladoresConcordantes.AddRange(mControladoresDisponibles.Select(c =>
+			{
+				var nuevoVm = c.CrearViewModelItem();
+
+				nuevoVm.IndiceGrupoDeBotonesActivo = -1;
+
+				return nuevoVm;
+			}));
+		}
 		#endregion
 	}
 }
