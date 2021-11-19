@@ -9,6 +9,7 @@
     <Grid Background="White" Width="300">
 
         <StackPanel>
+            
             <!-- Nombre del combate -->
             <TextBlock>
                 <Run Text="Nombre: " 
@@ -48,6 +49,7 @@
                      FontSize="{StaticResource TamañoFontMediano}"
                      FontFamily="{StaticResource 'Font Canon'}"/>
             </TextBlock>
+
         </StackPanel>
             
     </Grid>

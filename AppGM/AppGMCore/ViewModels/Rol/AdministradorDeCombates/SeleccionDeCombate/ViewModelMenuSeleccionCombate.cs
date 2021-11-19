@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Windows.Input;
 
 namespace AppGM.Core
@@ -16,9 +17,9 @@ namespace AppGM.Core
         public ICommand ComandoAgregarCombate { get; set; }
 
         /// <summary>
-        /// Lista de combates existentes
+        /// VMs de combates existentes
         /// </summary>
-        public ViewModelListaCombates Combates { get; set; }
+        public List<ViewModelCombateItem> Combates { get; set; } = new List<ViewModelCombateItem>();
 
         /// <summary>
         /// Globo que muestra la informacion del combate que el usuario tiene actualmente seleccionado
@@ -34,7 +35,8 @@ namespace AppGM.Core
         /// <param name="_combates">Lista que contiene controladores de los administradores de combate existentes</param>
         public ViewModelMenuSeleccionCombate(List<ControladorAdministradorDeCombate> _combates)
         {
-            Combates = new ViewModelListaCombates(_combates);
+            for (int i = 0; i < _combates.Count; ++i)
+                Combates.Add(new ViewModelCombateItem(_combates[i]));
 
             GloboInfoCombate = new ViewModelGlobo<ViewModelInfoCombateGlobo>
             {
@@ -60,9 +62,11 @@ namespace AppGM.Core
             //Se crea el popup y se espera a que se cierre
             await SistemaPrincipal.MostrarMensajeAsync(vm, "Agregar combate", true, 150, 500);
 
-            Combates.Combates.Add(new ViewModelCombateItem(vm.vmResultado.administradorDeCombate));
+            Combates.Add(new ViewModelCombateItem(vm.vmResultado.administradorDeCombate));
 
             await SistemaPrincipal.GuardarDatosAsync();
+
+            DispararPropertyChanged(new PropertyChangedEventArgs(nameof(Combates)));
         }
 
         #endregion

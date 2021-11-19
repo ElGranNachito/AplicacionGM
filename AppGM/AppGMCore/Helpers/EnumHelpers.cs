@@ -193,7 +193,7 @@ namespace AppGM.Core
             
             int indice = Array.IndexOf<T>(valores, e) - 1;
             
-            return (valores.Length==indice) ? valores[0] : valores[indice];            
+            return (indice < 0) ? valores.Max() : valores[indice];          
         }
 
         /// <summary>

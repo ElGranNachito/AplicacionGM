@@ -46,7 +46,7 @@
     <Resource Include="Media\Imagenes\Fichas\Elementos\PRANA_Icon.png" />
     <Resource Include="Media\Imagenes\Fichas\Elementos\STR_Icon.png" />
     <Resource Include="Media\Imagenes\Fichas\Index_Fichas.png" />
-    <Resource Include="Media\Imagenes\Fichas\Invocación_Fichas.png" />
+    <Resource Include="Media\Imagenes\Fichas\Invocacion_Fichas.png" />
     <Resource Include="Media\Imagenes\Fichas\Master_Fichas.png" />
     <Resource Include="Media\Imagenes\Fichas\NPC_Fichas.png" />
     <Resource Include="Media\Imagenes\Fichas\Record_Fichas.png" />
@@ -293,7 +293,7 @@
     <None Remove="Media\Imagenes\Fichas\Elementos\PRANA_Icon.png" />
     <None Remove="Media\Imagenes\Fichas\Elementos\STR_Icon.png" />
     <None Remove="Media\Imagenes\Fichas\Index_Fichas.png" />
-    <None Remove="Media\Imagenes\Fichas\Invocación_Fichas.png" />
+    <None Remove="Media\Imagenes\Fichas\Invocacion_Fichas.png" />
     <None Remove="Media\Imagenes\Fichas\Master_Fichas.png" />
     <None Remove="Media\Imagenes\Fichas\NPC_Fichas.png" />
     <None Remove="Media\Imagenes\Fichas\Record_Fichas.png" />
@@ -307,7 +307,6 @@
     <None Remove="Media\Imagenes\Tiradas\Iconos\TiradaPersonalizada.png" />
     <None Remove="Media\Imagenes\Tiradas\Iconos\TiradaStat.png" />
     <Page Remove="Estilos\Colores.xaml" />
-    <Page Remove="Recursos\Botones.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Media\Imagenes\Botones\Agregar_Mapas_Frame1.png" />
@@ -331,7 +330,6 @@
     <Resource Include="Media\Imagenes\Botones\MenuPrincipal\Flechita_Derecha_Click.png" />
     <Resource Include="Media\Imagenes\Botones\MenuPrincipal\Flechita_Derecha_Idle.png" />
     <Resource Include="Media\Imagenes\Botones\MenuPrincipal\Flechita_Derecha_Select.png" />
-    <Resource Include="Recursos\Botones.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Media\Imagenes\Iconos\Parties\" />

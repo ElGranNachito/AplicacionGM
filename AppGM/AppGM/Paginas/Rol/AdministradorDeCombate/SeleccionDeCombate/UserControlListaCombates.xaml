@@ -10,13 +10,23 @@
     <Grid>
 
         <!-- Lista de combates -->
-        <ItemsControl ItemsSource="{Binding Combates}">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <local:UserControlCombateItem/>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+
+            <ItemsControl ItemsSource="{Binding }">
             
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                    
+                        <local:UserControlCombateItem/>
+
+                    </DataTemplate>
+
+                </ItemsControl.ItemTemplate>
+
+            </ItemsControl>
+
+        </ScrollViewer>
+
     </Grid>
+
 </UserControl>
