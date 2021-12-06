@@ -269,9 +269,18 @@
                             Background="{StaticResource Tema.VerdeOscuro}"
                             MinHeight="40"
                             MaxWidth="200"
-                            Source="../../../Media/Imagenes/Tiradas/Iconos/Stat.png"
-                            
-                            IsEnabled="{Binding UsuarioSeleccionado, Converter={local:IsNullToBooleanConverter}, ConverterParameter=0}">
+                            Source="../../../Media/Imagenes/Tiradas/Iconos/Stat.png">
+
+                            <local:UserControlConImagencitaAlCostado.IsEnabled>
+
+                                <MultiBinding Converter="{local:MultiplesBoolsABool}" ConverterParameter="0">
+
+                                    <Binding Path="UsuarioSeleccionado" Converter="{local:IsNullToBooleanConverter}"/>
+                                    <Binding Path="EsTiradaPreexistente"/>
+
+                                </MultiBinding>
+
+                            </local:UserControlConImagencitaAlCostado.IsEnabled>
 
                             <local:UserControlComboBoxConDescripcion
                                 Descripcion="Stat:"
@@ -417,6 +426,8 @@
                         MinHeight="40"
                         MaxHeight="40"
                         MaxWidth="200"
+
+                        IsEnabled="{Binding EsTiradaPreexistente, Converter={local:NegarBoolConverter}}"
                         
                         Source="{Binding RutaCompletaImagenTipoTirada, Converter={local:FullPathToImageConverter}}">
 
@@ -557,6 +568,8 @@
                                     Grid.Column="2"
 
                                     Descripcion="Tipos de daño:"
+
+                                    IsEnabled="{Binding DataContext.EsTiradaPreexistente, Converter={local:NegarBoolConverter}, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControlRealizarTirada}}}"
                                     
                                     DataContext="{Binding ViewModelMultiselectComboBoxTipoDeDaño}"
                                     

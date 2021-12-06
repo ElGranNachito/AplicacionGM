@@ -67,6 +67,15 @@ namespace AppGM.Core
 		}
 
 		/// <summary>
+		/// Multiplicador de daño
+		/// </summary>
+		public string Multiplicador
+		{
+			get => PresetTirada.Multiplicador.ToString();
+			set => PresetTirada.Multiplicador = value.ParseToIntIfValid();
+		}
+
+		/// <summary>
 		/// Texto de la burbuja de texto del croto	
 		/// </summary>
 		public string TextoCroto { get; set; }
@@ -102,10 +111,18 @@ namespace AppGM.Core
 		public string RutaCompletaImagenTipoTirada => ObtenerPathImagenTipoTirada(ViewModelComboBoxTipoTirada.Valor);
 
 		/// <summary>
+		/// Mensaje de error de validacion
+		/// </summary>
+		public string MensajeDeError { get; private set; }
+
+		/// <summary>
 		/// Indica si se debe utilizar el multiplicador del punto vital
 		/// </summary>
 		public bool UtilizaMultiplicadorDelPuntoVital { get; set; }
 
+		/// <summary>
+		/// Indica si hay una tirada preexistente seleccionada
+		/// </summary>
 		public bool EsTiradaPreexistente { get; private set; }
 
 		/// <summary>
@@ -213,8 +230,9 @@ namespace AppGM.Core
 
 			ViewModelComboBoxTipoTirada.SeleccionarValor(ETipoTirada.Stat);
 
-			ViewModelMultiselectComboBoxTipoDeDaño = new ViewModelMultiselectComboBox<ETipoDeDaño>(EnumHelpers
-				.TiposDeDañoDisponibles.Select(t => new ViewModelMultiselectComboBoxItem<ETipoDeDaño>(t, t.ToString(), ViewModelMultiselectComboBoxTipoDeDaño)).ToList());
+			ViewModelMultiselectComboBoxTipoDeDaño = new ViewModelMultiselectComboBox<ETipoDeDaño>(
+				EnumHelpers.ObtenerValoresEnum<ETipoDeDaño>(new [] {ETipoDeDaño.NINGUNO}).Select(t => new ViewModelMultiselectComboBoxItem<ETipoDeDaño>(t, t.ToString(), ViewModelMultiselectComboBoxTipoDeDaño)).ToList(),
+				new FlagsEnumEqualityComparer<ETipoDeDaño>());
 
 			//Seleccion usuario
 			ViewModelSeleccionUsuario = new ViewModelSeleccionDeControlador<ControladorPersonaje>(SistemaPrincipal.DatosRolSeleccionado.Personajes);
@@ -245,7 +263,15 @@ namespace AppGM.Core
 				EsTiradaPreexistente = !EsTiradaPreexistente;
 
 				if (!EsTiradaPreexistente)
+				{
 					ControladorTirada = null;
+				}
+				else
+				{
+					ControladorTirada = ViewModelSeleccionTirada.ControladorSeleccionado;
+
+					ActualizarValoresCamposALosDeLaTiradaSeleccionada();
+				}
 			});
 
 			ComandoSalir = new Comando(() =>
@@ -291,6 +317,8 @@ namespace AppGM.Core
 		private void TiradaSeleccionadaCambioHandler(ViewModelItemListaBase itemSeleccionado, ControladorTiradaBase nuevaTirada)
 		{
 			PresetTirada.TiradaALaQuePertenece = nuevaTirada.modelo;
+
+			ActualizarValoresCamposALosDeLaTiradaSeleccionada();
 
 			ControladorTirada = nuevaTirada;
 		}
@@ -397,9 +425,27 @@ namespace AppGM.Core
 			return string.Empty;
 		}
 
+		private void ActualizarValoresCamposALosDeLaTiradaSeleccionada()
+		{
+			if(ControladorTirada is null)
+				return;
+
+			ViewModelComboBoxTipoTirada.SeleccionarValor(ControladorTirada.modelo.TipoTirada);
+
+			if (ControladorTirada is ControladorTiradaDaño tiradaDaño)
+			{
+				ViewModelComboBoxStat.SeleccionarValor(tiradaDaño.modeloGenerico.StatDeLaQueDepende);
+
+				ViewModelMultiselectComboBoxTipoDeDaño.ModificarEstadoSeleccionItem(tiradaDaño.modeloGenerico.TipoDeDaño, true);
+			}
+		}
+
 		private async Task<List<ResultadoTirada>> RealizarTiradas()
 		{
 			var resultadoActual = new List<ResultadoTirada>();
+
+			if (!ValidarTirada())
+				return resultadoActual;
 
 			int numeroDeTiradas = 1;
 
@@ -438,23 +484,8 @@ namespace AppGM.Core
 				if (ControladorTirada == null)
 					return resultadoActual;
 
-				ArgumentosTiradaPersonalizada argsTirada = EsTiradaPersonalizada
-					? new ArgumentosTiradaPersonalizada()
-					: new ArgumentosTiradaDaño
-					{
-						objetivo      = (IDañable)ViewModelSeleccionObjetivo.ControladorSeleccionado,
-						manoUtilizada = PresetTirada.ManoUtilizada.Value
-					};
-
-				argsTirada.personaje                 = ViewModelSeleccionUsuario.ControladorSeleccionado;
-				argsTirada.controlador               = ViewModelSeleccionContenedor.ControladorSeleccionado;
-				argsTirada.modificador               = PresetTirada.Modificador;
-				argsTirada.stat                      = ViewModelComboBoxStat.Valor;
-				argsTirada.controlador               = ViewModelSeleccionUsuario.ControladorSeleccionado;
-				argsTirada.argumentoExtra            = VariableExtra;
-				argsTirada.modificador               = PresetTirada.Modificador;
-				argsTirada.multiplicadorEspecialidad = PresetTirada.MultiplicadorDeEspecialidad.Value;
-
+				var argsTirada = CrearArgumentosTirada();
+				
 				for(int i = 0; i < numeroDeTiradas; ++i)
 					resultadoActual.Add(await ControladorTirada.RealizarTiradaAsync(argsTirada));
 			}
@@ -472,11 +503,108 @@ namespace AppGM.Core
 					for (int i = 0; i < numeroDeTiradas; ++i)
 						resultadoActual.Add(ParserTiradas.RealizarTiradaStat(argsTirada));
 				}
+				else
+				{
+					var argsTirada = CrearArgumentosTirada();
+
+					var resultadoParse = await ParserTiradas.TryParseAsync(
+						Tirada,
+						(ModeloConVariablesYTiradas) ViewModelSeleccionContenedor.ControladorSeleccionado.Modelo,
+						ViewModelComboBoxTipoTirada.Valor,
+						ViewModelComboBoxStat.Valor);
+				}
 			}
 
 			TextoCroto = ViewModelComboBoxTipoTirada.Valor.ToString();
 
 			return resultadoActual;
+		}
+
+		private ArgumentosTiradaPersonalizada CrearArgumentosTirada()
+		{
+			ArgumentosTiradaPersonalizada argsTirada = EsTiradaPersonalizada
+				? new ArgumentosTiradaPersonalizada()
+				: new ArgumentosTiradaDaño
+				{
+					objetivo = (IDañable)ViewModelSeleccionObjetivo.ControladorSeleccionado,
+					manoUtilizada = PresetTirada.ManoUtilizada ?? EManoUtilizada.Dominante,
+					multiplicador = PresetTirada.Multiplicador ?? 1
+				};
+
+			argsTirada.personaje = ViewModelSeleccionUsuario.ControladorSeleccionado;
+			argsTirada.controlador = ViewModelSeleccionContenedor.ControladorSeleccionado;
+			argsTirada.modificador = PresetTirada.Modificador;
+			argsTirada.stat = ViewModelComboBoxStat.Valor;
+			argsTirada.controlador = ViewModelSeleccionUsuario.ControladorSeleccionado;
+			argsTirada.argumentoExtra = VariableExtra;
+			argsTirada.modificador = PresetTirada.Modificador;
+			argsTirada.multiplicadorEspecialidad = PresetTirada.MultiplicadorDeEspecialidad ?? 0;
+
+			return argsTirada;
+		}
+
+		private bool ValidarTirada()
+		{
+			MensajeDeError = string.Empty;
+
+			if (UsuarioSeleccionado == null)
+			{
+				MensajeDeError = "Debes seleccionar al usuario";
+
+				return false;
+			}
+
+			if (ViewModelSeleccionContenedor.ControladorSeleccionado == null && EsTiradaPreexistente)
+			{
+				MensajeDeError = "Debes seleccionar al contenedor de la tirada";
+
+				return false;
+			}
+
+			if (ViewModelComboBoxStat.ValorSeleccionado == null && (EsTiradaStat || EsTiradaDeDaño))
+			{
+				MensajeDeError = "Debes seleccionar un stat";
+
+				return false;
+			}
+
+			if (ViewModelComboBoxTipoTirada.ValorSeleccionado == null)
+			{
+				MensajeDeError = "Debes seleccionar un tipo de tirada";
+
+				return false;
+			}
+
+			if (ViewModelSeleccionTirada.ControladorSeleccionado == null && EsTiradaPreexistente)
+			{
+				MensajeDeError = "Debes seleccionar una tirada";
+
+				return false;
+			}
+
+			if (ViewModelSeleccionObjetivo.ControladorSeleccionado == null && EsTiradaDeDaño)
+			{
+				MensajeDeError = "Debes seleccionar un objetivo";
+
+				return false;
+			}
+
+			if (!NumeroDeTiradas.IsNullOrWhiteSpace())
+			{
+				var contenedorTirada = (ModeloConVariablesYTiradas) (ViewModelSeleccionContenedor.ControladorSeleccionado ?? ViewModelSeleccionUsuario.ControladorSeleccionado).Modelo;
+
+				var resultadoVerificacion = ParserTiradas.VerificarValidezTirada(
+					NumeroDeTiradas,
+					contenedorTirada.ObtenerVariablesDisponibles(),
+					ViewModelComboBoxTipoTirada.Valor,
+					ViewModelComboBoxStat.Valor);
+
+				MensajeDeError = resultadoVerificacion.error;
+
+				return resultadoVerificacion.esValida;
+			}
+
+			return true;
 		}
 	}
 }

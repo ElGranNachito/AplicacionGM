@@ -49,18 +49,21 @@ namespace AppGM.Core
         /// <typeparam name="TEnum">Tipo del <see cref="Enum"/> cuyos valores obtener</typeparam>
         /// <param name="valoresQueExcluir">Valores del <typeparamref name="TEnum"/> que excluir del resultado</param>
         /// <returns><see cref="List{T}"/> con todos los valores disponibles del <typeparamref name="TEnum"/></returns>
-		public static List<TEnum> ObtenerValoresEnum<TEnum>(IEnumerable<TEnum> valoresQueExcluir)
+		public static List<TEnum> ObtenerValoresEnum<TEnum>(IEnumerable<TEnum> valoresQueExcluir = null)
 
 			where TEnum: struct, Enum
 		{
 			var valoresEnum = Enum.GetValues<TEnum>().ToList();
 
-			valoresQueExcluir = valoresQueExcluir.ToList();
-
-			foreach (var valor in valoresQueExcluir)
+			if (valoresQueExcluir is not null)
 			{
-				valoresEnum.Remove(valor);
-			}
+				valoresQueExcluir = valoresQueExcluir.ToList();
+
+				foreach (var valor in valoresQueExcluir)
+				{
+					valoresEnum.Remove(valor);
+				}
+            }
 
 			return valoresEnum;
 		}
