@@ -210,10 +210,10 @@ namespace AppGM.Core
 				: modeloDestino.GetType();
 
 			//Obtenemos las propiedades a las que podemos escribir
-			var propiedades = tipoModeloOrigen.GetProperties().Where(p => p.CanWrite).ToList();
+			var propiedades = modeloDelQueObtenerLosMiembros.GetProperties().Where(p => p.CanWrite).ToList();
 
 			//Obtenemos los campos
-			var campos = tipoModeloOrigen.GetFields().ToList();
+			var campos = modeloDelQueObtenerLosMiembros.GetFields().ToList();
 
 			if (outModelosEliminados != null && tipoModeloOrigen.IsSubclassOf(typeof(TResultado)))
 			{

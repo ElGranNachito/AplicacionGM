@@ -35,98 +35,166 @@
 
             <Border
                 Margin="0 0 0 10"
+
+                IsHitTestVisible="{TemplateBinding IsHitTestVisible}"
         
                 BorderThickness="{TemplateBinding BorderThickness}"
                 BorderBrush="{TemplateBinding BorderBrush}">
 
-                <Grid
-                    x:Name="contendor"
-                    Background="{TemplateBinding Background}">
-
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="2*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-
-                    <TextBlock
-                        Grid.ColumnSpan="3"
-                        Text="{Binding Titulo}"/>
-
-                    <!-- Imagen del item -->
-                    <Border
-                        Grid.Row="1"
-                        Padding="5"
-
-                        VerticalAlignment="Stretch"
-                        Width="{Binding RelativeSource={RelativeSource Mode=Self}, Path=ActualHeight}"
+                <Grid>
+                    <!--Version multilinea-->
+                    <Grid
+                        x:Name="contendor"
+                        Background="{TemplateBinding Background}"
                         
-                        Visibility="{Binding TieneImagen,
-                        Converter={local:BooleanToVisibilityConverterColapsar},
-                        FallbackValue=Collapsed}">
+                        Visibility="{Binding 
+                        RelativeSource={RelativeSource Mode=TemplatedParent}, 
+                        Path=MostrarVersionReducida,
+                        Converter={local:BooleanToVisibilityConverterColapsar}, ConverterParameter=0}">
 
-                        <Border>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
 
-                            <Border.Background>
-                                <ImageBrush 
-                                    Stretch="Uniform"
-                                    ImageSource="{Binding Imagen, 
-                                    Converter={local:FullPathToImageConverter}}"/>
-                            </Border.Background>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
 
+                        <TextBlock
+                            Grid.ColumnSpan="3"
+                            Text="{Binding Titulo}"/>
+
+                        <!-- Imagen del item -->
+                        <Border
+                            Grid.Row="1"
+                            Padding="5"
+
+                            VerticalAlignment="Stretch"
+                            Width="{Binding RelativeSource={RelativeSource Mode=Self}, Path=ActualHeight}"
+                            
+                            Visibility="{Binding TieneImagen,
+                            Converter={local:BooleanToVisibilityConverterColapsar},
+                            FallbackValue=Collapsed}">
+
+                            <Border>
+
+                                <Border.Background>
+                                    <ImageBrush 
+                                        Stretch="Uniform"
+                                        ImageSource="{Binding Imagen, 
+                                        Converter={local:FullPathToImageConverter}}"/>
+                                </Border.Background>
+
+                            </Border>
                         </Border>
-                    </Border>
 
-                    <!-- Datos del item -->
-                    <ItemsControl
-                        Grid.Row="1"
-                        Grid.Column="1"
-                        ItemsSource="{Binding CaracteristicasItem.Elementos}">
-
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-
-                                <StackPanel
-                                    Margin="0 0 0 5">
-
-                                    <TextBlock
-                                        Text="{Binding Titulo, FallbackValue=Algo}"
-                                        FontWeight="Bold"/>
-
-                                    <TextBlock
-                                        Margin="0 5 0 0"
-                                        Text="{Binding Valor, FallbackValue='No existo'}"/>
-
-                                </StackPanel>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-
-                    <ScrollViewer
-                        Grid.Row="1"
-                        Grid.Column="2"
-
-                        HorizontalAlignment="Center"
-                
-                        VerticalScrollBarVisibility="Auto">
-
-                        <ItemsControl ItemsSource="{Binding GruposDeBotones.Elementos}">
+                        <!-- Datos del item -->
+                        <ItemsControl
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            ItemsSource="{Binding CaracteristicasItem.Elementos}">
 
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <local:UserControlGrupoBotones/>
+
+                                    <StackPanel
+                                        Margin="0 0 0 5">
+
+                                        <TextBlock
+                                        Text="{Binding Titulo, FallbackValue=Algo}"
+                                        FontWeight="Bold"/>
+
+                                        <TextBlock
+                                        Margin="0 5 0 0"
+                                        Text="{Binding Valor, FallbackValue='No existo'}"/>
+
+                                    </StackPanel>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
-
                         </ItemsControl>
 
-                    </ScrollViewer>
+                        <ScrollViewer
+                            Grid.Row="1"
+                            Grid.Column="2"
 
+                            HorizontalAlignment="Center"
+                
+                            VerticalScrollBarVisibility="Auto">
+
+                            <ItemsControl ItemsSource="{Binding GruposDeBotones.Elementos}">
+
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <local:UserControlGrupoBotones/>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+
+                            </ItemsControl>
+
+                        </ScrollViewer>
+
+                    </Grid>
+
+                    <!--Version reducida-->
+                    <Grid
+                        Visibility="{Binding 
+                        RelativeSource={RelativeSource Mode=TemplatedParent}, 
+                        Path=MostrarVersionReducida,
+                        Converter={local:BooleanToVisibilityConverterColapsar}}">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Imagen del item -->
+                        <Border
+                            Grid.Column="0"
+                            Padding="5"
+
+                            VerticalAlignment="Stretch"
+                            Width="{Binding RelativeSource={RelativeSource Mode=Self}, Path=ActualHeight}"
+                            
+                            Visibility="{Binding Imagen,
+                            Converter={local:IsNullToVisibilityConverter},
+                            FallbackValue=Collapsed}">
+
+                            <Border>
+
+                                <Border.Background>
+                                    <ImageBrush 
+                                        Stretch="Uniform"
+                                        ImageSource="{Binding Imagen, 
+                                    Converter={local:FullPathToImageConverter}}"/>
+                                </Border.Background>
+                            </Border>
+                        </Border>
+
+                        <!--Primer caracteristica del item-->
+                        <Grid
+                            Grid.Column="1"
+
+                            DataContext="{Binding CaracteristicasItem.Elementos, 
+                            Converter={local:AccederAColeccionPorIndiceConverter}, 
+                            ConverterParameter=0}">
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock
+                                Text="{Binding Titulo}"/>
+
+                            <TextBlock
+                                Grid.Row="1"
+                                Text="{Binding Valor}"/>
+                        </Grid>
+                        
+                    </Grid>
                 </Grid>
 
             </Border>

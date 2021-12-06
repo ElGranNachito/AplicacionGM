@@ -27,6 +27,7 @@ namespace AppGM.Core
         /// Personaje que posee este slot
         /// </summary>
         [BackingField(nameof(mPersonajeContenedor))]
+        [CopiarSuperficialmente]
         public virtual ModeloPersonaje PersonajeContenedor
         {
 	        get
@@ -47,21 +48,25 @@ namespace AppGM.Core
         /// <summary>
         /// Parte del cuerpo a la que pertenece el slot
         /// </summary>
+        [CopiarSuperficialmente]
         public virtual ModeloParteDelCuerpo ParteDelCuerpoDueña { get; set; }
 
         /// <summary>
         /// Item al que pertenece este slot
         /// </summary>
+        [CopiarSuperficialmente]
         public virtual ModeloItem ItemDueño { get; set; }
 
         /// <summary>
         /// Items actualmente almacenados en el slot
         /// </summary>
+        [CopiarSuperficialmente]
         public virtual List<ModeloItem> ItemsAlmacenados { get; set; } = new List<ModeloItem>();
 
         /// <summary>
         /// Historial del daño recibido por este slot
         /// </summary>
+        [CopiarSuperficialmente]
         public virtual List<ModeloDañable> HistorialDañoRecibido { get; set; } = new List<ModeloDañable>();
     }
 }

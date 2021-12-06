@@ -38,7 +38,7 @@
 
                     Style="{StaticResource TextoDescriptivo}"
                 
-                    Text="{Binding Filtro}"/>
+                    Text="{Binding Filtro, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <Button
                     Grid.Column="1"
@@ -70,7 +70,7 @@
                     ItemsSource="{Binding ControladoresConcordantes.Elementos}"
                     SelectedItem="{Binding ItemSeleccionado}"
                     
-                    ItemContainerStyle="{StaticResource EstiloContenedorItemListBox}">
+                    ItemContainerStyle="{StaticResource EstiloContenedorItemListBox}" Margin="1,0,-1,0">
 
                     <ListBox.ItemTemplate>
                         <DataTemplate>

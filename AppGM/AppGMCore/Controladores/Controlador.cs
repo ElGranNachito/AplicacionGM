@@ -123,6 +123,11 @@ namespace AppGM.Core
 			throw new System.NotImplementedException();
 		}
 
+		public override List<IControladorTiradaBase> ObtenerTiradas()
+		{
+			return mTiradas.Values.ToList();
+		}
+
 		/// <summary>
 		/// Metodo destinado a lidia con el evento de que se cree el <see cref="ControladorBase"/> que necesitamos
 		/// </summary>

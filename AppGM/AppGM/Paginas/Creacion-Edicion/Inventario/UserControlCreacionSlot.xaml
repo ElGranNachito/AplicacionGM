@@ -93,12 +93,12 @@
 
                         HorizontalAlignment="Stretch"
                         
-                        Text="{Binding NombreSlot}"/>
+                        Text="{Binding NombreSlot, UpdateSourceTrigger=PropertyChanged}"/>
 
                     <TextBox
                         Tag="Espacio total"
 
-                        Text="{Binding EspacioSlot}"
+                        Text="{Binding EspacioSlot, UpdateSourceTrigger=PropertyChanged}"
 
                         Margin="0 10 "
                         

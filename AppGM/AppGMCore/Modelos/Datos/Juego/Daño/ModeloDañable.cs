@@ -18,21 +18,25 @@
 		/// <summary>
 		/// Personaje representado
 		/// </summary>
+		[CopiarSuperficialmente]
 		public virtual ModeloPersonaje Personaje { get; set; }
 
 		/// <summary>
 		/// Slot representado
 		/// </summary>
+		[CopiarSuperficialmente]
 		public virtual ModeloSlot Slot { get; set; }
 
 		/// <summary>
 		/// Parte del cuerpo representada
 		/// </summary>
+		[CopiarSuperficialmente]
 		public virtual ModeloParteDelCuerpo ParteDelCuerpo { get; set; }
 
 		/// <summary>
 		/// Item representado
 		/// </summary>
+		[CopiarSuperficialmente]
 		public virtual ModeloItem Item { get; set; }
 	}
 }
