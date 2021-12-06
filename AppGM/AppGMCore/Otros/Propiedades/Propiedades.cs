@@ -5,7 +5,7 @@ namespace AppGM.Core
 	/// <summary>
 	/// Representa un elemento del codigo al que se puede acceder desde GuraScratch.
 	/// </summary>
-	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Method | AttributeTargets.Enum | AttributeTargets.Interface)]
+	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Method | AttributeTargets.Enum | AttributeTargets.Interface | AttributeTargets.Struct)]
 	public class AccesibleEnGuraScratch : Attribute
 	{
 		/// <summary>

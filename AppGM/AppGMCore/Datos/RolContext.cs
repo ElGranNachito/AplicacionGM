@@ -595,10 +595,9 @@ namespace AppGM.Core
 			#region Tirada
 
 			modelBuilder.Entity<ModeloTiradaBase>().ToTable("Tirada")
-				.HasDiscriminator<int>("Tipo")
-				.HasValue<ModeloTiradaPersonalizada>(1)
-				.HasValue<ModeloTiradaStat>(2)
-				.HasValue<ModeloTiradaDeDaño>(3);
+				.HasDiscriminator<ETipoTirada>(t => t.TipoTirada)
+				.HasValue<ModeloTiradaBase>(ETipoTirada.Personalizada)
+				.HasValue<ModeloTiradaDeDaño>(ETipoTirada.Daño);
 
 			//Tirada - Personaje
 			modelBuilder.Entity<ModeloTiradaBase>()

@@ -7,7 +7,7 @@ namespace AppGM.Core
     /// <summary>
     /// Modelo de una tirada que no especifica su tipo
     /// </summary>
-    public abstract partial class ModeloTiradaBase : ModeloBase
+    public partial class ModeloTiradaBase : ModeloBase
     {
         /// <summary>
         /// Nombre de la tirada
@@ -22,6 +22,19 @@ namespace AppGM.Core
         public string Descripcion { get; set; }
 
         /// <summary>
+        /// Cadena que representa la tirada
+        /// </summary>
+        [MaxLength(256)]
+        [Required]
+        public string Tirada { get; set; }
+
+        /// <summary>
+        /// Descripcion de la variable extra que requiere la tirada
+        /// </summary>
+        [MaxLength(512)]
+        public string DescripcionVariableExtra { get; set; }
+
+        /// <summary>
         /// Indica si esta tirada es para alguna accion en la que se tenga especialidad
         /// </summary>
         public int MultiplicadorDeEspecialidad { get; set; }
@@ -34,7 +47,7 @@ namespace AppGM.Core
 	    /// <summary>
         /// Modelo del personaje que contiene la tirada
         /// </summary>
-        public virtual ModeloPersonaje PersonajeContenedor { get; set; }
+	    public virtual ModeloPersonaje PersonajeContenedor { get; set; }
 
         /// <summary>
         /// Modelo de la habilidad que contiene la tirada
@@ -54,43 +67,14 @@ namespace AppGM.Core
         /// <summary>
         /// Historial de lanzamientos de esta tirada
         /// </summary>
+        [NoCopiar]
         public virtual List<ModeloHistorialTirada> Historial { get; set; }
-    }
-
-    /// <summary>
-    /// Tirada con un numero de caras y dados personalizado
-    /// </summary>
-    public class ModeloTiradaPersonalizada : ModeloTiradaBase
-    {
-        /// <summary>
-        /// Cadena que representa la tirada
-        /// </summary>
-        [MaxLength(256)]
-        [Required]
-	    public string Tirada { get; set; }
-
-        /// <summary>
-        /// Descripcion de la variable extra que requiere la tirada
-        /// </summary>
-        [MaxLength(512)]
-        public string DescripcionVariableExtra { get; set; }
-    }
-
-    /// <summary>
-    /// Tirada que depende de una stat
-    /// </summary>
-    public class ModeloTiradaStat : ModeloTiradaBase
-    {
-	    /// <summary>
-        /// Stat a tener en cuenta durante la tirada
-        /// </summary>
-        public EStat StatDeLaQueDepende { get; set; }
     }
 
     /// <summary>
     /// Tirada de daño
     /// </summary>
-    public class ModeloTiradaDeDaño : ModeloTiradaPersonalizada
+    public class ModeloTiradaDeDaño : ModeloTiradaBase
     {
 	    /// <summary>
         /// Tipo de daño que aplica la tirada

@@ -118,16 +118,16 @@ namespace AppGM.Core
         #region Propiedades
 
         //-----------------------------PROPIEDADES (CONTROLADORES)-------------------------------
-   
+
         /// <summary>
         /// Efectos que actualmente se estan aplicando a este personaje
         /// </summary>
-        public List<ControladorEfectoSiendoAplicado> Efectos { get; set; }
+        public List<ControladorEfectoSiendoAplicado> Efectos { get; set; } = new List<ControladorEfectoSiendoAplicado>();
 
         /// <summary>
         /// Items que el personaje tiene en su inventario
         /// </summary>
-        public List<ControladorItem> Inventario { get; set; }
+        public List<ControladorItem> Inventario { get; set; } = new List<ControladorItem>();
 
         /// <summary>
         /// Alianzas a las que pertenece el personaje
@@ -135,29 +135,29 @@ namespace AppGM.Core
         public List<ControladorAlianza> Alianzas { get; set; } = new List<ControladorAlianza>();
 
         /// <summary>
-        /// Perks del personaje
-        /// </summary>
-        public List<ControladorHabilidadG<ModeloPerk>> Perks { get; set; }
-
-        /// <summary>
         /// Habilidades del personaje
         /// </summary>
-        public List<ControladorHabilidad> Skills { get; set; }
+        public List<ControladorHabilidad> Skills { get; set; } = new List<ControladorHabilidad>();
+
+        /// <summary>
+        /// Perks del personaje
+        /// </summary>
+        public List<ControladorHabilidadGenerico<ModeloPerk>> Perks { get; set; } = new List<ControladorHabilidadGenerico<ModeloPerk>>();
 
         /// <summary>
         /// Magias del personaje
         /// </summary>
-        public List<ControladorMagia> Magias { get; set; }
+        public List<ControladorHabilidadGenerico<ModeloMagia>> Magias { get; set; } = new List<ControladorHabilidadGenerico<ModeloMagia>>();
+
+        /// <summary>
+        /// Noble Phantasms del personaje
+        /// </summary>
+        public List<ControladorHabilidadGenerico<ModeloNoblePhantasm>> NomblePhantasms { get; set; } = new List<ControladorHabilidadGenerico<ModeloNoblePhantasm>>();
 
         /// <summary>
         /// Invocaciones que ha generado el personaje
         /// </summary>
         public List<ControladorInvocacion> ControladorInvocaciones { get; set; }
-
-        /// <summary>
-        /// Noble Phantasms del personaje
-        /// </summary>
-        public List<ControladorHabilidadG<ModeloNoblePhantasm>> ControladorNoblePhantasms { get; set; }
 
         //-----------------------------PROPIEDADES (VARIAS)-------------------------------
 
@@ -203,14 +203,62 @@ namespace AppGM.Core
 
         public int Int
         {
-	        get => modelo.Agi;
-	        set => modelo.Agi = value;
+	        get => modelo.Int;
+	        set => modelo.Int = value;
         }
 
         public int Lck
         {
 	        get => modelo.Lck;
 	        set => modelo.Lck = value;
+        }
+
+        public int Chr
+        {
+	        get
+	        {
+		        if (modelo is ModeloMaster m)
+			        return m.Chr;
+
+                SistemaPrincipal.LoggerGlobal.Log($"Se intento obtener la stat CHR de {this}, pero no es un master", ESeveridad.Error);
+
+                return -1;
+	        }
+	        set
+	        {
+		        if (modelo is ModeloMaster m)
+		        {
+			        m.Chr = value;
+
+                    return;
+		        }
+
+		        SistemaPrincipal.LoggerGlobal.Log($"Se intento establecer la stat CHR de {this}, pero no es un master", ESeveridad.Error);
+	        }
+        }
+
+        public ERango Np
+        {
+	        get
+	        {
+		        if (modelo is ModeloServant s)
+			        return s.RangoNP;
+
+		        SistemaPrincipal.LoggerGlobal.Log($"Se intento obtener la stat NP de {this}, pero no es un servant", ESeveridad.Error);
+
+		        return ERango.NINGUNO;
+	        }
+	        set
+	        {
+		        if (modelo is ModeloServant s)
+		        {
+			        s.RangoNP = value;
+
+			        return;
+		        }
+
+		        SistemaPrincipal.LoggerGlobal.Log($"Se intento establecer la stat NP de {this}, pero no es un servant", ESeveridad.Error);
+	        }
         }
 
         public int VentajaStr
@@ -241,6 +289,30 @@ namespace AppGM.Core
         {
 	        get => modelo.VentajaLck;
 	        set => modelo.VentajaLck = value;
+        }
+
+        public int VentajaChr
+        {
+	        get
+	        {
+		        if (modelo is ModeloMaster m)
+			        return m.VentajaChr;
+
+		        SistemaPrincipal.LoggerGlobal.Log($"Se intento obtener la ventaja en CHR de {this}, pero no es un master", ESeveridad.Error);
+
+		        return 0;
+	        }
+	        set
+	        {
+		        if (modelo is ModeloMaster m)
+		        {
+			        m.VentajaChr = value;
+
+                    return;
+		        }
+
+		        SistemaPrincipal.LoggerGlobal.Log($"Se intento establecer la ventaja en CHR de {this}, pero no es un master", ESeveridad.Error);
+            }
         }
 
         #endregion
@@ -332,11 +404,58 @@ namespace AppGM.Core
         public ControladorPersonaje(ModeloPersonaje _modeloPersonaje)
             : base(_modeloPersonaje)
         {
-            for (int i = 0; i < modelo.Alianzas.Count; ++i)
+	        for (int i = 0; i < modelo.Alianzas.Count; ++i)
             {
                 Alianzas.Add(SistemaPrincipal.ObtenerControlador<ControladorAlianza, ModeloAlianza>(modelo.Alianzas[i], true));
             }
-            
+
+            foreach (var habilidad in modelo.Habilidades)
+            {
+	            switch (habilidad.TipoDeHabilidad)
+	            {
+		            case ETipoHabilidad.Skill:
+		            {
+			            var controladorSkill = SistemaPrincipal.ObtenerControlador<ControladorHabilidad, ModeloHabilidad>(habilidad, true);
+
+			            Skills.Add(controladorSkill);
+
+                        break;
+		            }
+
+		            case ETipoHabilidad.Hechizo:
+		            {
+			            var controladorHechizo = SistemaPrincipal.ObtenerControlador<ControladorHabilidadGenerico<ModeloMagia>, ModeloHabilidad>(habilidad, true);
+
+			            Magias.Add(controladorHechizo);
+
+                        break;
+		            }
+
+		            case ETipoHabilidad.Perk:
+		            {
+			            var controladorPerk = SistemaPrincipal.ObtenerControlador<ControladorHabilidadGenerico<ModeloPerk>, ModeloHabilidad>(habilidad, true) as ControladorHabilidadGenerico<ModeloPerk>;
+
+			            Perks.Add(controladorPerk);
+
+			            break;
+		            }
+
+		            case ETipoHabilidad.NoblePhantasm:
+		            {
+			            var controladorNp = SistemaPrincipal.ObtenerControlador<ControladorHabilidadGenerico<ModeloNoblePhantasm>, ModeloHabilidad>(habilidad, true) as ControladorHabilidadGenerico<ModeloNoblePhantasm>;
+
+			            NomblePhantasms.Add(controladorNp);
+
+			            break;
+		            }
+	            }
+            }
+
+            foreach (var item in modelo.Inventario)
+            {
+				Inventario.Add(SistemaPrincipal.ObtenerControlador<ControladorItem, ModeloItem>(item, true));	            
+            }
+
             CargarVariablesYTiradas();
         }
 
@@ -466,30 +585,101 @@ namespace AppGM.Core
             OnQuitarItem(item, this);
         }
 
-        public int ObtenerModificadorStat(EStat stat)
+        public List<ControladorHabilidad> ObtenerHabilidades()
+        {
+	        return Skills.Concat(Perks).Concat(Magias).Concat(NomblePhantasms).ToList();
+        }
+
+        /// <summary>
+        /// Obtiene el valor de una <paramref name="stat"/> de este personaje
+        /// </summary>
+        /// <param name="stat">Stat cuyo valor obtener</param>
+        /// <returns>Valor de la <paramref name="stat"/></returns>
+        public int ObtenerValorStat(EStat stat)
         {
 	        switch (stat)
 	        {
-                case EStat.STR:
-	                return Helpers.Juego.ObtenerModificadorStat(Str) + VentajaStr;
-                case EStat.AGI:
-	                return Helpers.Juego.ObtenerModificadorStat(Agi) + VentajaAgi;
-                case EStat.END:
-	                return Helpers.Juego.ObtenerModificadorStat(End) + VentajaEnd;
-                case EStat.INT:
-	                return Helpers.Juego.ObtenerModificadorStat(Int) + VentajaInt;
-                case EStat.LCK:
-	                return Helpers.Juego.ObtenerModificadorStat(Lck) + VentajaLck;
+		        case EStat.STR:
+			        return Str;
 
-                default:
-                {
-	                SistemaPrincipal.LoggerGlobal.Log($"valor de {nameof(stat)}({stat}) no soportado", ESeveridad.Error);
+		        case EStat.AGI:
+			        return Agi;
 
-	                return 0;
-                }
+		        case EStat.END:
+			        return End;
+
+		        case EStat.INT:
+			        return Int;
+
+		        case EStat.LCK:
+			        return Lck;
+
+		        case EStat.CHR:
+			        return Chr;
+
+                case EStat.NP:
+	                return (int)Np;
+
+		        default:
+		        {
+			        SistemaPrincipal.LoggerGlobal.Log($"valor de {nameof(stat)}({stat}) no soportado", ESeveridad.Error);
+
+			        return 0;
+		        }
+            }
+        }
+
+        /// <summary>
+        /// Obtiene la ventaja que tiene este personaje en una <paramref name="stat"/>
+        /// </summary>
+        /// <param name="stat">Stat cuya ventaja obtener</param>
+        /// <returns>Ventaja que tiene el personaje en la <paramref name="stat"/></returns>
+        public int ObtenerVentajaStat(EStat stat)
+        {
+	        switch (stat)
+	        {
+		        case EStat.STR:
+			        return VentajaStr;
+
+		        case EStat.AGI:
+			        return VentajaAgi;
+
+		        case EStat.END:
+			        return VentajaEnd;
+
+		        case EStat.INT:
+			        return VentajaInt;
+
+		        case EStat.LCK:
+			        return VentajaLck;
+
+		        case EStat.CHR:
+			        return VentajaChr;
+
+		        default:
+		        {
+			        SistemaPrincipal.LoggerGlobal.Log($"valor de {nameof(stat)}({stat}) no soportado", ESeveridad.Error);
+
+			        return 0;
+		        }
 	        }
         }
 
+        /// <summary>
+        /// Obtiene el modificador que tiene este personaje en una <paramref name="stat"/>
+        /// </summary>
+        /// <param name="stat">Stat cuyo modificador obtener</param>
+        /// <returns>Modificador de la <paramref name="stat"/></returns>
+        public int ObtenerModificadorStat(EStat stat)
+        {
+	        return Helpers.Juego.ObtenerModificadorStat(ObtenerValorStat(stat) + ObtenerVentajaStat(stat));
+        }
+
+        /// <summary>
+        /// Establece el valor de una <paramref name="stat"/>
+        /// </summary>
+        /// <param name="stat">Stat cuyo valor establecer</param>
+        /// <param name="valor">Valor que darle a la stat</param>
         public void EstablecerValorStat(EStat stat, int valor)
         {
 	        switch (stat)
@@ -497,18 +687,31 @@ namespace AppGM.Core
                 case EStat.STR:
 	                Str = valor;
 	                break;
+
                 case EStat.AGI:
 	                Agi = valor;
                     break;
+
                 case EStat.END:
 	                End = valor;
 	                break;
+
                 case EStat.INT:
 	                Int = valor;
                     break;
+
                 case EStat.LCK:
 	                Lck = valor;
 	                break;
+
+                case EStat.CHR:
+	                Chr = valor;
+                    break;
+
+                case EStat.NP:
+	                Np = (ERango) valor;
+                    break;
+
                 default:
 
                     SistemaPrincipal.LoggerGlobal.Log($"valor de {nameof(stat)}({stat}) no soportado", ESeveridad.Error);
@@ -517,25 +720,49 @@ namespace AppGM.Core
 	        }
         }
 
-        public void EstablecerValorBonoStat(EStat stat, int valor)
+        /// <summary>
+        /// Establece el valor de una <see cref="stat"/>
+        /// </summary>
+        /// <param name="stat">Stat cuyo valor establecer</param>
+        /// <param name="valor">Rango que asignarle a la stat</param>
+        public void EstablecerValorStat(EStat stat, ERango valor)
+        {
+            EstablecerValorStat(stat, (int)valor);
+        }
+
+        /// <summary>
+        /// Establece la ventaja que tiene este personaje en una <paramref name="stat"/>
+        /// </summary>
+        /// <param name="stat">Stat cuya ventaja establecer</param>
+        /// <param name="valor">Ventaja que asignarle a la <paramref name="stat"/></param>
+        public void EstablecerValorVentajaStat(EStat stat, int valor)
         {
 	        switch (stat)
 	        {
 		        case EStat.STR:
 			        VentajaStr = valor;
 			        break;
+
 		        case EStat.AGI:
 			        VentajaAgi = valor;
 			        break;
+
 		        case EStat.END:
 			        VentajaEnd = valor;
 			        break;
+
 		        case EStat.INT:
 			        VentajaInt = valor;
 			        break;
+
 		        case EStat.LCK:
 			        VentajaLck = valor;
 			        break;
+
+                case EStat.CHR:
+	                VentajaChr = valor;
+                    break;
+
 		        default:
 
 			        SistemaPrincipal.LoggerGlobal.Log($"valor de {nameof(stat)}({stat}) no soportado");

@@ -10,6 +10,8 @@
 
         <Setter Property="FontFamily" Value="{StaticResource 'Font Canon'}"/>
 
+        <Setter Property="Foreground" Value="{StaticResource Tema.Verde}"/>
+
     </Style>
 
     <Style TargetType="{x:Type TextBox}">

@@ -126,6 +126,11 @@ namespace AppGM.Core
 		/// </summary>
 		public ICommand ComandoFinalizar { get; protected set; }
 
+		/// <summary>
+		/// Comando que se ejecuta al presionar 'Guardar'
+		/// </summary>
+		public ICommand ComandoGuardar { get; protected set; }
+
 		#endregion
 
 		#region Constructores
@@ -309,6 +314,33 @@ namespace AppGM.Core
 				Resultado = EResultadoViewModel.Eliminar;
 
 				mAccionSalir?.Invoke((TViewModel)this);
+			});
+		}
+
+		/// <summary>
+		/// Inicializa el <see cref="ComandoGuardar"/>
+		/// </summary>
+		protected void CrearComandoGuardar()
+		{
+			ComandoGuardar = new Comando(async () =>
+			{
+				ContenedorModelosCreadosEliminadosAlCopiar modelosCreadosEliminados;
+
+				if (!EstaEditando)
+				{
+					var resultado = await ModeloCreado.CrearCopiaProfundaEnSubtipoAsync(ModeloCreado.GetType());
+
+					ModeloSiendoEditado = ModeloCreado;
+					ModeloCreado = resultado.resultado as TModelo;
+
+					modelosCreadosEliminados = resultado.modelosCreadosEliminados;
+				}
+				else
+				{
+					modelosCreadosEliminados = (await ModeloCreado.CrearCopiaProfundaEnSubtipoAsync(ModeloCreado.GetType(), ModeloSiendoEditado)).modelosCreadosEliminados;
+				}
+
+				await modelosCreadosEliminados.GuardarYEliminarModelosAsync();
 			});
 		}
 

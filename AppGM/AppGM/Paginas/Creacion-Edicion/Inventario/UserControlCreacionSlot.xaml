@@ -133,7 +133,7 @@
                     HorizontalAlignment="Center">
 
                     <StackPanel.Visibility>
-                        <MultiBinding Converter="{local:BooleanToVisibilityConverterColapsarMultiple}">
+                        <MultiBinding Converter="{local:BooleanToVisibilityConverterAllTrueColapsarMultiple}">
                             <Binding Path="MostrarMenuCrearContenido"/>
                             <Binding Path="MostrarContenido"/>
                         </MultiBinding>

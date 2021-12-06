@@ -62,27 +62,27 @@ namespace AppGM.Core
 		public abstract void AsignarAVariable(int idVariable, object valor);
 
 		/// <summary>
-		/// Obtiene una <see cref="IControladorTiradaBase"/> guardada en el modelo representado por este controlador
+		/// Obtiene una <see cref="AppGM.Core.ControladorTiradaBase"/> guardada en el modelo representado por este controlador
 		/// a partir de su <paramref name="idTirada"/>
 		/// </summary>
 		/// <param name="idTirada">Id de la tirada que se quiere obtener</param>
 		/// <returns>Tirada hallada o null</returns>
-		public abstract IControladorTiradaBase ObtenerTirada(int idTirada);
+		public abstract ControladorTiradaBase ObtenerTirada(int idTirada);
 
 		/// <summary>
-		/// Obtiene una <see cref="IControladorTiradaBase"/> guardada en el modelo representado por este controlador
+		/// Obtiene una <see cref="AppGM.Core.ControladorTiradaBase"/> guardada en el modelo representado por este controlador
 		/// a partir de su <paramref name="nombreTirada"/>
 		/// </summary>
 		/// <param name="nombreTirada">nombre de la tirada que se quiere obtener</param>
 		/// <returns>Tirada hallada o null</returns>
 		[AccesibleEnGuraScratch(nameof(ObtenerTirada))]
-		public abstract IControladorTiradaBase ObtenerTirada(string nombreTirada);
+		public abstract ControladorTiradaBase ObtenerTirada(string nombreTirada);
 
 		/// <summary>
-		/// Obtiene todos los <see cref="IControladorTiradaBase"/> guardados en este controlador
+		/// Obtiene todos los <see cref="AppGM.Core.ControladorTiradaBase"/> guardados en este controlador
 		/// </summary>
-		/// <returns><see cref="List{T}"/> con los <see cref="IControladorTiradaBase"/> guardados en este controlador</returns>
-		public abstract List<IControladorTiradaBase> ObtenerTiradas();
+		/// <returns><see cref="List{T}"/> con los <see cref="AppGM.Core.ControladorTiradaBase"/> guardados en este controlador</returns>
+		public abstract List<ControladorTiradaBase> ObtenerTiradas();
 
 		/// <summary>
 		/// Crea un viewmodel para representar a este controlador en una lista

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -7,7 +8,7 @@ namespace AppGM.Core
 	/// <summary>
 	/// Clase que representa un control para la creacion, edicion o vista de un <see cref="ModeloItem"/>
 	/// </summary>
-	public class ViewModelCreacionEdicionItem : ViewModelCreacionEdicionDeModelo<ModeloItem, ControladorItem, ViewModelCreacionEdicionItem>
+	public sealed class ViewModelCreacionEdicionItem : ViewModelCreacionEdicionDeModelo<ModeloItem, ControladorItem, ViewModelCreacionEdicionItem>
 	{
 		#region Campos & Propiedades
 
@@ -44,8 +45,12 @@ namespace AppGM.Core
 		/// </summary>
 		public string Peso
 		{
-			get => ModeloCreado.Peso.ToString("##.####");
-			set => ModeloCreado.Peso = decimal.Parse(value);
+			get => ModeloCreado.Peso.ToString("F1");
+			set
+			{
+				if (decimal.TryParse(value, out var peso))
+					ModeloCreado.Peso = peso;
+			}
 		}
 
 		/// <summary>
@@ -53,8 +58,12 @@ namespace AppGM.Core
 		/// </summary>
 		public string EspacioQueOcupa
 		{
-			get => ModeloCreado.EspacioQueOcupa.ToString("##.####");
-			set => ModeloCreado.EspacioQueOcupa = decimal.Parse(value);
+			get => ModeloCreado.EspacioQueOcupa.ToString("F1");
+			set
+			{
+				if (decimal.TryParse(value, out var peso))
+					ModeloCreado.Peso = peso;
+			}
 		}
 
 		/// <summary>
@@ -162,31 +171,44 @@ namespace AppGM.Core
 			CrearComandoEliminar();
 
 			ViewModelMultiselectComboBoxTipoItem = new ViewModelMultiselectComboBox<ETipoItem>(
-				EnumHelpers.TiposItemDisponibles.Select(t =>
+				EnumHelpers.ObtenerValoresEnum<ETipoItem>(new [] {ETipoItem.TODOS}).Select(t =>
 					new ViewModelMultiselectComboBoxItem<ETipoItem>(t, t.ToString(), ViewModelMultiselectComboBoxTipoItem)).ToList(), new FlagsEnumEqualityComparer<ETipoItem>());
 
-			if (!EstaEditando)
+			ViewModelComboBoxEstadoPortacion.OnValorSeleccionadoCambio += (anterior, actual) =>
 			{
-				ViewModelComboBoxEstadoPortacion.SeleccionarValor(EEstadoPortacion.Transportado);
+				if(ModeloCreado is null)
+					return;
 
-				ViewModelMultiselectComboBoxTipoItem.ModificarEstadoSeleccionItem(ETipoItem.Item, true);
-			}
-			else
-			{
-				ViewModelComboBoxEstadoPortacion.SeleccionarValor(ModeloSiendoEditado.EstadoPortacion);
-
-				ViewModelMultiselectComboBoxTipoItem.ModificarEstadoSeleccionItem(ModeloSiendoEditado.TipoItem, true);
-			}
+				ModeloCreado.EstadoPortacion = actual.valor;
+			};
 
 			ViewModelMultiselectComboBoxTipoItem.OnEstadoSeleccionItemCambio += async item =>
 			{
+				if (!item.EstaSeleccionado)
+				{
+					ModeloCreado.TipoItem ^= item.Valor;
+				}
+				else
+				{
+					ModeloCreado.TipoItem |= item.Valor;
+				}
+
 				switch (item.Valor)
 				{
 					case ETipoItem.Arma:
 					{
-						ModeloCreado.DatosArma ??= new ModeloDatosArma();
+						if (item.EstaSeleccionado)
+						{
+							ModeloCreado.DatosArma ??= new ModeloDatosArma();
 
-						DatosArma = await new ViewModelIngresoDatosArma(ModeloCreado.DatosArma, this).Inicializar();
+							DatosArma = await new ViewModelIngresoDatosArma(ModeloCreado.DatosArma, this).Inicializar();
+						}
+						else
+						{
+							ModeloCreado.DatosArma.Item = null;
+
+							ModeloCreado.DatosArma = null;
+						}
 
 						DispararPropertyChanged(nameof(EsArma));
 
@@ -194,9 +216,18 @@ namespace AppGM.Core
 					}
 					case ETipoItem.Defensivo:
 					{
-						ModeloCreado.DatosDefensivo ??= new ModeloDatosDefensivo();
+						if (item.EstaSeleccionado)
+						{
+							ModeloCreado.DatosDefensivo ??= new ModeloDatosDefensivo();
 
-						DatosDefensivo = await new ViewModelIngresoDatosDefensivo(ModeloCreado.DatosDefensivo, this).Inicializar();
+							DatosDefensivo = await new ViewModelIngresoDatosDefensivo(ModeloCreado.DatosDefensivo, this).Inicializar();
+						}
+						else
+						{
+							ModeloCreado.DatosDefensivo.Item = null;
+
+							ModeloCreado.DatosDefensivo = null;
+						}
 
 						DispararPropertyChanged(nameof(EsDefensivo));
 
@@ -204,9 +235,18 @@ namespace AppGM.Core
 					}
 					case ETipoItem.Consumible:
 					{
-						ModeloCreado.DatosConsumible ??= new ModeloDatosConsumible();
+						if (item.EstaSeleccionado)
+						{
+							ModeloCreado.DatosConsumible ??= new ModeloDatosConsumible();
 
-						DatosConsumible = new ViewModelIngresoDatosConsumible(this, ModeloCreado.DatosConsumible);
+							DatosConsumible = new ViewModelIngresoDatosConsumible(this, ModeloCreado.DatosConsumible);
+						}
+						else
+						{
+							ModeloCreado.DatosConsumible.Item = null;
+										
+							ModeloCreado.DatosConsumible = null;
+						}
 
 						DispararPropertyChanged(nameof(EsConsumible));
 
@@ -285,19 +325,23 @@ namespace AppGM.Core
 			}, true, "Efectos");
 
 			//Inicializamos el viewmodel de la lista que contiene las tiradas de este item
-			ViewModelListaTiradas = new ViewModelListaItems<ViewModelTiradaItem>(() =>
+			ViewModelListaTiradas = new ViewModelListaItems<ViewModelTiradaItem>(async () =>
 			{
 				var dataContextActual = SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido;
 
-				SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = new ViewModelCreacionEdicionDeTirada(vm =>
+				SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = await new ViewModelCreacionEdicionDeTirada(vm =>
 				{
 					if (vm.Resultado.EsAceptarOFinalizar())
 					{
-						ModeloCreado.Tiradas.Add(vm.CrearModelo());
+						var nuevaTirada = vm.CrearControlador();
+
+						nuevaTirada.modelo.ItemContenedor = ModeloCreado;
+
+						AñadirModeloDesdeListaItems<ModeloTiradaBase, ViewModelTiradaItem>((ViewModelTiradaItem)nuevaTirada.CrearViewModelItem(), ModeloCreado.Tiradas, ViewModelListaTiradas);
 					}
 
 					SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = dataContextActual;
-				}, ModeloCreado, null);
+				}, ModeloCreado, null).Inicializar();
 			}, true, "Tiradas");
 
 			//Inicializamos el viewmodel de la lista de variables de este item
@@ -328,6 +372,24 @@ namespace AppGM.Core
 			if (!EstaEditando)
 			{
 				ModeloCreado.PersonajePortador = personajePortador;
+
+				ViewModelComboBoxEstadoPortacion.SeleccionarValor(EEstadoPortacion.Transportado);
+
+				ViewModelMultiselectComboBoxTipoItem.ModificarEstadoSeleccionItem(ETipoItem.Item, true);
+			}
+			else
+			{
+				ViewModelMultiselectComboBoxTipoItem.ModificarEstadoSeleccionItem(ETipoItem.Arma, ModeloCreado.TipoItem.HasFlag(ETipoItem.Arma));
+				ViewModelMultiselectComboBoxTipoItem.ModificarEstadoSeleccionItem(ETipoItem.Consumible, ModeloCreado.TipoItem.HasFlag(ETipoItem.Consumible));
+				ViewModelMultiselectComboBoxTipoItem.ModificarEstadoSeleccionItem(ETipoItem.Defensivo, ModeloCreado.TipoItem.HasFlag(ETipoItem.Defensivo));
+
+				ViewModelComboBoxEstadoPortacion.SeleccionarValor(ModeloSiendoEditado.EstadoPortacion);
+
+				ViewModelMultiselectComboBoxTipoItem.ModificarEstadoSeleccionItem(ModeloSiendoEditado.TipoItem, true);
+
+				ViewModelListaTiradas.Items.AddRange(ModeloCreado.Tiradas.Select(t => SistemaPrincipal.ObtenerControlador(t, t.ObtenerTipoControlador(), true).CrearViewModelItem() as ViewModelTiradaItem));
+				ViewModelListaEfectos.Items.AddRange(ModeloCreado.Efectos.Select(e => SistemaPrincipal.ObtenerControlador(e, e.ObtenerTipoControlador(), true).CrearViewModelItem() as ViewModelEfectoItem));
+				ViewModelListaVariables.Items.AddRange(ModeloCreado.Variables.Select(v => SistemaPrincipal.ObtenerControlador(v, v.ObtenerTipoControlador(), true).CrearViewModelItem() as ViewModelVariableItem));
 			}
 
 			var eventosDisponibles = TypeHelpers.ObtenerEventosDisponibles(typeof(ControladorItem), new[] { typeof(ControladorPersonaje) });
@@ -422,15 +484,15 @@ namespace AppGM.Core
 			}
 
 			//Si el item es un arma nos aseguramos de que los datos del arma sean validos
-			if(ViewModelMultiselectComboBoxTipoItem.ItemsSeleccionados.Contains(ETipoItem.Arma) && !DatosArma.EsValido)
+			if(ViewModelMultiselectComboBoxTipoItem.ItemsSeleccionados.Contains(ETipoItem.Arma) && (DatosArma is null || !DatosArma.EsValido))
 				return;
 
 			//Si el item es un consumible nos aseguramos de que los datos del consumible sea valido
-			if (ViewModelMultiselectComboBoxTipoItem.ItemsSeleccionados.Contains(ETipoItem.Consumible) && !DatosConsumible.EsValido)
+			if (ViewModelMultiselectComboBoxTipoItem.ItemsSeleccionados.Contains(ETipoItem.Consumible) && (DatosConsumible is null || !DatosConsumible.EsValido))
 				return;
 
 			//Si el item es defensivo nos aseguramos de que los datos de defensa sean validos
-			if (ViewModelMultiselectComboBoxTipoItem.ItemsSeleccionados.Contains(ETipoItem.Defensivo) && !DatosDefensivo.EsValido)
+			if (ViewModelMultiselectComboBoxTipoItem.ItemsSeleccionados.Contains(ETipoItem.Defensivo) && (DatosDefensivo is null || !DatosDefensivo.EsValido))
 				return;
 
 			EsValido = true;

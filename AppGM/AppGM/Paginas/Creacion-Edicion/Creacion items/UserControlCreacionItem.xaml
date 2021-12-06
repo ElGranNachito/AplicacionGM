@@ -66,7 +66,7 @@
                             MinHeight="80"
                 
                             Text="{Binding Descripcion, UpdateSourceTrigger=PropertyChanged}"
-                
+
                             Tag="Descripcion"/>
 
                         <!--Peso del item-->
@@ -74,26 +74,35 @@
                             MinHeight="20"
 
                             Margin="0 50 0 10"
+
+                            Tag="Peso"
+
+                            local:CampoDeTextoNumericoProperty.Value="True"
+                            local:CampoDeTextoNumericoProperty.Tipo="{x:Type sys:Decimal}"
                 
-                            Text="{Binding Peso, UpdateSourceTrigger=PropertyChanged}"
-                
-                            Tag="Peso"/>
+                            Text="{Binding Peso}"/>
 
                         <!--Espacio que ocupa el item-->
                         <TextBox
                             MinHeight="20"
                 
-                            Text="{Binding EspacioQueOcupa, UpdateSourceTrigger=PropertyChanged}"
+                            Text="{Binding EspacioQueOcupa}"
                 
-                            Tag="Espacio que ocupa"/>
+                            Tag="Espacio que ocupa"
+
+                            local:CampoDeTextoNumericoProperty.Value="True"
+                            local:CampoDeTextoNumericoProperty.Tipo="{x:Type sys:Decimal}"/>
 
                         <!--Estado porcentual del item-->
                         <TextBox
                             MinHeight="20"
+
+                            Tag="Estado %"
                 
                             Text="{Binding EstadoPorcentual, UpdateSourceTrigger=PropertyChanged}"
                 
-                            Tag="Estado %"/>
+                            local:CampoDeTextoNumericoProperty.Value="True"
+                            local:CampoDeTextoNumericoProperty.Tipo="{x:Type sys:Int32}"/>
 
                         <!--Estado de portacion actual del item-->
                         <local:UserControlComboBoxConDescripcion
@@ -163,7 +172,8 @@
                         <local:UserControlListaItems
                             Grid.Row="1"
             
-                            DataContext="{Binding ViewModelListaTiradas}"/>
+                            DataContext="{Binding ViewModelListaTiradas}">
+                        </local:UserControlListaItems>
 
                         <!--Variables del item-->
                         <local:UserControlListaItems
@@ -401,7 +411,9 @@
             <Button
                 HorizontalAlignment="Center"
 
-                Content="Cancelar"
+                Content="Salir"
+
+                Width="90"
                 
                 Command="{Binding ComandoCancelar}"/>
 
@@ -412,6 +424,8 @@
                 HorizontalAlignment="Center"
 
                 Content="Guardar"
+
+                Width="90"
                 
                 Command="{Binding ComandoGuardar}"/>
 
@@ -422,6 +436,8 @@
                 HorizontalAlignment="Center"
 
                 Content="Finalizar"
+
+                Width="90"
 
                 IsEnabled="{Binding EsValido}"
                 Command="{Binding ComandoFinalizar}"/>

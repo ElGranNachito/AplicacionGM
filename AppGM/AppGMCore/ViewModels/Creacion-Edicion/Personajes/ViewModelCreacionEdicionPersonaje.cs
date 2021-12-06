@@ -240,8 +240,6 @@ namespace AppGM.Core
 
         public List<EClaseServant>  ClasesDeServantDisponibles => ObtenerClasesDeServantDisponibles();
 
-        public ICommand ComandoGuardar { get; set; }
-
         public ICommand ComandoSeleccionarImagen { get; set; }
 
         public ICommand ComandoAñadirPerk  { get; set; }
@@ -263,11 +261,13 @@ namespace AppGM.Core
             mAccionAñadirHabilidad = async () =>
 	        {
 		        SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = await new ViewModelCrearHabilidad( 
-			        vm =>
+			        async vm =>
 			        {
-				        if (vm.Resultado.EsAceptarOFinalizar())
+				        if (vm.Resultado.EsAceptarOFinalizar() || vm.EstaEditando)
 				        {
+					        var nuevaHabilidad = vm.CrearControlador();
 
+                            AñadirModeloDesdeListaItems<ModeloHabilidad, ViewModelHabilidadItem>((ViewModelHabilidadItem)nuevaHabilidad.CrearViewModelItem(), ModeloCreado.Habilidades, ContenedorListaHabilidades);
 				        }
 				        SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = this;
 			        }, ModeloCreado).Inicializar();
@@ -373,27 +373,6 @@ namespace AppGM.Core
 		            SistemaPrincipal.LoggerGlobal.Log(
 			            $"Error al intentar leer imagen {archivoSeleccionado.Nombre}.{Environment.NewLine}{ex.Message}", ESeveridad.Error);
 	            }
-            });
-
-            ComandoGuardar = new Comando(async () =>
-            {
-	            ContenedorModelosCreadosEliminadosAlCopiar modelosCreadosEliminados;
-
-	            if (!EstaEditando)
-	            {
-		            var resultado = await ModeloCreado.CrearCopiaProfundaEnSubtipoAsync(ModeloCreado.GetType());
-
-		            ModeloSiendoEditado = ModeloCreado;
-		            ModeloCreado = resultado.resultado as ModeloPersonaje;
-
-		            modelosCreadosEliminados = resultado.modelosCreadosEliminados;
-	            }
-	            else
-	            {
-		           modelosCreadosEliminados = (await ModeloCreado.CrearCopiaProfundaEnSubtipoAsync(ModeloCreado.GetType(), ModeloSiendoEditado)).modelosCreadosEliminados;
-                }
-
-	            await modelosCreadosEliminados.GuardarYEliminarModelosAsync();
             });
 
             PropertyChanged += (sender, args) =>

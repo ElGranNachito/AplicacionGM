@@ -23,7 +23,20 @@ namespace AppGM.Core
 
         #region Propiedades
 
-        public string TextoNivelMagia => $"Lv.{ObtenerNivelDeMagia()}";
+        public string TextoNivelMagia
+        {
+	        get
+	        {
+		        if (ModeloCreado is ModeloMagia m)
+		        {
+			        m.Nivel = ObtenerNivelDeMagia();
+
+			       return $"Lv.{m.Nivel}";
+                }
+
+		        return string.Empty;
+	        }
+        } 
 
         public bool PuedeFinalizar => EsValido;
         public bool EsMagia        => ComboBoxTipoHabilidad.Valor == ETipoHabilidad.Hechizo;
@@ -35,7 +48,17 @@ namespace AppGM.Core
         public bool UtilizaPrana => EsMagia && (mModeloPersonaje.TipoPersonaje & (ETipoPersonaje.Servant | ETipoPersonaje.Invocacion)) != 0;
         public bool UtilizaOd => EsMagia && (mModeloPersonaje.TipoPersonaje & (ETipoPersonaje.Servant | ETipoPersonaje.NPC)) != 0;
 
-        public bool ModeloGuardado { get; private set; } = false;
+        public string Nombre
+        {
+	        get => ModeloCreado.Nombre;
+	        set => ModeloCreado.Nombre = value;
+        }
+
+        public string Descripcion
+        {
+	        get => ModeloCreado.Descripcion;
+	        set => ModeloCreado.Descripcion = value;
+        }
 
         public string CostoDeMana
         {
@@ -51,9 +74,7 @@ namespace AppGM.Core
                 if(ModeloCreado is ModeloMagia m)
 				{
                     m.CostoDeMana = int.Parse(value);
-
-                    DispararPropertyChanged(new PropertyChangedEventArgs(nameof(TextoNivelMagia)));
-                }       
+				}       
             }
         }
 
@@ -109,8 +130,6 @@ namespace AppGM.Core
         public ViewModelListaItems<ViewModelFuncionItem<ControladorFuncion_Habilidad>> FuncionUtilizar { get; set; }
         public ViewModelListaItems<ViewModelFuncionItem<ControladorFuncion_Item>> FuncionCondicion { get; set; }
 
-        public ICommand ComandoGuardar { get; set; }
-
         #endregion
 
         #region Constructor
@@ -121,27 +140,32 @@ namespace AppGM.Core
 	        mModeloPersonaje  = _modeloPersonaje;
             ControladorSiendoEditado = _habilidad;
 
+            CrearComandoGuardar();
+
             if (EstaEditando)
             {
-                ModeloGuardado = true;
-
-                DispararPropertyChanged(nameof(EstaEditando));
-            }
-            else
-            {
-	            mModeloPersonaje.Habilidades.Add(ModeloCreado);
-
-                SistemaPrincipal.GuardarModelo(ModeloCreado);
+	            DispararPropertyChanged(nameof(EstaEditando));
             }
 
             ComboBoxTipoHabilidad = new ViewModelComboBox<ETipoHabilidad>(_modeloPersonaje.TipoPersonaje.ObtenerTiposDeHabilidadDisponibles());
 
-            ComboBoxTipoHabilidad.OnValorSeleccionadoCambio += (anterior, actual) =>
+            ComboBoxTipoHabilidad.OnValorSeleccionadoCambio += async (anterior, actual) =>
             {
-	            DispararPropertyChanged(nameof(EsMagia));
+	            var resultado = await ModeloCreado.CrearCopiaProfundaEnSubtipoAsync(actual.valor.ObtenerTipoModeloHabilidad());
+
+	            ModeloCreado = (ModeloHabilidad)resultado.resultado;
+                
+	            ModeloCreado.TipoDeHabilidad = actual.valor;
+
+                DispararPropertyChanged(nameof(EsMagia));
                 DispararPropertyChanged(nameof(UtilizaOd));
                 DispararPropertyChanged(nameof(UtilizaPrana));
                 DispararPropertyChanged(nameof(PuedeElegirSiTieneRango));
+            };
+
+            ComboBoxRangoHabilidad.OnValorSeleccionadoCambio += (anterior, actual) =>
+            {
+	            ModeloCreado.Rango = actual.valor;
             };
 
             FuncionUtilizar = new ViewModelListaItems<ViewModelFuncionItem<ControladorFuncion_Habilidad>>(async () =>
@@ -214,7 +238,7 @@ namespace AppGM.Core
                 }, mModeloPersonaje, typeof(ControladorHabilidad), null).Inicializar();
 
             }, true, "Efectos");
-
+            
             ContenedorListaTiradas   = new ViewModelListaItems<ViewModelTiradaItem>(async ()=>
             {            
                 SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = await new ViewModelCreacionEdicionDeTirada(async (vm) =>
@@ -224,10 +248,6 @@ namespace AppGM.Core
                     if (vm.Resultado.EsAceptarOFinalizar())
                     {
                         var nuevaTirada = vm.CrearControlador();
-
-                        nuevaTirada.modelo.HabilidadContenedora = ModeloCreado;
-
-                        await nuevaTirada.GuardarAsync();
 
                         AñadirModeloDesdeListaItems<ModeloTiradaBase, ViewModelTiradaItem>((ViewModelTiradaItem)nuevaTirada.CrearViewModelItem(), ModeloCreado.Tiradas, ContenedorListaTiradas);
                     }
@@ -273,19 +293,11 @@ namespace AppGM.Core
 	            }).Inicializar(typeof(ModeloVariableInt));
             }, true, "Variables");
 
-            ComandoGuardar = new Comando(async () =>
-            {
-                await SistemaPrincipal.GuardarDatosAsync();
-
-                ModeloGuardado = true;
-            });
-
             ComandoCancelar = new Comando(() =>
             {
-	            Resultado = EResultadoViewModel.Cancelar;
+	            ModeloCreado.Dueño = null;
 
-                if (!EstaEditando && !ModeloGuardado)
-                    SistemaPrincipal.EliminarModelo(ModeloCreado);
+	            Resultado = EResultadoViewModel.Cancelar;
 
                 accionSalir(this);
             });
@@ -312,20 +324,31 @@ namespace AppGM.Core
 		{
 			await base.Inicializar(tipoValorPorDefectoModelo);
 
-            if(!EstaEditando)
-	            ModeloCreado.Dueño = mModeloPersonaje;
+			if (!EstaEditando)
+			{
+				ModeloCreado.Dueño = mModeloPersonaje;
 
-            return this;
+				ModeloCreado.TipoDeHabilidad = ETipoHabilidad.Skill;
+            }
+
+			return this;
 		}
 
 		public override ModeloHabilidad CrearModelo()
 		{
-			throw new NotImplementedException();
+			ActualizarValidez();
+
+			if (!EsValido)
+				return null;
+
+			return ModeloCreado;
 		}
 
 		public override ControladorHabilidad CrearControlador()
 		{
-			throw new NotImplementedException();
+			var modeloCreado = CrearModelo();
+
+			return modeloCreado == null ? null : new ControladorHabilidad(modeloCreado);
 		}
 
 		private void FinalizarCreacion()
@@ -373,12 +396,10 @@ namespace AppGM.Core
             return 0;
         }
 
-        
-
         protected override void ActualizarValidez()
-		{
-			base.ActualizarValidez();
-		}
+        {
+	        EsValido = true;
+        }
 
 		#endregion
 	}

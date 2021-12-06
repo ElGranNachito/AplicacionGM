@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace AppGM.Core
@@ -49,10 +50,12 @@ namespace AppGM.Core
 			get => ModeloCreado.EspacioTotal.ToString("##.###");
 			set
 			{
-				if (ModeloCreado.EspacioTotal.ToString() == value)
+				var nuevoEspacioOcupado = ConversionHelpers.ParseToDecimalIfValid(value);
+
+				if(nuevoEspacioOcupado == decimal.MinValue)
 					return;
 
-				ModeloCreado.EspacioTotal = decimal.Parse(value);
+				ModeloCreado.EspacioTotal = nuevoEspacioOcupado;
 
 				OnSlotModificado(ControladorSiendoEditado);
 			}
@@ -165,6 +168,20 @@ namespace AppGM.Core
 				}
 			};
 
+			PropertyChanged += (sender, args) =>
+			{
+				if (args.PropertyName != nameof(EsValido) && ModeloCreado != null)
+					ActualizarValidez();
+
+				if(args.PropertyName == nameof(MostrarMenuCrearContenido)) 
+					DispararPropertyChanged(nameof(MostrarListaItems));
+			};
+		}
+
+		public override async Task<ViewModelCreacionEdicionDeSlot> Inicializar(Type tipoValorPorDefectoModelo = null)
+		{
+			await base.Inicializar(tipoValorPorDefectoModelo);
+
 			//Si el controlador no es null y no esta vacio...
 			if (!(ControladorSiendoEditado?.EstaVacio ?? true))
 			{
@@ -185,14 +202,7 @@ namespace AppGM.Core
 				}
 			}
 
-			PropertyChanged += (sender, args) =>
-			{
-				if (args.PropertyName != nameof(EsValido) && ModeloCreado != null)
-					ActualizarValidez();
-
-				if(args.PropertyName == nameof(MostrarMenuCrearContenido)) 
-					DispararPropertyChanged(nameof(MostrarListaItems));
-			};
+			return this;
 		}
 
 		public override ModeloSlot CrearModelo()

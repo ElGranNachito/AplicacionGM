@@ -358,16 +358,20 @@ namespace AppGM.Core
             where TModelo : ModeloBase
             where TControlador : Controlador<TModelo>
         {
+	        //Si el modelo ya tiene un controlador registrado entonces lo devolvemos
             if (mControladores.ContainsKey(modelo))
                 return mControladores[modelo] as TControlador;
 
+            //Si no queremos crear un controlador entonces nos pegamos la vuelta
             if (!intenarCrearSiNoExiste)
                 return null;
 
             try
             {
+                //Intentamos crear una instancia del controlador y castearla al tipo especificado
                 var nuevoControlador = Activator.CreateInstance(typeof(TControlador), modelo) as TControlador;
 
+                //Devolvemos el controlador creado
                 return nuevoControlador;
             }
             catch (Exception ex)
@@ -386,18 +390,24 @@ namespace AppGM.Core
         /// <returns>El controlador encontrado o null</returns>
         public static ControladorBase ObtenerControlador(ModeloBase modelo, Type tipoControlador = null, bool intenarCrearSiNoExiste = false)
         {
+            //Si el modelo ya tiene un controlador registrado entonces lo devolvemos
 	        if (mControladores.ContainsKey(modelo))
 		        return mControladores[modelo];
 
-	        if (tipoControlador == null || !intenarCrearSiNoExiste || tipoControlador.IsSubclassOf(typeof(ControladorBase)))
+            //Si se cumple algunas de las siguientes condiciones devolvemos null:
+            // 1 - El tipo de controlador es null
+            // 2 - No debemos crear un nuevo controlador
+            // 3 - El tipo de controlador especificado no es un subtipo de ControladorBase
+            //----------------------------------------------------------------------------
+            if (tipoControlador == null || !intenarCrearSiNoExiste || !tipoControlador.IsSubclassOf(typeof(ControladorBase)))
 		        return null;
 
 	        try
 	        {
+                //Intentamos crear una instancia del controlador
 		        var nuevoControlador = Activator.CreateInstance(tipoControlador, modelo) as ControladorBase;
 
-		        mControladores.Add(modelo, nuevoControlador);
-
+                //Devolvemos el controlador creado
 		        return nuevoControlador;
 	        }
 	        catch (Exception ex)

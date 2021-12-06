@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows.Input;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace AppGM.Core
@@ -42,7 +43,7 @@ namespace AppGM.Core
 		public string Modificador
 		{
 			get => PresetTirada.Modificador.ToString();
-			set => PresetTirada.Modificador = int.Parse(value);
+			set => PresetTirada.Modificador = value.ParseToIntIfValid();
 		}
 
 		/// <summary>
@@ -62,7 +63,7 @@ namespace AppGM.Core
 		public string MultiplicadorEspecialidad
 		{
 			get => PresetTirada.MultiplicadorDeEspecialidad.ToString();
-			set => PresetTirada.MultiplicadorDeEspecialidad = int.Parse(value);
+			set => PresetTirada.MultiplicadorDeEspecialidad = value.ParseToIntIfValid();
 		}
 
 		/// <summary>
@@ -178,6 +179,8 @@ namespace AppGM.Core
 
 		public ViewModelItemListaBase UsuarioSeleccionado => ViewModelSeleccionUsuario.ItemSeleccionado;
 
+		public ViewModelResultadosTiradas ResultadosTiradas { get; private set; }
+
 		public ICommand ComandoRealizarTirada { get; private set; }
 
 		public ICommand ComandoAplicarDaño { get; private set; }
@@ -228,36 +231,21 @@ namespace AppGM.Core
 			ViewModelSeleccionContenedor.OnControladorSeleccionado += ContenedorTiradaCambioHandler;
 
 			//Seleccion tirada
-			ViewModelSeleccionTirada = new ViewModelSeleccionDeControlador<ControladorTiradaBase>(
-				new List<ControladorTiradaBase>
-				{
-					new ControladorTiradaDaño(new ModeloTiradaDeDaño
-					{
-						Nombre = "Tirada habilidad piola",
-						Descripcion = "Mete mucho daño",
-						Tirada = "6d21+9",
-						EsValido = true
-					})
-				});
+			ViewModelSeleccionTirada = new ViewModelSeleccionDeControlador<ControladorTiradaBase>(new List<ControladorTiradaBase>());
 
 			ViewModelSeleccionTirada.OnControladorSeleccionado += TiradaSeleccionadaCambioHandler;
 
-			ComandoRealizarTirada = new Comando(() =>
+			ComandoRealizarTirada = new Comando(async () =>
 			{
-				var resultadoTirada = ParserTiradas.RealizarTiradaStat(new ArgumentosTirada
-				{
-					multiplicadorEspecialidad = int.Parse(MultiplicadorEspecialidad),
-					modificador = int.Parse(Modificador) + int.Parse(ModStat),
-					stat = ViewModelComboBoxStat.Valor
-				});
-
-				ResultadoTirada          = resultadoTirada.resultado.ToString();
-				ResultadoDetalladoTirada = resultadoTirada.resultadoDetallado;
+				ResultadosTiradas = new ViewModelResultadosTiradas((await RealizarTiradas()).Select(r => new ViewModelResultadoTirada(r)));
 			});
 
 			ComandoToggleEsTiradaExistente = new Comando(() =>
 			{
 				EsTiradaPreexistente = !EsTiradaPreexistente;
+
+				if (!EsTiradaPreexistente)
+					ControladorTirada = null;
 			});
 
 			ComandoSalir = new Comando(() =>
@@ -280,26 +268,9 @@ namespace AppGM.Core
 		{
 			DispararPropertyChanged(nameof(UsuarioSeleccionado));
 
-			ViewModelSeleccionContenedor.ActualizarControladorDisponibles(new List<ControladorBase>
-			{
-				new ControladorHabilidad(new ModeloMagia()
-				{
-					Nombre = "Explosion",
-					Descripcion = "Piola descripcion",
-					CostoDeMana = 120,
-					TipoDeHabilidad = ETipoHabilidad.Hechizo,
-					Nivel = 2
-				}),
+			var fuentesDeTiradas = nuevoUsuario.Inventario.Cast<ControladorBase>().Concat(nuevoUsuario.ObtenerHabilidades());
 
-				new ControladorHabilidad(new ModeloHabilidad
-				{
-					Nombre = "Baile cautivador",
-					Descripcion = "Piola descripcion",
-					CostoDeMana = 0,
-					TipoDeHabilidad = ETipoHabilidad.Skill,
-					Rango = ERango.E
-				}),
-			});
+			ViewModelSeleccionContenedor.ActualizarControladorDisponibles(fuentesDeTiradas.ToList());
 
 			if (EsTiradaDeDaño)
 			{
@@ -320,10 +291,15 @@ namespace AppGM.Core
 		private void TiradaSeleccionadaCambioHandler(ViewModelItemListaBase itemSeleccionado, ControladorTiradaBase nuevaTirada)
 		{
 			PresetTirada.TiradaALaQuePertenece = nuevaTirada.modelo;
+
+			ControladorTirada = nuevaTirada;
 		}
 
 		private void ObjetivoSeleccionadoCambioHandler(ViewModelItemListaBase itemLista, ControladorBase nuevoObjetivo)
 		{
+			if(nuevoObjetivo is not IDañable)
+				SistemaPrincipal.LoggerGlobal.LogCrash($"{nameof(nuevoObjetivo)} debe ser una instancia de un tipo que implemente la interfaz {nameof(IDañable)}");
+
 			if (nuevoObjetivo is ControladorPersonaje pj)
 			{
 				ViewModelInventarioObjetivo = new ViewModelVistaArbol<ViewModelElementoArbol<ControladorSlot>, ControladorSlot>(null);
@@ -419,6 +395,88 @@ namespace AppGM.Core
 			}
 
 			return string.Empty;
+		}
+
+		private async Task<List<ResultadoTirada>> RealizarTiradas()
+		{
+			var resultadoActual = new List<ResultadoTirada>();
+
+			int numeroDeTiradas = 1;
+
+			if (!PresetTirada.NumeroDeTiradas.IsNullOrWhiteSpace())
+			{
+				var argsTiradaNumeroDeTiradas = new ArgumentosTiradaPersonalizada
+				{
+					multiplicadorEspecialidad = 0,
+					modificador               = 0,
+					stat                      = EStat.NINGUNA,
+					argumentoExtra            = VariableExtra,
+					controlador               = ViewModelSeleccionContenedor.ControladorSeleccionado,
+					personaje                 = ViewModelSeleccionUsuario.ControladorSeleccionado
+				};
+
+				var resultadoParse = await ParserTiradas.TryParseAsync(
+					NumeroDeTiradas,
+					ViewModelSeleccionUsuario.ControladorSeleccionado.modelo,
+					ETipoTirada.Personalizada,
+					EStat.NINGUNA);
+
+				if (resultadoParse.exito)
+				{
+					numeroDeTiradas = resultadoParse.funcion(argsTiradaNumeroDeTiradas).resultado;
+				}
+				else
+				{
+					TextoCroto = resultadoParse.error;
+
+					return resultadoActual;
+				}
+			}
+
+			if (EsTiradaPreexistente)
+			{
+				if (ControladorTirada == null)
+					return resultadoActual;
+
+				ArgumentosTiradaPersonalizada argsTirada = EsTiradaPersonalizada
+					? new ArgumentosTiradaPersonalizada()
+					: new ArgumentosTiradaDaño
+					{
+						objetivo      = (IDañable)ViewModelSeleccionObjetivo.ControladorSeleccionado,
+						manoUtilizada = PresetTirada.ManoUtilizada.Value
+					};
+
+				argsTirada.personaje                 = ViewModelSeleccionUsuario.ControladorSeleccionado;
+				argsTirada.controlador               = ViewModelSeleccionContenedor.ControladorSeleccionado;
+				argsTirada.modificador               = PresetTirada.Modificador;
+				argsTirada.stat                      = ViewModelComboBoxStat.Valor;
+				argsTirada.controlador               = ViewModelSeleccionUsuario.ControladorSeleccionado;
+				argsTirada.argumentoExtra            = VariableExtra;
+				argsTirada.modificador               = PresetTirada.Modificador;
+				argsTirada.multiplicadorEspecialidad = PresetTirada.MultiplicadorDeEspecialidad.Value;
+
+				for(int i = 0; i < numeroDeTiradas; ++i)
+					resultadoActual.Add(await ControladorTirada.RealizarTiradaAsync(argsTirada));
+			}
+			else
+			{
+				if (EsTiradaStat)
+				{
+					var argsTirada = new ArgumentosTirada
+					{
+						modificador               = PresetTirada.Modificador - ViewModelSeleccionUsuario.ControladorSeleccionado.ObtenerModificadorStat(ViewModelComboBoxStat.Valor),
+						multiplicadorEspecialidad = PresetTirada.MultiplicadorDeEspecialidad.Value,
+						stat                      = ViewModelComboBoxStat.Valor
+					};
+
+					for (int i = 0; i < numeroDeTiradas; ++i)
+						resultadoActual.Add(ParserTiradas.RealizarTiradaStat(argsTirada));
+				}
+			}
+
+			TextoCroto = ViewModelComboBoxTipoTirada.Valor.ToString();
+
+			return resultadoActual;
 		}
 	}
 }

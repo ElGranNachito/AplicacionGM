@@ -1127,6 +1127,10 @@ namespace AppGM.Core.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("DescripcionVariableExtra")
+                        .HasMaxLength(512)
+                        .HasColumnType("TEXT");
+
                     b.Property<bool>("EsValido")
                         .HasColumnType("INTEGER");
 
@@ -1151,11 +1155,13 @@ namespace AppGM.Core.Migrations
                     b.Property<int?>("PersonajeContenedorId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Tipo")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("TipoTirada")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("Tirada")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -1171,7 +1177,7 @@ namespace AppGM.Core.Migrations
 
                     b.ToTable("Tirada");
 
-                    b.HasDiscriminator<int>("Tipo");
+                    b.HasDiscriminator<int>("TipoTirada").HasValue(2);
                 });
 
             modelBuilder.Entity("AppGM.Core.ModeloUnidadMapa", b =>
@@ -1628,31 +1634,17 @@ namespace AppGM.Core.Migrations
                     b.HasDiscriminator().HasValue(1);
                 });
 
-            modelBuilder.Entity("AppGM.Core.ModeloTiradaPersonalizada", b =>
-                {
-                    b.HasBaseType("AppGM.Core.ModeloTiradaBase");
-
-                    b.Property<string>("DescripcionVariableExtra")
-                        .HasMaxLength(512)
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Tirada")
-                        .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("TEXT");
-
-                    b.HasDiscriminator().HasValue(1);
-                });
-
-            modelBuilder.Entity("AppGM.Core.ModeloTiradaStat", b =>
+            modelBuilder.Entity("AppGM.Core.ModeloTiradaDeDaño", b =>
                 {
                     b.HasBaseType("AppGM.Core.ModeloTiradaBase");
 
                     b.Property<int>("StatDeLaQueDepende")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("ModeloTiradaStat_StatDeLaQueDepende");
+                        .HasColumnType("INTEGER");
 
-                    b.HasDiscriminator().HasValue(2);
+                    b.Property<int>("TipoDeDaño")
+                        .HasColumnType("INTEGER");
+
+                    b.HasDiscriminator().HasValue(1);
                 });
 
             modelBuilder.Entity("AppGM.Core.ModeloUnidadMapaMasterServant", b =>
@@ -1731,19 +1723,19 @@ namespace AppGM.Core.Migrations
                         .HasMaxLength(5000)
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Mana")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("ManaActual")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Od")
+                    b.Property<int>("ManaTotal")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("OdActual")
                         .HasColumnType("INTEGER");
 
-                    b.Property<ushort>("VentajaChr")
+                    b.Property<int>("OdTotal")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("VentajaChr")
                         .HasColumnType("INTEGER");
 
                     b.HasDiscriminator().HasValue(6);
@@ -1767,19 +1759,6 @@ namespace AppGM.Core.Migrations
                         .HasColumnType("INTEGER");
 
                     b.HasDiscriminator().HasValue(7);
-                });
-
-            modelBuilder.Entity("AppGM.Core.ModeloTiradaDeDaño", b =>
-                {
-                    b.HasBaseType("AppGM.Core.ModeloTiradaPersonalizada");
-
-                    b.Property<int>("StatDeLaQueDepende")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("TipoDeDaño")
-                        .HasColumnType("INTEGER");
-
-                    b.HasDiscriminator().HasValue(3);
                 });
 
             modelBuilder.Entity("AppGM.Core.ModeloUnidadMapaInvocacionTrampa", b =>

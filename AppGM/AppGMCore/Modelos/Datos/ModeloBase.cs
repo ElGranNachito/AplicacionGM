@@ -14,17 +14,17 @@ namespace AppGM.Core
     /// </summary>
     public partial class ModeloBase : ModeloBaseSK
     {
-        /// <summary>
-        /// Guid del modelo. Utilizado para identificarlos en la copia profunda
-        /// </summary>
-        [NotMapped]
-	    public Guid guid = Guid.NewGuid(); 
+	    /// <summary>
+	    /// Guid del modelo. Utilizado para identificarlos en la copia profunda
+	    /// </summary>
+	    [NotMapped]
+	    public Guid guid = Guid.NewGuid();
 
         /// <summary>
         /// Contiene el valor de <see cref="Id"/>
         /// </summary>
         [NoCopiar]
-	    private int mId;
+	    protected int mId;
 
 		/// <summary>
 		/// Indica si este modelo es valido
@@ -34,7 +34,7 @@ namespace AppGM.Core
         //Id
         [Key]
         [NoCopiar]
-        public int Id
+        public virtual int Id
         {
 	        get => mId;
             set
@@ -51,5 +51,5 @@ namespace AppGM.Core
 	            SistemaPrincipal.AñadirModelo(this);
             }
         }
-	}
+    }
 }

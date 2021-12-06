@@ -37,8 +37,8 @@
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 FontSize="{Binding 
-                            RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl},
-                            Path=TamañoFontTitulo}"
+                                RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl},
+                                Path=TamañoFontTitulo}"
                                 Text="{Binding Titulo, FallbackValue=Err}"
                                 Style="{StaticResource TextBlockBase}"
                             />
