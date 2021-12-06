@@ -195,10 +195,15 @@ namespace AppGM.Core
     /// Una clase para asegurarnos de que los <see cref="ModeloHabilidad"/> sean de cierto tipo, asi podemos evitar errores en los casteos
     /// </summary>
     /// <typeparam name="TipoHabilidad">Tipo del modelo</typeparam>
-    public class ControladorHabilidadG<TipoHabilidad> : ControladorHabilidad
+    public class ControladorHabilidadGenerico<TipoHabilidad> : ControladorHabilidad
         where TipoHabilidad: ModeloHabilidad, new()
     {
-        public ControladorHabilidadG(TipoHabilidad _habilidad) : base(_habilidad){}
+	    public readonly TipoHabilidad modeloHabilidad;
+
+	    public ControladorHabilidadGenerico(TipoHabilidad _habilidad) : base(_habilidad)
+	    {
+		    modeloHabilidad = _habilidad;
+	    }
 
         public static Type ObtenerTipo() => typeof(TipoHabilidad);
     }

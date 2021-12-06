@@ -183,9 +183,22 @@
                     <local:UserControlConImagencitaAlCostado
                         Background="{StaticResource Tema.VerdeOscuro}"
                         MaxHeight="40"
-                        Source="../../../Media/Imagenes/Tiradas/Iconos/FuentedeDaño.png"
+                        Source="../../../Media/Imagenes/Tiradas/Iconos/FuentedeDaño.png">
 
-                        Visibility="{Binding UsuarioSeleccionado, Converter={local:IsNullToVisibilityConverter}}">
+                        <local:UserControlConImagencitaAlCostado.Visibility>
+
+                            <MultiBinding 
+                                Converter="{local:BooleanToVisibilityConverterAllTrueColapsarMultiple}" 
+                                ConverterParameter="0">
+
+                                <Binding Path="UsuarioSeleccionado" 
+                                         Converter="{local:IsNullToBooleanConverter}"/>
+
+                                <Binding Path="EsTiradaStat"/>
+
+                            </MultiBinding>
+
+                        </local:UserControlConImagencitaAlCostado.Visibility>
 
                         <local:UserControlSeleccionControlador
                             Content="Seleccionar contenedor"
@@ -300,9 +313,7 @@
                             HorizontalContentAlignment="Center"
 
                             Style="{StaticResource TextoDescriptivo}"
-                            Text="{Binding NumeroDeTiradas, UpdateSourceTrigger=PropertyChanged}"
-                            
-                            local:CampoDeTextoNumericoProperty.Value="True"/>
+                            Text="{Binding NumeroDeTiradas, UpdateSourceTrigger=PropertyChanged}"/>
 
                     </local:UserControlConImagencitaAlCostado>
 
@@ -359,7 +370,9 @@
                             Margin="0 40 0 0"
                             MaxHeight="40"
                             MaxWidth="200"
-                            Source="../../../Media/Imagenes/Tiradas/Iconos/tiradas.png">
+                            Source="../../../Media/Imagenes/Tiradas/Iconos/tiradas.png"
+                            
+                            Visibility="{Binding EsTiradaStat, Converter={local:BooleanToVisibilityConverterColapsar}, ConverterParameter=1}">
 
                             <Grid>
 
@@ -379,10 +392,9 @@
                                     Visibility="{Binding EsTiradaPreexistente, Converter={local:BooleanToVisibilityConverterColapsar}, ConverterParameter=0}"/>
 
                                 <local:UserControlSeleccionControlador
-                                    Margin="0 40 0 0"
                                     Content="Seleccionar tirada"
                                     
-                                    Visibility="{Binding EsTiradaPreexistente, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControlRealizarTirada}}, Converter={local:BooleanToVisibilityConverterColapsar}}"
+                                    Visibility="{Binding DataContext.EsTiradaPreexistente, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControlRealizarTirada}}, Converter={local:BooleanToVisibilityConverterColapsar}}"
                                     DataContext="{Binding ViewModelSeleccionTirada}"/>
 
                                 <Button
@@ -638,15 +650,59 @@
                     <Border
                         Background="{StaticResource Tema.VerdeOscuro}">
 
-                        <Viewbox
-                            MaxWidth="100">
+                        <Grid>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Button
+                                Command="{Binding ResultadosTiradas.ComandoDisminuirIndice}">
+                                
+                                &lt;
+
+                            </Button>
 
                             <TextBlock
-                                VerticalAlignment="Center"
+                                Grid.Column="1"
+
+                                Margin="0 1 0 0"
+
                                 HorizontalAlignment="Center"
-                                Foreground="{StaticResource Tema.Verde}"
-                                Text="Resultado"/>
-                        </Viewbox>
+
+                                Style="{StaticResource TextBlockBase}"
+                                
+                                Text="{Binding ResultadosTiradas.TextoPosicionActual}"></TextBlock>
+
+                            <Button
+                                Grid.Column="2"
+                                
+                                Command="{Binding ResultadosTiradas.ComandoIncrementarIndice}">
+                                
+                                &gt;
+
+                            </Button>
+
+                            <Viewbox
+                                Grid.RowSpan="2"
+                                Grid.ColumnSpan="3"
+                                MaxWidth="100">
+
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                    Foreground="{StaticResource Tema.Verde}"
+                                    Text="Resultado"/>
+                            </Viewbox>
+
+                        </Grid>
 
                     </Border>
 
@@ -662,7 +718,7 @@
                             <TextBlock
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
-                                Text="{Binding ResultadoDetalladoTirada}"/>
+                                Text="{Binding ResultadosTiradas.ResultadoActual.ResultadoDetallado}"/>
                         </Viewbox>
                     </Border>
 
@@ -679,7 +735,7 @@
 
                             FontSize="30"
 
-                            Text="{Binding ResultadoTirada, FallbackValue=Err}"></TextBlock>
+                            Text="{Binding ResultadosTiradas.ResultadoActual.Resultado, FallbackValue=Err}"></TextBlock>
                     </Border>
                     
                 </Grid>

@@ -14,38 +14,65 @@ namespace AppGM.Core
     public static class EnumHelpers
     {
 
-	    //Todas estas propiedades simplemente devuelven los valores de un enum como una lista para su uso en ComboBoxes
-        public static List<ERango>                   RangosDisponibles               => Enum.GetValues(typeof(ERango)).Cast<ERango>().ToList();
-        public static List<ETemporada>               TemporadaDelAño                 => Enum.GetValues(typeof(ETemporada)).Cast<ETemporada>().ToList();
-        public static List<ECondicionClimatica>      CondicionesClimaticas           => Enum.GetValues(typeof(ECondicionClimatica)).Cast<ECondicionClimatica>().ToList();
-        public static List<ECaracteristicasAmbiente> CaracteristicasAmbiente         => Enum.GetValues(typeof(ECaracteristicasAmbiente)).Cast<ECaracteristicasAmbiente>().ToList();
-        public static List<EArquetipo>               ArquetiposDisponibles           => Enum.GetValues(typeof(EArquetipo)).Cast<EArquetipo>().ToList();
-        public static List<EBienestar>               BienestarPersonaje              => Enum.GetValues(typeof(EBienestar)).Cast<EBienestar>().ToList();
-        public static List<EClaseServant>            ClasesDisponibles               => Enum.GetValues(typeof(EClaseServant)).Cast<EClaseServant>().ToList();
-        public static List<ETipoPersonaje>           TiposDePersonajesDisponibles    => Enum.GetValues(typeof(ETipoPersonaje)).Cast<ETipoPersonaje>().ToList();
-        public static List<ETipoAccion>              TiposDeAccionesDisponibles      => Enum.GetValues(typeof(ETipoAccion)).Cast<ETipoAccion>().ToList();
-        public static List<EManoDominante>           TiposDeManoDominanteDisponibles => Enum.GetValues(typeof(EManoDominante)).Cast<EManoDominante>().ToList();
-        public static List<EParteDelCuerpo>          PartesDelCuerpoDisponibles      => Enum.GetValues(typeof(EParteDelCuerpo)).Cast<EParteDelCuerpo>().ToList();
-        public static List<ESexo>                    SexosDisponibles                => Enum.GetValues(typeof(ESexo)).Cast<ESexo>().ToList();
-        public static List<EStat>                    StatsDisponibles                => Enum.GetValues(typeof(EStat)).Cast<EStat>().ToList();
-        public static List<ETipoDeDaño>              TiposDeDañoDisponibles          => Enum.GetValues(typeof(ETipoDeDaño)).Cast<ETipoDeDaño>().ToList();
-        public static List<EUsoDeHabilidad>          UsosDeHabilidadDisponibles      => Enum.GetValues(typeof(EUsoDeHabilidad)).Cast<EUsoDeHabilidad>().ToList();
-        public static List<ETipoHabilidad>           TiposDeHabilidadDisponibles     => Enum.GetValues(typeof(ETipoHabilidad)).Cast<ETipoHabilidad>().ToList();
-        public static List<ETipoTirada>              TiposDeTiradasDisponibles       => Enum.GetValues(typeof(ETipoTirada)).Cast<ETipoTirada>().ToList();
-        public static List<ETipoEfecto>              TiposDeEfectoDisponibles                 => Enum.GetValues(typeof(ETipoEfecto)).Cast<ETipoEfecto>().ToList();
-        public static List<EComportamientoAcumulativo> ComportamientosAcumulativosDisponibles => Enum.GetValues(typeof(EComportamientoAcumulativo)).Cast<EComportamientoAcumulativo>().ToList();
-        public static List<EEstadoPortacion>         EstadosDePortacionDisponibles            => Enum.GetValues(typeof(EEstadoPortacion)).Cast<EEstadoPortacion>().ToList();
-        public static List<ETipoItem>                TiposItemDisponibles                     => Enum.GetValues(typeof(ETipoItem)).Cast<ETipoItem>().ToList();
-        public static List<EEstrategiaDeDeteccionDeDaño>   TiposDeDeteccionDeDañoDisponibles        => Enum.GetValues<EEstrategiaDeDeteccionDeDaño>().ToList();
-        public static List<EMetodoDeReduccionDeDaño> MetodosDeReduccionDeDañoDisponibles      => Enum.GetValues<EMetodoDeReduccionDeDaño>().ToList();
-        public static List<ENivelMagia>              NivelesDeMagiaDisponibles                => Enum.GetValues<ENivelMagia>().ToList();
+		#region Obtencion de los valores de enums
+
+		//Todas estas propiedades simplemente devuelven los valores de un enum como una lista para su uso en ComboBoxes
+		public static List<ERango> RangosDisponibles => Enum.GetValues(typeof(ERango)).Cast<ERango>().ToList();
+		public static List<ETemporada> TemporadaDelAño => Enum.GetValues(typeof(ETemporada)).Cast<ETemporada>().ToList();
+		public static List<ECondicionClimatica> CondicionesClimaticas => Enum.GetValues(typeof(ECondicionClimatica)).Cast<ECondicionClimatica>().ToList();
+		public static List<ECaracteristicasAmbiente> CaracteristicasAmbiente => Enum.GetValues(typeof(ECaracteristicasAmbiente)).Cast<ECaracteristicasAmbiente>().ToList();
+		public static List<EArquetipo> ArquetiposDisponibles => Enum.GetValues(typeof(EArquetipo)).Cast<EArquetipo>().ToList();
+		public static List<EBienestar> BienestarPersonaje => Enum.GetValues(typeof(EBienestar)).Cast<EBienestar>().ToList();
+		public static List<EClaseServant> ClasesDisponibles => Enum.GetValues(typeof(EClaseServant)).Cast<EClaseServant>().ToList();
+		public static List<ETipoPersonaje> TiposDePersonajesDisponibles => Enum.GetValues(typeof(ETipoPersonaje)).Cast<ETipoPersonaje>().ToList();
+		public static List<ETipoAccion> TiposDeAccionesDisponibles => Enum.GetValues(typeof(ETipoAccion)).Cast<ETipoAccion>().ToList();
+		public static List<EManoDominante> TiposDeManoDominanteDisponibles => Enum.GetValues(typeof(EManoDominante)).Cast<EManoDominante>().ToList();
+		public static List<EParteDelCuerpo> PartesDelCuerpoDisponibles => Enum.GetValues(typeof(EParteDelCuerpo)).Cast<EParteDelCuerpo>().ToList();
+		public static List<ESexo> SexosDisponibles => Enum.GetValues(typeof(ESexo)).Cast<ESexo>().ToList();
+		public static List<EStat> StatsDisponibles => Enum.GetValues(typeof(EStat)).Cast<EStat>().ToList();
+		public static List<ETipoDeDaño> TiposDeDañoDisponibles => Enum.GetValues(typeof(ETipoDeDaño)).Cast<ETipoDeDaño>().ToList();
+		public static List<EUsoDeHabilidad> UsosDeHabilidadDisponibles => Enum.GetValues(typeof(EUsoDeHabilidad)).Cast<EUsoDeHabilidad>().ToList();
+		public static List<ETipoHabilidad> TiposDeHabilidadDisponibles => Enum.GetValues(typeof(ETipoHabilidad)).Cast<ETipoHabilidad>().ToList();
+		public static List<ETipoTirada> TiposDeTiradasDisponibles => Enum.GetValues(typeof(ETipoTirada)).Cast<ETipoTirada>().ToList();
+		public static List<ETipoEfecto> TiposDeEfectoDisponibles => Enum.GetValues(typeof(ETipoEfecto)).Cast<ETipoEfecto>().ToList();
+		public static List<EComportamientoAcumulativo> ComportamientosAcumulativosDisponibles => Enum.GetValues(typeof(EComportamientoAcumulativo)).Cast<EComportamientoAcumulativo>().ToList();
+		public static List<EEstadoPortacion> EstadosDePortacionDisponibles => Enum.GetValues(typeof(EEstadoPortacion)).Cast<EEstadoPortacion>().ToList();
+		public static List<ETipoItem> TiposItemDisponibles => Enum.GetValues(typeof(ETipoItem)).Cast<ETipoItem>().ToList();
+		public static List<EEstrategiaDeDeteccionDeDaño> TiposDeDeteccionDeDañoDisponibles => Enum.GetValues<EEstrategiaDeDeteccionDeDaño>().ToList();
+		public static List<EMetodoDeReduccionDeDaño> MetodosDeReduccionDeDañoDisponibles => Enum.GetValues<EMetodoDeReduccionDeDaño>().ToList();
+		public static List<ENivelMagia> NivelesDeMagiaDisponibles => Enum.GetValues<ENivelMagia>().ToList();
+
 
         /// <summary>
-        /// Transforma el valor del <see cref="EFormatoImagen"/> a una cadena
+        /// Obtiene todos los valores disponibles de un <typeparamref name="TEnum"/>
         /// </summary>
-        /// <param name="formato">Froamto que convertir a cadena</param>
-        /// <returns>Valor del <paramref name="formato"/> como cadena</returns>
-        public static string Valor(this EFormatoImagen formato) => "." + Enum.GetName(typeof(EFormatoImagen), formato);
+        /// <typeparam name="TEnum">Tipo del <see cref="Enum"/> cuyos valores obtener</typeparam>
+        /// <param name="valoresQueExcluir">Valores del <typeparamref name="TEnum"/> que excluir del resultado</param>
+        /// <returns><see cref="List{T}"/> con todos los valores disponibles del <typeparamref name="TEnum"/></returns>
+		public static List<TEnum> ObtenerValoresEnum<TEnum>(IEnumerable<TEnum> valoresQueExcluir)
+
+			where TEnum: struct, Enum
+		{
+			var valoresEnum = Enum.GetValues<TEnum>().ToList();
+
+			valoresQueExcluir = valoresQueExcluir.ToList();
+
+			foreach (var valor in valoresQueExcluir)
+			{
+				valoresEnum.Remove(valor);
+			}
+
+			return valoresEnum;
+		}
+
+		#endregion
+
+		/// <summary>
+		/// Transforma el valor del <see cref="EFormatoImagen"/> a una cadena
+		/// </summary>
+		/// <param name="formato">Froamto que convertir a cadena</param>
+		/// <returns>Valor del <paramref name="formato"/> como cadena</returns>
+		public static string Valor(this EFormatoImagen formato) => "." + Enum.GetName(typeof(EFormatoImagen), formato);
 
         /// <summary>
         /// Obtiene el modificador correspondiente para un <see cref="ERango"/>

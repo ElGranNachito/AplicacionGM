@@ -173,10 +173,12 @@ namespace AppGM.Core
 
             ComandoRetrocederIndiceRol = new Comando(() =>
             {
-                if (mIndiceRolActual != 0)
-                    --mIndiceRolActual;
+	            if (mIndiceRolActual != 0)
+		            --mIndiceRolActual;
+	            else
+		            mIndiceRolActual = Roles.Count - 1;
 
-                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(RolActual)));
+	            DispararPropertyChanged(new PropertyChangedEventArgs(nameof(RolActual)));
             });
 
             //Creamos la animacion del fondo

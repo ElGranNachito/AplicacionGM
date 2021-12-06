@@ -37,7 +37,7 @@ namespace AppGM.Core
 		private static Dictionary<string, Func<ArgumentosTiradaPersonalizada, ResultadoTirada>> mTiradasCacheadas =
 			new Dictionary<string, Func<ArgumentosTiradaPersonalizada, ResultadoTirada>>();
 
-		public static (bool esValida, string error, MatchCollection seccionesTirada) TiradaEsValida(
+		public static (bool esValida, string error, MatchCollection seccionesTirada) VerificarValidezTirada(
 			string tirada,
 			IReadOnlyList<ModeloVariableBase> variablesDisponibles,
 			ETipoTirada tipoTirada,
@@ -105,6 +105,55 @@ namespace AppGM.Core
 		///		</item>
 		/// </list>
 		/// </returns>
+		public static (bool exito, Func<ArgumentosTiradaPersonalizada, ResultadoTirada> funcion, string error) TryParse(
+			string tirada,
+			ModeloConVariablesYTiradas usuario,
+			ETipoTirada tipoTirada,
+			EStat stat)
+		{
+			//Si la tirada ya ha sido parseada entonces devolvemos la funcion existente
+			if (mTiradasCacheadas.ContainsKey(tirada))
+				return (true, mTiradasCacheadas[tirada], string.Empty);
+
+			var resultadoComprobacion = ParserTiradas.VerificarValidezTirada(tirada, usuario.ObtenerVariablesDisponibles(), tipoTirada, stat);
+
+			if (!resultadoComprobacion.esValida)
+				return (false, null, resultadoComprobacion.error);
+
+			//Creamos el parser
+			ParserTirada parser = new ParserTirada(resultadoComprobacion.seccionesTirada, tipoTirada);
+
+			//Parseamos la tirada
+			var resultado = parser.Parse();
+
+			//Si no hubo errores la añadimos a las tiradas cacheadas
+			if (resultado.error == string.Empty && resultado.funcion != null)
+				mTiradasCacheadas.Add(tirada, resultado.funcion);
+
+			return (true, resultado.funcion, resultado.error);
+		}
+
+		/// <summary>
+		/// Intenta parsear una <paramref name="tirada"/> asincronicamente
+		/// </summary>
+		/// <param name="tirada">Tirada que se intentara parsear</param>
+		/// <param name="usuario">Controlador que quiere realizar esta tirada</param>
+		/// <param name="tipoTirada">Tipo de la tirada</param>
+		/// <param name="stat">Stat de la que denpende la tirada</param>
+		/// <returns>
+		/// Tupla que contiene:
+		/// <list type="number">
+		///		<item>
+		///			<see cref="bool"/> indicando si se pudo parsear la tirada con exito
+		///		</item>
+		///		<item>
+		///			<see cref="Func{TResult}"/> de la tirada
+		///		</item>
+		///		<item>
+		///			<see cref="string"/> en caso de que haya ocurrido un error los detalles de este se encontraran aqui
+		///		</item>
+		/// </list>
+		/// </returns>
 		public static async Task<(bool exito, Func<ArgumentosTiradaPersonalizada, ResultadoTirada> funcion, string error)> TryParseAsync(
 			string tirada,
 			ModeloConVariablesYTiradas usuario,
@@ -115,7 +164,7 @@ namespace AppGM.Core
 			if (mTiradasCacheadas.ContainsKey(tirada))
 				return (true, mTiradasCacheadas[tirada], string.Empty);
 
-			var resultadoComprobacion = ParserTiradas.TiradaEsValida(tirada, usuario.ObtenerVariablesDisponibles(), tipoTirada, stat);
+			var resultadoComprobacion = ParserTiradas.VerificarValidezTirada(tirada, usuario.ObtenerVariablesDisponibles(), tipoTirada, stat);
 
 			if (!resultadoComprobacion.esValida)
 				return (false, null, resultadoComprobacion.error);
@@ -125,7 +174,7 @@ namespace AppGM.Core
 
 			//Parseamos la tirada
 			var resultado = await parser.ParseAsync();
-
+			
 			//Si no hubo errores la añadimos a las tiradas cacheadas
 			if(resultado.error == string.Empty && resultado.funcion != null)
 				mTiradasCacheadas.Add(tirada, resultado.funcion);
@@ -312,7 +361,7 @@ namespace AppGM.Core
 		}
 
 		/// <summary>
-		/// Parsea la tirada con la que se construyo este parser
+		/// Parsea la tirada con la que se construyo este parser 
 		/// </summary>
 		/// <returns>
 		/// Tupla que contiene:
@@ -325,59 +374,56 @@ namespace AppGM.Core
 		///		</item>
 		/// </list>
 		/// </returns>
-		public async Task<(Func<ArgumentosTiradaPersonalizada, ResultadoTirada> funcion, string error)> ParseAsync()
+		public (Func<ArgumentosTiradaPersonalizada, ResultadoTirada> funcion, string error) Parse()
 		{
-			//Funcion resultante
-			Func<ArgumentosTiradaPersonalizada, ResultadoTirada> funcion = null;
-
-			funcion = await Task.Run(() =>
+			try
 			{
-				try
+				//Si la incializacion falla lanzamos una excepcion
+				if (!Inicializar())
 				{
-					//Si la incializacion falla lanzamos una excepcion
-					if (!Inicializar())
-					{
-						throw new NullReferenceException(mError);
-					}
+					throw new NullReferenceException(mError);
+				}
 
-					//Label que representa el final de la funcion
-					LabelTarget labelFinal = Expression.Label(typeof(ResultadoTirada), "LabelFinal");
+				//Label que representa el final de la funcion
+				LabelTarget labelFinal = Expression.Label(typeof(ResultadoTirada), "LabelFinal");
 
-					//Creamos los parametros
-					ParameterExpression argumentos = Expression.Parameter(typeof(ArgumentosTiradaPersonalizada), "args");
+				//Creamos los parametros
+				ParameterExpression argumentos = Expression.Parameter(typeof(ArgumentosTiradaPersonalizada), "args");
 
-					//Creamos las variables
-					ParameterExpression usuario					  = Expression.Parameter(typeof(ControladorPersonaje), "Usuario");
-					ParameterExpression resultadoTirada           = Expression.Parameter(typeof(ResultadoTirada), "ResultadoTiradaActual");
-					ParameterExpression multiplicador			  = Expression.Parameter(typeof(float), "Multiplicador");
-					ParameterExpression modificador				  = Expression.Parameter(typeof(int), "Modificador");
-					ParameterExpression multiplicadorEspecialidad = Expression.Parameter(typeof(int), "MultiplicadorEspecialidad");
-					ParameterExpression resultadoActual			  = Expression.Parameter(typeof(int), "ResultadoActual");
-					ParameterExpression bonoEspecialidad          = Expression.Parameter(typeof(int), "BonoEspecialidad");
-					ParameterExpression parametroExtra            = Expression.Parameter(typeof(string), "ParametroExtra");
-					ParameterExpression cadenaActual			  = Expression.Parameter(typeof(string), "Cadena");
-					ParameterExpression manoUtilizada             = Expression.Parameter(typeof(EManoUtilizada), "ManoUtilizada");
-					ParameterExpression stat                      = Expression.Parameter(typeof(EStat), "Stat");
+				//Creamos las variables
+				ParameterExpression usuario = Expression.Parameter(typeof(ControladorPersonaje), "Usuario");
+				ParameterExpression contenedor = Expression.Parameter(typeof(ControladorBase), "Contenedor");
+				ParameterExpression resultadoTirada = Expression.Parameter(typeof(ResultadoTirada), "ResultadoTiradaActual");
+				ParameterExpression multiplicador = Expression.Parameter(typeof(float), "Multiplicador");
+				ParameterExpression modificador = Expression.Parameter(typeof(int), "Modificador");
+				ParameterExpression multiplicadorEspecialidad = Expression.Parameter(typeof(int), "MultiplicadorEspecialidad");
+				ParameterExpression resultadoActual = Expression.Parameter(typeof(int), "ResultadoActual");
+				ParameterExpression bonoEspecialidad = Expression.Parameter(typeof(int), "BonoEspecialidad");
+				ParameterExpression parametroExtra = Expression.Parameter(typeof(string), "ParametroExtra");
+				ParameterExpression cadenaActual = Expression.Parameter(typeof(string), "Cadena");
+				ParameterExpression manoUtilizada = Expression.Parameter(typeof(EManoUtilizada), "ManoUtilizada");
+				ParameterExpression stat = Expression.Parameter(typeof(EStat), "Stat");
 
-					Expression argumentosDelTipoAdecuado = null;
+				Expression argumentosDelTipoAdecuado = null;
 
-					switch (mTipoTirada)
-					{
-						case ETipoTirada.Daño:
+				switch (mTipoTirada)
+				{
+					case ETipoTirada.Daño:
 						{
 							ParameterExpression argumentosTiradaDaño = Expression.Parameter(typeof(ArgumentosTiradaDaño), "ArgumentosTiradaDaño");
 
-							mVariables.AddRange(new []
+							mVariables.AddRange(new[]
 							{
-								usuario, 
-								resultadoTirada, 
+								usuario,
+								contenedor,
+								resultadoTirada,
 								multiplicador,
-								modificador, 
+								modificador,
 								bonoEspecialidad,
 								multiplicadorEspecialidad,
-								parametroExtra, 
+								parametroExtra,
 								resultadoActual,
-								cadenaActual, 
+								cadenaActual,
 								manoUtilizada,
 								argumentosTiradaDaño,
 								stat
@@ -390,7 +436,7 @@ namespace AppGM.Core
 										Expression.Constant(null)),
 									Expression.Return(labelFinal, resultadoTirada, typeof(ResultadoTirada)));
 
-							mExpresiones.AddRange(new []
+							mExpresiones.AddRange(new[]
 							{
 								Expression.Assign(argumentosTiradaDaño, Expression.Convert(argumentos, typeof(ArgumentosTiradaDaño))),
 								comprobacionNull,
@@ -401,11 +447,12 @@ namespace AppGM.Core
 
 							break;
 						}
-						case ETipoTirada.Personalizada:
+					case ETipoTirada.Personalizada:
 						{
 							mVariables.AddRange(new[]
 							{
 								usuario,
+								contenedor,
 								resultadoTirada,
 								modificador,
 								bonoEspecialidad,
@@ -420,250 +467,267 @@ namespace AppGM.Core
 
 							break;
 						}
-					}
+				}
 
-					mExpresiones.AddRange(new []
-					{
+				mExpresiones.AddRange(new[]
+				{
 						Expression.Assign(parametroExtra,Expression.Field(argumentos, nameof(ArgumentosTiradaPersonalizada.argumentoExtra))),
 						Expression.Assign(stat,Expression.Field(argumentos, nameof(ArgumentosTiradaPersonalizada.stat))),
-						Expression.Assign(usuario, Expression.Field(argumentos, nameof(ArgumentosTiradaPersonalizada.controlador))),
+						Expression.Assign(usuario, Expression.Field(argumentos, nameof(ArgumentosTiradaPersonalizada.personaje))),
+						Expression.Assign(contenedor, Expression.Field(argumentos, nameof(ArgumentosTiradaPersonalizada.controlador))),
 						Expression.Assign(modificador, Expression.Field(argumentos, nameof(ArgumentosTiradaPersonalizada.modificador))),
 						Expression.Assign(multiplicadorEspecialidad, Expression.Field(argumentos, nameof(ArgumentosTiradaPersonalizada.multiplicadorEspecialidad))),
-					});
+				});
 
-					//Por cada seccion de la tirada...
-					for (int i = 0; i < mSeccionesTirada.Count; i += 2)
+				//Por cada seccion de la tirada...
+				for (int i = 0; i < mSeccionesTirada.Count; i += 2)
+				{
+					//Obtenemos la seccion actual
+					Match seccionActual = mSeccionesTirada[i];
+
+					//Si es una tirada...
+					if (seccionActual.Groups["Tirada"].Value is string tirada && !string.IsNullOrWhiteSpace(tirada))
 					{
-						//Obtenemos la seccion actual
-						Match seccionActual = mSeccionesTirada[i];
+						//Actualimos el tipo de seccion actual
+						mTipoSeccionActual = ETipoSeccionActual.Tirada;
 
-						//Si es una tirada...
-						if (seccionActual.Groups["Tirada"].Value is string tirada && !string.IsNullOrWhiteSpace(tirada))
+						//Separamos la tirada en sus dos partes
+						string[] datosTirada = tirada.Split('d');
+
+						//Obtenemos el numero de dados y de caras
+						int numeroDeDados = int.Parse(datosTirada[0]);
+						int carasDados = int.Parse(datosTirada[1]);
+
+						//Añadimos una llamada al metodo para realizar una tirada simple y guardamos su resultado en 'resultadoTirada'
+						mExpresiones.Add(Expression.Assign(resultadoTirada, Expression.Call(null, mMetodoRealizarTirada, Expression.Constant(numeroDeDados), Expression.Constant(carasDados))));
+
+						mExpresionActual = resultadoTirada;
+					}
+
+					//Si es una constante...
+					else if (seccionActual.Groups["Constante"].Value is string constante && !string.IsNullOrWhiteSpace(constante))
+					{
+						mTipoSeccionActual = ETipoSeccionActual.Constante;
+
+						//Igualamos la expresion actual al valor de la constante
+						mExpresionActual = Expression.Constant(int.Parse(constante), typeof(int));
+					}
+
+					//Si es una variable...
+					else if (seccionActual.Groups["Variable"].Value is string variable && !string.IsNullOrWhiteSpace(variable))
+					{
+						mTipoSeccionActual = ETipoSeccionActual.Variable;
+
+						//Quitamos el '@' del nombre de la variable
+						string nombreVariable = variable.Remove(0, 1);
+
+						//Si es alguna de las variables por defectos asignamos la expresion actual a su valor
+						if (nombreVariable.Equals("ParametroExtra"))
 						{
-							//Actualimos el tipo de seccion actual
-							mTipoSeccionActual = ETipoSeccionActual.Tirada;
-
-							//Separamos la tirada en sus dos partes
-							string[] datosTirada = tirada.Split('d');
-
-							//Obtenemos el numero de dados y de caras
-							int numeroDeDados = int.Parse(datosTirada[0]);
-							int carasDados    = int.Parse(datosTirada[1]);
-
-							//Añadimos una llamada al metodo para realizar una tirada simple y guardamos su resultado en 'resultadoTirada'
-							mExpresiones.Add(Expression.Assign(resultadoTirada, Expression.Call(null, mMetodoRealizarTirada, Expression.Constant(numeroDeDados), Expression.Constant(carasDados))));
-
-							mExpresionActual = resultadoTirada;
+							mExpresionActual = Expression.Call(null, typeof(int).GetMethod(nameof(int.Parse), new[] { typeof(string) }), parametroExtra);
 						}
-
-						//Si es una constante...
-						else if (seccionActual.Groups["Constante"].Value is string constante && !string.IsNullOrWhiteSpace(constante))
+						else if (nombreVariable.Equals("Multiplicador"))
 						{
-							mTipoSeccionActual = ETipoSeccionActual.Constante;
-
-							//Igualamos la expresion actual al valor de la constante
-							mExpresionActual = Expression.Constant(int.Parse(constante), typeof(int));
+							mExpresionActual = multiplicador;
 						}
-
-						//Si es una variable...
-						else if (seccionActual.Groups["Variable"].Value is string variable && !string.IsNullOrWhiteSpace(variable))
+						else if (nombreVariable.Equals("Modificador"))
 						{
-							mTipoSeccionActual = ETipoSeccionActual.Variable;
-
-							//Quitamos el '@' del nombre de la variable
-							string nombreVariable = variable.Remove(0, 1);
-
-							//Si es alguna de las variables por defectos asignamos la expresion actual a su valor
-							if (nombreVariable.Equals("ParametroExtra"))
-							{
-								mExpresionActual = Expression.Call(null, typeof(int).GetMethod(nameof(int.Parse), new []{typeof(string)}), parametroExtra);
-							}
-							else if (nombreVariable.Equals("Multiplicador"))
-							{
-								mExpresionActual = multiplicador;
-							}
-							else if (nombreVariable.Equals("Modificador"))
-							{
-								mExpresionActual = modificador;
-							}
-							//Si no lo es entonces obtenemos el valor de la variable desde el controlador del usuario
-							else
-							{
-								mExpresionActual = Expression.Call(usuario, mMetodoObtenerVariable, Expression.Constant(nombreVariable));
-							}
-
-							//Actualizamos el nombre de la varaible actual
-							mNombreVariableActual = nombreVariable;
+							mExpresionActual = modificador;
 						}
-
-						//Si es un indicador de zona no afectada por multiplicadores...
-						else if (!string.IsNullOrWhiteSpace(seccionActual.Groups["ZonaNoAfectadoPorMultiplicadores"].Value))
-						{
-							mTipoSeccionActual = ETipoSeccionActual.ZonaNoAfectadaPorMultiplicador;
-
-							//Multiplicamos el valor acumulado hasta ahora por el multiplicador
-							mExpresiones.Add(Expression.Assign(resultadoActual, FloorToInt(MultiplyConTipo(resultadoActual, multiplicador, typeof(float)))));
-
-							//Si esta no es la primera seccion, actualizamos la cadena actual
-							if (i != 0)
-								mExpresiones.Add(ConcatAssign(cadenaActual, Concat(Concat(Expression.Constant(" * ("), multiplicador), Expression.Constant(")"))));
-
-							//Quitamos esta seccion de la lista y retrocedemos un indice para no romper el orden
-							mSeccionesTirada.RemoveAt(i);
-
-							--i;
-
-							mZonaNoAfectadaPorMultiplicadorEncontrada = true;
-
-							continue;
-						}
-
-						//Si es otra cosa...
+						//Si no lo es entonces obtenemos el valor de la variable desde el controlador del usuario
 						else
 						{
-							//Si es una operacion aritmetica...
-							if (!string.IsNullOrWhiteSpace(seccionActual.Groups["OperacionAritmetica"].Value))
-							{
-								string nombreVariable = seccionActual.Groups["OperacionAritmetica"].Value;
-
-								throw new ArgumentException($"Una variable no es valida aqui! ({nombreVariable})");
-							}
-
-							//Si no lo es...
-							throw new ArgumentException($"Grupo desconocido! ({seccionActual.Value})");
+							mExpresionActual = Expression.Call(contenedor, mMetodoObtenerVariable, Expression.Constant(nombreVariable));
 						}
 
-						//Si esta es la primera seccion...
-						if (i == 0)
-						{
-							//Añadimos la expresion actual a la cadena
-							mExpresiones.Add(ExpresionActualToString(cadenaActual));
-
-							//Sumamos al resultado actual el valor de la expresion actual
-							mExpresiones.Add(Expression.AddAssign(resultadoActual,  mTipoSeccionActual == ETipoSeccionActual.Tirada ? Expression.Field(mExpresionActual, mFieldResultado) : mExpresionActual));
-
-							//Continuamos a la siguiente iteracion
-							continue;
-						}
-
-						//Si llegamos a este punto es porque esta no es la primera seccion
-
-						//Obtenemos la seccion anterior a la actual, la cual debe ser una operacion aritmetica
-						Match seccionAnterior = mSeccionesTirada[i - 1];
-
-						//Si es una operacion aritmetica...
-						if (seccionAnterior.Groups["OperacionAritmetica"].Value is string operacion && !string.IsNullOrWhiteSpace(operacion))
-						{
-							//Añadimos a la cadena la operacion
-							mExpresiones.Add(ConcatAssign(cadenaActual, Expression.Constant($" {operacion} ")));
-
-							//Añadimos a la cadena la expresion actual
-							mExpresiones.Add(ExpresionActualToString(cadenaActual));
-
-							//Si la seccion actual es una tirada entonces ahora asignamos a la expresion actual el resultado de esa tirada
-							if (mTipoSeccionActual == ETipoSeccionActual.Tirada)
-								mExpresionActual = Expression.Field(mExpresionActual, mFieldResultado);
-
-							//Revisamos cual es la operacion aritmetica y la realizamos
-							switch (operacion[0])
-							{
-								case '+':
-									mExpresiones.Add(Expression.AddAssign(resultadoActual, mExpresionActual));
-									break;
-								case '-':
-									mExpresiones.Add(Expression.SubtractAssign(resultadoActual, mExpresionActual));
-									break;
-								case '*':
-									mExpresiones.Add(Expression.MultiplyAssign(resultadoActual, mExpresionActual));
-									break;
-								case '/':
-									mExpresiones.Add(Expression.DivideAssign(resultadoActual, mExpresionActual));
-									break;
-							}
-						}
-
-						//Fin del for
+						//Actualizamos el nombre de la varaible actual
+						mNombreVariableActual = nombreVariable;
 					}
 
-					//Obtenemos el bono de por especialidad
-					mExpresiones.Add(Expression.Assign(bonoEspecialidad, Expression.Multiply(Expression.Constant(Constantes.BonoEspecialidad), multiplicadorEspecialidad)));
-
-					//Y se lo sumamos al resultado
-					mExpresiones.Add(Expression.AddAssign(resultadoActual, bonoEspecialidad));
-
-					//Representamos las ultimas dos operaciones en la cadena
-					mExpresiones.Add(ConcatAssign(cadenaActual, Concat(Concat(Expression.Constant(" + BonoEspecialidad("), ExpresionToString(bonoEspecialidad)), Expression.Constant(")"))));
-
-					//Si la tirada es de daño
-					if (mTipoTirada == ETipoTirada.Daño)
+					//Si es un indicador de zona no afectada por multiplicadores...
+					else if (!string.IsNullOrWhiteSpace(seccionActual.Groups["ZonaNoAfectadoPorMultiplicadores"].Value))
 					{
-						//Metodo para obtener el modificador de stat de un personaje
-						MethodInfo metodoObtenerModificadorStat            = typeof(ControladorPersonaje).GetMethod(nameof(ControladorPersonaje.ObtenerModificadorStat), new[] { typeof(EStat) });
+						mTipoSeccionActual = ETipoSeccionActual.ZonaNoAfectadaPorMultiplicador;
 
-						//Metodo para obtener el multiplicador por mano utilizada
-						MethodInfo metodoObtenerMultiplicadorManoUtilizada = typeof(Helpers.Juego).GetMethod(nameof(Helpers.Juego.ObtenerMultiplicadorManoUsada), new[] {typeof(EManoUtilizada)});
-
-						//Creamos una varaible para almacenar el valor del modificador de tirada por stat
-						ParameterExpression modificadorStat = Expression.Parameter(typeof(int), "ModificadorStat");
-
-						//Añadimos la variable a la lista
-						mVariables.Add(modificadorStat);
-
-						//Obtenemos el modificador de stat del usuario y lo guardamos en la variable creada anteriormente
-						mExpresiones.Add(Expression.Assign(modificadorStat, Expression.Call(usuario, metodoObtenerModificadorStat, stat)));
-
-						//Multiplicamos el modificador de stat por el multiplicador de mano utilizada y guardamos el resultado en la misma variable
-						mExpresiones.Add(Expression.Assign(modificadorStat, FloorToInt(MultiplyConTipo(modificadorStat, Expression.Call(null, metodoObtenerMultiplicadorManoUtilizada, manoUtilizada), typeof(float)))));
-
-						//Sumamos al resultado actual el valor de modificador stat
-						mExpresiones.Add(Expression.AddAssign(resultadoActual, modificadorStat));
-
-						//Actualizamos la cadena con la ultima operacion
-						mExpresiones.Add(ConcatEnvolver(cadenaActual, Concat(ObtenerOperacionQueMostrar(modificadorStat), Expression.Constant("ModStat(")), ExpresionToString(modificadorStat), Expression.Constant(")")));
-					}
-
-					//Sumamos al resultado actual el modificador
-					mExpresiones.Add(Expression.AddAssign(resultadoActual, modificador));
-
-					//Actualizamos la candena
-					mExpresiones.Add(ConcatEnvolver(cadenaActual, Concat(ObtenerOperacionQueMostrar(modificador), Expression.Constant("Mod(")), ExpresionToString(modificador), Expression.Constant(")")));
-
-					//Si la tirada no incluia una zona no afectada por multiplicador...
-					if (!mZonaNoAfectadaPorMultiplicadorEncontrada && mTipoTirada == ETipoTirada.Daño)
-					{
-						//Multiplicamos el resultado actual por el multiplicador
+						//Multiplicamos el valor acumulado hasta ahora por el multiplicador
 						mExpresiones.Add(Expression.Assign(resultadoActual, FloorToInt(MultiplyConTipo(resultadoActual, multiplicador, typeof(float)))));
 
-						//Actualizamos la candena
-						mExpresiones.Add(ConcatEnvolver(cadenaActual, Expression.Constant(" * Multiplicador("), ExpresionToString(multiplicador), Expression.Constant(")")));
+						//Si esta no es la primera seccion, actualizamos la cadena actual
+						if (i != 0)
+							mExpresiones.Add(ConcatAssign(cadenaActual, Concat(Concat(Expression.Constant(" * ("), multiplicador), Expression.Constant(")"))));
+
+						//Quitamos esta seccion de la lista y retrocedemos un indice para no romper el orden
+						mSeccionesTirada.RemoveAt(i);
+
+						--i;
+
+						mZonaNoAfectadaPorMultiplicadorEncontrada = true;
+
+						continue;
 					}
 
-					//Construimos el resultado de la tirada con los datos generados y lo guardamos en resultadoTirada
-					mExpresiones.Add(Expression.Assign(resultadoTirada, Expression.New(mConstructorResultadoTirada, resultadoActual, cadenaActual)));
+					//Si es otra cosa...
+					else
+					{
+						//Si es una operacion aritmetica...
+						if (!string.IsNullOrWhiteSpace(seccionActual.Groups["OperacionAritmetica"].Value))
+						{
+							string nombreVariable = seccionActual.Groups["OperacionAritmetica"].Value;
 
-					//Label de final de funcion
-					mExpresiones.Add(Expression.Label(labelFinal, resultadoTirada));
+							throw new ArgumentException($"Una variable no es valida aqui! ({nombreVariable})");
+						}
 
-					//Bloque que contiene todas las expresiones y variables creadas
-					Expression expresionFinal = Expression.Block(mVariables, mExpresiones);
+						//Si no lo es...
+						throw new ArgumentException($"Grupo desconocido! ({seccionActual.Value})");
+					}
 
-					//Compilamos la funcion
-					return Expression.Lambda<Func<ArgumentosTiradaPersonalizada, ResultadoTirada>>(expresionFinal, argumentos).Compile();
+					//Si esta es la primera seccion...
+					if (i == 0)
+					{
+						//Añadimos la expresion actual a la cadena
+						mExpresiones.Add(ExpresionActualToString(cadenaActual));
+
+						//Sumamos al resultado actual el valor de la expresion actual
+						mExpresiones.Add(Expression.AddAssign(resultadoActual, mTipoSeccionActual == ETipoSeccionActual.Tirada ? Expression.Field(mExpresionActual, mFieldResultado) : mExpresionActual));
+
+						//Continuamos a la siguiente iteracion
+						continue;
+					}
+
+					//Si llegamos a este punto es porque esta no es la primera seccion
+
+					//Obtenemos la seccion anterior a la actual, la cual debe ser una operacion aritmetica
+					Match seccionAnterior = mSeccionesTirada[i - 1];
+
+					//Si es una operacion aritmetica...
+					if (seccionAnterior.Groups["OperacionAritmetica"].Value is string operacion && !string.IsNullOrWhiteSpace(operacion))
+					{
+						//Añadimos a la cadena la operacion
+						mExpresiones.Add(ConcatAssign(cadenaActual, Expression.Constant($" {operacion} ")));
+
+						//Añadimos a la cadena la expresion actual
+						mExpresiones.Add(ExpresionActualToString(cadenaActual));
+
+						//Si la seccion actual es una tirada entonces ahora asignamos a la expresion actual el resultado de esa tirada
+						if (mTipoSeccionActual == ETipoSeccionActual.Tirada)
+							mExpresionActual = Expression.Field(mExpresionActual, mFieldResultado);
+
+						//Revisamos cual es la operacion aritmetica y la realizamos
+						switch (operacion[0])
+						{
+							case '+':
+								mExpresiones.Add(Expression.AddAssign(resultadoActual, mExpresionActual));
+								break;
+							case '-':
+								mExpresiones.Add(Expression.SubtractAssign(resultadoActual, mExpresionActual));
+								break;
+							case '*':
+								mExpresiones.Add(Expression.MultiplyAssign(resultadoActual, mExpresionActual));
+								break;
+							case '/':
+								mExpresiones.Add(Expression.DivideAssign(resultadoActual, mExpresionActual));
+								break;
+						}
+					}
+
+					//Fin del for
 				}
-				//En caso que ocurra alguna excepcion durante el parseo...
-				catch (Exception ex)
+
+				//Obtenemos el bono de por especialidad
+				mExpresiones.Add(Expression.Assign(bonoEspecialidad, Expression.Multiply(Expression.Constant(Constantes.BonoEspecialidad), multiplicadorEspecialidad)));
+
+				//Y se lo sumamos al resultado
+				mExpresiones.Add(Expression.AddAssign(resultadoActual, bonoEspecialidad));
+
+				//Representamos las ultimas dos operaciones en la cadena
+				mExpresiones.Add(ConcatAssign(cadenaActual, Concat(Concat(Expression.Constant(" + BonoEspecialidad("), ExpresionToString(bonoEspecialidad)), Expression.Constant(")"))));
+
+				//Si la tirada es de daño
+				if (mTipoTirada == ETipoTirada.Daño)
 				{
-					//Asignamos el valor del error a la excepcion
-					mError = ex.Message;
+					//Metodo para obtener el modificador de stat de un personaje
+					MethodInfo metodoObtenerModificadorStat = typeof(ControladorPersonaje).GetMethod(nameof(ControladorPersonaje.ObtenerModificadorStat), new[] { typeof(EStat) });
 
-					SistemaPrincipal.LoggerGlobal.Log($"Error parseando tirada!{Environment.NewLine}{mError}", ESeveridad.Error);
+					//Metodo para obtener el multiplicador por mano utilizada
+					MethodInfo metodoObtenerMultiplicadorManoUtilizada = typeof(Helpers.Juego).GetMethod(nameof(Helpers.Juego.ObtenerMultiplicadorManoUsada), new[] { typeof(EManoUtilizada) });
 
-					return null;
+					//Creamos una varaible para almacenar el valor del modificador de tirada por stat
+					ParameterExpression modificadorStat = Expression.Parameter(typeof(int), "ModificadorStat");
+
+					//Añadimos la variable a la lista
+					mVariables.Add(modificadorStat);
+
+					//Obtenemos el modificador de stat del usuario y lo guardamos en la variable creada anteriormente
+					mExpresiones.Add(Expression.Assign(modificadorStat, Expression.Call(usuario, metodoObtenerModificadorStat, stat)));
+
+					//Multiplicamos el modificador de stat por el multiplicador de mano utilizada y guardamos el resultado en la misma variable
+					mExpresiones.Add(Expression.Assign(modificadorStat, FloorToInt(MultiplyConTipo(modificadorStat, Expression.Call(null, metodoObtenerMultiplicadorManoUtilizada, manoUtilizada), typeof(float)))));
+
+					//Sumamos al resultado actual el valor de modificador stat
+					mExpresiones.Add(Expression.AddAssign(resultadoActual, modificadorStat));
+
+					//Actualizamos la cadena con la ultima operacion
+					mExpresiones.Add(ConcatEnvolver(cadenaActual, Concat(ObtenerOperacionQueMostrar(modificadorStat), Expression.Constant("ModStat(")), ExpresionToString(modificadorStat), Expression.Constant(")")));
 				}
-			});
 
+				//Sumamos al resultado actual el modificador
+				mExpresiones.Add(Expression.AddAssign(resultadoActual, modificador));
+
+				//Actualizamos la candena
+				mExpresiones.Add(ConcatEnvolver(cadenaActual, Concat(ObtenerOperacionQueMostrar(modificador), Expression.Constant("Mod(")), ExpresionToString(modificador), Expression.Constant(")")));
+
+				//Si la tirada no incluia una zona no afectada por multiplicador...
+				if (!mZonaNoAfectadaPorMultiplicadorEncontrada && mTipoTirada == ETipoTirada.Daño)
+				{
+					//Multiplicamos el resultado actual por el multiplicador
+					mExpresiones.Add(Expression.Assign(resultadoActual, FloorToInt(MultiplyConTipo(resultadoActual, multiplicador, typeof(float)))));
+
+					//Actualizamos la candena
+					mExpresiones.Add(ConcatEnvolver(cadenaActual, Expression.Constant(" * Multiplicador("), ExpresionToString(multiplicador), Expression.Constant(")")));
+				}
+
+				//Construimos el resultado de la tirada con los datos generados y lo guardamos en resultadoTirada
+				mExpresiones.Add(Expression.Assign(resultadoTirada, Expression.New(mConstructorResultadoTirada, resultadoActual, cadenaActual)));
+
+				//Label de final de funcion
+				mExpresiones.Add(Expression.Label(labelFinal, resultadoTirada));
+
+				//Bloque que contiene todas las expresiones y variables creadas
+				Expression expresionFinal = Expression.Block(mVariables, mExpresiones);
+
+				//Compilamos la funcion
+				return (Expression.Lambda<Func<ArgumentosTiradaPersonalizada, ResultadoTirada>>(expresionFinal, argumentos).Compile(), string.Empty);
+			}
+			//En caso que ocurra alguna excepcion durante el parseo...
+			catch (Exception ex)
+			{
+				//Asignamos el valor del error a la excepcion
+				mError = ex.Message;
+
+				SistemaPrincipal.LoggerGlobal.Log($"Error parseando tirada!{Environment.NewLine}{mError}", ESeveridad.Error);
+
+				return (null, mError);
+			}
+		}
+
+		/// <summary>
+		/// Parsea asincronicamente la tirada con la que se construyo este parser 
+		/// </summary>
+		/// <returns>
+		/// Tupla que contiene:
+		/// <list type="number">
+		///		<item>
+		///			<see cref="Func{TResult}"/> de la tirada
+		///		</item>
+		///		<item>
+		///			<see cref="string"/> en caso de que haya ocurrido un error los detalles de este se encontraran aqui
+		///		</item>
+		/// </list>
+		/// </returns>
+		public async Task<(Func<ArgumentosTiradaPersonalizada, ResultadoTirada> funcion, string error)> ParseAsync()
+		{
 			//Devolvemos la funcion creada
-			return (funcion, mError);
+			return await Task.Run(Parse);
 		}
 
 		/// <summary>

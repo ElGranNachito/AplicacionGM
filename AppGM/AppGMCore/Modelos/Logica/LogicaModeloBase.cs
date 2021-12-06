@@ -215,32 +215,6 @@ namespace AppGM.Core
 			//Obtenemos los campos
 			var campos = modeloDelQueObtenerLosMiembros.GetFields().ToList();
 
-			if (outModelosEliminados != null && tipoModeloOrigen.IsSubclassOf(typeof(TResultado)))
-			{
-				var propiedadesModeloOrigen = tipoModeloOrigen.GetProperties().Where(p => !propiedades.Contains(p) && typeof(ModeloBase).IsAssignableFrom(p.PropertyType)).ToList();
-
-				foreach (var propiedad in propiedadesModeloOrigen)
-				{
-					if (typeof(IList).IsAssignableFrom(propiedad.PropertyType))
-					{
-						var valorPropiedad = propiedad.ObtenerValorComoLista<ModeloBase>(modeloQueCopiar);
-
-						foreach (var modelo in valorPropiedad)
-						{
-							if (!outModelosEliminados.Contains(modelo))
-								outModelosEliminados.Add(modelo);
-						}
-					}
-					else
-					{
-						var valorPropiedad = propiedad.GetValue(modeloQueCopiar) as ModeloBase;
-
-						if (!outModelosEliminados.Contains(valorPropiedad))
-							outModelosEliminados.Add(valorPropiedad);
-					}
-				}
-			}
-
 			var metodoClonar = typeof(ModeloBase).GetMethod(nameof(CrearCopiaProfundaEnSubtipo_Interno), BindingFlags.Instance | BindingFlags.NonPublic);
 
 			//Por cada propiedad...
@@ -443,7 +417,9 @@ namespace AppGM.Core
 
 			return modeloDestino;
 		}
-		#endregion 
+		#endregion
+
+		public override int GetHashCode() => guid.ToString().GetHashCode();
 
 		#endregion
 	}

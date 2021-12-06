@@ -17,6 +17,8 @@ namespace AppGM.Core
 
 		protected override void ActualizarCaracteristicas()
 		{
+			CaracteristicasItem.Elementos.Clear();
+
 			CaracteristicasItem.AddRange(new []
 			{
 				new ViewModelCaracteristicaItem
@@ -50,8 +52,12 @@ namespace AppGM.Core
 						await resultadoCopia.modelosCreadosEliminados.GuardarYEliminarModelosAsync();
 
 						await SistemaPrincipal.GuardarDatosAsync();
+
+						await ControladorGenerico.Recargar();
+
+						ActualizarCaracteristicas();
 					}
-				}, ControladorGenerico.Portador.modelo, ControladorGenerico).Inicializar();
+				}, ControladorGenerico.modelo.PersonajePortador, ControladorGenerico).Inicializar();
 			};
 
 			Action accionVer = async () =>

@@ -127,14 +127,6 @@ namespace AppGM.Core
 				TipoSeleccionado = actual.valor;
 			};
 
-			PropertyChanged += (sender, args) =>
-			{
-				if (args.PropertyName == nameof(EsValido))
-					return;
-
-				ActualizarValidez();
-			};
-
 			ComandoAceptar = new Comando(() =>
 			{
 				Resultado = EResultadoViewModel.Aceptar;
@@ -148,6 +140,14 @@ namespace AppGM.Core
 
 				mAccionSalir(this);
 			});
+
+			PropertyChanged += (sender, args) =>
+			{
+				if (args.PropertyName == nameof(EsValido))
+					return;
+
+				ActualizarValidez();
+			};
 		}
 
 		#region Metodos

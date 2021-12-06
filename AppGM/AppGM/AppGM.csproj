@@ -53,8 +53,12 @@
     <Resource Include="Media\Imagenes\Fichas\Roll_Fichas.png" />
     <Resource Include="Media\Imagenes\Fichas\Servant_Fichas.png" />
     <Resource Include="Media\Imagenes\Habilidades\Hechizo.png" />
+    <Resource Include="Media\Imagenes\Habilidades\Hechizo_Mini.png" />
     <Resource Include="Media\Imagenes\Habilidades\NP.png" />
+    <Resource Include="Media\Imagenes\Habilidades\NP_Mini.png" />
     <Resource Include="Media\Imagenes\Habilidades\Perks.png" />
+    <Resource Include="Media\Imagenes\Habilidades\Perks_Mini.png" />
+    <Resource Include="Media\Imagenes\Habilidades\Skill_Mini.png" />
     <Resource Include="Media\Imagenes\Lupita.png" />
   </ItemGroup>
   <ItemGroup>
@@ -300,14 +304,17 @@
     <None Remove="Media\Imagenes\Fichas\Roll_Fichas.png" />
     <None Remove="Media\Imagenes\Fichas\Servant_Fichas.png" />
     <None Remove="Media\Imagenes\Habilidades\Hechizo.png" />
+    <None Remove="Media\Imagenes\Habilidades\Hechizo_Mini.png" />
     <None Remove="Media\Imagenes\Habilidades\NP.png" />
+    <None Remove="Media\Imagenes\Habilidades\NP_Mini.png" />
     <None Remove="Media\Imagenes\Habilidades\Perks.png" />
+    <None Remove="Media\Imagenes\Habilidades\Perks_Mini.png" />
+    <None Remove="Media\Imagenes\Habilidades\Skill_Mini.png" />
     <None Remove="Media\Imagenes\Tiradas\Iconos\ParametroExtra.png" />
     <None Remove="Media\Imagenes\Tiradas\Iconos\TiradaDaño.png" />
     <None Remove="Media\Imagenes\Tiradas\Iconos\TiradaPersonalizada.png" />
     <None Remove="Media\Imagenes\Tiradas\Iconos\TiradaStat.png" />
     <Page Remove="Estilos\Colores.xaml" />
-    <Page Remove="Recursos\Botones.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Media\Imagenes\Botones\Agregar_Mapas_Frame1.png" />
@@ -331,7 +338,6 @@
     <Resource Include="Media\Imagenes\Botones\MenuPrincipal\Flechita_Derecha_Click.png" />
     <Resource Include="Media\Imagenes\Botones\MenuPrincipal\Flechita_Derecha_Idle.png" />
     <Resource Include="Media\Imagenes\Botones\MenuPrincipal\Flechita_Derecha_Select.png" />
-    <Resource Include="Recursos\Botones.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Media\Imagenes\Iconos\Parties\" />

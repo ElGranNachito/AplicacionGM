@@ -10,6 +10,8 @@ AppGM/AppGM/tmp
 #Funciones
 AppGM/AppGM/Funciones
 
+AppGM/AppGMCore/Migrations
+
 # User-specific files
 *.rsuser
 *.suo

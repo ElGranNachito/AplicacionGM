@@ -1,11 +1,11 @@
 ﻿
+using System;
+
 namespace AppGM.Core
 {
     public static class Constantes
     {
-        // Ambiente:
-
-        /// <summary>
+	    /// <summary>
         /// Valor constante para la propiedad CaracteristicasAmbiente de un <see cref="ModeloAmbiente"/>
         /// </summary>
         public const ECaracteristicasAmbiente CaracteristicasAmbiente = ECaracteristicasAmbiente.NINGUNO;
@@ -29,6 +29,11 @@ namespace AppGM.Core
         /// Bono
         /// </summary>
         public const int BonoEspecialidad = 2;
+
+        /// <summary>
+        /// Valor que se le asigna a los <see cref="ResultadoTirada"/> cuando son invalidos
+        /// </summary>
+        public const int ResultadoTiradaInvalido = int.MinValue;
 
         /// <summary>
         /// Espacio por defecto que tiene un slot al crearse

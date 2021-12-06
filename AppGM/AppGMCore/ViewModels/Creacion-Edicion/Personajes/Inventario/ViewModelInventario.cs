@@ -27,7 +27,7 @@ namespace AppGM.Core
 
 			ViewModelVistaInventario = new ViewModelVistaArbol<ViewModelElementoArbol<ControladorSlot>, ControladorSlot>(null);
 
-			var elementosBaseArbol = ModeloPersonaje.SlotsBase.Select(s =>
+			var elementosBaseArbol = ModeloPersonaje.SlotsBase.Where(s => s.ObtenerProfundidad() == 0).Select(s =>
 			{
 				var controladorSlot = SistemaPrincipal.ObtenerControlador<ControladorSlot, ModeloSlot>(s, true);
 

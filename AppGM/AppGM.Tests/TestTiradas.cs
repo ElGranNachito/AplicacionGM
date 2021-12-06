@@ -80,7 +80,7 @@ namespace AppGM.Tests
 			ControladorPersonaje controlador = new ControladorPersonaje(pj);
 
 			controlador.EstablecerValorStat(stat, valorStat);
-			controlador.EstablecerValorBonoStat(stat, bonoStat);
+			controlador.EstablecerValorVentajaStat(stat, bonoStat);
 
 			int resultadoEsperado = (int) Math.Floor((resultadoTiradas + int.Parse(parametroExtra) + mod + especialidad * Core.Constantes.BonoEspecialidad + Math.Floor(controlador.ObtenerModificadorStat(stat) * Helpers.Juego.ObtenerMultiplicadorManoUsada(manoUtilizada))) * multiplicador);
 
@@ -138,7 +138,7 @@ namespace AppGM.Tests
 			ControladorPersonaje controlador = new ControladorPersonaje(pj);
 
 			controlador.EstablecerValorStat(stat, valorStat);
-			controlador.EstablecerValorBonoStat(stat, bonoStat);
+			controlador.EstablecerValorVentajaStat(stat, bonoStat);
 
 			int resultadoMinimo = (int)Math.Floor((resultadoMinimoTiradas 
 			                                       + especialidad * Constantes.BonoEspecialidad 

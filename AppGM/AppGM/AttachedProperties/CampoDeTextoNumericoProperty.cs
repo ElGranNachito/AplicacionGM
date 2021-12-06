@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -52,12 +53,10 @@ namespace AppGM
 
 				Type tipoActual = GetTipo(textBox);
 
-				//Nos desubscribimos del evento para que no se dispara cuando cambiemos el texto mas abajo
 				textBox.TextChanged -= mTextChangedHandler;
 
 				QuitarCaracteresNoPermitidos(textBox, tipoActual);
 
-				//Nos volvemos a subscribir al evento de text changed
 				textBox.TextChanged += mTextChangedHandler;
 			}
 		};
@@ -71,7 +70,7 @@ namespace AppGM
 			if (o is TextBox textBox)
 			{
 				//Si solo hay un caracter y ese caracter es un cero entonces eliminamos el texto
-				if (textBox.Text.Length == 1 && textBox.Text[0].Equals('0'))
+				if (Regex.IsMatch(textBox.Text, @"^0*\.?0*$"))
 					textBox.Clear();
 			}
 		};
@@ -105,7 +104,7 @@ namespace AppGM
 
 				Type tipo = GetTipo(textBox);
 
-				if (tipo != typeof(int) && tipo != typeof(float) && tipo != typeof(double))
+				if (tipo != typeof(int) && tipo != typeof(float) && tipo != typeof(double) && tipo != typeof(decimal))
 				{
 					SistemaPrincipal.LoggerGlobal.Log($"{tipo} no es un tipo aceptado", ESeveridad.Error);
 
@@ -134,8 +133,8 @@ namespace AppGM
 						textBox.LostFocus   -= mLostFocusHandler;
 
 						//Si el texto actual es un 0 entonces vaciamos la textbox
-						if (textBox.Text == "0")
-							textBox.Text = "";
+						if (Regex.IsMatch(textBox.Text, @"^0*\.?0*$"))
+							textBox.Clear();
 					}
 				}
 			}
@@ -183,22 +182,16 @@ namespace AppGM
 			//Si el tipo no es un entero entonces debe ser un tipo con decimales
 			if (tipoActual != typeof(int))
 			{
-				//Reemplazamos todos los puntos por comas
-				string cadenaFinal = textBox.Text.Replace('.', ',');
+				var separadorParteDecimal = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
+
+				//Reemplazamos todos los puntos y comas por el caractere separador de numeros de la cultura actual
+				string cadenaFinal = Regex.Replace(textBox.Text, @"\.,", separadorParteDecimal);
 
 				//Quitamos todos los caracteres que no sean un numero o una coma
-				cadenaFinal = Regex.Replace(textBox.Text, "[^0-9,.]", "");
+				cadenaFinal = Regex.Replace(textBox.Text, $"[^0-9{separadorParteDecimal}]", string.Empty);
 
-				//Si hay mas de un punto
-				if (cadenaFinal.Count(c => c == '.') > 1)
-				{
-					int indicePrimerPunto = cadenaFinal.IndexOf('.');
-
-					int indiceSegundoPunto = cadenaFinal.IndexOf('.', indicePrimerPunto + 1);
-
-					//Quitamos todos los caracteres del segundo punto en adelante
-					cadenaFinal = cadenaFinal.Remove(indiceSegundoPunto);
-				}
+				//Si hay mas de un separador decimal en la cadena, lo quitamos
+				cadenaFinal = Regex.Replace(cadenaFinal, $"(?<={separadorParteDecimal}.*){separadorParteDecimal}", string.Empty);
 
 				textBox.Text = cadenaFinal;
 			}

@@ -97,7 +97,7 @@
                         DataContext="{Binding ViewModelComboBoxStatTirada}"/>
 
                     <!-- Tipo de daño de la tirada -->
-                    <local:UserControlComboBoxConDescripcion
+                    <local:UserControlMultiSelectComboBox
                         Margin="0 10 0 0"
 
                         Descripcion="Tipo de daño:"
@@ -133,6 +133,8 @@
                             HorizontalAlignment="Left"
 
                             MinWidth="30"
+
+                            Text="{Binding MultiplicadorEspecialidad}"
 
                             local:CampoDeTextoNumericoProperty.Value="True"/>
 

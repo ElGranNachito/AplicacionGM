@@ -5,11 +5,13 @@ namespace AppGM.Core
 	/// <summary>
 	/// Representa el resultado de una tirada
 	/// </summary>
+	[AccesibleEnGuraScratch]
 	public readonly struct ResultadoTirada
 	{
 		/// <summary>
 		/// Resultado de la tirada
 		/// </summary>
+		[AccesibleEnGuraScratch("Resultado")]
 		public readonly int resultado;
 
 		/// <summary>

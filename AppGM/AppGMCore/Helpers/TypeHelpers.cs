@@ -118,6 +118,33 @@ namespace AppGM.Core
 		}
 
 		/// <summary>
+		/// Obtiene el <see cref="Type"/> del <see cref="ModeloHabilidad"/> representado por un <see cref="ETipoHabilidad"/>
+		/// </summary>
+		/// <param name="tipoHabilidad">Valor de <see cref="ETipoHabilidad"/></param>
+		/// <returns><see cref="Type"/> del <see cref="ModeloHabilidad"/> por <paramref name="tipoHabilidad"/></returns>
+		public static Type ObtenerTipoModeloHabilidad(this ETipoHabilidad tipoHabilidad)
+		{
+			switch (tipoHabilidad)
+			{
+				case ETipoHabilidad.Hechizo:
+					return typeof(ModeloMagia);
+				case ETipoHabilidad.NoblePhantasm:
+					return typeof(ModeloNoblePhantasm);
+				case ETipoHabilidad.Perk:
+					return typeof(ModeloPerk);
+				case ETipoHabilidad.Skill:
+					return typeof(ModeloHabilidad);
+
+				default:
+				{
+					SistemaPrincipal.LoggerGlobal.Log($"{nameof(tipoHabilidad)}({tipoHabilidad}) no contiene un valor soportado", ESeveridad.Error);
+
+					return typeof(ModeloHabilidad);
+				}
+			}
+		}
+
+		/// <summary>
 		/// Obtiene la lista de eventos disponibles para cierto controlador.
 		/// <para>
 		///		Las combinaciones existentes de tipos son las siguientes:
@@ -297,11 +324,8 @@ namespace AppGM.Core
 				if (tipoModelo == typeof(ModeloTiradaDeDaño))
 					return typeof(ControladorTiradaDaño);
 
-				if (tipoModelo == typeof(ModeloTiradaPersonalizada))
-					return typeof(ControladorTiradaPersonalizada);
-
-				if (tipoModelo == typeof(ModeloTiradaStat))
-					return typeof(ControladorTiradaStat);
+				if (tipoModelo == typeof(ModeloTiradaBase))
+					return typeof(ControladorTirada);
 			}
 
 			SistemaPrincipal.LoggerGlobal.Log($"{tipoModelo} no esta soportado", ESeveridad.Error);
@@ -310,6 +334,9 @@ namespace AppGM.Core
 
 			#endregion
 		}
+
+		public static Type ObtenerTipoControlador(this ModeloBase modelo) =>
+			modelo.GetType().ObtenerTipoControladorParaModelo();
 
 		/// <summary>
 		/// Indica si <paramref name="t"/> tiene el <typeparamref name="TAtributo"/>

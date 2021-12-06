@@ -1,12 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using CoolLogs;
 
 namespace AppGM.Core
 {
 	/// <summary>
 	/// Clase base que representa una relacion con un <see cref="ModeloFuncion"/>
 	/// </summary>
-	public class TIFuncion : ModeloBaseSK
+	public class TIFuncion : ModeloBase
 	{
 		[ForeignKey(nameof(Funcion))]
 		public int IDFuncion { get; set; }
@@ -17,6 +18,16 @@ namespace AppGM.Core
 		/// Proposito de la funcion contenida en este relacion
 		/// </summary>
 		public EPropositoFuncionRelacion PropositoFuncionRelacion { get; set; }
+
+		[NotMapped]
+		public override int Id { get; set; }
+
+		[NotMapped]
+		public override bool EsValido
+		{
+			get => Funcion.EsValido;
+			set => SistemaPrincipal.LoggerGlobal.Log($"No se puede establecer la validez de un {this.GetType()}", ESeveridad.Error);
+		}
 	}
 
 	/// <summary>
@@ -71,7 +82,7 @@ namespace AppGM.Core
 	/// Representa una relacion entre un <see cref="ModeloBase"/> y un <see cref="ModeloFuncion_HandlerEvento"/>
 	/// </summary>
 	/// <typeparam name="TOtro">Tipo del modelo cuyo controlador contiene los eventos a los que la funcion esta subscrita</typeparam>
-	public partial class TIFuncionHandlerEvento<TOtro>
+	public partial class TIFuncionHandlerEvento<TOtro> : ModeloBase
 
 		where TOtro: ModeloBase
 	{
@@ -79,6 +90,7 @@ namespace AppGM.Core
 		/// Clave foranea a la <see cref="Funcion"/>
 		/// </summary>
 		[ForeignKey(nameof(Funcion))]
+		[NoCopiar]
 		public int IdFuncion { get; set; }
 
 		/// <summary>
@@ -90,6 +102,7 @@ namespace AppGM.Core
 		/// Clave foranea al otro modelo que forma parte de la relacion
 		/// </summary>
 		[ForeignKey(nameof(Otro))]
+		[NoCopiar]
 		public int IdOtro { get; set; }
 
 		/// <summary>
@@ -102,5 +115,22 @@ namespace AppGM.Core
 		/// </summary>
 		[StringLength(1000)]
 		public string NombresEventosVinculados { get; set; }
+
+		[NotMapped]
+		public override int Id
+		{
+			get => mId;
+			set => mId = value;
+		}
+
+		[NotMapped]
+		public override bool EsValido
+		{
+			get => Funcion.EsValido;
+			set
+			{
+				SistemaPrincipal.LoggerGlobal.Log($"No se puede establecer la validez de un {this.GetType()}", ESeveridad.Error);
+			}
+		}
 	}
 }

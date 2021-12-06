@@ -142,7 +142,7 @@ namespace AppGM
         /// <summary>
         /// Energia vital total del personaje
         /// </summary>
-        public int Od => ((ModeloMaster) personaje.modelo).Od;
+        public int Od => ((ModeloMaster) personaje.modelo).OdTotal;
         
         /// <summary>
         /// Energia vital actual del personaje
@@ -152,7 +152,7 @@ namespace AppGM
         /// <summary>
         /// Energia magica concentrada total del personaje.
         /// </summary>
-        public int Mana => ((ModeloMaster) personaje.modelo).Mana;
+        public int Mana => ((ModeloMaster) personaje.modelo).ManaTotal;
 
         /// <summary>
         /// Energia magica concentrada actual del personaje.

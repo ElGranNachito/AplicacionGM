@@ -10,11 +10,23 @@ namespace AppGM.Core
         public EBienestar EBienestar { get; set; }
 
         /// <summary>
-        /// Energia magica del personaje
+        /// Energia magica total del master
         /// </summary>
-        public int Od         { get; set; }
+        public int OdTotal         { get; set; }
+
+        /// <summary>
+        /// Energia magica actual del master
+        /// </summary>
         public int OdActual   { get; set; }
-        public int Mana       { get; set; }
+
+        /// <summary>
+        /// Mana total del master
+        /// </summary>
+        public int ManaTotal       { get; set; }
+
+        /// <summary>
+        /// Mana actual del master
+        /// </summary>
         public int ManaActual { get; set; }
 
         /// <summary>
@@ -24,7 +36,7 @@ namespace AppGM.Core
         /// <summary>
         /// Ventaja en stat de carisma
         /// </summary>
-        public ushort VentajaChr { get; set; }
+        public int VentajaChr { get; set; }
 
         /// <summary>
         /// Command spells disponibles

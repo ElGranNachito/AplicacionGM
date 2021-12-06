@@ -38,17 +38,6 @@
 
                     Content="Caracteristicas generales"/>
 
-                <!-- Solapa inventario -->
-                <CheckBox
-                    Padding="30 5"
-                    BorderBrush="Blue"
-
-                    IsChecked="{Binding MostrarInventario}"
-
-                    Style="{StaticResource CheckBoxSolapaHorizontal}"
-
-                    Content="Inventario"/>
-
                 <!-- Solapa habilidades -->
                 <CheckBox
                     Padding="30 5"
@@ -61,7 +50,7 @@
 
                     Content="Habilidades"/>
 
-                <!-- Solapa partes del cuerpo -->
+                <!-- Inventario -->
                 <CheckBox
                     Padding="30 5"
                     BorderBrush="Blue"
@@ -70,7 +59,7 @@
 
                     Style="{StaticResource CheckBoxSolapaHorizontal}"
 
-                    Content="Partes del cuerpo"/>
+                    Content="Inventario"/>
 
             </StackPanel>
 
@@ -511,7 +500,7 @@
 
                 <!-- Boton cancelar -->
                 <Button
-                    Content="Cancelar"
+                    Content="Salir"
                     VerticalAlignment="Bottom"
                     HorizontalAlignment="Center"
                     Width="90"

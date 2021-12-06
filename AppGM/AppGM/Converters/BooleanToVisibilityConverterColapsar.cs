@@ -25,23 +25,45 @@ namespace AppGM
         }
     }
 
-    /// <summary>
-    /// Convierte varios valores <see cref="bool"/> a un valor de <see cref="Visibility"/>
-    /// </summary>
-	public class BooleanToVisibilityConverterColapsarMultiple : ConvertidorDeValoresMultiples<BooleanToVisibilityConverterColapsarMultiple>
+	/// <summary>
+	/// <para>
+	///		Convierte varios valores <see cref="bool"/> a un valor de <see cref="Visibility"/>
+	/// </para>
+	/// <para>
+	///		Si el parametro pasado no es null, el valor que deben tener todos los booleanos para que el resultado sea
+	///		<see cref="Visibility.Visible"/>, pasa a ser true. Es decir que si el parametro no es null, el valor de
+	///		visibilidad devuelto sera collapsed cuando cualquiera de los booleanos es verdadero
+	/// </para>
+	/// </summary>
+	[ValueConversion(sourceType: typeof(bool[]), targetType: typeof(Visibility), ParameterType = typeof(object))]
+	public class BooleanToVisibilityConverterAllTrueColapsarMultiple : ConvertidorDeValoresMultiples<BooleanToVisibilityConverterAllTrueColapsarMultiple>
 	{
 		public override object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
 		{
-			foreach (var valor in values)
+			if (parameter == null)
 			{
-				//Si alguno de los valores es falso estonces devolvemos collapsed
-				if (valor is false || valor is not bool)
+				foreach (var valor in values)
 				{
-					return Visibility.Collapsed;
+					//Si alguno de los valores es falso estonces devolvemos collapsed
+					if (valor is false || valor is not bool)
+					{
+						return Visibility.Collapsed;
+					}
+				}
+            }
+			else
+			{
+				foreach (var valor in values)
+				{
+					//Si alguno de los valores es falso estonces devolvemos collapsed
+					if (valor is true || valor is not bool)
+					{
+						return Visibility.Collapsed;
+					}
 				}
 			}
 
-            //Si llegamos hasta aqui es porque todos los valores son verdaderos
+			//Si llegamos hasta aqui es porque todos los valores son verdaderos
 			return Visibility.Visible;
 		}
 	}

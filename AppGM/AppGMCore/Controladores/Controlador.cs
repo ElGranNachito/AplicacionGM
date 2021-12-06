@@ -25,9 +25,9 @@ namespace AppGM.Core
 		protected Dictionary<int, ControladorVariableBase> mVariablesPersistenes;
 
 		/// <summary>
-		/// Contiene todas las <see cref="IControladorTiradaBase"/> guardadas en el <see cref="modelo"/>
+		/// Contiene todas las <see cref="AppGM.Core.ControladorTiradaBase"/> guardadas en el <see cref="modelo"/>
 		/// </summary>
-		protected Dictionary<int, IControladorTiradaBase> mTiradas;
+		protected Dictionary<int, ControladorTiradaBase> mTiradas;
 
 		public IReadOnlyList<ControladorVariableBase> Variables => mVariablesPersistenes.Values.ToList();
 
@@ -102,6 +102,7 @@ namespace AppGM.Core
 
 		public override object ObtenerValorVariable(string nombreVariable)
 		{
+			//TODO: Implementar
 			return null;
 		}
 
@@ -110,7 +111,7 @@ namespace AppGM.Core
 			ObtenerControladorVariable(idVariable)?.GuardarValorVariable(valor);
 		}
 
-		public override IControladorTiradaBase ObtenerTirada(int idTirada)
+		public override ControladorTiradaBase ObtenerTirada(int idTirada)
 		{
 			if (mTiradas.ContainsKey(idTirada))
 				return mTiradas[idTirada];
@@ -118,12 +119,12 @@ namespace AppGM.Core
 			return null;
 		}
 
-		public override IControladorTiradaBase ObtenerTirada(string nombreTirada)
+		public override ControladorTiradaBase ObtenerTirada(string nombreTirada)
 		{
 			throw new System.NotImplementedException();
 		}
 
-		public override List<IControladorTiradaBase> ObtenerTiradas()
+		public override List<ControladorTiradaBase> ObtenerTiradas()
 		{
 			return mTiradas.Values.ToList();
 		}
@@ -155,9 +156,9 @@ namespace AppGM.Core
 					return new KeyValuePair<int, ControladorVariableBase>(var.IDVariable, ControladorVariableBase.CrearControladorCorrespondiente(var));
 				}));
 
-				mTiradas = new Dictionary<int, IControladorTiradaBase>(modeloConVariables.Tiradas.Select(var =>
+				mTiradas = new Dictionary<int, ControladorTiradaBase>(modeloConVariables.Tiradas.Select(var =>
 				{
-					return new KeyValuePair<int, IControladorTiradaBase>(var.Id, IControladorTiradaBase.CrearControladorDeTiradaCorrespondiente(var));
+					return new KeyValuePair<int, ControladorTiradaBase>(var.Id, ControladorTiradaBase.CrearControladorDeTiradaCorrespondiente(var));
 				}));
 			}
 			else
@@ -202,7 +203,7 @@ namespace AppGM.Core
 				//Recargamos las tiradas previamente cargadas o las quitamos si ya no se encuentran en el modelo
 				foreach (var var in mTiradas)
 				{
-					var controladorTirada = (ControladorTiradaBase) var.Value;
+					var controladorTirada = var.Value;
 
 					if (!tiradasNuevas.Contains(controladorTirada.modelo))
 					{
@@ -219,7 +220,7 @@ namespace AppGM.Core
 				//Creamos un controlador para las nuevas tiradas
 				foreach (var var in tiradasNuevas)
 				{
-					mTiradas.Add(var.Id, IControladorTiradaBase.CrearControladorDeTiradaCorrespondiente(var));
+					mTiradas.Add(var.Id, ControladorTiradaBase.CrearControladorDeTiradaCorrespondiente(var));
 				}
 			}
 		}

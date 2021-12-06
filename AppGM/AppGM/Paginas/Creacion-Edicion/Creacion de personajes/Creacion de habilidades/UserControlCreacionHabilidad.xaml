@@ -43,7 +43,10 @@
                         Tag="Nombre de la habilidad"
                         MaxLength="50"
                         MinHeight="20"
-                        Style="{StaticResource TextoDescriptivo}"/>
+                        Style="{StaticResource TextoDescriptivo}"
+                        
+                        Text="{Binding Nombre, UpdateSourceTrigger=PropertyChanged}"
+                        />
 
                     <!-- Descripcion de la habilidad -->
                     <TextBox
@@ -56,15 +59,14 @@
                         Tag="Descripcion"
                         MaxLength="2000"
                         Height="50"
-                        Style="{StaticResource TextoDescriptivo}"/>
+                        Style="{StaticResource TextoDescriptivo}"
+                        
+                        Text="{Binding Descripcion, UpdateSourceTrigger=PropertyChanged}"/>
 
                     <!-- Checkbox usa rango -->
                     <CheckBox
                         Margin="0 10 0 0"
                         Content="Tiene rango"
-                        Visibility="{Binding PuedeElegirSiTieneRango, 
-                        Converter={local:BooleanToVisibilityConverterColapsar},
-                        Mode=OneWay}"
                         IsChecked="{Binding RequiereRango}"/>
 
                     <!-- Es magia particular -->
@@ -220,26 +222,45 @@
             <!-- Barra inferior -->
             <Grid Grid.Row="1">
 
-                <!-- Boton cancelar -->
-                <Button
-                    Margin="10 10 0 0"
-                    HorizontalAlignment="Left"
-                    Content="Cancelar"
-                    BorderBrush="Black"
-                    Width="70"
-                    Style="{StaticResource BotonFondoResaltable}"
-                    Command="{Binding ComandoCancelar}"/>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-                <!-- Boton aceptar -->
+                <!-- Boton salir -->
                 <Button
+                    Grid.Column="0"
+                    HorizontalAlignment="Left"
                     Margin="0 10 10 0"
-                    HorizontalAlignment="Right"
-                    Content="Aceptar"
+                    Content="Salir"
                     BorderBrush="Black"
                     Width="70"
                     Style="{StaticResource BotonFondoResaltable}"
                     IsEnabled="{Binding PuedeFinalizarCreacion}"
-                    Command="{Binding ComandoAceptar}"/>
+                    Command="{Binding ComandoCancelar}"/>
+
+                <!-- Boton guardar -->
+                <Button
+                    Grid.Column="1"
+                    Margin="10 10 0 0"
+                    Content="Guardar"
+                    BorderBrush="Black"
+                    Width="70"
+                    Style="{StaticResource BotonFondoResaltable}"
+                    Command="{Binding ComandoGuardar}"/>
+
+                <!-- Boton finalizar -->
+                <Button
+                    Grid.Column="2"
+                    Margin="0 10 10 0"
+                    HorizontalAlignment="Right"
+                    Content="Finalizar"
+                    BorderBrush="Black"
+                    Width="70"
+                    Style="{StaticResource BotonFondoResaltable}"
+                    IsEnabled="{Binding PuedeFinalizarCreacion}"
+                    Command="{Binding ComandoFinalizar}"/>
 
             </Grid>
 

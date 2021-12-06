@@ -10,7 +10,7 @@ namespace AppGM.Core
 	/// <summary>
 	/// Representa un control para la creacion de una tirada
 	/// </summary>
-	public class ViewModelCreacionEdicionDeTirada : ViewModelCreacionEdicionDeModelo<ModeloTiradaPersonalizada, ControladorTiradaPersonalizada, ViewModelCreacionEdicionDeTirada>, IAutocompletable
+	public class ViewModelCreacionEdicionDeTirada : ViewModelCreacionEdicionDeModelo<ModeloTiradaBase, ControladorTiradaBase, ViewModelCreacionEdicionDeTirada>, IAutocompletable
 	{
 		#region Eventos
 
@@ -144,8 +144,7 @@ namespace AppGM.Core
 		/// <summary>
 		/// VM para el combobox de seleccion del tipo de daño de la tirada
 		/// </summary>
-		public ViewModelComboBox<ETipoDeDaño> ViewModelComboBoxTipoDeDañoTirada { get; set; } =
-			new ViewModelComboBox<ETipoDeDaño>("Tipo de daño", EnumHelpers.TiposDeDañoDisponibles);
+		public ViewModelMultiselectComboBox<ETipoDeDaño> ViewModelComboBoxTipoDeDañoTirada { get; set; }
 
 		public int PosSignoIntercalacion { get; set; }
 
@@ -166,9 +165,9 @@ namespace AppGM.Core
 		/// Constructor base de esta clase
 		/// </summary>
 		/// <param name="_accionSalir">Delegado que se ejecuta al salir del control representado por este vm</param>
-		/// <param name="_personaje"><see cref="ModeloConVariablesYTiradas"/> para el que se esta creando la tirada</param>
+		/// <param name="_contenedorTirada"><see cref="ModeloConVariablesYTiradas"/> para el que se esta creando la tirada</param>
 		/// <param name="_controladorTiradaSiendoEditada">Controlador de la tirada que esta siendo editada</param>
-		public ViewModelCreacionEdicionDeTirada(Action<ViewModelCreacionEdicionDeTirada> _accionSalir, ModeloConVariablesYTiradas _contenedorTirada, ControladorTiradaPersonalizada _controladorTiradaSiendoEditada)
+		public ViewModelCreacionEdicionDeTirada(Action<ViewModelCreacionEdicionDeTirada> _accionSalir, ModeloConVariablesYTiradas _contenedorTirada, ControladorTiradaBase _controladorTiradaSiendoEditada)
 			: base(_accionSalir, _controladorTiradaSiendoEditada)
 		{
 			mModeloContenedor = _contenedorTirada;
@@ -176,12 +175,37 @@ namespace AppGM.Core
 			ViewModelComboBoxTipoTirada.OnValorSeleccionadoCambio += async (ViewModelItemComboBoxBase<ETipoTirada> anterior, ViewModelItemComboBoxBase<ETipoTirada> actual) =>
 			{
 				if (actual.valor == ETipoTirada.Daño)
-					ModeloCreado = (await ModeloCreado.CrearCopiaProfundaEnSubtipoAsync<ModeloTiradaDeDaño, ModeloTiradaPersonalizada>()).resultado;
+				{
+					if(ModeloCreado is not ModeloTiradaDeDaño)
+					{
+						ModeloCreado = (await ModeloCreado.CrearCopiaProfundaEnSubtipoAsync<ModeloTiradaDeDaño, ModeloTiradaBase>()).resultado;
+					}
+				}
 				else
-					ModeloCreado = (await ModeloCreado.CrearCopiaProfundaEnSubtipoAsync<ModeloTiradaPersonalizada, ModeloTiradaDeDaño>()).resultado;
+				{
+					if (ModeloCreado is ModeloTiradaDeDaño)
+					{
+						ModeloCreado = (await ModeloCreado.CrearCopiaProfundaEnSubtipoAsync<ModeloTiradaBase, ModeloTiradaDeDaño>()).resultado;
+					}
+				}
+
+				ModeloCreado.TipoTirada = actual.valor;
 
 				DispararPropertyChanged(nameof(EsTiradaDeDaño));
 			};
+
+			ViewModelComboBoxStatTirada.OnValorSeleccionadoCambio += (anterior, actual) =>
+			{
+				if (ModeloCreado is ModeloTiradaDeDaño d)
+				{
+					d.StatDeLaQueDepende = actual.valor;
+				}
+			};
+
+			ViewModelComboBoxTipoDeDañoTirada = new ViewModelMultiselectComboBox<ETipoDeDaño>(EnumHelpers.TiposDeDañoDisponibles.Select(t =>
+			{
+				return new ViewModelMultiselectComboBoxItem<ETipoDeDaño>(t, t.ToString(), ViewModelComboBoxTipoDeDañoTirada);
+			}).ToList(), new FlagsEnumEqualityComparer<ETipoDeDaño>());
 
 			Autocompletado.OnValorSeleccionado += HandlerValorSeleccionado;
 
@@ -206,14 +230,22 @@ namespace AppGM.Core
 			if (EstaEditando)
 			{
 				TextoTextbox = ModeloCreado.Tirada;
+				TextoActual  = ModeloCreado.Tirada;
 
 				ViewModelComboBoxTipoTirada.SeleccionarValor(ModeloCreado.TipoTirada);
+
+				if (ModeloCreado is ModeloTiradaDeDaño d)
+				{
+					ViewModelComboBoxStatTirada.SeleccionarValor(d.StatDeLaQueDepende);
+
+					ViewModelComboBoxTipoDeDañoTirada.ModificarEstadoSeleccionItem(d.TipoDeDaño, true);
+				}
 			}
 
 			return this;
 		}
 
-		public override ModeloTiradaPersonalizada CrearModelo()
+		public override ModeloTiradaBase CrearModelo()
 		{
 			ActualizarValidez();
 
@@ -222,7 +254,13 @@ namespace AppGM.Core
 
 			if (ViewModelComboBoxTipoTirada.ValorSeleccionado.valor == ETipoTirada.Daño && ModeloCreado is ModeloTiradaDeDaño m)
 			{
-				m.TipoDeDaño = ViewModelComboBoxTipoDeDañoTirada.Valor;
+				//Reseteamos los tipos de daño de la tirada para que si esta editando los tipos de daños queden en blanco
+				m.TipoDeDaño = ETipoDeDaño.NINGUNO;
+
+				foreach (var tipoDeDaño in ViewModelComboBoxTipoDeDañoTirada.ItemsSeleccionados)
+				{
+					m.TipoDeDaño |= tipoDeDaño;
+				}
 			}
 
 			ModeloCreado.Tirada = TextoActual;
@@ -230,14 +268,14 @@ namespace AppGM.Core
 			return ModeloCreado;
 		}
 
-		public override ControladorTiradaPersonalizada CrearControlador()
+		public override ControladorTiradaBase CrearControlador()
 		{
 			var nuevaTirada = CrearModelo();
 
 			if (nuevaTirada == null)
 				return null;
 
-			return IControladorTiradaBase.CrearControladorDeTiradaCorrespondiente(nuevaTirada) as ControladorTiradaPersonalizada;
+			return ControladorTiradaBase.CrearControladorDeTiradaCorrespondiente(nuevaTirada) as ControladorTiradaBase;
 		}
 
 		public void ActualizarPosibilidadesAutocompletado(string nuevoTexto, int nuevoIndiceIntercalacion)
@@ -263,7 +301,7 @@ namespace AppGM.Core
 			{
 				nuevoTexto = nuevoTexto.Remove(indiceComienzoVariable);
 
-				ModificarTextoActual(nuevoTexto += valorSeleccionado.RepresentacionTextual);
+				ModificarTextoActual(nuevoTexto + valorSeleccionado.RepresentacionTextual);
 			}
 			else
 			{
@@ -380,7 +418,7 @@ namespace AppGM.Core
 			}
 
 			//Comprobamos la validez de la tirada
-			var resultadoComprobacion = ParserTiradas.TiradaEsValida(TextoActual, mModeloContenedor.ObtenerVariablesDisponibles(), tipoTiradaSeleccionada.valor, tipoTiradaSeleccionada.valor == ETipoTirada.Daño ? ViewModelComboBoxStatTirada.ValorSeleccionado.valor : EStat.NINGUNA);
+			var resultadoComprobacion = ParserTiradas.VerificarValidezTirada(TextoActual, mModeloContenedor.ObtenerVariablesDisponibles(), tipoTiradaSeleccionada.valor, tipoTiradaSeleccionada.valor == ETipoTirada.Daño ? ViewModelComboBoxStatTirada.ValorSeleccionado.valor : EStat.NINGUNA);
 
 			//Si la tirada no es valida...
 			if (!resultadoComprobacion.esValida)

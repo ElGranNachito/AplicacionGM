@@ -6,9 +6,9 @@ namespace AppGM.Core
 	/// <summary>
 	/// Representa un <see cref="ModeloTiradaBase"/> en una lista
 	/// </summary>
-	public class ViewModelTiradaItem : ViewModelItemListaControlador<ViewModelTiradaItem, ControladorTiradaPersonalizada>
+	public class ViewModelTiradaItem : ViewModelItemListaControlador<ViewModelTiradaItem, ControladorTiradaBase>
 	{
-		public ViewModelTiradaItem(ControladorTiradaPersonalizada _controladorTirada)
+		public ViewModelTiradaItem(ControladorTiradaBase _controladorTirada)
 			:base(_controladorTirada) {}
 
 		protected override void ActualizarCaracteristicas()
@@ -24,7 +24,7 @@ namespace AppGM.Core
 				new ViewModelCaracteristicaItem
 				{
 					Titulo = "Tirada",
-					Valor = ((ModeloTiradaPersonalizada)ControladorGenerico.modelo).Tirada
+					Valor = ControladorGenerico.modelo.Tirada
 				},
 
 				new ViewModelCaracteristicaItem
@@ -41,8 +41,24 @@ namespace AppGM.Core
 			{
 				var dataContextActual = SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido;
 
-				var vmEdicion = await new ViewModelCreacionEdicionDeTirada(vm =>
+				var vmEdicion = await new ViewModelCreacionEdicionDeTirada(async vm =>
 				{
+					if (vm.Resultado.EsAceptarOFinalizar())
+					{
+						var modeloTiradaEditada = vm.CrearModelo();
+
+						//No nos interesa el resultado de la copia puesto que el modelo tirada no contiene referencias a modelos que se puedan modificar durante su edicion
+						await modeloTiradaEditada.CrearCopiaProfundaEnSubtipoAsync(ControladorGenerico.modelo.GetType(), ControladorGenerico.modelo);
+
+						await SistemaPrincipal.GuardarDatosAsync();
+
+						await ControladorGenerico.Recargar();
+
+						ActualizarCaracteristicas();
+					}
+
+					SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = dataContextActual;
+
 				}, ControladorGenerico.modelo.ObtenerModeloContenedor(), ControladorGenerico).Inicializar();
 
 				SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = vmEdicion;

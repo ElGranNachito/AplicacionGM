@@ -48,7 +48,7 @@
 
 		#endregion
 
-		#region Funciones
+		#region Metodos
 
 		public override void Desactivar(ViewModelCrearRol vm)
         {

@@ -16,7 +16,7 @@
 
             modeloRol = new ModeloRol();
 
-	        SistemaPrincipal.Atar(modeloRol);
+            SistemaPrincipal.Atar(modeloRol);
 
 	        //SistemaPrincipal.DatosRolSeleccionado.BaseDeDatos.Database.EnsureDeleted();
 			//SistemaPrincipal.DatosRolSeleccionado.BaseDeDatos.Database.EnsureCreated();
@@ -24,7 +24,21 @@
             SistemaPrincipal.GuardarModelo(SistemaPrincipal.ModeloRolActual);
             SistemaPrincipal.GuardarDatos();
 
-            //Añadimos los pasos
+            EventoVentana ventanaCerradaHandler = null;
+
+            ventanaCerradaHandler = async ventana =>
+            {
+	            await SistemaPrincipal.ModeloRolActual.Eliminar();
+            };
+
+            SistemaPrincipal.Aplicacion.VentanaActual.OnVentanaCerrada += ventanaCerradaHandler;
+
+            OnResultadoEstablecido += resultado =>
+            {
+	            SistemaPrincipal.Aplicacion.VentanaActual.OnVentanaCerrada -= ventanaCerradaHandler;
+            };
+
+	            //Añadimos los pasos
             mViewModelsPasos.AddRange(new ViewModelPaso<ViewModelCrearRol>[]
             {
                 new ViewModelCrearRol_DatosRol(this),
@@ -64,6 +78,8 @@
 
                 await SistemaPrincipal.GuardarModeloAsync(mapaRol);
                 await SistemaPrincipal.GuardarModeloAsync(modeloRol.ClimaHorarioGlobal);
+
+                modeloRol.EsValido = true;
 
                 await SistemaPrincipal.GuardarDatosAsync();
 

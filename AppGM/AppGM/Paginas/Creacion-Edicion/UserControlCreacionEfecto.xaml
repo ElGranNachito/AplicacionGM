@@ -111,8 +111,8 @@
 
                 <Button
                     Padding="10 2"
-                    HorizontalAlignment="Center"
-                    Content="Cancelar"
+                    HorizontalAlignment="Left"
+                    Content="Salir"
                     
                     Style="{StaticResource BotonFondoResaltable}"
                     
@@ -124,9 +124,7 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-
 
                     <Button
                         Grid.Column="0"
@@ -140,16 +138,6 @@
 
                     <Button
                         Grid.Column="1"
-                        Padding="10 2"
-                        HorizontalAlignment="Center"
-                        Content="Aceptar"
-                    
-                        Style="{StaticResource BotonFondoResaltable}"
-                    
-                        Command="{Binding ComandoAceptar}"/>
-
-                    <Button
-                        Grid.Column="2"
                         Padding="10 2"
                         HorizontalAlignment="Center"
                         Content="Finalizar"

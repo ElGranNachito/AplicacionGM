@@ -16,7 +16,12 @@ namespace AppGM
         private static readonly DependencyProperty ItemTemplateProperty = DependencyProperty.Register(
 	        "ItemTemplate",
 	        typeof(DataTemplate),
-	        typeof(UserControlListaItems), new PropertyMetadata(defaultValue: null));
+	        typeof(UserControlListaItems), 
+	        new PropertyMetadata(defaultValue: new DataTemplate
+	        {
+		        DataType = typeof(UserControlItemLista),
+                VisualTree = new FrameworkElementFactory(typeof(UserControlItemLista))
+	        }));
 
         /// <summary>
         /// <see cref="DataTemplate"/> de los items contenidos en esta lista
