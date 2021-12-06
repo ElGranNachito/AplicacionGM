@@ -17,6 +17,12 @@ namespace AppGM.Core
 
         // Campos ---
 
+
+        /// <summary>
+        /// Mapa actualmente seleccionado
+        /// </summary>
+        private ControladorMapa MapaSeleccionado;
+
         /// <summary>
         /// VM de participante resultante de la creacion
         /// </summary>
@@ -40,7 +46,7 @@ namespace AppGM.Core
         /// Indica si combate sigue activo.
         /// De ser falso se toma como concluido o en receso. 
         /// </summary>
-        public bool EstaActivo { get; set; }
+        public bool EstaActivo { get; set; } = true;
 
         /// <summary>
         /// Indica si la creacion puede finalizarse.
@@ -55,6 +61,11 @@ namespace AppGM.Core
                 return true;
             }
         }
+
+        /// <summary>
+        /// VM del ComboBox con los mapas disponibles a seleccionar.
+        /// </summary>
+        public ViewModelComboBox<ControladorMapa> ComboBoxMapas { get; set; } = new ViewModelComboBox<ControladorMapa>(SistemaPrincipal.DatosRolSeleccionado.Mapas);
 
         #endregion
 
@@ -75,6 +86,8 @@ namespace AppGM.Core
                     //Disparamos el evento property changed en PuedeFinalizarCreacion
                     DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PuedeFinalizarCreacion)));
             };
+
+            ComboBoxMapas.OnValorSeleccionadoCambio += (anterior, actual) => MapaSeleccionado = actual.valor;
         }
 
         #endregion
@@ -92,6 +105,8 @@ namespace AppGM.Core
                 EstaActivo = EstaActivo
             };
 
+            modeloAdministradorDeCombate.Mapas.Add(MapaSeleccionado.modelo);
+
             ControladorAdministradorDeCombate controlador = new ControladorAdministradorDeCombate(modeloAdministradorDeCombate);
 
             SistemaPrincipal.DatosRolSeleccionado.CombatesActivos.Add(controlador);
@@ -99,6 +114,10 @@ namespace AppGM.Core
             vmResultado = new ViewModelCombate();
 
             vmResultado.ActualizarCombateActual(controlador);
+
+            SistemaPrincipal.GuardarModelo(modeloAdministradorDeCombate);
+
+            SistemaPrincipal.GuardarDatosAsync();
 
             Resultado = EResultadoViewModel.Aceptar;
         }

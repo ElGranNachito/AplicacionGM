@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AppGM"
              mc:Ignorable="d" 
-             d:DesignHeight="150" d:DesignWidth="400">
+             d:DesignHeight="180" d:DesignWidth="400">
 
     <!-- UserControl que hace uso de un ViewModelCrearParticipanteCombate -->
     <!-- Control para la creacion de la representacion de un participante en un combate-->
@@ -25,6 +25,7 @@
                 HorizontalAlignment="Left"
                 Text="Nombre:"/>
 
+            <!-- Nombre del combate -->
             <TextBox 
                 Grid.Column="1"
                 FontFamily="{StaticResource 'Font Awesome Regular'}"
@@ -33,14 +34,14 @@
                 MinWidth="300"
                 MinHeight="15"
                 Text="{Binding NombreCombate, Mode=TwoWay}"/>
-    
+
+            <!-- CheckBox para indicar si el combate esta actualmente activo o no -->
             <StackPanel
                 Grid.Column="1"
                 Margin="0 30 0 0">
 
                 <StackPanel Orientation="Horizontal">
-                    
-                    <!-- CheckBox  -->
+
                     <CheckBox VerticalAlignment="Center"
                               HorizontalAlignment="Left"
                               Margin="15 0 0 0"
@@ -54,9 +55,19 @@
 
                 </StackPanel>
 
+                <!-- Nombre del combate -->
+                <StackPanel Margin="0 15">
+
+                    <local:UserControlComboBoxConDescripcion 
+                        Grid.Row="0"
+                        Descripcion="Mapa: "
+                        DataContext="{Binding ComboBoxMapas}"/>
+
+                </StackPanel>
+
                 <!-- Boton confirmar -->
                 <Button VerticalAlignment="Bottom"
-                        Margin="0 65"
+                        Margin="0 20"
                         Content="Confirmar"
                         IsEnabled="{Binding PuedeFinalizarCreacion}"
                         Command="{Binding ComandoFinalizar}"/>

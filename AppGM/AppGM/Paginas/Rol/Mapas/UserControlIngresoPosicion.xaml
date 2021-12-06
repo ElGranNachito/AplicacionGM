@@ -72,7 +72,6 @@
                     </Grid>
 
                     <!-- Elementos que oculta la flecha -->
-
                     <Grid
                     Visibility="{Binding DebeMostrarDatosExtra, Converter={local:BooleanToVisibilityConverterColapsar}}"
                     >

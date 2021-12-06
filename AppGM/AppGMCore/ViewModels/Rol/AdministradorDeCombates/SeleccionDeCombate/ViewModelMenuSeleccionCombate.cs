@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
 
@@ -19,12 +20,13 @@ namespace AppGM.Core
         /// <summary>
         /// VMs de combates existentes
         /// </summary>
-        public List<ViewModelCombateItem> Combates { get; set; } = new List<ViewModelCombateItem>();
+        public ObservableCollection<ViewModelCombateItem> Combates { get; set; } = new ObservableCollection<ViewModelCombateItem>();
 
         /// <summary>
-        /// Globo que muestra la informacion del combate que el usuario tiene actualmente seleccionado
+        /// Globo que muestra la informacion del combate que el usuario tiene actualmente seleccionado.
         /// </summary>
         public ViewModelGlobo<ViewModelInfoCombateGlobo> GloboInfoCombate { get; set; }
+
         #endregion
 
         #region Constructores
@@ -60,7 +62,7 @@ namespace AppGM.Core
             ViewModelCrearCombate vm = new ViewModelCrearCombate();
 
             //Se crea el popup y se espera a que se cierre
-            await SistemaPrincipal.MostrarMensajeAsync(vm, "Agregar combate", true, 150, 500);
+            await SistemaPrincipal.MostrarMensajeAsync(vm, "Agregar combate", true, 200, 500);
 
             Combates.Add(new ViewModelCombateItem(vm.vmResultado.administradorDeCombate));
 

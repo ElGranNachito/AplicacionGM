@@ -119,13 +119,14 @@ namespace AppGM.Core
                 for (int i = 0; i < administradorDeCombate.ControladoresParticipantes.Count; ++i)
                     Participantes.Add(new ViewModelParticipante(administradorDeCombate.ControladoresParticipantes[i],this));
 
-                for(int i = 0; i < administradorDeCombate.ControladoresMapas.Count; ++i)
-                    Mapas.Add(new ViewModelMapa(administradorDeCombate.ControladoresMapas[i], SistemaPrincipal.DatosRolSeleccionado.Climas[0]));
-
                 ParticipanteTurnoActual = Participantes[0];
 
                 DispararPropertyChanged(new PropertyChangedEventArgs(nameof(ParticipanteTurnoActual)));
             }
+
+            if(Mapas.IsNullOrEmpty() && !_administradorDeCombate.ControladoresMapas.IsNullOrEmpty())
+                for(int i = 0; i < administradorDeCombate.ControladoresMapas.Count; ++i)
+                    Mapas.Add(new ViewModelMapa(administradorDeCombate.ControladoresMapas[i], SistemaPrincipal.DatosRolSeleccionado.Climas[0]));
 
             DispararPropertyChanged(new PropertyChangedEventArgs(nameof(MapaActual)));
 

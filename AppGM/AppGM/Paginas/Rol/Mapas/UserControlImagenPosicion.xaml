@@ -16,14 +16,14 @@
             <!-- Imagen de la unidad -->
             <Image
                 local:DragProperty.Value="True"
-                    Source="{Binding PathImagen, Mode=OneWay}"
-                    Width="{Binding TamañoImagenesPosicion.X, Mode=OneWay}"
-                    Height="{Binding TamañoImagenesPosicion.Y, Mode=OneWay}"
-                    Margin="{Binding PosicionImg,
-                    Converter={local:GrosorToThicknessConverter},
-                    Mode=OneWay}"
-                    SnapsToDevicePixels="True"
-                    >
+                Source="{Binding PathImagen, Mode=OneWay}"
+                Width="{Binding TamañoImagenesPosicion.X, Mode=OneWay}"
+                Height="{Binding TamañoImagenesPosicion.Y, Mode=OneWay}"
+                Margin="{Binding PosicionImg,
+                Converter={local:GrosorToThicknessConverter},
+                Mode=OneWay}"
+                SnapsToDevicePixels="True"
+                >
 
                 <Image.RenderTransform>
                     <TranslateTransform 

@@ -45,6 +45,7 @@ namespace AppGM.Core
         /// Participantes en el combate
         /// </summary>
         public virtual List<ModeloParticipante> Participantes { get; set; } = new List<ModeloParticipante>();
+        
         /// <summary>
         /// Mapas en los que el combate se lleve a cabo
         /// </summary>
