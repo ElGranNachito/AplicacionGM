@@ -164,7 +164,7 @@ namespace AppGM.Core
 
             if (Participantes.IsNullOrEmpty())
             {
-                Participantes.Add(vm.vmResultado);    
+                Participantes.Add(vm.vmResultado);
                 administradorDeCombate.AvanzarTurno();
             }
             else

@@ -173,8 +173,7 @@
                 Grid.Column="1"
                 Style="{StaticResource BotonPlegarDesplegar}"
                 IsChecked="{Binding DebeMostrarMenuUnidades}"
-                ToolTip="Pliega / Despliega la seccion de gestion de unidades.">
-            </ToggleButton>
+                ToolTip="Pliega / Despliega la seccion de gestion de unidades."/>
 
             <!--Columna media contenedora del mapa-->
             <Border Padding="5" Grid.Column="2" Grid.Row="0" Background="{StaticResource Tema.BlancoVerde}">
@@ -228,12 +227,13 @@
                                 <Grid SizeChanged="OnMapaSizeXChanged">
 
                                     <Grid.Background>
+                                        
                                         <!-- Fondo mapa -->
                                         <ImageBrush
                                             ImageSource="{Binding ImagenMapa, 
                                             Converter={local:FullPathToImageConverter}}"/>
-                                    </Grid.Background>
 
+                                    </Grid.Background>
 
                                     <Grid Visibility="{Binding MuestraTableroDeCasillas, Converter={local:BooleanToVisibilityConverterOcultar}}">
 
@@ -250,8 +250,6 @@
                                 </Grid>
 
                             </local:ZoomBorder>
-
-
 
                             <Grid Visibility="{Binding MuestraPanelClima, Converter={local:BooleanToVisibilityConverterOcultar}}">
 

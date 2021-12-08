@@ -36,7 +36,7 @@ namespace AppGM
 
         private void OnPreviewMouseLeftButtonDown(object sender, RoutedEventArgs e)
         {
-            if (!Keyboard.IsKeyDown(Key.LeftCtrl) && 
+            if ((!Keyboard.IsKeyDown(Key.LeftCtrl) || !Keyboard.IsKeyDown(Key.Space)) && 
                 e.OriginalSource is not UserControlIngresoPosicion && 
                 e.OriginalSource is not UserControlIngresoPosicionParty && 
                 e.OriginalSource is not UserControlIngresoPosicionGeneral &&

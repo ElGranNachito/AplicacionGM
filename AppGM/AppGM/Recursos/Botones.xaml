@@ -422,38 +422,91 @@
     <!-- Estilo para togglebutton de plegar y desplegar contenido -->
     <Style TargetType="{x:Type ToggleButton}" x:Key="BotonPlegarDesplegar">
 
-        <Setter Property="BorderBrush" Value="Transparent"/>
-        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="BorderBrush" Value="{StaticResource Tema.Verde}"/>
+        <Setter Property="BorderThickness" Value="2"/>
 
-        <Setter Property="Background" Value="{StaticResource Tema.VerdeOscuro}" />
-        <Setter Property="Foreground" Value="{StaticResource Tema.BlancoVerde}" />
+        <Setter Property="Background" Value="{StaticResource Tema.VerdeSemiOscuro}" />
+        <Setter Property="Foreground" Value="{StaticResource Tema.Verde}" />
 
         <Setter Property="Content" Value="{StaticResource Fa-FlechaDerecha-Chevron}"/>
 
         <Setter Property="FontFamily" Value="{StaticResource 'Font Awesome Regular'}" />
 
+        <Setter Property="OverridesDefaultStyle" Value="true"/>
+        <Setter Property="IsTabStop" Value="false"/>
+        <Setter Property="Focusable" Value="false"/>
+        <Setter Property="ClickMode" Value="Press"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+
+                    <Border x:Name="templateRoot" Background="{StaticResource Tema.VerdeSemiOscuro}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{StaticResource Tema.Verde}" SnapsToDevicePixels="true">
+                        
+                        <Border x:Name="splitBorder"  BorderThickness="1" BorderBrush="Transparent" HorizontalAlignment="Center" Margin="0" SnapsToDevicePixels="true" Width="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}">
+                            
+                            <!-- Flecha -->
+                            <TextBlock 
+                                x:Name="Texto"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Foreground="{StaticResource Tema.Verde}"
+                                FontFamily="{StaticResource 'Font Awesome Regular'}"
+                                Text="{StaticResource Fa-FlechaIzquierda-Chevron}"/>
+
+                        </Border>
+
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+
+                        <!-- Hacer flechita negra cuando el mouse se posa sobre el elemento -->
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Background" Value="{StaticResource Tema.VerdeSemiOscuro}" />
+                            <Setter Property="Foreground" Value="{StaticResource Tema.Verde}" />
+                        </Trigger>
+
+                        <!-- Resaltar fondo cuando mouse se posa sobre el elemento -->
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true"/>
+                                <Condition Binding="{Binding IsEditable, RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}" Value="false"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Background" TargetName="templateRoot" Value="{StaticResource Tema.VerdeOscuro}"/>
+                            <Setter Property="BorderBrush" TargetName="templateRoot" Value="{StaticResource Tema.Verde}"/>
+                        </MultiDataTrigger>
+
+                        <!-- Triggers para cambiar colorcitos al presionar -->
+
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsPressed, RelativeSource={RelativeSource Self}}" Value="true"/>
+                                <Condition Binding="{Binding IsEditable, RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}" Value="false"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Background" TargetName="templateRoot" Value="{StaticResource Tema.VerdeOscuro}"/>
+                            <Setter Property="BorderBrush" TargetName="templateRoot" Value="{StaticResource Tema.Verde}"/>
+                        </MultiDataTrigger>
+
+                        <!-- Triggers para cambiar colorcitos cuando esta deshabilitado -->
+
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="false"/>
+                                <Condition Binding="{Binding IsEditable, RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}" Value="false"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Background" TargetName="templateRoot" Value="{StaticResource Tema.VerdeSemiOscuro}"/>
+                            <Setter Property="BorderBrush" TargetName="templateRoot" Value="{StaticResource Tema.Verde}"/>
+                        </MultiDataTrigger>
+
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
         <Style.Triggers>
-
-            <!-- Cuando el cursor este sobre el control el fondo cambia de color -->
-            <Trigger Property="IsMouseOver" Value="True">
-                <Trigger.Setters>
-                    <Setter Property="Background" Value="{StaticResource Tema.VerdeOscuro}"></Setter>
-                </Trigger.Setters>
-            </Trigger>
-
-            <!-- Cuando el usuario presiona la flecha esta pasa a apuntar hacia la derecha -->
-            <Trigger Property="IsChecked" Value="True">
-                <Trigger.Setters>
-                    <Setter Property="Content" Value="{StaticResource Fa-FlechaIzquierda-Chevron}" />
-                    <Setter Property="Background" Value="{StaticResource Tema.VerdeOscuro}"></Setter>
-                </Trigger.Setters>
-            </Trigger>
-
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Foreground" Value="{StaticResource Tema.BlancoVerde}"/>
-                <Setter Property="Background" Value="{StaticResource Tema.VerdeOscuro}"></Setter>
+                <Setter Property="Foreground" Value="{StaticResource Tema.VerdeSemiOscuro}"/>
             </Trigger>
-
         </Style.Triggers>
 
     </Style>
@@ -498,7 +551,7 @@
 
         <Style.Triggers>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Foreground" Value="{StaticResource {StaticResource Tema.VerdeOscuro}}"/>
+                <Setter Property="Foreground" Value="{StaticResource Tema.VerdeOscuro}"/>
             </Trigger>
         </Style.Triggers>
 

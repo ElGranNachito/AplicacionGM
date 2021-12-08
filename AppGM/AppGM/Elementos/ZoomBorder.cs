@@ -20,6 +20,7 @@ namespace AppGM
         private UIElement _elemento = null;
         
         private Point _origen;
+        
         private Point _puntoInicial;
 
 
@@ -114,7 +115,7 @@ namespace AppGM
 
         private void OnPreviewMouseLeftButtonDown(object sender, RoutedEventArgs e)
         {
-            if (_elemento != null && Keyboard.IsKeyDown(Key.LeftCtrl))
+            if (_elemento != null && (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.Space)))
             {
                 var translateTransform = ObtenerTranslateTransform(_elemento);
                 
@@ -139,13 +140,13 @@ namespace AppGM
 
         private void OnPreviewMouseRightButtonDown(object sender, RoutedEventArgs e)
         {
-            if (Keyboard.IsKeyDown(Key.LeftCtrl))
+            if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.Space))
                 this.Reset();
         }
 
         private void OnPreviewMouseMove(object sender, RoutedEventArgs e)
         {
-            if (_elemento != null && Keyboard.IsKeyDown(Key.LeftCtrl))
+            if (_elemento != null && (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.Space)))
             {
                 if (_elemento.IsMouseCaptured)
                 {
