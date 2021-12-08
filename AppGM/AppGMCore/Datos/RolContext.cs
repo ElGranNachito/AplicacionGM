@@ -318,11 +318,6 @@ namespace AppGM.Core
 				.WithOne(i => i.DatosArma)
 				.OnDelete(DeleteBehavior.Cascade);
 
-			modelBuilder.Entity<ModeloDatosDefensivo>().ToTable("ModeloDatosDefensivo")
-				.HasOne(d => d.Item)
-				.WithOne(i => i.DatosDefensivo)
-				.OnDelete(DeleteBehavior.Cascade);
-
 			modelBuilder.Entity<ModeloDatosConsumible>().ToTable("ModeloDatosConsumible")
 				.HasOne(c => c.Item)
 				.WithOne(i => i.DatosConsumible)
@@ -623,6 +618,9 @@ namespace AppGM.Core
 				.WithMany(p => p.Tiradas)
 				.OnDelete(DeleteBehavior.Cascade);
 
+			modelBuilder.Entity<ModeloTiradaDeDaño>()
+				.HasMany(t => t.FuentesDeDañoAbarcadas);
+
 			#endregion
 
 			#region Historial Daño
@@ -686,6 +684,28 @@ namespace AppGM.Core
 				.WithMany(i => i.HistorialDañoInfligido)
 				.OnDelete(DeleteBehavior.SetNull);
 
+
+			#endregion
+
+			#region Datos Defensa
+
+			modelBuilder.Entity<ModeloDatosDefensivo>().ToTable("ModeloDatosDefensivo")
+				.HasOne(d => d.Item)
+				.WithOne(i => i.DatosDefensivo)
+				.OnDelete(DeleteBehavior.Cascade);
+
+			modelBuilder.Entity<ModeloDatosDefensivo>().ToTable("ModeloDatosDefensivo")
+				.HasOne(d => d.ParteDelCuerpo)
+				.WithOne(p => p.DatosDefensa)
+				.OnDelete(DeleteBehavior.Cascade);
+
+			modelBuilder.Entity<ModeloDatosReduccionDeDaño>().ToTable("DatosReduccionDeDaño")
+				.HasOne(d => d.DatosDefensaAlQuePertenece)
+				.WithMany(d => d.ReduccionesDeDaños)
+				.OnDelete(DeleteBehavior.Cascade);
+
+			modelBuilder.Entity<ModeloDatosReduccionDeDaño>().ToTable("DatosReduccionDeDaño")
+				.HasMany(d => d.FuentesDeDañoQueReduce);
 
 			#endregion
 
@@ -771,6 +791,8 @@ namespace AppGM.Core
 				.WithMany(p => p.PartesDelCuerpo)
 				.OnDelete(DeleteBehavior.Cascade);
 
+			modelBuilder.Entity<ModeloParteDelCuerpo>()
+				.HasOne(p => p.DatosDefensa);
 			#endregion
 
 			#region Fuente de daño

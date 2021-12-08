@@ -38,7 +38,7 @@ namespace AppGM.Core
 
 			ViewModelVistaInventario.OnElementoSeleccionadoCambio += async (arbol, item) =>
 			{
-				if(arbol.ElementosSeleccionados.Count > 1)
+				if(arbol.ElementosSeleccionados.Count > 1 || !item.EstaSeleccionado)
 					return;
 
 				var vmAnterior = ViewModelEdicionSlotActual;

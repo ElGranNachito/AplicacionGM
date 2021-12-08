@@ -146,6 +146,11 @@ namespace AppGM.Core
 		/// </summary>
 		public ViewModelMultiselectComboBox<ETipoDeDaño> ViewModelComboBoxTipoDeDañoTirada { get; set; }
 
+		/// <summary>
+		/// VM para el combobox de seleccion del tipo de daño de la tirada
+		/// </summary>
+		public ViewModelMultiselectComboBox<ModeloFuenteDeDaño> ViewModelComboBoxFuentesDeDañoTirada { get; set; }
+
 		public int PosSignoIntercalacion { get; set; }
 
 		public Regex ExpresionRegularDetectarCaracteresNoPermitidos { get; set; } = new Regex(@"[^\w@+\-\*\\]");
@@ -207,6 +212,9 @@ namespace AppGM.Core
 				return new ViewModelMultiselectComboBoxItem<ETipoDeDaño>(t, t.ToString(), ViewModelComboBoxTipoDeDañoTirada);
 			}).ToList(), new FlagsEnumEqualityComparer<ETipoDeDaño>());
 
+			ViewModelComboBoxFuentesDeDañoTirada = new ViewModelMultiselectComboBox<ModeloFuenteDeDaño>(SistemaPrincipal
+				.ModeloRolActual.FuentesDeDaño.Select(f => new ViewModelMultiselectComboBoxItem<ModeloFuenteDeDaño>(f, f.ToString(), ViewModelComboBoxFuentesDeDañoTirada)).ToList());
+
 			Autocompletado.OnValorSeleccionado += HandlerValorSeleccionado;
 
 			ComandoComprobar = new Comando(ActualizarValidez);
@@ -239,6 +247,11 @@ namespace AppGM.Core
 					ViewModelComboBoxStatTirada.SeleccionarValor(d.StatDeLaQueDepende);
 
 					ViewModelComboBoxTipoDeDañoTirada.ModificarEstadoSeleccionItem(d.TipoDeDaño, true);
+
+					foreach (var fuenteDaño in d.FuentesDeDañoAbarcadas)
+					{
+						ViewModelComboBoxFuentesDeDañoTirada.ModificarEstadoSeleccionItem(fuenteDaño, true);
+					}
 				}
 			}
 
@@ -260,6 +273,11 @@ namespace AppGM.Core
 				foreach (var tipoDeDaño in ViewModelComboBoxTipoDeDañoTirada.ItemsSeleccionados)
 				{
 					m.TipoDeDaño |= tipoDeDaño;
+				}
+
+				foreach (var fuenteDeDaño in ViewModelComboBoxFuentesDeDañoTirada.ItemsSeleccionados)
+				{
+					m.FuentesDeDañoAbarcadas.Add(fuenteDeDaño);
 				}
 			}
 
@@ -381,7 +399,7 @@ namespace AppGM.Core
 		/// <summary>
 		/// Comprueba la validez de la tirada siendo creada
 		/// </summary>
-		protected override void ActualizarValidez()
+		public override void ActualizarValidez()
 		{
 			//Comprobamos que el nombre no este vacio
 			if (Nombre.IsNullOrWhiteSpace())

@@ -201,7 +201,7 @@ namespace AppGM.Core
 						{
 							ModeloCreado.DatosArma ??= new ModeloDatosArma();
 
-							DatosArma = await new ViewModelIngresoDatosArma(ModeloCreado.DatosArma, this).Inicializar();
+							DatosArma = new ViewModelIngresoDatosArma(ModeloCreado.DatosArma, this);
 						}
 						else
 						{
@@ -220,7 +220,7 @@ namespace AppGM.Core
 						{
 							ModeloCreado.DatosDefensivo ??= new ModeloDatosDefensivo();
 
-							DatosDefensivo = await new ViewModelIngresoDatosDefensivo(ModeloCreado.DatosDefensivo, this).Inicializar();
+							DatosDefensivo = new ViewModelIngresoDatosDefensivo(ModeloCreado.DatosDefensivo);
 						}
 						else
 						{
@@ -239,7 +239,7 @@ namespace AppGM.Core
 						{
 							ModeloCreado.DatosConsumible ??= new ModeloDatosConsumible();
 
-							DatosConsumible = new ViewModelIngresoDatosConsumible(this, ModeloCreado.DatosConsumible);
+							DatosConsumible = new ViewModelIngresoDatosConsumible(ModeloCreado.DatosConsumible, this);
 						}
 						else
 						{
@@ -434,7 +434,7 @@ namespace AppGM.Core
 			return modelo == null ? null : SistemaPrincipal.ObtenerControlador<ControladorItem, ModeloItem>(modelo, true);
 		}
 
-		protected override void ActualizarValidez()
+		public override void ActualizarValidez()
 		{
 			EsValido = false;
 

@@ -484,7 +484,7 @@ namespace AppGM.Core
         }
 
         
-        public void Dañar(ModeloArgumentosDaño argsDaño, SortedList<int, IDañable> subObjetivos = null)
+        public void Dañar(ModeloArgumentosDaño argsDaño, SortedList<int, SubobjetivoDaño> subObjetivos = null)
         {
 	        throw new NotImplementedException();
         }
@@ -709,7 +709,7 @@ namespace AppGM.Core
                     break;
 
                 case EStat.NP:
-	                Np = (ERango) valor;
+	                Np = valor.ARango();
                     break;
 
                 default:

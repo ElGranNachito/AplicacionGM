@@ -39,6 +39,7 @@ namespace AppGM.Core
 		{
 			ElementosSeleccionados.Remove(elemento);
 
+			OnElementoSeleccionadoCambio(this, (TViewModelElementos)elemento);
 			OnElementoDeseleccionado(this, (TViewModelElementos)elemento);
 		}
 	}

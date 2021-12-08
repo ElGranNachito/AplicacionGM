@@ -5,15 +5,17 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AppGM"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             
+             Background="{StaticResource Tema.VerdeOscuro}">
+
 
     <!--ViewModel: ViewModelCrearTirada-->
 
     <Grid>
 
         <Border
-            Padding="10"
-            Background="White">
+            Padding="10">
 
             <Grid >
 
@@ -105,6 +107,16 @@
                         Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControlCreacionTirada}}, Path=DataContext.EsTiradaDeDaño, Converter={local:BooleanToVisibilityConverterColapsar}}"
 
                         DataContext="{Binding ViewModelComboBoxTipoDeDañoTirada}"/>
+
+                    <!-- Fuentes de daño abarcadas por la tirada -->
+                    <local:UserControlMultiSelectComboBox
+                        Margin="0 10 0 0"
+
+                        Descripcion="Fuentes de daño:"
+
+                        Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControlCreacionTirada}}, Path=DataContext.EsTiradaDeDaño, Converter={local:BooleanToVisibilityConverterColapsar}}"
+
+                        DataContext="{Binding ViewModelComboBoxFuentesDeDañoTirada}"/>
 
                     <StackPanel
                         Margin="0 10 0 10"
@@ -224,8 +236,6 @@
                         Command="{Binding ComandoAceptar}"/>
 
                 </Grid>
-
-                
 
                 <!-- Boton instrucciones -->
                 <Button

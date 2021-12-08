@@ -12,7 +12,7 @@ namespace AppGM.Core
 		/// </summary>
 		/// <param name="argsDaño"></param>
 		/// <param name="subObjetivos"></param>
-		public delegate void dDañado(ModeloArgumentosDaño argsDaño, SortedList<int, IDañable> subObjetivos = null);
+		public delegate void dDañado(ModeloArgumentosDaño argsDaño, SortedList<int, SubobjetivoDaño> subObjetivos = null);
 
 		/// <summary>
 		/// Evento disparado cuando este objeto recibe daño
@@ -24,6 +24,6 @@ namespace AppGM.Core
 		/// </summary>
 		/// <param name="argsDaño">Argumentos del daño</param>
 		/// <param name="subObjetivos">Subobjetivos</param>
-		void Dañar(ModeloArgumentosDaño argsDaño, SortedList<int, IDañable> subObjetivos = null);
+		void Dañar(ModeloArgumentosDaño argsDaño, SortedList<int, SubobjetivoDaño> subObjetivos = null);
 	}
 }

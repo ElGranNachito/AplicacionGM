@@ -9,11 +9,13 @@
 
              MinHeight="550"
 
-             d:DesignHeight="550" d:DesignWidth="800">
+             d:DesignHeight="550" d:DesignWidth="800"
+             
+             Background="{StaticResource Tema.VerdeOscuro}">
 
     <!--ViewModel: ViewModelCreacionPersonaje-->
 
-    <Border Background="White"
+    <Border 
             Padding="5">
         <Grid>
             <Grid.RowDefinitions>
@@ -30,7 +32,7 @@
                 <!-- Solapa caracteristicas generales -->
                 <CheckBox
                     Padding="30 5"
-                    BorderBrush="Blue"
+                    BorderBrush="{StaticResource Tema.Verde}"
 
                     IsChecked="{Binding MostrarCaracteristicasGenerales}"
 
@@ -41,7 +43,7 @@
                 <!-- Solapa habilidades -->
                 <CheckBox
                     Padding="30 5"
-                    BorderBrush="Blue"
+                    BorderBrush="{StaticResource Tema.Verde}"
 
                     IsChecked="{Binding MostrarHabilidades}"
                     IsEnabled="{Binding PuedeAñadirHabilidades}"
@@ -53,7 +55,7 @@
                 <!-- Inventario -->
                 <CheckBox
                     Padding="30 5"
-                    BorderBrush="Blue"
+                    BorderBrush="{StaticResource Tema.Verde}"
 
                     IsChecked="{Binding MostrarPartesDelCuerpo}"
 
@@ -96,7 +98,7 @@
                                 Height="50"
                                 Width="{Binding RelativeSource={RelativeSource Mode=Self}, Path=ActualHeight}"
                                 CornerRadius="{Binding RelativeSource={RelativeSource Mode=Self}, Path=ActualHeight}"
-                                BorderBrush="Black"
+                                BorderBrush="{StaticResource Tema.Verde}"
                                 BorderThickness="1">
 
                                 <Border.Background>
@@ -505,7 +507,6 @@
                     HorizontalAlignment="Center"
                     Width="90"
                     BorderBrush="Black"
-                    Style="{StaticResource BotonFondoResaltable}"
                     Command="{Binding ComandoCancelar}"/>
 
                 <!-- Boton guardar -->
@@ -516,7 +517,6 @@
                     HorizontalAlignment="Center"
                     Width="90"
                     BorderBrush="Black"
-                    Style="{StaticResource BotonFondoResaltable}"
                     Command="{Binding ComandoGuardar}"/>
 
                 <!-- Boton finalizar -->
@@ -529,7 +529,6 @@
                     BorderBrush="Black"
 
                     IsEnabled="{Binding EsValido}"
-                    Style="{StaticResource BotonFondoResaltable}"
                     Command="{Binding ComandoFinalizar}"/>
 
             </Grid>

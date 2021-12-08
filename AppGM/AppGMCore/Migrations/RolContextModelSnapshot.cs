@@ -161,16 +161,22 @@ namespace AppGM.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("DañoFinal")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("DañoTotal")
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("EsValido")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("NivelMagia")
+                    b.Property<int?>("NivelMagia")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Rango")
+                    b.Property<int?>("Rango")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("TipoDeDaño")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -378,12 +384,18 @@ namespace AppGM.Core.Migrations
                     b.Property<int>("EstrategiasDeDeteccionDeDañoUtilizadas")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("IDItem")
+                    b.Property<int?>("IDItem")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("IDParteDelCuerpo")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
                     b.HasIndex("IDItem")
+                        .IsUnique();
+
+                    b.HasIndex("IDParteDelCuerpo")
                         .IsUnique();
 
                     b.ToTable("ModeloDatosDefensivo");
@@ -415,7 +427,13 @@ namespace AppGM.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int?>("DatosDefensaAlQuePerteneceId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<bool>("EsValido")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("EstaHabilitada")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("EstrategiaDeDeteccionDeDaño")
@@ -424,16 +442,16 @@ namespace AppGM.Core.Migrations
                     b.Property<int>("MetodoDeReduccionDeDaño")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("ModeloDatosDefensivoId")
+                    b.Property<int>("NivelesDeLasMagiasCuyosDañosReduce")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("NivelDeLaMagiaCuyoDañoReduce")
+                    b.Property<string>("Nombre")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("RangosDelDañoQueReduce")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("RangoDelDañoQueReduce")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("TipoDeDañoQueReduce")
+                    b.Property<int>("TiposDeDañoQueReduce")
                         .HasColumnType("INTEGER");
 
                     b.Property<decimal>("ValorReduccion")
@@ -441,9 +459,9 @@ namespace AppGM.Core.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ModeloDatosDefensivoId");
+                    b.HasIndex("DatosDefensaAlQuePerteneceId");
 
-                    b.ToTable("ModeloDatosReduccionDeDaño");
+                    b.ToTable("DatosReduccionDeDaño");
                 });
 
             modelBuilder.Entity("AppGM.Core.ModeloDañable", b =>
@@ -610,6 +628,9 @@ namespace AppGM.Core.Migrations
                     b.Property<int?>("ModeloDatosReduccionDeDañoId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int?>("ModeloTiradaDeDañoId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("NombreFuente")
                         .HasColumnType("TEXT");
 
@@ -622,6 +643,8 @@ namespace AppGM.Core.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ModeloDatosReduccionDeDañoId");
+
+                    b.HasIndex("ModeloTiradaDeDañoId");
 
                     b.HasIndex("RolAlQuePerteneceId");
 
@@ -1887,10 +1910,16 @@ namespace AppGM.Core.Migrations
                     b.HasOne("AppGM.Core.ModeloItem", "Item")
                         .WithOne("DatosDefensivo")
                         .HasForeignKey("AppGM.Core.ModeloDatosDefensivo", "IDItem")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("AppGM.Core.ModeloParteDelCuerpo", "ParteDelCuerpo")
+                        .WithOne("DatosDefensa")
+                        .HasForeignKey("AppGM.Core.ModeloDatosDefensivo", "IDParteDelCuerpo")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Item");
+
+                    b.Navigation("ParteDelCuerpo");
                 });
 
             modelBuilder.Entity("AppGM.Core.ModeloDatosInvocacionBase", b =>
@@ -1906,9 +1935,12 @@ namespace AppGM.Core.Migrations
 
             modelBuilder.Entity("AppGM.Core.ModeloDatosReduccionDeDaño", b =>
                 {
-                    b.HasOne("AppGM.Core.ModeloDatosDefensivo", null)
+                    b.HasOne("AppGM.Core.ModeloDatosDefensivo", "DatosDefensaAlQuePertenece")
                         .WithMany("ReduccionesDeDaños")
-                        .HasForeignKey("ModeloDatosDefensivoId");
+                        .HasForeignKey("DatosDefensaAlQuePerteneceId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("DatosDefensaAlQuePertenece");
                 });
 
             modelBuilder.Entity("AppGM.Core.ModeloDañable", b =>
@@ -2008,6 +2040,10 @@ namespace AppGM.Core.Migrations
                     b.HasOne("AppGM.Core.ModeloDatosReduccionDeDaño", null)
                         .WithMany("FuentesDeDañoQueReduce")
                         .HasForeignKey("ModeloDatosReduccionDeDañoId");
+
+                    b.HasOne("AppGM.Core.ModeloTiradaDeDaño", null)
+                        .WithMany("FuentesDeDañoAbarcadas")
+                        .HasForeignKey("ModeloTiradaDeDañoId");
 
                     b.HasOne("AppGM.Core.ModeloRol", "RolAlQuePertenece")
                         .WithMany("FuentesDeDaño")
@@ -2678,6 +2714,8 @@ namespace AppGM.Core.Migrations
 
             modelBuilder.Entity("AppGM.Core.ModeloParteDelCuerpo", b =>
                 {
+                    b.Navigation("DatosDefensa");
+
                     b.Navigation("HistorialDañoRecibido");
 
                     b.Navigation("Slots");
@@ -2771,6 +2809,11 @@ namespace AppGM.Core.Migrations
             modelBuilder.Entity("AppGM.Core.ModeloPersonajeJugable", b =>
                 {
                     b.Navigation("Caracteristicas");
+                });
+
+            modelBuilder.Entity("AppGM.Core.ModeloTiradaDeDaño", b =>
+                {
+                    b.Navigation("FuentesDeDañoAbarcadas");
                 });
 
             modelBuilder.Entity("AppGM.Core.ModeloServant", b =>

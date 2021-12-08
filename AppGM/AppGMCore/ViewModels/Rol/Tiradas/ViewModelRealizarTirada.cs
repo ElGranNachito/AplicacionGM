@@ -166,6 +166,11 @@ namespace AppGM.Core
 		public ViewModelMultiselectComboBox<ETipoDeDaño> ViewModelMultiselectComboBoxTipoDeDaño { get; set; }
 
 		/// <summary>
+		/// Viewmodel del combobox para seleccionar las fuentes de daño abarcadas por la tirada
+		/// </summary>
+		public ViewModelMultiselectComboBox<ModeloFuenteDeDaño> ViewModelMultiselectComboBoxFuenteDaño { get; set; }
+
+		/// <summary>
 		/// Viewmodel para la seleccion del controlador de la tirada
 		/// </summary>
 		public ViewModelSeleccionDeControlador<ControladorTiradaBase> ViewModelSeleccionTirada { get; set; }
@@ -197,6 +202,8 @@ namespace AppGM.Core
 		public ViewModelItemListaBase UsuarioSeleccionado => ViewModelSeleccionUsuario.ItemSeleccionado;
 
 		public ViewModelResultadosTiradas ResultadosTiradas { get; private set; }
+
+		public ViewModelListaOrdenable<ViewModelListaOrdenableItemSlotObjetivo, ControladorSlot> ViewModelListaSubobjetivos { get; private set; }
 
 		public ICommand ComandoRealizarTirada { get; private set; }
 
@@ -230,9 +237,14 @@ namespace AppGM.Core
 
 			ViewModelComboBoxTipoTirada.SeleccionarValor(ETipoTirada.Stat);
 
+			//Tipo de daño
 			ViewModelMultiselectComboBoxTipoDeDaño = new ViewModelMultiselectComboBox<ETipoDeDaño>(
 				EnumHelpers.ObtenerValoresEnum<ETipoDeDaño>(new [] {ETipoDeDaño.NINGUNO}).Select(t => new ViewModelMultiselectComboBoxItem<ETipoDeDaño>(t, t.ToString(), ViewModelMultiselectComboBoxTipoDeDaño)).ToList(),
 				new FlagsEnumEqualityComparer<ETipoDeDaño>());
+
+			//Fuente del daño
+			ViewModelMultiselectComboBoxFuenteDaño = new ViewModelMultiselectComboBox<ModeloFuenteDeDaño>(
+				SistemaPrincipal.ModeloRolActual.FuentesDeDaño.Select(f => new ViewModelMultiselectComboBoxItem<ModeloFuenteDeDaño>(f, f.ToString(), ViewModelMultiselectComboBoxFuenteDaño)).ToList());
 
 			//Seleccion usuario
 			ViewModelSeleccionUsuario = new ViewModelSeleccionDeControlador<ControladorPersonaje>(SistemaPrincipal.DatosRolSeleccionado.Personajes);
@@ -298,14 +310,7 @@ namespace AppGM.Core
 
 			ViewModelSeleccionContenedor.ActualizarControladorDisponibles(fuentesDeTiradas.ToList());
 
-			if (EsTiradaDeDaño)
-			{
-				ViewModelSeleccionObjetivo = new ViewModelSeleccionDeControlador<ControladorBase>(
-					new List<ControladorBase>(
-						SistemaPrincipal.DatosRolSeleccionado.Personajes.Where(p => p != nuevoUsuario)));
-
-				ViewModelSeleccionObjetivo.OnControladorSeleccionado += ObjetivoSeleccionadoCambioHandler;
-			}
+			ViewModelSeleccionObjetivo?.ActualizarControladorDisponibles(SistemaPrincipal.DatosRolSeleccionado.Personajes.Where(p => p != nuevoUsuario).Cast<ControladorBase>().ToList());
 		}
 
 		private void ContenedorTiradaCambioHandler(ViewModelItemListaBase itemSeleccionado, ControladorBase nuevoContenedor)
@@ -318,9 +323,9 @@ namespace AppGM.Core
 		{
 			PresetTirada.TiradaALaQuePertenece = nuevaTirada.modelo;
 
-			ActualizarValoresCamposALosDeLaTiradaSeleccionada();
-
 			ControladorTirada = nuevaTirada;
+
+			ActualizarValoresCamposALosDeLaTiradaSeleccionada();
 		}
 
 		private void ObjetivoSeleccionadoCambioHandler(ViewModelItemListaBase itemLista, ControladorBase nuevoObjetivo)
@@ -330,9 +335,10 @@ namespace AppGM.Core
 
 			if (nuevoObjetivo is ControladorPersonaje pj)
 			{
+				ViewModelListaSubobjetivos = new ViewModelListaOrdenable<ViewModelListaOrdenableItemSlotObjetivo, ControladorSlot>((s, c) => new ViewModelListaOrdenableItemSlotObjetivo(s, c));
 				ViewModelInventarioObjetivo = new ViewModelVistaArbol<ViewModelElementoArbol<ControladorSlot>, ControladorSlot>(null);
 
-				var itemsInventario = pj.modelo.SlotsBase.Select(s =>
+				var itemsInventario = pj.modelo.SlotsBase.Where(s => s.ObtenerProfundidad() == 0).Select(s =>
 				{
 					var controladorSlot = SistemaPrincipal.ObtenerControlador<ControladorSlot, ModeloSlot>(s, true);
 
@@ -341,6 +347,18 @@ namespace AppGM.Core
 				}).ToList();
 
 				ViewModelInventarioObjetivo.Hijos.AddRange(itemsInventario);
+
+				ViewModelInventarioObjetivo.OnElementoSeleccionadoCambio += (arbol, elementoArbol) =>
+				{
+					if (elementoArbol.EstaSeleccionado)
+					{
+						ViewModelListaSubobjetivos.Add(elementoArbol.Contenido);
+					}
+					else
+					{
+						ViewModelListaSubobjetivos.Remove(elementoArbol.Contenido);
+					}
+				};
 			}
 			else
 			{
@@ -360,9 +378,14 @@ namespace AppGM.Core
 			{
 				case ETipoTirada.Daño:
 				{
-					ViewModelSeleccionObjetivo = new ViewModelSeleccionDeControlador<ControladorBase>(
-						new List<ControladorBase>(
-							SistemaPrincipal.DatosRolSeleccionado.Personajes.Where(p => p != UsuarioSeleccionado?.Controlador)));
+					if (ViewModelSeleccionObjetivo is null)
+					{
+						ViewModelSeleccionObjetivo = new ViewModelSeleccionDeControlador<ControladorBase>(
+							new List<ControladorBase>(
+								SistemaPrincipal.DatosRolSeleccionado.Personajes.Where(p => p != UsuarioSeleccionado?.Controlador)));
+
+						ViewModelSeleccionObjetivo.OnControladorSeleccionado += ObjetivoSeleccionadoCambioHandler;
+					}
 
 					ActualizarCroto(EImagenCroto.ImagenCrotoArmado);
 

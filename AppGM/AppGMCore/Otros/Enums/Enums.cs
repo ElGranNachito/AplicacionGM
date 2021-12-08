@@ -329,12 +329,13 @@ namespace AppGM.Core
         /// </summary>
         NINGUNO = 0,
     }
-
+    
     /// <summary>
     /// Rango de una <see cref="ModeloHabilidad"/> o <see cref="EStat"/>.
     /// Estos rangos se utilizan solo para servants o invocaciones.
     /// Los valores numericos que tienen asignados son lo que equivaldrian en stats de <see cref="ModeloMaster"/>
     /// </summary>
+    [Flags]
     public enum ERango
     {
 	    /// <summary>
@@ -381,6 +382,65 @@ namespace AppGM.Core
 	    /// EX, Lo mejor de lo mejor de lo mejor, y con honores
 	    /// </summary>
 	    Ex = 22,
+
+	    /// <summary>
+	    /// Una miseria, probablemente
+	    /// </summary>
+	    NINGUNO = 0
+    }
+
+    /// <summary>
+    /// Rango de una <see cref="ModeloHabilidad"/> o <see cref="EStat"/>.
+    /// Estos rangos se utilizan solo para servants o invocaciones.
+    /// Los valores numericos que tienen asignados son lo que equivaldrian en stats de <see cref="ModeloMaster"/>
+    /// </summary>
+    [Flags]
+    public enum ERangoFlags
+    {
+	    /// <summary>
+	    /// F, lo mas bajo de lo bajo
+	    /// </summary>
+	    F = 1 << 0,
+
+	    /// <summary>
+	    /// E
+	    /// </summary>
+	    E = 1 << 1,
+
+	    /// <summary>
+	    /// D
+	    /// </summary>
+	    D = 1 << 2,
+
+	    /// <summary>
+	    /// C, Agarramos mecha
+	    /// </summary>
+	    C = 1 << 3,
+
+	    /// <summary>
+	    /// B
+	    /// </summary>
+	    B = 1 << 4,
+
+	    /// <summary>
+	    /// A, Potente
+	    /// </summary>
+	    A = 1 << 5,
+
+	    /// <summary>
+	    /// A+, Aun mas potente
+	    /// </summary>
+	    AMas = 1 << 6,
+
+	    /// <summary>
+	    /// A++, Uff que polenta
+	    /// </summary>
+	    AMasMas = 1 << 7,
+
+	    /// <summary>
+	    /// EX, Lo mejor de lo mejor de lo mejor, y con honores
+	    /// </summary>
+	    Ex = 1 << 8,
 
 	    /// <summary>
 	    /// Una miseria, probablemente

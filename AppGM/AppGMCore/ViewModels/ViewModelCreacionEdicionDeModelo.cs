@@ -205,7 +205,7 @@ namespace AppGM.Core
 		/// <summary>
 		/// Actualiza el valor de <see cref="EsValido"/>
 		/// </summary>
-		protected virtual void ActualizarValidez() { }
+		public virtual void ActualizarValidez() { }
 
 		/// <summary>
 		/// Crea el <typeparamref name="TModelo"/> con los datos ingresados por el usuario o 

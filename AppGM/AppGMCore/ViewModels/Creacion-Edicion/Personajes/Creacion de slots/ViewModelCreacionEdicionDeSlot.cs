@@ -215,7 +215,7 @@ namespace AppGM.Core
 			throw new NotImplementedException();
 		}
 
-		protected override void ActualizarValidez()
+		public override void ActualizarValidez()
 		{
 			if (NombreSlot.IsNullOrWhiteSpace() || ModeloCreado.EspacioTotal <= 0)
 			{
@@ -248,6 +248,12 @@ namespace AppGM.Core
 						else
 						{
 							var resultadoCopia = await vm.ModeloCreado.CrearCopiaProfundaEnSubtipoAsync<ModeloParteDelCuerpo, ModeloParteDelCuerpo>(controladorCreado.modelo);
+
+							foreach (var modeloCreado in resultadoCopia.modelosCreadosEliminados.ModelosCreados)
+							{
+								if (modeloCreado is ModeloDatosDefensivo datosDefensa)
+									datosDefensa.ParteDelCuerpo = resultadoCopia.resultado;
+							}
 
 							await resultadoCopia.modelosCreadosEliminados.GuardarYEliminarModelosAsync();
 

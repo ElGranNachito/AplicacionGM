@@ -396,7 +396,7 @@ namespace AppGM.Core
             return 0;
         }
 
-        protected override void ActualizarValidez()
+        public override void ActualizarValidez()
         {
 	        EsValido = true;
         }

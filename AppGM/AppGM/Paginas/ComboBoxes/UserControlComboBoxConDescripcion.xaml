@@ -13,10 +13,9 @@
 
         MinHeight="20"
 
-        Template="{StaticResource ComboBoxTemplate}"
-
         VerticalContentAlignment="Center"
 
+        ItemContainerStyle="{StaticResource EstiloContenedorItemsComboBox}"
         IsEnabled="{Binding EstaHabilitada}"
         ItemsSource="{Binding ValoresPosibles.Elementos}"
         SelectedValue="{Binding ValorSeleccionado}">

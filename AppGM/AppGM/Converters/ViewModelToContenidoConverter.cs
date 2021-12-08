@@ -98,6 +98,9 @@ namespace AppGM
                 case ViewModelFichaPersonaje vm:
                     return new UserControlVistaFicha {DataContext = vm};
 
+                case ViewModelIngresoDatosDefensivo vm:
+	                return new UserControlIngresoDatosReduccionesDeDaño {DataContext = vm};
+
                 default:
                     return null;
             }

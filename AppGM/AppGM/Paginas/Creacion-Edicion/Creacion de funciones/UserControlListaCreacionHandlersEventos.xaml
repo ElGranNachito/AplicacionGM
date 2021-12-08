@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="225" d:DesignWidth="300"
              
-             Background="White">
+             Background="Transparent">
 
     <UserControl.Template>
         <ControlTemplate TargetType="{x:Type UserControl}">

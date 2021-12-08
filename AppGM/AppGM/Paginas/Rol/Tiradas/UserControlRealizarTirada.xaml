@@ -563,7 +563,6 @@
 
                                 </local:UserControlConImagencitaAlCostado>
 
-
                                 <local:UserControlMultiSelectComboBox
                                     Grid.Column="2"
 
@@ -572,6 +571,18 @@
                                     IsEnabled="{Binding DataContext.EsTiradaPreexistente, Converter={local:NegarBoolConverter}, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControlRealizarTirada}}}"
                                     
                                     DataContext="{Binding ViewModelMultiselectComboBoxTipoDeDaño}"
+                                    
+                                    Visibility="{Binding DataContext.EsTiradaDeDaño, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControlRealizarTirada}}, Converter={local:BooleanToVisibilityConverterColapsar}}"/>
+
+                                <local:UserControlMultiSelectComboBox
+                                    Grid.Column="2"
+                                    Grid.Row="1"
+
+                                    Descripcion="Fuentes de daño:"
+
+                                    IsEnabled="{Binding DataContext.EsTiradaPreexistente, Converter={local:NegarBoolConverter}, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControlRealizarTirada}}}"
+                                    
+                                    DataContext="{Binding ViewModelMultiselectComboBoxFuenteDaño}"
                                     
                                     Visibility="{Binding DataContext.EsTiradaDeDaño, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControlRealizarTirada}}, Converter={local:BooleanToVisibilityConverterColapsar}}"/>
 
@@ -602,7 +613,24 @@
                                 <ListView
                                     Grid.Column="1"
                                     
-                                    Margin="10 0 0 0"/>
+                                    Margin="10 0 0 0"
+                                    
+                                    ItemsSource="{Binding ViewModelListaSubobjetivos.Items.Elementos}">
+
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="{x:Type ListViewItem}">
+                                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                            <Setter Property="Padding" Value="0"/>
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <local:UserControlListaOrdenableItemSlotObjetivo/>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+
+                                </ListView>
                             </Grid>
 
                         </TabItem>

@@ -11,7 +11,7 @@
 
              d:DesignHeight="500" d:DesignWidth="900"
              
-             Background="White"
+             Background="{StaticResource Tema.VerdeOscuro}"
              
              Padding="5">
 
@@ -31,7 +31,8 @@
             <RowDefinition Height="Auto" MaxHeight="50"/>
         </Grid.RowDefinitions>
 
-        <TabControl>
+        <TabControl
+            Background="Transparent">
 
             <!--#region Datos Basicos -->
             <TabItem>
@@ -325,65 +326,7 @@
                     <TextBlock Text="Datos Defensa"/>
                 </TabItem.Header>
 
-                <Border
-                    Padding="5">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-
-                        <Grid
-                            Grid.Row="0">
-
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="2*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-
-                            <!--Seleccion de estrategias utilizadas-->
-                            <local:UserControlMultiSelectComboBox
-                                
-                                Descripcion="Estrategias de deteccion disponibles:"
-                                
-                                DataContext="{Binding ViewModelComboBoxSeleccionEstrategiaDeteccionDeDaño}"/>
-
-                            <!--Boton para añadir nueva reduccion-->
-                            <Button
-                                Grid.Column="1"
-                                Content="+"
-
-                                Style="{StaticResource BotonFondoResaltable}"
-                                    
-                                Command="{Binding ComandoAñadirReduccionDeDaño}"/>
-
-                            <!--Boton para quitar la reduccion seleccionada-->
-                            <Button
-                                Grid.Column="2"
-                                Content="-"
-
-                                Style="{StaticResource BotonFondoResaltable}"
-
-                                IsEnabled="{Binding PuedeQuitarReduccionDeDaño}"
-                                Command="{Binding ComandoQuitarReduccionDeDaño}"/>
-                        </Grid>
-
-                        <ListView
-                                Grid.Row="1"
-                                Margin="0 5"
-                                ItemsSource="{Binding ReduccionesDeDaño.Elementos}"
-                                SelectedValue="{Binding ReduccionDeDañoSeleccionada}">
-
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <local:UserControlIngresoDatosReduccionDeDaño
-                                        HorizontalAlignment="Stretch"/>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                    </Grid>
-                </Border>
+                <local:UserControlIngresoDatosReduccionesDeDaño/>
             </TabItem>
             <!--#endregion-->
         </TabControl>

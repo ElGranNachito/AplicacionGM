@@ -50,6 +50,7 @@
                             HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                             Foreground="{TemplateBinding Foreground}"
                             Text="{TemplateBinding Content}"
+                            IsHitTestVisible="False"
                             TextAlignment="Center"/>
                     </Border>
                 </ControlTemplate>
@@ -553,6 +554,8 @@
 
     <!-- Estilo para los botones de solapas horizontales -->
     <Style TargetType="{x:Type CheckBox}" x:Key="CheckBoxSolapaHorizontal">
+
+        <Setter Property="Foreground" Value="{StaticResource Tema.Verde}"/>
 
         <Setter Property="Template">
             <Setter.Value>
