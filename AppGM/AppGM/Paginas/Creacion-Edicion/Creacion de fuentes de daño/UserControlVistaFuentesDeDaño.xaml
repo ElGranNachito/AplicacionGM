@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              
-             Background="White">
+             Background="{StaticResource Tema.VerdeOscuro}">
 
     <!--ViewModel: ViewModelVistaFuentesDeDaño-->
 
@@ -55,14 +55,14 @@
                 
                 Content="Añadir"
 
-                Style="{StaticResource BotonFondoResaltable}"
-                
                 Command="{Binding ComandoAñadirNueva}"/>
         </Grid>
 
         <!--Edicion de la fuente acualmente seleccionada-->
         <local:UserControlCreacionEdicionFuentesDeDaño
             Grid.Column="1"
+
+            Background="{StaticResource Tema.VerdeOscuro}"
 
             Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}, Path=DataContext.MostrarControlCreacionEdicionFuenteDeDaño, Converter={local:BooleanToVisibilityConverterColapsar}}"
             

@@ -67,7 +67,7 @@ namespace AppGM.Core
 		/// </summary>
 		/// <param name="idTirada">Id de la tirada que se quiere obtener</param>
 		/// <returns>Tirada hallada o null</returns>
-		public abstract ControladorTiradaBase ObtenerTirada(int idTirada);
+		public abstract ControladorTiradaBase ObtenerTirada(Guid guidTIrada);
 
 		/// <summary>
 		/// Obtiene una <see cref="AppGM.Core.ControladorTiradaBase"/> guardada en el modelo representado por este controlador

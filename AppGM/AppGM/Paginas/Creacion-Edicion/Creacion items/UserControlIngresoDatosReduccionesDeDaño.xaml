@@ -40,7 +40,7 @@
                     Grid.Column="1"
                     Content="+"
 
-                    Style="{StaticResource BotonFondoResaltable}"
+                    
                                     
                     Command="{Binding ComandoAñadirReduccionDeDaño}"/>
 
@@ -49,7 +49,7 @@
                     Grid.Column="2"
                     Content="-"
 
-                    Style="{StaticResource BotonFondoResaltable}"
+                    
 
                     IsEnabled="{Binding PuedeQuitarReduccionDeDaño}"
                     Command="{Binding ComandoQuitarReduccionDeDaño}"/>

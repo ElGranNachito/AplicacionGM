@@ -99,8 +99,6 @@
                     MinWidth="90"
 
                     BorderBrush="Black"
-
-                    Style="{StaticResource BotonFondoResaltable}"
                     
                     HorizontalAlignment="Center"
                     
@@ -115,8 +113,6 @@
 
                     BorderBrush="Black"
 
-                    Style="{StaticResource BotonFondoResaltable}"
-                    
                     HorizontalAlignment="Center"
                     
                     Command="{Binding ComandoAceptar}"/>

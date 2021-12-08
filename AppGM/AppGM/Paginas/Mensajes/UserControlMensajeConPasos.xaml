@@ -5,10 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AppGM"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             
+             Background="{StaticResource Tema.VerdeOscuro}">
 
     <!-- Control base para la creacion de un popup con pasos -->
-    <Grid Background="White">
+    <Grid>
             
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -55,7 +57,7 @@
                     Padding="10 0"
                 
                     Command="{Binding ComandoCancelar}"
-                    Style="{StaticResource BotonFondoResaltable}"/>
+                    />
 
                 <!--Boton guardar-->
                 <Button
@@ -67,7 +69,7 @@
                     Padding="10 0"
                 
                     Command="{Binding ComandoGuardar}"
-                    Style="{StaticResource BotonFondoResaltable}"/>
+                    />
 
                 <!--Boton finalizar-->
                 <Button
@@ -80,7 +82,7 @@
 
                     IsEnabled="{Binding PuedeFinalizar}"
                     Command="{Binding ComandoFinalizar}"
-                    Style="{StaticResource BotonFondoResaltable}"/>
+                    />
             </StackPanel>
 
             <!-- Flechas -->
@@ -92,7 +94,7 @@
 
                 <!-- Flecha izquierda -->
                 <Button
-                    Style="{StaticResource BotonFondoResaltable}"
+                    
                     FontFamily="{StaticResource 'Font Awesome Regular'}"
                     Content="{StaticResource Fa-FlechaIzquierda}"
                     FontSize="{StaticResource TamañoFontMediano}"
@@ -104,7 +106,7 @@
 
                 <!-- Flecha derecha -->
                 <Button
-                    Style="{StaticResource BotonFondoResaltable}"
+                    
                     FontFamily="{StaticResource 'Font Awesome Regular'}"
                     Content="{StaticResource Fa-FlechaDerecha}"
                     FontSize="{StaticResource TamañoFontMediano}"

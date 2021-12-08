@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace AppGM.Core
 {
 	/// <summary>
-	/// Viewmodel que representa un control para la creacion/edicion de un <see cref="ModeloDatosDefensivo"/>
+	/// Viewmodel que representa un control para la creacion/edicion de un <see cref="ModeloDatosDefensa"/>
 	/// </summary>
 	public class ViewModelCreacionEdicionDatosReduccionDaño : ViewModel
 	{

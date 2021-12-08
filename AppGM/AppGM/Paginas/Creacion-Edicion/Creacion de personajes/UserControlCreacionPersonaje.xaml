@@ -96,6 +96,7 @@
                             <!-- Foto/Ilustracion personaje -->
                             <Border 
                                 Height="50"
+                                SnapsToDevicePixels="True"
                                 Width="{Binding RelativeSource={RelativeSource Mode=Self}, Path=ActualHeight}"
                                 CornerRadius="{Binding RelativeSource={RelativeSource Mode=Self}, Path=ActualHeight}"
                                 BorderBrush="{StaticResource Tema.Verde}"

@@ -23,7 +23,7 @@ namespace AppGM
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
 	        if (value is null)
-		        return null;
+		        return new BitmapImage(new Uri("pack://application:,,,/Media/Imagenes/CamaritaMarcaJuancha.png"));
 
 	        BitmapImage nuevaImagen = null;
 
@@ -52,7 +52,7 @@ namespace AppGM
 		        {
                     SistemaPrincipal.LoggerGlobal.Log($"Se intento cargar una imagen que no existe ({tmp})", ESeveridad.Error);
 
-			        return null;
+			        return new BitmapImage(new Uri("pack://application:,,,/Media/Imagenes/CamaritaMarcaJuancha.png"));
 		        }
 
 		        if (String.IsNullOrEmpty(tmp))

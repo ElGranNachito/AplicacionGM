@@ -54,7 +54,7 @@
                 MinHeight="25"
                 MinWidth="80"
 
-                Style="{StaticResource BotonFondoResaltable}"
+                
 
                 Command="{Binding ComandoSeleccionarControlador}"/>
         </StackPanel>

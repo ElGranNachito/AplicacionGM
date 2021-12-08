@@ -1,19 +1,20 @@
 ﻿using System;
 using System.Linq;
+
 using CoolLogs;
 
 namespace AppGM.Core
 {
 	/// <summary>
-	/// Controlador para el <see cref="ModeloDatosDefensivo"/>
+	/// Controlador para el <see cref="ModeloDatosDefensa"/>
 	/// </summary>
-	public class ControladorDefensa : Controlador<ModeloDatosDefensivo>
+	public class ControladorDefensa : Controlador<ModeloDatosDefensa>
 	{
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		/// <param name="_datosDefensa"><see cref="ModeloDatosDefensivo"/> representado por este controlador</param>
-		public ControladorDefensa(ModeloDatosDefensivo _datosDefensa)
+		/// <param name="_datosDefensa"><see cref="ModeloDatosDefensa"/> representado por este controlador</param>
+		public ControladorDefensa(ModeloDatosDefensa _datosDefensa)
 			:base(_datosDefensa){}
 
 		/// <summary>

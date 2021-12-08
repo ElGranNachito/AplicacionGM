@@ -49,7 +49,7 @@
 
                 IsEnabled="{Binding EsValido}"
 
-                Style="{StaticResource BotonFondoResaltable}"
+                
             
                 Command="{Binding ComandoAceptar}"/>
 
@@ -62,7 +62,7 @@
 
                 Content="Cancelar"
 
-                Style="{StaticResource BotonFondoResaltable}"
+                
             
                 Command="{Binding ComandoCancelar}"/>
 
@@ -75,8 +75,7 @@
                 Content="Eliminar"
 
                 IsEnabled="{Binding EstaEditando}"
-
-                Style="{StaticResource BotonFondoResaltable}"
+                
             
                 Command="{Binding ComandoEliminar}"/>
 

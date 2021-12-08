@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CoolLogs;
@@ -27,7 +28,7 @@ namespace AppGM.Core
 		/// <summary>
 		/// Contiene todas las <see cref="AppGM.Core.ControladorTiradaBase"/> guardadas en el <see cref="modelo"/>
 		/// </summary>
-		protected Dictionary<int, ControladorTiradaBase> mTiradas;
+		protected Dictionary<Guid, ControladorTiradaBase> mTiradas;
 
 		public IReadOnlyList<ControladorVariableBase> Variables => mVariablesPersistenes.Values.ToList();
 
@@ -111,10 +112,10 @@ namespace AppGM.Core
 			ObtenerControladorVariable(idVariable)?.GuardarValorVariable(valor);
 		}
 
-		public override ControladorTiradaBase ObtenerTirada(int idTirada)
+		public override ControladorTiradaBase ObtenerTirada(Guid guidTirada)
 		{
-			if (mTiradas.ContainsKey(idTirada))
-				return mTiradas[idTirada];
+			if (mTiradas.ContainsKey(guidTirada))
+				return mTiradas[guidTirada];
 
 			return null;
 		}
@@ -156,9 +157,9 @@ namespace AppGM.Core
 					return new KeyValuePair<int, ControladorVariableBase>(var.IDVariable, ControladorVariableBase.CrearControladorCorrespondiente(var));
 				}));
 
-				mTiradas = new Dictionary<int, ControladorTiradaBase>(modeloConVariables.Tiradas.Select(var =>
+				mTiradas = new Dictionary<Guid, ControladorTiradaBase>(modeloConVariables.Tiradas.Select(var =>
 				{
-					return new KeyValuePair<int, ControladorTiradaBase>(var.Id, ControladorTiradaBase.CrearControladorDeTiradaCorrespondiente(var));
+					return new KeyValuePair<Guid, ControladorTiradaBase>(var.guid, ControladorTiradaBase.CrearControladorDeTiradaCorrespondiente(var));
 				}));
 			}
 			else
@@ -207,7 +208,7 @@ namespace AppGM.Core
 
 					if (!tiradasNuevas.Contains(controladorTirada.modelo))
 					{
-						mVariablesPersistenes.Remove(var.Key);
+						mTiradas.Remove(var.Key);
 
 						continue;
 					}
@@ -220,7 +221,7 @@ namespace AppGM.Core
 				//Creamos un controlador para las nuevas tiradas
 				foreach (var var in tiradasNuevas)
 				{
-					mTiradas.Add(var.Id, ControladorTiradaBase.CrearControladorDeTiradaCorrespondiente(var));
+					mTiradas.Add(var.guid, ControladorTiradaBase.CrearControladorDeTiradaCorrespondiente(var));
 				}
 			}
 		}

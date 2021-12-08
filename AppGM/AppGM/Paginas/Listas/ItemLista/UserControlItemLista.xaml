@@ -12,7 +12,7 @@
     <UserControl.Resources>
 
         <Style TargetType="{x:Type local:UserControlItemLista}">
-            <Setter Property="Background" Value="White"/>
+            <Setter Property="Background" Value="{StaticResource Tema.VerdeOscuro}"/>
         </Style>
 
         <Style TargetType="{x:Type Grid}" x:Key="EstiloContenedorBotones">
@@ -104,12 +104,14 @@
                                         Margin="0 0 0 5">
 
                                         <TextBlock
-                                        Text="{Binding Titulo, FallbackValue=Algo}"
-                                        FontWeight="Bold"/>
+                                            Foreground="{StaticResource Tema.Verde}"
+                                            Text="{Binding Titulo, FallbackValue=Algo}"
+                                            FontWeight="Bold"/>
 
                                         <TextBlock
-                                        Margin="0 5 0 0"
-                                        Text="{Binding Valor, FallbackValue='No existo'}"/>
+                                            Margin="0 5 0 0"
+                                            Foreground="{StaticResource Tema.Verde}"
+                                            Text="{Binding Valor, FallbackValue='No existo'}"/>
 
                                     </StackPanel>
                                 </DataTemplate>

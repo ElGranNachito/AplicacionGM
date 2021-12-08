@@ -61,6 +61,6 @@ namespace AppGM.Core
 		/// <summary>
 		/// Reducciones de daño que aplica esta parte del cuerpo
 		/// </summary>
-		public virtual ModeloDatosDefensivo DatosDefensa { get; set; }
+		public virtual ModeloDatosDefensa DatosDefensa { get; set; }
 	}
 }

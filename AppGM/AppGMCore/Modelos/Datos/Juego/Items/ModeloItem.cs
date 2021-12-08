@@ -67,7 +67,7 @@ namespace AppGM.Core
         /// <summary>
         /// Datos de defensa
         /// </summary>
-        public virtual ModeloDatosDefensivo DatosDefensivo { get; set; }
+        public virtual ModeloDatosDefensa DatosDefensa { get; set; }
 
         /// <summary>
         /// Handlers vinculados a eventos del controlador de este utilizable

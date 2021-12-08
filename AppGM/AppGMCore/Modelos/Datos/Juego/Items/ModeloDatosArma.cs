@@ -47,6 +47,6 @@ namespace AppGM.Core
 		/// <summary>
 		/// Fuentes de daño que abarcan este arma
 		/// </summary>
-		public virtual List<ModeloFuenteDeDaño> FuentesDeDañoQueAbarcaEsteArma { get; set; }
+		public virtual List<ModeloFuenteDeDaño> FuentesDeDañoQueAbarcaEsteArma { get; set; } = new List<ModeloFuenteDeDaño>();
 	}
 }

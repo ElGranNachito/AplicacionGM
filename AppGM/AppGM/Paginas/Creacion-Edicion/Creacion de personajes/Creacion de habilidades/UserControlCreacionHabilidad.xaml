@@ -6,13 +6,14 @@
              xmlns:local="clr-namespace:AppGM"
              xmlns:core="clr-namespace:AppGM.Core;assembly=AppGM.Core"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             
+             Background="{StaticResource Tema.VerdeOscuro}">
 
     <!-- ViewModel: ViewModelCrearFuncion -->
 
     <Border
-        Padding="10"
-        Background="White">
+        Padding="10">
 
         <Grid>
                 
@@ -236,7 +237,7 @@
                     Content="Salir"
                     BorderBrush="Black"
                     Width="70"
-                    Style="{StaticResource BotonFondoResaltable}"
+                    
                     IsEnabled="{Binding PuedeFinalizarCreacion}"
                     Command="{Binding ComandoCancelar}"/>
 
@@ -247,7 +248,7 @@
                     Content="Guardar"
                     BorderBrush="Black"
                     Width="70"
-                    Style="{StaticResource BotonFondoResaltable}"
+                    
                     Command="{Binding ComandoGuardar}"/>
 
                 <!-- Boton finalizar -->
@@ -258,7 +259,7 @@
                     Content="Finalizar"
                     BorderBrush="Black"
                     Width="70"
-                    Style="{StaticResource BotonFondoResaltable}"
+                    
                     IsEnabled="{Binding PuedeFinalizarCreacion}"
                     Command="{Binding ComandoFinalizar}"/>
 

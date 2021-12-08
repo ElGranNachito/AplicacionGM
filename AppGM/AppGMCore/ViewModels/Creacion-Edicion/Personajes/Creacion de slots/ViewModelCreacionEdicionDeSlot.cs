@@ -251,7 +251,7 @@ namespace AppGM.Core
 
 							foreach (var modeloCreado in resultadoCopia.modelosCreadosEliminados.ModelosCreados)
 							{
-								if (modeloCreado is ModeloDatosDefensivo datosDefensa)
+								if (modeloCreado is ModeloDatosDefensa datosDefensa)
 									datosDefensa.ParteDelCuerpo = resultadoCopia.resultado;
 							}
 

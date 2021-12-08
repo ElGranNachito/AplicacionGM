@@ -98,7 +98,7 @@
 
                     BorderBrush="Black"
                     
-                    Style="{StaticResource BotonFondoResaltable}"
+                    
                     Command="{Binding ComandoCancelar}"/>
 
                 <!-- Boton aceptar -->
@@ -114,7 +114,7 @@
 
                     IsEnabled="{Binding EsValido}"
                     
-                    Style="{StaticResource BotonFondoResaltable}"
+                    
                     Command="{Binding ComandoAceptar}"/>
 
             </Grid>

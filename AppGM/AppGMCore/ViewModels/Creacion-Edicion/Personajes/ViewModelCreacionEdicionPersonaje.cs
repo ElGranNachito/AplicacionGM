@@ -51,13 +51,7 @@ namespace AppGM.Core
 
         public object Imagen
         {
-			get
-			{
-                if(ModeloCreado.Imagen == null)
-                    return Path.Combine(SistemaPrincipal.ControladorDeArchivos.DirectorioImagenes, "camarita.png");
-
-                return ModeloCreado.Imagen;
-			}
+	        get => ModeloCreado.Imagen;
 			set
 			{
 				if (value is byte[] bytesImagen)

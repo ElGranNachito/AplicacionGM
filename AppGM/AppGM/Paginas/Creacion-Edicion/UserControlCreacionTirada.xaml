@@ -194,7 +194,7 @@
 
                     BorderBrush="Black"
                     
-                    Style="{StaticResource BotonFondoResaltable}"
+                    
                     Command="{Binding ComandoCancelar}"/>
 
                 <Grid
@@ -216,7 +216,7 @@
 
                         BorderBrush="Black"
                         
-                        Style="{StaticResource BotonFondoResaltable}"
+                        
                         Command="{Binding ComandoComprobar}"/>
 
                     <!-- Boton aceptar -->
@@ -232,7 +232,7 @@
                         
                         IsEnabled="{Binding EsValido}"
                         
-                        Style="{StaticResource BotonFondoResaltable}"
+                        
                         Command="{Binding ComandoAceptar}"/>
 
                 </Grid>
@@ -248,7 +248,7 @@
                     
                     FontFamily="{StaticResource 'Font Awesome Regular'}"
                     Content="{StaticResource Fa-SignoInterrogacion}"
-                    Style="{StaticResource BotonFondoResaltable}"
+                    
                     Command="{Binding ComandoAyuda}"/>
 
             </Grid>

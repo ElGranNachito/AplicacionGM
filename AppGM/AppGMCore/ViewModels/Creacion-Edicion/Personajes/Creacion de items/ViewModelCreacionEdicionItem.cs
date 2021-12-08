@@ -218,15 +218,15 @@ namespace AppGM.Core
 					{
 						if (item.EstaSeleccionado)
 						{
-							ModeloCreado.DatosDefensivo ??= new ModeloDatosDefensivo();
+							ModeloCreado.DatosDefensa ??= new ModeloDatosDefensa();
 
-							DatosDefensivo = new ViewModelIngresoDatosDefensivo(ModeloCreado.DatosDefensivo);
+							DatosDefensivo = new ViewModelIngresoDatosDefensivo(ModeloCreado.DatosDefensa);
 						}
 						else
 						{
-							ModeloCreado.DatosDefensivo.Item = null;
+							ModeloCreado.DatosDefensa.Item = null;
 
-							ModeloCreado.DatosDefensivo = null;
+							ModeloCreado.DatosDefensa = null;
 						}
 
 						DispararPropertyChanged(nameof(EsDefensivo));

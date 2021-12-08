@@ -48,9 +48,9 @@ namespace AppGM.Core
 		public ENivelMagiaFlags NivelesDeLasMagiasCuyosDañosReduce { get; set; }
 
 		/// <summary>
-		/// <see cref="ModeloDatosDefensivo"/> al que pertenece
+		/// <see cref="ModeloDatosDefensa"/> al que pertenece
 		/// </summary>
-		public virtual ModeloDatosDefensivo DatosDefensaAlQuePertenece { get; set; }
+		public virtual ModeloDatosDefensa DatosDefensaAlQuePertenece { get; set; }
 
 		/// <summary>
 		/// Fuentes de daño que abarca la reduccion

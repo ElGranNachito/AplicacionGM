@@ -65,7 +65,7 @@
 
                     Content="Cancelar"
 
-                    Style="{StaticResource BotonFondoResaltable}"
+                    
                     
                     Command="{Binding ComandoCancelar}"/>
             </Viewbox>
@@ -81,8 +81,6 @@
                     HorizontalAlignment="Stretch"
 
                     Content="Aceptar"
-
-                    Style="{StaticResource BotonFondoResaltable}"
                     
                     Command="{Binding ComandoAceptar}"/>
             </Viewbox>

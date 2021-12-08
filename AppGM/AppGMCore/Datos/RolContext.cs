@@ -689,12 +689,14 @@ namespace AppGM.Core
 
 			#region Datos Defensa
 
-			modelBuilder.Entity<ModeloDatosDefensivo>().ToTable("ModeloDatosDefensivo")
+			modelBuilder.Entity<ModeloDatosDefensa>().ToTable("ModeloDatosDefensa");
+
+			modelBuilder.Entity<ModeloDatosDefensa>()
 				.HasOne(d => d.Item)
-				.WithOne(i => i.DatosDefensivo)
+				.WithOne(i => i.DatosDefensa)
 				.OnDelete(DeleteBehavior.Cascade);
 
-			modelBuilder.Entity<ModeloDatosDefensivo>().ToTable("ModeloDatosDefensivo")
+			modelBuilder.Entity<ModeloDatosDefensa>()
 				.HasOne(d => d.ParteDelCuerpo)
 				.WithOne(p => p.DatosDefensa)
 				.OnDelete(DeleteBehavior.Cascade);

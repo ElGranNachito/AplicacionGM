@@ -90,7 +90,16 @@ namespace AppGM.Core
 			ModeloCreado = ModeloSiendoEditado ?? new ModeloDatosArma();
 
 			if (EstaEditando)
+			{
 				ViewModelMultiselectTiposDeDaño.ModificarEstadoSeleccionItem(ModeloCreado.TiposDeDañoQueInflige, true);
+
+				foreach (var fuenteDeDaño in ModeloSiendoEditado.FuentesDeDañoQueAbarcaEsteArma)
+				{
+					ViewModelMultiselectFuentesDeDañoQueAbarca.ModificarEstadoSeleccionItem(fuenteDeDaño, true);
+				}
+			}
+
+			ViewModelMultiselectTiposDeDaño.OnEstadoSeleccionItemCambio += item => ActualizarValidez();
 		}
 
 		#endregion

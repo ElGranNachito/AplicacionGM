@@ -7,7 +7,7 @@ namespace AppGM.Core
 	/// <summary>
 	/// Viewmodel que representa un control para el ingreso de los datos de defensa de un <see cref="ModeloItem"/>
 	/// </summary>
-	public sealed class ViewModelIngresoDatosDefensivo : ViewModelCreacionEdicionDeModelo<ModeloDatosDefensivo, Controlador<ModeloDatosDefensivo>, ViewModelIngresoDatosDefensivo>
+	public sealed class ViewModelIngresoDatosDefensivo : ViewModelCreacionEdicionDeModelo<ModeloDatosDefensa, Controlador<ModeloDatosDefensa>, ViewModelIngresoDatosDefensivo>
 	{
 		#region Campos & Propiedades
 
@@ -62,12 +62,12 @@ namespace AppGM.Core
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		/// <param name="_datosDefensivo">Modelo que se editara</param>
-		public ViewModelIngresoDatosDefensivo(ModeloDatosDefensivo _datosDefensivo)
+		/// <param name="_datosDefensa">Modelo que se editara</param>
+		public ViewModelIngresoDatosDefensivo(ModeloDatosDefensa _datosDefensa)
 
 			: base(null, true, false)
 		{
-			ModeloSiendoEditado = _datosDefensivo;
+			ModeloSiendoEditado = _datosDefensa;
 
 			ViewModelComboBoxSeleccionEstrategiaDeteccionDeDaño = new ViewModelMultiselectComboBox<EEstrategiaDeDeteccionDeDaño>(
 				EnumHelpers.TiposDeDeteccionDeDañoDisponibles.Select(t => new ViewModelMultiselectComboBoxItem<EEstrategiaDeDeteccionDeDaño>(t, t.ToString(),
@@ -104,7 +104,7 @@ namespace AppGM.Core
 				ReduccionDeDañoSeleccionada = null;
 			});
 
-			ModeloCreado = ModeloSiendoEditado ?? new ModeloDatosDefensivo();
+			ModeloCreado = ModeloSiendoEditado ?? new ModeloDatosDefensa();
 		} 
 
 		#endregion
@@ -127,7 +127,7 @@ namespace AppGM.Core
 			EsValido = true;
 		}
 
-		public override ModeloDatosDefensivo CrearModelo()
+		public override ModeloDatosDefensa CrearModelo()
 		{
 			ActualizarValidez();
 
@@ -137,9 +137,9 @@ namespace AppGM.Core
 			return ModeloCreado;
 		}
 
-		public override Controlador<ModeloDatosDefensivo> CrearControlador()
+		public override Controlador<ModeloDatosDefensa> CrearControlador()
 		{
-			SistemaPrincipal.LoggerGlobal.Log($"{nameof(ModeloDatosDefensivo)} no requiere un controlador", ESeveridad.Error);
+			SistemaPrincipal.LoggerGlobal.Log($"{nameof(ModeloDatosDefensa)} no requiere un controlador", ESeveridad.Error);
 
 			return null;
 		} 

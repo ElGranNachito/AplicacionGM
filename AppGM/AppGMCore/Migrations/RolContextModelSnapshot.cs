@@ -372,7 +372,7 @@ namespace AppGM.Core.Migrations
                     b.ToTable("ModeloDatosConsumible");
                 });
 
-            modelBuilder.Entity("AppGM.Core.ModeloDatosDefensivo", b =>
+            modelBuilder.Entity("AppGM.Core.ModeloDatosDefensa", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -398,7 +398,7 @@ namespace AppGM.Core.Migrations
                     b.HasIndex("IDParteDelCuerpo")
                         .IsUnique();
 
-                    b.ToTable("ModeloDatosDefensivo");
+                    b.ToTable("ModeloDatosDefensa");
                 });
 
             modelBuilder.Entity("AppGM.Core.ModeloDatosInvocacionBase", b =>
@@ -1905,16 +1905,16 @@ namespace AppGM.Core.Migrations
                     b.Navigation("Item");
                 });
 
-            modelBuilder.Entity("AppGM.Core.ModeloDatosDefensivo", b =>
+            modelBuilder.Entity("AppGM.Core.ModeloDatosDefensa", b =>
                 {
                     b.HasOne("AppGM.Core.ModeloItem", "Item")
-                        .WithOne("DatosDefensivo")
-                        .HasForeignKey("AppGM.Core.ModeloDatosDefensivo", "IDItem")
+                        .WithOne("DatosDefensa")
+                        .HasForeignKey("AppGM.Core.ModeloDatosDefensa", "IDItem")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("AppGM.Core.ModeloParteDelCuerpo", "ParteDelCuerpo")
                         .WithOne("DatosDefensa")
-                        .HasForeignKey("AppGM.Core.ModeloDatosDefensivo", "IDParteDelCuerpo")
+                        .HasForeignKey("AppGM.Core.ModeloDatosDefensa", "IDParteDelCuerpo")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Item");
@@ -1935,7 +1935,7 @@ namespace AppGM.Core.Migrations
 
             modelBuilder.Entity("AppGM.Core.ModeloDatosReduccionDeDaño", b =>
                 {
-                    b.HasOne("AppGM.Core.ModeloDatosDefensivo", "DatosDefensaAlQuePertenece")
+                    b.HasOne("AppGM.Core.ModeloDatosDefensa", "DatosDefensaAlQuePertenece")
                         .WithMany("ReduccionesDeDaños")
                         .HasForeignKey("DatosDefensaAlQuePerteneceId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -2615,7 +2615,7 @@ namespace AppGM.Core.Migrations
                     b.Navigation("Tirada");
                 });
 
-            modelBuilder.Entity("AppGM.Core.ModeloDatosDefensivo", b =>
+            modelBuilder.Entity("AppGM.Core.ModeloDatosDefensa", b =>
                 {
                     b.Navigation("ReduccionesDeDaños");
                 });
@@ -2686,7 +2686,7 @@ namespace AppGM.Core.Migrations
 
                     b.Navigation("DatosConsumible");
 
-                    b.Navigation("DatosDefensivo");
+                    b.Navigation("DatosDefensa");
 
                     b.Navigation("Efectos");
 

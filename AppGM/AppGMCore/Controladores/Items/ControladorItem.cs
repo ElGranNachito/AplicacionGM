@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace AppGM.Core
@@ -94,6 +95,11 @@ namespace AppGM.Core
 	        : base(_modeloItem)
         {
 	        Portador = SistemaPrincipal.ObtenerControlador<ControladorPersonaje, ModeloPersonaje>(modelo.PersonajePortador, false);
+
+	        if (modelo.DatosDefensa is not null)
+	        {
+		        Defensa = SistemaPrincipal.ObtenerControlador<ControladorDefensa, ModeloDatosDefensa>(modelo.DatosDefensa, true);
+	        }
 
 	        if (Portador == null)
 	        {
