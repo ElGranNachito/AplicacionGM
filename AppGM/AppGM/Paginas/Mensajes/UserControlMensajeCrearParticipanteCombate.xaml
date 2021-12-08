@@ -9,7 +9,7 @@
 
     <!-- UserControl que hace uso de un ViewModelCrearParticipanteCombate -->
     <!-- Control para la creacion de la representacion de un participante en un combate-->
-    <Border Background="White"
+    <Border Background="{StaticResource Tema.Verde}"
             Padding="10">
         
         <Grid >
@@ -24,7 +24,8 @@
                 Grid.Column="0"
                 VerticalAlignment="Top"
                 HorizontalAlignment="Left"
-                Text="Total acciones:"/>
+                Text="Total acciones:"
+                Foreground="{StaticResource Tema.VerdeOscuro}"/>
 
             <TextBox 
                 Grid.Column="1"
@@ -34,35 +35,27 @@
                 MinWidth="300"
                 MinHeight="15"
                 local:CampoDeTextoNumericoProperty.Value="True"
-                Text="{Binding CantidadInicialDeAcciones, Mode=TwoWay}"/>
+                Text="{Binding CantidadInicialDeAcciones, Mode=TwoWay}"
+                Foreground="{StaticResource Tema.VerdeOscuro}"
+                Background="{StaticResource Tema.Verde}"/>
 
             <Grid Grid.Column="2">
 
                 <StackPanel>
 
                     <!-- Tipo de unidad (Todos) -->
-                    <TextBlock Text="Tipo de participante:"/>
+                    <TextBlock Text="Tipo de participante:"
+                               Foreground="{StaticResource Tema.VerdeOscuro}"/>
                     
                     <ComboBox ItemsSource="{Binding TiposPersonajes}"
                               SelectedValue="{Binding TipoPersonajeSeleccionado}"
                               Margin="0 0 0 20"/>
 
-                    <!-- Clase de servant (Masters, Servants, Invocaciones y trampas) -->
-                    <StackPanel Visibility="{Binding DebeSeleccionarClaseServant, Converter={local:BooleanToVisibilityConverterOcultar}}">
-
-                        <TextBlock Text="Clase de servant:"/>
-
-                        <ComboBox 
-                            ItemsSource="{Binding ClasesServants}"
-                            SelectedValue="{Binding ClaseSeleccionada}"
-                            Margin="0 0 0 20"/>
-
-                    </StackPanel>
-
                     <!-- Personaje (Masters, Servants e invocaciones) -->
                     <StackPanel Visibility="{Binding DebeSeleccionarPersonaje, Converter={local:BooleanToVisibilityConverterOcultar}}">
 
-                        <TextBlock Text="Personaje:"/>
+                        <TextBlock Text="Personaje:"
+                                   Foreground="{StaticResource Tema.VerdeOscuro}"/>
                         
                         <ComboBox 
                             ItemsSource="{Binding PersonajesDisponibles}"

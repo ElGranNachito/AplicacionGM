@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="800"
 
-             Background="White"
+             Background="{StaticResource Tema.Verde}"
              
              Padding="10">
 
@@ -27,7 +27,10 @@
 
                 TextWrapping="Wrap"
 
-                Text="{Binding Titulo, FallbackValue='Todo mal'}"/>
+                Text="{Binding Titulo, FallbackValue='Todo mal'}"
+                
+                Foreground="{StaticResource Tema.VerdeOscuro}"
+                />
         </Viewbox>
 
         <!--Mensaje-->
@@ -38,7 +41,10 @@
 
             FontSize="28"
             
-            Text="{Binding Mensaje, FallbackValue='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Dui ut ornare lectus sit amet est placerat in egestas. Eu consequat ac felis donec et odio pellentesque. Eu consequat ac felis donec et. Duis convallis convallis tellus id interdum velit laoreet id. Donec massa sapien faucibus et molestie ac feugiat sed. Eget dolor morbi non arcu. Interdum posuere lorem ipsum dolor.'}"/>
+            Text="{Binding Mensaje, FallbackValue='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Dui ut ornare lectus sit amet est placerat in egestas. Eu consequat ac felis donec et odio pellentesque. Eu consequat ac felis donec et. Duis convallis convallis tellus id interdum velit laoreet id. Donec massa sapien faucibus et molestie ac feugiat sed. Eget dolor morbi non arcu. Interdum posuere lorem ipsum dolor.'}"
+            
+            Foreground="{StaticResource Tema.VerdeOscuro}"
+            />
 
         <Grid
             Grid.Row="2">

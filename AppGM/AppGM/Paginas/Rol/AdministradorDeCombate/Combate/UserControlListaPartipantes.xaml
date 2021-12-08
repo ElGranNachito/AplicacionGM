@@ -6,7 +6,8 @@
              xmlns:local="clr-namespace:AppGM"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="400">
-    <Grid Background="Black">
+    
+    <Grid Background="{StaticResource Tema.VerdeSemiOscuro}">
 
         <!-- Lista de participantes de un combate -->
         <ScrollViewer>

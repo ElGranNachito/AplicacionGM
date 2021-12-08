@@ -27,7 +27,8 @@
         /// <summary>
         /// Color del fondo del globo
         /// </summary>
-        public string ColorFondo { get; set; } = "FFFFFF"; 
+        public string ColorFondo { get; set; } = "b4e1d6"; 
+
         #endregion
     }
 }

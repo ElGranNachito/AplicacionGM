@@ -5,12 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AppGM"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="250" d:DesignWidth="800">
 
     <!-- Control para la creacion de la representacion de una unidad
     en un mapa-->
-    <Border Background="White"
+    <Border Background="{StaticResource Tema.Verde}"
             Padding="10">
+        
         <Grid >
 
             <Grid.ColumnDefinitions>
@@ -25,12 +26,16 @@
                             HorizontalAlignment="Left">
 
                     <!-- Campo ingreso de nombre -->
-                    <TextBlock Text="Nombre: "/>
+                    <TextBlock Text="Nombre: "
+                               Foreground="{StaticResource Tema.VerdeOscuro}"/>
                     <TextBox 
-                        FontFamily="{StaticResource 'Font Canon'}"
                         HorizontalAlignment="Center"
                         MinWidth="150"
-                        Text="{Binding Nombre, Mode=OneWayToSource}"/>
+                        Foreground="{StaticResource Tema.VerdeOscuro}"
+                        Background="{StaticResource Tema.Verde}"
+                        FontFamily="{StaticResource 'Font Canon'}"
+                        Text="{Binding Nombre, Mode=OneWayToSource}"
+                        />
 
                 </StackPanel>
 
@@ -44,25 +49,32 @@
                                Margin="0 0 10 0"
                                HorizontalAlignment="Left"
                                FontFamily="{StaticResource 'Font Canon'}"
-                               />
+                               Foreground="{StaticResource Tema.VerdeOscuro}"
+                    />
                     <TextBox MinWidth="30"
                              Text="{Binding PosInicialX}"
                              FontFamily="{StaticResource 'Font Canon'}"
+                             Foreground="{StaticResource Tema.VerdeOscuro}"
+                             Background="{StaticResource Tema.Verde}"
                              />
 
                     <!-- Y -->
                     <TextBlock Text="Y:"
                                Margin="10 0"
                                FontFamily="{StaticResource 'Font Canon'}"
+                               Foreground="{StaticResource Tema.VerdeOscuro}"
                                />
                     <TextBox MinWidth="30"
                              Text="{Binding PosInicialY}"
                              FontFamily="{StaticResource 'Font Canon'}"
+                             Foreground="{StaticResource Tema.VerdeOscuro}"
+                             Background="{StaticResource Tema.Verde}"
                              />
 
                     <TextBlock Text="(Opcional)"
                                Margin="10 0"
                                FontFamily="{StaticResource 'Font Canon'}"
+                               Foreground="{StaticResource Tema.VerdeOscuro}"
                                />
 
                 </StackPanel>
@@ -78,18 +90,6 @@
                     <ComboBox ItemsSource="{Binding TiposUnidades}"
                               SelectedValue="{Binding TipoSeleccionado}"
                               Margin="0 0 0 20"/>
-
-                    <!-- Clase de servant (Masters, Servants, Invocaciones y trampas) -->
-                    <StackPanel 
-                        Visibility="{Binding DebeSeleccionarClaseServant, Converter={local:BooleanToVisibilityConverterOcultar}}">
-
-                        <TextBlock Text="Clase de servant:"/>
-                        <ComboBox 
-                            ItemsSource="{Binding ClasesServants}"
-                            SelectedValue="{Binding ClaseSeleccionada}"
-                            Margin="0 0 0 20"/>
-
-                    </StackPanel>
 
                     <!-- Personaje (Masters, Servants e invocaciones) -->
                     <StackPanel 
@@ -107,10 +107,13 @@
                     <StackPanel 
                         Visibility="{Binding DebeSeleccionarCantidad, Converter={local:BooleanToVisibilityConverterOcultar}}">
 
-                        <TextBlock Text="Cantidad:"/>
+                        <TextBlock Text="Cantidad:"
+                                   Foreground="{StaticResource Tema.VerdeOscuro}"/>
                         <TextBox 
                             local:CampoDeTextoNumericoProperty.Value="True"
-                            Text="{Binding CantidadInicialDeUnidades, Mode=TwoWay}"/>
+                            Text="{Binding CantidadInicialDeUnidades, Mode=TwoWay}"
+                            Foreground="{StaticResource Tema.VerdeOscuro}"
+                            Background="{StaticResource Tema.Verde}"/>
 
                     </StackPanel>
 
@@ -121,6 +124,7 @@
                         Content="Confirmar"
                         IsEnabled="{Binding PuedeFinalizarCreacion}"
                         Command="{Binding ComandoFinalizar}"/>
+
             </Grid>
                 
         </Grid>

@@ -6,12 +6,14 @@
              xmlns:local="clr-namespace:AppGM"
              mc:Ignorable="d" 
              d:DesignHeight="150" d:DesignWidth="300">
-    <Grid Background="White" Width="300">
+    <Grid Background="{StaticResource Tema.Verde}" Width="300">
 
         <StackPanel>
             
             <!-- Nombre del combate -->
-            <TextBlock>
+            <TextBlock 
+                Foreground="{StaticResource Tema.VerdeOscuro}">
+
                 <Run Text="Nombre: " 
                      FontWeight="Bold" 
                      FontSize="{StaticResource TamañoFontMediano}"/>
@@ -21,7 +23,8 @@
             </TextBlock>
 
             <!-- Turno acutal dentro del combate -->
-            <TextBlock>
+            <TextBlock
+                Foreground="{StaticResource Tema.VerdeOscuro}">
                 <Run Text="Turno actual: " 
                      FontWeight="Bold" 
                      FontSize="{StaticResource TamañoFontMediano}"/>
@@ -31,7 +34,8 @@
             </TextBlock>
 
             <!-- Cantidad de participantes -->
-            <TextBlock>
+            <TextBlock
+                Foreground="{StaticResource Tema.VerdeOscuro}">
                 <Run Text="Cantidad de participantes: " 
                      FontWeight="Bold" 
                      FontSize="{StaticResource TamañoFontMediano}"/>
@@ -41,7 +45,8 @@
             </TextBlock>
 
             <!-- Participantes -->
-            <TextBlock>
+            <TextBlock
+                Foreground="{StaticResource Tema.VerdeOscuro}">
                 <Run Text="Participantes: " 
                      FontWeight="Bold" 
                      FontSize="{StaticResource TamañoFontMediano}"/>

@@ -24,9 +24,9 @@ namespace AppGM.Core
         private ControladorMapa MapaSeleccionado;
 
         /// <summary>
-        /// VM de participante resultante de la creacion
+        /// Controlador del combate a crear.
         /// </summary>
-        public ViewModelCombate vmResultado;
+        public ControladorAdministradorDeCombate controlador;
 
 
         // Propiedades ---
@@ -97,7 +97,7 @@ namespace AppGM.Core
         /// <summary>
         /// Crea el VM
         /// </summary>
-        private void GenerarViewModel()
+        private async void GenerarViewModel()
         {
             ModeloAdministradorDeCombate modeloAdministradorDeCombate = new ModeloAdministradorDeCombate
             {
@@ -107,17 +107,15 @@ namespace AppGM.Core
 
             modeloAdministradorDeCombate.Mapas.Add(MapaSeleccionado.modelo);
 
-            ControladorAdministradorDeCombate controlador = new ControladorAdministradorDeCombate(modeloAdministradorDeCombate);
+            SistemaPrincipal.ModeloRolActual.Combates.Add(modeloAdministradorDeCombate);
+
+            controlador = new ControladorAdministradorDeCombate(modeloAdministradorDeCombate);
 
             SistemaPrincipal.DatosRolSeleccionado.CombatesActivos.Add(controlador);
 
-            vmResultado = new ViewModelCombate();
-
-            vmResultado.ActualizarCombateActual(controlador);
-
             SistemaPrincipal.GuardarModelo(modeloAdministradorDeCombate);
 
-            SistemaPrincipal.GuardarDatosAsync();
+            await SistemaPrincipal.GuardarDatosAsync();
 
             Resultado = EResultadoViewModel.Aceptar;
         }

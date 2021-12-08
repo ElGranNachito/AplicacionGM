@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <!--UserControl que hace uso de ViewModelCombate-->
-    <Grid Background="Black">
+    <Grid Background="{StaticResource Tema.VerdeSemiOscuro}">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -72,16 +72,13 @@
             <!--Mapa-->
             <Grid Grid.Column="0">
 
-                <local:UserControlMapa DataContext="{Binding MapaActual, Mode=OneWay}"/>
+                <!--<local:UserControlMapa DataContext="{Binding MapaActual, Mode=OneWay}"/>-->
 
             </Grid>
 
             <!-- Participantes -->
-            <Border 
-                Grid.Column="1"
-                BorderThickness="2 2 0 0"
-                BorderBrush="Aqua">
-
+            <Grid Grid.Column="1">
+                
                 <Grid>
 
                     <!-- Lista de participantes -->
@@ -90,10 +87,17 @@
                         <RowDefinition Height="40"/>
                     </Grid.RowDefinitions>
 
-                    <local:UserControlListaPartipantes 
+
+                    <Border
                         Grid.Row="0"
-                        DataContext="{Binding Participantes, Mode=OneWay}"
-                    />
+                        BorderThickness="2 2 0 2"
+                        BorderBrush="{StaticResource Tema.Verde}">
+
+                        <local:UserControlListaPartipantes 
+                            DataContext="{Binding Participantes, Mode=OneWay}"
+                            />
+
+                    </Border>
 
                     <!--Boton agregar participante-->
                     <Button 
@@ -104,7 +108,9 @@
 
                 </Grid>
 
-            </Border>
+
+
+            </Grid>
 
         </Grid>
             

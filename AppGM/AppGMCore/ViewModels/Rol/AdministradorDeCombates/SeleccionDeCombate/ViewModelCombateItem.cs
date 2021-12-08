@@ -12,23 +12,27 @@ namespace AppGM.Core
         /// <summary>
         /// Controlador del combate
         /// </summary>
-        /// TODO: Pasar esto a que sea directamente un modelo ya que no necesitamos de las funciones del controlador
         public ControladorAdministradorDeCombate Combate { get; set; }
 
         /// <summary>
-        /// Comando que se ejecutara cuando el usuario haga click sobre este item
+        /// Comando que se ejecuta cuando el usuario haga click sobre este item
         /// </summary>
         public ICommand ComandoClickeado { get; set; }
 
         /// <summary>
-        /// Comando que se ejecutara cuando el cursor se pose sobre este item
+        /// Comando que se ejecuta cuando el cursor se pose sobre este item
         /// </summary>
         public ICommand ComandoMouseEnter { get; set; }
 
         /// <summary>
-        /// Comando que se ejecutara cuando el cursor deje de estar sobre este item
+        /// Comando que se ejecuta cuando el cursor deje de estar sobre este item
         /// </summary>
         public ICommand ComandoMouseLeave { get; set; }
+
+        /// <summary>
+        /// Comando que se ejecuta cuando se presiona el boton 'eliminar'.
+        /// </summary>
+        public ICommand ComandoEliminar { get; set; }
 
         /// <summary>
         /// Nombre del combate actual
@@ -89,6 +93,19 @@ namespace AppGM.Core
                     SistemaPrincipal.CombateActual.ActualizarCombateActual(Combate);
 
                     SistemaPrincipal.RolSeleccionado.EMenu = EMenuRol.Combate;
+                });
+
+            ComandoEliminar = new Comando(
+                async () =>
+                {
+                    SistemaPrincipal.MenuSeleccionCombate.Combates.Remove(this);
+
+                    SistemaPrincipal.ModeloRolActual.Combates.Remove(Combate.modelo);
+                    SistemaPrincipal.DatosRolSeleccionado.CombatesActivos.Remove(Combate);
+
+                    Combate.Eliminar();
+
+                    await SistemaPrincipal.GuardarDatosAsync();
                 });
         }
     }

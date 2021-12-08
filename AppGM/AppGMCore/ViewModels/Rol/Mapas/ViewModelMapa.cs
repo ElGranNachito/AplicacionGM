@@ -467,7 +467,7 @@ namespace AppGM.Core
 			ViewModelCrearUnidadMapa vm = new ViewModelCrearUnidadMapa(this);
 
             //Creamos el popup y esperamos a que se cierre
-            await SistemaPrincipal.MostrarMensajeAsync(vm, "Añadir Unidad", true, -1, -1);
+            await SistemaPrincipal.MostrarMensajeAsync(vm, "Añadir Unidad", true, 250, 800);
 
 			//Si el resultado es valido entonces añadimos la nueva unidad
             if (vm.vmResultado is ViewModelIngresoPosicion vmNuevaUndiad)

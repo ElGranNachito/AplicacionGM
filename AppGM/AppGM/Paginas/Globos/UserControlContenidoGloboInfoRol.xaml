@@ -8,32 +8,40 @@
              d:DesignHeight="450" d:DesignWidth="800">
 
     <!-- Contol para un globo que muestra la informacion de un rol -->
-    <Grid Background="White">
+    <Grid Background="{StaticResource Tema.Verde}">
 
         <StackPanel
             local:ParametroThicknessProperty.Parametro="5 5"
             local:AñadirMargenAElementosProperty.Value="{x:Type TextBlock}">
             
             <!-- Nombre del rol -->
-            <TextBlock TextWrapping="Wrap">
+            <TextBlock 
+                TextWrapping="Wrap"
+                Foreground="{StaticResource Tema.VerdeOscuro}">
                 <Run Text="Nombre: " FontWeight="Bold"/>
                 <Run Text="{Binding ModeloRol.Nombre}"/>
             </TextBlock>
 
             <!-- Dia en el rol -->
-            <TextBlock TextWrapping="Wrap">
+            <TextBlock 
+                TextWrapping="Wrap"
+                Foreground="{StaticResource Tema.VerdeOscuro}">
                 <Run Text="Dia: " FontWeight="Bold"/>
                 <Run Text="{Binding ModeloRol.Dia}"/>
             </TextBlock>
 
             <!-- Descripcion del rol -->
-            <TextBlock TextWrapping="Wrap">
+            <TextBlock 
+                TextWrapping="Wrap"
+                Foreground="{StaticResource Tema.VerdeOscuro}">
                 <Run Text="Descripcion: " FontWeight="Bold"/>
                 <Run Text="{Binding ModeloRol.Descripcion}"/>
             </TextBlock>
 
             <!-- Fecha de la ultima sesion del rol -->
-            <TextBlock TextWrapping="Wrap">
+            <TextBlock 
+                TextWrapping="Wrap"
+                Foreground="{StaticResource Tema.VerdeOscuro}">
                 <Run Text="Fecha ultima sesion: " FontWeight="Bold"/>
                 <Run Text="{Binding ModeloRol.FechaUltimaSesion}"/>
             </TextBlock>

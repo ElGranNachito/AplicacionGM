@@ -18,19 +18,44 @@
                 local:ParametroComandoOnLeaveProperty.Parametro="{Binding ComandoMouseLeave}"
                 local:LlamarComandoOnMouseEnterProperty.Value="{Binding ComandoMouseEnter}">
 
+                <!-- Context menu -->
+                <Grid.ContextMenu>
+
+                    <ContextMenu Style="{StaticResource ConextMenuBase}">
+                
+                        <MenuItem Style="{StaticResource MenuOpcionesMapa}" 
+                                  ItemContainerStyle="{DynamicResource MenuItemOpcionesMapa1}" 
+                                  Template="{DynamicResource MenuItemOpcionesMapaControlTemplate2}"
+                                  Header="Acceder" 
+                                  ToolTip="Accede al menu de control del combate seleccionado.."
+                                  Command="{Binding ComandoClickeado}"
+                        />
+                        <Separator/>
+                        <MenuItem Style="{StaticResource MenuOpcionesMapa}" 
+                                  ItemContainerStyle="{DynamicResource MenuItemOpcionesMapa1}" 
+                                  Template="{DynamicResource MenuItemOpcionesMapaControlTemplate2}"
+                                  Header="Eliminar" 
+                                  ToolTip="Elimina el combate seleccionado."
+                                  Command="{Binding ComandoEliminar}"
+                        />
+
+                    </ContextMenu>
+            
+                </Grid.ContextMenu>
+
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
                 <!-- Grid con attached property que llama un comando del view model cuando el mouse deja de estar sobre el elemento -->
-                <Border x:Name="contenido" Background="White"
+                <Border x:Name="contenido" Background="{StaticResource Tema.Verde}"
                         Padding="5 10">
                     <Grid>
                         <StackPanel>
-                            <TextBlock Text="{Binding Nombre, Mode=OneWay}"/>
-                            <TextBlock Text="{Binding TurnoActual, Mode=OneWay}"/>
-                            <TextBlock Text="{Binding CantidadParticipantes, Mode=OneWay}"/>
+                            <TextBlock Foreground="{StaticResource Tema.VerdeOscuro}" Text="{Binding Nombre, Mode=OneWay}"/>
+                            <TextBlock Foreground="{StaticResource Tema.VerdeOscuro}" Text="{Binding TurnoActual, Mode=OneWay}"/>
+                            <TextBlock Foreground="{StaticResource Tema.VerdeOscuro}" Text="{Binding CantidadParticipantes, Mode=OneWay}"/>
                         </StackPanel>
                     </Grid>
                 </Border>
@@ -43,7 +68,7 @@
                       Grid.Column="1" 
                       HorizontalAlignment="Right"
                       Data="M0 0 1 0 15 35 1 70 0 70"
-                      Fill="LightGray"/>
+                      Fill="{StaticResource Tema.VerdeClima}"/>
 
                 <!-- Binding a un comando del view model que se ejecuta cuando el elemento es clickeado -->
                 <Grid.InputBindings>
@@ -57,7 +82,7 @@
             del path y lo hace visible-->
             <ControlTemplate.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter TargetName="contenido" Property="Background" Value="LightGray"/>
+                    <Setter TargetName="contenido" Property="Background" Value="{StaticResource Tema.VerdeClima}"/>
                     <Setter TargetName="path" Property="Visibility" Value="Visible"/>
                 </Trigger>
             </ControlTemplate.Triggers>

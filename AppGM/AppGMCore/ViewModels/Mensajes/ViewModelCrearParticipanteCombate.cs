@@ -44,19 +44,6 @@ namespace AppGM.Core
         public List<ETipoPersonaje> TiposPersonajes => Enum.GetValues(typeof(ETipoPersonaje)).Cast<ETipoPersonaje>().ToList();
 
         /// <summary>
-        /// Valores del enum <see cref="EClaseServant"/>
-        /// Indica si la creacion puede finalizarse.
-        /// </summary>
-        /// TODO: Remover
-        public List<EClaseServant> ClasesServants => Enum.GetValues(typeof(EClaseServant)).Cast<EClaseServant>().ToList();
-
-        /// <summary>
-        /// Clase de servant seleccionada.
-        /// Solamente aplica si el <see cref="TipoPersonajeSeleccionado"/> no es <see cref="ETipoPersonaje.NPC"/>
-        /// </summary>
-        public EClaseServant ClaseSeleccionada { get; set; }
-
-        /// <summary>
         /// Tipo del personaje que sera agregado al combate
         /// </summary>
         public ETipoPersonaje TipoPersonajeSeleccionado { get; set; }
@@ -72,20 +59,12 @@ namespace AppGM.Core
         public int CantidadInicialDeAcciones { get; set; } = 2;
 
         /// <summary>
-        /// Indica si es necesario seleccionar una <see cref="EClaseServant"/>
-        /// </summary>
-        public bool DebeSeleccionarClaseServant   => TipoPersonajeSeleccionado != ETipoPersonaje.NPC;
-
-        /// <summary>
         /// Indica si la creacion puede finalizarse.
         /// </summary>
         public bool PuedeFinalizarCreacion
         {
             get
             {
-                if (DebeSeleccionarClaseServant && ClaseSeleccionada == EClaseServant.NINGUNO)
-                    return false;
-
                 if (PersonajeSeleccionado == string.Empty)
                     return false;
 
@@ -132,16 +111,12 @@ namespace AppGM.Core
 
             PropertyChanged += (obj, e) =>
             {
-                //Si el tipo de personaje que estamos creando cambio...
-                if (e.PropertyName == nameof(TipoPersonajeSeleccionado))
+                //Si la propiedad no es el tipo sileccionado ni si podemos finalizar la creacion
+                if (e.PropertyName != nameof(PuedeFinalizarCreacion))
                 {
-                    //Disparamos property changed en estas propiedades para que se actualicen los campos a completar en la UI
-                    DispararPropertyChanged(new PropertyChangedEventArgs(nameof(DebeSeleccionarClaseServant)));
-                }
-                //Si la propiedad no es el tipo sileccionado ni si podemos finalizar la creacion...
-                else if(e.PropertyName != nameof(PuedeFinalizarCreacion))
                     //Disparamos el evento property changed en PuedeFinalizarCreacion
                     DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PuedeFinalizarCreacion)));
+                }
             };
         }
 

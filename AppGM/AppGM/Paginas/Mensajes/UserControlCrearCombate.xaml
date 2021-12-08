@@ -9,7 +9,7 @@
 
     <!-- UserControl que hace uso de un ViewModelCrearParticipanteCombate -->
     <!-- Control para la creacion de la representacion de un participante en un combate-->
-    <Border Background="White"
+    <Border Background="{StaticResource Tema.Verde}"
             Padding="10">
         
         <Grid >
@@ -23,7 +23,8 @@
                 Grid.Column="0"
                 VerticalAlignment="Top"
                 HorizontalAlignment="Left"
-                Text="Nombre:"/>
+                Text="Nombre:"
+                Foreground="{StaticResource Tema.VerdeOscuro}"/>
 
             <!-- Nombre del combate -->
             <TextBox 
@@ -33,7 +34,9 @@
                 VerticalAlignment="Top"
                 MinWidth="300"
                 MinHeight="15"
-                Text="{Binding NombreCombate, Mode=TwoWay}"/>
+                Text="{Binding NombreCombate, Mode=TwoWay}"
+                Foreground="{StaticResource Tema.VerdeOscuro}"
+                Background="{StaticResource Tema.Verde}"/>
 
             <!-- CheckBox para indicar si el combate esta actualmente activo o no -->
             <StackPanel

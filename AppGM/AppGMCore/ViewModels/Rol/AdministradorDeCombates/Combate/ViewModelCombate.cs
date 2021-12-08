@@ -158,11 +158,19 @@ namespace AppGM.Core
             ViewModelCrearParticipanteCombate vm = new ViewModelCrearParticipanteCombate(this);
 
             //Se crea el popup y se espera a que se cierre
-            await SistemaPrincipal.MostrarMensajeAsync(vm, "Agregar Personaje", true, -1, -1);
+            await SistemaPrincipal.MostrarMensajeAsync(vm, "Agregar Personaje", true, 250, 800);
 
             administradorDeCombate.AgregarParticipante(vm.vmResultado.controladorParticipante.modelo);
 
-            Participantes.Add(vm.vmResultado);
+            if (Participantes.IsNullOrEmpty())
+            {
+                Participantes.Add(vm.vmResultado);    
+                administradorDeCombate.AvanzarTurno();
+            }
+            else
+                Participantes.Add(vm.vmResultado);
+            
+            ActualizarCombateActual(administradorDeCombate);
 
             await SistemaPrincipal.GuardarDatosAsync();
         }

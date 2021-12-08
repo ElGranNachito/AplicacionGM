@@ -145,7 +145,7 @@ namespace AppGM.Core
         /// <summary>
         /// Elimina este participante del combate y de la base de datos
         /// </summary>
-        private void EliminarParticipante()
+        private async void EliminarParticipante()
         {
             if (combate.ParticipanteTurnoActual == this)
                 combate.AvanzarTurno();
@@ -154,7 +154,7 @@ namespace AppGM.Core
 
             controladorParticipante.Eliminar();
 
-            SistemaPrincipal.GuardarDatosAsync();
+            await SistemaPrincipal.GuardarDatosAsync();
         }
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace AppGM.Core
             ViewModelCrearAccionParticipante vm = new ViewModelCrearAccionParticipante(this);
 
             //Se crea el popup y se espera a que se cierre
-            await SistemaPrincipal.MostrarMensajeAsync(vm, "Añadir accion", true, -1, -1);
+            await SistemaPrincipal.MostrarMensajeAsync(vm, "Añadir accion", true, 450, 800);
 
             //Si el resultado es valido entonces añadimos la nueva accion
             if (vm.vmResultado is ViewModelAccion vmNuevaAccion)

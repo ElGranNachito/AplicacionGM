@@ -56,11 +56,6 @@ namespace AppGM.Core
         public int CantidadInicialDeUnidades { get; set; } = 1;
 
         /// <summary>
-        /// Indica si es necesario seleccionar una <see cref="EClaseServant"/>
-        /// </summary>
-        public bool DebeSeleccionarClaseServant   => TipoSeleccionado != ETipoUnidad.NINGUNO && TipoSeleccionado != ETipoUnidad.Iglesia;
-
-        /// <summary>
         /// Indica si es necesario seleccionar un <see cref="ModeloPersonaje"/>
         /// </summary>
         public bool DebeSeleccionarPersonaje      => (TipoSeleccionado & (ETipoUnidad.Master | ETipoUnidad.Servant | ETipoUnidad.Invocacion)) != 0;
@@ -76,20 +71,9 @@ namespace AppGM.Core
         public ETipoUnidad TipoSeleccionado { get; set; }
 
         /// <summary>
-        /// Clase de servant seleccionada.
-        /// Solamente aplica si el <see cref="TipoSeleccionado"/> no es <see cref="ETipoUnidad.Iglesia"/>
-        /// </summary>
-        public EClaseServant ClaseSeleccionada { get; set; }
-
-        /// <summary>
         /// Valores del enum <see cref="ETipoUnidad"/>
         /// </summary>
         public List<ETipoUnidad> TiposUnidades => Enum.GetValues(typeof(ETipoUnidad)).Cast<ETipoUnidad>().ToList();
-
-        /// <summary>
-        /// Valores del enum <see cref="EClaseServant"/>
-        /// </summary>
-        public List<EClaseServant> ClasesServants => Enum.GetValues(typeof(EClaseServant)).Cast<EClaseServant>().ToList();
 
         /// <summary>
         /// Comando que ejecutara cuando el usuario presiones el boton 'Finalizar'
@@ -110,9 +94,6 @@ namespace AppGM.Core
                     return false;
 
                 if (TipoSeleccionado == ETipoUnidad.NINGUNO)
-                    return false;
-
-                if (DebeSeleccionarClaseServant && ClaseSeleccionada == EClaseServant.NINGUNO)
                     return false;
 
                 if (DebeSeleccionarCantidad && CantidadInicialDeUnidades < 1)
@@ -163,7 +144,6 @@ namespace AppGM.Core
                 if (e.PropertyName == nameof(TipoSeleccionado))
                 {
                     //Disparamos property changed en estas propiedades para que se actualicen los campos a completar en la UI
-                    DispararPropertyChanged(new PropertyChangedEventArgs(nameof(DebeSeleccionarClaseServant)));
                     DispararPropertyChanged(new PropertyChangedEventArgs(nameof(DebeSeleccionarPersonaje)));
                     DispararPropertyChanged(new PropertyChangedEventArgs(nameof(DebeSeleccionarCantidad)));
 
@@ -184,7 +164,7 @@ namespace AppGM.Core
         /// <summary>
         /// Crea el VM
         /// </summary>
-        private void GenerarViewModel()
+        private async void GenerarViewModel()
         {
             ModeloUnidadMapa      modeloUnidad        = null;
             ModeloVector2         posicionUnidad      = new ModeloVector2();
@@ -207,33 +187,53 @@ namespace AppGM.Core
                     break;
 
                 case ETipoUnidad.Master:
-                case ETipoUnidad.Servant:
+                {
+                    var master = (ModeloMaster) SistemaPrincipal.DatosRolSeleccionado.Masters.Find(m => m.ToString() == PersonajeSeleccionado).modelo;
+
                     modeloUnidad = new ModeloUnidadMapaMasterServant
                     {
                         ETipoUnidad = TipoSeleccionado,
-                        EClaseServant = ClaseSeleccionada,
+                        EClaseServant = master.ClaseServant,
+                        Nombre = Nombre
+                    };
+                        
+                    if (TipoSeleccionado == ETipoUnidad.Master)
+                        modeloUnidad.Personaje = master;
+
+                    break;
+                }
+                case ETipoUnidad.Servant:
+                {
+                    var servant = (ModeloServant) SistemaPrincipal.DatosRolSeleccionado.Servants.Find(s => s.ToString() == PersonajeSeleccionado).modelo;
+
+                    modeloUnidad = new ModeloUnidadMapaMasterServant
+                    {
+                        ETipoUnidad = TipoSeleccionado,
+                        EClaseServant = servant.ClaseServant,
                         Nombre = Nombre
                     };
 
-                    if (TipoSeleccionado == ETipoUnidad.Master)
-                        modeloUnidad.Personaje = SistemaPrincipal.DatosRolSeleccionado.Masters.Find(m => m.ToString() == PersonajeSeleccionado).modelo;
-                    else
-                        modeloUnidad.Personaje = SistemaPrincipal.DatosRolSeleccionado.Servants.Find(s => s.ToString() == PersonajeSeleccionado).modelo;
+                    if (TipoSeleccionado == ETipoUnidad.Servant)
+                        modeloUnidad.Personaje = servant;
 
                     break;
-
+                }
                 case ETipoUnidad.Invocacion:
+                {
+                    var invocacion = (ModeloInvocacion) SistemaPrincipal.DatosRolSeleccionado.Invocaciones.Find(i => i.ToString() == PersonajeSeleccionado).modelo;
+
                     modeloUnidad = new ModeloUnidadMapaInvocacionTrampa()
                     {
                         ETipoUnidad = TipoSeleccionado,
-                        EClaseServant = ClaseSeleccionada,
+                        EClaseServant = ((ModeloPersonajeJugable)invocacion.Invocador).ClaseServant,
                         Nombre = Nombre
                     };
 
                     if (TipoSeleccionado == ETipoUnidad.Invocacion)
-                        modeloUnidad.Personaje = SistemaPrincipal.DatosRolSeleccionado.Invocaciones.Find(i => i.ToString() == PersonajeSeleccionado).modelo;
+                        modeloUnidad.Personaje = invocacion;
                     
                     break;
+                }
             }
 
             modeloUnidad.Posicion  = posicionUnidad;
@@ -241,10 +241,12 @@ namespace AppGM.Core
             mMapa.controladorMapa.AñadirUnidad(modeloUnidad);
 
             ControladorUnidadMapa controlador = new ControladorUnidadMapa(modeloUnidad);
+            
             vmResultado = new ViewModelIngresoPosicion(mMapa, controlador);
 
             SistemaPrincipal.GuardarModelo(modeloUnidad);
-            SistemaPrincipal.GuardarDatosAsync();
+            
+            await SistemaPrincipal.GuardarDatosAsync();
 
             Resultado = EResultadoViewModel.Aceptar;
         }

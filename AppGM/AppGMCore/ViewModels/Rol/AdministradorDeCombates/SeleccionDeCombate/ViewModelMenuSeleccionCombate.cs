@@ -64,11 +64,11 @@ namespace AppGM.Core
             //Se crea el popup y se espera a que se cierre
             await SistemaPrincipal.MostrarMensajeAsync(vm, "Agregar combate", true, 200, 500);
 
-            Combates.Add(new ViewModelCombateItem(vm.vmResultado.administradorDeCombate));
-
-            await SistemaPrincipal.GuardarDatosAsync();
+            Combates.Add(new ViewModelCombateItem(vm.controlador));
 
             DispararPropertyChanged(new PropertyChangedEventArgs(nameof(Combates)));
+
+            await SistemaPrincipal.GuardarDatosAsync();
         }
 
         #endregion
