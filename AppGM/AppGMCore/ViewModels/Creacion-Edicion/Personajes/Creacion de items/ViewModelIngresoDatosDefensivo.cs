@@ -17,11 +17,6 @@ namespace AppGM.Core
 		private ViewModelCreacionEdicionDatosReduccionDaño mReduccionDeDañoSeleccionada;
 
 		/// <summary>
-		/// Viewmodel de creacion/edicion de item que contiene a este objeto
-		/// </summary>
-		public readonly ViewModelCreacionEdicionItem viewModelCreacionEdicionItemContenedor;
-
-		/// <summary>
 		/// Indica si hay una reduccion de daño seleccionado y por lo tanto podemos quitarla
 		/// </summary>
 		public bool PuedeQuitarReduccionDeDaño => ReduccionDeDañoSeleccionada != null;
@@ -68,16 +63,11 @@ namespace AppGM.Core
 		/// Constructor
 		/// </summary>
 		/// <param name="_datosDefensivo">Modelo que se editara</param>
-		/// <param name="_vmCreacionEdicionItem">Viewmodel de creacion/edicion de item que contiene a este objeto</param>
-		public ViewModelIngresoDatosDefensivo(ModeloDatosDefensivo _datosDefensivo, ViewModelCreacionEdicionItem _vmCreacionEdicionItem)
+		public ViewModelIngresoDatosDefensivo(ModeloDatosDefensivo _datosDefensivo)
 
 			: base(null, true, false)
 		{
 			ModeloSiendoEditado = _datosDefensivo;
-			viewModelCreacionEdicionItemContenedor = _vmCreacionEdicionItem;
-
-			if (viewModelCreacionEdicionItemContenedor == null)
-				SistemaPrincipal.LoggerGlobal.LogCrash($"{nameof(viewModelCreacionEdicionItemContenedor)} no puede ser null");
 
 			ViewModelComboBoxSeleccionEstrategiaDeteccionDeDaño = new ViewModelMultiselectComboBox<EEstrategiaDeDeteccionDeDaño>(
 				EnumHelpers.TiposDeDeteccionDeDañoDisponibles.Select(t => new ViewModelMultiselectComboBoxItem<EEstrategiaDeDeteccionDeDaño>(t, t.ToString(),
@@ -121,7 +111,7 @@ namespace AppGM.Core
 
 		#region Metodos
 
-		protected override void ActualizarValidez()
+		public override void ActualizarValidez()
 		{
 			EsValido = false;
 

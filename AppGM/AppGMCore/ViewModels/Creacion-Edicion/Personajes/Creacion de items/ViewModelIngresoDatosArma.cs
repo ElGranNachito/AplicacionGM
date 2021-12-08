@@ -97,7 +97,7 @@ namespace AppGM.Core
 
 		#region Metodos
 
-		protected override void ActualizarValidez()
+		public override void ActualizarValidez()
 		{
 			EsValido = false;
 

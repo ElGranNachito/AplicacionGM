@@ -447,7 +447,7 @@ namespace AppGM.Core
             return true;
         }
 
-        protected override void ActualizarValidez()
+        public override void ActualizarValidez()
         {
             if (string.IsNullOrWhiteSpace(Nombre))
 			{

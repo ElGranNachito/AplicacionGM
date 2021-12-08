@@ -49,6 +49,13 @@ namespace AppGM.Core
 			}
 		}
 
+		/// <summary>
+		/// Viewmodel del control para el ingreso de datos de defensa
+		/// </summary>
+		public ViewModelIngresoDatosDefensivo ViewModelIngresoDatosDefensa { get; private set; }
+
+		public ICommand ComandoEditarDefensa { get; private set; }
+
 		#endregion
 
 		#region Contructor
@@ -65,6 +72,13 @@ namespace AppGM.Core
 			: base(_accionSalir, _controladorParaEditar, true, true)
 		{
 			CrearComandoEliminar();
+
+			ComandoEditarDefensa = new Comando(async () =>
+			{
+				ViewModelIngresoDatosDefensa ??= new ViewModelIngresoDatosDefensivo(ModeloCreado.DatosDefensa);
+
+				await SistemaPrincipal.MostrarMensajeAsync(ViewModelIngresoDatosDefensa, "Datos defensa", true, 500, 700);
+			});
 		}
 
 		#endregion
@@ -75,6 +89,9 @@ namespace AppGM.Core
 		{
 			ActualizarValidez();
 
+			if (ViewModelIngresoDatosDefensa is not null && ViewModelIngresoDatosDefensa.ReduccionesDeDaño.Count > 0)
+				ModeloCreado.DatosDefensa = ViewModelIngresoDatosDefensa.CrearModelo();
+
 			return EsValido ? ModeloCreado : null;
 		}
 
@@ -84,23 +101,28 @@ namespace AppGM.Core
 
 			if (modeloCreado == null)
 				return null;
-
+			
 			return EstaEditando ? ControladorSiendoEditado : SistemaPrincipal.ObtenerControlador<ControladorParteDelCuerpo, ModeloParteDelCuerpo>(ModeloCreado, true);
 		}
 
-		protected override void ActualizarValidez()
+		public override void ActualizarValidez()
 		{
+			EsValido = false;
+
 			if (ModeloCreado.Nombre.IsNullOrWhiteSpace())
 			{
-				EsValido = false;
-
 				return;
 			}
 
 			if (ModeloCreado.MultiplicadorDeEstaParte <= 0)
 			{
-				EsValido = false;
+				return;
+			}
 
+			ViewModelIngresoDatosDefensa?.ActualizarValidez();
+
+			if (ViewModelIngresoDatosDefensa is not null && ViewModelIngresoDatosDefensa.ReduccionesDeDaño.Count > 0 && !ViewModelIngresoDatosDefensa.EsValido)
+			{
 				return;
 			}
 

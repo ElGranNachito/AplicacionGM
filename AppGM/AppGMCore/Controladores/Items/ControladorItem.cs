@@ -81,6 +81,11 @@ namespace AppGM.Core
         /// </summary>
         public ControladorPersonaje Portador { get; set; }
 
+        /// <summary>
+        /// Controlador de denfensa del item
+        /// </summary>
+        public ControladorDefensa Defensa { get; set; }
+
         #endregion
 
         #region Constructores

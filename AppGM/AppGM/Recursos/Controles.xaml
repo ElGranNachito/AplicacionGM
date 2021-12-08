@@ -6,6 +6,28 @@
     <!--#region TreeView -->
 
     <!--Boton toggle-->
+    <Style x:Key="OptionMarkFocusVisual">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle Margin="14,0,0,0" StrokeDashArray="1 2" SnapsToDevicePixels="true" StrokeThickness="1" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <SolidColorBrush x:Key="OptionMark.Static.Background" Color="#FFFFFFFF"/>
+    <SolidColorBrush x:Key="OptionMark.Static.Border" Color="#FF707070"/>
+    <SolidColorBrush x:Key="OptionMark.Static.Glyph" Color="#FF212121"/>
+    <SolidColorBrush x:Key="OptionMark.MouseOver.Background" Color="#FFF3F9FF"/>
+    <SolidColorBrush x:Key="OptionMark.MouseOver.Border" Color="#FF5593FF"/>
+    <SolidColorBrush x:Key="OptionMark.MouseOver.Glyph" Color="#FF212121"/>
+    <SolidColorBrush x:Key="OptionMark.Pressed.Background" Color="#FFD9ECFF"/>
+    <SolidColorBrush x:Key="OptionMark.Pressed.Border" Color="#FF3C77DD"/>
+    <SolidColorBrush x:Key="OptionMark.Pressed.Glyph" Color="#FF212121"/>
+    <SolidColorBrush x:Key="OptionMark.Disabled.Background" Color="#FFE6E6E6"/>
+    <SolidColorBrush x:Key="OptionMark.Disabled.Border" Color="#FFBCBCBC"/>
+    <SolidColorBrush x:Key="OptionMark.Disabled.Glyph" Color="#FF707070"/>
+    
     <Style TargetType="{x:Type ToggleButton}" x:Key="EstiloToggleTreeViewItem">
 
         <Setter Property="Template">
@@ -132,6 +154,7 @@
 
         <Setter Property="Background" Value="{StaticResource Color.ComboBoxSeleccionMultiple.FondoItem.Estatico}"/>
         <Setter Property="BorderBrush" Value="{StaticResource Color.ComboBoxSeleccionMultiple.BordeItem.Estatico}"/>
+        <Setter Property="Foreground" Value="{StaticResource Color.ComboBoxSeleccionMultiple.Texto.Estatico}"/>
         <Setter Property="BorderThickness" Value="1"/>
 
         <Setter Property="IsChecked" Value="{Binding EstaSeleccionado, Mode=OneWay}"/>
@@ -163,9 +186,14 @@
 
                             <!--Bloque de texto que muestra el contenido del item-->
                             <TextBlock
+                                x:Name="contenidoItem"
+
                                 Grid.Column="1"
-                                Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=DataContext.Contenido}" 
-                                Focusable="False"/>
+                                Focusable="False"
+
+                                Foreground="{TemplateBinding Foreground}"
+                                
+                                Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=DataContext.Contenido}"/>
                         </Grid>
 
                         <!--Binding al click izquierdo que llama a 'ComandoSeleccionar'-->
@@ -181,6 +209,7 @@
                             <DataTrigger.Setters>
                                 <Setter Property="Background" TargetName="checkBoxBorder" Value="{StaticResource Color.ComboBoxSeleccionMultiple.FondoItem.Seleccionado}"/>
                                 <Setter Property="BorderBrush" TargetName="checkBoxBorder" Value="{StaticResource Color.ComboBoxSeleccionMultiple.BordeItem.Seleccionado}"/>
+                                <Setter Property="Foreground" TargetName="contenidoItem" Value="{StaticResource Color.ComboBoxSeleccionMultiple.Texto.Seleccionado}"/>
                             </DataTrigger.Setters>
                         </DataTrigger>
 
@@ -188,12 +217,14 @@
                         <Trigger Property="IsMouseOver" Value="true">
                             <Setter Property="Background" TargetName="checkBoxBorder" Value="{StaticResource Color.ComboBoxSeleccionMultiple.FondoItem.MouseOver}"/>
                             <Setter Property="BorderBrush" TargetName="checkBoxBorder" Value="{StaticResource Color.ComboBoxSeleccionMultiple.BordeItem.MouseOver}"/>
+                            <Setter Property="Foreground" TargetName="contenidoItem" Value="{StaticResource Color.ComboBoxSeleccionMultiple.Texto.MouseOver}"/>
                         </Trigger>
 
                         <!--Cuando el item esta deshabilitado-->
                         <Trigger Property="IsEnabled" Value="false">
                             <Setter Property="Background" TargetName="checkBoxBorder" Value="{StaticResource Color.ComboBoxSeleccionMultiple.FondoItem.Deshabilitado}"/>
                             <Setter Property="BorderBrush" TargetName="checkBoxBorder" Value="{StaticResource Color.ComboBoxSeleccionMultiple.BordeItem.Deshabilitado}"/>
+                            <Setter Property="Foreground" TargetName="contenidoItem" Value="{StaticResource Color.ComboBoxSeleccionMultiple.Texto.Deshabilitado}"/>
                         </Trigger>
 
                         <!--Cuando el item esta siendo presionado-->
@@ -383,7 +414,9 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ComboBoxItem}">
                     <Border 
-                        SnapsToDevicePixels="true">
+                        SnapsToDevicePixels="true"
+                        
+                        Background="{StaticResource Color.ComboBoxSeleccionMultiple.FondoItem.Estatico}">
 
                         <ContentPresenter HorizontalAlignment="Stretch" 
                                           VerticalAlignment="Stretch" 
@@ -394,16 +427,53 @@
         </Setter>
     </Style>
 
+    <!-- Estilo de checkbox que representa el contenedor de un item en un combo box de seleccion multiple -->
+    <Style x:Key="EstiloContenedorItemsComboBox" TargetType="{x:Type ComboBoxItem}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ComboBoxItem}">
+                    <Border 
+                        x:Name="borderContenedor"
+
+                        SnapsToDevicePixels="true"
+                        
+                        Background="{StaticResource Color.ComboBoxSeleccionMultiple.FondoItem.Estatico}">
+
+                        <ContentPresenter HorizontalAlignment="Stretch" 
+                                          VerticalAlignment="Stretch" 
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" TargetName="borderContenedor" Value="{StaticResource Color.ComboBoxSeleccionMultiple.FondoItem.MouseOver}"/>
+                            <Setter Property="BorderBrush" TargetName="borderContenedor" Value="{StaticResource Color.ComboBoxSeleccionMultiple.BordeItem.MouseOver}"/>
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" TargetName="borderContenedor" Value="{StaticResource Color.ComboBoxSeleccionMultiple.FondoItem.Deshabilitado}"/>
+                            <Setter Property="BorderBrush" TargetName="borderContenedor" Value="{StaticResource Color.ComboBoxSeleccionMultiple.BordeItem.Deshabilitado}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <!--Estilo de un combobox de seleccion multiple-->
     <Style x:Key="EstiloMultiselectComboBox" TargetType="{x:Type ComboBox}">
+
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="Padding" Value="4,1"/>
         <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
         <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual2}"/>
+        <Setter Property="Foreground" Value="{StaticResource Color.ComboBoxSeleccionMultiple.Texto.Estatico}"/>
+
+        <Setter Property="Background" Value="{StaticResource Color.ComboBox.Fondo.Estatico}"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
 
         <Setter Property="Template">
             <Setter.Value>
@@ -429,10 +499,10 @@
 
                                             <Canvas x:Name="canvas" HorizontalAlignment="Left" Height="0" VerticalAlignment="Top" Width="0">
                                                 <Rectangle 
-                                            x:Name="opaqueRect"
-                                            Fill="{Binding Background, ElementName=dropDownBorder}" 
-                                            Height="{Binding ActualHeight, ElementName=dropDownBorder}" 
-                                            Width="{Binding ActualWidth, ElementName=dropDownBorder}"/>
+                                                    x:Name="opaqueRect"
+                                                    Fill="{Binding Background, ElementName=dropDownBorder}" 
+                                                    Height="{Binding ActualHeight, ElementName=dropDownBorder}" 
+                                                    Width="{Binding ActualWidth, ElementName=dropDownBorder}"/>
                                             </Canvas>
 
                                             <ItemsPresenter
@@ -468,28 +538,53 @@
 
                                 VerticalAlignment="Center"
 
+                                Foreground="{TemplateBinding Foreground}"
+
                                 Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControlMultiSelectComboBox}}, Path=Descripcion}"/>
 
                             <TextBlock
+                                x:Name="stringItemsSeleccionados"
+
                                 Margin="5 5 0 5"
 
                                 IsHitTestVisible="False"
 
                                 TextWrapping="NoWrap"
                                 TextTrimming="CharacterEllipsis"
+
+                                Foreground="{TemplateBinding Foreground}"
+
                                 Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=DataContext.ToStringItemsSeleccionados}"/>
 
                         </StackPanel>
 
                     </Grid>
+
                     <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" TargetName="descripcion" Value="{StaticResource Color.ComboBoxSeleccionMultiple.Texto.Deshabilitado}"/>
+                            <Setter Property="Foreground" TargetName="stringItemsSeleccionados" Value="{StaticResource Color.ComboBoxSeleccionMultiple.Texto.Deshabilitado}"/>
+                            <Setter Property="Background" TargetName="toggleButton" Value="{StaticResource Color.ComboBoxSeleccionMultiple.Fondo.Deshabilitado}"/>
+                            <Setter Property="BorderBrush" TargetName="toggleButton" Value="{StaticResource Color.ComboBoxSeleccionMultiple.Borde.Deshabilitado}"/>
+                        </Trigger>
+
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" TargetName="descripcion" Value="{StaticResource Color.ComboBoxSeleccionMultiple.Texto.MouseOver}"/>
+                            <Setter Property="Foreground" TargetName="stringItemsSeleccionados" Value="{StaticResource Color.ComboBoxSeleccionMultiple.Texto.MouseOver}"/>
+                            <Setter Property="Background" TargetName="toggleButton" Value="{StaticResource Color.ComboBoxSeleccionMultiple.Fondo.MouseOver}"/>
+                            <Setter Property="BorderBrush" TargetName="toggleButton" Value="{StaticResource Color.ComboBoxSeleccionMultiple.Borde.MouseOver}"/>
+                        </Trigger>
+
                         <Trigger Property="HasDropShadow" SourceName="PART_Popup" Value="true">
                             <Setter Property="Margin" TargetName="shadow" Value="0,0,5,5"/>
                             <Setter Property="Color" TargetName="shadow" Value="#71000000"/>
                         </Trigger>
+
                         <Trigger Property="HasItems" Value="false">
                             <Setter Property="Height" TargetName="dropDownBorder" Value="95"/>
                         </Trigger>
+
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsGrouping" Value="true"/>
@@ -497,20 +592,25 @@
                             </MultiTrigger.Conditions>
                             <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
                         </MultiTrigger>
+
                         <Trigger Property="ScrollViewer.CanContentScroll" SourceName="DropDownScrollViewer" Value="false">
                             <Setter Property="Canvas.Top" TargetName="opaqueRect" Value="{Binding VerticalOffset, ElementName=DropDownScrollViewer}"/>
                             <Setter Property="Canvas.Left" TargetName="opaqueRect" Value="{Binding HorizontalOffset, ElementName=DropDownScrollViewer}"/>
                         </Trigger>
+
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
+
             </Setter.Value>
         </Setter>
     </Style>
 
-
     <ControlTemplate x:Key="ComboBoxTemplate" TargetType="{x:Type ComboBox}">
 
-        <Grid x:Name="templateRoot" SnapsToDevicePixels="true">
+        <Grid 
+            x:Name="templateRoot"
+            SnapsToDevicePixels="true">
+
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition MinWidth="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}" Width="0"/>
@@ -564,15 +664,18 @@
                     IsHitTestVisible="False">
 
                 <TextBlock
-                        Padding="5 5 0 5"
-                        x:Name="descripcion"
+                    Padding="5 5 0 5"
+                    x:Name="descripcion"
 
-                        VerticalAlignment="Center"
+                    VerticalAlignment="Center"
 
-                        Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControlComboBoxConDescripcion}}, Path=Descripcion}"/>
+                    Foreground="{TemplateBinding Foreground}"
+
+                    Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControlComboBoxConDescripcion}}, Path=Descripcion}"/>
 
                 <ContentPresenter 
                     x:Name="contentPresenter" 
+
                     ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" 
                     Content="{TemplateBinding SelectionBoxItem}"
                     ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}" 
@@ -583,10 +686,22 @@
                     VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
             </StackPanel>
 
-
-
         </Grid>
+
         <ControlTemplate.Triggers>
+
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" TargetName="descripcion" Value="{StaticResource Color.ComboBoxSeleccionMultiple.Texto.Deshabilitado}"/>
+                <Setter Property="Background" TargetName="toggleButton" Value="{StaticResource Color.ComboBoxSeleccionMultiple.Fondo.Deshabilitado}"/>
+                <Setter Property="BorderBrush" TargetName="toggleButton" Value="{StaticResource Color.ComboBoxSeleccionMultiple.Borde.Deshabilitado}"/>
+            </Trigger>
+
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground" TargetName="descripcion" Value="{StaticResource Color.ComboBoxSeleccionMultiple.Texto.MouseOver}"/>
+                <Setter Property="Background" TargetName="toggleButton" Value="{StaticResource Color.ComboBoxSeleccionMultiple.Fondo.MouseOver}"/>
+                <Setter Property="BorderBrush" TargetName="toggleButton" Value="{StaticResource Color.ComboBoxSeleccionMultiple.Borde.MouseOver}"/>
+            </Trigger>
+
             <Trigger Property="HasDropShadow" SourceName="PART_Popup" Value="true">
                 <Setter Property="Margin" TargetName="shadow" Value="0,0,5,5"/>
                 <Setter Property="Color" TargetName="shadow" Value="#71000000"/>
@@ -608,6 +723,14 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
+    <Style TargetType="{x:Type ComboBox}">
+
+        <Setter Property="Background" Value="{StaticResource Color.ComboBox.Fondo.Estatico}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource Color.ComboBox.Borde.Estatico}"/>
+        <Setter Property="Foreground" Value="{StaticResource Color.ComboBoxSeleccionMultiple.Texto.Estatico}"/>
+
+        <Setter Property="Template" Value="{StaticResource ComboBoxTemplate}"/>
+    </Style>
 
     <SolidColorBrush x:Key="ComboBoxItem.ItemsviewHover.Background" Color="#1F26A0DA"/>
     <SolidColorBrush x:Key="ComboBoxItem.ItemsviewHover.Border" Color="#A826A0DA"/>
@@ -924,5 +1047,87 @@
     </Style>
 
     <!--#endregion-->
+
+    <!--#region Checkbox -->
+
+    <Style TargetType="{x:Type CheckBox}">
+
+        <Setter Property="Background" Value="{StaticResource Color.CheckBox.Fondo.Estatico}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource Color.CheckBox.Borde.Estatico}"/>
+        <Setter Property="Foreground" Value="{StaticResource Color.CheckBox.Texto.Estatico}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type CheckBox}">
+                    <Grid x:Name="templateRoot" Background="Transparent" SnapsToDevicePixels="True">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!--Checkbox-->
+                        <Border
+                            x:Name="checkBoxBorder" 
+                            Margin="1"
+                            Background="{TemplateBinding Background}" 
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+
+                            <!--Tilde-->
+                            <Grid x:Name="markGrid">
+                                <Path x:Name="optionMark" Data="F1 M 9.97498,1.22334L 4.6983,9.09834L 4.52164,9.09834L 0,5.19331L 1.27664,3.52165L 4.255,6.08833L 8.33331,1.52588e-005L 9.97498,1.22334 Z " Fill="{StaticResource Color.CheckBox.Tilde.Estatico}" Margin="1" Opacity="0" Stretch="None"/>
+                            </Grid>
+                        </Border>
+
+                        <!--Contenido-->
+                        <ContentPresenter x:Name="contentPresenter" Grid.Column="1" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HasContent" Value="true">
+                            <Setter Property="FocusVisualStyle" Value="{StaticResource OptionMarkFocusVisual}"/>
+                            <Setter Property="Padding" Value="4,-1,0,0"/>
+                        </Trigger>
+
+                        <!--Cuando el mouse esta sobre el elemento-->
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Background" TargetName="checkBoxBorder" Value="{StaticResource Color.CheckBox.Fondo.MouseOver}"/>
+                            <Setter Property="BorderBrush" TargetName="checkBoxBorder" Value="{StaticResource Color.CheckBox.Borde.MouseOver}"/>
+                            <Setter Property="Fill" TargetName="optionMark" Value="{StaticResource Color.CheckBox.Tilde.MouseOver}"/>
+                        </Trigger>
+
+                        <!--Cuando esta deshabilitado-->
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Background" TargetName="checkBoxBorder" Value="{StaticResource Color.CheckBox.Fondo.Deshabilitado}"/>
+                            <Setter Property="BorderBrush" TargetName="checkBoxBorder" Value="{StaticResource Color.CheckBox.Borde.Deshabilitado}"/>
+                            <Setter Property="Foreground" Value="{StaticResource Color.CheckBox.Texto.Deshabilitado}"/>
+                            <Setter Property="Fill" TargetName="optionMark" Value="{StaticResource Color.CheckBox.Tilde.Deshabilitado}"/>
+                        </Trigger>
+
+                        <!--Cuando esta tildado-->
+                        <Trigger Property="IsChecked" Value="true">
+                            <Setter Property="Opacity" TargetName="optionMark" Value="1"/>
+
+                            <Setter Property="Background" TargetName="checkBoxBorder" Value="{StaticResource Color.CheckBox.Fondo.Checked}"/>
+                            <Setter Property="BorderBrush" TargetName="checkBoxBorder" Value="{StaticResource Color.CheckBox.Borde.Checked}"/>
+                            <Setter Property="Foreground" Value="{StaticResource Color.CheckBox.Texto.Checked}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--#endregion-->
+
+    <Style TargetType="{x:Type ListView}">
+
+        <Setter Property="Background" Value="{StaticResource Color.ListView.Fondo.Estatico}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource Color.ListView.Borde.Estatico}"/>
+    </Style>
 
 </ResourceDictionary>

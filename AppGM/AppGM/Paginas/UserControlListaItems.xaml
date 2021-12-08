@@ -15,11 +15,10 @@
 
             <Border 
                 Padding="{TemplateBinding Padding}"
-                BorderBrush="{TemplateBinding BorderBrush}"
-                BorderThickness="{TemplateBinding BorderThickness}">
+                BorderBrush="{StaticResource Tema.Verde}"
+                BorderThickness="1">
 
                 <Grid 
-                    Background="White" 
                     VerticalAlignment="Top">
 
                     <Grid.RowDefinitions>
@@ -51,7 +50,6 @@
                         Visibility="{Binding PuedeAñadirItems, Converter={local:BooleanToVisibilityConverterColapsar}}"
                         FontFamily="{StaticResource 'Font Awesome Regular'}"
                         Content="{StaticResource Fa-BotonPlus}"
-                        Style="{StaticResource BotonFondoResaltable}"
                         Command="{Binding ComandoAñadirItem}"/>
                     
                     <ScrollViewer

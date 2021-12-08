@@ -250,7 +250,7 @@ namespace AppGM.Core
             SistemaPrincipal.LoggerGlobal.Log($"Parte del cuerpo almacenada en {this} quitada con exito", ESeveridad.Debug);
         }
 
-        public void Dañar(ModeloArgumentosDaño argsDaño, SortedList<int, IDañable> subObjetivos = null)
+        public void Dañar(ModeloArgumentosDaño argsDaño, SortedList<int, SubobjetivoDaño> subObjetivos = null)
         {
 	        throw new NotImplementedException();
         }

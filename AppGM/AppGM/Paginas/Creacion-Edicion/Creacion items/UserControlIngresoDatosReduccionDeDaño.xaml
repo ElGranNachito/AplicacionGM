@@ -8,7 +8,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="100" d:DesignWidth="1000"
              
-             Background="Transparent"
+             Background="{StaticResource Tema.VerdeOscuro}"
              
              Padding="5">
 
@@ -20,11 +20,28 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
+        <!--Nombre-->
+        <TextBox
+            Grid.Column="0"
+            VerticalAlignment="Center"
+
+            Margin="0 0 5 0"
+
+            MinHeight="30"
+            
+            Tag="Nombre"
+
+            Text="{Binding NombreReduccion}"
+            Style="{StaticResource TextoDescriptivo}"/>
+
         <!--Tipos de daño con los que lidia-->
         <local:UserControlComboBoxConDescripcion
+            Grid.Column="1"
             Margin="0 0 5 0"
             Descripcion="Estrategia de deteccion:"
 
@@ -32,19 +49,9 @@
             
             DataContext="{Binding ViewModelComboBoxEstrategiaDeDeteccionDeDaño}"/>
 
-        <!--Valores del tipo de daño-->
+        <!--Fuentes de daño que abarca (en caso de que la estrategia sea detectar fuente de daño)-->
         <local:UserControlMultiSelectComboBox
-            Grid.Column="1"
-
-            Margin="0 0 5 0"
-
-            Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControlIngresoDatosReduccionDeDaño}}, Path=DataContext.EstrategiaDeReduccionEsDetectarFuenteDelDaño, Converter={local:BooleanToVisibilityConverterColapsar}, ConverterParameter=1}"
-
-            DataContext="{Binding ViewModelMultiselectComboBoxValorTipoDeDeteccion}"
-            Descripcion="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControlIngresoDatosReduccionDeDaño}}, Path=DataContext.DescripcionValorTipoQueDetectar}"/>
-
-        <local:UserControlMultiSelectComboBox
-            Grid.Column="1"
+            Grid.Column="2"
 
             Margin="0 0 5 0"
 
@@ -53,9 +60,23 @@
             DataContext="{Binding ViewModelMultiselectComboBoxSeleccionFuentesDeDaño}"
             Descripcion="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControlIngresoDatosReduccionDeDaño}}, Path=DataContext.DescripcionValorTipoQueDetectar}"/>
 
+        <!--Valor del tipo de deteccion-->
+        <local:UserControlMultiSelectComboBox
+            Grid.Column="2"
+            
+            Margin="0 0 5 0"
+
+            Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControlIngresoDatosReduccionDeDaño}}, Path=DataContext.EstrategiaDeReduccionEsDetectarFuenteDelDaño, Converter={local:BooleanToVisibilityConverterColapsar}, ConverterParameter=0}"
+            
+            DataContext="{Binding ViewModelMultiselectComboBoxValorTipoDeDeteccion}"
+            Descripcion="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControlIngresoDatosReduccionDeDaño}}, Path=DataContext.DescripcionValorTipoQueDetectar}"></local:UserControlMultiSelectComboBox>
+
         <!--Metodo de reduccion del daño-->
         <local:UserControlComboBoxConDescripcion
-            Grid.Column="2"
+            Grid.Column="3"
+
+            Margin="0 0 5 0"
+
             Descripcion="Metodo de reduccion:"
 
             VerticalAlignment="Center"
@@ -64,16 +85,17 @@
 
         <!--Valor de la reduccion-->
         <TextBox
-            Grid.Column="3"
+            Grid.Column="4"
 
-            Margin="5 0 0 0"
-            Padding="10 6"
+            MinHeight="30"
+
+            Margin="0 0 5 0"
 
             HorizontalContentAlignment="Center"
 
             Tag="Reduccion"
 
-            HorizontalAlignment="Center"
+            HorizontalAlignment="Stretch"
             VerticalAlignment="Center"
 
             local:CampoDeTextoNumericoProperty.Value="True"
@@ -85,9 +107,15 @@
 
             Text="{Binding ValorReduccion}"/>
 
+        <CheckBox
+            Grid.Column="5"
+            
+            VerticalAlignment="Center"
+            
+            Content="Habilitada"></CheckBox>
 
         <Rectangle
-            Grid.Column="4"
+            Grid.Column="6"
 
             Margin="10 0"
             

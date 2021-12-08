@@ -38,7 +38,7 @@ namespace AppGM.Core
 		/// </summary>
 		/// <param name="_vmContenedor">Viewmodel de creacion/edicion item que contiene a este objeto</param>
 		/// <param name="_modeloEditar">Modelo que editaremos</param>
-		public ViewModelIngresoDatosConsumible(ViewModelCreacionEdicionItem _vmContenedor, ModeloDatosConsumible _modeloEditar = null)
+		public ViewModelIngresoDatosConsumible(ModeloDatosConsumible _modeloEditar, ViewModelCreacionEdicionItem _vmContenedor)
 
 			: base(null, true, false)
 		{
@@ -50,7 +50,7 @@ namespace AppGM.Core
 		#endregion
 
 		#region Metodos
-		protected override void ActualizarValidez()
+		public override void ActualizarValidez()
 		{
 			EsValido = false;
 

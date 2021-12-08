@@ -33,7 +33,7 @@
 				case EStat.NP:
 				{
 					if (this is ModeloServant s)
-						return s.RangoNP.AValorNumerico();
+						return (int)s.RangoNP;
 
 					return 0;
 				}

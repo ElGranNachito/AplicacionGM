@@ -14,6 +14,11 @@
 
     </Style>
 
+    <Style TargetType="{x:Type Label}">
+
+        <Setter Property="Foreground" Value="{StaticResource Color.Label.Texto}"/>
+    </Style>
+
     <Style TargetType="{x:Type TextBox}">
 
         <Setter Property="FontFamily" Value="{StaticResource 'Font Canon'}"/>

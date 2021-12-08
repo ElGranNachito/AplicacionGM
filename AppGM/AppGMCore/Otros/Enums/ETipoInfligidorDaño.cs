@@ -8,16 +8,16 @@
 		/// <summary>
 		/// <see cref="ControladorPersonaje"/>
 		/// </summary>
-		Personaje,
+		Personaje = 1<<0,
 
 		/// <summary>
 		/// <see cref="ControladorItem"/>
 		/// </summary>
-		Item,
+		Item = 1<<1,
 
 		/// <summary>
 		/// <see cref="ControladorHabilidad"/>
 		/// </summary>
-		Habilidad
+		Habilidad = 1<<2
 	}
 }

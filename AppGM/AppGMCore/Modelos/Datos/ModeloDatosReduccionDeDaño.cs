@@ -13,6 +13,16 @@ namespace AppGM.Core
 		public decimal ValorReduccion { get; set; }
 
 		/// <summary>
+		/// Nombre de esta reduccion
+		/// </summary>
+		public string Nombre { get; set; }
+
+		/// <summary>
+		/// Indica si esta reduccion esta habilitada
+		/// </summary>
+		public bool EstaHabilitada { get; set; }
+
+		/// <summary>
 		/// Manera en la que se detecta el daño que reducir
 		/// </summary>
 		public EEstrategiaDeDeteccionDeDaño EstrategiaDeDeteccionDeDaño { get; set; }
@@ -23,19 +33,24 @@ namespace AppGM.Core
 		public EMetodoDeReduccionDeDaño MetodoDeReduccionDeDaño { get; set; }
 
 		/// <summary>
-		/// Tipo del daño que reduce
+		/// Tipos de los daños que reduce
 		/// </summary>
-		public ETipoDeDaño TipoDeDañoQueReduce { get; set; }
+		public ETipoDeDaño TiposDeDañoQueReduce { get; set; }
 
 		/// <summary>
-		/// Rango del daño que reduce
+		/// Rangos de los daños que reduce
 		/// </summary>
-		public ERango RangoDelDañoQueReduce { get; set; }
+		public ERangoFlags RangosDelDañoQueReduce { get; set; }
 
 		/// <summary>
-		/// Nivel de la magia cuyo daño reduce
+		/// Niveles de las magias cuyos daños reduce
 		/// </summary>
-		public ENivelMagia NivelDeLaMagiaCuyoDañoReduce { get; set; }
+		public ENivelMagiaFlags NivelesDeLasMagiasCuyosDañosReduce { get; set; }
+
+		/// <summary>
+		/// <see cref="ModeloDatosDefensivo"/> al que pertenece
+		/// </summary>
+		public virtual ModeloDatosDefensivo DatosDefensaAlQuePertenece { get; set; }
 
 		/// <summary>
 		/// Fuentes de daño que abarca la reduccion

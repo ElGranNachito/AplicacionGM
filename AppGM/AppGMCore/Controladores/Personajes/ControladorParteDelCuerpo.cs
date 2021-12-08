@@ -82,7 +82,7 @@ namespace AppGM.Core
 
 		#region Metodos
 
-		public void Dañar(ModeloArgumentosDaño argsDaño, SortedList<int, IDañable> subObjetivos = null)
+		public void Dañar(ModeloArgumentosDaño argsDaño, SortedList<int, SubobjetivoDaño> subObjetivos = null)
 		{
 			throw new System.NotImplementedException();
 		}

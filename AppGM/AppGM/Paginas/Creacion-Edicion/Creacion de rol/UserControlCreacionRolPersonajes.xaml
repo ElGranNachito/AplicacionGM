@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:AppGM"
              mc:Ignorable="d" 
 
-             Background="White"
+             Background="{StaticResource Tema.VerdeOscuro}"
 
              Padding="10"
 
@@ -14,7 +14,9 @@
 
     <!--ViewModel: ViewModelDatosPersonajesRol-->
 
-    <TabControl>
+    <TabControl
+        
+        Background="{StaticResource Tema.VerdeOscuro}">
 
         <!--#region Personajes -->
         <TabItem>

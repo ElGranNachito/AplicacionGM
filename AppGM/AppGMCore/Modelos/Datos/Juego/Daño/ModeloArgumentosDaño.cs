@@ -13,14 +13,24 @@ namespace AppGM.Core
 		public int DañoTotal { get; set; }
 
 		/// <summary>
+		/// Daño final aplicado al objetivo luego de atravesar todas las reducciones
+		/// </summary>
+		public int DañoFinal { get; set; }
+
+		/// <summary>
 		/// Rango del daño
 		/// </summary>
-		public ERango Rango { get; set; }
+		public ERango? Rango { get; set; }
 
 		/// <summary>
 		/// Nivel de la magia
 		/// </summary>
-		public ENivelMagia NivelMagia { get; set; }
+		public ENivelMagia? NivelMagia { get; set; }
+
+		/// <summary>
+		/// Tipo del daño
+		/// </summary>
+		public ETipoDeDaño? TipoDeDaño { get; set; }
 
 		/// <summary>
 		/// Argumentos de la tirada en caso de que este daño se haya infligido a traves de una tirada

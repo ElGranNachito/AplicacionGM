@@ -218,7 +218,7 @@ namespace AppGM.Core
 		/// <summary>
 		/// Actualiza el valor de <see cref="EsValido"/>
 		/// </summary>
-		protected override void ActualizarValidez()
+		public override void ActualizarValidez()
 		{
 			if (VMIngresoVariable is null or { EsValido: false })
 			{

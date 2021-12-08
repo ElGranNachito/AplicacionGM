@@ -57,5 +57,10 @@ namespace AppGM.Core
 		/// Historial del daño recibido por esta parte del cuerpo
 		/// </summary>
 		public virtual List<ModeloDañable> HistorialDañoRecibido { get; set; } = new List<ModeloDañable>();
+
+		/// <summary>
+		/// Reducciones de daño que aplica esta parte del cuerpo
+		/// </summary>
+		public virtual ModeloDatosDefensivo DatosDefensa { get; set; }
 	}
 }

@@ -68,7 +68,7 @@ namespace AppGM.Core
         /// Historial de lanzamientos de esta tirada
         /// </summary>
         [NoCopiar]
-        public virtual List<ModeloHistorialTirada> Historial { get; set; }
+        public virtual List<ModeloHistorialTirada> Historial { get; set; } = new List<ModeloHistorialTirada>();
     }
 
     /// <summary>
@@ -77,13 +77,18 @@ namespace AppGM.Core
     public class ModeloTiradaDeDaño : ModeloTiradaBase
     {
 	    /// <summary>
-        /// Tipo de daño que aplica la tirada
-        /// </summary>
-        public ETipoDeDaño TipoDeDaño { get; set; }
-
-	    /// <summary>
 	    /// Stat a tener en cuenta durante la tirada
 	    /// </summary>
 	    public EStat StatDeLaQueDepende { get; set; }
+
+	    /// <summary>
+	    /// Tipo de daño que aplica la tirada
+	    /// </summary>
+	    public ETipoDeDaño TipoDeDaño { get; set; }
+
+	    /// <summary>
+	    /// Fuentes de daño abarcadas por esta tirada
+	    /// </summary>
+	    public virtual List<ModeloFuenteDeDaño> FuentesDeDañoAbarcadas { get; set; } = new List<ModeloFuenteDeDaño>();
     }
 }

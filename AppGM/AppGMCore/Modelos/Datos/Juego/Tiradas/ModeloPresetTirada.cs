@@ -41,12 +41,17 @@ namespace AppGM.Core
 		/// <summary>
 		/// Modificador
 		/// </summary>
-		public int Modificador { get; set; }
+		public int Modificador { get; set; } 
 
 		/// <summary>
 		/// Multiplicador de especialidad
 		/// </summary>
 		public int? MultiplicadorDeEspecialidad { get; set; }
+
+		/// <summary>
+		/// Multiplicador de la tirada
+		/// </summary>
+		public int? Multiplicador { get; set; }
 
 		/// <summary>
 		/// Indica si se debe utilizar el multiplicador de punto vital

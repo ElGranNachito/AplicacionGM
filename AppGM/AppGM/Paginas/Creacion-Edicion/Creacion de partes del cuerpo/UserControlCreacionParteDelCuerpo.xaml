@@ -6,7 +6,7 @@
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:local="clr-namespace:AppGM"
              mc:Ignorable="d" 
-             d:DesignHeight="200" d:DesignWidth="200"
+             d:DesignHeight="250" d:DesignWidth="200"
              
              Background="White"
 
@@ -58,6 +58,12 @@
                 Tag="Cantidad de slots"
                 
                 local:CampoDeTextoNumericoProperty.Tipo="sys:Int32"/>
+
+            <!-- Boton editar defensa -->
+            <Button
+                Content="Defensa"
+                
+                Command="{Binding ComandoEditarDefensa}"/>
 
             <!-- Boton aceptar -->
             <Button

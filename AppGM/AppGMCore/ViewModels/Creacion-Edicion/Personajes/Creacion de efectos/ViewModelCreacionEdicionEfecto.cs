@@ -193,7 +193,7 @@ namespace AppGM.Core
 			return new ControladorEfecto(modeloEfecto);
 		}
 
-		protected override void ActualizarValidez()
+		public override void ActualizarValidez()
 		{
 			if (ModeloCreado.Nombre.IsNullOrWhiteSpace())
 			{

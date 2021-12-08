@@ -44,6 +44,15 @@ namespace AppGM.Core
 		}
 
 		/// <summary>
+		/// Nombre de la reduccion de daño
+		/// </summary>
+		public string NombreReduccion
+		{
+			get => Resultado.Nombre;
+			set => Resultado.Nombre = value;
+		}
+
+		/// <summary>
 		/// Indica si los datos ingresados son validos
 		/// </summary>
 		public bool EsValido { get; private set; }
@@ -161,13 +170,13 @@ namespace AppGM.Core
 			switch (Resultado.EstrategiaDeDeteccionDeDaño)
 			{
 				case EEstrategiaDeDeteccionDeDaño.Nivel:
-					valoresDeteccion = Resultado.NivelDeLaMagiaCuyoDañoReduce;
+					valoresDeteccion = Resultado.NivelesDeLasMagiasCuyosDañosReduce;
 					break;
 				case EEstrategiaDeDeteccionDeDaño.Rango:
-					valoresDeteccion = Resultado.RangoDelDañoQueReduce;
+					valoresDeteccion = Resultado.RangosDelDañoQueReduce;
 					break;
 				case EEstrategiaDeDeteccionDeDaño.TipoDeDaño:
-					valoresDeteccion = Resultado.TipoDeDañoQueReduce;
+					valoresDeteccion = Resultado.TiposDeDañoQueReduce;
 					break;
 			}
 
@@ -193,6 +202,45 @@ namespace AppGM.Core
 			if (!EsValido)
 				return null;
 
+			Resultado.EstrategiaDeDeteccionDeDaño = ViewModelComboBoxEstrategiaDeDeteccionDeDaño.Valor;
+
+			switch (Resultado.EstrategiaDeDeteccionDeDaño)
+			{
+				case EEstrategiaDeDeteccionDeDaño.TipoDeDaño:
+				{
+					foreach (var tipoDeDaño in ViewModelMultiselectComboBoxValorTipoDeDeteccion.ItemsSeleccionados.Cast<ETipoDeDaño>())
+					{
+						Resultado.TiposDeDañoQueReduce |= tipoDeDaño;
+					}
+
+					break;
+				}
+				case EEstrategiaDeDeteccionDeDaño.Rango:
+				{
+					foreach (var rango in ViewModelMultiselectComboBoxValorTipoDeDeteccion.ItemsSeleccionados.Cast<ERangoFlags>())
+					{
+						Resultado.RangosDelDañoQueReduce |= rango;
+					}
+
+					break;
+				}
+				case EEstrategiaDeDeteccionDeDaño.Nivel:
+				{
+					foreach (var nivel in ViewModelMultiselectComboBoxValorTipoDeDeteccion.ItemsSeleccionados.Cast<ENivelMagiaFlags>())
+					{
+						Resultado.NivelesDeLasMagiasCuyosDañosReduce |= nivel;
+					}
+
+					break;
+				}
+				case EEstrategiaDeDeteccionDeDaño.FuenteDelDaño:
+				{
+					Resultado.FuentesDeDañoQueReduce = ViewModelMultiselectComboBoxSeleccionFuentesDeDaño.ItemsSeleccionados.ToList();
+
+					break;
+				}
+			}
+
 			return Resultado;
 		}
 
@@ -206,6 +254,7 @@ namespace AppGM.Core
 			if (ViewModelComboBoxEstrategiaDeDeteccionDeDaño.ValorSeleccionado == null)
 				return;
 
+			//Nos aseguramos de que la estrategia seleccionada este habilitada
 			if(!viewModelIngresoDatosDefensivo.ViewModelComboBoxSeleccionEstrategiaDeteccionDeDaño.ItemsSeleccionados.Contains(ViewModelComboBoxEstrategiaDeDeteccionDeDaño.Valor))
 				return;
 

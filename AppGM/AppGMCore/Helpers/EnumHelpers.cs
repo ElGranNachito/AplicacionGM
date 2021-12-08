@@ -49,18 +49,21 @@ namespace AppGM.Core
         /// <typeparam name="TEnum">Tipo del <see cref="Enum"/> cuyos valores obtener</typeparam>
         /// <param name="valoresQueExcluir">Valores del <typeparamref name="TEnum"/> que excluir del resultado</param>
         /// <returns><see cref="List{T}"/> con todos los valores disponibles del <typeparamref name="TEnum"/></returns>
-		public static List<TEnum> ObtenerValoresEnum<TEnum>(IEnumerable<TEnum> valoresQueExcluir)
+		public static List<TEnum> ObtenerValoresEnum<TEnum>(IEnumerable<TEnum> valoresQueExcluir = null)
 
 			where TEnum: struct, Enum
 		{
 			var valoresEnum = Enum.GetValues<TEnum>().ToList();
 
-			valoresQueExcluir = valoresQueExcluir.ToList();
-
-			foreach (var valor in valoresQueExcluir)
+			if (valoresQueExcluir is not null)
 			{
-				valoresEnum.Remove(valor);
-			}
+				valoresQueExcluir = valoresQueExcluir.ToList();
+
+				foreach (var valor in valoresQueExcluir)
+				{
+					valoresEnum.Remove(valor);
+				}
+            }
 
 			return valoresEnum;
 		}
@@ -74,27 +77,17 @@ namespace AppGM.Core
 		/// <returns>Valor del <paramref name="formato"/> como cadena</returns>
 		public static string Valor(this EFormatoImagen formato) => "." + Enum.GetName(typeof(EFormatoImagen), formato);
 
-        /// <summary>
-        /// Obtiene el modificador correspondiente para un <see cref="ERango"/>
-        /// </summary>
-        /// <param name="rango">Rango cuyo modificador obtener</param>
-        /// <returns>Valor del modificador</returns>
-        public static int ObtenerModificador(this ERango rango)
-        {
-            //Hacemos este if pare prevenir una division por cero
-            return rango == ERango.F ? 2 : 2 + (int)rango / 2;
-        }
+		/// <summary>
+		/// Obtiene el modificador correspondiente para un <see cref="ERango"/>
+		/// </summary>
+		/// <param name="rango">Rango cuyo modificador obtener</param>
+		/// <returns>Valor del modificador</returns>
+		public static int ObtenerModificador(this ERango rango)
+		{
+			return Convert.ToInt32(Math.Floor(((int)rango - 10) / 2.0f));
+		}
 
-        /// <summary>
-        /// Converte un rango a su valor numerico correspondiente.
-        /// </summary>
-        /// <param name="rango">Rango que convertir</param>
-        /// <returns>Valor numerico equivalente a este rango</returns>
-        /// La verdad es que esta funcion no hace mucho pero me parece que queda mas prolijo que hacer un casteo
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int AValorNumerico(this ERango rango) => (int) rango;
-
-        /// <summary>
+		/// <summary>
         /// Obtiene una lista con las <see cref="EOperacionLogica"/> que se pueden realizar con el <paramref name="tipo"/>
         /// </summary>
         /// <param name="tipo"><see cref="Type"/> Con el que se quiere realizar la <see cref="EOperacionLogica"/></param>
@@ -284,9 +277,9 @@ namespace AppGM.Core
                 case EEstrategiaDeDeteccionDeDaño.Nivel:
                     return EnumHelpers.NivelesDeMagiaDisponibles.Cast<Enum>().ToList();
                 case EEstrategiaDeDeteccionDeDaño.Rango:
-                    return EnumHelpers.RangosDisponibles.Cast<Enum>().ToList();
+	                return ObtenerValoresEnum<ERangoFlags>().Cast<Enum>().ToList();
                 case EEstrategiaDeDeteccionDeDaño.TipoDeDaño:
-                    return EnumHelpers.TiposDeDañoDisponibles.Cast<Enum>().ToList();
+                    return ObtenerValoresEnum<ETipoDeDaño>().Cast<Enum>().ToList();
                 case EEstrategiaDeDeteccionDeDaño.FuenteDelDaño:
                 {
                     SistemaPrincipal.LoggerGlobal.Log($"el valor de {nameof(estrategiaDeDeteccion)} no puede ser {EEstrategiaDeDeteccionDeDaño.FuenteDelDaño}", ESeveridad.Error);
@@ -545,6 +538,23 @@ namespace AppGM.Core
 	                SistemaPrincipal.LoggerGlobal.Log($"{nameof(tipoInfligidorDaño)}({tipoInfligidorDaño}) valor no soportado", ESeveridad.Error);
 	                return null;
             }
+        }
+
+        public static ERango ARango(this int rango)
+        {
+	        rango = Math.Clamp(rango, 14, 22);
+
+	        return (ERango) rango;
+        }
+
+        public static bool TieneFlagRango(this ERangoFlags flags, ERango rango)
+        {
+	        return ((int)flags & Convert.ToInt32(Math.Pow(2, (int) rango - 14))) != 0;
+        }
+
+        public static bool TieneFlagMagia(this ENivelMagiaFlags flags, ENivelMagia nivel)
+        {
+	        return ((int)flags & Convert.ToInt32(Math.Pow(2, (int)nivel))) != 0;
         }
 
         public static bool EsAceptarOFinalizar(this EResultadoViewModel resultado) => resultado is EResultadoViewModel.Aceptar or EResultadoViewModel.Finalizar;
