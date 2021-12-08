@@ -72,7 +72,7 @@ namespace AppGM.Core
         /// <summary>
         /// Mapa actualmente siendo mostrado
         /// </summary>
-        public ViewModelMapa MapaActual => Mapas[indiceMapaActual];
+        public ViewModelMapa MapaActual => Mapas.IsNullOrEmpty() ? SistemaPrincipal.MapaPrincipal : Mapas[indiceMapaActual];
 
         #endregion
 
