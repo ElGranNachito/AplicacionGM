@@ -72,7 +72,7 @@
             <!--Mapa-->
             <Grid Grid.Column="0">
 
-                <!--<local:UserControlMapa DataContext="{Binding MapaActual, Mode=OneWay}"/>-->
+                <local:UserControlMapa DataContext="{Binding MapaActual, Mode=OneWay}"/>
 
             </Grid>
 
