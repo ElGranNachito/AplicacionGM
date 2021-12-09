@@ -78,6 +78,8 @@ namespace AppGM.Core
 			{
 				var masters = mRolSeleccionado.Personajes.Where(p => p.TipoPersonaje == ETipoPersonaje.Master).ToList();
 				var servants = mRolSeleccionado.Personajes.Where(p => p.TipoPersonaje == ETipoPersonaje.Servant).ToList();
+                var invocaciones = mRolSeleccionado.Personajes.Where(p => p.TipoPersonaje == ETipoPersonaje.Invocacion).ToList();
+                var npcs = mRolSeleccionado.Personajes.Where(p => p.TipoPersonaje == ETipoPersonaje.NPC).ToList();
 
 				//Si no hay datos creamos algunos para probar
 				if (!BaseDeDatos.Combates.Any())
@@ -163,6 +165,28 @@ namespace AppGM.Core
 				}
 
 				Personajes.AddRange(Servants);
+
+                Invocaciones = new List<ControladorInvocacion>(invocaciones.Count);
+
+                for (int i = 0; i < invocaciones.Count; ++i)
+                {
+                    ControladorInvocacion controladorActual = new ControladorInvocacion(invocaciones[i]);
+
+                    Invocaciones.Add(controladorActual);
+                }
+
+                Personajes.AddRange(Invocaciones);
+
+                NPCs = new List<ControladorPersonaje>(npcs.Count);
+
+                for (int i = 0; i < npcs.Count; ++i)
+                {
+                    ControladorPersonaje controladorActual = new ControladorPersonaje(npcs[i]);
+
+                    NPCs.Add(controladorActual);
+                }
+
+                Personajes.AddRange(NPCs);
 
 				Mapas = new List<ControladorMapa>(mRolSeleccionado.Mapas.Count);
 

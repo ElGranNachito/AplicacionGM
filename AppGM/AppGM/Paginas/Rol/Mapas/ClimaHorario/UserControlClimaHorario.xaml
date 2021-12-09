@@ -143,6 +143,7 @@
             BorderBrush="{StaticResource Tema.VerdeClima}"
             FontSize="{StaticResource TamañoFontMuyGrande}"
             FontFamily="{StaticResource 'Font Canon'}"
+            Foreground="{StaticResource Tema.VerdeOscuro}"
             TextChanged="TextBoxBaseHora_OnTextChanged"
             Text="{Binding Hora, Mode=TwoWay}"/>
 
@@ -154,9 +155,9 @@
             MinHeight="10"
             Width="25"
             Height="25"
-            Foreground="Black"
             FontSize="{StaticResource TamañoFontMuyGrande}"
             FontFamily="{StaticResource 'Font Canon'}"
+            Foreground="{StaticResource Tema.VerdeOscuro}"
             Text=":"
             />
 
@@ -174,6 +175,7 @@
             BorderBrush="{StaticResource Tema.VerdeClima}"
             FontSize="{StaticResource TamañoFontMuyGrande}"
             FontFamily="{StaticResource 'Font Canon'}"
+            Foreground="{StaticResource Tema.VerdeOscuro}"
             TextChanged="TextBoxBaseMinuto_OnTextChanged"
             Text="{Binding Minuto, Mode=TwoWay}"/>
 

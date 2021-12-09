@@ -50,31 +50,6 @@ namespace AppGM
         public int Hp => personaje.Hp;
 
         /// <summary>
-        /// Fuerza del personaje.
-        /// </summary>
-        public int Str => personaje.Str;
-
-        /// <summary>
-        /// Resistencia del personaje.
-        /// </summary>
-        public int End => personaje.End;
-
-        /// <summary>
-        /// Agilidad del personaje.
-        /// </summary>
-        public int Agi => personaje.Agi;
-
-        /// <summary>
-        /// Inteligencia del personaje.
-        /// </summary>
-        public int Int => personaje.Int;
-
-        /// <summary>
-        /// Suerte del personaje.
-        /// </summary>
-        public int Lck => personaje.Lck;
-
-        /// <summary>
         /// Stat de carisma
         /// </summary>
         public int Chr => personaje.modelo.TipoPersonaje == ETipoPersonaje.Master ? ((ModeloMaster) personaje.modelo).Chr : 0;
@@ -265,6 +240,31 @@ namespace AppGM
         public string Bienestar => personaje.modelo.TipoPersonaje == ETipoPersonaje.Master ? Enum.GetName(((ModeloMaster) personaje.modelo).EBienestar) : string.Empty;
 
         /// <summary>
+        /// Fuerza del personaje.
+        /// </summary>
+        public string Str => personaje.modelo.TipoPersonaje == ETipoPersonaje.Servant ? Enum.GetName(EnumHelpers.ARango(personaje.Str)) : personaje.Str.ToString();
+
+        /// <summary>
+        /// Resistencia del personaje.
+        /// </summary>
+        public string End => personaje.modelo.TipoPersonaje == ETipoPersonaje.Servant ? Enum.GetName(EnumHelpers.ARango(personaje.End)) : personaje.End.ToString();
+
+        /// <summary>
+        /// Agilidad del personaje.
+        /// </summary>
+        public string Agi => personaje.modelo.TipoPersonaje == ETipoPersonaje.Servant ? Enum.GetName(EnumHelpers.ARango(personaje.Agi)) : personaje.Agi.ToString();
+
+        /// <summary>
+        /// Inteligencia del personaje.
+        /// </summary>
+        public string Int => personaje.modelo.TipoPersonaje == ETipoPersonaje.Servant ? Enum.GetName(EnumHelpers.ARango(personaje.Int)) : personaje.Int.ToString();
+
+        /// <summary>
+        /// Suerte del personaje.
+        /// </summary>
+        public string Lck => personaje.modelo.TipoPersonaje == ETipoPersonaje.Servant ? Enum.GetName(EnumHelpers.ARango(personaje.Lck)) : personaje.Lck.ToString();
+
+        /// <summary>
         /// Rango del Noble Phantasm del personaje si es servant.
         /// </summary>
         public string RangoNP => personaje.modelo.TipoPersonaje == ETipoPersonaje.Servant ? Enum.GetName(((ModeloServant)personaje.modelo).RangoNP) : string.Empty;
@@ -288,11 +288,12 @@ namespace AppGM
 
             Inventario = new ViewModelInventario(personaje.modelo, personaje);
 
-            ModificadorStr = Helpers.Juego.ObtenerModificadorStat(Str);
-            ModificadorAgi = Helpers.Juego.ObtenerModificadorStat(Agi);
-            ModificadorEnd = Helpers.Juego.ObtenerModificadorStat(End);
-            ModificadorInt = Helpers.Juego.ObtenerModificadorStat(Int);
-            ModificadorLck = Helpers.Juego.ObtenerModificadorStat(Lck);
+            ModificadorStr = Helpers.Juego.ObtenerModificadorStat(personaje.Str);
+            ModificadorEnd = Helpers.Juego.ObtenerModificadorStat(personaje.End);
+            ModificadorAgi = Helpers.Juego.ObtenerModificadorStat(personaje.Agi);
+            ModificadorInt = Helpers.Juego.ObtenerModificadorStat(personaje.Int);
+            ModificadorLck = Helpers.Juego.ObtenerModificadorStat(personaje.Lck);
+
             ModificadorChr = Helpers.Juego.ObtenerModificadorStat(Chr);
 
             ComandoVerFicha = new Comando(VerFicha);
