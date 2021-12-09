@@ -59,6 +59,9 @@
     <Resource Include="Media\Imagenes\Habilidades\Perks.png" />
     <Resource Include="Media\Imagenes\Habilidades\Perks_Mini.png" />
     <Resource Include="Media\Imagenes\Habilidades\Skill_Mini.png" />
+    <Resource Include="Media\Imagenes\Items\Item.png" />
+    <Resource Include="Media\Imagenes\Items\Miembro.png" />
+    <Resource Include="Media\Imagenes\Items\Vacio.png" />
     <Resource Include="Media\Imagenes\Lupita.png" />
   </ItemGroup>
   <ItemGroup>
@@ -68,6 +71,7 @@
     <Resource Include="Media\Imagenes\MenuPrincipal1.png" />
     <Resource Include="Media\Imagenes\CamaritaMarcaJuancha.png" />
     <Resource Include="Media\Imagenes\CamaraMarcaJuanchaSinFondo.png" />
+    <Resource Include="Media\Imagenes\Tiradas\GloboError.png" />
     <Resource Include="Media\Imagenes\Tiradas\Iconos\ParametroExtra.png" />
     <Resource Include="Media\Imagenes\Tiradas\Iconos\TiradaDaño.png" />
     <Resource Include="Media\Imagenes\Tiradas\Iconos\TiradaPersonalizada.png" />
@@ -306,8 +310,12 @@
     <None Remove="Media\Imagenes\Habilidades\Perks.png" />
     <None Remove="Media\Imagenes\Habilidades\Perks_Mini.png" />
     <None Remove="Media\Imagenes\Habilidades\Skill_Mini.png" />
+    <None Remove="Media\Imagenes\Items\Item.png" />
+    <None Remove="Media\Imagenes\Items\Miembro.png" />
+    <None Remove="Media\Imagenes\Items\Vacio.png" />
     <None Remove="Media\Imagenes\Tiradas\CamaraMarcaJuanchaSinFondo.png" />
     <None Remove="Media\Imagenes\Tiradas\CamaritaMarcaJuancha.png" />
+    <None Remove="Media\Imagenes\Tiradas\GloboError.png" />
     <None Remove="Media\Imagenes\Tiradas\Iconos\ParametroExtra.png" />
     <None Remove="Media\Imagenes\Tiradas\Iconos\TiradaDaño.png" />
     <None Remove="Media\Imagenes\Tiradas\Iconos\TiradaPersonalizada.png" />

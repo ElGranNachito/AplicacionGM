@@ -81,10 +81,20 @@ namespace AppGM.Core
 	    /// </summary>
 	    public EStat StatDeLaQueDepende { get; set; }
 
-	    /// <summary>
-	    /// Tipo de daño que aplica la tirada
-	    /// </summary>
-	    public ETipoDeDaño TipoDeDaño { get; set; }
+        /// <summary>
+        /// Nivel de la magia (en caso de que sea una tirada de daño para una magia)
+        /// </summary>
+	    public ENivelMagia NivelMagia { get; set; }
+
+        /// <summary>
+        /// Rango del daño
+        /// </summary>
+	    public ERango Rango { get; set; }
+
+        /// <summary>
+        /// Tipo de daño que aplica la tirada
+        /// </summary>
+        public ETipoDeDaño TipoDeDaño { get; set; }
 
 	    /// <summary>
 	    /// Fuentes de daño abarcadas por esta tirada

@@ -27,6 +27,11 @@ namespace AppGM.Core
 		/// </summary>
 		public Func<TArgs, ResultadoTirada> FuncionTirada { get; private set; } 
 
+		/// <summary>
+		/// Argumentos utilizados la ultima vez que se realizo esta tirada
+		/// </summary>
+		public TArgs ArgsUltimaTirada { get; private set; }
+
 		#endregion
 
 		#region Constructor
@@ -64,8 +69,14 @@ namespace AppGM.Core
 		{
 			if (FuncionTirada is not null)
 			{
-				if(argsTirada.personaje.modelo == UltimoUsuario)
-					return FuncionTirada(argsTirada);
+				if (argsTirada.personaje.modelo == UltimoUsuario)
+				{
+					ArgsUltimaTirada = argsTirada;
+
+					Resultado = FuncionTirada(argsTirada);
+
+					return Resultado;
+				}
 
 				if (!PuedeRealizarTirada((ModeloConVariablesYTiradas)argsTirada.controlador.Modelo))
 				{
@@ -75,7 +86,12 @@ namespace AppGM.Core
 				}
 
 				UltimoUsuario = argsTirada.personaje.modelo;
-				return FuncionTirada(argsTirada);
+
+				ArgsUltimaTirada = argsTirada;
+
+				Resultado = FuncionTirada(argsTirada);
+
+				return Resultado;
 			}
 
 			var resultadoParse = ParserTiradas.TryParse(
@@ -83,11 +99,17 @@ namespace AppGM.Core
 				(ModeloConVariablesYTiradas)argsTirada.controlador.Modelo,
 				modelo.TipoTirada,
 				argsTirada.stat);
-
+			
 			FuncionTirada = resultadoParse.funcion;
 
 			if (resultadoParse.exito)
-				return FuncionTirada(argsTirada);
+			{
+				ArgsUltimaTirada = argsTirada;
+
+				Resultado = FuncionTirada(argsTirada);
+
+				return Resultado;
+			}
 
 			return new ResultadoTirada(Constantes.ResultadoTiradaInvalido, string.Empty);
 		}
@@ -112,7 +134,13 @@ namespace AppGM.Core
 			if (FuncionTirada is not null)
 			{
 				if (UltimoUsuario == argsTirada.personaje.modelo)
-					return FuncionTirada(argsTirada);
+				{
+					ArgsUltimaTirada = argsTirada;
+
+					Resultado = FuncionTirada(argsTirada);
+
+					return Resultado;
+				}
 
 				if (!PuedeRealizarTirada((ModeloConVariablesYTiradas) argsTirada.controlador.Modelo))
 				{
@@ -123,7 +151,11 @@ namespace AppGM.Core
 
 				UltimoUsuario = argsTirada.personaje.modelo;
 
-				return FuncionTirada(argsTirada);
+				ArgsUltimaTirada = argsTirada;
+
+				Resultado = FuncionTirada(argsTirada);
+
+				return Resultado;
 			}
 
 			var resultadoParse = await ParserTiradas.TryParseAsync(
@@ -135,7 +167,13 @@ namespace AppGM.Core
 			FuncionTirada = resultadoParse.funcion;
 
 			if (resultadoParse.exito)
-				return FuncionTirada(argsTirada);
+			{
+				ArgsUltimaTirada = argsTirada;
+
+				Resultado = FuncionTirada(argsTirada);
+
+				return Resultado;
+			}
 
 			return new ResultadoTirada(Constantes.ResultadoTiradaInvalido, string.Empty);
 		}

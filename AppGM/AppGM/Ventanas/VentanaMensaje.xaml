@@ -28,7 +28,7 @@
 
                             <!-- Barra superior -->
 
-                            <Grid Background="White">
+                            <Grid Background="{StaticResource Tema.VerdeSemiOscuro}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>

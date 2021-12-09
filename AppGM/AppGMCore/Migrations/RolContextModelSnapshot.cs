@@ -1661,6 +1661,12 @@ namespace AppGM.Core.Migrations
                 {
                     b.HasBaseType("AppGM.Core.ModeloTiradaBase");
 
+                    b.Property<int>("NivelMagia")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Rango")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("StatDeLaQueDepende")
                         .HasColumnType("INTEGER");
 

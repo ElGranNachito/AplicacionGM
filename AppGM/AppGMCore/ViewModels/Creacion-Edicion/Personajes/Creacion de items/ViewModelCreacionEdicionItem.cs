@@ -345,22 +345,22 @@ namespace AppGM.Core
 			}, true, "Tiradas");
 
 			//Inicializamos el viewmodel de la lista de variables de este item
-			ViewModelListaVariables = new ViewModelListaItems<ViewModelVariableItem>(() =>
+			ViewModelListaVariables = new ViewModelListaItems<ViewModelVariableItem>(async () =>
 			{
-				var dataContextActual = SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido;
-
-				SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = new ViewModelCreacionDeVariable(vm =>
-				{
-					if (vm.Resultado.EsAceptarOFinalizar())
+				SistemaPrincipal.MostrarViewModelCreacionEdicion<ViewModelCreacionDeVariable, ModeloVariableBase, ControladorVariableBase>(
+					await new ViewModelCreacionDeVariable(vm =>
 					{
-						ModeloCreado.Variables.Add(vm.CrearModelo());
-					}
+						if (vm.Resultado.EsAceptarOFinalizar())
+						{
+							var nuevaTirada = vm.CrearControlador();
 
-					SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = dataContextActual;
-				});
+							AñadirModeloDesdeListaItems<ModeloVariableBase, ViewModelVariableItem>((ViewModelVariableItem)nuevaTirada.CrearViewModelItem(), ModeloCreado.Variables, ViewModelListaVariables);
+						}
+
+					}).Inicializar(typeof(ModeloVariableInt)));
 			}, true, "Variables");
 		}
-
+		
 		#endregion
 
 		#region Metodos
@@ -423,6 +423,21 @@ namespace AppGM.Core
 		public override ModeloItem CrearModelo()
 		{
 			ActualizarValidez();
+			
+			if (EsDefensivo)
+			{
+				ModeloCreado.DatosDefensa = DatosDefensivo.CrearModelo();
+			}
+
+			if (EsArma)
+			{
+				ModeloCreado.DatosArma = DatosArma.CrearModelo();
+			}
+
+			if (EsConsumible)
+			{
+				ModeloCreado.DatosConsumible = DatosConsumible.CrearModelo();
+			}
 
 			return EsValido ? ModeloCreado : null;
 		}

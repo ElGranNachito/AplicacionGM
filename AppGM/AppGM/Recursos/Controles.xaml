@@ -37,13 +37,13 @@
 
                     <Grid Width="15" Height="13" SnapsToDevicePixels="True">
                         <!--Recuadro del botoncito-->
-                        <Rectangle Width="9" Height="9" Stroke="Black" SnapsToDevicePixels="True" Fill="DarkGray"/>
+                        <Rectangle Width="9" Height="9" Stroke="{StaticResource Tema.Verde}" SnapsToDevicePixels="True" Fill="{StaticResource Tema.VerdeSemiOscuro}"/>
 
                         <!--Barra vertical del botoncito-->
-                        <Rectangle Width="1" Height="5" Stroke="Black" x:Name="BarraVertical"/>
+                        <Rectangle Width="1" Height="5" Stroke="{StaticResource Tema.Verde}" x:Name="BarraVertical"/>
 
                         <!--Barra horizontal del botoncito-->
-                        <Rectangle Width="5" Height="1" Stroke="Black" x:Name="BarraHorizontal"/>
+                        <Rectangle Width="5" Height="1" Stroke="{StaticResource Tema.Verde}" x:Name="BarraHorizontal"/>
                     </Grid>
 
                     <!--Cuando el toggle este presionado ocultamos la barra vertical-->
@@ -83,10 +83,10 @@
                         </Grid.ColumnDefinitions>
 
                         <!--Linea horizontal-->
-                        <Rectangle Margin="9 1 0 0" Height="1" Stroke="Black" SnapsToDevicePixels="True"/>
+                        <Rectangle Margin="9 1 0 0" Height="1" Stroke="{StaticResource Tema.Verde}" SnapsToDevicePixels="True"/>
 
                         <!--Linea vertical-->
-                        <Rectangle Grid.RowSpan="2" Margin="0 0 1 0" Width="1" Stroke="Black" SnapsToDevicePixels="True"/>
+                        <Rectangle Grid.RowSpan="2" Margin="0 0 1 0" Width="1" Stroke="{StaticResource Tema.Verde}" SnapsToDevicePixels="True"/>
 
                         <!--Boton expandir-->
                         <ToggleButton
@@ -102,7 +102,6 @@
                             local:DragAndDrop_DrageableSeleccionMultiple.Value="True">
 
                             <Border 
-                                
                                 x:Name="BorderHeader"
 
                                 Background="{TemplateBinding Background}"
@@ -143,6 +142,7 @@
     <Style TargetType="{x:Type TreeView}" x:Key="EstiloTreeView">
 
         <Setter Property="ItemsSource" Value="{Binding Hijos.Elementos}"/>
+        <Setter Property="Background" Value="{StaticResource Tema.VerdeOscuro}"/>
 
     </Style>
 

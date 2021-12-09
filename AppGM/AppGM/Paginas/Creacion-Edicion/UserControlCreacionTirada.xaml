@@ -118,6 +118,26 @@
 
                         DataContext="{Binding ViewModelComboBoxFuentesDeDañoTirada}"/>
 
+                    <!-- Rango del daño aplicado por esta tirada -->
+                    <local:UserControlComboBoxConDescripcion
+                        Margin="0 10 0 0"
+
+                        Descripcion="Rango del daño:"
+
+                        Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControlCreacionTirada}}, Path=DataContext.EsTiradaDeDaño, Converter={local:BooleanToVisibilityConverterColapsar}}"
+
+                        DataContext="{Binding ViewModelComboBoxRangoTirada}"/>
+
+                    <!-- Nivel de magia del daño aplicado por esta tirada -->
+                    <local:UserControlComboBoxConDescripcion
+                        Margin="0 10 0 0"
+
+                        Descripcion="Nivel de la magia:"
+
+                        Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControlCreacionTirada}}, Path=DataContext.EsTiradaDeDaño, Converter={local:BooleanToVisibilityConverterColapsar}}"
+
+                        DataContext="{Binding ViewModelComboBoxNivelMagia}"/>
+
                     <StackPanel
                         Margin="0 10 0 10"
 

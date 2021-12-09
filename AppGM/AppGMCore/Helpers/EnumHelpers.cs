@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using CoolLogs;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AppGM.Core
 {

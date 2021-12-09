@@ -133,13 +133,25 @@ namespace AppGM.Core
 		/// VM para el combobox de seleccion de tipo de tirada
 		/// </summary>
 		public ViewModelComboBox<ETipoTirada> ViewModelComboBoxTipoTirada { get; set; } =
-			new ViewModelComboBox<ETipoTirada>("Tipo tirada", EnumHelpers.TiposDeTiradasDisponibles.Remover(ETipoTirada.Stat).ToList());
+			new ViewModelComboBox<ETipoTirada>("Tipo tirada", EnumHelpers.ObtenerValoresEnum<ETipoTirada>(new []{ETipoTirada.Stat}));
 
 		/// <summary>
 		/// VM para el combobox de seleccion de la stat de la tirada
 		/// </summary>
 		public ViewModelComboBox<EStat> ViewModelComboBoxStatTirada { get; set; } =
-			new ViewModelComboBox<EStat>("Stat", EnumHelpers.StatsDisponibles);
+			new ViewModelComboBox<EStat>("Stat", EnumHelpers.ObtenerValoresEnum<EStat>(new [] {EStat.NINGUNA, EStat.NP, EStat.HP}));
+
+		/// <summary>
+		/// Viewmodel para el combobox de seleccion del rango del daño aplicado por la tirada
+		/// </summary>
+		public ViewModelComboBox<ERango> ViewModelComboBoxRangoTirada { get; set; } =
+			new ViewModelComboBox<ERango>("Rango del daño", EnumHelpers.ObtenerValoresEnum<ERango>());
+
+		/// <summary>
+		/// Viewmodel para el combobox de seleccion del nivel de magia del daño aplicado por la tirada
+		/// </summary>
+		public ViewModelComboBox<ENivelMagia> ViewModelComboBoxNivelMagia { get; set; } =
+			new ViewModelComboBox<ENivelMagia>("Nivel de la magia", EnumHelpers.ObtenerValoresEnum<ENivelMagia>());
 
 		/// <summary>
 		/// VM para el combobox de seleccion del tipo de daño de la tirada
@@ -176,6 +188,12 @@ namespace AppGM.Core
 			: base(_accionSalir, _controladorTiradaSiendoEditada)
 		{
 			mModeloContenedor = _contenedorTirada;
+
+			if (!EstaEditando)
+			{
+				ViewModelComboBoxRangoTirada.SeleccionarValor(ERango.NINGUNO);
+				ViewModelComboBoxNivelMagia.SeleccionarValor(ENivelMagia.NINGUNO);
+			}
 
 			ViewModelComboBoxTipoTirada.OnValorSeleccionadoCambio += async (ViewModelItemComboBoxBase<ETipoTirada> anterior, ViewModelItemComboBoxBase<ETipoTirada> actual) =>
 			{
@@ -246,6 +264,10 @@ namespace AppGM.Core
 				{
 					ViewModelComboBoxStatTirada.SeleccionarValor(d.StatDeLaQueDepende);
 
+					ViewModelComboBoxRangoTirada.SeleccionarValor(d.Rango);
+
+					ViewModelComboBoxNivelMagia.SeleccionarValor(d.NivelMagia);
+
 					ViewModelComboBoxTipoDeDañoTirada.ModificarEstadoSeleccionItem(d.TipoDeDaño, true);
 
 					foreach (var fuenteDaño in d.FuentesDeDañoAbarcadas)
@@ -265,20 +287,27 @@ namespace AppGM.Core
 			if (!EsValido)
 				return null;
 
-			if (ViewModelComboBoxTipoTirada.ValorSeleccionado.valor == ETipoTirada.Daño && ModeloCreado is ModeloTiradaDeDaño m)
+			if (ModeloCreado is ModeloTiradaDeDaño tiradaDaño)
 			{
-				//Reseteamos los tipos de daño de la tirada para que si esta editando los tipos de daños queden en blanco
-				m.TipoDeDaño = ETipoDeDaño.NINGUNO;
-
-				foreach (var tipoDeDaño in ViewModelComboBoxTipoDeDañoTirada.ItemsSeleccionados)
+				if (ViewModelComboBoxTipoTirada.ValorSeleccionado.valor == ETipoTirada.Daño)
 				{
-					m.TipoDeDaño |= tipoDeDaño;
+					//Reseteamos los tipos de daño de la tirada para que si esta editando los tipos de daños queden en blanco
+					tiradaDaño.TipoDeDaño = ETipoDeDaño.NINGUNO;
+					tiradaDaño.FuentesDeDañoAbarcadas.Clear();
+
+					foreach (var tipoDeDaño in ViewModelComboBoxTipoDeDañoTirada.ItemsSeleccionados)
+					{
+						tiradaDaño.TipoDeDaño |= tipoDeDaño;
+					}
+
+					foreach (var fuenteDeDaño in ViewModelComboBoxFuentesDeDañoTirada.ItemsSeleccionados)
+					{
+						tiradaDaño.FuentesDeDañoAbarcadas.Add(fuenteDeDaño);
+					}
 				}
 
-				foreach (var fuenteDeDaño in ViewModelComboBoxFuentesDeDañoTirada.ItemsSeleccionados)
-				{
-					m.FuentesDeDañoAbarcadas.Add(fuenteDeDaño);
-				}
+				tiradaDaño.Rango      = ViewModelComboBoxRangoTirada.Valor;
+				tiradaDaño.NivelMagia = ViewModelComboBoxNivelMagia.Valor;
 			}
 
 			ModeloCreado.Tirada = TextoActual;

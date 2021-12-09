@@ -134,6 +134,11 @@ namespace AppGM.Core
 			if (!EsValido)
 				return null;
 
+			foreach (var reduccion in ReduccionesDeDaño)
+			{
+				reduccion.ActulizarModelo();
+			}
+			
 			return ModeloCreado;
 		}
 

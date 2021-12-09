@@ -9,7 +9,7 @@
              
              Padding="5"
 
-             Background="White">
+             Background="{StaticResource Tema.VerdeOscuro}">
 
     <!--ViewModel: ViewModelCreacionEdicionFuenteDeDaño-->
 

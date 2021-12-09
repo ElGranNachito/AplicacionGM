@@ -19,15 +19,15 @@ namespace AppGM
 			{
 				if (slot.ContieneParteDelCuerpo)
 				{
-					return new BitmapImage(new Uri("pack://application:,,,/Media/Imagenes/Botones/MenupRincipal/Flechita_Derecha_Select.png"));
+					return new BitmapImage(new Uri("pack://application:,,,/Media/Imagenes/Items/Miembro.png"));
 				}
 				else if (slot.ContieneItems)
 				{
-					return new BitmapImage(new Uri("pack://application:,,,/Media/Imagenes/Botones/MenupRincipal/Flechita_Derecha_Select.png"));
+					return new BitmapImage(new Uri("pack://application:,,,/Media/Imagenes/Items/Item.png"));
 				}
 				else
 				{
-					return new BitmapImage(new Uri("pack://application:,,,/Media/Imagenes/Botones/MenupRincipal/Flechita_Derecha_Select.png"));
+					return new BitmapImage(new Uri("pack://application:,,,/Media/Imagenes/Items/Vacio.png"));
 				}
 			}
 

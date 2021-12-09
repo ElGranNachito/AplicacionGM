@@ -2,8 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AppGM.Core
 {
@@ -50,6 +48,15 @@ namespace AppGM.Core
 		{
 			get => Resultado.Nombre;
 			set => Resultado.Nombre = value;
+		}
+
+		/// <summary>
+		/// Indica si la reduccion siendo creada esta habilitada
+		/// </summary>
+		public bool EstaHabilitada
+		{
+			get => Resultado.EstaHabilitada;
+			set => Resultado.EstaHabilitada = value;
 		}
 
 		/// <summary>
@@ -195,14 +202,19 @@ namespace AppGM.Core
 		/// Crea el <see cref="ModeloDatosReduccionDeDaño"/> con los datos ingresados
 		/// </summary>
 		/// <returns><see cref="ModeloDatosReduccionDeDaño"/> creado con los datos existentes  <remarks> o null si los datos ingresados no son validos</remarks></returns>
-		public ModeloDatosReduccionDeDaño CrearModelo()
+		public void ActulizarModelo()
 		{
 			ActualizarValidez();
 
 			if (!EsValido)
-				return null;
+				return;
 
 			Resultado.EstrategiaDeDeteccionDeDaño = ViewModelComboBoxEstrategiaDeDeteccionDeDaño.Valor;
+
+			Resultado.TiposDeDañoQueReduce               = ETipoDeDaño.NINGUNO;
+			Resultado.RangosDelDañoQueReduce             = ERangoFlags.NINGUNO;
+			Resultado.NivelesDeLasMagiasCuyosDañosReduce = ENivelMagiaFlags.NINGUNO;
+			Resultado.FuentesDeDañoQueReduce.Clear();
 
 			switch (Resultado.EstrategiaDeDeteccionDeDaño)
 			{
@@ -240,8 +252,6 @@ namespace AppGM.Core
 					break;
 				}
 			}
-
-			return Resultado;
 		}
 
 		/// <summary>

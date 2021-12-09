@@ -5,7 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AppGM"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             
+             Background="{StaticResource Tema.VerdeOscuro}">
 
     <!--ViewModel: ViewModelVistaArbol<ViewModelElementoArbolItemInventario, ControladorSlot>-->
 
@@ -17,26 +19,36 @@
 
             <TreeView.Resources>
 
-                <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource EstiloTreeViewItem}">
+                <Style 
+                    TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource EstiloTreeViewItem}">
+
+                    <Setter Property="Padding" Value="0 2 "/>
 
                     <Setter Property="HeaderTemplate">
                         <Setter.Value>
                             <DataTemplate>
+
                                 <StackPanel 
                                     x:Name="Header"
+
                                     Orientation="Horizontal"
-                                    
+                                            
                                     Visibility="{Binding EsVisible, Converter={local:BooleanToVisibilityConverterColapsar}}">
 
-                                    <Image Source="../../../Media/Imagenes/Botones/MenuPrincipal/Flechita_Derecha_Click.png"/>
+                                    <Image 
+                                        MinHeight="20"
+                                        MinWidth="20"
+                                        Source="{Binding Contenido, Converter={local:ContenidoSlotToImagenConverter}}"/>
 
-                                    <TextBlock Text="{Binding DescripcionSlot}" />
+                                    <TextBlock 
+                                        Foreground="{StaticResource Tema.Verde}"
+                                        Text="{Binding DescripcionSlot}" />
                                 </StackPanel>
 
                                 <DataTemplate.Triggers>
                                     <DataTrigger Binding="{Binding EstaSeleccionado}" Value="True">
                                         <DataTrigger.Setters>
-                                            <Setter TargetName="Header" Property="Background" Value="{StaticResource Color.ListBox.FondoItemSeleccionado}"/>
+                                            <Setter TargetName="Header" Property="Background" Value="{StaticResource Color.TreeView.FondoItemSeleccionado}"/>
                                         </DataTrigger.Setters>
                                     </DataTrigger>
                                 </DataTemplate.Triggers>

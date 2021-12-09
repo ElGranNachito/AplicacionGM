@@ -53,6 +53,11 @@
     <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.ListView.Fondo.Estatico" Color="{StaticResource Tema.Color.VerdeSemiOscuro}"/>
     <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.ListView.Fondo.Deshabilitado" Color="{StaticResource Tema.Color.VerdeSemiOscuro}"/>
 
+    <!--......................................TREE_VIEW............................................-->
+
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.TreeView.FondoItemSeleccionado" Color="{StaticResource Tema.Color.VerdeSemiOscuro}"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.TreeView.BordeItemSeleccionado" Color="{StaticResource Tema.Color.Verde}"/>
+
     <!--......................................COMBO_BOX...........................................-->
 
     <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.ComboBoxSeleccionMultiple.Texto.Estatico" Color="{StaticResource Tema.Color.Verde}"/>
@@ -171,6 +176,11 @@
 
     <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.UnidadMapa.BordeIngresoPosicion" Color="#363636"/>
     <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.UnidadMapa.FondoIngresoPosicion" Color="#242424"/>
+
+    <!--........................................MENU_REALIZAR_TIRADAS......................................-->
+
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.MenuRealizarTirada.ColorMensajeCroto" Color="White"/>
+    <system:SolidColorBrush PresentationOptions:Freeze="true" x:Key="Color.MenuRealizarTirada.ColorMensajeError" Color="Red"/>
 
 
 </ResourceDictionary>

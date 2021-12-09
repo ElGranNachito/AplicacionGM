@@ -24,6 +24,6 @@ namespace AppGM.Core
 		/// </summary>
 		/// <param name="argsDaño">Argumentos del daño</param>
 		/// <param name="subObjetivos">Subobjetivos</param>
-		void Dañar(ModeloArgumentosDaño argsDaño, SortedList<int, SubobjetivoDaño> subObjetivos = null);
+		void Dañar(ModeloArgumentosDaño argsDaño, SortedList<int, SubobjetivoDaño> subObjetivos = null, SubobjetivoDaño subobjetivoActual = null);
 	}
 }

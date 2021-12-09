@@ -18,7 +18,7 @@ namespace AppGM.Core
 		/// </summary>
 		public event dParteDelCuerpoEliminada OnParteDelCuerpoEliminada = delegate { };
 
-		public event IDañable.dDañado OnDañado; 
+		public event IDañable.dDañado OnDañado = delegate{}; 
 
 		#endregion
 
@@ -33,6 +33,11 @@ namespace AppGM.Core
 		/// Controlador del slot que contiene esta parte del cuerpo
 		/// </summary>
 		public ControladorSlot SlotContenedor { get; private set; }
+
+		/// <summary>
+		/// Controlador de la defensa de esta parte del cuerpo
+		/// </summary>
+		public ControladorDefensa ControladorDefensa { get; private set; }
 
 		/// <summary>
 		/// Coleccion con los controladores de los slots contenidos por esta parte del cuerpo
@@ -50,6 +55,11 @@ namespace AppGM.Core
 		public ControladorParteDelCuerpo(ModeloParteDelCuerpo _modelo)
 			: base(_modelo)
 		{
+			if (modelo.DatosDefensa is not null)
+			{
+				ControladorDefensa = SistemaPrincipal.ObtenerControlador<ControladorDefensa, ModeloDatosDefensa>(modelo.DatosDefensa, true);
+			}
+
 			//Creamos el controlador de los slots contenidos
 			foreach (var slot in modelo.Slots)
 			{
@@ -82,9 +92,11 @@ namespace AppGM.Core
 
 		#region Metodos
 
-		public void Dañar(ModeloArgumentosDaño argsDaño, SortedList<int, SubobjetivoDaño> subObjetivos = null)
+		public void Dañar(ModeloArgumentosDaño argsDaño, SortedList<int, SubobjetivoDaño> subObjetivos = null, SubobjetivoDaño subobjetivoActual = null)
 		{
-			throw new System.NotImplementedException();
+			ControladorDefensa?.ReducirDaño(argsDaño);
+
+			OnDañado(argsDaño, subObjetivos);
 		}
 
 		public override async Task Recargar()

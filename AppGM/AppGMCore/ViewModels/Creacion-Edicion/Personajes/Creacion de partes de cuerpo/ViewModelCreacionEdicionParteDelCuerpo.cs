@@ -89,8 +89,20 @@ namespace AppGM.Core
 		{
 			ActualizarValidez();
 
-			if (ViewModelIngresoDatosDefensa is not null && ViewModelIngresoDatosDefensa.ReduccionesDeDaño.Count > 0)
-				ModeloCreado.DatosDefensa = ViewModelIngresoDatosDefensa.CrearModelo();
+			if (ViewModelIngresoDatosDefensa is not null)
+			{
+				if (ViewModelIngresoDatosDefensa.ReduccionesDeDaño.Count > 0)
+				{
+					ModeloCreado.DatosDefensa = ViewModelIngresoDatosDefensa.CrearModelo();
+				}
+				else
+				{
+					if (ModeloCreado.DatosDefensa is not null)
+						ModeloCreado.DatosDefensa.ParteDelCuerpo = null;
+
+					ModeloCreado.DatosDefensa = null;
+				}
+			}
 
 			return EsValido ? ModeloCreado : null;
 		}

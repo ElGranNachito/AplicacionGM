@@ -189,7 +189,7 @@ namespace AppGM.Core
 				{
 					ModeloCreado = Activator.CreateInstance(tipoModelo) as TModelo;
 				}
-				else if (tipoModelo != null)
+				else if (tipoValorPorDefectoModelo != null)
 				{
 					ModeloCreado = Activator.CreateInstance(tipoValorPorDefectoModelo) as TModelo;
 				}

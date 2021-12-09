@@ -1,8 +1,11 @@
-﻿namespace AppGM.Core
+﻿using System;
+
+namespace AppGM.Core
 {
 	/// <summary>
 	/// Representa el tipo de contenido por un <see cref="ModeloInfligidorDaño"/>
 	/// </summary>
+	[Flags]
 	public enum ETipoInfligidorDaño
 	{
 		/// <summary>

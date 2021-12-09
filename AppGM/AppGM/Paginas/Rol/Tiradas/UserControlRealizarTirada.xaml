@@ -48,7 +48,7 @@
                     VerticalAlignment="Bottom"
                     Margin="0 0 -20 400"
                     MaxWidth="300"
-                    Source="../../../Media/Imagenes/Tiradas/GloboTipoTirada.png"/>
+                    Source="{Binding ArgumentosSonValidos, Converter={local:BoolToImagenGloboCroto}}"/>
 
                 <!--Croto-->
                 <Image
@@ -77,22 +77,47 @@
                     
                     Margin="30 0 0 520">
 
-                    <TextBox
-                        VerticalAlignment="Center"
-                        HorizontalAlignment="Center"
-                        HorizontalContentAlignment="Center"
-                        MaxHeight="200"
-                        TextAlignment="Left"
-                        Background="Transparent"
+                    <Grid>
 
-                        FontSize="20"
-                        TextWrapping="Wrap"
-                        MaxLines="4"
-                        MaxLength="50"
-                        Foreground="White"
-                        BorderThickness="0"
-                        
-                        Text="{Binding TextoCroto, FallbackValue='Buenos dias'}"/>
+                        <TextBox
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            HorizontalContentAlignment="Center"
+                            MaxHeight="200"
+                            TextAlignment="Left"
+                            Background="Transparent"
+
+                            FontSize="20"
+                            TextWrapping="Wrap"
+                            MaxLines="4"
+                            MaxLength="50"
+                            Foreground="{StaticResource Color.MenuRealizarTirada.ColorMensajeCroto}"
+                            BorderThickness="0"
+
+                            Visibility="{Binding ArgumentosSonValidos, Converter={local:BooleanToVisibilityConverterColapsar}, Mode=OneWay}"
+                            
+                            Text="{Binding TextoCroto, FallbackValue='Buenos dias', Mode=OneWay}"/>
+
+                        <TextBox
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            HorizontalContentAlignment="Center"
+                            MaxHeight="200"
+                            TextAlignment="Left"
+                            Background="Transparent"
+
+                            FontSize="20"
+                            TextWrapping="Wrap"
+                            MaxLines="4"
+                            MaxLength="50"
+                            Foreground="{StaticResource Color.MenuRealizarTirada.ColorMensajeError}"
+                            BorderThickness="0"
+
+                            Visibility="{Binding ArgumentosSonValidos, Converter={local:BooleanToVisibilityConverterColapsar}, ConverterParameter=0, Mode=OneWay}"
+                            
+                            Text="{Binding MensajeDeError, FallbackValue='Buenos dias', Mode=OneWay}"/>
+
+                    </Grid>
                 </Border>
 
                 <!--Flecha salir-->
@@ -298,8 +323,9 @@
                             MinWidth="30"
                             MaxHeight="30"
                             Margin="0 0 -195 0"
-                            Background="White"
                             BorderThickness="1"
+
+                            Background="{StaticResource Tema.VerdeSemiOscuro}"
 
                             IsHitTestVisible="False"
 
@@ -483,6 +509,7 @@
                                     Visibility="{Binding EsTiradaDeDaño, Converter={local:BooleanToVisibilityConverterColapsar}}">
                                     
                                     <local:UserControlSeleccionControlador
+                                        Width="100"
                                         Content="Objetivo"
                                         DataContext="{Binding ViewModelSeleccionObjetivo}"/>
 
@@ -563,29 +590,65 @@
 
                                 </local:UserControlConImagencitaAlCostado>
 
-                                <local:UserControlMultiSelectComboBox
+                                <Grid
                                     Grid.Column="2"
+                                    Grid.RowSpan="5">
 
-                                    Descripcion="Tipos de daño:"
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
 
-                                    IsEnabled="{Binding DataContext.EsTiradaPreexistente, Converter={local:NegarBoolConverter}, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControlRealizarTirada}}}"
+                                    <local:UserControlMultiSelectComboBox
+
+                                        Descripcion="Tipos de daño:"
+
+                                        IsEnabled="{Binding DataContext.EsTiradaPreexistente, Converter={local:NegarBoolConverter}, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControlRealizarTirada}}}"
                                     
-                                    DataContext="{Binding ViewModelMultiselectComboBoxTipoDeDaño}"
+                                        DataContext="{Binding ViewModelMultiselectComboBoxTipoDeDaño}"
                                     
-                                    Visibility="{Binding DataContext.EsTiradaDeDaño, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControlRealizarTirada}}, Converter={local:BooleanToVisibilityConverterColapsar}}"/>
+                                        Visibility="{Binding DataContext.EsTiradaDeDaño, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControlRealizarTirada}}, Converter={local:BooleanToVisibilityConverterColapsar}}"/>
 
-                                <local:UserControlMultiSelectComboBox
-                                    Grid.Column="2"
-                                    Grid.Row="1"
+                                    <local:UserControlMultiSelectComboBox
+                                        Grid.Row="1"
 
-                                    Descripcion="Fuentes de daño:"
+                                        Descripcion="Fuentes de daño:"
 
-                                    IsEnabled="{Binding DataContext.EsTiradaPreexistente, Converter={local:NegarBoolConverter}, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControlRealizarTirada}}}"
+                                        IsEnabled="{Binding DataContext.EsTiradaPreexistente, Converter={local:NegarBoolConverter}, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControlRealizarTirada}}}"
                                     
-                                    DataContext="{Binding ViewModelMultiselectComboBoxFuenteDaño}"
+                                        DataContext="{Binding ViewModelMultiselectComboBoxFuenteDaño}"
                                     
-                                    Visibility="{Binding DataContext.EsTiradaDeDaño, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControlRealizarTirada}}, Converter={local:BooleanToVisibilityConverterColapsar}}"/>
+                                        Visibility="{Binding DataContext.EsTiradaDeDaño, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControlRealizarTirada}}, Converter={local:BooleanToVisibilityConverterColapsar}}"/>
 
+                                    <local:UserControlComboBoxConDescripcion
+                                        Grid.Row="2"
+
+                                        VerticalAlignment="Center"
+
+                                        Descripcion="Rango del daño:"
+
+                                        IsEnabled="{Binding DataContext.EsTiradaPreexistente, Converter={local:NegarBoolConverter}, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControlRealizarTirada}}}"
+                                    
+                                        DataContext="{Binding ViewModelComboBoxRangoDaño}"
+                                    
+                                        Visibility="{Binding DataContext.EsTiradaDeDaño, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControlRealizarTirada}}, Converter={local:BooleanToVisibilityConverterColapsar}}"/>
+
+                                    <local:UserControlComboBoxConDescripcion
+                                        Grid.Row="3"
+
+                                        VerticalAlignment="Center"
+
+                                        Descripcion="Nivel magia del daño:"
+
+                                        IsEnabled="{Binding DataContext.EsTiradaPreexistente, Converter={local:NegarBoolConverter}, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControlRealizarTirada}}}"
+                                    
+                                        DataContext="{Binding ViewModelComboBoxNivelMagia}"
+                                    
+                                        Visibility="{Binding DataContext.EsTiradaDeDaño, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControlRealizarTirada}}, Converter={local:BooleanToVisibilityConverterColapsar}}"/>
+
+                                </Grid>
 
                             </Grid>
 
@@ -658,7 +721,15 @@
                         MinHeight="30"
                         Content="Aplicar daño"
                         
-                        Command="{Binding ComandoAplicarDaño}"/>
+                        Command="{Binding ComandoAplicarDaño}">
+
+                        <Button.Visibility>
+                            <MultiBinding Converter="{local:BooleanToVisibilityConverterAllTrueColapsarMultiple}">
+                                <Binding Path="EsTiradaDeDaño"/>
+                                <Binding Path="ResultadosTiradas.ResultadoActual" Converter="{local:IsNullToBooleanConverter}" ConverterParameter="0"></Binding>
+                            </MultiBinding>
+                        </Button.Visibility>
+                    </Button>
 
                     <!--Boton crear preset-->
                     <Button

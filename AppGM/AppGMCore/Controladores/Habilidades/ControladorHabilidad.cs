@@ -120,7 +120,7 @@ namespace AppGM.Core
 	        mUtilizarHabilidad.EjecutarFuncion(this, usuario, null, new[]{parametroExtra, segundoParametroExtra});
         }
 
-        public void InfligirDaño(IDañable objetivo, ModeloArgumentosDaño argsDaño, SortedList<int, IDañable> subObjetivos = null)
+        public void InfligirDaño(IDañable objetivo, ModeloArgumentosDaño argsDaño, SortedList<int, SubobjetivoDaño> subObjetivos = null)
         {
 	        throw new NotImplementedException();
         }

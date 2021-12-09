@@ -13,7 +13,7 @@ namespace AppGM.Core
 		/// <param name="objetivo">Objetivo al que infligir el daño</param>
 		/// <param name="argsDaño">Argumentos del daño</param>
 		/// <param name="subObjetivos">Subobjetivos</param>
-		public delegate void dInfligirDaño(IDañable objetivo, ModeloArgumentosDaño argsDaño, SortedList<int, IDañable> subObjetivos);
+		public delegate void dInfligirDaño(IDañable objetivo, ModeloArgumentosDaño argsDaño, SortedList<int, SubobjetivoDaño> subObjetivos);
 
 		/// <summary>
 		/// Evento disparado cuando este objeto inflige daño a algun <see cref="IDañable"/>
@@ -26,6 +26,6 @@ namespace AppGM.Core
 		/// <param name="objetivo">Objetivo al que infligir el daño</param>
 		/// <param name="argsDaño">Argumentos del daño</param>
 		/// <param name="subObjetivos">Subobjetivos</param>
-		public void InfligirDaño(IDañable objetivo, ModeloArgumentosDaño argsDaño, SortedList<int, IDañable> subObjetivos = null);
+		public void InfligirDaño(IDañable objetivo, ModeloArgumentosDaño argsDaño, SortedList<int, SubobjetivoDaño> subObjetivos = null);
 	}
 }

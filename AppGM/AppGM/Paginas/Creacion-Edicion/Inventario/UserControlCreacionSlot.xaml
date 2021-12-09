@@ -8,12 +8,13 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="400"
              
-             x:Name="Base">
+             x:Name="Base"
+             
+             Background="{StaticResource Tema.VerdeOscuro}">
 
     <!--ViewModel: ViewModelCreacionEdicionDeSlot-->
 
-    <Grid
-        Background="White">
+    <Grid>
 
         <Grid.Resources>
             <Style x:Name="EstiloLocalTextbox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextoDescriptivo}">
@@ -167,7 +168,7 @@
 
                     <local:UserControlCreacionParteDelCuerpo.Visibility>
                         <MultiBinding Converter="{local:MultiplesBoolsAVisibilidad}" ConverterParameter="{StaticResource ArregloParametroConvertidor}">
-                            <Binding Path="DataContext.MostrarContenido" ElementName="Base"  Mode="OneWay"/>
+                            <Binding Path="DataContext.MostrarContenido" ElementName="Base" Mode="OneWay"/>
                             <Binding Path="DataContext.MostrarMenuCrearContenido" ElementName="Base" Mode="OneWay"/>
                             <Binding Path="DataContext.MostrarListaItems" ElementName="Base" Mode="OneWay"/>
                         </MultiBinding>

@@ -26,7 +26,6 @@ namespace AppGM.Core
 			//Por cada reduccion de daño
 			modelo.ReduccionesDeDaños.ForEach(reduccionActual =>
 			{
-				//Antes que nada, nos aseguramos de que esta reduccion se encuentre habilitada
 				if(!reduccionActual.EstaHabilitada)
 					return;
 

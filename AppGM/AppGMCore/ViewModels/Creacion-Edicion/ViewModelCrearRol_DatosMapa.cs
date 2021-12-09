@@ -36,7 +36,12 @@ namespace AppGM.Core
         /// <summary>
         /// Ruta a la imagen del mapa
         /// </summary>
-        public byte[] ImagenMapa { get; set; } 
+        public byte[] ImagenMapa { get; set; }
+
+		/// <summary>
+		/// Indica si la imagen del mapa ha sido seleccionada
+		/// </summary>
+        public bool ImagenMapaFueSeleccionada => ImagenMapa != null;
 
         /// <summary>
         /// Indica si borrar la imagen de su ubicacion anterior
@@ -57,21 +62,23 @@ namespace AppGM.Core
 					"Formatos imagen (*.jpg *.png)|*.jpg;*.png",
 					SistemaPrincipal.Aplicacion.VentanaActual);
 
+				if (mArchivoMapa == null)
+					return;
+
 				try
 				{
 					using BinaryReader bReader =
 						new BinaryReader(File.Open(mArchivoMapa.Ruta, FileMode.Open, FileAccess.Read));
 
 					ImagenMapa = bReader.ReadBytes((int)bReader.BaseStream.Length);
+
+					DispararPropertyChanged(nameof(ImagenMapaFueSeleccionada));
 				}
 				catch (Exception ex)
 				{
 					SistemaPrincipal.LoggerGlobal.Log(
 						$"Error al intentar leer imagen {mArchivoMapa.Nombre}.{Environment.NewLine}{ex.Message}", ESeveridad.Error);
 				}
-
-				if (mArchivoMapa == null)
-                    return;
 			});
 		}
 

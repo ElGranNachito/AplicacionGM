@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using CoolLogs;
 
@@ -250,9 +251,49 @@ namespace AppGM.Core
             SistemaPrincipal.LoggerGlobal.Log($"Parte del cuerpo almacenada en {this} quitada con exito", ESeveridad.Debug);
         }
 
-        public void Dañar(ModeloArgumentosDaño argsDaño, SortedList<int, SubobjetivoDaño> subObjetivos = null)
+        public void Dañar(ModeloArgumentosDaño argsDaño, SortedList<int, SubobjetivoDaño> subObjetivos = null, SubobjetivoDaño subobjetivoActual = null)
         {
-	        throw new NotImplementedException();
+	        if (subobjetivoActual is null)
+	        {
+                SistemaPrincipal.LoggerGlobal.LogCrash($"{nameof(subobjetivoActual)} no puede ser null");
+	        }
+
+	        ParteDelCuerpoAlmacenada?.Dañar(argsDaño);
+
+	        foreach (var item in ControladoresItemsAlmacenados)
+	        {
+		        item.Dañar(argsDaño, subObjetivos);
+
+		        if (subobjetivoActual.dañarContenido || subobjetivoActual.profundidadMaxima > 0)
+		        {
+			        foreach (var slot in item.Slots)
+			        {
+				        var nuevoSubobjetivo = new SubobjetivoDaño
+				        (
+					        slot,
+					        subobjetivoActual.dañarContenido,
+					        Math.Clamp(subobjetivoActual.profundidadMaxima - 1, 0, int.MaxValue)
+				        );
+
+				        slot.Dañar(argsDaño, subObjetivos, nuevoSubobjetivo);
+			        }
+		        }
+	        }
+
+            if (ParteDelCuerpoAlmacenada is not null)
+	        {
+		        foreach (var slot in ParteDelCuerpoAlmacenada.Slots)
+		        {
+			        var nuevoSubobjetivo = new SubobjetivoDaño
+			        (
+				        slot,
+				        subobjetivoActual.dañarContenido,
+				        Math.Clamp(subobjetivoActual.profundidadMaxima - 1, 0, int.MaxValue)
+			        );
+
+			        slot.Dañar(argsDaño, subObjetivos, nuevoSubobjetivo);
+                }
+	        }
         }
 
         public bool ContieneItemsDeTipo(ETipoItem tipoItem, bool incluirHijos)

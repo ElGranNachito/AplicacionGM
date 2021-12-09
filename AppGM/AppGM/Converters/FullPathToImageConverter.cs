@@ -12,9 +12,10 @@ using CoolLogs;
 namespace AppGM
 {
     /// <summary>
-    /// Convierte una ruta completa a una imagen. No creo que haga falta aclarar que esa ruta completa de be ser a una imagen
+    /// Convierte una ruta completa o un arreglo de bytes a una imagen. Si la conversion falla se devuelve una imagen por defecto que se
+    /// puede especificar a traves del parametro
     /// </summary>
-    [ValueConversion(sourceType: typeof(string), targetType: typeof(BitmapImage))]
+    [ValueConversion(sourceType: typeof(string), targetType: typeof(BitmapImage), ParameterType = typeof(string))]
     public class FullPathToImageConverter : BaseConverter<FullPathToImageConverter>
     {
         //Diccionario con BitmapImages cacheados para no tener que estar creandolo cada vez que tratamos de acceder a una misma imagen
@@ -23,7 +24,7 @@ namespace AppGM
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
 	        if (value is null)
-		        return new BitmapImage(new Uri("pack://application:,,,/Media/Imagenes/CamaritaMarcaJuancha.png"));
+		        return ObtenerImagenPorDefecto(parameter);
 
 	        BitmapImage nuevaImagen = null;
 
@@ -52,7 +53,7 @@ namespace AppGM
 		        {
                     SistemaPrincipal.LoggerGlobal.Log($"Se intento cargar una imagen que no existe ({tmp})", ESeveridad.Error);
 
-			        return new BitmapImage(new Uri("pack://application:,,,/Media/Imagenes/CamaritaMarcaJuancha.png"));
+			        return ObtenerImagenPorDefecto(parameter);
 		        }
 
 		        if (String.IsNullOrEmpty(tmp))
@@ -79,6 +80,28 @@ namespace AppGM
 			}
             
             return nuevaImagen;
+        }
+
+        private BitmapImage ObtenerImagenPorDefecto(object parametroExtra)
+        {
+	        if (parametroExtra is string nombreImagen)
+	        {
+		        if (nombreImagen.IsNullOrWhiteSpace())
+			        return null;
+
+		        try
+		        {
+			        return new BitmapImage(new Uri($"pack://application:,,,/Media/Imagenes/{nombreImagen}"));
+		        }
+		        catch (Exception ex)
+		        {
+                    SistemaPrincipal.LoggerGlobal.Log($"Ocurrio un error al obtener la imagen por defecto: {ex.Message}", ESeveridad.Error);
+
+                    return null;
+		        }
+	        }
+
+	        return new BitmapImage(new Uri("pack://application:,,,/Media/Imagenes/CamaritaMarcaJuancha.png"));
         }
 
         public FullPathToImageConverter()

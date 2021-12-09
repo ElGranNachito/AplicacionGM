@@ -25,36 +25,27 @@
 
             <!-- Textbox nombre mapa -->
             <TextBox
-                Style="{StaticResource TextoDescriptivo}"
-                Text="{Binding NombreMapa, UpdateSourceTrigger=PropertyChanged}"
                 TextAlignment="Center"
                 VerticalAlignment="Top"
+
                 Margin="15 10"
-                Tag="Nombre mapa"/>
 
-            <StackPanel Grid.Column="1"
-                        Margin="15 10">
+                MinHeight="25"
 
-                <!-- Boton buscar archivo mapa -->
-                <Button 
-                    Content="Seleccionar archivo"
-                    BorderBrush="Black"
-                    FontFamily="{StaticResource 'Font Awesome Regular'}"
-                    FontSize="{StaticResource TamañoFontMediano}"
-                    Command="{Binding ComandoSeleccionarImagenMapa}"/>
+                Tag="Nombre mapa"
 
-                <StackPanel Orientation="Horizontal"
-                            Margin="0 10 0 0">
+                Style="{StaticResource TextoDescriptivo}"
+                
+                Text="{Binding NombreMapa, UpdateSourceTrigger=PropertyChanged}"/>
 
-                    <!-- Checkbox borrar imagen -->
-                    <CheckBox 
-                        Content="Eliminar imagen de la ubicacion anterior"
-                        IsChecked="{Binding BorrarImagenDeLaUbicacionAnterior}"/>
+            <!-- Checkbox borrar imagen -->
+            <CheckBox 
+                Grid.Column="1"
 
-                </StackPanel>
+                Margin="10 15 0 0"
 
-            </StackPanel>
-
+                Content="Eliminar imagen de la ubicacion anterior"
+                IsChecked="{Binding BorrarImagenDeLaUbicacionAnterior}"/>
 
         </Grid>
 
@@ -66,20 +57,36 @@
             
             Margin="5">
 
-            <Border
-                BorderThickness="2"
-                BorderBrush="{StaticResource Tema.Verde}"
+            <Grid>
 
-                Height="{Binding ElementName=Fondo, Path=ActualHeight}"
-                Width="{Binding ElementName=Fondo, Path= ActualWidth}">
+                <Image
+                    Width="250"
+                    Source="../../../Media/Imagenes/CamaraMarcaJuanchaSinFondo.png"/>
 
-                <Border.Background>
-                    <ImageBrush 
-                        x:Name="Fondo"
-                        ImageSource="{Binding ImagenMapa, Converter={local:FullPathToImageConverter}}"/>
-                </Border.Background>
+                <Border
+                    BorderThickness="2"
+                    BorderBrush="{StaticResource Tema.Verde}"
 
-            </Border>
+                    ToolTip="Haga click para seleccionar la imagen"
+
+                    Height="{Binding ElementName=Fondo, Path=ActualHeight}"
+                    Width="{Binding ElementName=Fondo, Path= ActualWidth}">
+
+                    <Border.Background>
+                        <ImageBrush 
+                            x:Name="Fondo"
+                            ImageSource="{Binding ImagenMapa, Converter={local:FullPathToImageConverter}, ConverterParameter=''}"/>
+                    </Border.Background>
+
+                    <Border.InputBindings>
+                        <MouseBinding MouseAction="LeftClick" Command="{Binding ComandoSeleccionarImagenMapa}"/>
+                    </Border.InputBindings>
+
+                </Border>
+
+            </Grid>
+
+            
         </ScrollViewer>
 
     </Grid>

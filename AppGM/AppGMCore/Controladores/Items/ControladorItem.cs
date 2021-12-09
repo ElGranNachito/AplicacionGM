@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace AppGM.Core
 {
-	public class ControladorItem : Controlador<ModeloItem>, IInfligidorDaño
+	public class ControladorItem : Controlador<ModeloItem>, IInfligidorDaño, IDañable
     {
 	    #region Eventos
 
@@ -20,7 +20,9 @@ namespace AppGM.Core
 
 	    public event dItemEliminado OnItemEliminado = delegate { };
 
-	    public event IInfligidorDaño.dInfligirDaño OnInfligirDaño;
+	    public event IInfligidorDaño.dInfligirDaño OnInfligirDaño = delegate{};
+
+	    public event IDañable.dDañado OnDañado = delegate{};
 
         #endregion
 
@@ -85,7 +87,7 @@ namespace AppGM.Core
         /// <summary>
         /// Controlador de denfensa del item
         /// </summary>
-        public ControladorDefensa Defensa { get; set; }
+        public ControladorDefensa ControladorDefensa { get; set; }
 
         #endregion
 
@@ -98,7 +100,7 @@ namespace AppGM.Core
 
 	        if (modelo.DatosDefensa is not null)
 	        {
-		        Defensa = SistemaPrincipal.ObtenerControlador<ControladorDefensa, ModeloDatosDefensa>(modelo.DatosDefensa, true);
+		        ControladorDefensa = SistemaPrincipal.ObtenerControlador<ControladorDefensa, ModeloDatosDefensa>(modelo.DatosDefensa, true);
 	        }
 
 	        if (Portador == null)
@@ -136,9 +138,18 @@ namespace AppGM.Core
 	        return false;
         }
 
-        public void InfligirDaño(IDañable objetivo, ModeloArgumentosDaño argsDaño, SortedList<int, IDañable> subObjetivos = null)
+        public void Dañar(ModeloArgumentosDaño argsDaño, SortedList<int, SubobjetivoDaño> subObjetivos = null, SubobjetivoDaño subobjetivoActual = null)
         {
-	        throw new System.NotImplementedException();
+	        ControladorDefensa?.ReducirDaño(argsDaño);
+
+	        OnDañado(argsDaño, subObjetivos);
+        }
+
+        public void InfligirDaño(IDañable objetivo, ModeloArgumentosDaño argsDaño, SortedList<int, SubobjetivoDaño> subObjetivos = null)
+        {
+	        objetivo.Dañar(argsDaño, subObjetivos);
+
+	        OnInfligirDaño(objetivo, argsDaño, subObjetivos);
         }
 
         public override async Task Recargar()

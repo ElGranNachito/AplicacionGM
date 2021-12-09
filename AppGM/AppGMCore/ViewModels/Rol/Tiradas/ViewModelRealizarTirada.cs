@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Windows.Input;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace AppGM.Core
 {
@@ -24,6 +22,21 @@ namespace AppGM.Core
 		}
 
 		/// <summary>
+		/// Argumentos utilizados para la ultima tirada de daño que se realizo
+		/// </summary>
+		private ArgumentosTiradaDaño mArgsUltimaTiradaDaño;
+
+		/// <summary>
+		/// Contiene el valor de <see cref="MensajeDeError"/>
+		/// </summary>
+		private string mMensajeDeError;
+
+		/// <summary>
+		/// Tirada que realizar (en caso de que no sea una tirada preexistente)
+		/// </summary>
+		public string Tirada { get; set; }
+
+		/// <summary>
 		/// Numero de tiradas a realizar
 		/// </summary>
 		public string NumeroDeTiradas
@@ -31,11 +44,6 @@ namespace AppGM.Core
 			get => PresetTirada.NumeroDeTiradas;
 			set => PresetTirada.NumeroDeTiradas = value;
 		}
-
-		/// <summary>
-		/// Tirada que realizar (en caso de que no sea una tirada preexistente)
-		/// </summary>
-		public string Tirada { get; set; }
 
 		/// <summary>
 		/// Modificador que aplicar al resultado
@@ -113,7 +121,16 @@ namespace AppGM.Core
 		/// <summary>
 		/// Mensaje de error de validacion
 		/// </summary>
-		public string MensajeDeError { get; private set; }
+		public string MensajeDeError
+		{
+			get => mMensajeDeError;
+			private set
+			{
+				mMensajeDeError = value;
+
+				DispararPropertyChanged(nameof(ArgumentosSonValidos));
+			}
+		}
 
 		/// <summary>
 		/// Indica si se debe utilizar el multiplicador del punto vital
@@ -141,6 +158,11 @@ namespace AppGM.Core
 		public bool EsTiradaStat => ObtenerEsTiradaDeTipo(ETipoTirada.Stat);
 
 		/// <summary>
+		/// Indica si los argumentos ingresados son validos
+		/// </summary>
+		public bool ArgumentosSonValidos => MensajeDeError.IsNullOrWhiteSpace();
+
+		/// <summary>
 		/// Viewmodel del combobox para seleccionar la stat de la tirada
 		/// </summary>
 		public ViewModelComboBox<EStat> ViewModelComboBoxStat { get; set; }
@@ -159,6 +181,18 @@ namespace AppGM.Core
 		/// Viewmodel del combobox para seleccionar el preset
 		/// </summary>
 		public ViewModelComboBox<ModeloPresetTirada> ViewModelComboBoxPresetsDisponibles { get; set; }
+
+		/// <summary>
+		/// Viewmdoel del combobox para seleccionar el <see cref="ENivelMagia"/> de magia del daño
+		/// </summary>
+		public ViewModelComboBox<ENivelMagia> ViewModelComboBoxNivelMagia { get; set; } =
+			new ViewModelComboBox<ENivelMagia>("Nivel de magia del daño", EnumHelpers.ObtenerValoresEnum<ENivelMagia>());
+
+		/// <summary>
+		/// Viewmodel del combobox para seleccionar el <see cref="ERango"/> del daño
+		/// </summary>
+		public ViewModelComboBox<ERango> ViewModelComboBoxRangoDaño { get; set; } =
+			new ViewModelComboBox<ERango>("Rango del daño", EnumHelpers.ObtenerValoresEnum<ERango>());
 
 		/// <summary>
 		/// Viewmodel del combobox para seleccionar los tipos de daño aplicados por la tirada
@@ -267,8 +301,17 @@ namespace AppGM.Core
 
 			ComandoRealizarTirada = new Comando(async () =>
 			{
-				ResultadosTiradas = new ViewModelResultadosTiradas((await RealizarTiradas()).Select(r => new ViewModelResultadoTirada(r)));
+				var resultadosTiradas = await RealizarTiradas();
+
+				ResultadosTiradas = null;
+
+				if(resultadosTiradas.Count <= 0)
+					return;
+
+				ResultadosTiradas = new ViewModelResultadosTiradas(resultadosTiradas.Select(r => new ViewModelResultadoTirada(r, mArgsUltimaTiradaDaño, ViewModelSeleccionTirada.ControladorSeleccionado )));
 			});
+
+			ComandoAplicarDaño = new Comando(AplicarDaño);
 
 			ComandoToggleEsTiradaExistente = new Comando(() =>
 			{
@@ -480,7 +523,7 @@ namespace AppGM.Core
 					modificador               = 0,
 					stat                      = EStat.NINGUNA,
 					argumentoExtra            = VariableExtra,
-					controlador               = ViewModelSeleccionContenedor.ControladorSeleccionado,
+					controlador               = ViewModelSeleccionContenedor.ControladorSeleccionado ?? ViewModelSeleccionUsuario.ControladorSeleccionado,
 					personaje                 = ViewModelSeleccionUsuario.ControladorSeleccionado
 				};
 
@@ -532,15 +575,85 @@ namespace AppGM.Core
 
 					var resultadoParse = await ParserTiradas.TryParseAsync(
 						Tirada,
-						(ModeloConVariablesYTiradas) ViewModelSeleccionContenedor.ControladorSeleccionado.Modelo,
+						(ModeloConVariablesYTiradas) (ViewModelSeleccionContenedor.ControladorSeleccionado?.Modelo ?? ViewModelSeleccionUsuario.ControladorSeleccionado.Modelo),
 						ViewModelComboBoxTipoTirada.Valor,
 						ViewModelComboBoxStat.Valor);
+
+					if (resultadoParse.exito)
+					{
+						resultadoActual.Add(resultadoParse.funcion(argsTirada));
+					}
+					else
+					{
+						TextoCroto = resultadoParse.error;
+
+						return resultadoActual;
+					}
 				}
 			}
 
 			TextoCroto = ViewModelComboBoxTipoTirada.Valor.ToString();
 
 			return resultadoActual;
+		}
+
+		private void AplicarDaño()
+		{
+			MensajeDeError = string.Empty;
+
+			if(ViewModelComboBoxTipoTirada.Valor != ETipoTirada.Daño ||
+			   ResultadosTiradas.Resultados.Count <= 0 ||
+			   mArgsUltimaTiradaDaño is null)
+				return;
+
+			foreach (var vmResultadoTirada in ResultadosTiradas.Resultados)
+			{
+				var resultadoTirada = vmResultadoTirada.resultadoTirada;
+
+				var subobjetivosDaño = new SortedList<int, SubobjetivoDaño>(new Dictionary<int, SubobjetivoDaño>(ViewModelListaSubobjetivos.Items.Elementos
+					.Select(obj => new KeyValuePair<int, SubobjetivoDaño>(obj.Posicion, new SubobjetivoDaño(obj.Contenido, obj.DañarContenido, obj.profundidad)))));
+
+				if (vmResultadoTirada.tirada is not null)
+				{
+					if (vmResultadoTirada.tirada is ControladorTiradaDaño tiradaDaño)
+					{
+						tiradaDaño.AplicarDaño(subobjetivosDaño);
+
+						return;
+					}
+
+					MensajeDeError = "No se que hiciste, no te lo permito";
+
+					return;
+				}
+				else
+				{
+					var argsDaño = new ModeloArgumentosDaño
+					{
+						DañoTotal = resultadoTirada.resultado,
+						DañoFinal = resultadoTirada.resultado,
+
+						FuentesDeDañoAbarcadas = ViewModelMultiselectComboBoxFuenteDaño.ItemsSeleccionados.ToList(),
+						Rango                  = ViewModelComboBoxRangoDaño.Valor,
+						NivelMagia             = ViewModelComboBoxNivelMagia.Valor
+					};
+
+					foreach (var tipoDaño in ViewModelMultiselectComboBoxTipoDeDaño.ItemsSeleccionados)
+					{
+						if (argsDaño.TipoDeDaño is null)
+							argsDaño.TipoDeDaño = tipoDaño;
+						else
+							argsDaño.TipoDeDaño |= tipoDaño;
+					}
+
+					argsDaño.AñadirInfligidorDaño(mArgsUltimaTiradaDaño.personaje);
+					argsDaño.AñadirInfligidorDaño(mArgsUltimaTiradaDaño.controlador as IInfligidorDaño);
+
+					argsDaño.AñadirObjetivos(mArgsUltimaTiradaDaño.personaje, subobjetivosDaño);
+
+					mArgsUltimaTiradaDaño.objetivo.Dañar(argsDaño, subobjetivosDaño);
+				}
+			}
 		}
 
 		private ArgumentosTiradaPersonalizada CrearArgumentosTirada()
@@ -554,14 +667,17 @@ namespace AppGM.Core
 					multiplicador = PresetTirada.Multiplicador ?? 1
 				};
 
-			argsTirada.personaje = ViewModelSeleccionUsuario.ControladorSeleccionado;
-			argsTirada.controlador = ViewModelSeleccionContenedor.ControladorSeleccionado;
-			argsTirada.modificador = PresetTirada.Modificador;
-			argsTirada.stat = ViewModelComboBoxStat.Valor;
-			argsTirada.controlador = ViewModelSeleccionUsuario.ControladorSeleccionado;
-			argsTirada.argumentoExtra = VariableExtra;
-			argsTirada.modificador = PresetTirada.Modificador;
-			argsTirada.multiplicadorEspecialidad = PresetTirada.MultiplicadorDeEspecialidad ?? 0;
+			argsTirada.personaje                    = ViewModelSeleccionUsuario.ControladorSeleccionado;
+			argsTirada.controlador                  = ViewModelSeleccionContenedor.ControladorSeleccionado;
+			argsTirada.modificador                  = PresetTirada.Modificador;
+			argsTirada.stat                         = ViewModelComboBoxStat.Valor;
+			argsTirada.controlador                  = ViewModelSeleccionUsuario.ControladorSeleccionado;
+			argsTirada.argumentoExtra               = VariableExtra;
+			argsTirada.modificador                  = PresetTirada.Modificador;
+			argsTirada.multiplicadorEspecialidad    = PresetTirada.MultiplicadorDeEspecialidad ?? 0;
+
+			if (argsTirada is ArgumentosTiradaDaño argsTiradaDaño)
+				mArgsUltimaTiradaDaño = argsTiradaDaño;
 
 			return argsTirada;
 		}

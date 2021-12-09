@@ -9,6 +9,8 @@ namespace AppGM.Core
 	/// </summary>
 	public class ViewModelResultadosTiradas : ViewModel
 	{
+		#region Campos & Propiedades
+
 		/// <summary>
 		/// <see cref="List{T}"/> con los <see cref="ViewModelResultadoTirada"/> contenidos por este <see cref="ViewModelResultadosTiradas"/>
 		/// </summary>
@@ -25,25 +27,29 @@ namespace AppGM.Core
 		public string TextoPosicionActual => $"{Indice + 1}/{resultados.Count}";
 
 		/// <summary>
+		/// <see cref="ViewModelResultadoTirada"/> actualmente seleccionado por el <see cref="Indice"/>
+		/// </summary>
+		public ViewModelResultadoTirada ResultadoActual => Indice < resultados.Count ? resultados[Indice] : null;
+
+		/// <summary>
 		/// Obtiene una <see cref="IReadOnlyList{T}"/> con los <see cref="ViewModelResultadoTirada"/>
 		/// contenidos por este <see cref="ViewModelResultadosTiradas"/>
 		/// </summary>
 		public IReadOnlyList<ViewModelResultadoTirada> Resultados => resultados.AsReadOnly();
 
 		/// <summary>
-		/// <see cref="ViewModelResultadoTirada"/> actualmente seleccionado por el <see cref="Indice"/>
-		/// </summary>
-		public ViewModelResultadoTirada ResultadoActual => Indice < resultados.Count ? resultados[Indice] : null;
-
-		/// <summary>
 		/// Aumenta el <see cref="Indice"/>
 		/// </summary>
-		public ICommand ComandoIncrementarIndice { get; init; } 
+		public ICommand ComandoIncrementarIndice { get; init; }
 
 		/// <summary>
 		/// Disminuce el <see cref="Indice"/>
 		/// </summary>
-		public ICommand ComandoDisminuirIndice { get; init; }
+		public ICommand ComandoDisminuirIndice { get; init; } 
+
+		#endregion
+
+		#region Constructores
 
 		/// <summary>
 		/// Construye una nueva instancia de esta clase a partir de una <see cref="List{T}"/> de resultados
@@ -53,7 +59,7 @@ namespace AppGM.Core
 		{
 			resultados = new List<ViewModelResultadoTirada>(_resultados);
 
-			if(resultados.Count == 0)
+			if (resultados.Count == 0)
 				SistemaPrincipal.LoggerGlobal.Log($"{nameof(_resultados)} esta vacio", ESeveridad.Advertencia);
 
 			ComandoIncrementarIndice = new Comando(() =>
@@ -81,8 +87,10 @@ namespace AppGM.Core
 		/// </summary>
 		/// <param name="_resultado">Resultado de la tirada</param>
 		public ViewModelResultadosTiradas(ViewModelResultadoTirada _resultado)
-			:this(new List<ViewModelResultadoTirada>(new []{_resultado}))
-		{}
+			: this(new List<ViewModelResultadoTirada>(new[] { _resultado }))
+		{ } 
+
+		#endregion
 
 	}
 }

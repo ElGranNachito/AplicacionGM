@@ -44,7 +44,7 @@
 
 		public override string ToString()
 		{
-			return $"Nombre ({TipoPersonaje})";
+			return $"{Nombre} ({TipoPersonaje})";
 		}
 	}
 }

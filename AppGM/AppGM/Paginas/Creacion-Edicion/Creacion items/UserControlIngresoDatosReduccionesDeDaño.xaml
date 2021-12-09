@@ -12,7 +12,8 @@
     <Border
         Padding="5"
         
-        Background="Transparent">
+        x:Name="borderContenedorIngresoReduccionesDaño">
+
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -30,6 +31,8 @@
 
                 <!--Seleccion de estrategias utilizadas-->
                 <local:UserControlMultiSelectComboBox
+
+                    Margin="0 0 0 0"
                                 
                     Descripcion="Estrategias de deteccion disponibles:"
                                 
@@ -38,18 +41,20 @@
                 <!--Boton para añadir nueva reduccion-->
                 <Button
                     Grid.Column="1"
+
+                    Margin="5 0 0 0"
+
                     Content="+"
 
-                    
-                                    
                     Command="{Binding ComandoAñadirReduccionDeDaño}"/>
 
                 <!--Boton para quitar la reduccion seleccionada-->
                 <Button
                     Grid.Column="2"
-                    Content="-"
 
-                    
+                    Margin="5 0 0 0"
+
+                    Content="-"
 
                     IsEnabled="{Binding PuedeQuitarReduccionDeDaño}"
                     Command="{Binding ComandoQuitarReduccionDeDaño}"/>
@@ -70,13 +75,13 @@
                 <ListView.ItemContainerStyle>
                     <Style TargetType="{x:Type ListViewItem}">
                         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        <Setter Property="MaxWidth" Value="{Binding ElementName=borderContenedorIngresoReduccionesDaño, Path=ActualWidth}"/>
                     </Style>
                 </ListView.ItemContainerStyle>
 
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <local:UserControlIngresoDatosReduccionDeDaño
-                            HorizontalAlignment="Stretch"/>
+                        <local:UserControlIngresoDatosReduccionDeDaño/>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>

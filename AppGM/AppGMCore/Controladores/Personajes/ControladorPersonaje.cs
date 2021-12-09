@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Text.RegularExpressions;
 using CoolLogs;
 
@@ -391,7 +390,7 @@ namespace AppGM.Core
 
         public event IInfligidorDaño.dInfligirDaño OnInfligirDaño = delegate{};
 
-        public event IDañable.dDañado OnDañado;
+        public event IDañable.dDañado OnDañado = delegate{};
 
         #endregion
 
@@ -484,14 +483,24 @@ namespace AppGM.Core
         }
 
         
-        public void Dañar(ModeloArgumentosDaño argsDaño, SortedList<int, SubobjetivoDaño> subObjetivos = null)
+        public void Dañar(ModeloArgumentosDaño argsDaño, SortedList<int, SubobjetivoDaño> subObjetivos = null, SubobjetivoDaño subobjetivoActual = null)
         {
-	        throw new NotImplementedException();
+	        if (subObjetivos is not null)
+	        {
+		        foreach (var subobjetivo in subObjetivos)
+		        {
+                    subobjetivo.Value.objetivo.Dañar(argsDaño, null, subobjetivo.Value);
+		        }
+	        }
+
+	        Hp -= argsDaño.DañoFinal;
+
+	        OnDañado(argsDaño, subObjetivos);
         }
 
-        public void InfligirDaño(IDañable objetivo, ModeloArgumentosDaño argsDaño, SortedList<int, IDañable> subObjetivos = null)
+        public void InfligirDaño(IDañable objetivo, ModeloArgumentosDaño argsDaño, SortedList<int, SubobjetivoDaño> subObjetivos = null)
         {
-	        throw new NotImplementedException();
+	        
         }
 
         /// <summary>

@@ -15,6 +15,7 @@
     <!--ViewModel: ViewModelCreacionEdicionDatosReduccionDaño-->
 
     <Grid>
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
@@ -27,12 +28,15 @@
 
         <!--Nombre-->
         <TextBox
-            Grid.Column="0"
+            Grid.Column="0"            
+            
             VerticalAlignment="Center"
+            HorizontalAlignment="Stretch"
 
             Margin="0 0 5 0"
 
-            MinHeight="30"
+            MinHeight="36"
+            MaxWidth="250"
             
             Tag="Nombre"
 
@@ -42,16 +46,22 @@
         <!--Tipos de daño con los que lidia-->
         <local:UserControlComboBoxConDescripcion
             Grid.Column="1"
-            Margin="0 0 5 0"
-            Descripcion="Estrategia de deteccion:"
 
+            HorizontalAlignment="Stretch"
             VerticalAlignment="Center"
+
+            Margin="0 0 5 0"
+
+            Descripcion="Estrategia de deteccion:"
             
             DataContext="{Binding ViewModelComboBoxEstrategiaDeDeteccionDeDaño}"/>
 
         <!--Fuentes de daño que abarca (en caso de que la estrategia sea detectar fuente de daño)-->
         <local:UserControlMultiSelectComboBox
             Grid.Column="2"
+
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Center"
 
             Margin="0 0 5 0"
 
@@ -75,11 +85,12 @@
         <local:UserControlComboBoxConDescripcion
             Grid.Column="3"
 
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Center"
+
             Margin="0 0 5 0"
 
             Descripcion="Metodo de reduccion:"
-
-            VerticalAlignment="Center"
             
             DataContext="{Binding ViewModelComboBoxMetodoDeReduccionDeDaño}"/>
 
@@ -87,7 +98,7 @@
         <TextBox
             Grid.Column="4"
 
-            MinHeight="30"
+            MinHeight="36"
 
             Margin="0 0 5 0"
 
@@ -112,7 +123,9 @@
             
             VerticalAlignment="Center"
             
-            Content="Habilitada"></CheckBox>
+            Content="Habilitada"
+            
+            IsChecked="{Binding EstaHabilitada}"/>
 
         <Rectangle
             Grid.Column="6"
@@ -124,7 +137,7 @@
             
             Fill="Red"
             
-            Visibility="{Binding EsValido, Converter={local:BooleanToVisibilityConverterColapsar}, ConverterParameter=1}"/>
+            Visibility="{Binding EsValido, Converter={local:BooleanToVisibilityConverterOcultar}, ConverterParameter=1}"/>
     </Grid>
 
 </UserControl>

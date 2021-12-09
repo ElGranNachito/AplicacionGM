@@ -20,7 +20,7 @@ namespace AppGM.Core
 		/// <summary>
 		/// Indica si esta reduccion esta habilitada
 		/// </summary>
-		public bool EstaHabilitada { get; set; }
+		public bool EstaHabilitada { get; set; } = true;
 
 		/// <summary>
 		/// Manera en la que se detecta el daño que reducir
@@ -55,6 +55,6 @@ namespace AppGM.Core
 		/// <summary>
 		/// Fuentes de daño que abarca la reduccion
 		/// </summary>
-		public virtual List<ModeloFuenteDeDaño> FuentesDeDañoQueReduce { get; set; }
+		public virtual List<ModeloFuenteDeDaño> FuentesDeDañoQueReduce { get; set; } = new List<ModeloFuenteDeDaño>();
 	}
 }

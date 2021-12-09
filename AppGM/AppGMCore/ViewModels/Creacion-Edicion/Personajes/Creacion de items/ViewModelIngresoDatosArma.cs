@@ -81,7 +81,7 @@ namespace AppGM.Core
 			viewModelCreacionEdicionItem = _vmCreacionEdicionItem;
 
 			ViewModelMultiselectTiposDeDaño = new ViewModelMultiselectComboBox<ETipoDeDaño>(
-				EnumHelpers.TiposDeDañoDisponibles.Select(t => new ViewModelMultiselectComboBoxItem<ETipoDeDaño>(t, t.ToString(), ViewModelMultiselectTiposDeDaño)).ToList(),
+				EnumHelpers.ObtenerValoresEnum(new []{ETipoDeDaño.NINGUNO}).Select(t => new ViewModelMultiselectComboBoxItem<ETipoDeDaño>(t, t.ToString(), ViewModelMultiselectTiposDeDaño)).ToList(),
 				new FlagsEnumEqualityComparer<ETipoDeDaño>());
 
 			ViewModelMultiselectFuentesDeDañoQueAbarca = new ViewModelMultiselectComboBox<ModeloFuenteDeDaño>(

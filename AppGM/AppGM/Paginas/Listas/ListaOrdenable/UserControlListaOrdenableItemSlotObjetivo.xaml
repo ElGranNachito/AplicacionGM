@@ -58,6 +58,19 @@
                 
                 IsChecked="{Binding DañarContenido}"/>
 
+             <!--Profundidad-->
+             <TextBox
+                 Grid.Column="2"
+                 Grid.Row="1"
+
+                 TextAlignment="Center"
+
+                 Tag="Profundidad"
+                 Style="{StaticResource TextoDescriptivo}"
+                 
+                 Text="{Binding ProfundidadTexto}"
+                 local:CampoDeTextoNumericoProperty.Value="True"/>
+
          </Grid>
 
     </local:UserControlListaOrdenableItem>
