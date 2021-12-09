@@ -31,7 +31,6 @@
     <ProjectReference Include="..\AppGMCore\AppGM.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Media\Imagenes\CamaritaMarcaJuancha.png" />
     <Resource Include="Media\Imagenes\Fichas\Combates_Fichas.png" />
     <Resource Include="Media\Imagenes\Fichas\Elementos\AGI_Icon.png" />
     <Resource Include="Media\Imagenes\Fichas\Elementos\Altura_Icon.png" />
@@ -67,6 +66,8 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Media\Imagenes\MenuPrincipal1.png" />
+    <Resource Include="Media\Imagenes\CamaritaMarcaJuancha.png" />
+    <Resource Include="Media\Imagenes\Tiradas\CamaraMarcaJuanchaSinFondo.png" />
     <Resource Include="Media\Imagenes\Tiradas\Iconos\ParametroExtra.png" />
     <Resource Include="Media\Imagenes\Tiradas\Iconos\TiradaDaño.png" />
     <Resource Include="Media\Imagenes\Tiradas\Iconos\TiradaPersonalizada.png" />
@@ -277,7 +278,6 @@
     <Compile Remove="BaseDesignModel.cs" />
     <Compile Remove="DesignModelRolItem.cs" />
     <Compile Remove="Viewmodels\BaseViewModel.cs" />
-    <None Remove="Media\Imagenes\CamaritaMarcaJuancha.png" />
     <None Remove="Media\Imagenes\Fichas\Combates_Fichas.png" />
     <None Remove="Media\Imagenes\Fichas\Elementos\AGI_Icon.png" />
     <None Remove="Media\Imagenes\Fichas\Elementos\Altura_Icon.png" />
@@ -306,6 +306,8 @@
     <None Remove="Media\Imagenes\Habilidades\Perks.png" />
     <None Remove="Media\Imagenes\Habilidades\Perks_Mini.png" />
     <None Remove="Media\Imagenes\Habilidades\Skill_Mini.png" />
+    <None Remove="Media\Imagenes\Tiradas\CamaraMarcaJuanchaSinFondo.png" />
+    <None Remove="Media\Imagenes\Tiradas\CamaritaMarcaJuancha.png" />
     <None Remove="Media\Imagenes\Tiradas\Iconos\ParametroExtra.png" />
     <None Remove="Media\Imagenes\Tiradas\Iconos\TiradaDaño.png" />
     <None Remove="Media\Imagenes\Tiradas\Iconos\TiradaPersonalizada.png" />
