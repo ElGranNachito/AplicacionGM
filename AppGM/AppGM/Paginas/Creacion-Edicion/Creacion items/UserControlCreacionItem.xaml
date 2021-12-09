@@ -65,6 +65,8 @@
                         <!--Descripcion del item-->
                         <TextBox
                             MinHeight="80"
+
+                            TextWrapping="WrapWithOverflow"
                 
                             Text="{Binding Descripcion, UpdateSourceTrigger=PropertyChanged}"
 
@@ -335,14 +337,9 @@
         <!--Botones inferiores-->
         <Grid
             Grid.Row="1"
-            Grid.ColumnSpan="3">
-
-            <Grid.Resources>
-                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BotonFondoResaltable}">
-
-                    <Setter Property="Padding" Value="5 2"></Setter>
-                </Style>
-            </Grid.Resources>
+            Grid.ColumnSpan="3"
+            
+            Margin="0 5 0 0">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>

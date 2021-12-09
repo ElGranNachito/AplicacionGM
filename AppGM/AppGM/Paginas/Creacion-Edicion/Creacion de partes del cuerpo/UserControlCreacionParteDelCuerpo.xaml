@@ -8,7 +8,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="250" d:DesignWidth="200"
              
-             Background="White"
+             Background="{StaticResource Tema.VerdeOscuro}"
 
              Padding="10">
 
@@ -25,9 +25,6 @@
                     <Setter Property="HorizontalContentAlignment" Value="Center"/>
                 </Style>
 
-                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BotonFondoResaltable}">
-                    <Setter Property="Margin" Value="0 10 0 0"/>
-                </Style>
             </StackPanel.Resources>
 
             <!-- Textbox nombre parte del cuerpo -->
@@ -61,12 +58,16 @@
 
             <!-- Boton editar defensa -->
             <Button
+                Margin="0 10 0 0"
+
                 Content="Defensa"
                 
                 Command="{Binding ComandoEditarDefensa}"/>
 
             <!-- Boton aceptar -->
             <Button
+                Margin="0 10 0 0"
+
                 Content="Aceptar"
                 
                 Command="{Binding ComandoAceptar}"
@@ -75,12 +76,16 @@
 
             <!-- Boton cancelar -->
             <Button
+                Margin="0 10 0 0"
+
                 Content="Cancelar"
                 
                 Command="{Binding ComandoCancelar}"/>
 
             <!-- Boton cancelar -->
             <Button
+                Margin="0 10 0 0"
+
                 Content="Eliminar"
                 
                 Command="{Binding ComandoEliminar}"

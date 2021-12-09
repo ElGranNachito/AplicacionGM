@@ -21,7 +21,6 @@
                 <Setter Property="Padding" Value="5 2"/>
                 <Setter Property="HorizontalContentAlignment" Value="Center"/>
             </Style>
-            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BotonFondoResaltable}"/>
         </Grid.Resources>
 
         <Grid.RowDefinitions>
@@ -37,7 +36,7 @@
             </Grid.ColumnDefinitions>
 
             <Grid.Resources>
-                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BotonFondoResaltable}">
+                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BotonBase}">
 
                     <Setter Property="BorderBrush" Value="Black"/>
                     <Setter Property="BorderThickness" Value="0 0 0 1"/>
@@ -84,7 +83,7 @@
                     d:IsHidden="false">
 
                     <StackPanel.Resources>
-                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BotonFondoResaltable}">
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BotonBase}">
                             <Setter Property="Margin" Value="0 10 0 0"/>
                         </Style>
                     </StackPanel.Resources>

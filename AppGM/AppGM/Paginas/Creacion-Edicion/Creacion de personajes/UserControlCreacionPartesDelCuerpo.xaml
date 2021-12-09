@@ -13,10 +13,6 @@
 
     <Grid>
 
-        <Grid.Resources>
-            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BotonFondoResaltable}"></Style>
-        </Grid.Resources>
-
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto" MaxHeight="50"/>

@@ -149,7 +149,26 @@ namespace AppGM.Core
 				ViewModelListaItemsSlot.DelegadoAñadirItem();
 			});
 
-			ComandoCrearParteDelCuerpo = new Comando(CrearViewModelCreacionEdicionPartedelCuerpo);
+			ComandoCrearParteDelCuerpo = new Comando(async ()=>
+			{
+				var nuevaParteDelCuerpo = new ModeloParteDelCuerpo
+				{
+					Nombre = "HuesitoHuerfano",
+					SlotContenedor = ControladorSiendoEditado.modelo,
+					PersonajeContenedor = ControladorSiendoEditado.modelo.PersonajeContenedor,
+					MultiplicadorDeEstaParte = 1
+				};
+
+				ModeloCreado.ParteDelCuerpoAlmacenada = nuevaParteDelCuerpo;
+
+				ControladorSiendoEditado.AlmacenarParteDelCuerpo(new ControladorParteDelCuerpo(nuevaParteDelCuerpo));
+
+				await SistemaPrincipal.GuardarModeloAsync(nuevaParteDelCuerpo);
+
+				CrearViewModelCreacionEdicionPartedelCuerpo();
+
+				DispararPropertyChanged(nameof(MostrarMenuCrearContenido));
+			});
 
 			mAccionSalirCreacionEdicionItem = async vm =>
 			{

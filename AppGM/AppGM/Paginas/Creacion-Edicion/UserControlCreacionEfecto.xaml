@@ -47,6 +47,8 @@
 
                     VerticalAlignment="Top"
 
+                    TextWrapping="WrapWithOverflow"
+
                     Text="{Binding Descripcion}"
                 
                     Style="{StaticResource TextoDescriptivo}"/>

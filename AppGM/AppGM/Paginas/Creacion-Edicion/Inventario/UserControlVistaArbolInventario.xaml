@@ -41,6 +41,8 @@
                                         Source="{Binding Contenido, Converter={local:ContenidoSlotToImagenConverter}}"/>
 
                                     <TextBlock 
+                                        Margin="5 0"
+                                        VerticalAlignment="Center"
                                         Foreground="{StaticResource Tema.Verde}"
                                         Text="{Binding DescripcionSlot}" />
                                 </StackPanel>

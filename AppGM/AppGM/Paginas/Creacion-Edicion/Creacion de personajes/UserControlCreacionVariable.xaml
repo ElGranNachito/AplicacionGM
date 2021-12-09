@@ -49,6 +49,8 @@
                     Style="{StaticResource TextoDescriptivo}"
                     Tag="Descripcion variable"
 
+                    TextWrapping ="WrapWithOverflow"
+
                     HorizontalContentAlignment="Center"
                     VerticalContentAlignment="Center"
                     

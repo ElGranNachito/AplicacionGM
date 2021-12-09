@@ -56,6 +56,8 @@
                         VerticalContentAlignment="Center"
                         HorizontalContentAlignment="Center"
 
+                        TextWrapping="WrapWithOverflow"
+
                         Tag="Descripcion"
 
                         Text="{Binding Descripcion}"
@@ -71,6 +73,8 @@
 
                         VerticalContentAlignment="Center"
                         HorizontalContentAlignment="Center"
+
+                        TextWrapping="WrapWithOverflow"
 
                         Tag="Descripcion variable extra (opcional)"
 
