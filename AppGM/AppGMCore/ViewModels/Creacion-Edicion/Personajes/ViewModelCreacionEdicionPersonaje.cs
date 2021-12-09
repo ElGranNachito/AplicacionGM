@@ -276,7 +276,6 @@ namespace AppGM.Core
         }
 
         public bool EsMasterOServant => (TipoPersonajeSeleccionado & (ETipoPersonaje.Master | ETipoPersonaje.Servant)) != 0;
-        public bool EsInvocacionOServant => (TipoPersonajeSeleccionado & (ETipoPersonaje.Invocacion | ETipoPersonaje.Servant)) != 0;
         public bool EsServant    => TipoPersonajeSeleccionado == ETipoPersonaje.Servant;
         public bool EsMaster     => TipoPersonajeSeleccionado == ETipoPersonaje.Master;
         public bool EsInvocacion => TipoPersonajeSeleccionado == ETipoPersonaje.Invocacion;
@@ -390,6 +389,37 @@ namespace AppGM.Core
         public ViewModelComboBox<ESexo>          ComboBoxSexo          { get; set; } = new ViewModelComboBox<ESexo>(EnumHelpers.SexosDisponibles);
         public ViewModelComboBox<EManoDominante> ComboBoxManoDominante { get; set; } = new ViewModelComboBox<EManoDominante>(EnumHelpers.TiposDeManoDominanteDisponibles);
 
+
+        /// <summary>
+        /// VM del ComboBox con los distintos rangos de STR.
+        /// </summary>
+        public ViewModelComboBox<ERango> ComboBoxSTR { get; set; } = new ViewModelComboBox<ERango>(EnumHelpers.RangosDisponibles);
+
+        /// <summary>
+        /// VM del ComboBox con los distintos rangos de END.
+        /// </summary>
+        public ViewModelComboBox<ERango> ComboBoxEND { get; set; } = new ViewModelComboBox<ERango>(EnumHelpers.RangosDisponibles);
+
+        /// <summary>
+        /// VM del ComboBox con los distintos rangos de AGI.
+        /// </summary>
+        public ViewModelComboBox<ERango> ComboBoxAGI { get; set; } = new ViewModelComboBox<ERango>(EnumHelpers.RangosDisponibles);
+
+        /// <summary>
+        /// VM del ComboBox con los distintos rangos de INT.
+        /// </summary>
+        public ViewModelComboBox<ERango> ComboBoxINT { get; set; } = new ViewModelComboBox<ERango>(EnumHelpers.RangosDisponibles);
+
+        /// <summary>
+        /// VM del ComboBox con los distintos rangos de STR.
+        /// </summary>
+        public ViewModelComboBox<ERango> ComboBoxLCK { get; set; } = new ViewModelComboBox<ERango>(EnumHelpers.RangosDisponibles);
+
+        /// <summary>
+        /// VM del ComboBox con los distintos rangos de NP.
+        /// </summary>
+        public ViewModelComboBox<ERango> ComboBoxNP { get; set; } = new ViewModelComboBox<ERango>(EnumHelpers.RangosDisponibles);
+
         public List<EClaseServant>  ClasesDeServantDisponibles => ObtenerClasesDeServantDisponibles();
 
         public ICommand ComandoSeleccionarImagen { get; set; }
@@ -465,7 +495,6 @@ namespace AppGM.Core
 
                 DispararPropertyChanged(new PropertyChangedEventArgs(nameof(ClasesDeServantDisponibles)));
                 DispararPropertyChanged(new PropertyChangedEventArgs(nameof(EsMasterOServant)));
-                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(EsInvocacionOServant)));
                 DispararPropertyChanged(new PropertyChangedEventArgs(nameof(EsServant)));
                 DispararPropertyChanged(new PropertyChangedEventArgs(nameof(EsMaster)));
                 DispararPropertyChanged(new PropertyChangedEventArgs(nameof(EsInvocacion)));
@@ -495,6 +524,14 @@ namespace AppGM.Core
                 if (ModeloCreado is ModeloPersonajeJugable pJugable)
                     pJugable.Caracteristicas.Sexo = actual.valor;
             };
+
+            ComboBoxSTR.OnValorSeleccionadoCambio += (anterior, actual) => STR = (int)actual.valor;
+            ComboBoxEND.OnValorSeleccionadoCambio += (anterior, actual) => END = (int)actual.valor;
+            ComboBoxAGI.OnValorSeleccionadoCambio += (anterior, actual) => AGI = (int)actual.valor;
+            ComboBoxINT.OnValorSeleccionadoCambio += (anterior, actual) => INT = (int)actual.valor;
+            ComboBoxLCK.OnValorSeleccionadoCambio += (anterior, actual) => LCK = (int)actual.valor;
+
+            ComboBoxNP.OnValorSeleccionadoCambio += (anterior, actual) => NP = actual.valor;
 
             ComandoActualizarStats = new Comando(ActualizarStatsPersonaje);
             
@@ -646,13 +683,6 @@ namespace AppGM.Core
             }
 
             if (EsMasterOServant && (ClaseServantSeleccionada == EClaseServant.NINGUNO || ArquetipoSeleccionado == EArquetipo.NINGUNO))
-            {
-                EsValido = false;
-
-                return;
-            }
-
-            if (EsInvocacionOServant && (ClaseServantSeleccionada == EClaseServant.NINGUNO || ArquetipoSeleccionado == EArquetipo.NINGUNO))
             {
                 EsValido = false;
 

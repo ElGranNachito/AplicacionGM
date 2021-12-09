@@ -156,7 +156,7 @@
                         <!-- Checkbox usar rangos -->
                         <CheckBox
                         Margin="0 0 0 5"
-                        Visibility="{Binding EsInvocacionOServant, Converter={local:BooleanToVisibilityConverterColapsar}}"
+                        Visibility="{Binding EsInvocacion, Converter={local:BooleanToVisibilityConverterColapsar}}"
                         IsChecked="{Binding CheckUsarRangos}"
                         Content="Usar rangos"/>
 
@@ -363,40 +363,34 @@
                                 <!-- Str -->
                                 <local:UserControlComboBoxConDescripcion
                                     Descripcion="STR:"
-                                    ItemsSource="{Binding Source={x:Static core:EnumHelpers.RangosDisponibles}}"
-                                    SelectedValue="{Binding STR}"/>
+                                    DataContext="{Binding ComboBoxSTR}"/>
 
                                 <!-- END -->
                                 <local:UserControlComboBoxConDescripcion
                                     Descripcion="END:"
-                                    ItemsSource="{Binding Source={x:Static core:EnumHelpers.RangosDisponibles}}"
-                                    SelectedValue="{Binding END}"/>
+                                    DataContext="{Binding ComboBoxEND}"/>
 
                                 <!-- AGI -->
                                 <local:UserControlComboBoxConDescripcion
                                     Descripcion="AGI:"
-                                    ItemsSource="{Binding Source={x:Static core:EnumHelpers.RangosDisponibles}}"
-                                    SelectedValue="{Binding AGI}"/>
+                                    DataContext="{Binding ComboBoxAGI}"/>
 
                                 <!-- INT -->
                                 <local:UserControlComboBoxConDescripcion
                                     Descripcion="INT:"
-                                    ItemsSource="{Binding Source={x:Static core:EnumHelpers.RangosDisponibles}}"
-                                    SelectedValue="{Binding INT}"/>
+                                    DataContext="{Binding ComboBoxINT}"/>
 
                                 <!-- LCK -->
                                 <local:UserControlComboBoxConDescripcion
                                     Descripcion="LCK:"
-                                    ItemsSource="{Binding Source={x:Static core:EnumHelpers.RangosDisponibles}}"
-                                    SelectedValue="{Binding LCK}"/>
+                                    DataContext="{Binding ComboBoxLCK}"/>
 
 
                                 <!-- NP -->
                                 <local:UserControlComboBoxConDescripcion
                                     Descripcion="NP:"
                                     Visibility="{Binding EsServant, Converter={local:BooleanToVisibilityConverterColapsar}}"
-                                    ItemsSource="{Binding Source={x:Static core:EnumHelpers.RangosDisponibles}}"
-                                    SelectedValue="{Binding NP}"/>
+                                    DataContext="{Binding ComboBoxNP}"/>
 
                             </StackPanel>
 
