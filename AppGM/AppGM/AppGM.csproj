@@ -67,7 +67,7 @@
   <ItemGroup>
     <Resource Include="Media\Imagenes\MenuPrincipal1.png" />
     <Resource Include="Media\Imagenes\CamaritaMarcaJuancha.png" />
-    <Resource Include="Media\Imagenes\Tiradas\CamaraMarcaJuanchaSinFondo.png" />
+    <Resource Include="Media\Imagenes\CamaraMarcaJuanchaSinFondo.png" />
     <Resource Include="Media\Imagenes\Tiradas\Iconos\ParametroExtra.png" />
     <Resource Include="Media\Imagenes\Tiradas\Iconos\TiradaDaño.png" />
     <Resource Include="Media\Imagenes\Tiradas\Iconos\TiradaPersonalizada.png" />
