@@ -156,119 +156,101 @@
                         <!-- Checkbox usar rangos -->
                         <CheckBox
                         Margin="0 0 0 5"
-                        Visibility="{Binding EsInvocacion, Converter={local:BooleanToVisibilityConverterColapsar}}"
+                        Visibility="{Binding EsInvocacionOServant, Converter={local:BooleanToVisibilityConverterColapsar}}"
                         IsChecked="{Binding CheckUsarRangos}"
                         Content="Usar rangos"/>
 
-                        <!-- Arquetipo -->
-                        <local:UserControlComboBoxConDescripcion
-                            Margin="0 10 0 0"
-                            Descripcion="Arquetipo: "
-                            Visibility="{Binding EsMasterOServant, Converter={local:BooleanToVisibilityConverterColapsar}}"
-                            DataContext="{Binding ComboBoxArquetipo}"/>
+                        <StackPanel
+                            Visibility="{Binding EsMasterOServant, Converter={local:BooleanToVisibilityConverterColapsar}}">
 
-                        <!-- Sexo -->
-                        <local:UserControlComboBoxConDescripcion
-                            Margin="0 5 0 0"
-                            Descripcion="Sexo:"
+                            <!-- Arquetipo -->
+                            <local:UserControlComboBoxConDescripcion
+                                Margin="0 10 0 0"
+                                Descripcion="Arquetipo: "
+                                DataContext="{Binding ComboBoxArquetipo}"/>
 
-                            DataContext="{Binding ComboBoxSexo}"/>
+                            <!-- Sexo -->
+                            <local:UserControlComboBoxConDescripcion
+                                Margin="0 5 0 0"
+                                Descripcion="Sexo:"
+                                DataContext="{Binding ComboBoxSexo}"/>
 
-                        <!-- Mano dominante -->
-                        <local:UserControlComboBoxConDescripcion
-                            Margin="0 5 0 0"
-                            Descripcion="Mano Dominante:"
+                            <!-- Mano dominante -->
+                            <local:UserControlComboBoxConDescripcion
+                                Margin="0 5 0 0"
+                                Descripcion="Mano Dominante:"
+                                DataContext="{Binding ComboBoxManoDominante}"/>
 
-                            DataContext="{Binding ComboBoxManoDominante}"/>
+                            <!--Edad-->
+                            <TextBox
+                                Margin="0 10 0 5"
+                                Tag="Edad"
+                                MaxLength="2"
+                                Text="{Binding Edad}"
+                                Style="{StaticResource TextoDescriptivo}"
+                                MinHeight="20"
+                                TextAlignment="Center"
+                                local:CampoDeTextoNumericoProperty.Value="True"/>
 
-                        <!--Edad-->
-                        <TextBox
-                            Margin="0 10 0 5"
-                            Tag="Edad"
-                            MaxLength="2"
-                            Text="{Binding Edad}"
-                            Style="{StaticResource TextoDescriptivo}"
+                            <!--Estatura-->
+                            <TextBox
+                                Margin="0 0 0 5"
+                                TextAlignment="Center"
+                                Tag="Estatura"
+                                MaxLength="3"
+                                Text="{Binding Estatura}"
+                                Style="{StaticResource TextoDescriptivo}"
+                                MinHeight="20"
+                                local:CampoDeTextoNumericoProperty.Value="True"/>
 
-                            MinHeight="20"
+                            <!--Peso-->
+                            <TextBox
+                                Margin="0 0 0 5"
+                                TextAlignment="Center"
+                                Tag="Peso"
+                                MaxLength="2"
+                                Text="{Binding Peso}"
+                                Style="{StaticResource TextoDescriptivo}"
+                                MinHeight="20"
+                                local:CampoDeTextoNumericoProperty.Value="True"/>
 
-                            TextAlignment="Center"
-                            
-                            local:CampoDeTextoNumericoProperty.Value="True"/>
+                            <!--Fisico-->
+                            <TextBox
+                                Margin="0 5 0 5"
+                                Tag="Fisico"
+                                MaxLength="200"
+                                TextWrapping="Wrap"
+                                AcceptsReturn="True"
+                                MinHeight="20"
+                                HorizontalContentAlignment="Center"
+                                Text="{Binding Fisico}"
+                                Style="{StaticResource TextoDescriptivo}"/>
 
-                        <!--Estatura-->
-                        <TextBox
-                            Margin="0 0 0 5"
-                            TextAlignment="Center"
-                            Tag="Estatura"
-                            MaxLength="3"
-                            Text="{Binding Estatura}"
-                            Style="{StaticResource TextoDescriptivo}"
-                            
-                            MinHeight="20"
+                            <!--Origen-->
+                            <TextBox
+                                Margin="0 5 0 0"
+                                Tag="Origen"
+                                MaxLength="200"
+                                TextWrapping="Wrap"
+                                AcceptsReturn="True"
+                                MinHeight="20"
+                                HorizontalContentAlignment="Center"
+                                Text="{Binding Origen}"
+                                Style="{StaticResource TextoDescriptivo}"/>
 
-                            local:CampoDeTextoNumericoProperty.Value="True"/>
+                            <!--Afinidad-->
+                            <TextBox
+                                Margin="0 5 0 0"
+                                Tag="Afinidad"
+                                MaxLength="200"
+                                TextWrapping="Wrap"
+                                AcceptsReturn="True"
+                                MinHeight="20"
+                                HorizontalContentAlignment="Center"
+                                Text="{Binding Afinidad}"
+                                Style="{StaticResource TextoDescriptivo}"/>
 
-                        <!--Peso-->
-                        <TextBox
-                            Margin="0 0 0 5"
-                            TextAlignment="Center"
-                            Tag="Peso"
-                            MaxLength="2"
-                            Text="{Binding Peso}"
-                            Style="{StaticResource TextoDescriptivo}"
-                            
-                            MinHeight="20"
-
-                            local:CampoDeTextoNumericoProperty.Value="True"/>
-
-                        <!--Fisico-->
-                        <TextBox
-                            Margin="0 5 0 5"
-                            Tag="Fisico"
-                            MaxLength="200"
-                            TextWrapping="Wrap"
-                            AcceptsReturn="True"
-
-                            MinHeight="20"
-
-                            HorizontalContentAlignment="Center"
-
-                            Text="{Binding Fisico}"
-
-                            Style="{StaticResource TextoDescriptivo}"/>
-
-                        <!--Origen-->
-                        <TextBox
-                            Margin="0 5 0 0"
-                            Tag="Origen"
-                            MaxLength="200"
-                            TextWrapping="Wrap"
-                            AcceptsReturn="True"
-
-                            MinHeight="20"
-
-                            HorizontalContentAlignment="Center"
-
-                            Text="{Binding Origen}"
-
-                            Style="{StaticResource TextoDescriptivo}"/>
-
-                        <!--Afinidad-->
-                        <TextBox
-                            Margin="0 5 0 0"
-                            Tag="Afinidad"
-                            MaxLength="200"
-                            TextWrapping="Wrap"
-                            AcceptsReturn="True"
-
-                            MinHeight="20"
-
-                            HorizontalContentAlignment="Center"
-
-                            Text="{Binding Afinidad}"
-
-                            Style="{StaticResource TextoDescriptivo}"/>
-
+                        </StackPanel>
 
                     </StackPanel>
 
@@ -290,7 +272,7 @@
                                     TextAlignment="Center"
                                     Tag="HP"
                                     MaxLength="2"
-                                    Text="{Binding HP}"
+                                    Text="{Binding MaxHP}"
 
                                     MinHeight="20"
                                     
@@ -339,9 +321,7 @@
                                     Tag="INT"
                                     MaxLength="2"
                                     Text="{Binding INT}"
-
                                     MinHeight="20"
-                                    
                                     local:CampoDeTextoNumericoProperty.Value="True"/>
 
                                 <!-- LCK -->
@@ -351,26 +331,24 @@
                                     Tag="LCK"
                                     MaxLength="2"
                                     Text="{Binding LCK}"
-
                                     MinHeight="20"
-                                    
                                     local:CampoDeTextoNumericoProperty.Value="True"/>
 
                                 <!-- CHR -->
                                 <TextBox
+                                    Visibility="{Binding EsMaster, Converter={local:BooleanToVisibilityConverterColapsar}}"
                                     Style="{StaticResource TextoDescriptivo}"
                                     TextAlignment="Center"
                                     Tag="CHR"
                                     MaxLength="2"
                                     Text="{Binding CHR}"
-
                                     MinHeight="20"
-                                    
                                     local:CampoDeTextoNumericoProperty.Value="True"/>
 
                                 <!-- Puntos de habilidad restantes -->
                                 <TextBlock
-                                    Visibility="{Binding EsMaster, Converter={local:BooleanToVisibilityConverterColapsar}}"
+                                    Visibility="{Binding UsarRangos, Converter={local:BooleanToVisibilityConverterColapsar}, ConverterParameter=1}"
+                                    Foreground="{StaticResource Tema.Verde}"
                                     Text="{Binding TextoPuntosDeHabilidadRestantes}"/>
 
                             </StackPanel>

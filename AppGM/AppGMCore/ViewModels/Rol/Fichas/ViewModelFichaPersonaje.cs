@@ -77,7 +77,7 @@ namespace AppGM
         /// <summary>
         /// Stat de carisma
         /// </summary>
-        public int Chr => ((ModeloMaster) personaje.modelo).Chr;
+        public int Chr => personaje.modelo.TipoPersonaje == ETipoPersonaje.Master ? ((ModeloMaster) personaje.modelo).Chr : 0;
 
         /// <summary>
         /// Modificador en fuerza del personaje.
@@ -137,57 +137,57 @@ namespace AppGM
         /// <summary>
         /// Ventaja en stat de carisma
         /// </summary>
-        public int VentajaChr => ((ModeloMaster) personaje.modelo).VentajaChr;
+        public int VentajaChr => personaje.modelo.TipoPersonaje == ETipoPersonaje.Master ? ((ModeloMaster) personaje.modelo).VentajaChr : 0;
 
         /// <summary>
         /// Energia vital total del personaje
         /// </summary>
-        public int Od => ((ModeloMaster) personaje.modelo).OdTotal;
+        public int Od => personaje.modelo.TipoPersonaje == ETipoPersonaje.Master ? ((ModeloMaster) personaje.modelo).OdTotal : 0;
         
         /// <summary>
         /// Energia vital actual del personaje
         /// </summary>
-        public int OdActual => ((ModeloMaster) personaje.modelo).OdActual;
+        public int OdActual => personaje.modelo.TipoPersonaje == ETipoPersonaje.Master ? ((ModeloMaster) personaje.modelo).OdActual : 0;
         
         /// <summary>
         /// Energia magica concentrada total del personaje.
         /// </summary>
-        public int Mana => ((ModeloMaster) personaje.modelo).ManaTotal;
+        public int Mana => personaje.modelo.TipoPersonaje == ETipoPersonaje.Master ? ((ModeloMaster) personaje.modelo).ManaTotal : 0;
 
         /// <summary>
         /// Energia magica concentrada actual del personaje.
         /// </summary>
-        public int ManaActual => ((ModeloMaster) personaje.modelo).ManaActual;
+        public int ManaActual => personaje.modelo.TipoPersonaje == ETipoPersonaje.Master ? ((ModeloMaster) personaje.modelo).ManaActual : 0;
 
         /// <summary>
         /// Energia magica total del personaje.
         /// </summary>
-        public int Prana => ((ModeloServant) personaje.modelo).Prana;
+        public int Prana => personaje.modelo.TipoPersonaje == ETipoPersonaje.Servant ? ((ModeloServant) personaje.modelo).Prana : 0;
 
         /// <summary>
         /// Energia magica actual del personaje.
         /// </summary>
-        public int PranaActual => ((ModeloServant) personaje.modelo).PranaActual;
+        public int PranaActual => personaje.modelo.TipoPersonaje == ETipoPersonaje.Servant ? ((ModeloServant) personaje.modelo).PranaActual : 0;
 
         /// <summary>
         /// Command spells disponibles del personaje.
         /// </summary>
-        public ushort CommandSpells => ((ModeloMaster) personaje.modelo).CommandSpells;
+        public ushort CommandSpells => personaje.modelo.TipoPersonaje == ETipoPersonaje.Master ? ((ModeloMaster) personaje.modelo).CommandSpells : ushort.MinValue;
 
         /// <summary>
         /// Edad del personaje.
         /// </summary>
-        public int Edad => ((ModeloPersonajeJugable) personaje.modelo).Caracteristicas.Edad;
+        public int Edad => (personaje.modelo.TipoPersonaje & (ETipoPersonaje.Master | ETipoPersonaje.Servant)) != 0 ? ((ModeloPersonajeJugable) personaje.modelo).Caracteristicas.Edad : 0;
 
         /// <summary>
         /// Estatura del personaje.
         /// </summary>
-        public int Estatura => ((ModeloPersonajeJugable) personaje.modelo).Caracteristicas.Estatura;
+        public int Estatura => (personaje.modelo.TipoPersonaje & (ETipoPersonaje.Master | ETipoPersonaje.Servant)) != 0 ? ((ModeloPersonajeJugable) personaje.modelo).Caracteristicas.Estatura : 0;
 
         /// <summary>
         /// Peso del personaje.
         /// </summary>
-        public int Peso => ((ModeloPersonajeJugable) personaje.modelo).Caracteristicas.Peso;
+        public int Peso => (personaje.modelo.TipoPersonaje & (ETipoPersonaje.Master | ETipoPersonaje.Servant)) != 0 ? ((ModeloPersonajeJugable) personaje.modelo).Caracteristicas.Peso : 0;
 
         /// <summary>
         /// Imagen del personaje.
@@ -227,47 +227,47 @@ namespace AppGM
         /// <summary>
         /// Nacionalidad del personaje.
         /// </summary>
-        public string Nacionalidad => ((ModeloPersonajeJugable) personaje.modelo).Caracteristicas.Nacionalidad;
+        public string Nacionalidad => (personaje.modelo.TipoPersonaje & (ETipoPersonaje.Master | ETipoPersonaje.Servant)) != 0 ? ((ModeloPersonajeJugable) personaje.modelo).Caracteristicas.Nacionalidad : string.Empty;
 
         /// <summary>
         /// Origen del personaje.
         /// </summary>
-        public string Origen => ((ModeloPersonajeJugable) personaje.modelo).Caracteristicas.Origen;
+        public string Origen => (personaje.modelo.TipoPersonaje & (ETipoPersonaje.Master | ETipoPersonaje.Servant)) != 0 ? ((ModeloPersonajeJugable) personaje.modelo).Caracteristicas.Origen : string.Empty;
 
         /// <summary>
         /// Afinidad del personaje.
         /// </summary>
-        public string Afinidad => ((ModeloPersonajeJugable) personaje.modelo).Caracteristicas.Afinidad;
+        public string Afinidad => (personaje.modelo.TipoPersonaje & (ETipoPersonaje.Master | ETipoPersonaje.Servant)) != 0 ? ((ModeloPersonajeJugable) personaje.modelo).Caracteristicas.Afinidad : string.Empty;
 
         /// <summary>
         /// Fisico del personaje.
         /// </summary>
-        public string Fisico => ((ModeloPersonajeJugable) personaje.modelo).Caracteristicas.Fisico;
+        public string Fisico => (personaje.modelo.TipoPersonaje & (ETipoPersonaje.Master | ETipoPersonaje.Servant)) != 0 ? ((ModeloPersonajeJugable) personaje.modelo).Caracteristicas.Fisico : string.Empty;
 
         /// <summary>
         /// Arquetipo del personaje.
         /// </summary>
-        public string Arquetipo => Enum.GetName(((ModeloPersonajeJugable) personaje.modelo).Caracteristicas.Arquetipo);
+        public string Arquetipo => (personaje.modelo.TipoPersonaje & (ETipoPersonaje.Master | ETipoPersonaje.Servant)) != 0 ? Enum.GetName(((ModeloPersonajeJugable) personaje.modelo).Caracteristicas.Arquetipo) : string.Empty;
 
         /// <summary>
         /// Mano dominante del personaje.
         /// </summary>
-        public string ManoDominante => Enum.GetName(((ModeloPersonajeJugable) personaje.modelo).Caracteristicas.ManoDominante);
+        public string ManoDominante => (personaje.modelo.TipoPersonaje & (ETipoPersonaje.Master | ETipoPersonaje.Servant)) != 0 ? Enum.GetName(((ModeloPersonajeJugable) personaje.modelo).Caracteristicas.ManoDominante) : string.Empty;
 
         /// <summary>
         /// Sexo del personaje.
         /// </summary>
-        public string Sexo => Enum.GetName(((ModeloPersonajeJugable) personaje.modelo).Caracteristicas.Sexo);
+        public string Sexo => (personaje.modelo.TipoPersonaje & (ETipoPersonaje.Master | ETipoPersonaje.Servant)) != 0 ? Enum.GetName(((ModeloPersonajeJugable) personaje.modelo).Caracteristicas.Sexo) : string.Empty;
 
         /// <summary>
         /// Bienestar del personaje.
         /// </summary>
-        public string Bienestar => Enum.GetName(((ModeloMaster) personaje.modelo).EBienestar);
+        public string Bienestar => personaje.modelo.TipoPersonaje == ETipoPersonaje.Master ? Enum.GetName(((ModeloMaster) personaje.modelo).EBienestar) : string.Empty;
 
         /// <summary>
         /// Rango del Noble Phantasm del personaje si es servant.
         /// </summary>
-        public string RangoNP => Enum.GetName(((ModeloServant)personaje.modelo).RangoNP);
+        public string RangoNP => personaje.modelo.TipoPersonaje == ETipoPersonaje.Servant ? Enum.GetName(((ModeloServant)personaje.modelo).RangoNP) : string.Empty;
 
         /// <summary>
         /// VM del inventario del personaje.

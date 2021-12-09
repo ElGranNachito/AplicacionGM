@@ -74,7 +74,7 @@ namespace AppGM.Core
                     case ETipoPersonaje.Invocacion:
                         return string.Intern($"../../../../Media/Imagenes/Posiciones/Invocacion_{EnumHelpers.ToStringClaseServant(((ModeloPersonajeJugable)((ModeloInvocacion)controladorParticipante.ControladorPersonaje.modelo).Invocador).ClaseServant)}.png");
                     default:
-                        return string.Intern("../../../../Media/Imagenes/Megumin.png");
+                        return string.Intern("../../../../Media/Imagenes/4ever_Alone.png");
                 }
             }
         }
