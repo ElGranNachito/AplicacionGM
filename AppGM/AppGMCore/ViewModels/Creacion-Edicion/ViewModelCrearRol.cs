@@ -38,7 +38,7 @@
 	            SistemaPrincipal.Aplicacion.VentanaActual.OnVentanaCerrada -= ventanaCerradaHandler;
             };
 
-	            //Añadimos los pasos
+            //Añadimos los pasos
             mViewModelsPasos.AddRange(new ViewModelPaso<ViewModelCrearRol>[]
             {
                 new ViewModelCrearRol_DatosRol(this),
