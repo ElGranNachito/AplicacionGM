@@ -31,6 +31,7 @@
     <ProjectReference Include="..\AppGMCore\AppGM.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Media\Imagenes\4ever_Alone.png" />
     <Resource Include="Media\Imagenes\Fichas\Combates_Fichas.png" />
     <Resource Include="Media\Imagenes\Fichas\Elementos\AGI_Icon.png" />
     <Resource Include="Media\Imagenes\Fichas\Elementos\Altura_Icon.png" />
@@ -282,6 +283,7 @@
     <Compile Remove="BaseDesignModel.cs" />
     <Compile Remove="DesignModelRolItem.cs" />
     <Compile Remove="Viewmodels\BaseViewModel.cs" />
+    <None Remove="Media\Imagenes\4ever_Alone.png" />
     <None Remove="Media\Imagenes\Fichas\Combates_Fichas.png" />
     <None Remove="Media\Imagenes\Fichas\Elementos\AGI_Icon.png" />
     <None Remove="Media\Imagenes\Fichas\Elementos\Altura_Icon.png" />

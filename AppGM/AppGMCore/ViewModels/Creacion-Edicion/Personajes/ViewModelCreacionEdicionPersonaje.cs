@@ -125,16 +125,163 @@ namespace AppGM.Core
             }
         } 
 
+        public int Edad
+        {
+            get
+            {
+                if (ModeloCreado is ModeloPersonajeJugable pJugable)
+                    return pJugable.Caracteristicas.Edad;
+
+                return 0;
+            }
+            set
+            {
+                if (ModeloCreado is ModeloPersonajeJugable pJugable)
+                    pJugable.Caracteristicas.Edad = value;
+            }
+        }
+
+        public int Estatura
+        {
+            get
+            {
+                if (ModeloCreado is ModeloPersonajeJugable pJugable)
+                    return pJugable.Caracteristicas.Estatura;
+
+                return 0;
+            }
+            set
+            {
+                if (ModeloCreado is ModeloPersonajeJugable pJugable)
+                    pJugable.Caracteristicas.Estatura = value;
+            }
+        }
+
+        public int Peso
+        {
+            get
+            {
+                if (ModeloCreado is ModeloPersonajeJugable pJugable)
+                    return pJugable.Caracteristicas.Peso;
+
+                return 0;
+            }
+            set
+            {
+                if (ModeloCreado is ModeloPersonajeJugable pJugable)
+                    pJugable.Caracteristicas.Peso = value;
+            }
+        }
+
+        public int MaxHP
+        {
+            get => ModeloCreado.MaxHp;
+            set => ModeloCreado.MaxHp = value;
+        }
+
+        public int STR
+        {
+            get => ModeloCreado.Str;
+            set
+            {
+                ModeloCreado.Str = value;
+
+                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(TextoPuntosDeHabilidadRestantes)));
+            }
+        }
+
+        public int END
+        {
+            get => ModeloCreado.End;
+            set
+            {
+                ModeloCreado.End = value;
+
+                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(TextoPuntosDeHabilidadRestantes)));
+            }
+        }
+
+        public int AGI
+        {
+            get => ModeloCreado.Agi;
+            set
+            {
+                ModeloCreado.Agi = value;
+
+                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(TextoPuntosDeHabilidadRestantes)));
+            }
+        }
+
+        public int INT
+        {
+            get => ModeloCreado.Int;
+            set
+            {
+                ModeloCreado.Int = value;
+
+                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(TextoPuntosDeHabilidadRestantes)));
+            }
+        }
+
+        public int LCK
+        {
+            get => ModeloCreado.Lck;
+            set
+            {
+                ModeloCreado.Lck = value;
+
+                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(TextoPuntosDeHabilidadRestantes)));
+            }
+        }
+
+        public int CHR
+        {
+            get
+			{
+                if (ModeloCreado is ModeloMaster m)
+                    return m.Chr;
+
+                return 0;
+			}
+            set
+            {
+                if (ModeloCreado is ModeloMaster m)
+                {
+                    m.Chr = value;
+
+                    DispararPropertyChanged(new PropertyChangedEventArgs(nameof(TextoPuntosDeHabilidadRestantes)));
+                }
+            }
+        }
+
         public ETipoPersonaje TipoPersonajeSeleccionado => ComboBoxTipoPersonaje.Valor;
         public EClaseServant  ClaseServantSeleccionada  => ComboBoxClaseServant.Valor;
         public EArquetipo     ArquetipoSeleccionado     => ComboBoxArquetipo.Valor;
         public ESexo          SexoSeleccionado          => ComboBoxSexo.Valor;
 
+        public ERango NP
+        {
+            get
+            {
+                if (ModeloCreado is ModeloServant servant)
+                    return servant.RangoNP;
+
+                return ERango.NINGUNO;
+            }
+            set
+            {
+                if (ModeloCreado is ModeloServant servant)
+                    servant.RangoNP = value;
+            }
+        }
+
         public bool EsMasterOServant => (TipoPersonajeSeleccionado & (ETipoPersonaje.Master | ETipoPersonaje.Servant)) != 0;
+        public bool EsInvocacionOServant => (TipoPersonajeSeleccionado & (ETipoPersonaje.Invocacion | ETipoPersonaje.Servant)) != 0;
         public bool EsServant    => TipoPersonajeSeleccionado == ETipoPersonaje.Servant;
         public bool EsMaster     => TipoPersonajeSeleccionado == ETipoPersonaje.Master;
         public bool EsInvocacion => TipoPersonajeSeleccionado == ETipoPersonaje.Invocacion;
         public bool UsarRangos   => EsServant || (EsInvocacion && CheckUsarRangos);
+        
         public bool PuedeAñadirHabilidades => true;
 
         public bool MostrarCaracteristicasGenerales
@@ -154,6 +301,17 @@ namespace AppGM.Core
 
 		        mValoresSolapas[1] = value;
 	        }
+        }
+
+        public bool CheckUsarRangos
+        {
+            get => mCheckUsarRangos;
+            set
+            {
+                mCheckUsarRangos = value;
+
+                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(UsarRangos)));
+            }
         }
 
         public bool MostrarInventario
@@ -222,7 +380,7 @@ namespace AppGM.Core
 	        }
         }
 
-        public ViewModelListaItems<ViewModelItemListaItems> ContenedorListaItems                { get; set; }
+        public ViewModelListaItems<ViewModelItemListaItems> ContenedorListaItems      { get; set; }
         public ViewModelListaItems<ViewModelHabilidadItem> ContenedorListaHabilidades { get; set; }
         public ViewModelListaItems<ViewModelHabilidadItem> ContendorListaNPs          { get; set; }
 
@@ -307,6 +465,7 @@ namespace AppGM.Core
 
                 DispararPropertyChanged(new PropertyChangedEventArgs(nameof(ClasesDeServantDisponibles)));
                 DispararPropertyChanged(new PropertyChangedEventArgs(nameof(EsMasterOServant)));
+                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(EsInvocacionOServant)));
                 DispararPropertyChanged(new PropertyChangedEventArgs(nameof(EsServant)));
                 DispararPropertyChanged(new PropertyChangedEventArgs(nameof(EsMaster)));
                 DispararPropertyChanged(new PropertyChangedEventArgs(nameof(EsInvocacion)));
@@ -493,6 +652,13 @@ namespace AppGM.Core
                 return;
             }
 
+            if (EsInvocacionOServant && (ClaseServantSeleccionada == EClaseServant.NINGUNO || ArquetipoSeleccionado == EArquetipo.NINGUNO))
+            {
+                EsValido = false;
+
+                return;
+            }
+
             EsValido = true;
         }
 
@@ -516,168 +682,6 @@ namespace AppGM.Core
             //DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PuedeAñadirHabilidades)));
         }
 
-        private void Guardar()
-		{
-           
-		}
-
         #endregion
-
-        public int HP
-        {
-            get => ModeloCreado.Hp;
-            set => ModeloCreado.Hp = value;
-        }
-
-        public int STR
-        {
-            get => ModeloCreado.Str;
-            set
-            {
-                ModeloCreado.Str = value;
-
-                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(TextoPuntosDeHabilidadRestantes)));
-            }
-        }
-
-        public int END
-        {
-            get => ModeloCreado.End;
-            set
-            {
-                ModeloCreado.End = value;
-
-                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(TextoPuntosDeHabilidadRestantes)));
-            }
-        }
-
-        public int AGI
-        {
-            get => ModeloCreado.Agi;
-            set
-            {
-                ModeloCreado.Agi = value;
-
-                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(TextoPuntosDeHabilidadRestantes)));
-            }
-        }
-
-        public int INT
-        {
-            get => ModeloCreado.Int;
-            set
-            {
-                ModeloCreado.Int = value;
-
-                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(TextoPuntosDeHabilidadRestantes)));
-            }
-        }
-
-        public int LCK
-        {
-            get => ModeloCreado.Lck;
-            set
-            {
-                ModeloCreado.Lck = value;
-
-                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(TextoPuntosDeHabilidadRestantes)));
-            }
-        }
-
-        public int CHR
-        {
-            get
-			{
-                if (ModeloCreado is ModeloMaster m)
-                    return m.Chr;
-
-                return 0;
-			}
-            set
-            {
-                if (ModeloCreado is ModeloMaster m)
-                {
-                    m.Chr = value;
-
-                    DispararPropertyChanged(new PropertyChangedEventArgs(nameof(TextoPuntosDeHabilidadRestantes)));
-                }
-            }
-        }
-
-        public int Edad
-        {
-            get
-			{
-                if (ModeloCreado is ModeloPersonajeJugable pJugable)
-                    return pJugable.Caracteristicas.Edad;
-
-                return 0;
-			}
-			set
-			{
-                if (ModeloCreado is ModeloPersonajeJugable pJugable)
-                    pJugable.Caracteristicas.Edad = value;
-            }
-        }
-
-        public int Estatura
-        {
-            get
-            {
-                if (ModeloCreado is ModeloPersonajeJugable pJugable)
-                    return pJugable.Caracteristicas.Estatura;
-
-                return 0;
-            }
-            set
-			{
-                if (ModeloCreado is ModeloPersonajeJugable pJugable)
-                    pJugable.Caracteristicas.Estatura = value;
-            }
-        }
-
-        public int Peso
-        {
-            get
-            {
-                if (ModeloCreado is ModeloPersonajeJugable pJugable)
-                    return pJugable.Caracteristicas.Peso;
-
-                return 0;
-            }
-            set
-            {
-                if (ModeloCreado is ModeloPersonajeJugable pJugable)
-                    pJugable.Caracteristicas.Peso = value;
-            }
-        }
-
-
-        public ERango NP
-        {
-            get
-			{
-                if (ModeloCreado is ModeloServant servant)
-                    return servant.RangoNP;
-
-                return ERango.NINGUNO;
-            }
-            set
-			{
-                if (ModeloCreado is ModeloServant servant)
-                    servant.RangoNP = value;
-            }
-        }
-
-        public bool CheckUsarRangos
-        {
-            get => mCheckUsarRangos;
-            set
-            {
-                mCheckUsarRangos = value;
-
-                DispararPropertyChanged(new PropertyChangedEventArgs(nameof(UsarRangos)));
-            }
-        }
     }
 }

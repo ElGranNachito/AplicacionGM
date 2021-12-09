@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="70" d:DesignWidth="250">
 
-    <!-- UserControl que hace uso de ViewModelFichaItem -->
+    <!-- UserControl que hace uso de ViewModelFichaPersonaje -->
     <!-- Representacion de una ficha en una lista de estas -->
     <Grid 
         Background="Transparent"
@@ -83,16 +83,18 @@
                     <Run Text="{Binding Nombre, Mode=OneWay}"/>
                 </TextBlock>
 
-                <!-- Tipo de personaje -->
-                <TextBlock Foreground="{StaticResource Tema.Verde}">
-                    <Run Text="- "/>
-                    <Run Text="{Binding TipoDelPersonaje, Mode=OneWay}"/>
-                </TextBlock>
-
                 <!-- Numero de party -->
                 <TextBlock Foreground="{StaticResource Tema.Verde}">
                     <Run Text="- "/>
                     <Run Text="{Binding NumeroDeParty, Mode=OneWay}"/>
+                </TextBlock>
+
+                <!-- HP del personaje -->
+                <TextBlock Foreground="{StaticResource Tema.Verde}">
+                    <Run Text="- HP: "/>
+                    <Run Text="{Binding Hp, Mode=OneWay}"/>
+                    <Run Text=" / "/>
+                    <Run Text="{Binding MaxHp, Mode=OneWay}"/>
                 </TextBlock>
 
             </StackPanel>
