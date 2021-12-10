@@ -259,6 +259,18 @@ namespace AppGM.Core
         public EArquetipo     ArquetipoSeleccionado     => ComboBoxArquetipo.Valor;
         public ESexo          SexoSeleccionado          => ComboBoxSexo.Valor;
 
+        public ENumeroParty Party
+        {
+            get
+            {
+                return ModeloCreado.NumeroParty;
+            }
+            set
+            {
+               ModeloCreado.NumeroParty = value;
+            }
+        }
+
         public ERango NP
         {
             get
@@ -389,6 +401,10 @@ namespace AppGM.Core
         public ViewModelComboBox<ESexo>          ComboBoxSexo          { get; set; } = new ViewModelComboBox<ESexo>(EnumHelpers.SexosDisponibles);
         public ViewModelComboBox<EManoDominante> ComboBoxManoDominante { get; set; } = new ViewModelComboBox<EManoDominante>(EnumHelpers.TiposDeManoDominanteDisponibles);
 
+        /// <summary>
+        /// VM del ComboBox con los distintas parties disponibles.
+        /// </summary>
+        public ViewModelComboBox<ENumeroParty> ComboBoxParty { get; set; } = new ViewModelComboBox<ENumeroParty>(EnumHelpers.PartiesDisponibles);
 
         /// <summary>
         /// VM del ComboBox con los distintos rangos de STR.
@@ -524,6 +540,8 @@ namespace AppGM.Core
                 if (ModeloCreado is ModeloPersonajeJugable pJugable)
                     pJugable.Caracteristicas.Sexo = actual.valor;
             };
+
+            ComboBoxParty.OnValorSeleccionadoCambio += (anterior, actual) => Party = actual.valor;
 
             ComboBoxSTR.OnValorSeleccionadoCambio += (anterior, actual) => STR = (int)actual.valor;
             ComboBoxEND.OnValorSeleccionadoCambio += (anterior, actual) => END = (int)actual.valor;
@@ -687,6 +705,48 @@ namespace AppGM.Core
                 EsValido = false;
 
                 return;
+            }
+
+            if((TipoPersonajeSeleccionado & (ETipoPersonaje.Master | ETipoPersonaje.Servant)) != 0)
+            {
+                switch (ClaseServantSeleccionada)
+                {
+                    case EClaseServant.Archer:
+                        {
+                            ModeloCreado.NumeroParty = ENumeroParty.Party_Archer;
+                            break;
+                        }
+                    case EClaseServant.Assassin:
+                        {
+                            ModeloCreado.NumeroParty = ENumeroParty.Party_Assassin;
+                            break;
+                        }
+                    case EClaseServant.Berserker:
+                        {
+                            ModeloCreado.NumeroParty = ENumeroParty.Party_Berserker;
+                            break;
+                        }
+                    case EClaseServant.Caster:
+                        {
+                            ModeloCreado.NumeroParty = ENumeroParty.Party_Caster;
+                            break;
+                        }
+                    case EClaseServant.Lancer:
+                        {
+                            ModeloCreado.NumeroParty = ENumeroParty.Party_Lancer;
+                            break;
+                        }
+                    case EClaseServant.Rider:
+                        {
+                            ModeloCreado.NumeroParty = ENumeroParty.Party_Rider;
+                            break;
+                        }
+                    case EClaseServant.Saber:
+                        {
+                            ModeloCreado.NumeroParty = ENumeroParty.Party_Saber;
+                            break;
+                        }
+                }
             }
 
             EsValido = true;
