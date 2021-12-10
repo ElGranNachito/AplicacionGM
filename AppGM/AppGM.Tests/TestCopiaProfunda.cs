@@ -180,8 +180,8 @@ namespace AppGM.Tests
 
 			var resultadoSegundaCopia = copiaPj.CrearCopiaProfundaEnSubtipo<ModeloPersonaje, ModeloPersonaje>(pj, null, null);
 
-			Assert.Contains(resultadoSegundaCopia.modelosCreadosEliminados.ModelosCreados, m => m is ModeloContrato && m.guid == nuevoContrato.guid);
-			Assert.Contains(resultadoSegundaCopia.modelosCreadosEliminados.ModelosCreados, m => m is ModeloAlianza && m.guid == nuevaAlianza.guid);
+			Assert.Contains(resultadoSegundaCopia.modelosCreadosEliminados.ModelosCreados, m => m is ModeloContrato && m.Guid == nuevoContrato.Guid);
+			Assert.Contains(resultadoSegundaCopia.modelosCreadosEliminados.ModelosCreados, m => m is ModeloAlianza && m.Guid == nuevaAlianza.Guid);
 			Assert.True(resultadoSegundaCopia.modelosCreadosEliminados.ModelosCreados.Count == 2);
 		}
 

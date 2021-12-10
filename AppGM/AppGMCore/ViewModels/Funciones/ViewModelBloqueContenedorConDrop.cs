@@ -46,21 +46,21 @@ namespace AppGM.Core
 		}
 
 		#region Metodos
-		public override void OnDragEntro_Impl(IDrageable vm)
+		public override void OnDragEntro_Impl(ArgumentosDragAndDropUnico vm)
 		{
 			base.OnDragEntro_Impl(vm);
 
 			ReceptorAñadirBloque.EsVisible = true;
 		}
 
-		public override void OnDragSalio_Impl(IDrageable vm)
+		public override void OnDragSalio_Impl(ArgumentosDragAndDropUnico vm)
 		{
 			base.OnDragSalio_Impl(vm);
 
 			ReceptorAñadirBloque.EsVisible = false;
 		}
 
-		public override bool OnDrop_Impl(IDrageable vm)
+		public override bool OnDrop_Impl(ArgumentosDragAndDropUnico vm)
 		{
 			ReceptorAñadirBloque.EsVisible = false;
 

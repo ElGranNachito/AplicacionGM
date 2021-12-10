@@ -96,7 +96,7 @@ namespace AppGM.Core
 					expresionesParametrosFuncion.Add(Expression.Convert(parametroActual.ObtenerExpresion(compilador), Parametros[i].ParameterType));
 			}
 
-			expresionCaller ??= caller.ObtenerExpresion(compilador);
+			expresionCaller = caller.ObtenerExpresion(compilador);
 
 			return Expression.Call(expresionCaller, metodo, expresionesParametrosFuncion);
 		}
@@ -193,6 +193,8 @@ namespace AppGM.Core
 			}
 
 			metodo = dueñoFuncion.GetMethod(nombreFuncion, tiposDeLosParametros);
+
+			Parametros = metodo.GetParameters();
 
 			reader.ReadToFollowing("Argumentos");
 

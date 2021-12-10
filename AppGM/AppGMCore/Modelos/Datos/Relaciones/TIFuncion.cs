@@ -12,6 +12,7 @@ namespace AppGM.Core
 		[ForeignKey(nameof(Funcion))]
 		public int IDFuncion { get; set; }
 
+		[CopiarSuperficialmente]
 		public virtual ModeloFuncion Funcion { get; set; }
 
 		/// <summary>

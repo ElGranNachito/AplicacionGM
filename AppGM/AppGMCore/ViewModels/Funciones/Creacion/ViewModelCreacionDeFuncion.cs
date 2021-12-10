@@ -177,10 +177,6 @@ namespace AppGM.Core
 			if (ResultadoCompilacion.FueExitosa)
 			{
 				Logs.Add(new ViewModelLog("Compilacion finalizada con exito!"));
-
-				var controladorHabilidad = new ControladorHabilidad(new ModeloHabilidad { Nombre = "Ultra destructor de nada" });
-
-				ControladorPersonaje[] objectivos = new ControladorPersonaje[1];
 			}
 			else
 				Logs.Add(new ViewModelLog($"Compilacion fallo! {ResultadoCompilacion.Mensaje}", ESeveridad.Error));

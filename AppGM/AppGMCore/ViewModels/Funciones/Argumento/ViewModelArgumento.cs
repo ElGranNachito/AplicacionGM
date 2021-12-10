@@ -269,7 +269,7 @@ namespace AppGM.Core
 		{
 			List<SeccionArgumentoBase> seccionesArgumento = new List<SeccionArgumentoBase>();
 
-			if (mBase == null && (TipoArgumento.IsValueType || TipoArgumento == typeof(object)))
+			if (mBase == null && (TipoArgumento.IsValueType || TipoArgumento == typeof(object) || TipoArgumento == typeof(string)))
 				seccionesArgumento.Add(new SeccionArgumentoConstante(TipoArgumento, TextoActual));
 
 			//Solo añadimos una seccion si la base es una variable

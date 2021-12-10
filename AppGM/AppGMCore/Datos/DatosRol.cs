@@ -74,7 +74,7 @@ namespace AppGM.Core
 			GCLatencyMode modoOriginal = GCSettings.LatencyMode;
 			GCSettings.LatencyMode = GCLatencyMode.Batch;
 
-			await Task.Run(() =>
+			await Task.Run(async () =>
 			{
 				var masters = mRolSeleccionado.Personajes.Where(p => p.TipoPersonaje == ETipoPersonaje.Master).ToList();
 				var servants = mRolSeleccionado.Personajes.Where(p => p.TipoPersonaje == ETipoPersonaje.Servant).ToList();
@@ -187,6 +187,13 @@ namespace AppGM.Core
                 }
 
                 Personajes.AddRange(NPCs);
+
+                var itemsCargados = SistemaPrincipal.ObtenerControladores(typeof(ControladorItem), false).Cast<ControladorItem>().ToList();
+
+                foreach (var item in itemsCargados)
+                {
+	                await item.CompilarFunciones();
+                }
 
 				Mapas = new List<ControladorMapa>(mRolSeleccionado.Mapas.Count);
 

@@ -225,7 +225,7 @@ namespace AppGM.Core
 				}
 			};
 
-			ViewModelComboBoxTipoDeDañoTirada = new ViewModelMultiselectComboBox<ETipoDeDaño>(EnumHelpers.TiposDeDañoDisponibles.Select(t =>
+			ViewModelComboBoxTipoDeDañoTirada = new ViewModelMultiselectComboBox<ETipoDeDaño>(EnumHelpers.ObtenerValoresEnum<ETipoDeDaño>(new []{ETipoDeDaño.NINGUNO}).Select(t =>
 			{
 				return new ViewModelMultiselectComboBoxItem<ETipoDeDaño>(t, t.ToString(), ViewModelComboBoxTipoDeDañoTirada);
 			}).ToList(), new FlagsEnumEqualityComparer<ETipoDeDaño>());

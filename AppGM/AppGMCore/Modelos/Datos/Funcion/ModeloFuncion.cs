@@ -55,5 +55,7 @@ namespace AppGM.Core
 				return Id;
 			}
 		}
+
+		public override Guid Guid { get; set; }
 	}
 }

@@ -664,6 +664,9 @@ namespace AppGM.Core.Migrations
                     b.Property<bool>("EsValido")
                         .HasColumnType("INTEGER");
 
+                    b.Property<Guid>("Guid")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("NombreFuncion")
                         .HasMaxLength(100)
                         .HasColumnType("TEXT");
@@ -1278,7 +1281,7 @@ namespace AppGM.Core.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("TipoVariableString")
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("varchar(200)");
 
                     b.HasKey("Id");
 

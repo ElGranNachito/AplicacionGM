@@ -36,7 +36,7 @@ namespace AppGM.Core
 		/// <summary>
 		/// Tipo de la variable
 		/// </summary>
-        [Column(TypeName = "varchar(50)")]
+        [Column(TypeName = "varchar(200)")]
         public string TipoVariableString
 		{
 			get => mTipoVariable;
@@ -110,7 +110,7 @@ namespace AppGM.Core
 	/// </summary>
 	public class ModeloVariableControlador : ModeloVariable<int>
 	{
-        [Column(TypeName = "varchar(50)")]
+        [Column(TypeName = "varchar(200)")]
 		public string TipoModeloControlador { get; set; }
 	}
 

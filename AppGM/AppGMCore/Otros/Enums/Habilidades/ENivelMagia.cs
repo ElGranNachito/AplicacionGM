@@ -9,15 +9,15 @@ namespace AppGM.Core
 	{
 		NINGUNO = 0,
 
-		Cero   = 0,
-		Uno    = 1,
-		Dos    = 2,
-		Tres   = 3,
-		Cuatro = 4,
-		Cinco  = 5,
-		Seis   = 6,
-		Siete  = 7,
-		Ocho   = 8
+		Cero   = 1,
+		Uno    = 2,
+		Dos    = 3,
+		Tres   = 4,
+		Cuatro = 5,
+		Cinco  = 6,
+		Seis   = 7,
+		Siete  = 8,
+		Ocho   = 9
 	}
 
 	/// <summary>

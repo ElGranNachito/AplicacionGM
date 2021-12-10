@@ -18,7 +18,7 @@ namespace AppGM.Core
 		/// <summary>
 		/// Evento disparado cuando este objeto inflige daño a algun <see cref="IDañable"/>
 		/// </summary>
-		public event dInfligirDaño OnInfligirDaño;
+		public event dInfligirDaño OnInfligioDaño;
 
 		/// <summary>
 		/// Inflige daño a un <paramref name="objetivo"/>

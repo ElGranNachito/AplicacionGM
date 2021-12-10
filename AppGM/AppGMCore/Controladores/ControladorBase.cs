@@ -41,7 +41,6 @@ namespace AppGM.Core
 		/// </summary>
 		/// <param name="idVariable">Id de la variable que se quiere obtener</param>
 		/// <returns>Controlador de la variable hallada o null si no se encontro la variable</returns>
-		[AccesibleEnGuraScratch(nameof(ObtenerValorVariable))]
 		public abstract object ObtenerValorVariable(int idVariable);
 
 		/// <summary>

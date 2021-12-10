@@ -35,7 +35,7 @@ namespace AppGM.Core
 		/// <summary>
 		/// Nombre de la funcion incluyendo su extension
 		/// </summary>
-		public string NombreArchivoFuncion => string.Intern($"{modelo.NombreFuncion}_{modelo.IDFuncion}.xml");
+		public string NombreArchivoFuncion => string.Intern($"{modelo.NombreFuncion}_{modelo.Guid}.xml");
 
 		/// <summary>
 		/// Ruta completa al archivo de la funcion
@@ -62,7 +62,7 @@ namespace AppGM.Core
 							Path.Combine(SistemaPrincipal.ControladorDeArchivos.DirectorioFunciones,
 								NombreArchivoFuncion),
 							Path.Combine(SistemaPrincipal.ControladorDeArchivos.DirectorioFunciones,
-								string.Intern(ObtenerNombreArchivo(value, modelo.Id))));
+								string.Intern(ObtenerNombreArchivo(value, modelo.Guid))));
 					}
 					catch (Exception ex)
 					{
@@ -254,9 +254,9 @@ namespace AppGM.Core
 		{
 			await base.Recargar();
 
-			if (!File.Exists(ObtenerPathArchivoFuncion(ObtenerNombreArchivo(modelo.NombreFuncion, modelo.IDFuncion))))
+			if (!File.Exists(ObtenerPathArchivoFuncion(ObtenerNombreArchivo(modelo.NombreFuncion, modelo.Guid))))
 			{
-				SistemaPrincipal.LoggerGlobal.LogCrash($"Se intento cambiar el archivo de origen de {this} pero el nuevo archivo {ObtenerNombreArchivo(modelo.NombreFuncion, modelo.Id)} no existe!");
+				SistemaPrincipal.LoggerGlobal.LogCrash($"Se intento cambiar el archivo de origen de {this} pero el nuevo archivo {ObtenerNombreArchivo(modelo.NombreFuncion, modelo.Guid)} no existe!");
 			}
 
 			//Obtenemos las variables persistentes del nuevo modelo y las del modelo actual
@@ -429,7 +429,7 @@ namespace AppGM.Core
 		/// <param name="nombreFuncion">Nombre de la funcion</param>
 		/// <param name="id">Id de la funcion</param>
 		/// <returns>Nombre del archivo que tendria la funcion</returns>
-		public static string ObtenerNombreArchivo(string nombreFuncion, int id) => $"{nombreFuncion}_{id}.xml";
+		public static string ObtenerNombreArchivo(string nombreFuncion, Guid guid) => $"{nombreFuncion}_{guid}.xml";
 
 		/// <summary>
 		/// Obtiene la ruta a un archivo de funcion a partir del <paramref name="nombreArchivoFuncion"/>

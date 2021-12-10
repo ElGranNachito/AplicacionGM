@@ -33,5 +33,10 @@ namespace AppGM.Core
 		{
 			throw new NotImplementedException();
 		}
+
+		public override ViewModelItemListaBase CrearViewModelItem()
+		{
+			return new ViewModelFuncionItem<ControladorFuncion_Item>(this);
+		}
 	}
 }

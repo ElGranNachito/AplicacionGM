@@ -159,7 +159,7 @@ namespace AppGM.Core
 			for (int i = 0; i < mSeccionesArgumento.Capacity; ++i)
 			{
 				//Ignoramos todo hasta encontrar el proximo elemento
-				while (!reader.Name.StartsWith("SeccionArgumento") && reader.NodeType != XmlNodeType.Element)
+				while (!reader.Name.StartsWith("SeccionArgumento") && reader.Name.StartsWith("Secciones") && reader.NodeType != XmlNodeType.Element)
 					reader.Read();
 
 				//Nos fijamos que tipo de seccion es la actual e instanciamos el tipo correspondiente
@@ -174,8 +174,13 @@ namespace AppGM.Core
 					case nameof(SeccionArgumentoVariable):
 						mSeccionesArgumento.Add(new SeccionArgumentoVariable(reader));
 						break;
+					case nameof(SeccionArgumentoConstante):
+						mSeccionesArgumento.Add(new SeccionArgumentoConstante(reader));
+						break;
 					default:
 						SistemaPrincipal.LoggerGlobal.Log($"Tipo de seccion ({reader.Name}) desconocido en BloqueArgumento: {Nombre}", ESeveridad.Error);
+						reader.Read();
+						--i;
 						break;
 				}
 			}

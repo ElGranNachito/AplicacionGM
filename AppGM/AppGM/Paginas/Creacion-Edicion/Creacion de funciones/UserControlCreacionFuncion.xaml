@@ -175,6 +175,7 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
                     <!-- Boton cancelar -->
@@ -200,6 +201,14 @@
                         HorizontalAlignment="Center"
                         Content="Guardar"
                         Command="{Binding ComandoGuardar}"/>
+
+                    <!-- Boton cancelar -->
+                    <Button
+                        Grid.Column="3"
+                        Padding="10 0"
+                        HorizontalAlignment="Center"
+                        Content="Aceptar"
+                        Command="{Binding ComandoAceptar}"/>
 
                 </Grid>
 

@@ -102,7 +102,7 @@ namespace AppGM.Core
 			return resultado;
 		}
 
-		public override void OnDragSalio_Impl(IDrageable vm)
+		public override void OnDragSalio_Impl(ArgumentosDragAndDropUnico vm)
 		{
 			IEnumerable<ViewModelBloqueCondicional> vmsCondiciones = Bloques.Elementos.Cast<ViewModelBloqueCondicional>();
 
@@ -115,7 +115,7 @@ namespace AppGM.Core
 			MostrarEspacioDrop = false;
 		}
 
-		public override bool OnDrop_Impl(IDrageable vm)
+		public override bool OnDrop_Impl(ArgumentosDragAndDropUnico vm)
 		{
 			foreach (var bloque in Bloques)
 			{

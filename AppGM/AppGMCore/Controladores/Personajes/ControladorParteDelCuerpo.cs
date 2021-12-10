@@ -96,6 +96,21 @@ namespace AppGM.Core
 		{
 			ControladorDefensa?.ReducirDaño(argsDaño);
 
+			var objetivoQueRepresentaAEstaParteDelCuerpo = argsDaño.Objetivos.Find(o => o.ParteDelCuerpo == modelo);
+
+			if (objetivoQueRepresentaAEstaParteDelCuerpo is null)
+			{
+				objetivoQueRepresentaAEstaParteDelCuerpo = new ModeloDañable
+				{
+					ParteDelCuerpo = modelo,
+					ArgumentosDaño = argsDaño
+				};
+
+				argsDaño.AñadirObjetivo(objetivoQueRepresentaAEstaParteDelCuerpo);
+			}
+
+			modelo.HistorialDañoRecibido.Add(objetivoQueRepresentaAEstaParteDelCuerpo);
+
 			OnDañado(argsDaño, subObjetivos);
 		}
 

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using CoolLogs;
 
 namespace AppGM.Core
 {
@@ -20,7 +21,7 @@ namespace AppGM.Core
 
 	    public event dItemEliminado OnItemEliminado = delegate { };
 
-	    public event IInfligidorDaño.dInfligirDaño OnInfligirDaño = delegate{};
+	    public event IInfligidorDaño.dInfligirDaño OnInfligioDaño = delegate{};
 
 	    public event IDañable.dDañado OnDañado = delegate{};
 
@@ -89,6 +90,11 @@ namespace AppGM.Core
         /// </summary>
         public ControladorDefensa ControladorDefensa { get; set; }
 
+        /// <summary>
+        /// Controlador de la funcion para utilizar el item
+        /// </summary>
+        public ControladorFuncion_Item ControladorFuncionUtilizar { get; set; }
+
         #endregion
 
         #region Constructores
@@ -123,6 +129,35 @@ namespace AppGM.Core
 
         #region Metodos
 
+        public async Task<bool> CompilarFunciones()
+        {
+	        foreach (var funcion in modelo.Funciones)
+	        {
+		        switch (funcion.PropositoFuncionRelacion)
+		        {
+			        case EPropositoFuncionRelacion.Uso:
+			        {
+				        ControladorFuncionUtilizar = new ControladorFuncion_Item(funcion.Funcion);
+
+				        await ControladorFuncionUtilizar.CargarBloquesAsync();
+
+				        await ControladorFuncionUtilizar.CompilarAsync();
+
+				        if (!ControladorFuncionUtilizar.ResultadoCompilacion.FueExitosa)
+				        {
+                            SistemaPrincipal.LoggerGlobal.Log($"Error al compilar {ControladorFuncionUtilizar}", ESeveridad.Error);
+
+					        return false;
+				        }
+
+				        break;
+			        }
+		        }
+	        }
+
+	        return true;
+        }
+
         public virtual void Utilizar(ControladorPersonaje usuario, ControladorPersonaje[] objetivos, object parametroExtra, object segundoParametroExtra)
         {
             
@@ -142,14 +177,45 @@ namespace AppGM.Core
         {
 	        ControladorDefensa?.ReducirDaño(argsDaño);
 
+	        var objetivoQueRepresentaAEsteItem = argsDaño.Objetivos.Find(o => o.Item == modelo);
+
+	        if (objetivoQueRepresentaAEsteItem is null)
+	        {
+		        objetivoQueRepresentaAEsteItem = new ModeloDañable
+		        {
+			        Item = modelo,
+			        ArgumentosDaño = argsDaño
+		        };
+
+                argsDaño.AñadirObjetivo(objetivoQueRepresentaAEsteItem);
+	        }
+
+            modelo.HistorialDañoRecibido.Add(objetivoQueRepresentaAEsteItem);
+
 	        OnDañado(argsDaño, subObjetivos);
         }
 
         public void InfligirDaño(IDañable objetivo, ModeloArgumentosDaño argsDaño, SortedList<int, SubobjetivoDaño> subObjetivos = null)
         {
-	        objetivo.Dañar(argsDaño, subObjetivos);
+	        if (Portador is not null)
+	        {
+                Portador.InfligirDaño(objetivo, argsDaño, subObjetivos);
+	        }
+	        else
+	        {
+		        objetivo.Dañar(argsDaño, subObjetivos);
+            }
 
-	        OnInfligirDaño(objetivo, argsDaño, subObjetivos);
+	        var infligidorDañoQueRepresentaAEsteItem = argsDaño.InfligidoresDaño.Find(i => i.Item == modelo) ?? argsDaño.AñadirInfligidorDaño(this);
+
+	        modelo.HistorialDañoInfligido.Add(infligidorDañoQueRepresentaAEsteItem);
+
+	        OnInfligioDaño(objetivo, argsDaño, subObjetivos);
+        }
+
+        public override ControladorVariableBase ObtenerControladorVariable(string nombreVariable)
+        {
+	        return base.ObtenerControladorVariable(nombreVariable) ?? Portador?.ObtenerControladorVariable(nombreVariable);
         }
 
         public override async Task Recargar()

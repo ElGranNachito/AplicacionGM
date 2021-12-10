@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+
+using CoolLogs;
 
 namespace AppGM.Core
 {
@@ -12,17 +15,40 @@ namespace AppGM.Core
 		/// Añade un <see cref="IInfligidorDaño"/> a los <see cref="InfligidoresDaño"/> de este modelo
 		/// </summary>
 		/// <param name="infligidor"><see cref="IInfligidorDaño"/> que añadir</param>
-		public void AñadirInfligidorDaño(
-			IInfligidorDaño infligidor)
+		public ModeloInfligidorDaño AñadirInfligidorDaño(IInfligidorDaño infligidor)
 		{
 			if(infligidor is null)
 				SistemaPrincipal.LoggerGlobal.LogCrash($"{nameof(infligidor)} no puede ser null");
 
-			InfligidoresDaño.Add(new ModeloInfligidorDaño(
+			var infligiforDañoExistente = InfligidoresDaño.Find(i => i.ObtenerInfligidorDaño() == infligidor);
+
+			if (infligiforDañoExistente is not null)
+			{
+				SistemaPrincipal.LoggerGlobal.Log($"{infligidor} ya se encuentra en la lista de infligidores de {this}", ESeveridad.Error);
+
+				return infligiforDañoExistente;
+			}
+
+			var nuevoInfligidorDaño = new ModeloInfligidorDaño(
 				this,
 				(infligidor as ControladorPersonaje)?.modelo,
 				(infligidor as ControladorHabilidad)?.modelo,
-				(infligidor as ControladorItem)?.modelo));
+				(infligidor as ControladorItem)?.modelo);
+
+			InfligidoresDaño.Add(nuevoInfligidorDaño);
+
+			return nuevoInfligidorDaño;
+		}
+
+		/// <summary>
+		/// Añade un nuevo <see cref="ModeloDañable"/> a los <see cref="Objetivos"/>
+		/// </summary>
+		/// <param name="objetivo"><see cref="ModeloDañable"/> que añadir</param>
+		public void AñadirObjetivo(ModeloDañable objetivo)
+		{
+			objetivo.Indice = Objetivos.Count;
+
+			Objetivos.Add(objetivo);
 		}
 
 		/// <summary>

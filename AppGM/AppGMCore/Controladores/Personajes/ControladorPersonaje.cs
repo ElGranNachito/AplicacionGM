@@ -388,7 +388,7 @@ namespace AppGM.Core
         /// </summary>
         public event dCurarse             OnRecibirCuracion   = delegate { };
 
-        public event IInfligidorDaño.dInfligirDaño OnInfligirDaño = delegate{};
+        public event IInfligidorDaño.dInfligirDaño OnInfligioDaño = delegate{};
 
         public event IDañable.dDañado OnDañado = delegate{};
 
@@ -496,11 +496,33 @@ namespace AppGM.Core
 	        Hp -= argsDaño.DañoFinal;
 
 	        OnDañado(argsDaño, subObjetivos);
+
+            var objetivoQueRepresentaAEstePersonaje = argsDaño.Objetivos.Find(d => d.Personaje == modelo);
+
+	        if (objetivoQueRepresentaAEstePersonaje is null)
+	        {
+		        objetivoQueRepresentaAEstePersonaje = new ModeloDañable
+		        {
+			        Personaje = modelo,
+			        ArgumentosDaño = argsDaño
+		        };
+
+                argsDaño.AñadirObjetivo(objetivoQueRepresentaAEstePersonaje);
+	        }
+
+	        //Añadimos una nueva entrada al historial de daño recibido
+            modelo.HistorialDañoRecibido.Add(objetivoQueRepresentaAEstePersonaje);
         }
 
         public void InfligirDaño(IDañable objetivo, ModeloArgumentosDaño argsDaño, SortedList<int, SubobjetivoDaño> subObjetivos = null)
         {
-	        
+	        objetivo.Dañar(argsDaño, subObjetivos);
+
+	        OnInfligioDaño(objetivo, argsDaño, subObjetivos);
+
+	        var infligidorDañoQueRepresentaAEstePersonaje = argsDaño.InfligidoresDaño.Find(i => i.Personaje == modelo) ?? argsDaño.AñadirInfligidorDaño(this);
+
+	        modelo.HistorialDañoInfligido.Add(infligidorDañoQueRepresentaAEstePersonaje);
         }
 
         /// <summary>

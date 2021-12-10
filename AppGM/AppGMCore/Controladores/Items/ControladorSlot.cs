@@ -294,6 +294,21 @@ namespace AppGM.Core
 			        slot.Dañar(argsDaño, subObjetivos, nuevoSubobjetivo);
                 }
 	        }
+
+            var objetivoQueRepresentaAEsteSlot = argsDaño.Objetivos.Find(o => o.Slot == modelo);
+
+            if (objetivoQueRepresentaAEsteSlot is null)
+            {
+	            objetivoQueRepresentaAEsteSlot = new ModeloDañable
+	            {
+                    ArgumentosDaño = argsDaño,
+                    Slot = modelo
+	            };
+
+	            argsDaño.AñadirObjetivo(objetivoQueRepresentaAEsteSlot);
+            }
+
+            modelo.HistorialDañoRecibido.Add(objetivoQueRepresentaAEsteSlot);
         }
 
         public bool ContieneItemsDeTipo(ETipoItem tipoItem, bool incluirHijos)

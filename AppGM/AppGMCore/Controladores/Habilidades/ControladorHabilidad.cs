@@ -95,7 +95,7 @@ namespace AppGM.Core
 
         public event dUtilizarHabilidad OnUtilizarHabilidad = delegate { };
 
-        public event IInfligidorDaño.dInfligirDaño OnInfligirDaño;
+        public event IInfligidorDaño.dInfligirDaño OnInfligioDaño;
 
         #endregion
 

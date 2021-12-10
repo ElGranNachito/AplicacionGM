@@ -18,7 +18,7 @@ namespace AppGM.Core
 	    /// Guid del modelo. Utilizado para identificarlos en la copia profunda
 	    /// </summary>
 	    [NotMapped]
-	    public Guid guid = Guid.NewGuid();
+	    public virtual Guid Guid { get; set; }
 
         /// <summary>
         /// Contiene el valor de <see cref="Id"/>

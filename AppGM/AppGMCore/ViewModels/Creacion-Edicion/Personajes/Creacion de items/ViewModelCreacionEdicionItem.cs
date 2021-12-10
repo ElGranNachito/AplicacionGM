@@ -103,7 +103,7 @@ namespace AppGM.Core
 		/// <summary>
 		/// Funcion utilizar
 		/// </summary>
-		public ViewModelListaItems<ViewModelFuncionItem<ControladorFuncion_Efecto>> ViewModelFuncionUtilizar { get; set; }
+		public ViewModelListaItems<ViewModelFuncionItem<ControladorFuncion_Item>> ViewModelFuncionUtilizar { get; set; }
 
 		/// <summary>
 		/// Predicado puede utilizar
@@ -256,11 +256,11 @@ namespace AppGM.Core
 			};
 
 			//Inicializamos la lista para crear la funcion de utilizacion
-			ViewModelFuncionUtilizar = new ViewModelListaItems<ViewModelFuncionItem<ControladorFuncion_Efecto>>(() =>
+			ViewModelFuncionUtilizar = new ViewModelListaItems<ViewModelFuncionItem<ControladorFuncion_Item>>(() =>
 			{
 				var dataContextActual = SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido;
 
-				SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = new ViewModelCreacionDeFuncionItem(vm =>
+				SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = new ViewModelCreacionDeFuncionItem(async vm =>
 				{
 					if (vm.Resultado.EsAceptarOFinalizar())
 					{
@@ -275,6 +275,7 @@ namespace AppGM.Core
 						};
 
 						ModeloCreado.Funciones.Add(nuevaRelacion);
+						ViewModelFuncionUtilizar.Items.Add((ViewModelFuncionItem<ControladorFuncion_Item>)controladorFuncion.CrearViewModelItem());
 					}
 
 					SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = dataContextActual;
@@ -483,9 +484,10 @@ namespace AppGM.Core
 			if(ModeloCreado.Estado is < 0 or > 100)
 				return;
 
+			//TODO:Hacer que esto ande
 			//Nos aseguramos de que si la funcion de utilizar existe, sea valida
-			if (ViewModelFuncionUtilizar.Items.Count > 0 && !ViewModelFuncionUtilizar.Items[0].ControladorGenerico.Modelo.EsValido)
-				return;
+			/*if (ViewModelFuncionUtilizar.Items.Count > 0 && !ViewModelFuncionUtilizar.Items[0].ControladorGenerico.Modelo.EsValido)
+				return;*/
 
 			//Nos aseguramos de que si existe el predicado de puede utilizar, sea valido
 			if (ViewModelFuncionPuedeUtilizar.Items.Count > 0 && !ViewModelFuncionPuedeUtilizar.Items[0].ControladorGenerico.Modelo.EsValido)

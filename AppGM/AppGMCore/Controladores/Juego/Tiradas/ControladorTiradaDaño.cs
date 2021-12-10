@@ -49,7 +49,9 @@ namespace AppGM.Core
 
 			modelo.Historial.Add(nuevaEntradaHistorialTirada);
 
-			ArgsUltimaTirada.objetivo.Dañar(argsDaño, subobjetivosDaño);
+			var infligidorDeDaño = ArgsUltimaTirada.controlador as IInfligidorDaño ?? ArgsUltimaTirada.personaje;
+			
+			infligidorDeDaño.InfligirDaño(ArgsUltimaTirada.objetivo, argsDaño, subobjetivosDaño);
 		}
 
 		#endregion

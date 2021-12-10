@@ -137,7 +137,7 @@ namespace AppGM.Core
 		/// Intenta parsear una <paramref name="tirada"/> asincronicamente
 		/// </summary>
 		/// <param name="tirada">Tirada que se intentara parsear</param>
-		/// <param name="usuario">Controlador que quiere realizar esta tirada</param>
+		/// <param name="contenedor">Controlador que quiere realizar esta tirada</param>
 		/// <param name="tipoTirada">Tipo de la tirada</param>
 		/// <param name="stat">Stat de la que denpende la tirada</param>
 		/// <returns>
@@ -156,7 +156,7 @@ namespace AppGM.Core
 		/// </returns>
 		public static async Task<(bool exito, Func<ArgumentosTiradaPersonalizada, ResultadoTirada> funcion, string error)> TryParseAsync(
 			string tirada,
-			ModeloConVariablesYTiradas usuario,
+			ModeloConVariablesYTiradas contenedor,
 			ETipoTirada tipoTirada,
 			EStat stat)
 		{
@@ -164,7 +164,7 @@ namespace AppGM.Core
 			if (mTiradasCacheadas.ContainsKey(tirada))
 				return (true, mTiradasCacheadas[tirada], string.Empty);
 
-			var resultadoComprobacion = ParserTiradas.VerificarValidezTirada(tirada, usuario.ObtenerVariablesDisponibles(), tipoTirada, stat);
+			var resultadoComprobacion = ParserTiradas.VerificarValidezTirada(tirada, contenedor.ObtenerVariablesDisponibles(), tipoTirada, stat);
 
 			if (!resultadoComprobacion.esValida)
 				return (false, null, resultadoComprobacion.error);
@@ -537,7 +537,7 @@ namespace AppGM.Core
 						//Si no lo es entonces obtenemos el valor de la variable desde el controlador del usuario
 						else
 						{
-							mExpresionActual = Expression.Call(contenedor, mMetodoObtenerVariable, Expression.Constant(nombreVariable));
+							mExpresionActual = Expression.Convert(Expression.Call(contenedor, mMetodoObtenerVariable, Expression.Constant(nombreVariable)), typeof(int));
 						}
 
 						//Actualizamos el nombre de la varaible actual

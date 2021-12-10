@@ -203,47 +203,30 @@ namespace AppGM.Core
 		/// </summary>
 		public virtual void OnBloqueRemovido(){}
 
-		public void OnDragEntro(IDrageable vm)
+		public virtual void OnDragEntro_Impl(ArgumentosDragAndDropUnico args)
 		{
-			if (vm is ViewModelBloqueFuncionBase vmBloque &&
-			    vm != this)
-			{
-				OnDragEntro_Impl(vm);
-			}
-		}
+			if (args.contenido is not ViewModelBloqueFuncionBase)
+				return;
 
-		public void OnDragSalio(IDrageable vm)
-		{
-			if (vm is ViewModelBloqueFuncionBase vmBloque)
-			{
-				OnDragSalio_Impl(vm);
-			}
-		}
-
-		public void OnDrop(IDrageable vm)
-		{
-			if (vm is ViewModelBloqueFuncionBase vmBloque &&
-			    vm != this)
-			{
-				OnDrop_Impl(vm);
-			}
-		}
-
-		public virtual void OnDragEntro_Impl(IDrageable vm)
-		{
 			MostrarEspacioDrop = true;
 		}
 
-		public virtual void OnDragSalio_Impl(IDrageable vm)
+		public virtual void OnDragSalio_Impl(ArgumentosDragAndDropUnico args)
 		{
+			if(args.contenido is not ViewModelBloqueFuncionBase)
+				return;
+
 			MostrarEspacioDrop = false;
 		}
 
-		public virtual bool OnDrop_Impl(IDrageable vm)
+		public virtual bool OnDrop_Impl(ArgumentosDragAndDropUnico args)
 		{
+			if (args.contenido is not ViewModelBloqueFuncionBase)
+				return false;
+
 			MostrarEspacioDrop = false;
 
-			Padre.AñadirBloque(((ViewModelBloqueFuncionBase)vm).Copiar(Padre), IndiceBloque);
+			Padre.AñadirBloque(((ViewModelBloqueFuncionBase)args.contenido).Copiar(Padre), IndiceBloque);
 
 			return true;
 		}

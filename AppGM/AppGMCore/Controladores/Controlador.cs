@@ -93,6 +93,12 @@ namespace AppGM.Core
 
 		public override ControladorVariableBase ObtenerControladorVariable(string nombreVariable)
 		{
+			foreach (var variablePersistente in mVariablesPersistenes)
+			{
+				if (variablePersistente.Value.NombreVariable.Equals(nombreVariable, StringComparison.Ordinal))
+					return variablePersistente.Value;
+			}
+
 			return null;
 		}
 
@@ -103,8 +109,7 @@ namespace AppGM.Core
 
 		public override object ObtenerValorVariable(string nombreVariable)
 		{
-			//TODO: Implementar
-			return null;
+			return ObtenerControladorVariable(nombreVariable)?.ObtenerValorVariable();
 		}
 
 		public override void AsignarAVariable(int idVariable, object valor)
@@ -159,7 +164,7 @@ namespace AppGM.Core
 
 				mTiradas = new Dictionary<Guid, ControladorTiradaBase>(modeloConVariables.Tiradas.Select(var =>
 				{
-					return new KeyValuePair<Guid, ControladorTiradaBase>(var.guid, ControladorTiradaBase.CrearControladorDeTiradaCorrespondiente(var));
+					return new KeyValuePair<Guid, ControladorTiradaBase>(var.Guid, ControladorTiradaBase.CrearControladorDeTiradaCorrespondiente(var));
 				}));
 			}
 			else
@@ -221,7 +226,7 @@ namespace AppGM.Core
 				//Creamos un controlador para las nuevas tiradas
 				foreach (var var in tiradasNuevas)
 				{
-					mTiradas.Add(var.guid, ControladorTiradaBase.CrearControladorDeTiradaCorrespondiente(var));
+					mTiradas.Add(var.Guid, ControladorTiradaBase.CrearControladorDeTiradaCorrespondiente(var));
 				}
 			}
 		}

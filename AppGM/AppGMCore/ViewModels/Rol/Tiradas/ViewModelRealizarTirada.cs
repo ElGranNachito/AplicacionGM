@@ -661,7 +661,9 @@ namespace AppGM.Core
 
                     argsDaño.AñadirObjetivos(mArgsUltimaTiradaDaño.personaje, subobjetivosDaño);
 
-                    mArgsUltimaTiradaDaño.objetivo.Dañar(argsDaño, subobjetivosDaño);
+                    var infligidorDaño = mArgsUltimaTiradaDaño.controlador as IInfligidorDaño ?? mArgsUltimaTiradaDaño.personaje;
+
+                    infligidorDaño.InfligirDaño(mArgsUltimaTiradaDaño.objetivo, argsDaño, subobjetivosDaño);
                 }
             }
         }
@@ -678,10 +680,9 @@ namespace AppGM.Core
                 };
 
             argsTirada.personaje = ViewModelSeleccionUsuario.ControladorSeleccionado;
-            argsTirada.controlador = ViewModelSeleccionContenedor.ControladorSeleccionado;
+            argsTirada.controlador = ViewModelSeleccionContenedor?.ControladorSeleccionado ?? ViewModelSeleccionUsuario.ControladorSeleccionado;
             argsTirada.modificador = PresetTirada.Modificador;
             argsTirada.stat = ViewModelComboBoxStat.Valor;
-            argsTirada.controlador = ViewModelSeleccionUsuario.ControladorSeleccionado;
             argsTirada.argumentoExtra = VariableExtra;
             argsTirada.modificador = PresetTirada.Modificador;
             argsTirada.multiplicadorEspecialidad = PresetTirada.MultiplicadorDeEspecialidad ?? 0;

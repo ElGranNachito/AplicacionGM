@@ -111,7 +111,7 @@ namespace AppGM.Core
 
 		public override async Task CompilarAsync()
 		{
-			if (mFuncionesConocidas.ContainsKey(NombreArchivoFuncion))
+			if (mFuncionesConocidas.ContainsKey(NombreArchivoFuncion) && mFuncionesConocidas[NombreArchivoFuncion].funcion is not null)
 				return;
 
 			var compilador = new Compilador(Bloques);

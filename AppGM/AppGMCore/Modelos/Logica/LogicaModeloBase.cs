@@ -248,7 +248,7 @@ namespace AppGM.Core
 								{
 									ModeloBase elementoActualListaOrigen = listaModeloOrigen[i];
 
-									var equivalenteEnDestino = listaModeloDestinoCasteada.FirstOrDefault(m => m.guid == elementoActualListaOrigen.guid);
+									var equivalenteEnDestino = listaModeloDestinoCasteada.FirstOrDefault(m => m.Guid == elementoActualListaOrigen.Guid);
 
 									//Si no hemos copiado este modelo aun, lo copiamos a su par en el destino
 									if (!modelosYaCopiados.ContainsKey(elementoActualListaOrigen))
@@ -272,8 +272,8 @@ namespace AppGM.Core
 
 								var listaModeloDestinoActualCasteada = listaModeloDestino.Cast<ModeloBase>().ToList();
 
-								var modelosEliminadosDestino = listaModeloDestinoCasteada.FindAll(m => listaModeloDestinoActualCasteada.All(ma => ma.guid != m.guid));
-								var modelosAñadidos = listaModeloDestinoActualCasteada.FindAll(m => listaModeloDestinoCasteada.All(ma => ma.guid != m.guid));
+								var modelosEliminadosDestino = listaModeloDestinoCasteada.FindAll(m => listaModeloDestinoActualCasteada.All(ma => ma.Guid != m.Guid));
+								var modelosAñadidos = listaModeloDestinoActualCasteada.FindAll(m => listaModeloDestinoCasteada.All(ma => ma.Guid != m.Guid));
 
 								//Los modelos restantes, es decir los que no se encontraban en ambas listas, son modelos que fueron eliminados, si 
 								//se encontraban en el destino, o añadidos, si se encontraban en el modelo de origen
@@ -419,7 +419,7 @@ namespace AppGM.Core
 		}
 		#endregion
 
-		public override int GetHashCode() => guid.ToString().GetHashCode();
+		public override int GetHashCode() => Guid.ToString().GetHashCode();
 
 		#endregion
 	}

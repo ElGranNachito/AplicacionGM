@@ -477,6 +477,9 @@ namespace AppGM.Core
 			// Funcion:
 			modelBuilder.Entity<ModeloFuncion>().ToTable("ModeloFuncion");
 
+			modelBuilder.Entity<ModeloFuncion>()
+				.Property(f => f.Guid);
+
 			//Funcion - Padre
 			modelBuilder.Entity<TIFuncionPadreFuncion>()
 				.HasKey(e => new { e.IDPadre, e.IDFuncion });
