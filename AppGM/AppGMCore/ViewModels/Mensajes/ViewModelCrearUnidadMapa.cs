@@ -90,10 +90,10 @@ namespace AppGM.Core
                 if (Nombre == string.Empty)
                     return false;
 
-                if (PersonajeSeleccionado == string.Empty)
+                if (TipoSeleccionado == ETipoUnidad.NINGUNO)
                     return false;
 
-                if (TipoSeleccionado == ETipoUnidad.NINGUNO)
+                if (PersonajeSeleccionado == string.Empty)
                     return false;
 
                 if (DebeSeleccionarCantidad && CantidadInicialDeUnidades < 1)
@@ -151,8 +151,7 @@ namespace AppGM.Core
                         DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PersonajesDisponibles)));
                 }
                 //Si la propiedad no es el tipo sileccionado ni si podemos finalizar la creacion...
-                else if(e.PropertyName != nameof(PuedeFinalizarCreacion))
-                    //Disparamos el evento property changed en PuedeFinalizarCreacion
+                else if(e.PropertyName != nameof(PuedeFinalizarCreacion)) 
                     DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PuedeFinalizarCreacion)));
             };
         }

@@ -9,7 +9,7 @@
 
     <!-- UserControl que hace uso de un ViewModelCrearParticipanteCombate -->
     <!-- Control para la creacion de la representacion de un participante en un combate-->
-    <Border Background="{StaticResource Tema.Verde}"
+    <Border Background="{StaticResource Tema.VerdeOscuro}"
             Padding="10">
         
         <Grid >
@@ -25,7 +25,7 @@
                 VerticalAlignment="Top"
                 HorizontalAlignment="Left"
                 Text="Total acciones:"
-                Foreground="{StaticResource Tema.VerdeOscuro}"/>
+                Foreground="{StaticResource Tema.Verde}"/>
 
             <TextBox 
                 Grid.Column="1"
@@ -36,8 +36,8 @@
                 MinHeight="15"
                 local:CampoDeTextoNumericoProperty.Value="True"
                 Text="{Binding CantidadInicialDeAcciones, Mode=TwoWay}"
-                Foreground="{StaticResource Tema.VerdeOscuro}"
-                Background="{StaticResource Tema.Verde}"/>
+                Foreground="{StaticResource Tema.Verde}"
+                Background="{StaticResource Tema.VerdeSemiOscuro}"/>
 
             <Grid Grid.Column="2">
 
@@ -45,7 +45,7 @@
 
                     <!-- Tipo de unidad (Todos) -->
                     <TextBlock Text="Tipo de participante:"
-                               Foreground="{StaticResource Tema.VerdeOscuro}"/>
+                               Foreground="{StaticResource Tema.Verde}"/>
                     
                     <ComboBox ItemsSource="{Binding TiposPersonajes}"
                               SelectedValue="{Binding TipoPersonajeSeleccionado}"
@@ -55,7 +55,7 @@
                     <StackPanel Visibility="{Binding DebeSeleccionarPersonaje, Converter={local:BooleanToVisibilityConverterOcultar}}">
 
                         <TextBlock Text="Personaje:"
-                                   Foreground="{StaticResource Tema.VerdeOscuro}"/>
+                                   Foreground="{StaticResource Tema.Verde}"/>
                         
                         <ComboBox 
                             ItemsSource="{Binding PersonajesDisponibles}"

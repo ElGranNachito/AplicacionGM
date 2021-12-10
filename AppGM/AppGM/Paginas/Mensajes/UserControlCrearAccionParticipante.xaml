@@ -9,7 +9,7 @@
 
     <!-- UserControl que hace uso de un ViewModelCrearAccionParticipante -->
     <!-- Control para la creacion de la representacion de un participante en un combate-->
-    <Border Background="{StaticResource Tema.Verde}"
+    <Border Background="{StaticResource Tema.VerdeOscuro}"
             Padding="10">
         
         <Grid >
@@ -66,8 +66,8 @@
             <Grid Grid.Row="1">
 
                 <TextBox
-                    Background="{StaticResource Tema.Verde}"
-                    Foreground="{StaticResource Tema.VerdeOscuro}"
+                    Background="{StaticResource Tema.VerdeSemiOscuro}"
+                    Foreground="{StaticResource Tema.Verde}"
                     Style="{StaticResource TextoDescriptivo}"
                     Text="{Binding DescripcionRol, Mode=TwoWay}"
                     Tag="Descripcion"
@@ -102,7 +102,7 @@
                     <TextBlock VerticalAlignment="Center"
                                Margin="10 0 0 0"
                                Text="Consume accion por turno"
-                               Foreground="{StaticResource Tema.VerdeOscuro}"/>
+                               Foreground="{StaticResource Tema.Verde}"/>
 
                 </StackPanel>
 

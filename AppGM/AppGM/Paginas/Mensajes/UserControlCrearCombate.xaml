@@ -9,7 +9,7 @@
 
     <!-- UserControl que hace uso de un ViewModelCrearParticipanteCombate -->
     <!-- Control para la creacion de la representacion de un participante en un combate-->
-    <Border Background="{StaticResource Tema.Verde}"
+    <Border Background="{StaticResource Tema.VerdeOscuro}"
             Padding="10">
         
         <Grid >
@@ -24,7 +24,7 @@
                 VerticalAlignment="Top"
                 HorizontalAlignment="Left"
                 Text="Nombre:"
-                Foreground="{StaticResource Tema.VerdeOscuro}"/>
+                Foreground="{StaticResource Tema.Verde}"/>
 
             <!-- Nombre del combate -->
             <TextBox 
@@ -35,8 +35,8 @@
                 MinWidth="300"
                 MinHeight="15"
                 Text="{Binding NombreCombate, Mode=TwoWay}"
-                Foreground="{StaticResource Tema.VerdeOscuro}"
-                Background="{StaticResource Tema.Verde}"/>
+                Foreground="{StaticResource Tema.Verde}"
+                Background="{StaticResource Tema.VerdeSemiOscuro}"/>
 
             <!-- CheckBox para indicar si el combate esta actualmente activo o no -->
             <StackPanel
@@ -53,12 +53,13 @@
 
                     <TextBlock VerticalAlignment="Center"
                                Margin="10 0 0 0"
+                               Foreground="{StaticResource Tema.Verde}"
                                Text="Esta activo"
                                ToolTip="Indica si el combate esta concurriendo o si estara pausado, concluido"/>
 
                 </StackPanel>
 
-                <!-- Nombre del combate -->
+                <!-- Mapa del combate -->
                 <StackPanel Margin="0 15">
 
                     <local:UserControlComboBoxConDescripcion 
