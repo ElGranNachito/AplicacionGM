@@ -309,11 +309,11 @@ namespace AppGM.Core
 			}, true, "Funcion puede utilizar", 1);
 
 			//Inicializamos el viewmodel de la lista que contiene los efectos de este item
-			ViewModelListaEfectos = new ViewModelListaItems<ViewModelEfectoItem>(() =>
+			ViewModelListaEfectos = new ViewModelListaItems<ViewModelEfectoItem>(async () =>
 			{
 				var dataContextActual = SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido;
 
-				SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = new ViewModelCreacionEdicionEfecto(vm =>
+				SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = await new ViewModelCreacionEdicionEfecto(vm =>
 				{
 					if (vm.Resultado.EsAceptarOFinalizar())
 					{
@@ -321,7 +321,7 @@ namespace AppGM.Core
 					}
 
 					SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = dataContextActual;
-				}, _personajePortador, typeof(ControladorItem), null);
+				}, _personajePortador, typeof(ControladorItem), null).Inicializar();
 			}, true, "Efectos");
 
 			//Inicializamos el viewmodel de la lista que contiene las tiradas de este item

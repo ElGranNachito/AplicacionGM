@@ -36,7 +36,7 @@ namespace AppGM.Core
 		/// Tirada para obtener el numero de tiradas
 		/// </summary>
 		[StringLength(256)]
-		public string NumeroDeTiradas { get; set; }
+		public string NumeroDeTiradas { get; set; } = string.Empty;
 
 		/// <summary>
 		/// Modificador

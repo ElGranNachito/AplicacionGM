@@ -47,18 +47,16 @@ namespace AppGM.Core
 		{
 			Action accionBotonEditar = async () =>
 			{
-				var dataContextActual = SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido;
-
-				var vmEdicion = await new ViewModelCreacionDeVariable(vm =>
+				SistemaPrincipal.MostrarViewModelCreacionEdicion<ViewModelCreacionDeVariable, ModeloVariableBase, ControladorVariableBase>(await new ViewModelCreacionDeVariable(vm =>
 				{
-					SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = dataContextActual;
-
 					if (vm.Resultado.EsAceptarOFinalizar())
+                    {
+						vm.CrearControlador();
+
 						ActualizarCaracteristicas();
+                    }
 
-				}, ControladorGenerico).Inicializar(typeof(ModeloVariableInt));
-
-				SistemaPrincipal.Aplicacion.VentanaActual.DataContextContenido = vmEdicion;
+				}, ControladorGenerico).Inicializar(typeof(ModeloVariableInt)));
 			};
 
 			Action accionBotonEliminar = () =>

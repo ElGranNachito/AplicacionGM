@@ -198,6 +198,11 @@ namespace AppGM.Core
 				ModeloCreado.CrearCopiaProfundaEnSubtipo(ModeloCreado.GetType(), ControladorSiendoEditado.modelo);
 
 				controladorVariableFinal = ControladorSiendoEditado;
+
+				var nuevoValorVariable = VMIngresoVariable.ObtenerValor();
+
+				if(nuevoValorVariable is not null)
+					controladorVariableFinal.GuardarValorVariable(VMIngresoVariable.ObtenerValor());
 			}
 			//Sino
 			else
@@ -207,10 +212,10 @@ namespace AppGM.Core
 				modeloCreado.DescripcionVariable = DescripcionVariable;
 
 				controladorVariableFinal = ControladorVariableBase.CrearControladorCorrespondiente(modeloCreado);
-			}
 
-			//Guardamos el valor ingresado por el usuario
-			controladorVariableFinal.GuardarValorVariable(VMIngresoVariable.ObtenerValor());
+				//Guardamos el valor ingresado por el usuario
+				controladorVariableFinal.GuardarValorVariable(VMIngresoVariable.ObtenerValor());
+			}
 
 			return controladorVariableFinal;
 		}

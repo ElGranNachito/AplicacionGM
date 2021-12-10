@@ -51,10 +51,11 @@
             ComandoCancelar = new Comando(async () =>
             {
 	            SistemaPrincipal.EliminarModelo(modeloRol);
-	            SistemaPrincipal.Desatar<ModeloRol>();
-                SistemaPrincipal.Desatar<DatosRol>();
 
-	            await SistemaPrincipal.GuardarDatosAsync();
+                await SistemaPrincipal.GuardarDatosAsync();
+
+                SistemaPrincipal.Desatar<ModeloRol>();
+                SistemaPrincipal.Desatar<DatosRol>();	         
 
                 Resultado = EResultadoViewModel.Cancelar;
 
