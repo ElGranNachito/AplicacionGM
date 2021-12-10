@@ -128,9 +128,11 @@ namespace AppGM.Core
 			{
 				nuevosItemsComboBox = nuevosValoresPosibles.Select(valor => new ViewModelItemComboBoxBase<TValor> { Texto = valor.ToString(), valor = valor });
 			}
+			
+			ValoresPosibles.Elementos.Clear();
 
-			ValoresPosibles.Elementos = new ObservableCollection<ViewModelItemComboBoxBase<TValor>>(nuevosItemsComboBox);
-		}
+			ValoresPosibles.AddRange(nuevosItemsComboBox);
+        }
 
 		/// <summary>
 		/// Cambia el valor seleccionado

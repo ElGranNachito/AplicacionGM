@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using Castle.Core.Internal;
 
 namespace AppGM.Core
 {
@@ -84,7 +85,7 @@ namespace AppGM.Core
 
                 mapa.UnidadesPartiesVisibles.Add(this);
 
-                if (PersonajesParty.All(a => !a.ModoPartyHabilitado))
+                if (!PersonajesParty.IsNullOrEmpty() && PersonajesParty.All(a => !a.ModoPartyHabilitado))
                 {
                     for (int i = 0; i < PersonajesParty.Count; ++i) 
                         PersonajesParty[i].ModoPartyHabilitado = value;
@@ -120,13 +121,15 @@ namespace AppGM.Core
         /// <summary>
         /// Elimina esta unidad del mapa y de la base de datos
         /// </summary>
-        private void EliminarUnidad()
+        private async void EliminarUnidad()
         {
             mapa.PosicionesParties.Remove(this);
 
             unidad.Eliminar();
 
-            SistemaPrincipal.GuardarDatosAsync();
+            await SistemaPrincipal.GuardarDatosAsync();
+
+            mapa.ActualizarUnidadesParties();
         }
 
         #endregion

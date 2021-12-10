@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
+using Castle.Core.Internal;
 
 namespace AppGM.Core
 {
@@ -109,7 +110,7 @@ namespace AppGM.Core
             {
                 imagenPosicionEsVisible = value;
 
-                if (UnidadParty.PersonajesParty.All(a => a.ImagenPosicionEsVisible))
+                if (!UnidadParty.PersonajesParty.IsNullOrEmpty() && UnidadParty.PersonajesParty.All(a => a.ImagenPosicionEsVisible))
                 {
                     UnidadParty.ImagenPosicionEsVisible = false;
                     modoPartyHabilitado = false;
@@ -341,13 +342,15 @@ namespace AppGM.Core
         /// <summary>
         /// Elimina esta unidad del mapa y de la base de datos
         /// </summary>
-        private void EliminarUnidad()
+        private async void EliminarUnidad()
         {
             mapa.Posiciones.Remove(this);
 
             unidad.Eliminar();
 
-            SistemaPrincipal.GuardarDatosAsync();
+            await SistemaPrincipal.GuardarDatosAsync();
+
+            mapa.ActualizarUnidadesParties();
         }
 
         #endregion

@@ -85,25 +85,21 @@
 
                 <StackPanel>
 
-                    <!-- Tipo de unidad (Todos) -->
-                    <TextBlock Text="Tipo de unidad:"
-                               Foreground="{StaticResource Tema.Verde}"/>
-                    <ComboBox ItemsSource="{Binding TiposUnidades}"
-                              SelectedValue="{Binding TipoSeleccionado}"
-                              Margin="0 0 0 20"/>
+                    <!-- Tipo de la unidad -->
+                    <local:UserControlComboBoxConDescripcion
+                        Margin="0 0 0 10"
+                        Descripcion="Tipo de unidad:"
+                        DataContext="{Binding ComboBoxTiposUnidades}"/>
 
                     <!-- Personaje (Masters, Servants e invocaciones) -->
-                    <StackPanel 
-                        Visibility="{Binding DebeSeleccionarPersonaje, Converter={local:BooleanToVisibilityConverterOcultar}}">
-
-                        <TextBlock Text="Personaje:"
-                                   Foreground="{StaticResource Tema.Verde}"/>
-                        <ComboBox 
-                            ItemsSource="{Binding PersonajesDisponibles}"
-                            SelectedValue="{Binding PersonajeSeleccionado}"
-                            Margin="0 0 0 20"/>
-
-                    </StackPanel>
+                    <local:UserControlComboBoxConDescripcion
+                        Margin="0 0 0 20"
+                        Descripcion="Personaje:"
+                        Visibility="{Binding 
+                            RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControlMensajeCrearUnidadMapa}},
+                            Converter={local:BooleanToVisibilityConverterColapsar},
+                            Path=DataContext.DebeSeleccionarPersonaje}"
+                        DataContext="{Binding ComboBoxPersonajesDisponibles}"/>
 
                     <!-- Cantidad (Invocaciones y trampas) -->
                     <StackPanel 

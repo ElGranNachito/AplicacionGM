@@ -122,7 +122,6 @@ namespace AppGM.Core
             base.Eliminar();
 
             SistemaPrincipal.EliminarModelo(modelo.Posicion);
-            SistemaPrincipal.EliminarModelo(modelo.Personaje);
             SistemaPrincipal.EliminarModelo(modelo);
 
             posicion.Eliminar();

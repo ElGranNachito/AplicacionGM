@@ -408,24 +408,9 @@ namespace AppGM.Core
 
             //Creamos los view models para el ingreso de las diferentes posiciones.
             for (int i = 0; i < controladorMapa.controladoresUnidadesMapa.Count; ++i)
-            {
                 Posiciones.Add(new ViewModelIngresoPosicion(this, controladorMapa.controladoresUnidadesMapa[i]));
 
-                var numeroParty = Posiciones.Last().unidad.personaje.modelo.NumeroParty;
-
-                if (!posicionesParty.ContainsKey(numeroParty))
-                {
-                    posicionesParty.Add(numeroParty, new ViewModelUnidadParty(this, controladorMapa.controladoresUnidadesMapa[i]));
-                }
-
-                posicionesParty[numeroParty].PersonajesParty.Add(Posiciones[i]);
-                posicionesParty[numeroParty].NumeroParty = numeroParty;
-            }
-
-            foreach (var party in posicionesParty)
-            {
-                PosicionesParties.Add(party.Value);
-            }
+            ActualizarUnidadesParties();
 
             UnidadesPartiesVisibles.CollectionChanged += this.OnUnidadesPartiesCollectionChanged;
 
@@ -442,6 +427,36 @@ namespace AppGM.Core
 		#endregion
 
 		#region Funciones
+
+        /// <summary>
+        /// Funcion llamada para actualizar <see cref="UnidadesPartiesVisibles"/> cuando se agregar o remueve una unidad de <see cref="Posiciones"/>
+        /// </summary>
+        public void ActualizarUnidadesParties()
+        {
+            PosicionesParties.Clear();
+            UnidadesPartiesVisibles.Clear();
+
+            Dictionary<ENumeroParty, ViewModelUnidadParty> posicionesParty = new Dictionary<ENumeroParty, ViewModelUnidadParty>();
+
+            //Creamos los view models para el ingreso de las diferentes posiciones.
+            for (int i = 0; i < controladorMapa.controladoresUnidadesMapa.Count; ++i)
+            {
+                var numeroParty = Posiciones.Last().unidad.personaje.modelo.NumeroParty;
+
+                if (!posicionesParty.ContainsKey(numeroParty))
+                {
+                    posicionesParty.Add(numeroParty, new ViewModelUnidadParty(this, controladorMapa.controladoresUnidadesMapa[i]));
+                }
+
+                posicionesParty[numeroParty].PersonajesParty.Add(Posiciones[i]);
+                posicionesParty[numeroParty].NumeroParty = numeroParty;
+            }
+
+            foreach (var party in posicionesParty)
+            {
+                PosicionesParties.Add(party.Value);
+            }
+        }
 
         /// <summary>
         /// Funcion llamada para remover todas las unidades seleccionadas a la vez en el mapa.
@@ -495,6 +510,8 @@ namespace AppGM.Core
                 }
 
                 Posiciones.Add(vmNuevaUndiad);
+
+                ActualizarUnidadesParties();
             }
         }
 

@@ -11,9 +11,10 @@ namespace AppGM.Core
     /// </summary>
     public class ViewModelCrearUnidadMapa : ViewModelConResultado<ViewModelCrearUnidadMapa>
     {
-        #region Campos & Propiedades
+        #region Miembros
 
-        //-----------------------------------CAMPOS--------------------------------------
+        // Campos ---
+
 
         /// <summary>
         /// VM del mapa en el que se añadira la unidad
@@ -26,7 +27,13 @@ namespace AppGM.Core
         public ViewModelIngresoPosicion vmResultado;
 
 
-        //---------------------------------PROPIEDADES-----------------------------------
+        // Propiedades ---
+
+
+        /// <summary>
+        /// Comando que ejecutara cuando el usuario presiones el boton 'Finalizar'
+        /// </summary>
+        public ICommand ComandoFinalizar { get; set; }
 
         /// <summary>
         /// Nombre de la unidad
@@ -46,8 +53,7 @@ namespace AppGM.Core
         /// <summary>
         /// Nombre del personaje actualmente seleccionado
         /// </summary>
-        /// TODO: Cambiar para que sea un modelo o un controlador del personaje
-        public string PersonajeSeleccionado { get; set; } = string.Empty;
+        public ModeloPersonaje PersonajeSeleccionado { get; set; }
 
         /// <summary>
         /// Cantidad de unidades en el grupo.
@@ -71,16 +77,6 @@ namespace AppGM.Core
         public ETipoUnidad TipoSeleccionado { get; set; }
 
         /// <summary>
-        /// Valores del enum <see cref="ETipoUnidad"/>
-        /// </summary>
-        public List<ETipoUnidad> TiposUnidades => Enum.GetValues(typeof(ETipoUnidad)).Cast<ETipoUnidad>().ToList();
-
-        /// <summary>
-        /// Comando que ejecutara cuando el usuario presiones el boton 'Finalizar'
-        /// </summary>
-        public ICommand ComandoFinalizar { get; set; }
-
-        /// <summary>
         /// Indica si se puede agregar el personaje marcado.
         /// </summary>
         public bool PuedeFinalizarCreacion
@@ -93,7 +89,7 @@ namespace AppGM.Core
                 if (TipoSeleccionado == ETipoUnidad.NINGUNO)
                     return false;
 
-                if (PersonajeSeleccionado == string.Empty)
+                if (PersonajeSeleccionado is null)
                     return false;
 
                 if (DebeSeleccionarCantidad && CantidadInicialDeUnidades < 1)
@@ -104,25 +100,14 @@ namespace AppGM.Core
         }
 
         /// <summary>
-        /// Lista de personajes dispobibles segun el tipo de personaje seleccionado.
+        /// VM del ComboBox con los distintas tipos de unidades disponibles.
         /// </summary>
-        public List<string> PersonajesDisponibles
-        {
-            get
-            {
-                switch (TipoSeleccionado)
-                {
-                    case ETipoUnidad.Servant:
-                        return SistemaPrincipal.DatosRolSeleccionado.Servants.Select(s => s.ToString()).ToList();
-                    case ETipoUnidad.Master:
-                        return SistemaPrincipal.DatosRolSeleccionado.Masters.Select(m => m.ToString()).ToList();
-                    case ETipoUnidad.Invocacion:
-                        return SistemaPrincipal.DatosRolSeleccionado.Invocaciones.Select(i => i.ToString()).ToList();
-                    default:
-                        return new List<string>(0);
-                }
-            }
-        }
+        public ViewModelComboBox<ETipoUnidad> ComboBoxTiposUnidades { get; set; } = new ViewModelComboBox<ETipoUnidad>(EnumHelpers.TiposDeUnidadesDisponibles);
+
+        /// <summary>
+        /// VM del ComboBox con los distintas personajes disponibles.
+        /// </summary>
+        public ViewModelComboBox<ModeloPersonaje> ComboBoxPersonajesDisponibles { get; set; }
 
         #endregion
 
@@ -146,19 +131,46 @@ namespace AppGM.Core
                     //Disparamos property changed en estas propiedades para que se actualicen los campos a completar en la UI
                     DispararPropertyChanged(new PropertyChangedEventArgs(nameof(DebeSeleccionarPersonaje)));
                     DispararPropertyChanged(new PropertyChangedEventArgs(nameof(DebeSeleccionarCantidad)));
-
-                    if(DebeSeleccionarPersonaje)
-                        DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PersonajesDisponibles)));
                 }
                 //Si la propiedad no es el tipo sileccionado ni si podemos finalizar la creacion...
                 else if(e.PropertyName != nameof(PuedeFinalizarCreacion)) 
                     DispararPropertyChanged(new PropertyChangedEventArgs(nameof(PuedeFinalizarCreacion)));
             };
+            
+            ComboBoxTiposUnidades.OnValorSeleccionadoCambio += (anterior, actual) =>
+            {
+                TipoSeleccionado = actual.valor;
+                
+                ComboBoxPersonajesDisponibles.ActualizarValoresPosibles(ObtenerPersonajesDisponibles());
+            };
+
+            ComboBoxPersonajesDisponibles = new ViewModelComboBox<ModeloPersonaje>(ObtenerPersonajesDisponibles());
+
+            ComboBoxPersonajesDisponibles.OnValorSeleccionadoCambio += (anterior, actual) => PersonajeSeleccionado = actual.valor;
         }
 
         #endregion
 
         #region Metodos
+
+        /// <summary>
+        /// Obtiene una lista de <see cref="ModeloPersonaje"/> dependiendo del tipo de unidad seleccionado. 
+        /// </summary>
+        /// <returns></returns>
+        public List<ModeloPersonaje> ObtenerPersonajesDisponibles()
+        {
+            switch (TipoSeleccionado)
+            {
+                case ETipoUnidad.Servant:
+                    return SistemaPrincipal.ModeloRolActual.Personajes.Where(s => s.TipoPersonaje == ETipoPersonaje.Servant).Select(s => s).ToList();
+                case ETipoUnidad.Master:
+                    return SistemaPrincipal.ModeloRolActual.Personajes.Where(s => s.TipoPersonaje == ETipoPersonaje.Master).Select(s => s).ToList();
+                case ETipoUnidad.Invocacion:
+                    return SistemaPrincipal.ModeloRolActual.Personajes.Where(s => s.TipoPersonaje == ETipoPersonaje.Invocacion).Select(s => s).ToList();
+                default:
+                    return new List<ModeloPersonaje>(0);
+            }
+        }
 
         /// <summary>
         /// Crea el VM
@@ -175,61 +187,58 @@ namespace AppGM.Core
             posicionUnidad.X = PosX;
             posicionUnidad.Y = PosY;
 
+            var personaje = SistemaPrincipal.ModeloRolActual.Personajes.Find(s => s == PersonajeSeleccionado);
+
             switch (TipoSeleccionado)
             {
                 case ETipoUnidad.Iglesia:
+                {
                     modeloUnidad = new ModeloUnidadMapa
                     {
                         ETipoUnidad = TipoSeleccionado,
                         Nombre = Nombre
                     };
                     break;
-
+                }
                 case ETipoUnidad.Master:
                 {
-                    var master = (ModeloMaster) SistemaPrincipal.DatosRolSeleccionado.Masters.Find(m => m.ToString() == PersonajeSeleccionado).modelo;
-
                     modeloUnidad = new ModeloUnidadMapaMasterServant
                     {
                         ETipoUnidad = TipoSeleccionado,
-                        EClaseServant = master.ClaseServant,
+                        EClaseServant = ((ModeloMaster) personaje).ClaseServant,
                         Nombre = Nombre
                     };
                         
                     if (TipoSeleccionado == ETipoUnidad.Master)
-                        modeloUnidad.Personaje = master;
+                        modeloUnidad.Personaje = (ModeloMaster) personaje;
 
                     break;
                 }
                 case ETipoUnidad.Servant:
                 {
-                    var servant = (ModeloServant) SistemaPrincipal.DatosRolSeleccionado.Servants.Find(s => s.ToString() == PersonajeSeleccionado).modelo;
-
                     modeloUnidad = new ModeloUnidadMapaMasterServant
                     {
                         ETipoUnidad = TipoSeleccionado,
-                        EClaseServant = servant.ClaseServant,
+                        EClaseServant = ((ModeloServant) personaje).ClaseServant,
                         Nombre = Nombre
                     };
 
                     if (TipoSeleccionado == ETipoUnidad.Servant)
-                        modeloUnidad.Personaje = servant;
+                        modeloUnidad.Personaje = (ModeloServant) personaje;
 
                     break;
                 }
                 case ETipoUnidad.Invocacion:
                 {
-                    var invocacion = (ModeloInvocacion) SistemaPrincipal.DatosRolSeleccionado.Invocaciones.Find(i => i.ToString() == PersonajeSeleccionado).modelo;
-
                     modeloUnidad = new ModeloUnidadMapaInvocacionTrampa()
                     {
                         ETipoUnidad = TipoSeleccionado,
-                        EClaseServant = ((ModeloPersonajeJugable)invocacion.Invocador).ClaseServant,
+                        EClaseServant = ((ModeloPersonajeJugable)((ModeloInvocacion) personaje).Invocador).ClaseServant,
                         Nombre = Nombre
                     };
 
                     if (TipoSeleccionado == ETipoUnidad.Invocacion)
-                        modeloUnidad.Personaje = invocacion;
+                        modeloUnidad.Personaje = (ModeloInvocacion) personaje;
                     
                     break;
                 }

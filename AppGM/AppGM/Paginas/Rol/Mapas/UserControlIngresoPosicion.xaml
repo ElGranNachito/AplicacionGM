@@ -38,7 +38,7 @@
                             Grid.ColumnSpan="4"
                             Text="{Binding Nombre, FallbackValue=Mr.Sin Nombre}" 
                             FontSize="{StaticResource TamañoFontPequeño}"
-                            Foreground="White"/>
+                            Foreground="{StaticResource Tema.Verde}"/>
 
                         <!-- Checkbox mostrar unidad -->
                         <CheckBox
@@ -51,7 +51,7 @@
                         <CheckBox
                         Grid.Column="1"
                         Margin="5 0 0 0"
-                        Foreground="White"
+                        Foreground="{StaticResource Tema.Verde}"
                         MinWidth="20"
                         Style="{StaticResource CheckBoxDropDown}"
                         IsChecked="{Binding DebeMostrarDatosExtra}"
@@ -64,7 +64,7 @@
                                  FontFamily="{StaticResource 'Font Awesome Regular'}"
                                  Command="{Binding ComandoEliminarUnidad}"
                                  Style="{StaticResource BotonBase}"
-                                 Foreground="White"
+                                 Foreground="{StaticResource Tema.Verde}"
                                  Margin="0 0 5 0"
                                  ToolTip="Click para eliminar la unidad"
                         />
@@ -82,13 +82,14 @@
                         Margin="0 5">
 
                             <!--Posicion X-->
-                            <TextBlock Text="X: " Foreground="White"/>
+                            <TextBlock Text="X: " Foreground="{StaticResource Tema.Verde}"/>
                             <TextBox 
                             local:CampoDeTextoNumericoProperty.Value="True"
                             local:CampoDeTextoNumericoProperty.Tipo="{x:Type system:Double}"
                             HorizontalAlignment="Center"
                             MinWidth="20"
                             Width="50"
+                            Foreground="{StaticResource Tema.Verde}"
                             FontSize="{StaticResource TamañoFontGrande}"
                             FontFamily="{StaticResource 'Font Canon'}"
                             TextChanged="TextBoxPosX_TextChanged"
@@ -97,13 +98,14 @@
                             <!--Posicion Y-->
                             <TextBlock Text="Y: "
                                Margin="10 0 0 0"
-                               Foreground="White"/>
+                               Foreground="{StaticResource Tema.Verde}"/>
                             <TextBox 
                             local:CampoDeTextoNumericoProperty.Value="True"
                             local:CampoDeTextoNumericoProperty.Tipo="{x:Type system:Double}"
                             HorizontalAlignment="Center"
                             MinWidth="20"
                             Width="50"
+                            Foreground="{StaticResource Tema.Verde}"
                             FontSize="{StaticResource TamañoFontGrande}"
                             FontFamily="{StaticResource 'Font Canon'}"
                             TextChanged="TextBoxPosY_TextChanged"
@@ -132,7 +134,7 @@
                             <TextBlock Text="Modo Party"
                                        Margin="5 0 0 0"
                                        FontSize="{StaticResource TamañoFontPequeño}"
-                                       Foreground="White"/>
+                                       Foreground="{StaticResource Tema.Verde}"/>
 
                         </StackPanel>
 
