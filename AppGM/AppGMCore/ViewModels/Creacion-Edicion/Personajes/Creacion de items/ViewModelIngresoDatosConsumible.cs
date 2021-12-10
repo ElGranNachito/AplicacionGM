@@ -19,7 +19,7 @@ namespace AppGM.Core
 		public string UsosTotales
 		{
 			get => ModeloCreado.UsosTotales.ToString();
-			set => ModeloCreado.UsosTotales = int.Parse(value);
+			set => ModeloCreado.UsosTotales = value.ParseToIntIfValid();
 		}
 
 		/// <summary>
@@ -28,7 +28,7 @@ namespace AppGM.Core
 		public string UsosRestantes
 		{
 			get => ModeloCreado.UsosRestantes.ToString();
-			set => ModeloCreado.UsosRestantes = int.Parse(value);
+			set => ModeloCreado.UsosRestantes = value.ParseToIntIfValid();
 		} 
 		#endregion
 
